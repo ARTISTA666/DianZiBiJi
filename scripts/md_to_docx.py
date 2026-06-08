@@ -10,7 +10,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
 
 MD_PATH = Path(__file__).resolve().parent.parent / "docs/毕业论文初稿.md"
-DOCX_PATH = Path(__file__).resolve().parent.parent / "docs/毕业论文初稿_v2.docx"
+DOCX_PATH = Path(__file__).resolve().parent.parent / "docs/毕业论文初稿_v3.docx"
 
 
 def parse_markdown(md_text: str):
