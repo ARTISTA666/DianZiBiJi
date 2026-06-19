@@ -123,6 +123,9 @@ export type RagDataset = {
   project_id: number;
   dify_dataset_id: string;
   dify_dataset_name: string;
+  provider: string;
+  embedding_model: string;
+  generation_model: string;
   status: string;
   created_by: number;
   created_at: string;
@@ -141,10 +144,14 @@ export type RagQueryResponse = {
   answer: string;
   conversation_id: string | null;
   sources: Array<{
+    chunk_id: number | null;
     file_id: number | null;
     filename: string | null;
     dify_document_id: string | null;
     snippet: string | null;
+    vector_score: number | null;
+    lexical_score: number | null;
+    retrieval_score: number | null;
   }>;
   graph_context: Array<{
     relation_id: number;
@@ -159,10 +166,14 @@ export type RagQueryResponse = {
     target_entity_type: string;
     target_entity_type_label: string;
     confidence: number;
+    retrieval_score: number;
   }>;
   rag_mode: string;
   query_log_id: number | null;
   response_ms: number | null;
+  provider: string;
+  model_name: string | null;
+  fallback_reason: string | null;
 };
 
 export type AIQueryEvaluation = {
@@ -190,7 +201,15 @@ export type AIQueryLog = {
   conversation_id: string | null;
   graph_context_json: RagQueryResponse["graph_context"];
   sources_json: RagQueryResponse["sources"];
+  provider: string;
+  model_name: string | null;
+  prompt_version: string;
+  retrieval_config_json: Record<string, unknown>;
+  usage_json: Record<string, unknown>;
+  fallback_reason: string | null;
   error_message: string | null;
+  experiment_run_id: number | null;
+  experiment_case_index: number | null;
   created_at: string;
   evaluation: AIQueryEvaluation | null;
 };
@@ -224,6 +243,33 @@ export type AIQueryAnalytics = {
   mode_stats: AIQueryModeStats[];
 };
 
+export type AIExperimentRun = {
+  id: number;
+  project_id: number;
+  created_by: number;
+  name: string;
+  status: string;
+  questions_json: string[];
+  modes_json: string[];
+  config_snapshot_json: Record<string, unknown>;
+  summary_json: {
+    errors?: Array<{ question_index: number; question: string; mode: string; error: string }>;
+    mode_stats?: Array<{
+      mode: string;
+      completed: number;
+      failed: number;
+      avg_response_ms: number;
+      avg_source_count: number;
+      avg_graph_hit_count: number;
+    }>;
+  };
+  total_cases: number;
+  completed_cases: number;
+  failed_cases: number;
+  created_at: string;
+  completed_at: string | null;
+};
+
 export type AgentGenerationRun = {
   id: number;
   project_id: number;
@@ -235,6 +281,10 @@ export type AgentGenerationRun = {
   source_note_ids_json: number[];
   source_file_ids_json: number[];
   source_graph_relation_ids_json: number[];
+  provider: string;
+  model_name: string | null;
+  prompt_version: string;
+  usage_json: Record<string, unknown>;
   status: string;
   response_ms: number;
   message: string | null;
@@ -585,6 +635,29 @@ export function getProjectQueryLogs(token: string, projectId: number) {
 
 export function getProjectQueryAnalytics(token: string, projectId: number) {
   return apiFetch<AIQueryAnalytics>(`/projects/${projectId}/rag/analytics`, token);
+}
+
+export function getRagExperiments(token: string, projectId: number) {
+  return apiFetch<AIExperimentRun[]>(`/projects/${projectId}/rag/experiments`, token);
+}
+
+export function runRagExperiment(
+  token: string,
+  projectId: number,
+  payload: { name: string; questions: string[]; modes?: string[] },
+) {
+  return apiFetch<AIExperimentRun>(`/projects/${projectId}/rag/experiments`, token, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function downloadRagExperiment(token: string, runId: number) {
+  const response = await fetch(`${API_BASE_URL}/rag/experiments/${runId}/export.csv`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) throw new Error((await response.text()) || `Request failed: ${response.status}`);
+  return response.blob();
 }
 
 export function evaluateQueryLog(

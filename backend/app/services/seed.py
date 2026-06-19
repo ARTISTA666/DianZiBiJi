@@ -7,15 +7,15 @@ from app.models.ai import AgentGenerationRun, AIQueryEvaluation, AIQueryLog
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.note import ExperimentNote, NoteApproval, NoteStatus, NoteVersion
 from app.models.project import Project
-from app.models.rag import ProjectRagDataset, RagFileSync, RagSyncStatus
+from app.models.rag import ProjectRagDataset, RagDocumentChunk, RagFileSync, RagSyncStatus
 from app.core.security import hash_password
 from app.models.template import ExperimentTemplate
 from app.models.user import User, UserRole
-from app.services.agent import AgentGenerationService
 from app.services.knowledge_graph import KnowledgeGraphService
 
 
 def ensure_seed_data(db: Session) -> None:
+    purge_legacy_synthetic_ai_data(db)
     admin = db.query(User).filter(User.username == "admin").first()
     if not admin:
         admin = User(
@@ -110,6 +110,7 @@ def ensure_thesis_demo_data(db: Session, admin: User) -> None:
         ),
     ]
     notes: list[ExperimentNote] = []
+    new_notes: list[ExperimentNote] = []
     for index, (title, experiment_type, experiment_date, fixed_fields, content_text) in enumerate(notes_payload, start=1):
         note = (
             db.query(ExperimentNote)
@@ -148,6 +149,7 @@ def ensure_thesis_demo_data(db: Session, admin: User) -> None:
                     comment="论文演示数据审核通过",
                 )
             )
+            new_notes.append(note)
         notes.append(note)
 
     demo_dir = Path("storage/demo")
@@ -176,77 +178,82 @@ def ensure_thesis_demo_data(db: Session, admin: User) -> None:
                 file_size=path.stat().st_size,
                 file_hash=f"demo-{filename}",
                 status=FileStatus.APPROVED,
-                knowledge_sync_status=KnowledgeSyncStatus.SYNCED.value,
-                knowledge_sync_message="论文演示资料已入库",
+                knowledge_sync_status=KnowledgeSyncStatus.PENDING_SYNC.value,
+                knowledge_sync_message="等待本地向量入库",
             )
             db.add(stored_file)
             db.flush()
 
     graph_service = KnowledgeGraphService()
-    for note in notes:
+    for note in new_notes:
         graph_service.extract_note(db, note, triggered_by=admin.id, rebuild=True)
     db.flush()
 
-    dataset = db.query(ProjectRagDataset).filter(ProjectRagDataset.project_id == project.id).first()
-    if dataset is None:
-        dataset = ProjectRagDataset(
-            project_id=project.id,
-            dify_dataset_id=f"demo-dataset-{project.id}",
-            dify_dataset_name=f"ELN Project {project.id} - {project.name}",
-            created_by=admin.id,
-        )
-        db.add(dataset)
-        db.flush()
-    for stored_file in db.query(StoredFile).filter(StoredFile.project_id == project.id, StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT).all():
-        sync = db.query(RagFileSync).filter(RagFileSync.file_id == stored_file.id).first()
-        if sync is None:
-            db.add(
-                RagFileSync(
-                    file_id=stored_file.id,
-                    project_id=project.id,
-                    dify_dataset_id=dataset.dify_dataset_id,
-                    dify_document_id=f"demo-document-{stored_file.id}",
-                    sync_status=RagSyncStatus.SYNCED.value,
-                    sync_message="论文演示资料同步记录",
-                )
-            )
 
-    if db.query(AIQueryLog).filter(AIQueryLog.project_id == project.id).count() == 0:
-        context = graph_service.find_relevant_context(db, project.id, "PCR 实验用了哪些试剂？")
-        log = AIQueryLog(
-            project_id=project.id,
-            user_id=admin.id,
-            question="PCR 实验用了哪些试剂？",
-            answer="根据实验知识图谱，PCR 条件优化实验使用了 Taq DNA Polymerase、dNTP、MgCl2 和模板 DNA。",
-            rag_mode="kg_enhanced_rag",
-            graph_hit_count=len(context),
-            source_count=2,
-            response_ms=486,
-            conversation_id="demo-conversation-1",
-            graph_context_json=context,
-            sources_json=[
-                {"file_id": None, "filename": "PCR_protocol_demo.txt", "dify_document_id": "demo-document-1", "snippet": "PCR 体系配置、循环条件和退火温度优化说明。"}
-            ],
+def purge_legacy_synthetic_ai_data(db: Session) -> None:
+    """Remove only records created by the old built-in mock/demo generators."""
+    db.query(AgentGenerationRun).filter(
+        AgentGenerationRun.status == "completed",
+        AgentGenerationRun.model_name.is_(None),
+        AgentGenerationRun.prompt_version == "agent-v1",
+        AgentGenerationRun.response_ms < 100,
+    ).delete(synchronize_session=False)
+
+    mock_logs = (
+        db.query(AIQueryLog)
+        .filter(
+            (AIQueryLog.conversation_id == "demo-conversation-1")
+            | AIQueryLog.conversation_id.like("mock-conv-%")
         )
-        db.add(log)
-        db.flush()
-        db.add(
-            AIQueryEvaluation(
-                query_log_id=log.id,
-                evaluator_user_id=admin.id,
-                score=5,
-                is_accurate=True,
-                is_traceable=True,
-                comment="图谱依据和资料来源清晰，适合作为论文可信问答案例。",
-            )
+        .all()
+    )
+    mock_log_ids = [log.id for log in mock_logs]
+    if mock_log_ids:
+        db.query(AIQueryEvaluation).filter(
+            AIQueryEvaluation.query_log_id.in_(mock_log_ids)
+        ).delete(synchronize_session=False)
+        db.query(AIQueryLog).filter(AIQueryLog.id.in_(mock_log_ids)).delete(
+            synchronize_session=False
         )
 
-    if db.query(AgentGenerationRun).filter(AgentGenerationRun.project_id == project.id).count() == 0:
-        AgentGenerationService().generate(
-            db,
-            project_id=project.id,
-            user_id=admin.id,
-            task_type="weekly_report",
-            date_from=date(2026, 6, 1),
-            date_to=date(2026, 6, 5),
+    demo_datasets = (
+        db.query(ProjectRagDataset)
+        .filter(
+            ProjectRagDataset.dify_dataset_id.like("demo-dataset-%")
+            | ProjectRagDataset.dify_dataset_id.like("demo-ds-%")
+        )
+        .all()
+    )
+    demo_dataset_ids = [dataset.dify_dataset_id for dataset in demo_datasets]
+    if demo_dataset_ids:
+        db.query(RagFileSync).filter(
+            RagFileSync.dify_dataset_id.in_(demo_dataset_ids)
+        ).delete(synchronize_session=False)
+        db.query(ProjectRagDataset).filter(
+            ProjectRagDataset.dify_dataset_id.in_(demo_dataset_ids)
+        ).delete(synchronize_session=False)
+
+    indexed_file_ids = {
+        file_id for (file_id,) in db.query(RagDocumentChunk.file_id).distinct().all()
+    }
+    stale_synced_files = (
+        db.query(StoredFile)
+        .filter(
+            StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT,
+            StoredFile.knowledge_sync_status == KnowledgeSyncStatus.SYNCED.value,
+        )
+        .all()
+    )
+    stale_file_ids = [record.id for record in stale_synced_files if record.id not in indexed_file_ids]
+    if stale_file_ids:
+        db.query(RagFileSync).filter(RagFileSync.file_id.in_(stale_file_ids)).delete(
+            synchronize_session=False
+        )
+        db.query(StoredFile).filter(StoredFile.id.in_(stale_file_ids)).update(
+            {
+                StoredFile.knowledge_sync_status: KnowledgeSyncStatus.PENDING_SYNC.value,
+                StoredFile.knowledge_sync_message: "等待本地向量入库",
+                StoredFile.knowledge_synced_at: None,
+            },
+            synchronize_session=False,
         )

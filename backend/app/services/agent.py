@@ -10,6 +10,7 @@ from app.models.file import FileCategory, FileStatus, StoredFile
 from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation
 from app.models.note import ExperimentNote, NoteStatus, NoteVersion
 from app.services.knowledge_graph import ENTITY_LABELS, RELATION_LABELS
+from app.services.deepseek import DeepSeekClient, DeepSeekConfigError, DeepSeekRequestError
 
 
 TASK_LABELS = {
@@ -18,12 +19,20 @@ TASK_LABELS = {
     AgentTaskType.STAGE_REPORT.value: "项目阶段报告",
     AgentTaskType.GRAPH_OVERVIEW.value: "实验过程图谱概览",
 }
+AGENT_PROMPT_VERSION = "agent-v3-deepseek-grounded-ids"
+
+
+class AgentGenerationFailure(RuntimeError):
+    def __init__(self, message: str, run: AgentGenerationRun, status_code: int) -> None:
+        super().__init__(message)
+        self.run = run
+        self.status_code = status_code
 
 
 class AgentGenerationService:
     """固定任务型智能体：从笔记、资料和图谱生成可追溯草稿。"""
 
-    def generate(
+    async def generate(
         self,
         db: Session,
         project_id: int,
@@ -42,7 +51,50 @@ class AgentGenerationService:
         entities, relations = self._load_graph(db, project_id)
         relation_ids = self._select_relation_ids(entities, relations, notes, task_type)
         title = self._title(task_type, project_id, date_from, date_to)
-        body = self._body(task_type, project_id, notes, files, entities, relations, relation_ids, date_from, date_to)
+        source_context = self._body(task_type, project_id, notes, files, entities, relations, relation_ids, date_from, date_to)
+        system_prompt = (
+            "你是科研电子实验笔记系统中的固定任务写作助手。只能依据用户提供的已审核实验记录、"
+            "资料列表和知识图谱关系生成内容，不得虚构实验、数据或结论。输出应结构清晰、语言正式，"
+            "并在关键结论后原样复用上下文中的 [N数字] 笔记编号或 [R数字] 图谱关系编号。"
+            "不得自行编造、重排或缩写编号；证据不足时明确说明。"
+        )
+        try:
+            result = await DeepSeekClient().generate(
+                system_prompt=system_prompt,
+                user_prompt=(
+                    f"任务类型：{TASK_LABELS[task_type]}\n"
+                    f"请将以下可追溯项目数据整理为正式草稿：\n\n{source_context}"
+                ),
+                temperature=0.1,
+                max_tokens=2200,
+            )
+        except (DeepSeekConfigError, DeepSeekRequestError) as exc:
+            run = AgentGenerationRun(
+                project_id=project_id,
+                user_id=user_id,
+                task_type=task_type,
+                input_params_json={
+                    "date_from": date_from.isoformat() if date_from else None,
+                    "date_to": date_to.isoformat() if date_to else None,
+                },
+                title=title,
+                body="",
+                source_note_ids_json=[note.id for note in notes],
+                source_file_ids_json=[file.id for file in files],
+                source_graph_relation_ids_json=relation_ids,
+                provider="deepseek",
+                model_name=None,
+                prompt_version=AGENT_PROMPT_VERSION,
+                usage_json={},
+                status=AgentRunStatus.FAILED.value,
+                response_ms=max(0, int((perf_counter() - started) * 1000)),
+                message=str(exc),
+            )
+            db.add(run)
+            db.flush()
+            status_code = 503 if isinstance(exc, DeepSeekConfigError) else 502
+            raise AgentGenerationFailure(str(exc), run, status_code) from exc
+        body = result["answer"]
         message = None if notes or task_type == AgentTaskType.GRAPH_OVERVIEW.value else "No approved notes in selected range"
         run = AgentGenerationRun(
             project_id=project_id,
@@ -57,6 +109,10 @@ class AgentGenerationService:
             source_note_ids_json=[note.id for note in notes],
             source_file_ids_json=[file.id for file in files],
             source_graph_relation_ids_json=relation_ids,
+            provider="deepseek",
+            model_name=result.get("model"),
+            prompt_version=AGENT_PROMPT_VERSION,
+            usage_json=result.get("usage") or {},
             status=AgentRunStatus.COMPLETED.value,
             response_ms=max(0, int((perf_counter() - started) * 1000)),
             message=message,
@@ -174,7 +230,9 @@ class AgentGenerationService:
         lines.append("### 实验记录概览")
         for note in notes:
             version = self._version_snapshot(note)
-            lines.append(f"- {note.title}（{note.experiment_type}，{note.experiment_date or '未填日期'}）")
+            lines.append(
+                f"- [N{note.id}] {note.title}（{note.experiment_type}，{note.experiment_date or '未填日期'}）"
+            )
             for key, value in list(version.items())[:4]:
                 text = self._short_value(value)
                 if text:
@@ -209,7 +267,7 @@ class AgentGenerationService:
                 if "result" in str(key).lower() or "结果" in str(key):
                     text = self._short_value(value)
                     if text:
-                        lines.append(f"- {note.title}：{text}")
+                        lines.append(f"- [N{note.id}] {note.title}：{text}")
         return lines
 
     def _graph_overview_lines(self, entity_by_id: dict[int, KnowledgeEntity], relations: list[KnowledgeRelation]) -> list[str]:
@@ -228,7 +286,8 @@ class AgentGenerationService:
             if source is None or target is None:
                 continue
             lines.append(
-                f"- [{ENTITY_LABELS.get(source.entity_type, source.entity_type)}] {source.label} "
+                f"- [R{relation.id}] "
+                f"[{ENTITY_LABELS.get(source.entity_type, source.entity_type)}] {source.label} "
                 f"--{RELATION_LABELS.get(relation.relation_type, relation.relation_type)}--> "
                 f"[{ENTITY_LABELS.get(target.entity_type, target.entity_type)}] {target.label}"
             )

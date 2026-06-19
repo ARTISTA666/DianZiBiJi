@@ -12,10 +12,11 @@ from app.api.deps import get_current_user
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
-from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation
+from app.models.knowledge_graph import KnowledgeEntity, KnowledgeEntityType, KnowledgeRelation
 from app.models.note import ExperimentNote, NoteStatus, NoteVersion
 from app.models.project import Project, ProjectMember, ProjectRole
 from app.models.user import User, UserRole
+from app.services.knowledge_graph import KnowledgeGraphService
 
 
 @pytest.fixture()
@@ -155,6 +156,34 @@ def test_project_rebuild_is_idempotent(test_app):
     with SessionLocal() as db:
         assert db.query(KnowledgeEntity).count() == first_entity_count
         assert db.query(KnowledgeRelation).count() == first_relation_count
+
+
+def test_entity_normalization_unifies_width_case_and_punctuation(test_app):
+    _, SessionLocal, _ = test_app
+    service = KnowledgeGraphService()
+
+    with SessionLocal() as db:
+        legacy = KnowledgeEntity(
+            project_id=1,
+            entity_type=KnowledgeEntityType.REAGENT.value,
+            label="Ｔａｑ-DNA Polymerase",
+            normalized_label="ｔａｑ-dna polymerase",
+            natural_key="reagent:ｔａｑ-dna polymerase",
+            properties={},
+        )
+        db.add(legacy)
+        db.flush()
+        second = service._upsert_entity(
+            db,
+            1,
+            KnowledgeEntityType.REAGENT,
+            "taq DNA polymerase",
+        )
+
+        assert legacy.id == second.id
+        assert second.normalized_label == "taq dna polymerase"
+        assert second.natural_key == "reagent:taq dna polymerase"
+        assert db.query(KnowledgeEntity).filter(KnowledgeEntity.entity_type == "reagent").count() == 1
 
 
 def test_reader_can_view_graph_but_cannot_extract(test_app):

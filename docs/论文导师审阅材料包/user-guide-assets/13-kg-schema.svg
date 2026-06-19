@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#264766" flood-opacity="0.15" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#547aa5"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="45" y="45" width="1510" height="810" rx="26" fill="#f8fafc" stroke="#8aa7c2" stroke-width="2"/>
+<rect x="90" y="85" width="1420" height="70" rx="16" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2"/>
+<text x="800" y="132" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="28" font-weight="700" fill="#245b91"><tspan x="800" dy="0">九类实体、八类关系均携带项目编号与来源信息</tspan></text>
+<circle cx="235" cy="430" r="82" fill="#3f78ae" stroke="#ffffff" stroke-width="3"/>
+<text x="235" y="441" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="28" font-weight="700" fill="#ffffff"><tspan x="235" dy="0">项目</tspan></text>
+<circle cx="710" cy="430" r="105" fill="#4f8f82" stroke="#ffffff" stroke-width="3"/>
+<text x="710" y="440" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="29" font-weight="700" fill="#ffffff"><tspan x="710" dy="0">实验笔记</tspan></text>
+<line x1="322" y1="430" x2="590" y2="430" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="455" y="398" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" font-weight="700" fill="#52687d"><tspan x="455" dy="0">包含笔记</tspan></text>
+<circle cx="1010" cy="235" r="70" fill="#6d7db3" stroke="#ffffff" stroke-width="3"/>
+<text x="1010" y="244" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#ffffff"><tspan x="1010" dy="0">用户</tspan></text>
+<line x1="785" y1="355" x2="955" y2="275" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="870" y="292" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="870" dy="0">创建者</tspan></text>
+<circle cx="1325" cy="255" r="70" fill="#6d7db3" stroke="#ffffff" stroke-width="3"/>
+<text x="1325" y="264" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="23" font-weight="700" fill="#ffffff"><tspan x="1325" dy="0">附件资料</tspan></text>
+<line x1="808" y1="382" x2="1253" y2="277" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1105" y="300" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="1105" dy="0">关联附件</tspan></text>
+<circle cx="1350" cy="465" r="70" fill="#6d7db3" stroke="#ffffff" stroke-width="3"/>
+<text x="1350" y="474" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="23" font-weight="700" fill="#ffffff"><tspan x="1350" dy="0">实验类型</tspan></text>
+<line x1="820" y1="435" x2="1270" y2="460" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1080" y="425" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="1080" dy="0">实验类型</tspan></text>
+<circle cx="1300" cy="700" r="70" fill="#b35f6d" stroke="#ffffff" stroke-width="3"/>
+<text x="1300" y="709" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="23" font-weight="700" fill="#ffffff"><tspan x="1300" dy="0">实验结果</tspan></text>
+<line x1="795" y1="505" x2="1243" y2="655" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="1080" y="600" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="1080" dy="0">产生结果</tspan></text>
+<circle cx="990" cy="710" r="70" fill="#a56f43" stroke="#ffffff" stroke-width="3"/>
+<text x="990" y="719" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#ffffff"><tspan x="990" dy="0">试剂</tspan></text>
+<line x1="765" y1="525" x2="950" y2="648" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="890" y="600" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="890" dy="0">使用试剂</tspan></text>
+<circle cx="675" cy="710" r="70" fill="#a56f43" stroke="#ffffff" stroke-width="3"/>
+<text x="675" y="719" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#ffffff"><tspan x="675" dy="0">仪器</tspan></text>
+<line x1="700" y1="540" x2="680" y2="635" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="625" y="590" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="625" dy="0">使用仪器</tspan></text>
+<circle cx="395" cy="685" r="70" fill="#a56f43" stroke="#ffffff" stroke-width="3"/>
+<text x="395" y="694" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#ffffff"><tspan x="395" dy="0">样本</tspan></text>
+<line x1="630" y1="505" x2="452" y2="638" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="515" y="585" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#52687d"><tspan x="515" dy="0">使用样本</tspan></text>
+<rect x="95" y="205" width="300" height="115" rx="16" fill="#ffffff" stroke="#9abada" stroke-width="2"/>
+<text x="245" y="245" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#245b91"><tspan x="245" dy="0">关系属性</tspan></text>
+<text x="245" y="278" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="400" fill="#3f5368"><tspan x="245" dy="0">source_type · source_id</tspan><tspan x="245" dy="26">confidence · properties</tspan></text>
+</svg>

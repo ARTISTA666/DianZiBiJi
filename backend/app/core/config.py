@@ -13,10 +13,23 @@ class Settings(BaseSettings):
     postgres_port: int = 5432
     secret_key: str = "change-me-in-production"
     access_token_expire_minutes: int = 480
-    dify_api_base_url: str = "http://localhost"
-    dify_dataset_api_key: str = ""
-    dify_chat_app_api_key: str = ""
-    dify_default_indexing_technique: str = "high_quality"
+    deepseek_api_base_url: str = "https://api.deepseek.com"
+    deepseek_api_key: str = ""
+    deepseek_model: str = "deepseek-v4-flash"
+    embedding_service_url: str = "http://embedding:8000"
+    embedding_model: str = "BAAI/bge-small-zh-v1.5"
+    embedding_dimension: int = 512
+    rag_chunk_size: int = 700
+    rag_chunk_overlap: int = 120
+    rag_retrieval_top_k: int = 6
+    rag_vector_candidate_k: int = 30
+    rag_graph_top_k: int = 10
+    rag_graph_min_score: float = 1.0
+
+    @property
+    def normalized_deepseek_model(self) -> str:
+        # Accept accidental shell-style inline comments in local .env files.
+        return self.deepseek_model.split("#", 1)[0].strip()
 
     @property
     def database_url(self) -> str:

@@ -14,9 +14,6 @@ from app.models.project import Project, ProjectMember
 from app.models.note import ExperimentNote, NoteStatus, NoteVersion, NoteApproval
 from app.models.file import StoredFile, FileCategory, FileStatus, KnowledgeSyncStatus
 from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation, KnowledgeExtractionRun
-from app.models.ai import AIQueryLog, AIQueryEvaluation, AgentGenerationRun, AgentTaskType, AgentRunStatus
-from app.models.rag import ProjectRagDataset, RagFileSync, RagSyncStatus
-from app.models.audit import AuditLog
 from app.services.knowledge_graph import KnowledgeGraphService
 from random import seed, randint, choice, random
 
@@ -284,16 +281,9 @@ def main():
                                 mime_type="text/plain", file_size=len(content),
                                 file_hash=f"demo-{fname}",
                                 status=FileStatus.APPROVED,
-                                knowledge_sync_status=KnowledgeSyncStatus.SYNCED.value)
+                                knowledge_sync_status=KnowledgeSyncStatus.PENDING_SYNC.value,
+                                knowledge_sync_message="等待本地向量入库")
                 db.add(sf)
-        # RAG dataset
-        ds2 = db.query(ProjectRagDataset).filter(ProjectRagDataset.project_id == proj2.id).first()
-        if not ds2:
-            ds2 = ProjectRagDataset(project_id=proj2.id,
-                                    dify_dataset_id=f"demo-ds-{proj2.id}",
-                                    dify_dataset_name=f"Project {proj2.id}",
-                                    created_by=admin.id)
-            db.add(ds2)
 
         # === 项目21：药物靶点验证 ===
         proj3 = ensure_project(db, "抗肿瘤化合物C的靶点验证与药效评价",
@@ -314,15 +304,9 @@ def main():
                                 mime_type="text/plain", file_size=len(content),
                                 file_hash=f"demo-{fname}",
                                 status=FileStatus.APPROVED,
-                                knowledge_sync_status=KnowledgeSyncStatus.SYNCED.value)
+                                knowledge_sync_status=KnowledgeSyncStatus.PENDING_SYNC.value,
+                                knowledge_sync_message="等待本地向量入库")
                 db.add(sf)
-        ds3 = db.query(ProjectRagDataset).filter(ProjectRagDataset.project_id == proj3.id).first()
-        if not ds3:
-            ds3 = ProjectRagDataset(project_id=proj3.id,
-                                    dify_dataset_id=f"demo-ds-{proj3.id}",
-                                    dify_dataset_name=f"Project {proj3.id}",
-                                    created_by=admin.id)
-            db.add(ds3)
 
         db.commit()
 

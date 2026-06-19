@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#264766" flood-opacity="0.15" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#547aa5"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="45" y="45" width="1510" height="835" rx="26" fill="#f8fafc" stroke="#8aa7c2" stroke-width="2"/>
+<rect x="565" y="75" width="470" height="90" rx="18" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2" filter="url(#shadow)"/>
+<text x="800" y="130" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="27" font-weight="700" fill="#245b91"><tspan x="800" dy="0">用户问题 + 项目读取权限校验</tspan></text>
+<path d="M700 165 L420 225" fill="none" stroke="#547aa5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M900 165 L1180 225" fill="none" stroke="#547aa5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="85" y="210" width="650" height="600" rx="22" fill="#f4f7fa" stroke="#9aaec0" stroke-width="2"/>
+<rect x="865" y="210" width="650" height="600" rx="22" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2"/>
+<text x="410" y="265" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="31" font-weight="700" fill="#173a5e"><tspan x="410" dy="0">普通 RAG</tspan></text>
+<text x="1190" y="265" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="31" font-weight="700" fill="#173a5e"><tspan x="1190" dy="0">图谱增强 RAG</tspan></text>
+<rect x="145" y="305" width="530" height="105" rx="18" fill="#ffffff" stroke="#8eafd0" stroke-width="2" filter="url(#shadow)"/>
+<text x="410" y="348" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#173a5e"><tspan x="410" dy="0">同一项目资料库</tspan></text>
+<text x="410" y="383" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" font-weight="400" fill="#3f5368"><tspan x="410" dy="0">向量 0.8 + 词项 0.2 → 前 6 个资料片段</tspan></text>
+<rect x="925" y="305" width="530" height="105" rx="18" fill="#ffffff" stroke="#8eafd0" stroke-width="2" filter="url(#shadow)"/>
+<text x="1190" y="348" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="25" font-weight="700" fill="#173a5e"><tspan x="1190" dy="0">同一项目资料库</tspan></text>
+<text x="1190" y="383" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" font-weight="400" fill="#3f5368"><tspan x="1190" dy="0">向量 0.8 + 词项 0.2 → 前 6 个资料片段</tspan></text>
+<line x1="410" y1="410" x2="410" y2="495" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="145" y="510" width="530" height="100" rx="18" fill="#ffffff" stroke="#8eafd0" stroke-width="2" filter="url(#shadow)"/>
+<text x="410" y="570" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#173a5e"><tspan x="410" dy="0">模型输入：资料证据</tspan></text>
+<line x1="1190" y1="410" x2="1190" y2="450" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="925" y="465" width="530" height="105" rx="18" fill="#eaf7f4" stroke="#65a99b" stroke-width="2" filter="url(#shadow)"/>
+<text x="1190" y="508" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#246b60"><tspan x="1190" dy="0">额外检索一跳图谱关系</tspan></text>
+<text x="1190" y="545" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" font-weight="400" fill="#3f5368"><tspan x="1190" dy="0">阈值 ≥ 1.0 → 前 10 条关系证据</tspan></text>
+<line x1="1190" y1="570" x2="1190" y2="620" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="925" y="635" width="530" height="85" rx="18" fill="#ffffff" stroke="#5686b5" stroke-width="2" filter="url(#shadow)"/>
+<text x="1190" y="687" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="24" font-weight="700" fill="#173a5e"><tspan x="1190" dy="0">模型输入：资料证据 + 关系证据</tspan></text>
+<line x1="410" y1="610" x2="410" y2="690" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="145" y="690" width="530" height="65" rx="14" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2"/>
+<text x="410" y="732" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#245b91"><tspan x="410" dy="0">同一 DeepSeek 模型与生成配置</tspan></text>
+<rect x="925" y="735" width="530" height="60" rx="14" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2"/>
+<text x="1190" y="773" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#245b91"><tspan x="1190" dy="0">同一 DeepSeek 模型与生成配置</tspan></text>
+<rect x="600" y="825" width="400" height="50" rx="14" fill="#fff7ed" stroke="#d99a51" stroke-width="2"/>
+<text x="800" y="858" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" font-weight="700" fill="#9a5a13"><tspan x="800" dy="0">主要实验变量：是否注入图谱上下文</tspan></text>
+</svg>

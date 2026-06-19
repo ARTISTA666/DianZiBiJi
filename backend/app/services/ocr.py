@@ -37,19 +37,16 @@ class OcrService:
 
     @staticmethod
     def _extract_pdf(path: Path) -> str:
-        """尝试用 PyMuPDF 提取 PDF 文字，回退到原始字节读取"""
+        """Extract text from a PDF with the pure-Python pypdf parser."""
         try:
-            import fitz  # type: ignore[import-untyped]
+            from pypdf import PdfReader
 
-            doc = fitz.open(str(path))
-            text = "\n".join(page.get_text() for page in doc)
-            doc.close()
-            return text
+            reader = PdfReader(str(path))
+            return "\n".join(page.extract_text() or "" for page in reader.pages)
         except ImportError:
             pass
-        # 降级：作为二进制读取，仅展示可打印字符
         raw = path.read_bytes()
-        return "".join(chr(b) for b in raw[:5000] if 32 <= b < 127) + "\n[PDF text extraction requires PyMuPDF]"
+        return "".join(chr(b) for b in raw[:5000] if 32 <= b < 127) + "\n[PDF text extraction requires pypdf]"
 
     @staticmethod
     def _extract_image(path: Path) -> str:

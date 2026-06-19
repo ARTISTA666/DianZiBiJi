@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from collections.abc import Iterable
 
 from sqlalchemy import or_
@@ -18,6 +19,7 @@ from app.models.knowledge_graph import (
 from app.models.note import ExperimentNote, NoteVersion
 from app.models.project import Project
 from app.models.user import User
+from app.core.config import get_settings
 
 
 STRUCTURED_ALIASES: dict[KnowledgeEntityType, tuple[str, ...]] = {
@@ -58,6 +60,7 @@ ENTITY_LABELS = {
 }
 
 QUERY_RELATION_HINTS = {
+    KnowledgeRelationType.HAS_NOTE.value: ("笔记", "记录", "已审核", "包含", "note", "notes"),
     KnowledgeRelationType.USES_REAGENT.value: ("试剂", "材料", "药品", "reagent", "reagents"),
     KnowledgeRelationType.USES_INSTRUMENT.value: ("仪器", "设备", "instrument", "instruments"),
     KnowledgeRelationType.USES_SAMPLE.value: ("样本", "样品", "sample", "samples"),
@@ -253,7 +256,9 @@ class KnowledgeGraphService:
         relations = db.query(KnowledgeRelation).filter(KnowledgeRelation.project_id == project_id).order_by(KnowledgeRelation.id).all()
         return entities, relations
 
-    def find_relevant_context(self, db: Session, project_id: int, query: str, limit: int = 8) -> list[dict]:
+    def find_relevant_context(self, db: Session, project_id: int, query: str, limit: int | None = None) -> list[dict]:
+        settings = get_settings()
+        limit = limit or settings.rag_graph_top_k
         entities, relations = self.get_project_graph(db, project_id)
         if not entities or not relations:
             return []
@@ -269,18 +274,16 @@ class KnowledgeGraphService:
             score = self._score_relation(source, target, relation, tokens, relation_hints)
             scored.append((score, relation))
         scored.sort(key=lambda item: (item[0], item[1].confidence, item[1].id), reverse=True)
-        relevant = [relation for score, relation in scored if score > 0][:limit]
-        if not relevant:
-            relevant = [relation for _, relation in scored[:limit]]
-        return [self._context_item(entity_by_id, relation) for relation in relevant]
+        relevant = [(score, relation) for score, relation in scored if score >= settings.rag_graph_min_score][:limit]
+        return [self._context_item(entity_by_id, relation, score) for score, relation in relevant]
 
     def format_context_for_prompt(self, context_items: list[dict], max_chars: int = 1400) -> str:
         if not context_items:
             return ""
         lines = ["实验知识图谱上下文："]
-        for item in context_items:
+        for index, item in enumerate(context_items, start=1):
             lines.append(
-                "- "
+                f"- [G{index}] "
                 f"[{item['source_entity_type_label']}] {item['source_label']} "
                 f"--{item['relation_label']}--> "
                 f"[{item['target_entity_type_label']}] {item['target_label']} "
@@ -330,22 +333,42 @@ class KnowledgeGraphService:
         properties: dict | None = None,
     ) -> KnowledgeEntity:
         clean_label = self._clean_label(label)
+        normalized_label = self._normalize_entity_label(clean_label)
+        uses_source_key = source_type in {"project", "note", "user", "file"} and source_id is not None
         natural_key = (
             self._source_natural_key(entity_type, source_type, source_id)
-            if source_type in {"project", "note", "user", "file"} and source_id is not None
-            else f"{entity_type.value}:{self._normalize(clean_label)}"
+            if uses_source_key
+            else f"{entity_type.value}:{normalized_label}"
         )
         entity = (
             db.query(KnowledgeEntity)
             .filter(KnowledgeEntity.project_id == project_id, KnowledgeEntity.natural_key == natural_key)
             .first()
         )
+        if entity is None and not uses_source_key:
+            candidates = (
+                db.query(KnowledgeEntity)
+                .filter(
+                    KnowledgeEntity.project_id == project_id,
+                    KnowledgeEntity.entity_type == entity_type.value,
+                    KnowledgeEntity.source_type.is_(None),
+                )
+                .all()
+            )
+            entity = next(
+                (
+                    candidate
+                    for candidate in candidates
+                    if self._normalize_entity_label(candidate.label) == normalized_label
+                ),
+                None,
+            )
         if entity is None:
             entity = KnowledgeEntity(
                 project_id=project_id,
                 entity_type=entity_type.value,
                 label=clean_label,
-                normalized_label=self._normalize(clean_label),
+                normalized_label=normalized_label,
                 natural_key=natural_key,
                 source_type=source_type,
                 source_id=source_id,
@@ -355,7 +378,8 @@ class KnowledgeGraphService:
             db.flush()
             return entity
         entity.label = clean_label
-        entity.normalized_label = self._normalize(clean_label)
+        entity.normalized_label = normalized_label
+        entity.natural_key = natural_key
         entity.properties = {**(entity.properties or {}), **(properties or {})}
         db.flush()
         return entity
@@ -452,7 +476,12 @@ class KnowledgeGraphService:
                 db.delete(entity)
         db.flush()
 
-    def _context_item(self, entity_by_id: dict[int, KnowledgeEntity], relation: KnowledgeRelation) -> dict:
+    def _context_item(
+        self,
+        entity_by_id: dict[int, KnowledgeEntity],
+        relation: KnowledgeRelation,
+        retrieval_score: float = 0,
+    ) -> dict:
         source = entity_by_id[relation.source_entity_id]
         target = entity_by_id[relation.target_entity_id]
         return {
@@ -468,6 +497,7 @@ class KnowledgeGraphService:
             "target_entity_type": target.entity_type,
             "target_entity_type_label": ENTITY_LABELS.get(target.entity_type, target.entity_type),
             "confidence": relation.confidence,
+            "retrieval_score": round(retrieval_score, 4),
         }
 
     def _score_relation(
@@ -567,7 +597,7 @@ class KnowledgeGraphService:
         deduped: list[str] = []
         for label in labels:
             clean = self._clean_label(label)
-            key = self._normalize(clean)
+            key = self._normalize_entity_label(clean)
             if clean and key not in seen:
                 seen.add(key)
                 deduped.append(clean)
@@ -578,6 +608,14 @@ class KnowledgeGraphService:
 
     def _normalize(self, label: str) -> str:
         return self._clean_label(label).lower()
+
+    def _normalize_entity_label(self, label: str) -> str:
+        normalized = unicodedata.normalize("NFKC", self._clean_label(label)).lower()
+        without_punctuation = "".join(
+            " " if unicodedata.category(character).startswith("P") else character
+            for character in normalized
+        )
+        return re.sub(r"\s+", " ", without_punctuation).strip()
 
     def _source_natural_key(self, entity_type: KnowledgeEntityType, source_type: str | None, source_id: int | None) -> str:
         return f"{entity_type.value}:{source_type}:{source_id}"

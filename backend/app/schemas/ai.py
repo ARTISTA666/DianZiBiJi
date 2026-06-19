@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field
 
 class AIQueryEvaluationRequest(BaseModel):
     score: int = Field(ge=1, le=5)
-    is_accurate: bool = True
-    is_traceable: bool = True
+    is_accurate: bool
+    is_traceable: bool
     comment: str | None = None
 
 
@@ -37,7 +37,15 @@ class AIQueryLogRead(BaseModel):
     conversation_id: str | None
     graph_context_json: list = Field(default_factory=list)
     sources_json: list = Field(default_factory=list)
+    provider: str = "deepseek"
+    model_name: str | None = None
+    prompt_version: str = "rag-v1"
+    retrieval_config_json: dict = Field(default_factory=dict)
+    usage_json: dict = Field(default_factory=dict)
+    fallback_reason: str | None = None
     error_message: str | None
+    experiment_run_id: int | None = None
+    experiment_case_index: int | None = None
     created_at: datetime
     evaluation: AIQueryEvaluationRead | None = None
 
@@ -91,9 +99,42 @@ class AgentGenerationRunRead(BaseModel):
     source_note_ids_json: list[int] = Field(default_factory=list)
     source_file_ids_json: list[int] = Field(default_factory=list)
     source_graph_relation_ids_json: list[int] = Field(default_factory=list)
+    provider: str = "deepseek"
+    model_name: str | None = None
+    prompt_version: str = "agent-v1"
+    usage_json: dict = Field(default_factory=dict)
     status: str
     response_ms: int
     message: str | None
     created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class AIExperimentRunRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    questions: list[str] = Field(min_length=1, max_length=50)
+    modes: list[str] = Field(
+        default_factory=lambda: ["project_rag", "kg_enhanced_rag"],
+        min_length=1,
+        max_length=2,
+    )
+
+
+class AIExperimentRunRead(BaseModel):
+    id: int
+    project_id: int
+    created_by: int
+    name: str
+    status: str
+    questions_json: list[str] = Field(default_factory=list)
+    modes_json: list[str] = Field(default_factory=list)
+    config_snapshot_json: dict = Field(default_factory=dict)
+    summary_json: dict = Field(default_factory=dict)
+    total_cases: int
+    completed_cases: int
+    failed_cases: int
+    created_at: datetime
+    completed_at: datetime | None
 
     model_config = {"from_attributes": True}

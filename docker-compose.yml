@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16-alpine
+    image: pgvector/pgvector:pg16
     container_name: eln-db
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-eln}
@@ -16,6 +16,22 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  embedding:
+    build:
+      context: ./embedding-service
+    container_name: eln-embedding
+    environment:
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-BAAI/bge-small-zh-v1.5}
+      EMBEDDING_DIMENSIONS: ${EMBEDDING_DIMENSION:-512}
+    volumes:
+      - embedding_models:/models
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=10)"]
+      interval: 30s
+      timeout: 15s
+      retries: 10
+      start_period: 180s
 
   backend:
     build:
@@ -33,14 +49,16 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      embedding:
+        condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
 
   frontend:
     build:
       context: ./frontend
     container_name: eln-frontend
-    env_file:
-      - .env
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8001}
     ports:
       - "${FRONTEND_PORT:-3000}:3000"
     volumes:
@@ -53,3 +71,4 @@ services:
 volumes:
   postgres_data:
   frontend_node_modules:
+  embedding_models:

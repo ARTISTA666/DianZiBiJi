@@ -1,60 +1,92 @@
-"""
-Generate RAG comparison chart (English labels, for thesis Chapter 7)
-Output: docs/user-guide-assets/09-rag-comparison-chart.png
-"""
+"""Generate a RAG comparison chart from a real experiment CSV export."""
+
+import argparse
+import csv
+from pathlib import Path
+
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-from pathlib import Path
 
-# Data
-categories = ["Accuracy", "Traceability", "Avg Score\n(/5)"]
-plain_rag = [0.85, 0.70, 3.90]
-kg_rag = [1.00, 1.00, 4.45]
 
-x = np.arange(len(categories))
-width = 0.32
+def parse_bool(value: str) -> bool:
+    return value.strip().lower() in {"true", "1", "yes"}
 
-fig, ax = plt.subplots(figsize=(7.5, 4.8))
 
-bars1 = ax.bar(x - width/2, plain_rag, width,
-               label="Plain RAG", color="#6b9bd2", edgecolor="white", linewidth=0.8)
-bars2 = ax.bar(x + width/2, kg_rag, width,
-               label="KG-Enhanced RAG", color="#ed7d31", edgecolor="white", linewidth=0.8)
+def load_metrics(path: Path) -> dict[str, dict[str, float]]:
+    groups: dict[str, list[dict[str, str]]] = {}
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        for row in csv.DictReader(handle):
+            if row.get("status") != "completed" or not row.get("evaluation_score"):
+                continue
+            groups.setdefault(row["mode"], []).append(row)
+    if not groups:
+        raise SystemExit("No evaluated completed rows found in the experiment CSV")
 
-ax.set_ylabel("Score", fontsize=12)
-ax.set_title("Plain RAG vs KG-Enhanced RAG:\nComparative Experiment Results (20 questions × 2 modes)",
-             fontsize=13, fontweight="bold", pad=12)
-ax.set_xticks(x)
-ax.set_xticklabels(categories, fontsize=11)
-ax.legend(fontsize=11, loc="upper right")
-ax.set_ylim(0, 5.5)
-ax.grid(axis="y", alpha=0.3, linestyle="--")
+    metrics: dict[str, dict[str, float]] = {}
+    for mode, rows in groups.items():
+        count = len(rows)
+        metrics[mode] = {
+            "count": count,
+            "accuracy": sum(parse_bool(row["is_accurate"]) for row in rows) / count,
+            "traceability": sum(parse_bool(row["is_traceable"]) for row in rows) / count,
+            "score": sum(float(row["evaluation_score"]) for row in rows) / count,
+        }
+    return metrics
 
-# Value labels
-for bar in bars1:
-    h = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width()/2, h + 0.08,
-            f"{h:.0%}" if h <= 1 else f"{h:.2f}",
-            ha="center", va="bottom", fontsize=10, fontweight="bold", color="#3a6b9b")
-for bar in bars2:
-    h = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width()/2, h + 0.08,
-            f"{h:.0%}" if h <= 1 else f"{h:.2f}",
-            ha="center", va="bottom", fontsize=10, fontweight="bold", color="#c05a1a")
 
-# Significance markers
-ax.annotate("p<0.01", xy=(0, 0.92), fontsize=9, ha="center", color="red", fontweight="bold")
-ax.annotate("p<0.01", xy=(1, 0.92), fontsize=9, ha="center", color="red", fontweight="bold")
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("csv_path", type=Path, help="CSV exported by the RAG experiment endpoint")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("docs/user-guide-assets/09-rag-comparison-chart.png"),
+    )
+    args = parser.parse_args()
+    metrics = load_metrics(args.csv_path)
+    modes = [mode for mode in ("project_rag", "kg_enhanced_rag") if mode in metrics]
+    labels = {
+        "project_rag": "Plain RAG",
+        "kg_enhanced_rag": "KG-Enhanced RAG",
+    }
+    categories = ["Accuracy", "Traceability", "Avg score / 5"]
+    x = np.arange(len(categories))
+    width = 0.7 / max(1, len(modes))
 
-# Add a subtle note
-ax.text(0.98, 0.02, "Source: 40 query logs with manual evaluation",
-        transform=ax.transAxes, fontsize=8, ha="right", va="bottom",
-        style="italic", color="gray")
+    fig, ax = plt.subplots(figsize=(7.5, 4.8))
+    for index, mode in enumerate(modes):
+        values = [
+            metrics[mode]["accuracy"],
+            metrics[mode]["traceability"],
+            metrics[mode]["score"] / 5,
+        ]
+        offset = (index - (len(modes) - 1) / 2) * width
+        bars = ax.bar(x + offset, values, width, label=f"{labels[mode]} (n={int(metrics[mode]['count'])})")
+        for bar, value in zip(bars, values, strict=True):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                value + 0.02,
+                f"{value:.1%}",
+                ha="center",
+                va="bottom",
+                fontsize=9,
+            )
 
-plt.tight_layout()
+    ax.set_ylabel("Normalized score")
+    ax.set_title("Plain RAG vs KG-Enhanced RAG")
+    ax.set_xticks(x)
+    ax.set_xticklabels(categories)
+    ax.set_ylim(0, 1.12)
+    ax.grid(axis="y", alpha=0.3, linestyle="--")
+    ax.legend()
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    fig.tight_layout()
+    fig.savefig(args.output, dpi=200, bbox_inches="tight")
+    print(f"Chart saved: {args.output}")
 
-out_path = Path(__file__).resolve().parent.parent / "docs/user-guide-assets/09-rag-comparison-chart.png"
-fig.savefig(out_path, dpi=200, bbox_inches="tight")
-print(f"Chart saved: {out_path}")
+
+if __name__ == "__main__":
+    main()

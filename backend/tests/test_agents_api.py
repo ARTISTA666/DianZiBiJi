@@ -18,10 +18,25 @@ from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation
 from app.models.note import ExperimentNote, NoteStatus, NoteVersion
 from app.models.project import Project, ProjectMember, ProjectRole
 from app.models.user import User, UserRole
+from app.services import agent as agent_service
+from app.services.deepseek import DeepSeekRequestError
+
+
+class FakeDeepSeekClient:
+    last_user_prompt = ""
+
+    async def generate(self, *, system_prompt: str, user_prompt: str, temperature: float, max_tokens: int) -> dict:
+        FakeDeepSeekClient.last_user_prompt = user_prompt
+        return {
+            "answer": user_prompt,
+            "request_id": "agent-request-1",
+            "model": "deepseek-test",
+            "usage": {"prompt_tokens": 20, "completion_tokens": 10},
+        }
 
 
 @pytest.fixture()
-def test_app(tmp_path: Path):
+def test_app(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     engine = create_engine(
         "sqlite://",
         connect_args={"check_same_thread": False},
@@ -146,6 +161,7 @@ def test_app(tmp_path: Path):
 
     app.dependency_overrides[get_db] = override_db
     app.dependency_overrides[get_current_user] = override_user
+    monkeypatch.setattr(agent_service, "DeepSeekClient", FakeDeepSeekClient)
     return TestClient(app), SessionLocal, active_user_id
 
 
@@ -163,6 +179,8 @@ def test_agent_generation_uses_approved_notes_and_records_run(test_app):
     assert body["source_note_ids_json"] == [1]
     assert body["source_file_ids_json"] == [1]
     assert body["source_graph_relation_ids_json"] == [1]
+    assert "[N1]" in FakeDeepSeekClient.last_user_prompt
+    assert "[R1]" in FakeDeepSeekClient.last_user_prompt
     assert "Cell viability assay" in body["body"]
     assert "Draft note" not in body["body"]
 
@@ -205,3 +223,23 @@ def test_reader_can_view_but_cannot_generate_agent_runs(test_app):
 
     assert client.get("/projects/1/agents/runs").status_code == 200
     assert client.post("/api/agents/generate", json={"project_id": 1, "task_type": "experiment_summary"}).status_code == 403
+
+
+def test_agent_failure_is_persisted(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+
+    class FailingDeepSeekClient:
+        async def generate(self, **_kwargs):
+            raise DeepSeekRequestError("upstream unavailable")
+
+    monkeypatch.setattr(agent_service, "DeepSeekClient", FailingDeepSeekClient)
+    response = client.post(
+        "/api/agents/generate",
+        json={"project_id": 1, "task_type": "experiment_summary"},
+    )
+    assert response.status_code == 502
+    with SessionLocal() as db:
+        run = db.query(AgentGenerationRun).order_by(AgentGenerationRun.id.desc()).first()
+        assert run.status == "failed"
+        assert run.message == "upstream unavailable"

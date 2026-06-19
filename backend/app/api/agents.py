@@ -6,14 +6,14 @@ from app.core.database import get_db
 from app.models.ai import AgentGenerationRun
 from app.models.user import User
 from app.schemas.ai import AgentGenerateRequest, AgentGenerationRunRead
-from app.services.agent import AgentGenerationService
+from app.services.agent import AgentGenerationFailure, AgentGenerationService
 from app.services.audit import write_audit
 
 router = APIRouter(tags=["agents"])
 
 
 @router.post("/api/agents/generate", response_model=AgentGenerationRunRead)
-def generate_agent_output(
+async def generate_agent_output(
     payload: AgentGenerateRequest,
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -22,7 +22,7 @@ def generate_agent_output(
     if not can_write_project(db, user, payload.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     try:
-        run = AgentGenerationService().generate(
+        run = await AgentGenerationService().generate(
             db,
             project_id=payload.project_id,
             user_id=user.id,
@@ -32,6 +32,18 @@ def generate_agent_output(
         )
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)) from exc
+    except AgentGenerationFailure as exc:
+        write_audit(
+            db,
+            actor=user,
+            action="generate_agent_output_failed",
+            project_id=payload.project_id,
+            target_type="agent_generation_run",
+            target_id=exc.run.id,
+            detail={"task_type": exc.run.task_type, "error": str(exc)},
+        )
+        db.commit()
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
     write_audit(
         db,
         actor=user,

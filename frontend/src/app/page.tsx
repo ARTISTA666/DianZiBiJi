@@ -26,6 +26,7 @@ import {
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   AgentGenerationRun,
+  AIExperimentRun,
   AIQueryAnalytics,
   AIQueryLog,
   CurrentUser,
@@ -58,6 +59,7 @@ import {
   createProject,
   createUser,
   disableUser,
+  downloadRagExperiment,
   fileDownloadUrl,
   getGroupMembers,
   getAuditLogs,
@@ -88,12 +90,14 @@ import {
   getProjectKnowledgeGraph,
   getProjectQueryAnalytics,
   getProjectQueryLogs,
+  getRagExperiments,
   getNotifications,
   publishNotification,
   rebuildProjectKnowledgeGraph,
   removeGroupMember,
   removeProjectMember,
   reviewFile,
+  runRagExperiment,
   returnNote,
   syncFileToRag,
   submitNote,
@@ -198,6 +202,18 @@ const kgEntityColors: Record<string, string> = {
   result: "#dc2626",
 };
 
+const kgEntityShortText: Record<string, string> = {
+  project: "项",
+  note: "笔",
+  user: "人",
+  file: "附",
+  experiment_type: "类",
+  reagent: "试",
+  instrument: "仪",
+  sample: "样",
+  result: "果",
+};
+
 function cardClass(extra = "") {
   return `rounded-md border border-border bg-white shadow-panel ${extra}`;
 }
@@ -274,7 +290,18 @@ export default function Home() {
   const [ragAnswer, setRagAnswer] = useState<RagQueryResponse | null>(null);
   const [queryLogs, setQueryLogs] = useState<AIQueryLog[]>([]);
   const [queryAnalytics, setQueryAnalytics] = useState<AIQueryAnalytics | null>(null);
-  const [evaluationDrafts, setEvaluationDrafts] = useState<Record<number, { score: string; is_accurate: boolean; is_traceable: boolean; comment: string }>>({});
+  const [experimentRuns, setExperimentRuns] = useState<AIExperimentRun[]>([]);
+  const [experimentDraft, setExperimentDraft] = useState({
+    name: "普通 RAG 与图谱增强 RAG 对照实验",
+    questions: "PCR 实验用了哪些关键试剂？\nPCR 实验的关键结果是什么？",
+  });
+  const [experimentBusy, setExperimentBusy] = useState(false);
+  const [evaluationDrafts, setEvaluationDrafts] = useState<Record<number, {
+    score: string;
+    is_accurate: boolean | null;
+    is_traceable: boolean | null;
+    comment: string;
+  }>>({});
   const [ragBusy, setRagBusy] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -383,37 +410,75 @@ export default function Home() {
     const typePriority: Record<string, number> = {
       project: 0,
       note: 1,
-      user: 2,
-      experiment_type: 3,
-      file: 4,
-      reagent: 5,
-      instrument: 6,
-      sample: 7,
-      result: 8,
+      experiment_type: 2,
+      result: 3,
+      reagent: 4,
+      instrument: 5,
+      sample: 6,
+      user: 7,
+      file: 8,
     };
-    const entities = [...filteredKgEntities]
-      .sort((left, right) => (typePriority[left.entity_type] ?? 99) - (typePriority[right.entity_type] ?? 99) || left.id - right.id)
-      .slice(0, 48);
-    const centerX = 360;
-    const centerY = 220;
-    const radiusX = 270;
-    const radiusY = 150;
-    const nonProjectEntities = entities.filter((entity) => entity.entity_type !== "project");
-    const projectEntity = entities.find((entity) => entity.entity_type === "project");
+    const degreeById = new Map<number, number>();
+    filteredKgRelations.forEach((relation) => {
+      degreeById.set(relation.source_entity_id, (degreeById.get(relation.source_entity_id) || 0) + 1);
+      degreeById.set(relation.target_entity_id, (degreeById.get(relation.target_entity_id) || 0) + 1);
+    });
+    const rankedEntities = [...filteredKgEntities].sort(
+      (left, right) =>
+        (typePriority[left.entity_type] ?? 99) - (typePriority[right.entity_type] ?? 99) ||
+        (degreeById.get(right.id) || 0) - (degreeById.get(left.id) || 0) ||
+        left.id - right.id,
+    );
+    const projectEntity = rankedEntities.find((entity) => entity.entity_type === "project");
+    const innerEntities = rankedEntities
+      .filter((entity) => entity.entity_type === "note")
+      .sort((left, right) => (degreeById.get(right.id) || 0) - (degreeById.get(left.id) || 0))
+      .slice(0, 6);
+    const selectedIds = new Set(innerEntities.map((entity) => entity.id));
+    if (projectEntity) selectedIds.add(projectEntity.id);
+    const outerTypeQuotas: Array<[string, number]> = [
+      ["user", 1],
+      ["experiment_type", 2],
+      ["reagent", 2],
+      ["instrument", 1],
+      ["sample", 1],
+      ["result", 2],
+    ];
+    const outerEntities = outerTypeQuotas.flatMap(([entityType, limit]) =>
+      rankedEntities
+        .filter((entity) => entity.entity_type === entityType && !selectedIds.has(entity.id))
+        .sort((left, right) => (degreeById.get(right.id) || 0) - (degreeById.get(left.id) || 0))
+        .slice(0, limit),
+    );
+    const centerX = 400;
+    const centerY = 250;
     const nodes: Array<{ entity: KnowledgeEntity; x: number; y: number }> = [];
     if (projectEntity) nodes.push({ entity: projectEntity, x: centerX, y: centerY });
-    nonProjectEntities.forEach((entity, index) => {
-      const angle = (Math.PI * 2 * index) / Math.max(nonProjectEntities.length, 1) - Math.PI / 2;
+    innerEntities.forEach((entity, index) => {
+      const angle = (Math.PI * 2 * index) / Math.max(innerEntities.length, 1) - Math.PI / 2;
       nodes.push({
         entity,
-        x: centerX + Math.cos(angle) * radiusX,
-        y: centerY + Math.sin(angle) * radiusY,
+        x: centerX + Math.cos(angle) * 165,
+        y: centerY + Math.sin(angle) * 105,
+      });
+    });
+    outerEntities.forEach((entity, index) => {
+      const angle = (Math.PI * 2 * index) / Math.max(outerEntities.length, 1) - Math.PI / 2 + Math.PI / 14;
+      nodes.push({
+        entity,
+        x: centerX + Math.cos(angle) * 330,
+        y: centerY + Math.sin(angle) * 205,
       });
     });
     const nodeIds = new Set(nodes.map((node) => node.entity.id));
     const relations = filteredKgRelations
       .filter((relation) => nodeIds.has(relation.source_entity_id) && nodeIds.has(relation.target_entity_id))
-      .slice(0, 120);
+      .sort(
+        (left, right) =>
+          Number(right.source_entity_id === projectEntity?.id || right.target_entity_id === projectEntity?.id) -
+          Number(left.source_entity_id === projectEntity?.id || left.target_entity_id === projectEntity?.id),
+      )
+      .slice(0, 36);
     const nodeById = new Map(nodes.map((node) => [node.entity.id, node]));
     return { nodes, relations, nodeById };
   }, [filteredKgEntities, filteredKgRelations]);
@@ -450,7 +515,7 @@ export default function Home() {
         }
       }
       if (nextProjectId) {
-        const [noteItems, fileItems, memberItems, ragStatusItem, kgGraphItem, queryLogItems, queryAnalyticsItem, agentRunItems] = await Promise.all([
+        const [noteItems, fileItems, memberItems, ragStatusItem, kgGraphItem, queryLogItems, queryAnalyticsItem, experimentItems, agentRunItems] = await Promise.all([
           getProjectNotes(activeToken, nextProjectId),
           getProjectFiles(activeToken, nextProjectId),
           getProjectMembers(activeToken, nextProjectId).catch(() => []),
@@ -458,6 +523,7 @@ export default function Home() {
           getProjectKnowledgeGraph(activeToken, nextProjectId).catch(() => null),
           getProjectQueryLogs(activeToken, nextProjectId).catch(() => []),
           getProjectQueryAnalytics(activeToken, nextProjectId).catch(() => null),
+          getRagExperiments(activeToken, nextProjectId).catch(() => []),
           getAgentRuns(activeToken, nextProjectId).catch(() => []),
         ]);
         setNotes(noteItems);
@@ -467,12 +533,14 @@ export default function Home() {
         setKgGraph(kgGraphItem);
         setQueryLogs(queryLogItems);
         setQueryAnalytics(queryAnalyticsItem);
+        setExperimentRuns(experimentItems);
         setAgentRuns(agentRunItems);
         setAgentRun(agentRunItems[0] || null);
       } else {
         setKgGraph(null);
         setQueryLogs([]);
         setQueryAnalytics(null);
+        setExperimentRuns([]);
         setAgentRuns([]);
         setAgentRun(null);
       }
@@ -612,7 +680,11 @@ export default function Home() {
         : await createNote(token, selectedProjectId, payload);
       setSelectedNote(note);
       setEditor({ ...editor, id: note.id });
-      setMessage("实验笔记已保存，知识图谱已自动更新");
+      setMessage(
+        note.status === "approved"
+          ? "实验笔记已保存，已审核内容将同步更新知识图谱"
+          : "实验笔记已保存；草稿不会进入知识图谱，审核通过后自动抽取",
+      );
       await refreshAll();
       editNote(note);
     } catch (err) {
@@ -838,17 +910,21 @@ export default function Home() {
 
   async function handleEvaluateQueryLog(log: AIQueryLog) {
     const draft = evaluationDrafts[log.id] || {
-      score: String(log.evaluation?.score || 5),
-      is_accurate: log.evaluation?.is_accurate ?? true,
-      is_traceable: log.evaluation?.is_traceable ?? true,
+      score: log.evaluation ? String(log.evaluation.score) : "",
+      is_accurate: log.evaluation?.is_accurate ?? null,
+      is_traceable: log.evaluation?.is_traceable ?? null,
       comment: log.evaluation?.comment || "",
     };
     if (!selectedProjectId) return;
+    if (!draft.score || draft.is_accurate === null || draft.is_traceable === null) {
+      setError("请完整选择评分、准确性和可追溯性后再保存");
+      return;
+    }
     setRagBusy(true);
     setError("");
     try {
       await evaluateQueryLog(token, log.id, {
-        score: Number(draft.score) || 5,
+        score: Number(draft.score),
         is_accurate: draft.is_accurate,
         is_traceable: draft.is_traceable,
         comment: draft.comment || null,
@@ -864,6 +940,53 @@ export default function Home() {
       setError(err instanceof Error ? err.message : "保存评价失败");
     } finally {
       setRagBusy(false);
+    }
+  }
+
+  async function handleRunRagExperiment(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!selectedProjectId || !canReviewSelectedProject) return;
+    const questions = experimentDraft.questions.split(/\r?\n/).map((item) => item.trim()).filter(Boolean);
+    if (questions.length === 0) {
+      setError("请至少输入一个实验问题，每行一个");
+      return;
+    }
+    setExperimentBusy(true);
+    setError("");
+    try {
+      const run = await runRagExperiment(token, selectedProjectId, {
+        name: experimentDraft.name,
+        questions,
+        modes: ["project_rag", "kg_enhanced_rag"],
+      });
+      const [runs, logs, analytics] = await Promise.all([
+        getRagExperiments(token, selectedProjectId),
+        getProjectQueryLogs(token, selectedProjectId),
+        getProjectQueryAnalytics(token, selectedProjectId),
+      ]);
+      setExperimentRuns(runs);
+      setQueryLogs(logs);
+      setQueryAnalytics(analytics);
+      setMessage(`对照实验 #${run.id} 已完成：成功 ${run.completed_cases}，失败 ${run.failed_cases}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "运行对照实验失败");
+    } finally {
+      setExperimentBusy(false);
+    }
+  }
+
+  async function handleDownloadRagExperiment(run: AIExperimentRun) {
+    setError("");
+    try {
+      const blob = await downloadRagExperiment(token, run.id);
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `rag-experiment-${run.id}.csv`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "导出实验结果失败");
     }
   }
 
@@ -981,7 +1104,7 @@ export default function Home() {
                   { icon: ShieldCheck, title: "项目隔离", text: "敏感项目显式授权，普通成员只看授权项目。" },
                   { icon: ClipboardCheck, title: "审批留痕", text: "笔记提交、审核、退回和版本记录可追溯。" },
                   { icon: Paperclip, title: "附件归档", text: "文件上传、下载和审计记录已接入。" },
-                  { icon: Database, title: "资料沉淀", text: "资料库入口已保留，后续接入 RAG 审核同步。" },
+                  { icon: Database, title: "本地 RAG", text: "审核资料本地向量化，并由 DeepSeek 生成可追溯回答。" },
                 ].map((item) => (
                   <div key={item.title} className="rounded-md border border-border p-4">
                     <item.icon className="mb-3 text-brand" size={22} />
@@ -1613,6 +1736,13 @@ export default function Home() {
                   <p className="mt-1 font-medium">{ragStatus?.failed_sync_count ?? 0}</p>
                 </div>
               </div>
+              {ragStatus?.dataset && (
+                <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted">
+                  <span className="rounded-md border border-border px-2 py-1">生成模型：{ragStatus.dataset.generation_model}</span>
+                  <span className="rounded-md border border-border px-2 py-1">嵌入模型：{ragStatus.dataset.embedding_model}</span>
+                  <span className="rounded-md border border-border px-2 py-1">运行方式：本地向量检索 + DeepSeek</span>
+                </div>
+              )}
               {queryAnalytics && (
                 <div className="mt-4 rounded-md border border-border bg-surface px-3 py-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
@@ -1668,6 +1798,54 @@ export default function Home() {
                   </div>
                 </div>
               )}
+              {canReviewSelectedProject && (
+                <div className="mt-4 rounded-md border border-border bg-surface px-3 py-3">
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                      <h3 className="text-sm font-semibold">论文对照实验</h3>
+                      <p className="mt-1 text-xs text-muted">对同一题集分别运行普通 RAG 与知识图谱增强 RAG，并保存配置快照和 CSV。</p>
+                    </div>
+                    <span className="rounded-md border border-border bg-white px-2 py-1 text-xs text-muted">
+                      已运行 {experimentRuns.length} 次
+                    </span>
+                  </div>
+                  <form onSubmit={handleRunRagExperiment} className="mt-3 grid gap-2">
+                    <input
+                      className="rounded-md border border-border px-3 py-2 text-sm"
+                      value={experimentDraft.name}
+                      onChange={(event) => setExperimentDraft({ ...experimentDraft, name: event.target.value })}
+                      placeholder="实验名称"
+                    />
+                    <textarea
+                      className="min-h-24 rounded-md border border-border px-3 py-2 text-sm"
+                      value={experimentDraft.questions}
+                      onChange={(event) => setExperimentDraft({ ...experimentDraft, questions: event.target.value })}
+                      placeholder="每行一个问题"
+                    />
+                    <button
+                      disabled={experimentBusy || !ragStatus?.initialized}
+                      className="justify-self-start rounded-md bg-accent px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {experimentBusy ? "正在运行，请勿关闭页面" : "运行成对对照实验"}
+                    </button>
+                  </form>
+                  <div className="mt-3 grid gap-2">
+                    {experimentRuns.slice(0, 5).map((run) => (
+                      <div key={run.id} className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-border bg-white px-3 py-2 text-xs">
+                        <div>
+                          <p className="font-medium text-foreground">#{run.id} {run.name}</p>
+                          <p className="mt-1 text-muted">
+                            {run.completed_cases}/{run.total_cases} 成功 · {run.failed_cases} 失败 · {new Date(run.created_at).toLocaleString()}
+                          </p>
+                        </div>
+                        <button type="button" onClick={() => void handleDownloadRagExperiment(run)} className="rounded-md border border-border px-3 py-1">
+                          导出 CSV
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               <form onSubmit={handleQueryRag} className="mt-4 grid gap-2 md:grid-cols-[180px_1fr_auto]">
                 <select
                   className="rounded-md border border-border px-3 py-2 text-sm"
@@ -1704,12 +1882,20 @@ export default function Home() {
                     <span className="rounded-md border border-border bg-white px-2 py-1 text-muted">
                       响应耗时：{ragAnswer.response_ms ?? 0} ms
                     </span>
+                    <span className="rounded-md border border-border bg-white px-2 py-1 text-muted">
+                      模型：{ragAnswer.provider}/{ragAnswer.model_name || "未知"}
+                    </span>
                     {ragAnswer.query_log_id && (
                       <span className="rounded-md border border-border bg-white px-2 py-1 text-muted">
                         记录编号：{ragAnswer.query_log_id}
                       </span>
                     )}
                   </div>
+                  {ragAnswer.fallback_reason && (
+                    <p className="mb-3 rounded-md border border-amber-200 bg-amber-50 px-2 py-2 text-xs text-amber-800">
+                      降级说明：{ragAnswer.fallback_reason}
+                    </p>
+                  )}
                   <p className="whitespace-pre-wrap">{ragAnswer.answer || "AI 没有返回回答。"}</p>
                   {ragAnswer.graph_context.length > 0 && (
                     <div className="mt-3 border-t border-border pt-3 text-xs text-muted">
@@ -1736,6 +1922,7 @@ export default function Home() {
                         <p key={`${source.dify_document_id || source.file_id || index}-${index}`} className="mt-1">
                           {source.filename || source.dify_document_id || "未知资料"}
                           {source.snippet ? `：${source.snippet.slice(0, 120)}` : ""}
+                          {source.retrieval_score != null ? `（综合相关度 ${source.retrieval_score.toFixed(3)}）` : ""}
                         </p>
                       ))}
                     </div>
@@ -1767,9 +1954,9 @@ export default function Home() {
                   {queryLogs.length === 0 && <p className="text-sm text-muted">暂无问答记录。</p>}
                   {queryLogs.slice(0, 8).map((log) => {
                     const draft = evaluationDrafts[log.id] || {
-                      score: String(log.evaluation?.score || 5),
-                      is_accurate: log.evaluation?.is_accurate ?? true,
-                      is_traceable: log.evaluation?.is_traceable ?? true,
+                      score: log.evaluation ? String(log.evaluation.score) : "",
+                      is_accurate: log.evaluation?.is_accurate ?? null,
+                      is_traceable: log.evaluation?.is_traceable ?? null,
                       comment: log.evaluation?.comment || "",
                     };
                     return (
@@ -1777,14 +1964,16 @@ export default function Home() {
                         <div className="flex flex-wrap items-center gap-2 text-xs text-muted">
                           <span>{new Date(log.created_at).toLocaleString()}</span>
                           <span>{log.rag_mode === "kg_enhanced_rag" ? "知识图谱增强 RAG" : "项目级 RAG"}</span>
+                          <span>{log.provider}/{log.model_name || "未知模型"}</span>
                           <span>图谱 {log.graph_hit_count} 条</span>
                           <span>来源 {log.source_count} 个</span>
+                          {log.experiment_run_id && <span>实验 #{log.experiment_run_id} / 题 {log.experiment_case_index}</span>}
                           <span>{log.response_ms} ms</span>
                           {log.evaluation && <span className="text-brand">已评价 {log.evaluation.score}/5</span>}
                         </div>
                         <p className="mt-2 font-medium">{log.question}</p>
                         <p className="mt-1 line-clamp-2 text-xs text-muted">{log.error_message || log.answer || "无回答内容"}</p>
-                        <div className="mt-3 grid gap-2 md:grid-cols-[90px_1fr_auto_auto_auto]">
+                        <div className="mt-3 grid gap-2 md:grid-cols-[90px_1fr_100px_110px_auto]">
                           <select
                             className="rounded-md border border-border px-2 py-1 text-xs"
                             value={draft.score}
@@ -1792,6 +1981,7 @@ export default function Home() {
                               setEvaluationDrafts((current) => ({ ...current, [log.id]: { ...draft, score: event.target.value } }))
                             }
                           >
+                            <option value="">评分</option>
                             {[5, 4, 3, 2, 1].map((score) => (
                               <option key={score} value={score}>{score} 分</option>
                             ))}
@@ -1804,29 +1994,50 @@ export default function Home() {
                               setEvaluationDrafts((current) => ({ ...current, [log.id]: { ...draft, comment: event.target.value } }))
                             }
                           />
-                          <label className="flex items-center gap-1 text-xs text-muted">
-                            <input
-                              type="checkbox"
-                              checked={draft.is_accurate}
-                              onChange={(event) =>
-                                setEvaluationDrafts((current) => ({ ...current, [log.id]: { ...draft, is_accurate: event.target.checked } }))
-                              }
-                            />
-                            准确
-                          </label>
-                          <label className="flex items-center gap-1 text-xs text-muted">
-                            <input
-                              type="checkbox"
-                              checked={draft.is_traceable}
-                              onChange={(event) =>
-                                setEvaluationDrafts((current) => ({ ...current, [log.id]: { ...draft, is_traceable: event.target.checked } }))
-                              }
-                            />
-                            可追溯
-                          </label>
+                          <select
+                            aria-label="准确性"
+                            className="rounded-md border border-border px-2 py-1 text-xs"
+                            value={draft.is_accurate === null ? "" : String(draft.is_accurate)}
+                            onChange={(event) =>
+                              setEvaluationDrafts((current) => ({
+                                ...current,
+                                [log.id]: {
+                                  ...draft,
+                                  is_accurate: event.target.value === "" ? null : event.target.value === "true",
+                                },
+                              }))
+                            }
+                          >
+                            <option value="">准确性</option>
+                            <option value="true">准确</option>
+                            <option value="false">不准确</option>
+                          </select>
+                          <select
+                            aria-label="可追溯性"
+                            className="rounded-md border border-border px-2 py-1 text-xs"
+                            value={draft.is_traceable === null ? "" : String(draft.is_traceable)}
+                            onChange={(event) =>
+                              setEvaluationDrafts((current) => ({
+                                ...current,
+                                [log.id]: {
+                                  ...draft,
+                                  is_traceable: event.target.value === "" ? null : event.target.value === "true",
+                                },
+                              }))
+                            }
+                          >
+                            <option value="">可追溯性</option>
+                            <option value="true">可追溯</option>
+                            <option value="false">不可追溯</option>
+                          </select>
                           <button
                             type="button"
-                            disabled={ragBusy}
+                            disabled={
+                              ragBusy
+                              || !draft.score
+                              || draft.is_accurate === null
+                              || draft.is_traceable === null
+                            }
                             onClick={() => void handleEvaluateQueryLog(log)}
                             className="rounded-md border border-brand px-3 py-1 text-xs text-brand disabled:cursor-not-allowed disabled:opacity-60"
                           >
@@ -1893,7 +2104,7 @@ export default function Home() {
                         </>
                       )}
                       {canReviewSelectedProject && file.file_category === "knowledge_document" && file.status === "approved" && file.knowledge_sync_status !== "synced" && ragStatus?.initialized && (
-                        <button type="button" disabled={ragBusy} onClick={() => void handleSyncRagFile(file)} className="rounded-md border border-brand px-3 py-1 text-xs text-brand disabled:cursor-not-allowed disabled:opacity-60">同步AI</button>
+                        <button type="button" disabled={ragBusy} onClick={() => void handleSyncRagFile(file)} className="rounded-md border border-brand px-3 py-1 text-xs text-brand disabled:cursor-not-allowed disabled:opacity-60">本地向量入库</button>
                       )}
                       {canWriteSelectedProject && <button type="button" onClick={() => void handleUpdateFile(file)} className="rounded-md border border-border px-3 py-1 text-xs">保存</button>}
                       {canWriteSelectedProject && file.status !== "archived" && (
@@ -2045,7 +2256,7 @@ export default function Home() {
               <div className={cardClass("p-5")}>
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="font-semibold">项目关系图</h3>
-                  <p className="text-xs text-muted">最多展示 48 个节点 / 120 条关系</p>
+                  <p className="text-xs text-muted">按关联度展示 16 个代表节点 / 36 条关系</p>
                 </div>
                 {(!kgGraph || kgGraph.entities.length === 0) && (
                   <div className="mt-4 rounded-md border border-dashed border-border bg-surface px-4 py-10 text-center text-sm text-muted">
@@ -2054,12 +2265,16 @@ export default function Home() {
                 )}
                 {kgGraph && kgGraph.entities.length > 0 && (
                   <div className="mt-4 overflow-auto rounded-md border border-border bg-surface">
-                    <svg viewBox="0 0 720 440" className="h-[420px] min-w-[720px] w-full">
-                      <rect width="720" height="440" fill="#f8fafc" />
+                    <svg viewBox="0 0 800 500" className="h-[500px] min-w-[800px] w-full" aria-label="项目知识图谱">
+                      <rect width="800" height="500" fill="#f8fafc" />
                       {kgLayout.relations.map((relation) => {
                         const source = kgLayout.nodeById.get(relation.source_entity_id);
                         const target = kgLayout.nodeById.get(relation.target_entity_id);
                         if (!source || !target) return null;
+                        const isConnected =
+                          !selectedKgEntityId ||
+                          relation.source_entity_id === selectedKgEntityId ||
+                          relation.target_entity_id === selectedKgEntityId;
                         return (
                           <line
                             key={relation.id}
@@ -2067,8 +2282,9 @@ export default function Home() {
                             y1={source.y}
                             x2={target.x}
                             y2={target.y}
-                            stroke="#cbd5e1"
-                            strokeWidth="1.4"
+                            stroke={isConnected ? "#94a3b8" : "#e2e8f0"}
+                            strokeWidth={isConnected ? 1.5 : 0.8}
+                            opacity={isConnected ? 0.72 : 0.28}
                           >
                             <title>{kgRelationLabel(relation.relation_type)}</title>
                           </line>
@@ -2078,23 +2294,54 @@ export default function Home() {
                         const color = kgEntityColors[node.entity.entity_type] || "#64748b";
                         const isProject = node.entity.entity_type === "project";
                         const isSelected = selectedKgEntityId === node.entity.id;
+                        const isRelated =
+                          !selectedKgEntityId ||
+                          isSelected ||
+                          selectedKgEntityRelations.some(
+                            (relation) =>
+                              relation.source_entity_id === node.entity.id || relation.target_entity_id === node.entity.id,
+                          );
                         return (
-                          <g key={node.entity.id} onClick={() => setSelectedKgEntityId(node.entity.id)} className="cursor-pointer">
+                          <g
+                            key={node.entity.id}
+                            onClick={() => setSelectedKgEntityId(isSelected ? null : node.entity.id)}
+                            className="cursor-pointer"
+                            opacity={isRelated ? 1 : 0.35}
+                          >
                             <circle
                               cx={node.x}
                               cy={node.y}
-                              r={isProject ? 34 : 26}
+                              r={isProject ? 38 : 18}
                               fill={color}
-                              opacity="0.92"
-                              stroke={isSelected ? "#0f172a" : "transparent"}
-                              strokeWidth={isSelected ? 4 : 0}
+                              opacity="0.96"
+                              stroke={isSelected ? "#0f172a" : "#ffffff"}
+                              strokeWidth={isSelected ? 4 : 2}
                             />
-                            <text x={node.x} y={node.y - 2} textAnchor="middle" className="fill-white text-[11px] font-semibold">
-                              {shortLabel(node.entity.label, isProject ? 12 : 9)}
-                            </text>
-                            <text x={node.x} y={node.y + 12} textAnchor="middle" className="fill-white text-[9px] opacity-90">
-                              {kgTypeLabel(node.entity.entity_type)}
-                            </text>
+                            {isProject ? (
+                              <>
+                                <text x={node.x} y={node.y - 3} textAnchor="middle" className="fill-white text-[11px] font-semibold">
+                                  {shortLabel(node.entity.label, 10)}
+                                </text>
+                                <text x={node.x} y={node.y + 13} textAnchor="middle" className="fill-white text-[9px] opacity-90">
+                                  项目
+                                </text>
+                              </>
+                            ) : (
+                              <>
+                                <text x={node.x} y={node.y + 4} textAnchor="middle" className="fill-white text-[9px] font-bold">
+                                  {kgEntityShortText[node.entity.entity_type] || "点"}
+                                </text>
+                                <text
+                                  x={node.x}
+                                  y={node.y + 34}
+                                  textAnchor="middle"
+                                  className="fill-slate-800 text-[10px] font-medium"
+                                  style={{ paintOrder: "stroke", stroke: "#f8fafc", strokeWidth: 4, strokeLinejoin: "round" }}
+                                >
+                                  {shortLabel(node.entity.label, 10)}
+                                </text>
+                              </>
+                            )}
                             <title>{kgTypeLabel(node.entity.entity_type)}：{node.entity.label}</title>
                           </g>
                         );

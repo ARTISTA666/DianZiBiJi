@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#264766" flood-opacity="0.15" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#547aa5"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="45" y="35" width="1510" height="830" rx="26" fill="#f8fafc" stroke="#8aa7c2" stroke-width="2"/>
+<rect x="105" y="65" width="1390" height="125" rx="18" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2" filter="url(#shadow)"/>
+<text x="235" y="137" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" font-weight="700" fill="#245b91"><tspan x="235" dy="0">用户交互层</tspan></text>
+<rect x="390" y="82" width="1040" height="90" rx="14" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="910" y="113" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#173a5e"><tspan x="910" dy="0">Next.js 前端</tspan></text>
+<text x="910" y="140" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="400" fill="#3f5368"><tspan x="910" dy="0">项目工作台 · 实验笔记 · 资料库 · 知识图谱</tspan><tspan x="910" dy="25">AI 问答 · 智能生成 · 审计追溯</tspan></text>
+<line x1="800" y1="190" x2="800" y2="220" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="105" y="230" width="1390" height="125" rx="18" fill="#f4f7fa" stroke="#9aaec0" stroke-width="2" filter="url(#shadow)"/>
+<text x="235" y="302" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" font-weight="700" fill="#245b91"><tspan x="235" dy="0">接口与权限层</tspan></text>
+<rect x="390" y="247" width="1040" height="90" rx="14" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="910" y="278" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" fill="#173a5e"><tspan x="910" dy="0">FastAPI REST API</tspan></text>
+<text x="910" y="305" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="400" fill="#3f5368"><tspan x="910" dy="0">JWT 身份校验 · project_id 权限校验</tspan><tspan x="910" dy="25">统一响应 · 审计记录</tspan></text>
+<line x1="800" y1="355" x2="800" y2="385" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="105" y="395" width="1390" height="205" rx="18" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2" filter="url(#shadow)"/>
+<text x="225" y="505" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" font-weight="700" fill="#245b91"><tspan x="225" dy="0">领域服务层</tspan></text>
+<rect x="335" y="430" width="190" height="135" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="430" y="472" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#173a5e"><tspan x="430" dy="0">笔记与审核</tspan></text>
+<text x="430" y="511" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="17" font-weight="400" fill="#3f5368"><tspan x="430" dy="0">版本管理</tspan><tspan x="430" dy="25">状态流转</tspan></text>
+<rect x="560" y="430" width="190" height="135" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="655" y="472" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#173a5e"><tspan x="655" dy="0">资料与 RAG</tspan></text>
+<text x="655" y="511" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="17" font-weight="400" fill="#3f5368"><tspan x="655" dy="0">分块入库</tspan><tspan x="655" dy="25">混合检索</tspan></text>
+<rect x="785" y="430" width="190" height="135" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="880" y="472" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#173a5e"><tspan x="880" dy="0">知识图谱</tspan></text>
+<text x="880" y="511" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="17" font-weight="400" fill="#3f5368"><tspan x="880" dy="0">实体抽取</tspan><tspan x="880" dy="25">关系关联</tspan></text>
+<rect x="1010" y="430" width="190" height="135" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="1105" y="472" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#173a5e"><tspan x="1105" dy="0">问答与生成</tspan></text>
+<text x="1105" y="511" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="17" font-weight="400" fill="#3f5368"><tspan x="1105" dy="0">证据注入</tspan><tspan x="1105" dy="25">任务生成</tspan></text>
+<rect x="1235" y="430" width="190" height="135" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2"/>
+<text x="1330" y="472" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#173a5e"><tspan x="1330" dy="0">审计评价</tspan></text>
+<text x="1330" y="511" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="17" font-weight="400" fill="#3f5368"><tspan x="1330" dy="0">日志留痕</tspan><tspan x="1330" dy="25">实验快照</tspan></text>
+<line x1="800" y1="600" x2="800" y2="630" stroke="#547aa5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="105" y="640" width="1390" height="140" rx="18" fill="#f4f7fa" stroke="#9aaec0" stroke-width="2" filter="url(#shadow)"/>
+<text x="225" y="722" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="26" font-weight="700" fill="#245b91"><tspan x="225" dy="0">数据与模型层</tspan></text>
+<rect x="365" y="667" width="310" height="88" rx="14" fill="#ffffff" stroke="#5686b5" stroke-width="2"/>
+<text x="520" y="720" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#173a5e"><tspan x="520" dy="0">PostgreSQL + pgvector</tspan></text>
+<rect x="725" y="667" width="310" height="88" rx="14" fill="#ffffff" stroke="#65a99b" stroke-width="2"/>
+<text x="880" y="704" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="19" font-weight="700" fill="#246b60"><tspan x="880" dy="0">FastEmbed / ONNX</tspan><tspan x="880" dy="26">CPU 嵌入服务</tspan></text>
+<rect x="1085" y="667" width="310" height="88" rx="14" fill="#ffffff" stroke="#d99a51" stroke-width="2"/>
+<text x="1240" y="720" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" fill="#9a5a13"><tspan x="1240" dy="0">DeepSeek 官方 API</tspan></text>
+<rect x="105" y="795" width="1390" height="55" rx="12" fill="#eaf7f4" stroke="#65a99b" stroke-width="2"/>
+<text x="225" y="829" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="20" font-weight="700" fill="#246b60"><tspan x="225" dy="0">横向约束</tspan></text>
+<text x="920" y="829" text-anchor="middle" font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif" font-size="18" font-weight="700" fill="#246b60"><tspan x="920" dy="0">project_id 数据隔离 · 审核后入库/入图 · 来源与操作全程留痕</tspan></text>
+</svg>

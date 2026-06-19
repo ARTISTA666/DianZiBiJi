@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+      <feOffset in="blur" dx="0" dy="4" result="offsetBlur"/>
+      <feFlood flood-color="#264766" flood-opacity="0.16" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="offsetBlur" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style>
+      .stage { font: 700 25px 'Microsoft YaHei', sans-serif; fill: #245b91; }
+      .chapter { font: 700 25px 'Microsoft YaHei', sans-serif; fill: #173a5e; }
+      .desc { font: 20px 'Microsoft YaHei', sans-serif; fill: #3f5368; }
+      .small { font: 18px 'Microsoft YaHei', sans-serif; fill: #52687d; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="760" fill="#ffffff"/>
+
+  <rect x="45" y="55" width="1310" height="145" rx="20" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2"/>
+  <text x="80" y="102" class="stage">研究提出</text>
+  <rect x="245" y="80" width="1045" height="95" rx="16" fill="#ffffff" stroke="#9abada" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="305" cy="128" r="34" fill="#3f78ae"/>
+  <text x="305" y="137" text-anchor="middle" font-family="Microsoft YaHei" font-size="25" font-weight="700" fill="#ffffff">1</text>
+  <text x="365" y="119" class="chapter">第一章 绪论</text>
+  <text x="365" y="151" class="desc">研究背景与现状 · 核心问题 · 研究内容与创新点</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="700" y1="207" x2="700" y2="226" stroke-width="3"/>
+    <path d="M693 226 L707 226 L700 239 Z" stroke="none"/>
+  </g>
+
+  <rect x="45" y="245" width="1310" height="165" rx="20" fill="#f4f7fa" stroke="#9aaec0" stroke-width="2"/>
+  <text x="80" y="292" class="stage">理论与需求</text>
+  <rect x="245" y="270" width="500" height="115" rx="16" fill="#ffffff" stroke="#aabccc" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="300" cy="327" r="31" fill="#6489ad"/>
+  <text x="300" y="336" text-anchor="middle" font-family="Microsoft YaHei" font-size="24" font-weight="700" fill="#ffffff">2</text>
+  <text x="350" y="316" class="chapter">第二章 相关理论与技术</text>
+  <text x="350" y="351" class="small">ELN · 科研数据管理 · RAG · 知识图谱</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="758" y1="327" x2="807" y2="327" stroke-width="3"/>
+    <path d="M807 320 L807 334 L821 327 Z" stroke="none"/>
+  </g>
+
+  <rect x="830" y="270" width="460" height="115" rx="16" fill="#ffffff" stroke="#aabccc" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="885" cy="327" r="31" fill="#6489ad"/>
+  <text x="885" y="336" text-anchor="middle" font-family="Microsoft YaHei" font-size="24" font-weight="700" fill="#ffffff">3</text>
+  <text x="935" y="316" class="chapter">第三章 需求分析</text>
+  <text x="935" y="351" class="small">业务场景 · 权限约束 · 可信知识闭环</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="700" y1="417" x2="700" y2="436" stroke-width="3"/>
+    <path d="M693 436 L707 436 L700 449 Z" stroke="none"/>
+  </g>
+
+  <rect x="45" y="455" width="1310" height="165" rx="20" fill="#edf5fc" stroke="#7fa9d2" stroke-width="2"/>
+  <text x="80" y="502" class="stage">方法与实现</text>
+  <rect x="245" y="480" width="315" height="115" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="295" cy="537" r="29" fill="#3f78ae"/>
+  <text x="295" y="546" text-anchor="middle" font-family="Microsoft YaHei" font-size="23" font-weight="700" fill="#ffffff">4</text>
+  <text x="340" y="526" class="chapter">第四章 图谱构建</text>
+  <text x="340" y="560" class="small">实体关系 · 审核入图</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="573" y1="537" x2="608" y2="537" stroke-width="3"/>
+    <path d="M608 530 L608 544 L622 537 Z" stroke="none"/>
+  </g>
+
+  <rect x="630" y="480" width="315" height="115" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="680" cy="537" r="29" fill="#3f78ae"/>
+  <text x="680" y="546" text-anchor="middle" font-family="Microsoft YaHei" font-size="23" font-weight="700" fill="#ffffff">5</text>
+  <text x="725" y="526" class="chapter">第五章 智能问答</text>
+  <text x="725" y="560" class="small">图谱增强 RAG · 溯源</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="958" y1="537" x2="993" y2="537" stroke-width="3"/>
+    <path d="M993 530 L993 544 L1007 537 Z" stroke="none"/>
+  </g>
+
+  <rect x="1015" y="480" width="275" height="115" rx="16" fill="#ffffff" stroke="#8eafd0" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="1065" cy="537" r="29" fill="#3f78ae"/>
+  <text x="1065" y="546" text-anchor="middle" font-family="Microsoft YaHei" font-size="23" font-weight="700" fill="#ffffff">6</text>
+  <text x="1110" y="526" class="chapter">第六章 系统实现</text>
+  <text x="1110" y="560" class="small">架构 · 模块 · 接口</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="700" y1="627" x2="700" y2="643" stroke-width="3"/>
+    <path d="M693 643 L707 643 L700 656 Z" stroke="none"/>
+  </g>
+
+  <rect x="145" y="660" width="500" height="75" rx="16" fill="#ffffff" stroke="#91a9bf" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="195" cy="698" r="27" fill="#587d9f"/>
+  <text x="195" y="706" text-anchor="middle" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#ffffff">7</text>
+  <text x="240" y="706" class="chapter">第七章 实验与结果分析</text>
+
+  <g fill="#547aa5" stroke="#547aa5" stroke-linecap="round">
+    <line x1="658" y1="698" x2="727" y2="698" stroke-width="3"/>
+    <path d="M727 691 L727 705 L741 698 Z" stroke="none"/>
+  </g>
+
+  <rect x="750" y="660" width="500" height="75" rx="16" fill="#ffffff" stroke="#91a9bf" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="800" cy="698" r="27" fill="#587d9f"/>
+  <text x="800" y="706" text-anchor="middle" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#ffffff">8</text>
+  <text x="845" y="706" class="chapter">第八章 总结与展望</text>
+</svg>
