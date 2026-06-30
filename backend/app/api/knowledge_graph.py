@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.api.deps import can_write_project, get_current_user, require_project_access
+from app.api.deps import can_write_project, get_current_user, require_note_access, require_project_access
 from app.core.database import get_db
 from app.models.note import ExperimentNote, NoteStatus
 from app.models.user import User
@@ -23,7 +23,7 @@ def extract_note_knowledge_graph(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> KnowledgeExtractionRunRead:
-    note = _require_note(note_id, db, user)
+    note = require_note_access(note_id, db, user)
     if not can_write_project(db, user, note.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     if note.status != NoteStatus.APPROVED:
@@ -79,14 +79,6 @@ def get_note_knowledge_graph(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> KnowledgeGraphRead:
-    note = _require_note(note_id, db, user)
+    note = require_note_access(note_id, db, user)
     entities, relations = KnowledgeGraphService().get_note_graph(db, note)
     return KnowledgeGraphRead(project_id=note.project_id, entities=entities, relations=relations)
-
-
-def _require_note(note_id: int, db: Session, user: User) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
-    return note

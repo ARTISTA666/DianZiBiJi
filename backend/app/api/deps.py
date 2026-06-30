@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.core.security import decode_access_token
+from app.models.note import ExperimentNote
 from app.models.project import Project, ProjectMember, ProjectReviewer, ProjectRole
 from app.models.user import User, UserRole, UserStatus
 
@@ -54,6 +55,14 @@ def require_project_access(project_id: int, db: Session, user: User) -> Project:
     if not can_access_project(db, user, project):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Project access denied")
     return project
+
+
+def require_note_access(note_id: int, db: Session, user: User) -> ExperimentNote:
+    note = db.get(ExperimentNote, note_id)
+    if note is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
+    require_project_access(note.project_id, db, user)
+    return note
 
 
 def accessible_project_ids(db: Session, user: User) -> list[int]:
