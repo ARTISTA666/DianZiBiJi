@@ -13,6 +13,14 @@ from app.services.knowledge_graph import KnowledgeGraphService
 router = APIRouter(tags=["notes"])
 
 
+def _require_note(note_id: int, db: Session, user: User) -> ExperimentNote:
+    note = db.get(ExperimentNote, note_id)
+    if note is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
+    require_project_access(note.project_id, db, user)
+    return note
+
+
 @router.get("/projects/{project_id}/notes", response_model=list[NoteRead])
 def list_notes(project_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[ExperimentNote]:
     require_project_access(project_id, db, user)
@@ -59,11 +67,7 @@ def create_note(
 
 @router.get("/notes/{note_id}", response_model=NoteRead)
 def get_note(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
-    return note
+    return _require_note(note_id, db, user)
 
 
 @router.patch("/notes/{note_id}", response_model=NoteRead)
@@ -73,10 +77,7 @@ def update_note(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    note = _require_note(note_id, db, user)
     if not can_write_project(db, user, note.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     if note.status not in {NoteStatus.DRAFT, NoteStatus.RETURNED}:
@@ -156,10 +157,7 @@ def submit_note(note_id: int, user: User = Depends(get_current_user), db: Sessio
 
 @router.get("/notes/{note_id}/versions", response_model=list[NoteVersionRead])
 def list_note_versions(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[NoteVersion]:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    _require_note(note_id, db, user)
     return db.query(NoteVersion).filter(NoteVersion.note_id == note_id).order_by(NoteVersion.version_number.desc()).all()
 
 
@@ -170,10 +168,7 @@ def get_note_version(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> NoteVersion:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    _require_note(note_id, db, user)
     version = db.get(NoteVersion, version_id)
     if version is None or version.note_id != note_id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note version not found")
@@ -182,10 +177,7 @@ def get_note_version(
 
 @router.post("/notes/{note_id}/archive", response_model=NoteRead)
 def archive_note(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    note = _require_note(note_id, db, user)
     if not can_write_project(db, user, note.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     if note.status not in {NoteStatus.APPROVED, NoteStatus.RETURNED, NoteStatus.DRAFT}:
@@ -204,10 +196,7 @@ def void_note(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    note = _require_note(note_id, db, user)
     if not can_review_project(db, user, note.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Review permission required")
     if note.status == NoteStatus.VOIDED:
@@ -241,10 +230,7 @@ def approve_note(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    note = _require_note(note_id, db, user)
     if not can_review_project(db, user, note.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Review permission required")
     if note.status != NoteStatus.SUBMITTED:
@@ -284,10 +270,7 @@ def return_note(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> ExperimentNote:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    note = _require_note(note_id, db, user)
     if not can_review_project(db, user, note.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Review permission required")
     if note.status != NoteStatus.SUBMITTED:
@@ -309,8 +292,5 @@ def return_note(
 
 @router.get("/notes/{note_id}/approvals", response_model=list[NoteApprovalRead])
 def list_note_approvals(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[NoteApproval]:
-    note = db.get(ExperimentNote, note_id)
-    if note is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
-    require_project_access(note.project_id, db, user)
+    _require_note(note_id, db, user)
     return db.query(NoteApproval).filter(NoteApproval.note_id == note_id).order_by(NoteApproval.created_at.desc()).all()
