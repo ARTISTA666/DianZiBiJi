@@ -18,6 +18,21 @@ def _require_user(db: Session, user_id: int | None) -> None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
 
+def _require_group(db: Session, group_id: int) -> Group:
+    group = db.get(Group, group_id)
+    if group is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group not found")
+    return group
+
+
+def _group_member(db: Session, group_id: int, user_id: int) -> GroupMember | None:
+    return (
+        db.query(GroupMember)
+        .filter(GroupMember.group_id == group_id, GroupMember.user_id == user_id)
+        .first()
+    )
+
+
 @router.get("", response_model=list[GroupRead])
 def list_groups(_: User = Depends(require_admin), db: Session = Depends(get_db)) -> list[Group]:
     return db.query(Group).order_by(Group.id).all()
@@ -37,10 +52,7 @@ def create_group(payload: GroupCreate, admin: User = Depends(require_admin), db:
 
 @router.get("/{group_id}", response_model=GroupRead)
 def get_group(group_id: int, _: User = Depends(require_admin), db: Session = Depends(get_db)) -> Group:
-    group = db.get(Group, group_id)
-    if group is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group not found")
-    return group
+    return _require_group(db, group_id)
 
 
 @router.patch("/{group_id}", response_model=GroupRead)
@@ -50,9 +62,7 @@ def update_group(
     admin: User = Depends(require_admin),
     db: Session = Depends(get_db),
 ) -> Group:
-    group = db.get(Group, group_id)
-    if group is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group not found")
+    group = _require_group(db, group_id)
     fields = payload.model_fields_set
     if "name" in fields:
         group.name = payload.name
@@ -69,8 +79,7 @@ def update_group(
 
 @router.get("/{group_id}/members", response_model=list[GroupMemberRead])
 def list_group_members(group_id: int, _: User = Depends(require_admin), db: Session = Depends(get_db)) -> list[GroupMember]:
-    if db.get(Group, group_id) is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group not found")
+    _require_group(db, group_id)
     return db.query(GroupMember).filter(GroupMember.group_id == group_id).order_by(GroupMember.id).all()
 
 
@@ -81,14 +90,9 @@ def add_group_member(
     admin: User = Depends(require_admin),
     db: Session = Depends(get_db),
 ) -> GroupMember:
-    if db.get(Group, group_id) is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group not found")
+    _require_group(db, group_id)
     _require_user(db, payload.user_id)
-    membership = (
-        db.query(GroupMember)
-        .filter(GroupMember.group_id == group_id, GroupMember.user_id == payload.user_id)
-        .first()
-    )
+    membership = _group_member(db, group_id, payload.user_id)
     if membership is None:
         membership = GroupMember(group_id=group_id, user_id=payload.user_id)
         db.add(membership)
@@ -106,11 +110,7 @@ def remove_group_member(
     admin: User = Depends(require_admin),
     db: Session = Depends(get_db),
 ) -> dict:
-    membership = (
-        db.query(GroupMember)
-        .filter(GroupMember.group_id == group_id, GroupMember.user_id == user_id)
-        .first()
-    )
+    membership = _group_member(db, group_id, user_id)
     if membership is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Group member not found")
     db.delete(membership)
