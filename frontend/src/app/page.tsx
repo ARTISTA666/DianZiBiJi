@@ -1,6 +1,5 @@
 "use client";
 
-import { BarChart, ClipboardCheck, Database, FileSearch, FileText, ShieldCheck, Sparkles, Upload, Users } from "lucide-react";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   AgentGenerationRun,
@@ -120,19 +119,6 @@ import {
   projectTabs,
 } from "@/components/constants";
 import type { ProjectTab } from "@/components/constants";
-
-// ── Local constants (icon-mapped tabs for type safety) ──
-const projectTabIcons: Record<string, React.ComponentType<{ size?: number }>> = {
-  overview: Database,
-  notes: FileText,
-  files: Upload,
-  search: FileSearch,
-  kg: Sparkles,
-  reports: BarChart,
-  approvals: ClipboardCheck,
-  members: Users,
-  logs: ShieldCheck,
-};
 
 const emptyEditor: NoteEditorState = {
   title: "",

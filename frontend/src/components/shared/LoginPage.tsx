@@ -3,7 +3,6 @@
 import { BookOpen, ShieldCheck, ClipboardCheck, Paperclip, Database } from "lucide-react";
 import { FormEvent } from "react";
 import { cardClass } from "../shared/utils";
-import { statusText } from "../constants";
 
 export type LoginProps = {
   username: string;

@@ -1,6 +1,6 @@
 "use client";
 
-import type { Project, KnowledgeGraph } from "@/lib/api";
+import type { Project } from "@/lib/api";
 import { cardClass } from "../shared/utils";
 import { projectTabs } from "../constants";
 import type { ProjectTab } from "../constants";

@@ -12,7 +12,7 @@ import type {
   Note,
 } from "@/lib/api";
 import { cardClass, formatRate, formatScore, ragModeLabel } from "../shared/utils";
-import { knowledgeSyncText, agentTaskOptions } from "../constants";
+import { knowledgeSyncText } from "../constants";
 
 interface FilesPanelProps {
   // RAG state
