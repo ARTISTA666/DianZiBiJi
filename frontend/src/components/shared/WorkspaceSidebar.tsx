@@ -1,14 +1,13 @@
 "use client";
 
 import { LayoutDashboard, Settings } from "lucide-react";
-import type { Project, Group, User } from "@/lib/api";
+import type { Project, Group } from "@/lib/api";
 import { cardClass } from "./utils";
 
 interface WorkspaceSidebarProps {
   workspaceView: "project" | "admin";
   projects: Project[];
   groups: Group[];
-  users: User[];
   selectedProjectId: number | null;
   selectedGroupId: number | null;
   canAdmin: boolean;
@@ -21,7 +20,6 @@ export function WorkspaceSidebar({
   workspaceView,
   projects,
   groups,
-  users,
   selectedProjectId,
   selectedGroupId,
   canAdmin,

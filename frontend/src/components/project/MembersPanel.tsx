@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent } from "react";
-import { Database, Users } from "lucide-react";
+import { Database } from "lucide-react";
 import type { Project, User, ProjectMember } from "@/lib/api";
 import { cardClass } from "../shared/utils";
 import { projectRoleOptions } from "../constants";

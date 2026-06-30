@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, CheckCircle2, XCircle } from "lucide-react";
+import { FileText } from "lucide-react";
 import type { Note, NoteVersion, NoteApproval, Template } from "@/lib/api";
 import { cardClass } from "../shared/utils";
 import { statusText } from "../constants";

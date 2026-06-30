@@ -5,12 +5,11 @@ import type { CurrentUser } from "@/lib/api";
 
 interface TopHeaderProps {
   user: CurrentUser;
-  token: string;
   onRefresh: () => void;
   onLogout: () => void;
 }
 
-export function TopHeader({ user, token, onRefresh, onLogout }: TopHeaderProps) {
+export function TopHeader({ user, onRefresh, onLogout }: TopHeaderProps) {
   return (
     <header className="border-b border-border bg-white">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:grid-cols-[1fr_auto]">

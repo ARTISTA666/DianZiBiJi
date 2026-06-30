@@ -7,14 +7,12 @@ import {
   AIQueryAnalytics,
   AIQueryLog,
   CurrentUser,
-  DashboardSummary,
   Group,
   GroupMember,
   AuditLog,
   Note,
   NoteApproval,
   NoteVersion,
-  Notification,
   KnowledgeEntity,
   KnowledgeGraph,
   Project,
@@ -63,13 +61,10 @@ import {
   evaluateQueryLog,
   generateAgentOutput,
   getAgentRuns,
-  getDashboardSummary,
   getProjectKnowledgeGraph,
   getProjectQueryAnalytics,
   getProjectQueryLogs,
   getRagExperiments,
-  getNotifications,
-  publishNotification,
   rebuildProjectKnowledgeGraph,
   removeGroupMember,
   removeProjectMember,
@@ -114,10 +109,6 @@ import { AdminProjectPanel } from "@/components/admin/AdminProjectPanel";
 import { GroupManagementPanel } from "@/components/admin/GroupManagementPanel";
 import { AuditLogPanel } from "@/components/admin/AuditLogPanel";
 
-// ── Constants ──
-import {
-  projectTabs,
-} from "@/components/constants";
 import type { ProjectTab } from "@/components/constants";
 
 const emptyEditor: NoteEditorState = {
@@ -194,8 +185,6 @@ export default function Home() {
   const [agentRuns, setAgentRuns] = useState<AgentGenerationRun[]>([]);
   const [agentDraft, setAgentDraft] = useState({ task_type: "experiment_summary", date_from: "", date_to: "" });
   const [agentBusy, setAgentBusy] = useState(false);
-  const [dashboardSummary, setDashboardSummary] = useState<DashboardSummary | null>(null);
-  const [notifList, setNotifList] = useState<Notification[]>([]);
   const [ocrResult, setOcrResult] = useState<string | null>(null);
   const [kgGraph, setKgGraph] = useState<KnowledgeGraph | null>(null);
   const [kgEntityFilter, setKgEntityFilter] = useState("");
@@ -363,8 +352,6 @@ export default function Home() {
         setKgGraph(null); setQueryLogs([]); setQueryAnalytics(null);
         setExperimentRuns([]); setAgentRuns([]); setAgentRun(null);
       }
-      getDashboardSummary(activeToken).then(setDashboardSummary).catch(() => {});
-      getNotifications(activeToken).then(setNotifList).catch(() => {});
     } catch (err) { setError(err instanceof Error ? err.message : "刷新失败"); }
   }
 
@@ -738,19 +725,15 @@ export default function Home() {
     );
   }
 
-  // ── Render: Main App ──
-  const projectPendingCount = pendingNotes.filter((n) => !selectedProjectId || n.project_id === selectedProjectId).length;
-
   return (
     <main className="min-h-screen bg-surface">
-      <TopHeader user={user} token={token} onRefresh={() => void refreshAll()} onLogout={logout} />
+      <TopHeader user={user} onRefresh={() => void refreshAll()} onLogout={logout} />
 
       <div className="mx-auto grid min-w-0 max-w-[1440px] gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)]">
         <WorkspaceSidebar
           workspaceView={workspaceView}
           projects={projects}
           groups={groups}
-          users={users}
           selectedProjectId={selectedProjectId}
           selectedGroupId={selectedGroupId}
           canAdmin={canAdmin}
