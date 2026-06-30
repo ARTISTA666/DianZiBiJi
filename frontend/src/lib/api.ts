@@ -364,11 +364,24 @@ export async function apiFetch<T>(path: string, token?: string, init?: RequestIn
   return response.json() as Promise<T>;
 }
 
+function jsonInit(method: string, payload?: unknown): RequestInit {
+  return payload === undefined ? { method } : { method, body: JSON.stringify(payload) };
+}
+
+function post<T>(path: string, token?: string, payload?: unknown) {
+  return apiFetch<T>(path, token, jsonInit("POST", payload));
+}
+
+function patch<T>(path: string, token: string, payload: unknown) {
+  return apiFetch<T>(path, token, jsonInit("PATCH", payload));
+}
+
+function del<T>(path: string, token: string) {
+  return apiFetch<T>(path, token, { method: "DELETE" });
+}
+
 export function login(username: string, password: string) {
-  return apiFetch<LoginResponse>("/auth/login", undefined, {
-    method: "POST",
-    body: JSON.stringify({ username, password }),
-  });
+  return post<LoginResponse>("/auth/login", undefined, { username, password });
 }
 
 export function getMe(token: string) {
@@ -376,7 +389,7 @@ export function getMe(token: string) {
 }
 
 export function logoutSession(token: string) {
-  return apiFetch<{ ok: boolean }>("/auth/logout", token, { method: "POST" });
+  return post<{ ok: boolean }>("/auth/logout", token);
 }
 
 export function getProjects(token: string) {
@@ -384,17 +397,11 @@ export function getProjects(token: string) {
 }
 
 export function createProject(token: string, payload: Partial<Project> & { name: string }) {
-  return apiFetch<Project>("/projects", token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<Project>("/projects", token, payload);
 }
 
 export function updateProject(token: string, projectId: number, payload: Partial<Project>) {
-  return apiFetch<Project>(`/projects/${projectId}`, token, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-  });
+  return patch<Project>(`/projects/${projectId}`, token, payload);
 }
 
 export function getUsers(token: string) {
@@ -402,21 +409,15 @@ export function getUsers(token: string) {
 }
 
 export function createUser(token: string, payload: { username: string; password: string; display_name: string; email?: string; role: string }) {
-  return apiFetch<User>("/users", token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<User>("/users", token, payload);
 }
 
 export function updateUser(token: string, userId: number, payload: Partial<User> & { password?: string }) {
-  return apiFetch<User>(`/users/${userId}`, token, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-  });
+  return patch<User>(`/users/${userId}`, token, payload);
 }
 
 export function disableUser(token: string, userId: number) {
-  return apiFetch<User>(`/users/${userId}/disable`, token, { method: "POST" });
+  return post<User>(`/users/${userId}/disable`, token);
 }
 
 export function getGroups(token: string) {
@@ -424,17 +425,11 @@ export function getGroups(token: string) {
 }
 
 export function createGroup(token: string, payload: { name: string; description?: string; leader_user_id?: number | null }) {
-  return apiFetch<Group>("/groups", token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<Group>("/groups", token, payload);
 }
 
 export function updateGroup(token: string, groupId: number, payload: Partial<Group>) {
-  return apiFetch<Group>(`/groups/${groupId}`, token, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-  });
+  return patch<Group>(`/groups/${groupId}`, token, payload);
 }
 
 export function getGroupMembers(token: string, groupId: number) {
@@ -442,14 +437,11 @@ export function getGroupMembers(token: string, groupId: number) {
 }
 
 export function addGroupMember(token: string, groupId: number, payload: { user_id: number; group_role: string }) {
-  return apiFetch<GroupMember>(`/groups/${groupId}/members`, token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<GroupMember>(`/groups/${groupId}/members`, token, payload);
 }
 
 export function removeGroupMember(token: string, groupId: number, userId: number) {
-  return apiFetch<{ ok: boolean }>(`/groups/${groupId}/members/${userId}`, token, { method: "DELETE" });
+  return del<{ ok: boolean }>(`/groups/${groupId}/members/${userId}`, token);
 }
 
 export function getProjectMembers(token: string, projectId: number) {
@@ -457,28 +449,19 @@ export function getProjectMembers(token: string, projectId: number) {
 }
 
 export function addProjectMember(token: string, projectId: number, payload: Omit<ProjectMember, "id" | "project_id">) {
-  return apiFetch<{ ok: boolean }>(`/projects/${projectId}/members`, token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<{ ok: boolean }>(`/projects/${projectId}/members`, token, payload);
 }
 
 export function updateProjectMember(token: string, projectId: number, userId: number, payload: Partial<Omit<ProjectMember, "id" | "project_id" | "user_id">>) {
-  return apiFetch<ProjectMember>(`/projects/${projectId}/members/${userId}`, token, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-  });
+  return patch<ProjectMember>(`/projects/${projectId}/members/${userId}`, token, payload);
 }
 
 export function removeProjectMember(token: string, projectId: number, userId: number) {
-  return apiFetch<{ ok: boolean }>(`/projects/${projectId}/members/${userId}`, token, { method: "DELETE" });
+  return del<{ ok: boolean }>(`/projects/${projectId}/members/${userId}`, token);
 }
 
 export function addProjectReviewer(token: string, projectId: number, payload: { user_id: number; review_scope?: string }) {
-  return apiFetch<{ id: number; project_id: number; user_id: number; review_scope: string }>(`/projects/${projectId}/reviewers`, token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<{ id: number; project_id: number; user_id: number; review_scope: string }>(`/projects/${projectId}/reviewers`, token, payload);
 }
 
 export function getTemplates(token: string) {
@@ -512,10 +495,7 @@ export function createNote(
     content_json: Record<string, unknown>;
   },
 ) {
-  return apiFetch<Note>(`/projects/${projectId}/notes`, token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<Note>(`/projects/${projectId}/notes`, token, payload);
 }
 
 export function updateNote(
@@ -530,39 +510,27 @@ export function updateNote(
     change_summary?: string;
   },
 ) {
-  return apiFetch<Note>(`/notes/${noteId}`, token, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-  });
+  return patch<Note>(`/notes/${noteId}`, token, payload);
 }
 
 export function submitNote(token: string, noteId: number) {
-  return apiFetch<Note>(`/notes/${noteId}/submit`, token, { method: "POST" });
+  return post<Note>(`/notes/${noteId}/submit`, token);
 }
 
 export function approveNote(token: string, noteId: number, comment: string) {
-  return apiFetch<Note>(`/notes/${noteId}/approve`, token, {
-    method: "POST",
-    body: JSON.stringify({ comment }),
-  });
+  return post<Note>(`/notes/${noteId}/approve`, token, { comment });
 }
 
 export function returnNote(token: string, noteId: number, comment: string) {
-  return apiFetch<Note>(`/notes/${noteId}/return`, token, {
-    method: "POST",
-    body: JSON.stringify({ comment }),
-  });
+  return post<Note>(`/notes/${noteId}/return`, token, { comment });
 }
 
 export function archiveNote(token: string, noteId: number) {
-  return apiFetch<Note>(`/notes/${noteId}/archive`, token, { method: "POST" });
+  return post<Note>(`/notes/${noteId}/archive`, token);
 }
 
 export function voidNote(token: string, noteId: number, comment: string) {
-  return apiFetch<Note>(`/notes/${noteId}/void`, token, {
-    method: "POST",
-    body: JSON.stringify({ comment }),
-  });
+  return post<Note>(`/notes/${noteId}/void`, token, { comment });
 }
 
 export function getNoteVersions(token: string, noteId: number) {
@@ -593,25 +561,19 @@ export function uploadFile(token: string, projectId: number, file: File, noteId?
 }
 
 export function updateFile(token: string, fileId: number, payload: { original_filename?: string }) {
-  return apiFetch<StoredFile>(`/files/${fileId}`, token, {
-    method: "PATCH",
-    body: JSON.stringify(payload),
-  });
+  return patch<StoredFile>(`/files/${fileId}`, token, payload);
 }
 
 export function archiveFile(token: string, fileId: number) {
-  return apiFetch<StoredFile>(`/files/${fileId}/archive`, token, { method: "POST" });
+  return post<StoredFile>(`/files/${fileId}/archive`, token);
 }
 
 export function reviewFile(token: string, fileId: number, action: "approve" | "reject", comment = "") {
-  return apiFetch<StoredFile>(`/files/${fileId}/review`, token, {
-    method: "POST",
-    body: JSON.stringify({ action, comment }),
-  });
+  return post<StoredFile>(`/files/${fileId}/review`, token, { action, comment });
 }
 
 export function initProjectRag(token: string, projectId: number) {
-  return apiFetch<RagStatus>(`/projects/${projectId}/rag/init`, token, { method: "POST" });
+  return post<RagStatus>(`/projects/${projectId}/rag/init`, token);
 }
 
 export function getProjectRagStatus(token: string, projectId: number) {
@@ -619,14 +581,11 @@ export function getProjectRagStatus(token: string, projectId: number) {
 }
 
 export function syncFileToRag(token: string, fileId: number) {
-  return apiFetch<RagStatus>(`/files/${fileId}/rag/sync`, token, { method: "POST" });
+  return post<RagStatus>(`/files/${fileId}/rag/sync`, token);
 }
 
 export function queryProjectRag(token: string, projectId: number, query: string, mode = "auto") {
-  return apiFetch<RagQueryResponse>(`/projects/${projectId}/rag/query`, token, {
-    method: "POST",
-    body: JSON.stringify({ query, mode }),
-  });
+  return post<RagQueryResponse>(`/projects/${projectId}/rag/query`, token, { query, mode });
 }
 
 export function getProjectQueryLogs(token: string, projectId: number) {
@@ -646,10 +605,7 @@ export function runRagExperiment(
   projectId: number,
   payload: { name: string; questions: string[]; modes?: string[] },
 ) {
-  return apiFetch<AIExperimentRun>(`/projects/${projectId}/rag/experiments`, token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<AIExperimentRun>(`/projects/${projectId}/rag/experiments`, token, payload);
 }
 
 export async function downloadRagExperiment(token: string, runId: number) {
@@ -665,10 +621,7 @@ export function evaluateQueryLog(
   logId: number,
   payload: { score: number; is_accurate: boolean; is_traceable: boolean; comment?: string | null },
 ) {
-  return apiFetch<AIQueryEvaluation>(`/rag/query-logs/${logId}/evaluation`, token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<AIQueryEvaluation>(`/rag/query-logs/${logId}/evaluation`, token, payload);
 }
 
 export function getProjectKnowledgeGraph(token: string, projectId: number) {
@@ -680,14 +633,11 @@ export function getNoteKnowledgeGraph(token: string, noteId: number) {
 }
 
 export function extractNoteKnowledgeGraph(token: string, noteId: number, rebuild = true) {
-  return apiFetch<KnowledgeExtractionRun>(`/notes/${noteId}/kg/extract`, token, {
-    method: "POST",
-    body: JSON.stringify({ rebuild }),
-  });
+  return post<KnowledgeExtractionRun>(`/notes/${noteId}/kg/extract`, token, { rebuild });
 }
 
 export function rebuildProjectKnowledgeGraph(token: string, projectId: number) {
-  return apiFetch<KnowledgeExtractionRun[]>(`/projects/${projectId}/kg/rebuild`, token, { method: "POST" });
+  return post<KnowledgeExtractionRun[]>(`/projects/${projectId}/kg/rebuild`, token);
 }
 
 export function fileDownloadUrl(fileId: number) {
@@ -712,14 +662,11 @@ export type SearchStatus = {
 
 export function reindexSearch(token: string, projectId?: number) {
   const params = projectId !== undefined ? `?project_id=${projectId}` : "";
-  return apiFetch<SearchStatus>(`/api/search/index${params}`, token, { method: "POST" });
+  return post<SearchStatus>(`/api/search/index${params}`, token);
 }
 
 export function searchDocuments(token: string, query: string, projectId?: number) {
-  return apiFetch<SearchResult[]>("/api/search", token, {
-    method: "POST",
-    body: JSON.stringify({ query, project_id: projectId ?? null }),
-  });
+  return post<SearchResult[]>("/api/search", token, { query, project_id: projectId ?? null });
 }
 
 // ── OCR ───────────────────────────────────────────────────
@@ -731,10 +678,7 @@ export type OcrJobResult = {
 };
 
 export function extractOcr(token: string, fileId: number) {
-  return apiFetch<OcrJobResult>("/api/ocr/extract", token, {
-    method: "POST",
-    body: JSON.stringify({ file_id: fileId }),
-  });
+  return post<OcrJobResult>("/api/ocr/extract", token, { file_id: fileId });
 }
 
 // ── Reports ───────────────────────────────────────────────
@@ -746,20 +690,14 @@ export type ReportDraft = {
 };
 
 export function createReportDraft(token: string, projectId: number, reportType = "daily") {
-  return apiFetch<ReportDraft>("/api/reports/draft", token, {
-    method: "POST",
-    body: JSON.stringify({ report_type: reportType, project_id: projectId }),
-  });
+  return post<ReportDraft>("/api/reports/draft", token, { report_type: reportType, project_id: projectId });
 }
 
 export function generateAgentOutput(
   token: string,
   payload: { project_id: number; task_type: string; date_from?: string | null; date_to?: string | null },
 ) {
-  return apiFetch<AgentGenerationRun>("/api/agents/generate", token, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  return post<AgentGenerationRun>("/api/agents/generate", token, payload);
 }
 
 export function getAgentRuns(token: string, projectId: number) {
@@ -798,12 +736,9 @@ export function getNotifications(token: string, projectId?: number) {
 }
 
 export function publishNotification(token: string, title: string, message = "", projectId?: number | null) {
-  return apiFetch<Notification>("/api/notifications", token, {
-    method: "POST",
-    body: JSON.stringify({ title, message, project_id: projectId ?? null }),
-  });
+  return post<Notification>("/api/notifications", token, { title, message, project_id: projectId ?? null });
 }
 
 export function markNotificationRead(token: string, notificationId: number) {
-  return apiFetch<Notification>(`/api/notifications/${notificationId}/read`, token, { method: "POST" });
+  return post<Notification>(`/api/notifications/${notificationId}/read`, token);
 }
