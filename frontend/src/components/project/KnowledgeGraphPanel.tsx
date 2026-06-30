@@ -2,10 +2,8 @@
 
 import { Sparkles } from "lucide-react";
 import type { KnowledgeGraph, KnowledgeEntity, KnowledgeRelation, Note } from "@/lib/api";
-import { cardClass, shortLabel } from "../shared/utils";
+import { cardClass, kgRelationLabel, kgTypeLabel, shortLabel } from "../shared/utils";
 import {
-  kgEntityTypeText,
-  kgRelationTypeText,
   kgEntityColors,
   kgEntityShortText,
   statusText,
@@ -41,14 +39,6 @@ interface KnowledgeGraphPanelProps {
   onRebuildGraph: () => void;
   onNavigateNotes: (note: Note) => void;
   onNavigateFiles: () => void;
-}
-
-function kgTypeLabel(type: string) {
-  return kgEntityTypeText[type] || type;
-}
-
-function kgRelationLabel(type: string) {
-  return kgRelationTypeText[type] || type;
 }
 
 export function KnowledgeGraphPanel({

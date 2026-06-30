@@ -22,6 +22,7 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import { kgEntityTypeText, kgRelationTypeText } from "../constants";
 
 // Re-export all icons so consumers don't need to import lucide-react directly
 export {
@@ -54,11 +55,11 @@ export function cardClass(extra = "") {
 }
 
 export function kgTypeLabel(type: string) {
-  return type; // caller will resolve via context or prop
+  return kgEntityTypeText[type] || type;
 }
 
 export function kgRelationLabel(type: string) {
-  return type;
+  return kgRelationTypeText[type] || type;
 }
 
 export function shortLabel(label: string, maxLength = 14) {

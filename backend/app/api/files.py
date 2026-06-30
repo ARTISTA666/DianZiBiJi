@@ -36,6 +36,14 @@ def _store_upload(upload: UploadFile, project_id: int) -> tuple[str, int, str]:
     return str(target), size, digest.hexdigest()
 
 
+def _require_file(file_id: int, db: Session, user: User) -> StoredFile:
+    record = db.get(StoredFile, file_id)
+    if record is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+    require_project_access(record.project_id, db, user)
+    return record
+
+
 @router.post("/projects/{project_id}/files", response_model=FileRead)
 def upload_project_file(
     project_id: int,
@@ -127,11 +135,7 @@ def list_note_files(note_id: int, user: User = Depends(get_current_user), db: Se
 
 @router.get("/files/{file_id}", response_model=FileRead)
 def get_file(file_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> StoredFile:
-    record = db.get(StoredFile, file_id)
-    if record is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
-    require_project_access(record.project_id, db, user)
-    return record
+    return _require_file(file_id, db, user)
 
 
 @router.patch("/files/{file_id}", response_model=FileRead)
@@ -141,10 +145,7 @@ def update_file(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> StoredFile:
-    record = db.get(StoredFile, file_id)
-    if record is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
-    require_project_access(record.project_id, db, user)
+    record = _require_file(file_id, db, user)
     if not can_write_project(db, user, record.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     if payload.original_filename is not None:
@@ -160,10 +161,7 @@ def update_file(
 
 @router.post("/files/{file_id}/archive", response_model=FileRead)
 def archive_file(file_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> StoredFile:
-    record = db.get(StoredFile, file_id)
-    if record is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
-    require_project_access(record.project_id, db, user)
+    record = _require_file(file_id, db, user)
     if not can_write_project(db, user, record.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     record.status = FileStatus.ARCHIVED
@@ -183,10 +181,7 @@ def review_file(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> StoredFile:
-    record = db.get(StoredFile, file_id)
-    if record is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
-    require_project_access(record.project_id, db, user)
+    record = _require_file(file_id, db, user)
     if record.file_category != FileCategory.KNOWLEDGE_DOCUMENT:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Only knowledge documents can be reviewed")
     if record.status != FileStatus.UPLOADED:
@@ -229,10 +224,7 @@ def reject_document(file_id: int, user: User = Depends(get_current_user), db: Se
 
 @router.get("/files/{file_id}/download")
 def download_file(file_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> FileResponse:
-    record = db.get(StoredFile, file_id)
-    if record is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
-    require_project_access(record.project_id, db, user)
+    record = _require_file(file_id, db, user)
     path = Path(record.storage_path)
     if not path.exists():
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Stored file missing")

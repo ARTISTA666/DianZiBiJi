@@ -95,7 +95,7 @@ import { MessageBanner } from "@/components/shared/MessageBanner";
 import { TopHeader } from "@/components/shared/TopHeader";
 import { WorkspaceSidebar } from "@/components/shared/WorkspaceSidebar";
 import { DashboardMetrics } from "@/components/shared/DashboardMetrics";
-import { cardClass, formatRate, formatScore, ragModeLabel, kgTypeLabel, kgRelationLabel, shortLabel } from "@/components/shared/utils";
+import { cardClass, kgRelationLabel, kgTypeLabel } from "@/components/shared/utils";
 
 // ── Project tab components ──
 import { ProjectHeader } from "@/components/project/ProjectHeader";
@@ -110,23 +110,14 @@ import { MembersPanel } from "@/components/project/MembersPanel";
 import { ProjectLogsPanel } from "@/components/project/ProjectLogsPanel";
 
 // ── Admin components ──
-import { UserManagementPanel } from "@/components/admin/UserManagementPanel";
+import { UserCreatePanel, UserManagementPanel } from "@/components/admin/UserManagementPanel";
 import { AdminProjectPanel } from "@/components/admin/AdminProjectPanel";
 import { GroupManagementPanel } from "@/components/admin/GroupManagementPanel";
 import { AuditLogPanel } from "@/components/admin/AuditLogPanel";
 
 // ── Constants ──
 import {
-  roleOptions,
-  projectRoleOptions,
-  statusText,
-  knowledgeSyncText,
-  agentTaskOptions,
   projectTabs,
-  kgEntityTypeText,
-  kgRelationTypeText,
-  kgEntityColors,
-  kgEntityShortText,
 } from "@/components/constants";
 import type { ProjectTab } from "@/components/constants";
 
@@ -821,18 +812,7 @@ export default function Home() {
               </div>
 
               <div className="grid gap-4 xl:grid-cols-2">
-                <UserManagementPanel
-                  users={users}
-                  currentUser={user}
-                  userEdits={userEdits}
-                  onUserEditChange={(userId, edit) => setUserEdits({ ...userEdits, [userId]: edit })}
-                  newUser={newUser}
-                  onNewUserChange={setNewUser}
-                  token={token}
-                  onCreateUser={handleCreateUser}
-                  onUpdateUser={handleUpdateUser}
-                  onDisableUser={(userId) => { void disableUser(token, userId).then(() => refreshAll()); }}
-                />
+                <UserCreatePanel newUser={newUser} onNewUserChange={setNewUser} onCreateUser={handleCreateUser} />
 
                 <AdminProjectPanel
                   users={users}
@@ -841,6 +821,16 @@ export default function Home() {
                   onCreateProject={handleCreateProject}
                 />
               </div>
+
+              {/* User Table (full width) */}
+              <UserManagementPanel
+                users={users}
+                currentUser={user}
+                userEdits={userEdits}
+                onUserEditChange={(userId, edit) => setUserEdits({ ...userEdits, [userId]: edit })}
+                onUpdateUser={handleUpdateUser}
+                onDisableUser={(userId) => { void disableUser(token, userId).then(() => refreshAll()); }}
+              />
 
               <GroupManagementPanel
                 groups={groups}
