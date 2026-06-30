@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
-from app.api.deps import can_access_project, get_current_user, require_admin, require_project_manager
+from app.api.deps import get_current_user, require_admin, require_project_access, require_project_manager
 from app.core.database import get_db
 from app.models.project import Project, ProjectMember, ProjectReviewer, ProjectRole, ProjectStatus
 from app.models.user import User, UserRole
@@ -21,16 +21,20 @@ from app.services.audit import write_audit
 router = APIRouter(prefix="/projects", tags=["projects"])
 
 
+def _project_member(db: Session, project_id: int, user_id: int) -> ProjectMember | None:
+    return (
+        db.query(ProjectMember)
+        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user_id)
+        .first()
+    )
+
+
 def _ensure_owner_membership(db: Session, project_id: int, user_id: int | None) -> None:
     if user_id is None:
         return
     if db.get(User, user_id) is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Owner user not found")
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user_id)
-        .first()
-    )
+    membership = _project_member(db, project_id, user_id)
     if membership is None:
         db.add(
             ProjectMember(
@@ -109,12 +113,7 @@ def create_project(payload: ProjectCreate, admin: User = Depends(require_admin),
 
 @router.get("/{project_id}", response_model=ProjectRead)
 def get_project(project_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> Project:
-    project = db.get(Project, project_id)
-    if project is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
-    if not can_access_project(db, user, project):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Project access denied")
-    return project
+    return require_project_access(project_id, db, user)
 
 
 @router.patch("/{project_id}", response_model=ProjectRead)
@@ -156,11 +155,7 @@ def add_project_member(
 ) -> dict:
     require_project_manager(project_id, db, user)
     _require_user(db, payload.user_id)
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == payload.user_id)
-        .first()
-    )
+    membership = _project_member(db, project_id, payload.user_id)
     if membership is None:
         membership = ProjectMember(project_id=project_id, user_id=payload.user_id)
         db.add(membership)
@@ -187,11 +182,7 @@ def list_project_members(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> list[ProjectMember]:
-    project = db.get(Project, project_id)
-    if project is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
-    if not can_access_project(db, user, project):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Project access denied")
+    require_project_access(project_id, db, user)
     return db.query(ProjectMember).filter(ProjectMember.project_id == project_id).order_by(ProjectMember.id).all()
 
 
@@ -204,11 +195,7 @@ def update_project_member(
     db: Session = Depends(get_db),
 ) -> ProjectMember:
     require_project_manager(project_id, db, user)
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user_id)
-        .first()
-    )
+    membership = _project_member(db, project_id, user_id)
     if membership is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project member not found")
     was_manager = _is_member_manager(membership)
@@ -244,11 +231,7 @@ def remove_project_member(
     db: Session = Depends(get_db),
 ) -> dict:
     require_project_manager(project_id, db, user)
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user_id)
-        .first()
-    )
+    membership = _project_member(db, project_id, user_id)
     if membership is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project member not found")
     if _is_member_manager(membership) and _manager_count(db, project_id) <= 1:
@@ -279,11 +262,7 @@ def add_project_reviewer(
         reviewer = ProjectReviewer(project_id=project_id, user_id=payload.user_id)
         db.add(reviewer)
     reviewer.review_scope = payload.review_scope
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == payload.user_id)
-        .first()
-    )
+    membership = _project_member(db, project_id, payload.user_id)
     if membership is None:
         db.add(
             ProjectMember(
@@ -321,11 +300,7 @@ def remove_project_reviewer(
     if reviewer is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project reviewer not found")
     db.delete(reviewer)
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user_id)
-        .first()
-    )
+    membership = _project_member(db, project_id, user_id)
     if membership is not None:
         membership.can_review = False
     write_audit(db, actor=user, action="change_permission", project_id=project_id, target_type="user", target_id=user_id)
