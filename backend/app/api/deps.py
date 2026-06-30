@@ -72,15 +72,19 @@ def accessible_project_ids(db: Session, user: User) -> list[int]:
     return sorted(project_ids)
 
 
+def _project_membership(db: Session, user: User, project_id: int) -> ProjectMember | None:
+    return (
+        db.query(ProjectMember)
+        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user.id)
+        .first()
+    )
+
+
 def can_write_project(db: Session, user: User, project_id: int) -> bool:
     if user.role == UserRole.SUPER_ADMIN:
         return True
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user.id, ProjectMember.can_write.is_(True))
-        .first()
-    )
-    return membership is not None
+    membership = _project_membership(db, user, project_id)
+    return bool(membership and membership.can_write)
 
 
 def can_manage_project(db: Session, user: User, project_id: int) -> bool:
@@ -91,13 +95,8 @@ def can_manage_project(db: Session, user: User, project_id: int) -> bool:
         return False
     if project.owner_user_id == user.id:
         return True
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user.id)
-        .filter((ProjectMember.can_manage.is_(True)) | (ProjectMember.project_role == ProjectRole.OWNER))
-        .first()
-    )
-    return membership is not None
+    membership = _project_membership(db, user, project_id)
+    return bool(membership and (membership.can_manage or membership.project_role == ProjectRole.OWNER))
 
 
 def require_project_manager(project_id: int, db: Session, user: User) -> Project:
@@ -110,13 +109,8 @@ def require_project_manager(project_id: int, db: Session, user: User) -> Project
 def can_review_project(db: Session, user: User, project_id: int) -> bool:
     if user.role == UserRole.SUPER_ADMIN:
         return True
-    membership = (
-        db.query(ProjectMember)
-        .filter(ProjectMember.project_id == project_id, ProjectMember.user_id == user.id)
-        .filter((ProjectMember.can_review.is_(True)) | (ProjectMember.can_manage.is_(True)))
-        .first()
-    )
-    if membership is not None:
+    membership = _project_membership(db, user, project_id)
+    if membership and (membership.can_review or membership.can_manage):
         return True
     reviewer = (
         db.query(ProjectReviewer)
