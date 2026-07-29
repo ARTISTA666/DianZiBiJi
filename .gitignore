@@ -45,3 +45,12 @@ frontend/.codex-home/
 # Local dataset caches and disposable validation databases
 data/**/.cache/
 data/**/*.sqlite3
+
+# Generated gate results bind to an existing clean commit. Committing them
+# would change that revision and make their provenance stale immediately.
+docs/experiments/main-maturity-gate-latest.json
+docs/experiments/main-maturity-gate-latest.md
+docs/experiments/final-maturity-gate-latest.json
+docs/experiments/final-maturity-gate-latest.md
+docs/experiments/confirmatory-review-completion-latest.json
+docs/experiments/confirmatory-review-completion-latest.md
