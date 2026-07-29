@@ -3,4 +3,5 @@ node_modules
 out
 dist
 npm-debug.log*
-
+e2e
+playwright.config.ts

@@ -1,5 +1,16 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
 
+export class ApiRequestError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+    public readonly requestId: string | null,
+  ) {
+    super(message);
+    this.name = "ApiRequestError";
+  }
+}
+
 export type LoginResponse = {
   access_token: string;
   token_type: string;
@@ -39,7 +50,9 @@ export type ProjectMember = {
   can_read: boolean;
   can_write: boolean;
   can_review: boolean;
+  can_evaluate: boolean;
   can_manage: boolean;
+  is_independent_reviewer: boolean;
 };
 
 export type Group = {
@@ -174,6 +187,13 @@ export type RagQueryResponse = {
   provider: string;
   model_name: string | null;
   fallback_reason: string | null;
+  citation_audit: {
+    passed: boolean;
+    citation_count: number;
+    invalid_citations: string[];
+    has_evidence: boolean;
+    message: string;
+  } | null;
 };
 
 export type AIQueryEvaluation = {
@@ -184,8 +204,53 @@ export type AIQueryEvaluation = {
   is_accurate: boolean;
   is_traceable: boolean;
   comment: string | null;
+  review_protocol: "method_masked" | "unblinded" | string;
   created_at: string;
   updated_at: string;
+};
+
+export type BlindReviewEvaluation = {
+  score: number;
+  is_accurate: boolean;
+  is_traceable: boolean;
+  comment: string | null;
+  updated_at: string;
+};
+
+export type BlindReviewEvidence = {
+  evidence_id: string;
+  content: string;
+};
+
+export type BlindReviewItem = {
+  blind_id: string;
+  question: string;
+  answer: string | null;
+  evidence: BlindReviewEvidence[];
+  evaluation: BlindReviewEvaluation | null;
+};
+
+export type BlindReviewBatch = {
+  batch_id: string;
+  total_items: number;
+  completed_items: number;
+};
+
+export type MaturityGate = {
+  key: string;
+  title: string;
+  path: string;
+  exists: boolean;
+  passed: boolean;
+  generated_at: string | null;
+  blockers: string[];
+};
+
+export type MaturityStatus = {
+  passed: boolean;
+  human_review_allowed: boolean;
+  human_review_report_allowed: boolean;
+  gates: MaturityGate[];
 };
 
 export type AIQueryLog = {
@@ -210,8 +275,11 @@ export type AIQueryLog = {
   error_message: string | null;
   experiment_run_id: number | null;
   experiment_case_index: number | null;
+  experiment_repetition_index: number | null;
+  experiment_execution_order: number | null;
   created_at: string;
   evaluation: AIQueryEvaluation | null;
+  evaluations: AIQueryEvaluation[];
 };
 
 export type AIQueryModeStats = {
@@ -230,6 +298,8 @@ export type AIQueryAnalytics = {
   project_id: number;
   total_queries: number;
   evaluated_queries: number;
+  evaluation_count: number;
+  evaluator_count: number;
   evaluation_rate: number;
   project_rag_queries: number;
   kg_enhanced_queries: number;
@@ -241,6 +311,16 @@ export type AIQueryAnalytics = {
   avg_graph_hit_count: number;
   avg_source_count: number;
   mode_stats: AIQueryModeStats[];
+  accuracy_agreement: {
+    paired_ratings: number;
+    agreement_rate: number | null;
+    cohens_kappa: number | null;
+  };
+  traceability_agreement: {
+    paired_ratings: number;
+    agreement_rate: number | null;
+    cohens_kappa: number | null;
+  };
 };
 
 export type AIExperimentRun = {
@@ -275,7 +355,23 @@ export type AgentGenerationRun = {
   project_id: number;
   user_id: number;
   task_type: string;
-  input_params_json: Record<string, string | null>;
+  input_params_json: {
+    date_from?: string | null;
+    date_to?: string | null;
+    collaboration_steps?: Array<{
+      key: string;
+      name: string;
+      status: string;
+      message: string;
+    }>;
+    review_result?: {
+      passed: boolean;
+      citation_count: number;
+      invalid_citations: string[];
+      message: string;
+    };
+    repair_attempted?: boolean;
+  };
   title: string;
   body: string;
   source_note_ids_json: number[];
@@ -324,7 +420,7 @@ export type KnowledgeGraph = {
   relations: KnowledgeRelation[];
 };
 
-export type KnowledgeExtractionRun = {
+type KnowledgeExtractionRun = {
   id: number;
   project_id: number;
   note_id: number;
@@ -347,20 +443,36 @@ export type AuditLog = {
   created_at: string;
 };
 
-export async function apiFetch<T>(path: string, token?: string, init?: RequestInit): Promise<T> {
+// Authentication uses the HttpOnly cookie set by /auth/login; the token
+// parameter is kept for call-site compatibility but is never sent, so the
+// token no longer needs to live in JS-accessible storage.
+async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): Promise<T> {
   const isFormData = init?.body instanceof FormData;
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
+    credentials: "include",
     headers: {
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(init?.headers || {}),
     },
   });
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || `Request failed: ${response.status}`);
+    const text = await response.text();
+    let message = text || `请求失败: ${response.status}`;
+    try {
+      const payload = JSON.parse(text) as { detail?: string };
+      if (payload.detail) message = payload.detail;
+    } catch {
+      // Keep non-JSON upstream errors unchanged.
+    }
+    const requestId = response.headers.get("x-request-id");
+    throw new ApiRequestError(
+      requestId ? `${message}（请求 ${requestId}）` : message,
+      response.status,
+      requestId,
+    );
   }
+  if (response.status === 204) return null as unknown as T;
   return response.json() as Promise<T>;
 }
 
@@ -388,12 +500,34 @@ export function getMe(token: string) {
   return apiFetch<CurrentUser>("/auth/me", token);
 }
 
+export function getMaturityStatus(token: string) {
+  return apiFetch<MaturityStatus>("/maturity/status", token);
+}
+
 export function logoutSession(token: string) {
   return post<{ ok: boolean }>("/auth/logout", token);
 }
 
-export function getProjects(token: string) {
-  return apiFetch<Project[]>("/projects", token);
+export function changeOwnPassword(token: string, currentPassword: string, newPassword: string) {
+  return post<LoginResponse>("/users/me/password", token, {
+    current_password: currentPassword,
+    new_password: newPassword,
+  });
+}
+
+export type ProjectListResponse = {
+  items: Project[];
+  total: number;
+  skip: number;
+  limit: number;
+};
+
+export function getProject(token: string, projectId: number) {
+  return apiFetch<Project>(`/projects/${projectId}`, token);
+}
+
+export function getProjectsPaginated(token: string, skip = 0, limit = 20) {
+  return apiFetch<ProjectListResponse>(`/projects?skip=${skip}&limit=${limit}`, token);
 }
 
 export function createProject(token: string, payload: Partial<Project> & { name: string }) {
@@ -448,11 +582,11 @@ export function getProjectMembers(token: string, projectId: number) {
   return apiFetch<ProjectMember[]>(`/projects/${projectId}/members`, token);
 }
 
-export function addProjectMember(token: string, projectId: number, payload: Omit<ProjectMember, "id" | "project_id">) {
+export function addProjectMember(token: string, projectId: number, payload: Omit<ProjectMember, "id" | "project_id" | "is_independent_reviewer">) {
   return post<{ ok: boolean }>(`/projects/${projectId}/members`, token, payload);
 }
 
-export function updateProjectMember(token: string, projectId: number, userId: number, payload: Partial<Omit<ProjectMember, "id" | "project_id" | "user_id">>) {
+export function updateProjectMember(token: string, projectId: number, userId: number, payload: Partial<Omit<ProjectMember, "id" | "project_id" | "user_id" | "is_independent_reviewer">>) {
   return patch<ProjectMember>(`/projects/${projectId}/members/${userId}`, token, payload);
 }
 
@@ -462,6 +596,10 @@ export function removeProjectMember(token: string, projectId: number, userId: nu
 
 export function addProjectReviewer(token: string, projectId: number, payload: { user_id: number; review_scope?: string }) {
   return post<{ id: number; project_id: number; user_id: number; review_scope: string }>(`/projects/${projectId}/reviewers`, token, payload);
+}
+
+export function removeProjectReviewer(token: string, projectId: number, userId: number) {
+  return del<{ ok: boolean }>(`/projects/${projectId}/reviewers/${userId}`, token);
 }
 
 export function getTemplates(token: string) {
@@ -600,19 +738,34 @@ export function getRagExperiments(token: string, projectId: number) {
   return apiFetch<AIExperimentRun[]>(`/projects/${projectId}/rag/experiments`, token);
 }
 
+export function getRagExperiment(token: string, runId: number) {
+  return apiFetch<AIExperimentRun>(`/rag/experiments/${runId}`, token);
+}
+
 export function runRagExperiment(
   token: string,
   projectId: number,
-  payload: { name: string; questions: string[]; modes?: string[] },
+  payload: {
+    name: string;
+    questions: string[];
+    modes?: string[];
+    repetitions?: number;
+    randomize_order?: boolean;
+    random_seed?: number | null;
+  },
 ) {
   return post<AIExperimentRun>(`/projects/${projectId}/rag/experiments`, token, payload);
 }
 
+export function resumeRagExperiment(token: string, runId: number) {
+  return post<AIExperimentRun>(`/rag/experiments/${runId}/resume`, token);
+}
+
 export async function downloadRagExperiment(token: string, runId: number) {
   const response = await fetch(`${API_BASE_URL}/rag/experiments/${runId}/export.csv`, {
-    headers: { Authorization: `Bearer ${token}` },
+    credentials: "include",
   });
-  if (!response.ok) throw new Error((await response.text()) || `Request failed: ${response.status}`);
+  if (!response.ok) throw new Error((await response.text()) || `请求失败: ${response.status}`);
   return response.blob();
 }
 
@@ -624,12 +777,48 @@ export function evaluateQueryLog(
   return post<AIQueryEvaluation>(`/rag/query-logs/${logId}/evaluation`, token, payload);
 }
 
-export function getProjectKnowledgeGraph(token: string, projectId: number) {
-  return apiFetch<KnowledgeGraph>(`/projects/${projectId}/kg/graph`, token);
+export function getBlindReviewBatches(token: string, projectId: number) {
+  return apiFetch<BlindReviewBatch[]>(`/projects/${projectId}/rag/blind-review/batches`, token);
 }
 
-export function getNoteKnowledgeGraph(token: string, noteId: number) {
-  return apiFetch<KnowledgeGraph>(`/notes/${noteId}/kg/graph`, token);
+export function getBlindReviewItems(
+  token: string,
+  projectId: number,
+  filters: { batch_id?: string; pending_only?: boolean } = {},
+) {
+  const params = new URLSearchParams();
+  if (filters.batch_id) params.set("batch_id", filters.batch_id);
+  if (filters.pending_only !== undefined) params.set("pending_only", String(filters.pending_only));
+  return apiFetch<BlindReviewItem[]>(
+    `/projects/${projectId}/rag/blind-review/items${params.toString() ? `?${params.toString()}` : ""}`,
+    token,
+  );
+}
+
+export function evaluateBlindReviewItem(
+  token: string,
+  projectId: number,
+  blindId: string,
+  payload: { score: number; is_accurate: boolean; is_traceable: boolean; comment?: string | null },
+) {
+  return post<BlindReviewEvaluation>(
+    `/projects/${projectId}/rag/blind-review/items/${encodeURIComponent(blindId)}/evaluation`,
+    token,
+    payload,
+  );
+}
+
+export async function downloadBlindReviewBatchExport(token: string, projectId: number, batchId: string) {
+  const response = await fetch(
+    `${API_BASE_URL}/projects/${projectId}/rag/blind-review/batches/${encodeURIComponent(batchId)}/export.csv`,
+    { credentials: "include" },
+  );
+  if (!response.ok) throw new Error(await response.text());
+  return response.blob();
+}
+
+export function getProjectKnowledgeGraph(token: string, projectId: number) {
+  return apiFetch<KnowledgeGraph>(`/projects/${projectId}/kg/graph`, token);
 }
 
 export function extractNoteKnowledgeGraph(token: string, noteId: number, rebuild = true) {
@@ -655,7 +844,7 @@ export type SearchResult = {
   source_ids: string[];
 };
 
-export type SearchStatus = {
+type SearchStatus = {
   total_documents: number;
   project_documents: number;
 };
@@ -672,26 +861,36 @@ export function searchDocuments(token: string, query: string, projectId?: number
 // ── OCR ───────────────────────────────────────────────────
 
 export type OcrJobResult = {
+  ocr_result_id: number;
   file_id: number;
   extracted_text: string;
+  raw_text: string;
   source_ids: string[];
+  character_count: number;
+  truncated: boolean;
+  extraction_method: string;
+  review_status: string;
+  created_by: number;
+  reviewed_by: number | null;
+  created_at: string;
+  reviewed_at: string | null;
 };
 
 export function extractOcr(token: string, fileId: number) {
   return post<OcrJobResult>("/api/ocr/extract", token, { file_id: fileId });
 }
 
-// ── Reports ───────────────────────────────────────────────
-
-export type ReportDraft = {
-  title: string;
-  body: string;
-  source_note_ids: number[];
-};
-
-export function createReportDraft(token: string, projectId: number, reportType = "daily") {
-  return post<ReportDraft>("/api/reports/draft", token, { report_type: reportType, project_id: projectId });
+export function getLatestOcrResult(token: string, fileId: number) {
+  return apiFetch<OcrJobResult>(`/api/ocr/files/${fileId}/latest`, token);
 }
+
+export function confirmOcrResult(token: string, resultId: number, correctedText: string) {
+  return post<OcrJobResult>(`/api/ocr/results/${resultId}/confirm`, token, {
+    corrected_text: correctedText,
+  });
+}
+
+// ── Reports ───────────────────────────────────────────────
 
 export function generateAgentOutput(
   token: string,

@@ -1,14 +1,13 @@
 export const projectTabs = [
-  { key: "overview", label: "项目概览", icon: "Database" },
-  { key: "notes", label: "实验笔记", icon: "FileText" },
-  { key: "files", label: "资料库", icon: "Upload" },
-  { key: "search", label: "搜索", icon: "FileSearch" },
-  { key: "kg", label: "知识图谱", icon: "Sparkles" },
-  { key: "reports", label: "报告", icon: "BarChart" },
-  { key: "approvals", label: "审批中心", icon: "ClipboardCheck" },
-  { key: "members", label: "成员权限", icon: "Users" },
-  { key: "logs", label: "项目日志", icon: "ShieldCheck" },
+  { key: "notes", label: "笔记" },
+  { key: "approvals", label: "审批" },
+  { key: "data", label: "资料" },
+  { key: "ai", label: "AI 问答" },
+  { key: "kg", label: "图谱" },
+  { key: "reports", label: "报告" },
+  { key: "settings", label: "设置" },
 ] as const;
+
 export type ProjectTab = (typeof projectTabs)[number]["key"];
 
 export const roleOptions = ["super_admin", "pi", "group_leader", "project_owner", "reviewer", "member"] as const;
