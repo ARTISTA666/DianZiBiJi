@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import subprocess
 from collections import defaultdict
@@ -11,10 +12,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = ROOT / "docs" / "experiments"
-NOTE_IDS = (9, 10, 11, 36)
+PROJECT_NAME = "论文演示项目：KG-RAG 实验流程"
 
-EXPECTED: dict[int, dict[str, list[str]]] = {
-    9: {
+EXPECTED: dict[str, dict[str, list[str]]] = {
+    "PCR 条件优化实验": {
         "has_note": ["PCR 条件优化实验"],
         "created_by": ["系统管理员"],
         "has_experiment_type": ["PCR"],
@@ -26,7 +27,7 @@ EXPECTED: dict[int, dict[str, list[str]]] = {
             "58℃ 条件下条带清晰。",
         ],
     },
-    10: {
+    "细胞活力检测实验": {
         "has_note": ["细胞活力检测实验"],
         "created_by": ["系统管理员"],
         "has_experiment_type": ["细胞培养"],
@@ -38,7 +39,7 @@ EXPECTED: dict[int, dict[str, list[str]]] = {
             "细胞活力下降约 18%。",
         ],
     },
-    11: {
+    "Western Blot 蛋白表达验证": {
         "has_note": ["Western Blot 蛋白表达验证"],
         "created_by": ["系统管理员"],
         "has_experiment_type": ["Western Blot"],
@@ -50,7 +51,7 @@ EXPECTED: dict[int, dict[str, list[str]]] = {
             "处理组目标蛋白表达降低。",
         ],
     },
-    36: {
+    "qPCR 定量验证实验": {
         "has_note": ["qPCR 定量验证实验"],
         "created_by": ["系统管理员"],
         "has_experiment_type": ["PCR"],
@@ -94,26 +95,29 @@ def query_json(sql: str) -> list[dict]:
 
 
 def load_relations() -> list[dict]:
-    ids = ",".join(str(value) for value in NOTE_IDS)
+    project_name = PROJECT_NAME.replace("'", "''")
+    titles = ",".join(f"'{title.replace(chr(39), chr(39) * 2)}'" for title in EXPECTED)
     sql = f"""
     SELECT COALESCE(json_agg(row_to_json(x)), '[]'::json)
     FROM (
-      SELECT r.id, r.source_id AS note_id, r.relation_type, r.confidence,
+      SELECT r.id, n.id AS note_id, n.title AS note_title, r.relation_type, r.confidence,
              r.source_type, se.label AS source_label, te.label AS target_label
       FROM kg_relations r
       JOIN kg_entities se ON se.id = r.source_entity_id
       JOIN kg_entities te ON te.id = r.target_entity_id
-      WHERE r.project_id = 19 AND r.source_id IN ({ids})
+      JOIN experiment_notes n ON n.id = r.source_id
+      JOIN projects p ON p.id = r.project_id
+      WHERE p.name = '{project_name}' AND n.title IN ({titles})
       ORDER BY r.id
     ) x;
     """
     return query_json(sql)
 
 
-def expected_pairs() -> set[tuple[int, str, str]]:
+def expected_pairs() -> set[tuple[str, str, str]]:
     return {
-        (note_id, relation_type, target)
-        for note_id, relations in EXPECTED.items()
+        (note_title, relation_type, target)
+        for note_title, relations in EXPECTED.items()
         for relation_type, targets in relations.items()
         for target in targets
     }
@@ -124,7 +128,7 @@ def main() -> None:
     relations = load_relations()
     expected = expected_pairs()
     actual = {
-        (int(row["note_id"]), str(row["relation_type"]), str(row["target_label"]))
+        (str(row["note_title"]), str(row["relation_type"]), str(row["target_label"]))
         for row in relations
     }
     true_positive = len(actual & expected)
@@ -134,13 +138,14 @@ def main() -> None:
     recall = true_positive / (true_positive + false_negative)
     f1 = 2 * precision * recall / (precision + recall)
 
-    audit_path = OUTPUT_DIR / "kg-relation-gold-audit-53.csv"
+    audit_path = OUTPUT_DIR / "kg-relation-gold-audit-after-fix.csv"
     with audit_path.open("w", encoding="utf-8-sig", newline="") as handle:
         writer = csv.DictWriter(
             handle,
             fieldnames=[
                 "relation_id",
                 "note_id",
+                "note_title",
                 "source_label",
                 "relation_type",
                 "target_label",
@@ -153,11 +158,12 @@ def main() -> None:
         )
         writer.writeheader()
         for row in relations:
-            key = (int(row["note_id"]), str(row["relation_type"]), str(row["target_label"]))
+            key = (str(row["note_title"]), str(row["relation_type"]), str(row["target_label"]))
             writer.writerow(
                 {
                     "relation_id": row["id"],
                     "note_id": row["note_id"],
+                    "note_title": row["note_title"],
                     "source_label": row["source_label"],
                     "relation_type": row["relation_type"],
                     "target_label": row["target_label"],
@@ -169,12 +175,12 @@ def main() -> None:
                 }
             )
 
-    missing_path = OUTPUT_DIR / "kg-relation-gold-missing.json"
+    missing_path = OUTPUT_DIR / "kg-relation-gold-missing-after-fix.json"
     missing_path.write_text(
         json.dumps(
             [
-                {"note_id": note_id, "relation_type": relation_type, "target_label": target}
-                for note_id, relation_type, target in sorted(expected - actual)
+                {"note_title": note_title, "relation_type": relation_type, "target_label": target}
+                for note_title, relation_type, target in sorted(expected - actual)
             ],
             ensure_ascii=False,
             indent=2,
@@ -185,11 +191,21 @@ def main() -> None:
     relation_counts: dict[str, int] = defaultdict(int)
     for row in relations:
         relation_counts[str(row["relation_type"])] += 1
-    summary_path = OUTPUT_DIR / "kg-relation-gold-audit-summary.md"
+    summary_path = OUTPUT_DIR / "kg-relation-gold-audit-after-fix-summary.md"
+    gold_hash = hashlib.sha256(
+        json.dumps(EXPECTED, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()
+    finding = (
+        "本次核验未发现错误关系。修复后的分隔规则已将正文“cDNA 样本 1、2”正确解析为“cDNA 样本 1”和“cDNA 样本 2”。"
+        if false_positive == 0 and false_negative == 0
+        else "仍存在错误或漏检关系，具体条目见 CSV 和缺失关系 JSON。"
+    )
     lines = [
         "# 知识图谱关系金标准核验",
         "",
-        "核验对象为项目 19 的前四条已审核实验笔记。金标准依据当前已审核版本中的结构化字段、正文和基础元数据逐条定义,不以抽取结果反推答案。",
+        f"核验对象为“{PROJECT_NAME}”中的四条固定演示笔记。源数据由 `backend/app/services/seed.py` 固定生成；它们不是用户提供的真实实验数据。",
+        "",
+        f"金标准 SHA-256：`{gold_hash}`。金标准依据固定笔记的结构化字段、正文和基础元数据预先定义，不以本次抽取结果反推答案。",
         "",
         "| 指标 | 结果 |",
         "| --- | ---: |",
@@ -202,7 +218,7 @@ def main() -> None:
         f"| 召回率 | {recall:.2%} |",
         f"| F1 | {f1:.2%} |",
         "",
-        "唯一错误关系为 qPCR 笔记中的样本实体“2”。其来源是正文“cDNA 样本 1、2”被分隔符规则拆分为“cDNA 样本 1”和“2”,说明当前规则对省略中心词的并列表达处理不足。",
+        finding,
         "",
         "关系类型分布:",
         "",
@@ -212,7 +228,7 @@ def main() -> None:
     lines.extend(
         [
             "",
-            "边界说明: 该金标准覆盖四条规范化笔记和 53 条实际关系,用于验证当前演示数据上的抽取一致性,不能替代跨领域、长文本和隐含关系场景的大规模信息抽取评测。CSV 中保留作者签核列,正式提交前应由研究者复核。",
+            f"边界说明: 该金标准覆盖四条规范化演示笔记和 {len(actual)} 条实际关系,只用于验证当前固定样例上的抽取一致性,不能替代真实实验笔记、跨领域长文本和隐含关系评测。CSV 中保留作者签核列,正式提交前应由研究者复核。",
             "",
         ]
     )

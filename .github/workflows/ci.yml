@@ -1,0 +1,154 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Legacy Python test job.
+  # The production backend is now Rust (Axum); the Python FastAPI code under
+  # backend/app/ is retained for development reference and scripted E2E probes
+  # (e.g. validate_experiment_restart.py, load_smoke.py).  This job ensures
+  # those Python scripts and any remaining unit tests stay green.
+  # ---------------------------------------------------------------------------
+  backend-python:
+    name: Backend (Python — legacy / dev-only)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: eln
+          POSTGRES_PASSWORD: eln_test
+          POSTGRES_DB: eln_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U eln"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        env:
+          TEST_DATABASE_URL: postgresql://eln:eln_test@localhost:5432/eln_test
+        run: python -m pytest tests -q
+      - name: Run repository script tests
+        working-directory: .
+        run: python -m pytest -q scripts/test_*.py
+
+  backend-rust:
+    name: Backend (Rust)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: eln
+          POSTGRES_PASSWORD: eln_test
+          POSTGRES_DB: eln_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U eln"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      # rustup picks up backend/rust-toolchain.toml automatically.
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: backend
+      - name: Format check
+        run: cargo fmt --check
+      - name: Clippy
+        run: cargo clippy --locked --all-targets --all-features -- -D warnings
+      - name: Tests (integration tests use the Postgres service)
+        env:
+          TEST_DATABASE_URL: postgresql://eln:eln_test@localhost:5432/eln_test
+        # Integration tests share one database schema; keep them serial.
+        run: cargo test --locked --all-targets --all-features -- --test-threads=1
+
+  frontend:
+    name: Frontend (Next.js)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=low
+      - name: Generate API contract types
+        run: npm run generate:api
+      - name: Verify generated API contract is committed
+        run: git diff --exit-code -- src/lib/api-schema.d.ts
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
+      - name: Build
+        run: npm run build
+
+  system-e2e:
+    name: System E2E (isolated production stack)
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install probe dependencies
+        run: python -m pip install -r backend/requirements.txt
+      - name: Install browser test dependencies
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Run browser, restart-recovery, and load gates
+        env:
+          E2E_PYTHON: python
+        run: ./scripts/run-system-e2e.sh
+      - name: Upload system-test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-e2e-evidence
+          path: output/playwright
+          if-no-files-found: warn
