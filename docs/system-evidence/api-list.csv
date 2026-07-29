@@ -1,0 +1,78 @@
+﻿method,path,tags,summary,operation_id
+POST,/api/agents/generate,agents,Generate Agent Output,generate_agent_output_api_agents_generate_post
+POST,/api/ocr/extract,ocr,Extract Ocr,extract_ocr_api_ocr_extract_post
+GET,/api/ocr/files/{file_id}/latest,ocr,Get Latest Ocr Result,get_latest_ocr_result_api_ocr_files__file_id__latest_get
+POST,/api/ocr/results/{result_id}/confirm,ocr,Confirm Ocr Result,confirm_ocr_result_api_ocr_results__result_id__confirm_post
+POST,/api/search,search,Search,search_api_search_post
+POST,/api/search/index,search,Reindex Search,reindex_search_api_search_index_post
+GET,/approvals/pending,notes,List Pending Approvals,list_pending_approvals_approvals_pending_get
+GET,/audit-logs,audit,List Audit Logs,list_audit_logs_audit_logs_get
+POST,/auth/login,auth,Login,login_auth_login_post
+POST,/auth/logout,auth,Logout,logout_auth_logout_post
+GET,/auth/me,auth,Me,me_auth_me_get
+POST,/documents/{file_id}/approve,files,Approve Document,approve_document_documents__file_id__approve_post
+POST,/documents/{file_id}/reject,files,Reject Document,reject_document_documents__file_id__reject_post
+GET,/files/{file_id},files,Get File,get_file_files__file_id__get
+PATCH,/files/{file_id},files,Update File,update_file_files__file_id__patch
+POST,/files/{file_id}/archive,files,Archive File,archive_file_files__file_id__archive_post
+GET,/files/{file_id}/download,files,Download File,download_file_files__file_id__download_get
+POST,/files/{file_id}/rag/sync,rag,Sync File To Rag,sync_file_to_rag_files__file_id__rag_sync_post
+POST,/files/{file_id}/review,files,Review File,review_file_files__file_id__review_post
+GET,/groups,groups,List Groups,list_groups_groups_get
+POST,/groups,groups,Create Group,create_group_groups_post
+GET,/groups/{group_id},groups,Get Group,get_group_groups__group_id__get
+PATCH,/groups/{group_id},groups,Update Group,update_group_groups__group_id__patch
+GET,/groups/{group_id}/members,groups,List Group Members,list_group_members_groups__group_id__members_get
+POST,/groups/{group_id}/members,groups,Add Group Member,add_group_member_groups__group_id__members_post
+DELETE,/groups/{group_id}/members/{user_id},groups,Remove Group Member,remove_group_member_groups__group_id__members__user_id__delete
+GET,/health,,Health,health_health_get
+GET,/notes/{note_id},notes,Get Note,get_note_notes__note_id__get
+PATCH,/notes/{note_id},notes,Update Note,update_note_notes__note_id__patch
+GET,/notes/{note_id}/approvals,notes,List Note Approvals,list_note_approvals_notes__note_id__approvals_get
+POST,/notes/{note_id}/approve,notes,Approve Note,approve_note_notes__note_id__approve_post
+POST,/notes/{note_id}/archive,notes,Archive Note,archive_note_notes__note_id__archive_post
+GET,/notes/{note_id}/files,files,List Note Files,list_note_files_notes__note_id__files_get
+POST,/notes/{note_id}/kg/extract,knowledge-graph,Extract Note Knowledge Graph,extract_note_knowledge_graph_notes__note_id__kg_extract_post
+GET,/notes/{note_id}/kg/graph,knowledge-graph,Get Note Knowledge Graph,get_note_knowledge_graph_notes__note_id__kg_graph_get
+POST,/notes/{note_id}/return,notes,Return Note,return_note_notes__note_id__return_post
+POST,/notes/{note_id}/submit,notes,Submit Note,submit_note_notes__note_id__submit_post
+GET,/notes/{note_id}/versions,notes,List Note Versions,list_note_versions_notes__note_id__versions_get
+GET,/notes/{note_id}/versions/{version_id},notes,Get Note Version,get_note_version_notes__note_id__versions__version_id__get
+POST,/notes/{note_id}/void,notes,Void Note,void_note_notes__note_id__void_post
+GET,/projects,projects,List Projects,list_projects_projects_get
+POST,/projects,projects,Create Project,create_project_projects_post
+GET,/projects/{project_id},projects,Get Project,get_project_projects__project_id__get
+PATCH,/projects/{project_id},projects,Update Project,update_project_projects__project_id__patch
+GET,/projects/{project_id}/agents/runs,agents,List Agent Runs,list_agent_runs_projects__project_id__agents_runs_get
+GET,/projects/{project_id}/documents,files,List Project Documents,list_project_documents_projects__project_id__documents_get
+POST,/projects/{project_id}/documents,files,Upload Project Document,upload_project_document_projects__project_id__documents_post
+GET,/projects/{project_id}/files,files,List Project Files,list_project_files_projects__project_id__files_get
+POST,/projects/{project_id}/files,files,Upload Project File,upload_project_file_projects__project_id__files_post
+GET,/projects/{project_id}/kg/graph,knowledge-graph,Get Project Knowledge Graph,get_project_knowledge_graph_projects__project_id__kg_graph_get
+POST,/projects/{project_id}/kg/rebuild,knowledge-graph,Rebuild Project Knowledge Graph,rebuild_project_knowledge_graph_projects__project_id__kg_rebuild_post
+GET,/projects/{project_id}/members,projects,List Project Members,list_project_members_projects__project_id__members_get
+POST,/projects/{project_id}/members,projects,Add Project Member,add_project_member_projects__project_id__members_post
+PATCH,/projects/{project_id}/members/{user_id},projects,Update Project Member,update_project_member_projects__project_id__members__user_id__patch
+DELETE,/projects/{project_id}/members/{user_id},projects,Remove Project Member,remove_project_member_projects__project_id__members__user_id__delete
+GET,/projects/{project_id}/notes,notes,List Notes,list_notes_projects__project_id__notes_get
+POST,/projects/{project_id}/notes,notes,Create Note,create_note_projects__project_id__notes_post
+GET,/projects/{project_id}/rag/analytics,rag,Get Project Query Analytics,get_project_query_analytics_projects__project_id__rag_analytics_get
+GET,/projects/{project_id}/rag/blind-review/batches,rag,List Blind Review Batches,list_blind_review_batches_projects__project_id__rag_blind_review_batches_get
+GET,/projects/{project_id}/rag/blind-review/items,rag,List Blind Review Items,list_blind_review_items_projects__project_id__rag_blind_review_items_get
+POST,/projects/{project_id}/rag/blind-review/items/{blind_id}/evaluation,rag,Evaluate Blind Review Item,evaluate_blind_review_item_projects__project_id__rag_blind_review_items__blind_id__evaluation_post
+GET,/projects/{project_id}/rag/experiments,rag,List Rag Experiments,list_rag_experiments_projects__project_id__rag_experiments_get
+POST,/projects/{project_id}/rag/experiments,rag,Run Rag Experiment,run_rag_experiment_projects__project_id__rag_experiments_post
+POST,/projects/{project_id}/rag/init,rag,Init Project Rag,init_project_rag_projects__project_id__rag_init_post
+POST,/projects/{project_id}/rag/query,rag,Query Project Rag,query_project_rag_projects__project_id__rag_query_post
+GET,/projects/{project_id}/rag/query-logs,rag,List Project Query Logs,list_project_query_logs_projects__project_id__rag_query_logs_get
+GET,/projects/{project_id}/rag/status,rag,Get Project Rag Status,get_project_rag_status_projects__project_id__rag_status_get
+POST,/projects/{project_id}/reviewers,projects,Add Project Reviewer,add_project_reviewer_projects__project_id__reviewers_post
+DELETE,/projects/{project_id}/reviewers/{user_id},projects,Remove Project Reviewer,remove_project_reviewer_projects__project_id__reviewers__user_id__delete
+GET,/rag/experiments/{run_id}/export.csv,rag,Export Rag Experiment,export_rag_experiment_rag_experiments__run_id__export_csv_get
+POST,/rag/query-logs/{log_id}/evaluation,rag,Upsert Query Evaluation,upsert_query_evaluation_rag_query_logs__log_id__evaluation_post
+GET,/templates,templates,List Templates,list_templates_templates_get
+GET,/users,users,List Users,list_users_users_get
+POST,/users,users,Create User,create_user_users_post
+GET,/users/{user_id},users,Get User,get_user_users__user_id__get
+PATCH,/users/{user_id},users,Update User,update_user_users__user_id__patch
+POST,/users/{user_id}/disable,users,Disable User,disable_user_users__user_id__disable_post

@@ -1,0 +1,37 @@
+# Evidence-only production environment file for maturity gate safety checks.
+# This file is NOT used at runtime; it proves that the production config
+# pipeline validates all required safety keys in a production context.
+APP_ENV=production
+SECRET_KEY=eln-production-maturity-evidence-key-32len
+BOOTSTRAP_ADMIN_PASSWORD=eln-prod-pwd12chars
+POSTGRES_PASSWORD=eln-prod-db-pwd12chars
+SEED_DEMO_DATA=false
+DEEPSEEK_API_KEY=production-placeholder-key
+APP_REVISION=maturity-evidence-v1
+POSTGRES_DB=eln
+POSTGRES_USER=eln_user
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+BACKEND_PORT=8001
+FRONTEND_PORT=3000
+SYSTEM_STORAGE_PATH=./storage
+BOOTSTRAP_ADMIN_USERNAME=admin
+CORS_ORIGINS=http://localhost:3000
+ACCESS_TOKEN_EXPIRE_MINUTES=480
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8001
+DEEPSEEK_API_BASE_URL=https://api.deepseek.com
+DEEPSEEK_MODEL=deepseek-v4-flash
+EMBEDDING_MODEL=BAAI/bge-small-zh-v1.5
+EMBEDDING_DIMENSION=512
+DOCUMENT_TEXT_MAX_CHARS=2000000
+UPLOAD_MAX_BYTES=52428800
+OCR_LANGUAGES=chi_sim+eng
+OCR_PREPROCESSING=grayscale_otsu
+OCR_PAGE_SEGMENTATION_MODE=3
+RAG_CHUNK_SIZE=700
+RAG_CHUNK_OVERLAP=120
+RAG_RETRIEVAL_TOP_K=6
+RAG_COLLECTION_RETRIEVAL_TOP_K=12
+RAG_VECTOR_CANDIDATE_K=30
+RAG_GRAPH_TOP_K=10
+RAG_GRAPH_MIN_SCORE=1.0

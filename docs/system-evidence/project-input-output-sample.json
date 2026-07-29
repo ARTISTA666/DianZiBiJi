@@ -1,0 +1,685 @@
+{
+  "files": [
+    {
+      "filename": "GSE111619_family.soft.gz",
+      "id": 9,
+      "knowledge_sync_status": "not_applicable",
+      "mime_type": "application/octet-stream",
+      "sha256": "fbfb8aa0a5b0bee99c8ec44d641eec82568a4ce24706b1d16a3010c9403c6043",
+      "size": 3029,
+      "status": "uploaded"
+    },
+    {
+      "filename": "GSE111619_series_matrix.txt.gz",
+      "id": 10,
+      "knowledge_sync_status": "not_applicable",
+      "mime_type": "text/plain",
+      "sha256": "b8086b3dad39d1120d6e03fc62ee22007692e86c7ad688e4da300c38822b8849",
+      "size": 2951,
+      "status": "uploaded"
+    },
+    {
+      "filename": "GSE111619_HTSeq_counts.txt.gz",
+      "id": 11,
+      "knowledge_sync_status": "not_applicable",
+      "mime_type": "text/plain",
+      "sha256": "662eeaa22c55beb5457b447a27be6f9c5df70f831addd3b04ed6bc718de569f5",
+      "size": 218459,
+      "status": "uploaded"
+    },
+    {
+      "filename": "gse111619_notes.json",
+      "id": 12,
+      "knowledge_sync_status": "not_applicable",
+      "mime_type": "application/json",
+      "sha256": "48fac5e897b655e25315a0351f910bac3afff9e381dfa91313269c4c47b13f5d",
+      "size": 7267,
+      "status": "uploaded"
+    },
+    {
+      "filename": "GSE111619_family.soft",
+      "id": 13,
+      "knowledge_sync_status": "synced",
+      "mime_type": "application/octet-stream",
+      "sha256": "b84b094bcc6bbbe40b57220ba7c219284200f35834627b6f3e8723b836016469",
+      "size": 20711,
+      "status": "approved"
+    },
+    {
+      "filename": "GSE111619_series_matrix.txt",
+      "id": 14,
+      "knowledge_sync_status": "synced",
+      "mime_type": "text/plain",
+      "sha256": "cc51ac118c73c1d64f4268115a2688db19ee844672c0dc3a80323a1fff7aeab1",
+      "size": 16086,
+      "status": "approved"
+    },
+    {
+      "filename": "GSE111619_HTSeq_counts.txt",
+      "id": 15,
+      "knowledge_sync_status": "synced",
+      "mime_type": "text/plain",
+      "sha256": "09275fe1d4576968d5f2fc9bf45b26812103dcef0c5a43108f283cb8c7519826",
+      "size": 531542,
+      "status": "approved"
+    },
+    {
+      "filename": "gse111619_samples.csv",
+      "id": 16,
+      "knowledge_sync_status": "synced",
+      "mime_type": "text/csv",
+      "sha256": "7aec664d8f87f24c01979206e8561d5c008482b8239fb0d853a4cf1a83b8e55d",
+      "size": 1394,
+      "status": "approved"
+    }
+  ],
+  "graph_relations": [
+    {
+      "confidence": 1.0,
+      "id": 351,
+      "relation": "has_note",
+      "source": "GSE111619 KG-RAG 原始语料盲测项目",
+      "source_record_id": 8,
+      "source_record_type": "note",
+      "source_type": "project",
+      "target": "GSE111619 GSM3035185 RNA-seq record",
+      "target_type": "note"
+    },
+    {
+      "confidence": 1.0,
+      "id": 352,
+      "relation": "created_by",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note",
+      "source_type": "note",
+      "target": "系统管理员",
+      "target_type": "user"
+    },
+    {
+      "confidence": 1.0,
+      "id": 353,
+      "relation": "has_experiment_type",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note",
+      "source_type": "note",
+      "target": "RNA-Seq",
+      "target_type": "experiment_type"
+    },
+    {
+      "confidence": 0.7,
+      "id": 354,
+      "relation": "uses_reagent",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "doxycycline (1 microgram per mL)",
+      "target_type": "reagent"
+    },
+    {
+      "confidence": 0.7,
+      "id": 355,
+      "relation": "uses_reagent",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "PureLink RNA Mini kit",
+      "target_type": "reagent"
+    },
+    {
+      "confidence": 0.7,
+      "id": 356,
+      "relation": "uses_reagent",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "TruSeq Stranded mRNA Library Prep Kit",
+      "target_type": "reagent"
+    },
+    {
+      "confidence": 0.7,
+      "id": 357,
+      "relation": "uses_instrument",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Illumina HiSeq 2500",
+      "target_type": "instrument"
+    },
+    {
+      "confidence": 0.7,
+      "id": 358,
+      "relation": "uses_instrument",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Bioanalyzer RNA Pico chips",
+      "target_type": "instrument"
+    },
+    {
+      "confidence": 0.7,
+      "id": 359,
+      "relation": "uses_sample",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]",
+      "target_type": "sample"
+    },
+    {
+      "confidence": 0.7,
+      "id": 360,
+      "relation": "produces_result",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "GSM3035185: total_count=53924761, detected_gene_rows=17926",
+      "target_type": "result"
+    },
+    {
+      "confidence": 0.7,
+      "id": 361,
+      "relation": "produces_result",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "RNA quality: RIN > 9",
+      "target_type": "result"
+    },
+    {
+      "confidence": 0.8,
+      "id": 362,
+      "relation": "has_biological_source",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "H226",
+      "target_type": "biological_source"
+    },
+    {
+      "confidence": 0.8,
+      "id": 363,
+      "relation": "has_biological_source",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "lung squamous cell carcinoma",
+      "target_type": "biological_source"
+    },
+    {
+      "confidence": 0.8,
+      "id": 364,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "37°C",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 365,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "5% CO2",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 366,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "6 days",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 367,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Control",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 368,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "1 µg/mL doxycycline",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 369,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "biological replicate 1",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 370,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "HTSeq v0.6.1",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 371,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "TopHat2 v2.0.13",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 372,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "bcl2fastq v1.8.4",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 373,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "FASTQC v0.11.2",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 374,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "SAMtools v0.1.19",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 375,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Picard v1.129",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 376,
+      "relation": "uses_software",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "RSeQC v2.6",
+      "target_type": "software"
+    },
+    {
+      "confidence": 0.8,
+      "id": 377,
+      "relation": "has_identifier",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "GRCh37/hg19",
+      "target_type": "identifier"
+    },
+    {
+      "confidence": 0.8,
+      "id": 378,
+      "relation": "has_identifier",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "GSM3035185",
+      "target_type": "identifier"
+    },
+    {
+      "confidence": 0.8,
+      "id": 379,
+      "relation": "has_identifier",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "NonTargeting_rep1",
+      "target_type": "identifier"
+    },
+    {
+      "confidence": 0.8,
+      "id": 380,
+      "relation": "has_identifier",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "SRX3777456",
+      "target_type": "identifier"
+    },
+    {
+      "confidence": 0.8,
+      "id": 381,
+      "relation": "has_identifier",
+      "source": "GSE111619 GSM3035185 RNA-seq record",
+      "source_record_id": 8,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "SAMN08667775",
+      "target_type": "identifier"
+    },
+    {
+      "confidence": 1.0,
+      "id": 382,
+      "relation": "has_note",
+      "source": "GSE111619 KG-RAG 原始语料盲测项目",
+      "source_record_id": 9,
+      "source_record_type": "note",
+      "source_type": "project",
+      "target": "GSE111619 GSM3035186 RNA-seq record",
+      "target_type": "note"
+    },
+    {
+      "confidence": 1.0,
+      "id": 383,
+      "relation": "created_by",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note",
+      "source_type": "note",
+      "target": "系统管理员",
+      "target_type": "user"
+    },
+    {
+      "confidence": 1.0,
+      "id": 384,
+      "relation": "has_experiment_type",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note",
+      "source_type": "note",
+      "target": "RNA-Seq",
+      "target_type": "experiment_type"
+    },
+    {
+      "confidence": 0.7,
+      "id": 385,
+      "relation": "uses_reagent",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "doxycycline (1 microgram per mL)",
+      "target_type": "reagent"
+    },
+    {
+      "confidence": 0.7,
+      "id": 386,
+      "relation": "uses_reagent",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "PureLink RNA Mini kit",
+      "target_type": "reagent"
+    },
+    {
+      "confidence": 0.7,
+      "id": 387,
+      "relation": "uses_reagent",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "TruSeq Stranded mRNA Library Prep Kit",
+      "target_type": "reagent"
+    },
+    {
+      "confidence": 0.7,
+      "id": 388,
+      "relation": "uses_instrument",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Illumina HiSeq 2500",
+      "target_type": "instrument"
+    },
+    {
+      "confidence": 0.7,
+      "id": 389,
+      "relation": "uses_instrument",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Bioanalyzer RNA Pico chips",
+      "target_type": "instrument"
+    },
+    {
+      "confidence": 0.7,
+      "id": 390,
+      "relation": "uses_sample",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]",
+      "target_type": "sample"
+    },
+    {
+      "confidence": 0.7,
+      "id": 391,
+      "relation": "produces_result",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "GSM3035186: total_count=52016366, detected_gene_rows=17953",
+      "target_type": "result"
+    },
+    {
+      "confidence": 0.7,
+      "id": 392,
+      "relation": "produces_result",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "RNA quality: RIN > 9",
+      "target_type": "result"
+    },
+    {
+      "confidence": 0.8,
+      "id": 393,
+      "relation": "has_biological_source",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "H226",
+      "target_type": "biological_source"
+    },
+    {
+      "confidence": 0.8,
+      "id": 394,
+      "relation": "has_biological_source",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "lung squamous cell carcinoma",
+      "target_type": "biological_source"
+    },
+    {
+      "confidence": 0.8,
+      "id": 395,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "37°C",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 396,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "5% CO2",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 397,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "6 days",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 398,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "Control",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 399,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "1 µg/mL doxycycline",
+      "target_type": "condition"
+    },
+    {
+      "confidence": 0.8,
+      "id": 400,
+      "relation": "has_condition",
+      "source": "GSE111619 GSM3035186 RNA-seq record",
+      "source_record_id": 9,
+      "source_record_type": "note_extraction",
+      "source_type": "note",
+      "target": "biological replicate 2",
+      "target_type": "condition"
+    }
+  ],
+  "note": {
+    "content_json": {
+      "text": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035185。\n样本信息为 GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035185: total_count=53924761, detected_gene_rows=17926；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。"
+    },
+    "experiment_date": null,
+    "experiment_type": "RNA-Seq",
+    "fixed_fields_json": {
+      "alignment_method": "TopHat2 v2.0.13",
+      "biosample_accession": "SAMN08667775",
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "condition": "control",
+      "count_column": "NonTargeting_rep1",
+      "count_method": "HTSeq v0.6.1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "genome_build": "GRCh37/hg19",
+      "instruments": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips"
+      ],
+      "processing_software": [
+        "bcl2fastq v1.8.4",
+        "FASTQC v0.11.2",
+        "TopHat2 v2.0.13",
+        "SAMtools v0.1.19",
+        "Picard v1.129",
+        "RSeQC v2.6",
+        "HTSeq v0.6.1"
+      ],
+      "reagents": [
+        "doxycycline (1 microgram per mL)",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "replicate_label": "biological replicate 1",
+      "results": [
+        "GSM3035185: total_count=53924761, detected_gene_rows=17926",
+        "RNA quality: RIN > 9"
+      ],
+      "samples": [
+        "GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]"
+      ],
+      "shrna_construct": "Control",
+      "source": "NCBI GEO GSE111619",
+      "source_accession": "GSM3035185",
+      "sra_accession": "SRX3777456",
+      "treatment": "1 µg/mL doxycycline"
+    },
+    "id": 8,
+    "status": "approved",
+    "title": "GSE111619 GSM3035185 RNA-seq record"
+  },
+  "project": {
+    "description": "NCBI GEO GSE111619 公开 RNA-seq 数据验证项目；仅以原始 GEO 文档作为向量语料，用冻结题集验证知识图谱关系补证。",
+    "id": 3,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "validated_at": "2026-07-12T11:55:59.270931+00:00",
+  "scope": "functional OCR review and indexing gate; not OCR accuracy",
+  "source": {
+    "file_id": 18,
+    "original_filename": "ocr-ui-validation.png",
+    "file_hash": "e5179fb0bc5c5e775be3a9c2f0de0de46bb4e06ebf29c9bf0d53cb18e6ddf5a7",
+    "storage_path": "/storage/projects/1/c9ccdbced06c45d584af20838a23cefe.png"
+  },
+  "project_id": 4,
+  "file_id": 19,
+  "file_status_after_validation": "approved",
+  "knowledge_sync_status_after_validation": "synced",
+  "before_confirmation": {
+    "sync_http_status": 502,
+    "sync_detail": "Image OCR must be reviewed and confirmed before indexing"
+  },
+  "ocr": {
+    "ocr_result_id": 1,
+    "extraction_method": "tesseract:chi_sim+eng",
+    "raw_character_count": 332,
+    "raw_text": "指标                                  普通 RAG                            图谱增强 RAG                       变化\n微平均事实覆盖率                      28.12%                                   78.12%                                   +50.00 个百分点\n\n宏平均事实履盖率                 26.11%                           76.11%                            +50.00 个百分点",
+    "confirmed_character_count": 91,
+    "confirmed_text": "指标 普通 RAG 图谱增强 RAG 变化\n微平均事实覆盖率 28.12% 78.12% +50.00 个百分点\n宏平均事实覆盖率 26.11% 76.11% +50.00 个百分点",
+    "review_status": "confirmed",
+    "reviewed_by": 1,
+    "reviewed_at": "2026-07-12T11:55:58.940369Z"
+  },
+  "after_confirmation": {
+    "sync_http_status": 200,
+    "rag_status": {
+      "initialized": true,
+      "dataset": {
+        "id": 4,
+        "project_id": 4,
+        "dify_dataset_id": "local-project-4",
+        "dify_dataset_name": "ELN Project 4 - 运行验收：图片 OCR 校对闭环",
+        "provider": "local_deepseek",
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "generation_model": "deepseek-v4-flash",
+        "status": "active",
+        "created_by": 1,
+        "created_at": "2026-07-12T11:55:58.662262Z",
+        "updated_at": "2026-07-12T11:55:58.662262Z"
+      },
+      "pending_sync_count": 0,
+      "failed_sync_count": 0,
+      "synced_count": 1
+    }
+  },
+  "audit_action_counts": {
+    "confirm_file_ocr": 1,
+    "extract_file_text": 1,
+    "index_rag_document": 1,
+    "index_rag_document_failed": 1,
+    "init_local_rag": 1,
+    "review_document": 1,
+    "upload_file": 1
+  },
+  "passed": true
+}

@@ -1,0 +1,1371 @@
+{
+  "generated_at": "2026-07-16T15:52:38.244024+00:00",
+  "runtime": {
+    "captured_at": "2026-07-16T15:52:39.664003+00:00",
+    "platform": {
+      "system": "Darwin",
+      "release": "25.5.0",
+      "machine": "arm64"
+    },
+    "commands": [
+      {
+        "command": [
+          "docker",
+          "compose",
+          "config",
+          "--quiet"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "docker",
+          "compose",
+          "exec",
+          "-T",
+          "backend",
+          "alembic",
+          "current"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "stdout": "0003_user_auth_version (head)",
+        "stderr": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL."
+      },
+      {
+        "command": [
+          "docker",
+          "compose",
+          "exec",
+          "-T",
+          "backend",
+          "alembic",
+          "check"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "stdout": "No new upgrade operations detected.",
+        "stderr": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments\n/app/migrations/env.py:74: SAWarning: Did not recognize type 'vector' of column 'embedding'\n  context.run_migrations()\nINFO  [alembic.ddl.postgresql] Detected sequence named 'group_projects_id_seq' as owned by integer column 'group_projects(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'files_id_seq' as owned by integer column 'files(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'project_members_id_seq' as owned by integer column 'project_members(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'kg_extraction_runs_id_seq' as owned by integer column 'kg_extraction_runs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'audit_logs_id_seq' as owned by integer column 'audit_logs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'project_reviewers_id_seq' as owned by integer column 'project_reviewers(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'kg_relations_id_seq' as owned by integer column 'kg_relations(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'group_members_id_seq' as owned by integer column 'group_members(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'rag_file_syncs_id_seq' as owned by integer column 'rag_file_syncs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'kg_entities_id_seq' as owned by integer column 'kg_entities(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'projects_id_seq' as owned by integer column 'projects(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'ai_query_logs_id_seq' as owned by integer column 'ai_query_logs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'note_approvals_id_seq' as owned by integer column 'note_approvals(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'ai_query_evaluations_id_seq' as owned by integer column 'ai_query_evaluations(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'file_ocr_results_id_seq' as owned by integer column 'file_ocr_results(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'groups_id_seq' as owned by integer column 'groups(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'agent_generation_runs_id_seq' as owned by integer column 'agent_generation_runs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'users_id_seq' as owned by integer column 'users(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'search_documents_id_seq' as owned by integer column 'search_documents(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'note_versions_id_seq' as owned by integer column 'note_versions(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'experiment_notes_id_seq' as owned by integer column 'experiment_notes(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'experiment_templates_id_seq' as owned by integer column 'experiment_templates(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'ai_experiment_runs_id_seq' as owned by integer column 'ai_experiment_runs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'rag_document_chunks_id_seq' as owned by integer column 'rag_document_chunks(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'project_rag_datasets_id_seq' as owned by integer column 'project_rag_datasets(id)', assuming SERIAL and omitting\nINFO  [alembic.autogenerate.compare.types] Couldn't determine database type for column 'rag_document_chunks.embedding'\nINFO  [alembic.autogenerate.compare.types] Couldn't determine database type for column 'rag_document_chunks.embedding'"
+      },
+      {
+        "command": [
+          "docker",
+          "compose",
+          "exec",
+          "-T",
+          "backend",
+          "python",
+          "scripts/verify_runtime_schema.py"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "stdout": "{\n  \"checked_at\": \"2026-07-16T15:52:39.563357+00:00\",\n  \"dialect\": \"postgresql\",\n  \"ok\": true,\n  \"checks\": [\n    {\n      \"id\": \"ocr_table_exists\",\n      \"passed\": true,\n      \"detail\": {}\n    },\n    {\n      \"id\": \"evaluation_table_exists\",\n      \"passed\": true,\n      \"detail\": {}\n    },\n    {\n      \"id\": \"ocr_columns_complete\",\n      \"passed\": true,\n      \"detail\": {\n        \"missing_columns\": []\n      }\n    },\n    {\n      \"id\": \"evaluation_columns_complete\",\n      \"passed\": true,\n      \"detail\": {\n        \"missing_columns\": []\n      }\n    },\n    {\n      \"id\": \"multi_reviewer_unique_constraint_present\",\n      \"passed\": true,\n      \"detail\": {\n        \"expected_name\": \"uq_ai_query_evaluation_log_evaluator\"\n      }\n    },\n    {\n      \"id\": \"legacy_single_reviewer_constraint_absent\",\n      \"passed\": true,\n      \"detail\": {\n        \"legacy_name\": \"uq_ai_query_evaluation_log\"\n      }\n    }\n  ]\n}",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "docker",
+          "compose",
+          "exec",
+          "-T",
+          "backend",
+          "tesseract",
+          "--list-langs"
+        ],
+        "exit_code": 0,
+        "passed": true,
+        "stdout": "List of available languages in \"/usr/share/tesseract-ocr/5/tessdata/\" (4):\nchi_sim\neng\nosd\nukr",
+        "stderr": ""
+      }
+    ],
+    "urls": [
+      {
+        "url": "http://127.0.0.1:8001/health",
+        "status": 200,
+        "passed": true,
+        "body": "{\"status\":\"ok\"}"
+      },
+      {
+        "url": "http://127.0.0.1:3000",
+        "status": 200,
+        "passed": true,
+        "body": "<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/40e15cc745facc20.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-52d428ccd66bfe75.js\"/><script src=\"/_next/static/chunks/4bd1b696-215e5051988c3dde.js\" async=\"\"></script><script src=\"/_next/static/chunks/794-0fc36bf1952fbc29.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-3f94d1654d7621f8.js\" async=\"\"></script><script src=\"/_next/static/chunks/512-1606fe8539aa3165.js\" async=\"\"></script><script src=\"/_next/static/chunks/app/page-dacd168dfdd6047e.js\" async=\"\"></script><title>智能电子实验笔记系统</title><meta name=\"description\" content=\"课题组级智能 ELN MVP\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body><div hidden=\"\"><!--$--><!--/$--></div><main class=\"min-h-sc"
+      }
+    ],
+    "metrics": {
+      "url": "http://127.0.0.1:8001/metrics",
+      "status": 200,
+      "ok": true,
+      "payload": {
+        "status": "ok",
+        "revision": "unversioned",
+        "uptime_seconds": 2539.282,
+        "in_flight": 1,
+        "total_requests": 361,
+        "status_counts": {
+          "2xx": 361
+        },
+        "avg_duration_ms": 4.91,
+        "p95_duration_ms": 18,
+        "max_duration_ms": 390,
+        "latency_sample_count": 361
+      }
+    },
+    "ok": true
+  },
+  "load_smoke": {
+    "ok": true,
+    "source": {
+      "path": "docs/system-evidence/load-smoke-latest.json",
+      "sha256": "58955e5ef070e78eb60e5d99a43be9b360c544c3164c209a337d26b0dd10d063",
+      "bytes": 89
+    },
+    "requests": 90,
+    "successful": 90,
+    "errors": [],
+    "p95_ms": 31,
+    "max_ms": 43
+  },
+  "soak_smoke": {
+    "ok": true,
+    "source": {
+      "path": "docs/system-evidence/soak-smoke-latest.json",
+      "sha256": "1b09f5a2e3192b6aaaf580e310cf2e8088463018dc020b986a73182cf3163ae9",
+      "bytes": 677
+    },
+    "started_at": "2026-07-16T14:44:06.067367+00:00",
+    "duration_seconds": 3.0,
+    "interval_seconds": 1.0,
+    "requests_per_cycle": 30,
+    "concurrency": 5,
+    "cycles": [
+      {
+        "requests": 30,
+        "successful": 30,
+        "errors": [],
+        "p95_ms": 15,
+        "max_ms": 17
+      },
+      {
+        "requests": 30,
+        "successful": 30,
+        "errors": [],
+        "p95_ms": 12,
+        "max_ms": 14
+      },
+      {
+        "requests": 30,
+        "successful": 30,
+        "errors": [],
+        "p95_ms": 13,
+        "max_ms": 17
+      }
+    ],
+    "summary": {
+      "cycles": 3,
+      "requests": 90,
+      "successful": 90,
+      "errors": [],
+      "p95_ms": 15,
+      "max_ms": 17,
+      "ok": true
+    }
+  },
+  "npm_audit": {
+    "ok": true,
+    "source": {
+      "path": "docs/system-evidence/npm-audit-latest.json",
+      "sha256": "1d553688c2b2e970e184bfe5d03e56b7d0ef23b4d4bd7c55b843c449af4dc42d",
+      "bytes": 364
+    },
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "production_config": {
+    "ok": true,
+    "status": "passed",
+    "app_env": "production",
+    "message": "Production configuration passed safety checks.",
+    "env_file": "docs/system-evidence/env-production-evidence",
+    "env_file_sha256": "1466e1d885d5d98c0f3130f8025ffb75fe4ef6927505adcd7e59a0b762db10ec",
+    "checked_keys": [
+      "APP_ENV",
+      "APP_REVISION",
+      "BOOTSTRAP_ADMIN_PASSWORD",
+      "DEEPSEEK_API_KEY",
+      "POSTGRES_PASSWORD",
+      "SECRET_KEY",
+      "SEED_DEMO_DATA"
+    ],
+    "missing_checked_keys": [],
+    "checks": {
+      "app_env_is_production": true,
+      "secret_key_non_default": true,
+      "bootstrap_admin_password_non_default": true,
+      "postgres_password_non_default": true,
+      "seed_demo_data_disabled": true,
+      "deepseek_api_key_present": true,
+      "app_revision_present": true
+    },
+    "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/production-config-latest.json"
+  },
+  "secret_hygiene": {
+    "source": {
+      "path": "docs/system-evidence/secret-hygiene-latest.json",
+      "sha256": "89d3b395a6e58906bb45ede70ed6b20270ccad313b960120a20f4cd8ae842ef1",
+      "bytes": 186
+    },
+    "ok": true,
+    "checked_secret_keys": [
+      "DEEPSEEK_API_KEY"
+    ],
+    "scan_targets": [
+      "README.md",
+      "docs",
+      "scripts",
+      "backend",
+      "frontend"
+    ],
+    "leaks": []
+  },
+  "secret_rotation": {
+    "source": {
+      "path": "docs/system-evidence/secret-rotation-latest.json",
+      "sha256": "90ef6244fcf8428378b86f81c67a9d764821d90f22b8d2f9bf1e49f46896c9d2",
+      "bytes": 1712
+    },
+    "ok": true,
+    "generated_at": "2026-07-16T15:29:57.107399+00:00",
+    "runbook": "/Users/yusong/Downloads/new/full-system/docs/operations/secret-rotation.md",
+    "checks": [
+      {
+        "name": "runbook exists",
+        "passed": true,
+        "detail": "/Users/yusong/Downloads/new/full-system/docs/operations/secret-rotation.md"
+      },
+      {
+        "name": "JWT signing key rotation",
+        "passed": true,
+        "detail": "SECRET_KEY"
+      },
+      {
+        "name": "bootstrap/admin password handling",
+        "passed": true,
+        "detail": "BOOTSTRAP_ADMIN_PASSWORD"
+      },
+      {
+        "name": "database password rotation",
+        "passed": true,
+        "detail": "POSTGRES_PASSWORD"
+      },
+      {
+        "name": "external model API key rotation",
+        "passed": true,
+        "detail": "DEEPSEEK_API_KEY"
+      },
+      {
+        "name": "token invalidation mechanism",
+        "passed": true,
+        "detail": "auth_version"
+      },
+      {
+        "name": "backup before rotation",
+        "passed": true,
+        "detail": "backup-system.sh"
+      },
+      {
+        "name": "post-rotation production preflight",
+        "passed": true,
+        "detail": "check_production_config.py"
+      },
+      {
+        "name": "post-rotation leak check",
+        "passed": true,
+        "detail": "check_secret_hygiene.py"
+      },
+      {
+        "name": "post-rotation monitoring check",
+        "passed": true,
+        "detail": "check_monitoring_alerts.py"
+      },
+      {
+        "name": "rollback steps",
+        "passed": true,
+        "detail": "回滚"
+      },
+      {
+        "name": "old credential revocation",
+        "passed": true,
+        "detail": "撤销旧"
+      },
+      {
+        "name": "user re-login impact",
+        "passed": true,
+        "detail": "重新登录"
+      }
+    ]
+  },
+  "backup_policy": {
+    "source": {
+      "path": "docs/system-evidence/backup-policy-latest.json",
+      "sha256": "eb2c5040fbc08a2342996d427e54112c24527a0f93801a1dc846050e8d28353b",
+      "bytes": 1351
+    },
+    "ok": true,
+    "generated_at": "2026-07-16T15:34:52.740494+00:00",
+    "runbook": "/Users/yusong/Downloads/new/full-system/docs/operations/backup-restore.md",
+    "checks": [
+      {
+        "name": "runbook exists",
+        "passed": true,
+        "detail": "/Users/yusong/Downloads/new/full-system/docs/operations/backup-restore.md"
+      },
+      {
+        "name": "encrypted backup copy",
+        "passed": true,
+        "detail": "加密"
+      },
+      {
+        "name": "offsite copy",
+        "passed": true,
+        "detail": "异地"
+      },
+      {
+        "name": "retention policy",
+        "passed": true,
+        "detail": "保留"
+      },
+      {
+        "name": "recovery point objective",
+        "passed": true,
+        "detail": "RPO"
+      },
+      {
+        "name": "recovery time objective",
+        "passed": true,
+        "detail": "RTO"
+      },
+      {
+        "name": "automated isolated restore drill",
+        "passed": true,
+        "detail": "restore_drill.py"
+      },
+      {
+        "name": "weekly restore sampling",
+        "passed": true,
+        "detail": "每周"
+      },
+      {
+        "name": "monthly full restore drill",
+        "passed": true,
+        "detail": "每月"
+      },
+      {
+        "name": "managed object storage target",
+        "passed": true,
+        "detail": "对象存储"
+      },
+      {
+        "name": "access revocation",
+        "passed": true,
+        "detail": "撤销"
+      }
+    ]
+  },
+  "monitoring_alerts": {
+    "source": {
+      "path": "docs/system-evidence/monitoring-alerts-latest.json",
+      "sha256": "b9c22e96a3a640b851bd61fdbac39c1fb09320e767b8994df943d5e01c7dee48",
+      "bytes": 1642
+    },
+    "ok": true,
+    "generated_at": "2026-07-16T15:23:19.791777+00:00",
+    "thresholds": {
+      "max_p95_ms": 2000,
+      "max_error_rate": 0.01,
+      "max_in_flight": 50
+    },
+    "metrics": {
+      "status": "ok",
+      "revision": "unversioned",
+      "uptime_seconds": 779.409,
+      "in_flight": 1,
+      "total_requests": 178,
+      "status_counts": {
+        "2xx": 178
+      },
+      "avg_duration_ms": 8.91,
+      "p95_duration_ms": 23,
+      "max_duration_ms": 390,
+      "latency_sample_count": 178
+    },
+    "derived": {
+      "total_requests": 178,
+      "error_requests": 0,
+      "error_rate": 0.0
+    },
+    "checks": [
+      {
+        "name": "readiness endpoint",
+        "actual": 200,
+        "operator": "==",
+        "expected": 200,
+        "passed": true
+      },
+      {
+        "name": "metrics status",
+        "actual": "ok",
+        "operator": "==",
+        "expected": "ok",
+        "passed": true
+      },
+      {
+        "name": "metrics has traffic",
+        "actual": 178,
+        "operator": ">=",
+        "expected": 1,
+        "passed": true
+      },
+      {
+        "name": "p95 latency ms",
+        "actual": 23,
+        "operator": "<=",
+        "expected": 2000,
+        "passed": true
+      },
+      {
+        "name": "error rate",
+        "actual": 0.0,
+        "operator": "<=",
+        "expected": 0.01,
+        "passed": true
+      },
+      {
+        "name": "in-flight requests",
+        "actual": 1,
+        "operator": "<=",
+        "expected": 50,
+        "passed": true
+      }
+    ],
+    "sources": {
+      "ready": {
+        "url": "http://127.0.0.1:8001/ready",
+        "status": 200,
+        "error": null
+      },
+      "metrics": {
+        "url": "http://127.0.0.1:8001/metrics",
+        "status": 200,
+        "error": null
+      }
+    }
+  },
+  "reverse_proxy": {
+    "source": {
+      "path": "docs/system-evidence/reverse-proxy-latest.json",
+      "sha256": "7370091c5131bf6ef553b8df1f7d9763d277529041e01e07650c07f65f54a10c",
+      "bytes": 2309
+    },
+    "ok": true,
+    "generated_at": "2026-07-16T15:26:30.134521+00:00",
+    "template": "/Users/yusong/Downloads/new/full-system/deploy/nginx.conf.template",
+    "checks": [
+      {
+        "name": "template exists",
+        "passed": true,
+        "detail": "/Users/yusong/Downloads/new/full-system/deploy/nginx.conf.template"
+      },
+      {
+        "name": "http redirects to https",
+        "passed": true,
+        "detail": "return 301 https://$host$request_uri;"
+      },
+      {
+        "name": "https listener",
+        "passed": true,
+        "detail": "listen 443 ssl"
+      },
+      {
+        "name": "certificate path",
+        "passed": true,
+        "detail": "ssl_certificate ${TLS_CERT_PATH};"
+      },
+      {
+        "name": "certificate key path",
+        "passed": true,
+        "detail": "ssl_certificate_key ${TLS_KEY_PATH};"
+      },
+      {
+        "name": "modern tls protocols",
+        "passed": true,
+        "detail": "ssl_protocols TLSv1.2 TLSv1.3;"
+      },
+      {
+        "name": "hsts header",
+        "passed": true,
+        "detail": "Strict-Transport-Security"
+      },
+      {
+        "name": "upload body limit",
+        "passed": true,
+        "detail": "client_max_body_size ${CLIENT_MAX_BODY_SIZE};"
+      },
+      {
+        "name": "backend proxy",
+        "passed": true,
+        "detail": "proxy_pass http://127.0.0.1:${BACKEND_PORT}/;"
+      },
+      {
+        "name": "frontend proxy",
+        "passed": true,
+        "detail": "proxy_pass http://127.0.0.1:${FRONTEND_PORT};"
+      },
+      {
+        "name": "forwarded proto",
+        "passed": true,
+        "detail": "proxy_set_header X-Forwarded-Proto https;"
+      },
+      {
+        "name": "request id",
+        "passed": true,
+        "detail": "proxy_set_header X-Request-ID $request_id;"
+      },
+      {
+        "name": "all required placeholders present",
+        "passed": true,
+        "detail": {
+          "expected": [
+            "BACKEND_PORT",
+            "CLIENT_MAX_BODY_SIZE",
+            "ELN_DOMAIN",
+            "FRONTEND_PORT",
+            "TLS_CERT_PATH",
+            "TLS_KEY_PATH"
+          ],
+          "actual": [
+            "BACKEND_PORT",
+            "CLIENT_MAX_BODY_SIZE",
+            "ELN_DOMAIN",
+            "FRONTEND_PORT",
+            "TLS_CERT_PATH",
+            "TLS_KEY_PATH"
+          ]
+        }
+      },
+      {
+        "name": "no localhost public server_name",
+        "passed": true,
+        "detail": "server_name localhost"
+      }
+    ]
+  },
+  "playwright": {
+    "source": {
+      "path": "output/playwright/results.json",
+      "sha256": "614b486b0deaee39e82868536c7b92731b23ce4fd840a0e3354fa0582b973057",
+      "bytes": 5321
+    },
+    "stats": {
+      "startTime": "2026-07-16T15:01:18.208Z",
+      "duration": 12098.086,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "登录并完成笔记审批",
+        "status": "passed",
+        "duration_ms": 1868
+      },
+      {
+        "title": "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
+        "status": "passed",
+        "duration_ms": 7417
+      },
+      {
+        "title": "独立评价人只能在盲评页面提交评价",
+        "status": "passed",
+        "duration_ms": 1567
+      }
+    ]
+  },
+  "knowledge_graph": {
+    "source": {
+      "path": "docs/experiments/kg-relation-gold-audit-after-fix.csv",
+      "sha256": "f715615da3e69d4e7894942600445521fafeab522f28237de2593c7950a4bb6b",
+      "bytes": 9591
+    },
+    "relation_count": 52,
+    "verdicts": {
+      "TP": 52
+    },
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "author_signoff_count": 0
+  },
+  "retrieval": {
+    "source": {
+      "path": "data/real/GSE111619/main-retrieval-evaluation/report.json",
+      "sha256": "b83cbfac7b695d1f278d67303585c9f3d580ce47537189877ff4913f1bf2f840",
+      "bytes": 4517
+    },
+    "project": {
+      "id": 3,
+      "name": "GSE111619 KG-RAG 原始语料盲测项目"
+    },
+    "question_count": 20,
+    "fact_count": 56,
+    "corpus": {
+      "chunk_count": 984,
+      "entity_count": 60,
+      "relation_count": 142,
+      "sha256": "ef12ac88e4bebb0ef8cba991f6496f08c612dd420ba75bd5fa93e080c796cb07"
+    },
+    "aggregate": [
+      {
+        "MRR": 0.267596,
+        "Recall@1": 0.125,
+        "Recall@10": 0.379167,
+        "Recall@3": 0.216667,
+        "Recall@5": 0.266667,
+        "mode": "bm25",
+        "nDCG@10": 0.298651
+      },
+      {
+        "MRR": 0.263036,
+        "Recall@1": 0.05,
+        "Recall@10": 0.4875,
+        "Recall@3": 0.240476,
+        "Recall@5": 0.371429,
+        "mode": "vector",
+        "nDCG@10": 0.325448
+      },
+      {
+        "MRR": 0.282131,
+        "Recall@1": 0.05,
+        "Recall@10": 0.563095,
+        "Recall@3": 0.2625,
+        "Recall@5": 0.3875,
+        "mode": "hybrid_rag",
+        "nDCG@10": 0.364622
+      },
+      {
+        "MRR": 0.475,
+        "Recall@1": 0.05,
+        "Recall@10": 0.902381,
+        "Recall@3": 0.477976,
+        "Recall@5": 0.697619,
+        "mode": "graph_enhanced_rag",
+        "nDCG@10": 0.607235
+      }
+    ],
+    "ablation": [
+      {
+        "MRR": 0.475,
+        "Recall@1": 0.05,
+        "Recall@10": 0.902381,
+        "Recall@3": 0.477976,
+        "Recall@5": 0.697619,
+        "delta_MRR": 0.0,
+        "delta_Recall@1": 0.0,
+        "delta_Recall@10": 0.0,
+        "delta_Recall@3": 0.0,
+        "delta_Recall@5": 0.0,
+        "delta_nDCG@10": 0.0,
+        "mode": "full",
+        "nDCG@10": 0.607235
+      },
+      {
+        "MRR": 0.282131,
+        "Recall@1": 0.05,
+        "Recall@10": 0.563095,
+        "Recall@3": 0.2625,
+        "Recall@5": 0.3875,
+        "delta_MRR": -0.192869,
+        "delta_Recall@1": 0.0,
+        "delta_Recall@10": -0.339286,
+        "delta_Recall@3": -0.215476,
+        "delta_Recall@5": -0.310119,
+        "delta_nDCG@10": -0.242613,
+        "mode": "without_graph",
+        "nDCG@10": 0.364622
+      },
+      {
+        "MRR": 0.48,
+        "Recall@1": 0.05,
+        "Recall@10": 0.897024,
+        "Recall@3": 0.419643,
+        "Recall@5": 0.646429,
+        "delta_MRR": 0.005,
+        "delta_Recall@1": 0.0,
+        "delta_Recall@10": -0.005357,
+        "delta_Recall@3": -0.058333,
+        "delta_Recall@5": -0.05119,
+        "delta_nDCG@10": -0.013423,
+        "mode": "without_bm25",
+        "nDCG@10": 0.593812
+      },
+      {
+        "MRR": 0.5625,
+        "Recall@1": 0.125,
+        "Recall@10": 0.889881,
+        "Recall@3": 0.469643,
+        "Recall@5": 0.660119,
+        "delta_MRR": 0.0875,
+        "delta_Recall@1": 0.075,
+        "delta_Recall@10": -0.0125,
+        "delta_Recall@3": -0.008333,
+        "delta_Recall@5": -0.0375,
+        "delta_nDCG@10": 0.032645,
+        "mode": "without_vector",
+        "nDCG@10": 0.63988
+      },
+      {
+        "MRR": 0.475,
+        "Recall@1": 0.05,
+        "Recall@10": 0.902381,
+        "Recall@3": 0.477976,
+        "Recall@5": 0.697619,
+        "delta_MRR": 0.0,
+        "delta_Recall@1": 0.0,
+        "delta_Recall@10": 0.0,
+        "delta_Recall@3": 0.0,
+        "delta_Recall@5": 0.0,
+        "delta_nDCG@10": 0.0,
+        "mode": "without_collection_graph_expansion",
+        "nDCG@10": 0.607235
+      }
+    ],
+    "result_sha256": "056138b1221988879d32745f441934a3274df2509ebdf8c488c349ee761bd28d",
+    "reproducibility_verified": false
+  },
+  "backup": {
+    "ok": true,
+    "source": {
+      "path": "/private/tmp/eln-maturity-backup-20260716T142815Z/manifest.txt",
+      "sha256": "12ce9fe2b440d37ac53b8393959a62ff95923f514175060b79e0d17c1d93f7d7",
+      "bytes": 246
+    },
+    "path": "/private/tmp/eln-maturity-backup-20260716T142815Z",
+    "manifest": {
+      "manifest_version": "1",
+      "created_at": "20260716T142815Z",
+      "app_revision": "unversioned",
+      "database": "eln",
+      "database_sha256": "2925f4e4624ed501ea844ddf0a7a9d284026ef03ad2726a0ea7104ad68bf88db",
+      "storage_sha256": "a604cbef285bef682e4f463de4c6c84caf155952b2214ddcaf858430fa6118c0"
+    },
+    "checks": {
+      "database.dump": true,
+      "storage.tar.gz": true
+    },
+    "dump_readable": true,
+    "dump_error": ""
+  },
+  "restore_drill": {
+    "source": {
+      "path": "docs/system-evidence/restore-drill-latest.json",
+      "sha256": "144d964384d9081ca4b958a7d681bd15a5abf57e00b81e801ab672bf26e097cf",
+      "bytes": 724
+    },
+    "ok": true,
+    "generated_at": "2026-07-16T15:19:36.936451+00:00",
+    "backup": "/private/tmp/eln-maturity-backup-20260716T142815Z",
+    "manifest": {
+      "manifest_version": "1",
+      "created_at": "20260716T142815Z",
+      "app_revision": "unversioned",
+      "database": "eln",
+      "database_sha256": "2925f4e4624ed501ea844ddf0a7a9d284026ef03ad2726a0ea7104ad68bf88db",
+      "storage_sha256": "a604cbef285bef682e4f463de4c6c84caf155952b2214ddcaf858430fa6118c0"
+    },
+    "checks": {
+      "database.dump": true,
+      "storage.tar.gz": true
+    },
+    "database": {
+      "dump_list_readable": true,
+      "restored": true,
+      "public_table_count": 26
+    },
+    "storage": {
+      "restored": true,
+      "file_count": 28,
+      "bytes": 1489698
+    }
+  },
+  "ocr": [
+    {
+      "dataset": "smithsonian_joseph_henry",
+      "split": "development",
+      "name": "htrflow-dev-nested",
+      "source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/evaluation.json",
+        "sha256": "8efa7bef78ff74ac0368892c7c758aee3b0affc25ba8a0fa72d04e7ee7493d0d",
+        "bytes": 7267
+      },
+      "run_source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/run.json",
+        "sha256": "8142482df72bf6815795f3a53472b352023e950d5cb884737899fed61c8555fb",
+        "bytes": 7118
+      },
+      "sample_count": 5,
+      "summary": {
+        "sample_count": 5,
+        "micro_character_error_rate": 0.894855,
+        "macro_character_error_rate": 0.843309,
+        "micro_compact_character_error_rate": 0.899491,
+        "macro_compact_character_error_rate": 0.851611,
+        "numeric_tokens": {
+          "reference_count": 50,
+          "prediction_count": 4,
+          "matched_count": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "HTRflow",
+      "layout": "nested",
+      "models": {
+        "region": {
+          "id": "Riksarkivet/yolov9-regions-1",
+          "revision": "6fb01d223f39ac325280d99e4a2d1804694e5e99"
+        },
+        "segmentation": {
+          "id": "Riksarkivet/yolov9-lines-within-regions-1",
+          "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+        },
+        "recognition": {
+          "id": "microsoft/trocr-base-handwritten",
+          "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+        }
+      },
+      "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    {
+      "dataset": "smithsonian_joseph_henry",
+      "split": "development",
+      "name": "htrflow-dev-simple",
+      "source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/evaluation.json",
+        "sha256": "e5a57c6ac490e8ac05aaa997fa39bfb1117e2fe3487e59cb678ec9571868bf1f",
+        "bytes": 7298
+      },
+      "run_source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/run.json",
+        "sha256": "6b11f6698ad26c683ada70d6dea3b35360ab9c8418442b19b9aac2e61b5e3264",
+        "bytes": 7020
+      },
+      "sample_count": 5,
+      "summary": {
+        "sample_count": 5,
+        "micro_character_error_rate": 0.789278,
+        "macro_character_error_rate": 0.781213,
+        "micro_compact_character_error_rate": 0.840055,
+        "macro_compact_character_error_rate": 0.831451,
+        "numeric_tokens": {
+          "reference_count": 50,
+          "prediction_count": 24,
+          "matched_count": 6,
+          "precision": 0.25,
+          "recall": 0.12,
+          "f1": 0.162162,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "HTRflow",
+      "layout": "simple",
+      "models": {
+        "region": null,
+        "segmentation": {
+          "id": "Riksarkivet/yolov9-lines-within-regions-1",
+          "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+        },
+        "recognition": {
+          "id": "microsoft/trocr-base-handwritten",
+          "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+        }
+      },
+      "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    {
+      "dataset": "smithsonian_joseph_henry",
+      "split": "development",
+      "name": "htrflow-dev-spread",
+      "source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/evaluation.json",
+        "sha256": "d76f4fc98f2cb1a33ee2231e9d504ed5311bb299e663faae704d03776219f846",
+        "bytes": 7179
+      },
+      "run_source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/run.json",
+        "sha256": "1aee5e516f1e252f78a2cd61b1820748fe4778306835fadb2d9e042bffedc3d5",
+        "bytes": 12341
+      },
+      "sample_count": 5,
+      "summary": {
+        "sample_count": 5,
+        "micro_character_error_rate": 0.556593,
+        "macro_character_error_rate": 0.545562,
+        "micro_compact_character_error_rate": 0.619508,
+        "macro_compact_character_error_rate": 0.605496,
+        "numeric_tokens": {
+          "reference_count": 50,
+          "prediction_count": 17,
+          "matched_count": 5,
+          "precision": 0.294118,
+          "recall": 0.1,
+          "f1": 0.149254,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "HTRflow",
+      "layout": "spread",
+      "models": {
+        "region": null,
+        "segmentation": {
+          "id": "Riksarkivet/yolov9-lines-within-regions-1",
+          "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+        },
+        "recognition": {
+          "id": "microsoft/trocr-base-handwritten",
+          "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+        }
+      },
+      "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    {
+      "dataset": "smithsonian_joseph_henry",
+      "split": "development",
+      "name": "tesseract-dev-autocontrast",
+      "source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/tesseract-dev-autocontrast/evaluation.json",
+        "sha256": "5ba9dbfc03e57877cee9ad413a563aee5e193e1bcd476713dd0c30bc2d2c58ff",
+        "bytes": 7230
+      },
+      "run_source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/tesseract-dev-autocontrast/run.json",
+        "sha256": "c39c2bf6ba5bee4158406dc26322b0dbc54ee4a10a50b2dda04f8a9d6cf7bf4f",
+        "bytes": 5718
+      },
+      "sample_count": 5,
+      "summary": {
+        "sample_count": 5,
+        "micro_character_error_rate": 0.731431,
+        "macro_character_error_rate": 0.732986,
+        "micro_compact_character_error_rate": 0.786776,
+        "macro_compact_character_error_rate": 0.78883,
+        "numeric_tokens": {
+          "reference_count": 50,
+          "prediction_count": 122,
+          "matched_count": 4,
+          "precision": 0.032787,
+          "recall": 0.08,
+          "f1": 0.046512,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    {
+      "dataset": "smithsonian_joseph_henry",
+      "split": "development",
+      "name": "tesseract-dev-none",
+      "source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/evaluation.json",
+        "sha256": "ff48129c6cca5f07da3a05e5b144411eba71ec78a54ef71cd43980f495258d9e",
+        "bytes": 7148
+      },
+      "run_source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/run.json",
+        "sha256": "09d1f06151c280943855dc090615ecc1672e55b487b700e399e3c79aac633252",
+        "bytes": 3662
+      },
+      "sample_count": 5,
+      "summary": {
+        "sample_count": 5,
+        "micro_character_error_rate": 0.870039,
+        "macro_character_error_rate": 0.874005,
+        "micro_compact_character_error_rate": 0.892804,
+        "macro_compact_character_error_rate": 0.896575,
+        "numeric_tokens": {
+          "reference_count": 50,
+          "prediction_count": 29,
+          "matched_count": 2,
+          "precision": 0.068966,
+          "recall": 0.04,
+          "f1": 0.050633,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    {
+      "dataset": "smithsonian_joseph_henry",
+      "split": "development",
+      "name": "tesseract-dev-otsu",
+      "source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/evaluation.json",
+        "sha256": "16c772be03fad8f9c9ee90dc43040088045ea16fc62732b41e0415de0b73c0d2",
+        "bytes": 7156
+      },
+      "run_source": {
+        "path": "data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/run.json",
+        "sha256": "1c26c9e4f98c8a02b8e628f101051c27d4b9dd09fc9ca4cda06221245119f25b",
+        "bytes": 5585
+      },
+      "sample_count": 5,
+      "summary": {
+        "sample_count": 5,
+        "micro_character_error_rate": 0.728664,
+        "macro_character_error_rate": 0.729271,
+        "micro_compact_character_error_rate": 0.784122,
+        "macro_compact_character_error_rate": 0.785148,
+        "numeric_tokens": {
+          "reference_count": 50,
+          "prediction_count": 82,
+          "matched_count": 4,
+          "precision": 0.04878,
+          "recall": 0.08,
+          "f1": 0.060606,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "development",
+      "name": "oracle_lines_psm7_autocontrast",
+      "source": {
+        "path": "data/real/rukopys_university/development_variants/oracle_lines_psm7_autocontrast/evaluation.json",
+        "sha256": "a208320c34fe417759d79644f4471b5410c42c74d60abbc7caf62d72358a7723",
+        "bytes": 14690
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/development_variants/oracle_lines_psm7_autocontrast/run.json",
+        "sha256": "b63fb2ecd5cd1a3b6d7c594156d27e9538c2023d03c8d4443cb65ce801463532",
+        "bytes": 199643
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 0.753717,
+        "macro_character_error_rate": 0.76195,
+        "micro_compact_character_error_rate": 0.79773,
+        "macro_compact_character_error_rate": 0.806202,
+        "numeric_tokens": {
+          "reference_count": 113,
+          "prediction_count": 101,
+          "matched_count": 28,
+          "precision": 0.277228,
+          "recall": 0.247788,
+          "f1": 0.261682,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": null,
+      "layout": null,
+      "models": null,
+      "manifest_sha256": null
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "development",
+      "name": "paddleocr_v5_mobile_eslav",
+      "source": {
+        "path": "data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/evaluation_report.json",
+        "sha256": "1f7fce4505b97b932928bde580ed7ce131952bfcd8e8fb6326705d90256ed4a7",
+        "bytes": 14684
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/run.json",
+        "sha256": "85758d85b34090f307f0dc2f8d4ce3507927ed26bcf6ca52891e9195aa14c8fd",
+        "bytes": 8252
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 0.757807,
+        "macro_character_error_rate": 0.741329,
+        "micro_compact_character_error_rate": 0.805189,
+        "macro_compact_character_error_rate": 0.788483,
+        "numeric_tokens": {
+          "reference_count": 113,
+          "prediction_count": 148,
+          "matched_count": 63,
+          "precision": 0.425676,
+          "recall": 0.557522,
+          "f1": 0.482759,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "PaddleOCR",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "development",
+      "name": "psm3_crop_autocontrast_nodpi",
+      "source": {
+        "path": "data/real/rukopys_university/development_variants/psm3_crop_autocontrast_nodpi/evaluation.json",
+        "sha256": "1ad9af88860d6c753e61e0ea05a695a7b6e16b81bef75c02eb3e4f46104dd708",
+        "bytes": 14679
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/development_variants/psm3_crop_autocontrast_nodpi/run.json",
+        "sha256": "c10db9e6db933f5b987b0c4c3c24f796f515a189ab741f8882b58f142eedcf59",
+        "bytes": 12677
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 0.749071,
+        "macro_character_error_rate": 0.750875,
+        "micro_compact_character_error_rate": 0.787568,
+        "macro_compact_character_error_rate": 0.788461,
+        "numeric_tokens": {
+          "reference_count": 113,
+          "prediction_count": 172,
+          "matched_count": 39,
+          "precision": 0.226744,
+          "recall": 0.345133,
+          "f1": 0.273684,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "development",
+      "name": "psm3_grayscale_autocontrast",
+      "source": {
+        "path": "data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/evaluation.json",
+        "sha256": "a2fe30c18066f48062ee3ad19875cc876ca9a55112321d9ace8a2bc4737af90e",
+        "bytes": 14672
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/run.json",
+        "sha256": "80fb1b4ce36a17f7a2a380e617964c4fdb6d8e1f492a6779d89e5d17d8c0762b",
+        "bytes": 12072
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 0.750372,
+        "macro_character_error_rate": 0.752388,
+        "micro_compact_character_error_rate": 0.789622,
+        "macro_compact_character_error_rate": 0.790812,
+        "numeric_tokens": {
+          "reference_count": 113,
+          "prediction_count": 168,
+          "matched_count": 35,
+          "precision": 0.208333,
+          "recall": 0.309735,
+          "f1": 0.24911,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "development",
+      "name": "psm3_grayscale_otsu",
+      "source": {
+        "path": "data/real/rukopys_university/development_variants/psm3_grayscale_otsu/evaluation.json",
+        "sha256": "078e7c9de4dcf3f2e8acc9b9df6c0dfa11ba039657332600025e168920b24816",
+        "bytes": 14599
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/development_variants/psm3_grayscale_otsu/run.json",
+        "sha256": "56f239e14bba83b3ca21b78a00de89995412d9a319db42ed97242b2bde415d9f",
+        "bytes": 11811
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 0.744145,
+        "macro_character_error_rate": 0.746724,
+        "micro_compact_character_error_rate": 0.787568,
+        "macro_compact_character_error_rate": 0.790108,
+        "numeric_tokens": {
+          "reference_count": 113,
+          "prediction_count": 162,
+          "matched_count": 36,
+          "precision": 0.222222,
+          "recall": 0.318584,
+          "f1": 0.261818,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "development",
+      "name": "htrflow-dev-simple",
+      "source": {
+        "path": "data/real/rukopys_university/runs/htrflow-dev-simple/evaluation.json",
+        "sha256": "623b4d6ea69b700309996c00b38df85ad664657886bc6bd97a138e5f0e6faef8",
+        "bytes": 14621
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/runs/htrflow-dev-simple/run.json",
+        "sha256": "cf42af830b2e47f6b4da02f6e901cd51f47167b3ff28f180d8867be6a59e0f7e",
+        "bytes": 13692
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 1.070167,
+        "macro_character_error_rate": 1.065498,
+        "micro_compact_character_error_rate": 1.152649,
+        "macro_compact_character_error_rate": 1.149146,
+        "numeric_tokens": {
+          "reference_count": 113,
+          "prediction_count": 135,
+          "matched_count": 55,
+          "precision": 0.407407,
+          "recall": 0.486726,
+          "f1": 0.443548,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "HTRflow",
+      "layout": "simple",
+      "models": {
+        "region": null,
+        "segmentation": {
+          "id": "Riksarkivet/yolov9-lines-within-regions-1",
+          "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+        },
+        "recognition": {
+          "id": "microsoft/trocr-base-handwritten",
+          "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+          "batch_size": 8
+        }
+      },
+      "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "holdout",
+      "name": "final_otsu",
+      "source": {
+        "path": "data/real/rukopys_university/holdout/final_otsu/evaluation_report.json",
+        "sha256": "fde33f7e0b8f3dba13daa2150daa27fe96c1f4ea6b16a37057edfcaa741ae966",
+        "bytes": 14377
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/holdout/final_otsu/run.json",
+        "sha256": "57a1f0b0af258b04b63f2b443e7fe9e3f48e939fc8d456f3fe775f74ff2cba6e",
+        "bytes": 11324
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 0.785764,
+        "macro_character_error_rate": 0.811951,
+        "micro_compact_character_error_rate": 0.828236,
+        "macro_compact_character_error_rate": 0.856263,
+        "numeric_tokens": {
+          "reference_count": 105,
+          "prediction_count": 92,
+          "matched_count": 19,
+          "precision": 0.206522,
+          "recall": 0.180952,
+          "f1": 0.192893,
+          "exact_sequence_sample_count": 0
+        }
+      },
+      "engine": "tesseract 5.5.0",
+      "layout": null,
+      "models": null,
+      "manifest_sha256": "37bbaa8454e913a48b526e68582c987cd723a49702d5610d08b43765ad890fad"
+    },
+    {
+      "dataset": "rukopys_university",
+      "split": "holdout",
+      "name": "htrflow-holdout-simple",
+      "source": {
+        "path": "data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/evaluation.json",
+        "sha256": "0550cf94c908eb7583fc7b7cd2b6b50a867fff6ecd858395a968a9717983cf05",
+        "bytes": 14804
+      },
+      "run_source": {
+        "path": "data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/run.json",
+        "sha256": "c6360ff51e1d9a0a23f82716d5445b8f144061f53052e6166c85b10fee149666",
+        "bytes": 14062
+      },
+      "sample_count": 10,
+      "summary": {
+        "sample_count": 10,
+        "micro_character_error_rate": 1.115104,
+        "macro_character_error_rate": 1.090759,
+        "micro_compact_character_error_rate": 1.213693,
+        "macro_compact_character_error_rate": 1.183213,
+        "numeric_tokens": {
+          "reference_count": 105,
+          "prediction_count": 105,
+          "matched_count": 46,
+          "precision": 0.438095,
+          "recall": 0.438095,
+          "f1": 0.438095,
+          "exact_sequence_sample_count": 1
+        }
+      },
+      "engine": "HTRflow",
+      "layout": "simple",
+      "models": {
+        "region": null,
+        "segmentation": {
+          "id": "Riksarkivet/yolov9-lines-within-regions-1",
+          "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+        },
+        "recognition": {
+          "id": "microsoft/trocr-base-handwritten",
+          "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+          "batch_size": 8
+        }
+      },
+      "manifest_sha256": "37bbaa8454e913a48b526e68582c987cd723a49702d5610d08b43765ad890fad"
+    }
+  ]
+}

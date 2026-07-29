@@ -1,0 +1,192 @@
+{
+  "generated_at": "2026-07-16T13:41:41.689564+00:00",
+  "scope": "full-system release-candidate maturity gate",
+  "evidence_level": "internal automated gate; not independent human review",
+  "thresholds": {
+    "retrieval_question_count_min": 20,
+    "retrieval_fact_count_min": 50,
+    "retrieval_chunk_count_min": 500,
+    "retrieval_graph_recall10_min": 0.9,
+    "retrieval_graph_ndcg10_min": 0.6,
+    "retrieval_graph_recall10_delta_min": 0.1,
+    "experiment_case_count_min": 12,
+    "experiment_kg_micro_fact_coverage_min": 0.85,
+    "experiment_kg_exact_accuracy_min": 0.6,
+    "experiment_forbidden_fact_hits_max": 0,
+    "citation_source_marker_rate_min": 0.95,
+    "citation_graph_marker_rate_min": 0.95,
+    "agent_completed_runs_min": 4,
+    "agent_invalid_citations_max": 0,
+    "agent_needs_review_max": 0
+  },
+  "inputs": {
+    "retrieval_report": "data/real/GSE111619/e2e-retrieval-evaluation/report.json",
+    "experiment_report": "/Users/yusong/Downloads/new/full-system/data/real/GSE111619/gse111619_kg_holdout_experiment_report.json",
+    "agent_report": null
+  },
+  "groups": {
+    "retrieval": [
+      {
+        "name": "retrieval question count",
+        "actual": 20,
+        "operator": ">=",
+        "expected": 20,
+        "passed": true
+      },
+      {
+        "name": "retrieval gold fact count",
+        "actual": 56,
+        "operator": ">=",
+        "expected": 50,
+        "passed": true
+      },
+      {
+        "name": "retrieval corpus chunk count",
+        "actual": 984,
+        "operator": ">=",
+        "expected": 500,
+        "passed": true
+      },
+      {
+        "name": "graph Recall@10",
+        "actual": 0.902381,
+        "operator": ">=",
+        "expected": 0.9,
+        "passed": true
+      },
+      {
+        "name": "graph nDCG@10",
+        "actual": 0.607235,
+        "operator": ">=",
+        "expected": 0.6,
+        "passed": true
+      },
+      {
+        "name": "graph Recall@10 delta over hybrid",
+        "actual": 0.339286,
+        "operator": ">=",
+        "expected": 0.1,
+        "passed": true
+      }
+    ],
+    "rag_experiment": [
+      {
+        "name": "experiment completed kg cases",
+        "actual": 12,
+        "operator": ">=",
+        "expected": 12,
+        "passed": true
+      },
+      {
+        "name": "experiment failed kg cases",
+        "actual": 0,
+        "operator": "==",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "kg micro fact coverage",
+        "actual": 0.7812,
+        "operator": ">=",
+        "expected": 0.85,
+        "passed": false
+      },
+      {
+        "name": "kg exact case accuracy",
+        "actual": 0.5,
+        "operator": ">=",
+        "expected": 0.6,
+        "passed": false
+      },
+      {
+        "name": "kg forbidden fact hits",
+        "actual": 5,
+        "operator": "<=",
+        "expected": 0,
+        "passed": false
+      },
+      {
+        "name": "citation indices in range",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "source marker answer rate",
+        "actual": 0.75,
+        "operator": ">=",
+        "expected": 0.95,
+        "passed": false
+      },
+      {
+        "name": "kg graph marker rate",
+        "actual": 0.8333,
+        "operator": ">=",
+        "expected": 0.95,
+        "passed": false
+      }
+    ],
+    "agent": [
+      {
+        "name": "agent live maturity evidence",
+        "actual": "missing",
+        "operator": "present",
+        "expected": "agent probe report",
+        "passed": false
+      }
+    ]
+  },
+  "passed": false,
+  "failures": [
+    {
+      "group": "rag_experiment",
+      "name": "kg micro fact coverage",
+      "actual": 0.7812,
+      "operator": ">=",
+      "expected": 0.85,
+      "passed": false
+    },
+    {
+      "group": "rag_experiment",
+      "name": "kg exact case accuracy",
+      "actual": 0.5,
+      "operator": ">=",
+      "expected": 0.6,
+      "passed": false
+    },
+    {
+      "group": "rag_experiment",
+      "name": "kg forbidden fact hits",
+      "actual": 5,
+      "operator": "<=",
+      "expected": 0,
+      "passed": false
+    },
+    {
+      "group": "rag_experiment",
+      "name": "source marker answer rate",
+      "actual": 0.75,
+      "operator": ">=",
+      "expected": 0.95,
+      "passed": false
+    },
+    {
+      "group": "rag_experiment",
+      "name": "kg graph marker rate",
+      "actual": 0.8333,
+      "operator": ">=",
+      "expected": 0.95,
+      "passed": false
+    },
+    {
+      "group": "agent",
+      "name": "agent live maturity evidence",
+      "actual": "missing",
+      "operator": "present",
+      "expected": "agent probe report",
+      "passed": false
+    }
+  ],
+  "next_blocker": "kg micro fact coverage"
+}

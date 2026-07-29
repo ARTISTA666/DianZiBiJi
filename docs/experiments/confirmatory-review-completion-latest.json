@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-07-19T09:28:30.848503+00:00",
+  "passed": false,
+  "scope": "confirmatory human review completion gate",
+  "checks": [
+    {
+      "name": "final maturity gate passed before reporting review",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/experiments/final-maturity-gate-latest.json",
+        "generated_at_present": true,
+        "scope": "final maturity gate for confirmatory human review",
+        "passed": false,
+        "failures_empty": false,
+        "required_checks_present": [
+          "external confirmatory human-review freeze passed",
+          "final maturity evidence manifest verified",
+          "internal release-candidate gate passed",
+          "long soak evidence passed",
+          "offsite encrypted backup evidence passed",
+          "production configuration was checked in production mode",
+          "real TLS deployment evidence passed"
+        ]
+      }
+    },
+    {
+      "name": "confirmatory freeze exists and validates",
+      "passed": false,
+      "detail": "missing: /Users/yusong/Downloads/new/full-system/docs/experiments/confirmatory-human-review-freeze.json"
+    },
+    {
+      "name": "human review export exists",
+      "passed": false,
+      "detail": "missing: /Users/yusong/Downloads/new/full-system/docs/experiments/confirmatory-human-review-export.csv"
+    },
+    {
+      "name": "confirmatory review evidence manifest verified",
+      "passed": false,
+      "detail": "missing: /Users/yusong/Downloads/new/full-system/docs/experiments/confirmatory-review-evidence-manifest.json"
+    }
+  ],
+  "failures": [
+    {
+      "name": "final maturity gate passed before reporting review",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/experiments/final-maturity-gate-latest.json",
+        "generated_at_present": true,
+        "scope": "final maturity gate for confirmatory human review",
+        "passed": false,
+        "failures_empty": false,
+        "required_checks_present": [
+          "external confirmatory human-review freeze passed",
+          "final maturity evidence manifest verified",
+          "internal release-candidate gate passed",
+          "long soak evidence passed",
+          "offsite encrypted backup evidence passed",
+          "production configuration was checked in production mode",
+          "real TLS deployment evidence passed"
+        ]
+      }
+    },
+    {
+      "name": "confirmatory freeze exists and validates",
+      "passed": false,
+      "detail": "missing: /Users/yusong/Downloads/new/full-system/docs/experiments/confirmatory-human-review-freeze.json"
+    },
+    {
+      "name": "human review export exists",
+      "passed": false,
+      "detail": "missing: /Users/yusong/Downloads/new/full-system/docs/experiments/confirmatory-human-review-export.csv"
+    },
+    {
+      "name": "confirmatory review evidence manifest verified",
+      "passed": false,
+      "detail": "missing: /Users/yusong/Downloads/new/full-system/docs/experiments/confirmatory-review-evidence-manifest.json"
+    }
+  ]
+}

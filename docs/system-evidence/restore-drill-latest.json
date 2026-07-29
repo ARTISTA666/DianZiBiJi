@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "generated_at": "2026-07-28T14:01:49.132621+00:00",
+  "backup": "/private/tmp/eln-maturity-backup-20260728T2202CST",
+  "manifest": {
+    "manifest_version": "1",
+    "created_at": "20260728T140059Z",
+    "app_revision": "unversioned",
+    "database": "eln",
+    "database_sha256": "5a6912d391eaa23e6a87c29aeb330219929b85ecd3fe16410a59f318072e4d1a",
+    "storage_sha256": "b9893e4fe83a9d9388812be3496485097e2b57ca9580b10a3ea575c613ea01db"
+  },
+  "checks": {
+    "database.dump": true,
+    "storage.tar.gz": true
+  },
+  "database": {
+    "dump_list_readable": true,
+    "restored": true,
+    "public_table_count": 27
+  },
+  "storage": {
+    "restored": true,
+    "file_count": 32,
+    "bytes": 1496090
+  }
+}

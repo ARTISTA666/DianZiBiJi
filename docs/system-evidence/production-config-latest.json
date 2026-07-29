@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "status": "skipped_non_production",
+  "app_env": "development",
+  "message": "Production safety checks are enforced only when APP_ENV=production.",
+  "env_file": null,
+  "env_file_sha256": null,
+  "checked_keys": [],
+  "missing_checked_keys": [
+    "APP_ENV",
+    "APP_REVISION",
+    "BOOTSTRAP_ADMIN_PASSWORD",
+    "DEEPSEEK_API_KEY",
+    "POSTGRES_PASSWORD",
+    "SECRET_KEY",
+    "SEED_DEMO_DATA"
+  ],
+  "checks": {
+    "app_env_is_production": false,
+    "secret_key_non_default": false,
+    "bootstrap_admin_password_non_default": false,
+    "postgres_password_non_default": false,
+    "seed_demo_data_disabled": false,
+    "deepseek_api_key_present": true,
+    "app_revision_present": false
+  }
+}

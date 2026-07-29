@@ -1,0 +1,3845 @@
+[
+  {
+    "columns": [
+      {
+        "default": "nextval('agent_generation_runs_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "task_type",
+        "nullable": false,
+        "type": "VARCHAR(60)"
+      },
+      {
+        "default": "",
+        "name": "input_params_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "title",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "body",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "source_note_ids_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "source_file_ids_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "source_graph_relation_ids_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "provider",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "model_name",
+        "nullable": true,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "prompt_version",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "usage_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "response_ms",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "message",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "agent_generation_runs_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "name": "agent_generation_runs_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_agent_generation_runs_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "provider"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_agent_generation_runs_provider",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_agent_generation_runs_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "task_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_agent_generation_runs_task_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_agent_generation_runs_user_id",
+        "unique": false
+      }
+    ],
+    "name": "agent_generation_runs",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "agent_generation_runs_pkey"
+    },
+    "row_count": 2,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('ai_experiment_runs_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "created_by",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "name",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "questions_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "modes_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "config_snapshot_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "summary_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "total_cases",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "completed_cases",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "failed_cases",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "",
+        "name": "completed_at",
+        "nullable": true,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "created_by"
+        ],
+        "name": "ai_experiment_runs_created_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "ai_experiment_runs_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "created_by"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_experiment_runs_created_by",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_experiment_runs_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_experiment_runs_status",
+        "unique": false
+      }
+    ],
+    "name": "ai_experiment_runs",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "ai_experiment_runs_pkey"
+    },
+    "row_count": 8,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('ai_query_evaluations_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "query_log_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "evaluator_user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "score",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "is_accurate",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "is_traceable",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "comment",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "'unblinded'::character varying",
+        "name": "review_protocol",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "evaluator_user_id"
+        ],
+        "name": "ai_query_evaluations_evaluator_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "query_log_id"
+        ],
+        "name": "ai_query_evaluations_query_log_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "ai_query_logs"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "evaluator_user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_evaluations_evaluator_user_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "query_log_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_evaluations_query_log_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "review_protocol"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_evaluations_review_protocol",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "query_log_id",
+          "evaluator_user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_ai_query_evaluation_log_evaluator",
+        "include_columns": [],
+        "name": "uq_ai_query_evaluation_log_evaluator",
+        "unique": true
+      }
+    ],
+    "name": "ai_query_evaluations",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "ai_query_evaluations_pkey"
+    },
+    "row_count": 0,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "query_log_id",
+          "evaluator_user_id"
+        ],
+        "comment": null,
+        "name": "uq_ai_query_evaluation_log_evaluator"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('ai_query_logs_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "question",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "answer",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "rag_mode",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "graph_hit_count",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "source_count",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "response_ms",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "conversation_id",
+        "nullable": true,
+        "type": "VARCHAR(160)"
+      },
+      {
+        "default": "",
+        "name": "graph_context_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "sources_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "provider",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "model_name",
+        "nullable": true,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "prompt_version",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "retrieval_config_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "usage_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "fallback_reason",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "error_message",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "experiment_run_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "experiment_case_index",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "",
+        "name": "experiment_repetition_index",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "experiment_execution_order",
+        "nullable": true,
+        "type": "INTEGER"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "experiment_run_id"
+        ],
+        "name": "ai_query_logs_experiment_run_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "ai_experiment_runs"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "ai_query_logs_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "name": "ai_query_logs_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "conversation_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_conversation_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "experiment_run_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_experiment_run_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "model_name"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_model_name",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "provider"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_provider",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "rag_mode"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_rag_mode",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_ai_query_logs_user_id",
+        "unique": false
+      }
+    ],
+    "name": "ai_query_logs",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "ai_query_logs_pkey"
+    },
+    "row_count": 303,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "",
+        "name": "version_num",
+        "nullable": false,
+        "type": "VARCHAR(32)"
+      }
+    ],
+    "foreign_keys": [],
+    "indexes": [],
+    "name": "alembic_version",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "version_num"
+      ],
+      "name": "alembic_version_pkc"
+    },
+    "row_count": 1,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('audit_logs_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "actor_user_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "action",
+        "nullable": false,
+        "type": "VARCHAR(80)"
+      },
+      {
+        "default": "",
+        "name": "target_type",
+        "nullable": true,
+        "type": "VARCHAR(80)"
+      },
+      {
+        "default": "",
+        "name": "target_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "detail_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "ip_address",
+        "nullable": true,
+        "type": "VARCHAR(80)"
+      },
+      {
+        "default": "",
+        "name": "user_agent",
+        "nullable": true,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "actor_user_id"
+        ],
+        "name": "audit_logs_actor_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "audit_logs_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "action"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_audit_logs_action",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "actor_user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_audit_logs_actor_user_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_audit_logs_project_id",
+        "unique": false
+      }
+    ],
+    "name": "audit_logs",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "audit_logs_pkey"
+    },
+    "row_count": 156,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('experiment_notes_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "template_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "title",
+        "nullable": false,
+        "type": "VARCHAR(200)"
+      },
+      {
+        "default": "",
+        "name": "experiment_type",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "experiment_date",
+        "nullable": true,
+        "type": "DATE"
+      },
+      {
+        "default": "",
+        "name": "owner_user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(9)"
+      },
+      {
+        "default": "",
+        "name": "current_version_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "owner_user_id"
+        ],
+        "name": "experiment_notes_owner_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "experiment_notes_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "experiment_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_notes_experiment_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "owner_user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_notes_owner_user_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_notes_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_notes_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "title"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_notes_title",
+        "unique": false
+      }
+    ],
+    "name": "experiment_notes",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "experiment_notes_pkey"
+    },
+    "row_count": 12,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('experiment_templates_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "name",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "experiment_type",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "schema_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "default_content_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "is_active",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [],
+    "indexes": [
+      {
+        "column_names": [
+          "experiment_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_templates_experiment_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "name"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_experiment_templates_name",
+        "unique": true
+      }
+    ],
+    "name": "experiment_templates",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "experiment_templates_pkey"
+    },
+    "row_count": 5,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('file_ocr_results_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "file_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "created_by",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "file_hash",
+        "nullable": false,
+        "type": "VARCHAR(64)"
+      },
+      {
+        "default": "",
+        "name": "raw_text",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "corrected_text",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "extraction_method",
+        "nullable": false,
+        "type": "VARCHAR(80)"
+      },
+      {
+        "default": "",
+        "name": "character_count",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "truncated",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "review_status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "reviewed_by",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "",
+        "name": "reviewed_at",
+        "nullable": true,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "created_by"
+        ],
+        "name": "file_ocr_results_created_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "file_id"
+        ],
+        "name": "file_ocr_results_file_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "files"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "file_ocr_results_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "reviewed_by"
+        ],
+        "name": "file_ocr_results_reviewed_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "created_by"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_file_ocr_results_created_by",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "file_hash"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_file_ocr_results_file_hash",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "file_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_file_ocr_results_file_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_file_ocr_results_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "review_status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_file_ocr_results_review_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "reviewed_by"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_file_ocr_results_reviewed_by",
+        "unique": false
+      }
+    ],
+    "name": "file_ocr_results",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "file_ocr_results_pkey"
+    },
+    "row_count": 1,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('files_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "note_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "uploaded_by",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "file_category",
+        "nullable": false,
+        "type": "VARCHAR(18)"
+      },
+      {
+        "default": "",
+        "name": "original_filename",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "storage_path",
+        "nullable": false,
+        "type": "VARCHAR(500)"
+      },
+      {
+        "default": "",
+        "name": "mime_type",
+        "nullable": true,
+        "type": "VARCHAR(160)"
+      },
+      {
+        "default": "",
+        "name": "file_size",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "file_hash",
+        "nullable": false,
+        "type": "VARCHAR(64)"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(8)"
+      },
+      {
+        "default": "",
+        "name": "knowledge_sync_status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "knowledge_synced_at",
+        "nullable": true,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "",
+        "name": "knowledge_sync_message",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "note_id"
+        ],
+        "name": "files_note_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "experiment_notes"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "files_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "uploaded_by"
+        ],
+        "name": "files_uploaded_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "file_hash"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_files_file_hash",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "knowledge_sync_status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_files_knowledge_sync_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "note_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_files_note_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_files_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_files_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "uploaded_by"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_files_uploaded_by",
+        "unique": false
+      }
+    ],
+    "name": "files",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "files_pkey"
+    },
+    "row_count": 19,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('group_members_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "group_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "group_role",
+        "nullable": false,
+        "type": "VARCHAR(64)"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "group_id"
+        ],
+        "name": "group_members_group_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "groups"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "name": "group_members_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "group_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_group_members_group_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_group_members_user_id",
+        "unique": false
+      }
+    ],
+    "name": "group_members",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "group_members_pkey"
+    },
+    "row_count": 0,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('group_projects_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "group_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "group_id"
+        ],
+        "name": "group_projects_group_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "groups"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "group_projects_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "group_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_group_projects_group_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_group_projects_project_id",
+        "unique": false
+      }
+    ],
+    "name": "group_projects",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "group_projects_pkey"
+    },
+    "row_count": 0,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('groups_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "name",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "description",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "leader_user_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "leader_user_id"
+        ],
+        "name": "groups_leader_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "name"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "groups_name_key",
+        "include_columns": [],
+        "name": "groups_name_key",
+        "unique": true
+      }
+    ],
+    "name": "groups",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "groups_pkey"
+    },
+    "row_count": 0,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "name"
+        ],
+        "comment": null,
+        "name": "groups_name_key"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('kg_entities_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "entity_type",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "label",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "normalized_label",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "natural_key",
+        "nullable": false,
+        "type": "VARCHAR(320)"
+      },
+      {
+        "default": "",
+        "name": "source_type",
+        "nullable": true,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "source_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "properties",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "kg_entities_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "entity_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_entity_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "label"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_label",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "natural_key"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_natural_key",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "normalized_label"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_normalized_label",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "source_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_source_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "source_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_entities_source_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id",
+          "natural_key"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_kg_entity_project_natural_key",
+        "include_columns": [],
+        "name": "uq_kg_entity_project_natural_key",
+        "unique": true
+      }
+    ],
+    "name": "kg_entities",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "kg_entities_pkey"
+    },
+    "row_count": 126,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "project_id",
+          "natural_key"
+        ],
+        "comment": null,
+        "name": "uq_kg_entity_project_natural_key"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('kg_extraction_runs_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "note_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "triggered_by",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "extracted_entities",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "extracted_relations",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "message",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "note_id"
+        ],
+        "name": "kg_extraction_runs_note_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "experiment_notes"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "kg_extraction_runs_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "triggered_by"
+        ],
+        "name": "kg_extraction_runs_triggered_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "note_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_extraction_runs_note_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_extraction_runs_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_extraction_runs_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "triggered_by"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_extraction_runs_triggered_by",
+        "unique": false
+      }
+    ],
+    "name": "kg_extraction_runs",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "kg_extraction_runs_pkey"
+    },
+    "row_count": 20,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('kg_relations_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "source_entity_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "target_entity_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "relation_type",
+        "nullable": false,
+        "type": "VARCHAR(60)"
+      },
+      {
+        "default": "",
+        "name": "source_type",
+        "nullable": true,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "source_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "confidence",
+        "nullable": false,
+        "type": "DOUBLE PRECISION"
+      },
+      {
+        "default": "",
+        "name": "properties",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "kg_relations_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "source_entity_id"
+        ],
+        "name": "kg_relations_source_entity_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "kg_entities"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "target_entity_id"
+        ],
+        "name": "kg_relations_target_entity_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "kg_entities"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_relations_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "relation_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_relations_relation_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "source_entity_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_relations_source_entity_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "source_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_relations_source_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "source_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_relations_source_type",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "target_entity_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_kg_relations_target_entity_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id",
+          "source_entity_id",
+          "target_entity_id",
+          "relation_type"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_kg_relation_project_source_target_type",
+        "include_columns": [],
+        "name": "uq_kg_relation_project_source_target_type",
+        "unique": true
+      }
+    ],
+    "name": "kg_relations",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "kg_relations_pkey"
+    },
+    "row_count": 222,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "project_id",
+          "source_entity_id",
+          "target_entity_id",
+          "relation_type"
+        ],
+        "comment": null,
+        "name": "uq_kg_relation_project_source_target_type"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('note_approvals_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "note_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "version_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "reviewer_user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "action",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "comment",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "note_id"
+        ],
+        "name": "note_approvals_note_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "experiment_notes"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "reviewer_user_id"
+        ],
+        "name": "note_approvals_reviewer_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "version_id"
+        ],
+        "name": "note_approvals_version_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "note_versions"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "action"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_note_approvals_action",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "note_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_note_approvals_note_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "reviewer_user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_note_approvals_reviewer_user_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "version_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_note_approvals_version_id",
+        "unique": false
+      }
+    ],
+    "name": "note_approvals",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "note_approvals_pkey"
+    },
+    "row_count": 12,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('note_versions_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "note_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "version_number",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "fixed_fields_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "content_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "",
+        "name": "created_by",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "change_summary",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "is_locked",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "created_by"
+        ],
+        "name": "note_versions_created_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "note_id"
+        ],
+        "name": "note_versions_note_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "experiment_notes"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "note_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_note_versions_note_id",
+        "unique": false
+      }
+    ],
+    "name": "note_versions",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "note_versions_pkey"
+    },
+    "row_count": 12,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('project_members_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_role",
+        "nullable": false,
+        "type": "VARCHAR(8)"
+      },
+      {
+        "default": "",
+        "name": "can_read",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "can_write",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "can_review",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "can_manage",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "false",
+        "name": "can_evaluate",
+        "nullable": false,
+        "type": "BOOLEAN"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "project_members_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "name": "project_members_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_members_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_members_user_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id",
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_project_member",
+        "include_columns": [],
+        "name": "uq_project_member",
+        "unique": true
+      }
+    ],
+    "name": "project_members",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "project_members_pkey"
+    },
+    "row_count": 2,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "project_id",
+          "user_id"
+        ],
+        "comment": null,
+        "name": "uq_project_member"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('project_rag_datasets_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "dify_dataset_id",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "dify_dataset_name",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "created_by",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "'local_deepseek'::character varying",
+        "name": "provider",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "'BAAI/bge-small-zh-v1.5'::character varying",
+        "name": "embedding_model",
+        "nullable": false,
+        "type": "VARCHAR(160)"
+      },
+      {
+        "default": "'deepseek-v4-flash'::character varying",
+        "name": "generation_model",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "created_by"
+        ],
+        "name": "project_rag_datasets_created_by_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "project_rag_datasets_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "created_by"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_rag_datasets_created_by",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "dify_dataset_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_rag_datasets_dify_dataset_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_rag_datasets_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "provider"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_rag_datasets_provider",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_rag_datasets_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_project_rag_dataset",
+        "include_columns": [],
+        "name": "uq_project_rag_dataset",
+        "unique": true
+      }
+    ],
+    "name": "project_rag_datasets",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "project_rag_datasets_pkey"
+    },
+    "row_count": 4,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "comment": null,
+        "name": "uq_project_rag_dataset"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('project_reviewers_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "user_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "review_scope",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "project_reviewers_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "user_id"
+        ],
+        "name": "project_reviewers_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_reviewers_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_project_reviewers_user_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id",
+          "user_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_project_reviewer",
+        "include_columns": [],
+        "name": "uq_project_reviewer",
+        "unique": true
+      }
+    ],
+    "name": "project_reviewers",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "project_reviewers_pkey"
+    },
+    "row_count": 0,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "project_id",
+          "user_id"
+        ],
+        "comment": null,
+        "name": "uq_project_reviewer"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('projects_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "name",
+        "nullable": false,
+        "type": "VARCHAR(160)"
+      },
+      {
+        "default": "",
+        "name": "description",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "is_sensitive",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(8)"
+      },
+      {
+        "default": "",
+        "name": "approval_enabled",
+        "nullable": false,
+        "type": "BOOLEAN"
+      },
+      {
+        "default": "",
+        "name": "owner_user_id",
+        "nullable": true,
+        "type": "INTEGER"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "owner_user_id"
+        ],
+        "name": "projects_owner_user_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "name"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_projects_name",
+        "unique": true
+      }
+    ],
+    "name": "projects",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "projects_pkey"
+    },
+    "row_count": 4,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('rag_document_chunks_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "file_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "chunk_index",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "content",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "content_hash",
+        "nullable": false,
+        "type": "VARCHAR(64)"
+      },
+      {
+        "default": "",
+        "name": "character_count",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "embedding",
+        "nullable": false,
+        "type": "NULL"
+      },
+      {
+        "default": "",
+        "name": "metadata_json",
+        "nullable": false,
+        "type": "JSON"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "file_id"
+        ],
+        "name": "rag_document_chunks_file_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "files"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "rag_document_chunks_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "content_hash"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_document_chunks_content_hash",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "file_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_document_chunks_file_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_document_chunks_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "file_id",
+          "chunk_index"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_rag_chunk_file_index",
+        "include_columns": [],
+        "name": "uq_rag_chunk_file_index",
+        "unique": true
+      }
+    ],
+    "name": "rag_document_chunks",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "rag_document_chunks_pkey"
+    },
+    "row_count": 999,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "file_id",
+          "chunk_index"
+        ],
+        "comment": null,
+        "name": "uq_rag_chunk_file_index"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('rag_file_syncs_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "file_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "dify_dataset_id",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "dify_document_id",
+        "nullable": true,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "sync_status",
+        "nullable": false,
+        "type": "VARCHAR(40)"
+      },
+      {
+        "default": "",
+        "name": "sync_message",
+        "nullable": true,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "synced_at",
+        "nullable": true,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "0",
+        "name": "chunk_count",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "content_hash",
+        "nullable": true,
+        "type": "VARCHAR(64)"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "file_id"
+        ],
+        "name": "rag_file_syncs_file_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "files"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "rag_file_syncs_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "content_hash"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_file_syncs_content_hash",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "dify_dataset_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_file_syncs_dify_dataset_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "dify_document_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_file_syncs_dify_document_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "file_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_file_syncs_file_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_file_syncs_project_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "sync_status"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_rag_file_syncs_sync_status",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "file_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "duplicates_constraint": "uq_rag_file_sync_file",
+        "include_columns": [],
+        "name": "uq_rag_file_sync_file",
+        "unique": true
+      }
+    ],
+    "name": "rag_file_syncs",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "rag_file_syncs_pkey"
+    },
+    "row_count": 9,
+    "unique_constraints": [
+      {
+        "column_names": [
+          "file_id"
+        ],
+        "comment": null,
+        "name": "uq_rag_file_sync_file"
+      }
+    ]
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('search_documents_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "note_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "project_id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "title",
+        "nullable": false,
+        "type": "VARCHAR(300)"
+      },
+      {
+        "default": "",
+        "name": "search_text",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "",
+        "name": "source_ids",
+        "nullable": false,
+        "type": "TEXT"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [
+      {
+        "comment": null,
+        "constrained_columns": [
+          "note_id"
+        ],
+        "name": "search_documents_note_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "experiment_notes"
+      },
+      {
+        "comment": null,
+        "constrained_columns": [
+          "project_id"
+        ],
+        "name": "search_documents_project_id_fkey",
+        "options": {},
+        "referred_columns": [
+          "id"
+        ],
+        "referred_schema": null,
+        "referred_table": "projects"
+      }
+    ],
+    "indexes": [
+      {
+        "column_names": [
+          "note_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_search_documents_note_id",
+        "unique": true
+      },
+      {
+        "column_names": [
+          "project_id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_search_documents_project_id",
+        "unique": false
+      }
+    ],
+    "name": "search_documents",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "search_documents_pkey"
+    },
+    "row_count": 0,
+    "unique_constraints": []
+  },
+  {
+    "columns": [
+      {
+        "default": "nextval('users_id_seq'::regclass)",
+        "name": "id",
+        "nullable": false,
+        "type": "INTEGER"
+      },
+      {
+        "default": "",
+        "name": "username",
+        "nullable": false,
+        "type": "VARCHAR(64)"
+      },
+      {
+        "default": "",
+        "name": "password_hash",
+        "nullable": false,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "display_name",
+        "nullable": false,
+        "type": "VARCHAR(120)"
+      },
+      {
+        "default": "",
+        "name": "email",
+        "nullable": true,
+        "type": "VARCHAR(255)"
+      },
+      {
+        "default": "",
+        "name": "role",
+        "nullable": false,
+        "type": "VARCHAR(13)"
+      },
+      {
+        "default": "",
+        "name": "status",
+        "nullable": false,
+        "type": "VARCHAR(8)"
+      },
+      {
+        "default": "now()",
+        "name": "created_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      },
+      {
+        "default": "now()",
+        "name": "updated_at",
+        "nullable": false,
+        "type": "TIMESTAMP"
+      }
+    ],
+    "foreign_keys": [],
+    "indexes": [
+      {
+        "column_names": [
+          "id"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_users_id",
+        "unique": false
+      },
+      {
+        "column_names": [
+          "username"
+        ],
+        "dialect_options": {
+          "postgresql_include": []
+        },
+        "include_columns": [],
+        "name": "ix_users_username",
+        "unique": true
+      }
+    ],
+    "name": "users",
+    "primary_key": {
+      "comment": null,
+      "constrained_columns": [
+        "id"
+      ],
+      "name": "users_pkey"
+    },
+    "row_count": 2,
+    "unique_constraints": []
+  }
+]

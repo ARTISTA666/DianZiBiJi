@@ -32,16 +32,15 @@
 
 ## 4. 对照方法
 
-所有方法使用同一生成模型、温度、最大输出和运行次数。
+所有生成式方法使用同一生成模型、温度、最大输出和运行次数。直接结构化查询不调用生成模型，其零 token 开销和确定性输出单独报告。
 
 1. 纯 LLM,不提供项目证据。
 2. 关键词/BM25 检索加生成。
 3. 当前向量与词项混合 RAG。
 4. 直接结构化查询,对可表达为数据库/图查询的问题返回确定性结果。
 5. 当前一跳图谱增强 RAG。
-6. 改进图谱检索:查询分解、关系类型配额、结构化过滤和连接聚合。
 
-若无法实现第 6 项,必须从论文贡献中删除相应方法改进主张。
+不单列尚无独立实现和消融证据的“改进图谱检索”第六方法。查询分解、连接聚合或多跳扩展只有在形成可与当前图谱增强 RAG 分离运行的实现后，才能建立新版本预注册。
 
 ## 5. 预先冻结内容
 
@@ -108,3 +107,44 @@
 - 原始日志、证据、规则和分析脚本可复查;
 - 测试集未用于参数调优;
 - 未完成和异常案例未被选择性删除。
+
+## 10. 项目执行门槛
+
+旧的 `rag-experiment-5-freeze-manifest.json` 只冻结了本说明文件，不能作为完整实验冻结证据，核查见 `rag-experiment-5-freeze-audit-2026-07-12.md`。正式运行前必须先补齐第 5 节所列材料，再生成新的 v2 清单。
+
+当前已准备但尚未冻结：
+
+- `data/real/experiment-5/run-config.json`：五种方法、随机种子、重复次数和运行参数。
+- `docs/experiments/rag-experiment-5-blind-review-template.csv`：不含方法、日志编号和运行顺序的评价表结构。
+
+仍需外部人员冻结后提供：`corpus-manifest.json`、`questions.json` 和 `gold-facts.json`。缺少任一文件时，下列命令必须失败。
+
+```bash
+python scripts/freeze_preregistration.py \
+  docs/experiments/rag-experiment-5-preregistration.md \
+  data/real/experiment-5/corpus-manifest.json \
+  data/real/experiment-5/questions.json \
+  data/real/experiment-5/gold-facts.json \
+  data/real/experiment-5/run-config.json \
+  docs/experiments/rag-experiment-5-blind-review-template.csv \
+  backend/app/api/rag.py \
+  backend/app/services/local_rag.py \
+  backend/app/services/knowledge_graph.py \
+  scripts/summarize_system_reviews.py \
+  --root . \
+  --output docs/experiments/rag-experiment-5-freeze-manifest-v2.json
+```
+
+运行实验前先校验清单：
+
+```bash
+python scripts/freeze_preregistration.py \
+  --verify docs/experiments/rag-experiment-5-freeze-manifest-v2.json \
+  --root .
+```
+
+人工盲评完成后再汇总,未填完整或未签名时脚本应失败:
+
+```bash
+python scripts/summarize_blind_review.py --sheet docs/experiments/rag-experiment-5-blind-review-sheet.csv --key docs/experiments/rag-experiment-5-blind-review-key.csv -o docs/experiments/rag-experiment-5-blind-review-summary.json
+```

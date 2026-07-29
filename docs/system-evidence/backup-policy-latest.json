@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "generated_at": "2026-07-28T13:03:55.686253+00:00",
+  "runbook": "/Users/yusong/Downloads/new/full-system/docs/operations/backup-restore.md",
+  "checks": [
+    {
+      "name": "runbook exists",
+      "passed": true,
+      "detail": "/Users/yusong/Downloads/new/full-system/docs/operations/backup-restore.md"
+    },
+    {
+      "name": "encrypted backup copy",
+      "passed": true,
+      "detail": "加密"
+    },
+    {
+      "name": "offsite copy",
+      "passed": true,
+      "detail": "异地"
+    },
+    {
+      "name": "retention policy",
+      "passed": true,
+      "detail": "保留"
+    },
+    {
+      "name": "recovery point objective",
+      "passed": true,
+      "detail": "RPO"
+    },
+    {
+      "name": "recovery time objective",
+      "passed": true,
+      "detail": "RTO"
+    },
+    {
+      "name": "automated isolated restore drill",
+      "passed": true,
+      "detail": "restore_drill.py"
+    },
+    {
+      "name": "weekly restore sampling",
+      "passed": true,
+      "detail": "每周"
+    },
+    {
+      "name": "monthly full restore drill",
+      "passed": true,
+      "detail": "每月"
+    },
+    {
+      "name": "managed object storage target",
+      "passed": true,
+      "detail": "对象存储"
+    },
+    {
+      "name": "access revocation",
+      "passed": true,
+      "detail": "撤销"
+    }
+  ]
+}

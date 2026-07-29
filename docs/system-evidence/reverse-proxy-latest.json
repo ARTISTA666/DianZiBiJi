@@ -1,0 +1,94 @@
+{
+  "ok": true,
+  "generated_at": "2026-07-28T13:03:55.685914+00:00",
+  "template": "/Users/yusong/Downloads/new/full-system/deploy/nginx.conf.template",
+  "checks": [
+    {
+      "name": "template exists",
+      "passed": true,
+      "detail": "/Users/yusong/Downloads/new/full-system/deploy/nginx.conf.template"
+    },
+    {
+      "name": "http redirects to https",
+      "passed": true,
+      "detail": "return 301 https://$host$request_uri;"
+    },
+    {
+      "name": "https listener",
+      "passed": true,
+      "detail": "listen 443 ssl"
+    },
+    {
+      "name": "certificate path",
+      "passed": true,
+      "detail": "ssl_certificate ${TLS_CERT_PATH};"
+    },
+    {
+      "name": "certificate key path",
+      "passed": true,
+      "detail": "ssl_certificate_key ${TLS_KEY_PATH};"
+    },
+    {
+      "name": "modern tls protocols",
+      "passed": true,
+      "detail": "ssl_protocols TLSv1.2 TLSv1.3;"
+    },
+    {
+      "name": "hsts header",
+      "passed": true,
+      "detail": "Strict-Transport-Security"
+    },
+    {
+      "name": "upload body limit",
+      "passed": true,
+      "detail": "client_max_body_size ${CLIENT_MAX_BODY_SIZE};"
+    },
+    {
+      "name": "backend proxy",
+      "passed": true,
+      "detail": "proxy_pass http://127.0.0.1:${BACKEND_PORT}/;"
+    },
+    {
+      "name": "frontend proxy",
+      "passed": true,
+      "detail": "proxy_pass http://127.0.0.1:${FRONTEND_PORT};"
+    },
+    {
+      "name": "forwarded proto",
+      "passed": true,
+      "detail": "proxy_set_header X-Forwarded-Proto https;"
+    },
+    {
+      "name": "request id",
+      "passed": true,
+      "detail": "proxy_set_header X-Request-ID $request_id;"
+    },
+    {
+      "name": "all required placeholders present",
+      "passed": true,
+      "detail": {
+        "expected": [
+          "BACKEND_PORT",
+          "CLIENT_MAX_BODY_SIZE",
+          "ELN_DOMAIN",
+          "FRONTEND_PORT",
+          "TLS_CERT_PATH",
+          "TLS_KEY_PATH"
+        ],
+        "actual": [
+          "BACKEND_PORT",
+          "CLIENT_MAX_BODY_SIZE",
+          "ELN_DOMAIN",
+          "FRONTEND_PORT",
+          "TLS_CERT_PATH",
+          "TLS_KEY_PATH"
+        ]
+      }
+    },
+    {
+      "name": "no localhost public server_name",
+      "passed": true,
+      "detail": "server_name localhost"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "ok": true,
+  "generated_at": "2026-07-28T13:05:34.383161+00:00",
+  "thresholds": {
+    "max_p95_ms": 2000,
+    "max_error_rate": 0.01,
+    "max_in_flight": 50
+  },
+  "metrics": {
+    "avg_duration_ms": 5.57,
+    "in_flight": 1,
+    "latency_sample_count": 112,
+    "max_duration_ms": 352,
+    "p95_duration_ms": 24,
+    "revision": "unversioned",
+    "status": "ok",
+    "status_counts": {
+      "2xx": 112
+    },
+    "total_requests": 112,
+    "uptime_seconds": 176.63
+  },
+  "derived": {
+    "total_requests": 112,
+    "error_requests": 0,
+    "error_rate": 0.0
+  },
+  "checks": [
+    {
+      "name": "readiness endpoint",
+      "actual": 200,
+      "operator": "==",
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "name": "metrics status",
+      "actual": "ok",
+      "operator": "==",
+      "expected": "ok",
+      "passed": true
+    },
+    {
+      "name": "metrics has traffic",
+      "actual": 112,
+      "operator": ">=",
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "p95 latency ms",
+      "actual": 24,
+      "operator": "<=",
+      "expected": 2000,
+      "passed": true
+    },
+    {
+      "name": "error rate",
+      "actual": 0.0,
+      "operator": "<=",
+      "expected": 0.01,
+      "passed": true
+    },
+    {
+      "name": "in-flight requests",
+      "actual": 1,
+      "operator": "<=",
+      "expected": 50,
+      "passed": true
+    }
+  ],
+  "sources": {
+    "ready": {
+      "url": "http://127.0.0.1:8001/ready",
+      "status": 200,
+      "error": null
+    },
+    "metrics": {
+      "url": "http://127.0.0.1:8001/metrics",
+      "status": 200,
+      "error": null
+    }
+  }
+}

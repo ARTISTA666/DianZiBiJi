@@ -1,0 +1,82 @@
+{
+  "format_version": 2,
+  "frozen_at_utc": "2026-07-19T09:31:11.935159+00:00",
+  "path_base": "root_argument",
+  "files": [
+    {
+      "path": "data/real/GSE111619/main-retrieval-evaluation/report.json",
+      "size_bytes": 4517,
+      "sha256": "b83cbfac7b695d1f278d67303585c9f3d580ce47537189877ff4913f1bf2f840"
+    },
+    {
+      "path": "data/real/GSE111619/main_v8_agent_probe_report.json",
+      "size_bytes": 1677,
+      "sha256": "913fa07fd0fe0112c051f7a15570ce25cb401104f2499c012ec2d9df721ce8b0"
+    },
+    {
+      "path": "data/real/GSE111619/main_v8_kg_holdout_experiment_report.json",
+      "size_bytes": 250486,
+      "sha256": "fcf52ffaf0724771e118457c0713823635415f228933d74b831fdb3731c67277"
+    },
+    {
+      "path": "docs/system-evidence/backup-policy-latest.json",
+      "size_bytes": 1351,
+      "sha256": "eb2c5040fbc08a2342996d427e54112c24527a0f93801a1dc846050e8d28353b"
+    },
+    {
+      "path": "docs/system-evidence/load-smoke-latest.json",
+      "size_bytes": 89,
+      "sha256": "58955e5ef070e78eb60e5d99a43be9b360c544c3164c209a337d26b0dd10d063"
+    },
+    {
+      "path": "docs/system-evidence/monitoring-alerts-latest.json",
+      "size_bytes": 1642,
+      "sha256": "b9c22e96a3a640b851bd61fdbac39c1fb09320e767b8994df943d5e01c7dee48"
+    },
+    {
+      "path": "docs/system-evidence/npm-audit-latest.json",
+      "size_bytes": 364,
+      "sha256": "1d553688c2b2e970e184bfe5d03e56b7d0ef23b4d4bd7c55b843c449af4dc42d"
+    },
+    {
+      "path": "docs/system-evidence/production-config-latest.json",
+      "size_bytes": 781,
+      "sha256": "abe25ccbad0339dc28690a39842105b1a1bd3aab27a9e0ce58030866c2b4faa6"
+    },
+    {
+      "path": "docs/system-evidence/restore-drill-latest.json",
+      "size_bytes": 724,
+      "sha256": "144d964384d9081ca4b958a7d681bd15a5abf57e00b81e801ab672bf26e097cf"
+    },
+    {
+      "path": "docs/system-evidence/reverse-proxy-latest.json",
+      "size_bytes": 2309,
+      "sha256": "7370091c5131bf6ef553b8df1f7d9763d277529041e01e07650c07f65f54a10c"
+    },
+    {
+      "path": "docs/system-evidence/secret-hygiene-latest.json",
+      "size_bytes": 186,
+      "sha256": "89d3b395a6e58906bb45ede70ed6b20270ccad313b960120a20f4cd8ae842ef1"
+    },
+    {
+      "path": "docs/system-evidence/secret-rotation-latest.json",
+      "size_bytes": 1712,
+      "sha256": "90ef6244fcf8428378b86f81c67a9d764821d90f22b8d2f9bf1e49f46896c9d2"
+    },
+    {
+      "path": "docs/system-evidence/soak-smoke-latest.json",
+      "size_bytes": 677,
+      "sha256": "1b09f5a2e3192b6aaaf580e310cf2e8088463018dc020b986a73182cf3163ae9"
+    },
+    {
+      "path": "docs/system-evidence/validation-results.json",
+      "size_bytes": 48205,
+      "sha256": "843b279526c92575c62b5a530d3f044302afa81a3351bb0aa48da23dcd7d8927"
+    },
+    {
+      "path": "docs/system-evidence/validation-results.md",
+      "size_bytes": 3399,
+      "sha256": "6f676f64e8272c85e93f3dda3a896dd96de02c91f0b668331c8cc9a76bafb632"
+    }
+  ]
+}

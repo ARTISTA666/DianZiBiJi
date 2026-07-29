@@ -1,0 +1,63 @@
+{
+  "app_revision": "unversioned",
+  "counts": {
+    "api_operations": 77,
+    "database_tables": 26,
+    "sample_files": 8,
+    "sample_graph_relations": 50
+  },
+  "database_dialect": "postgresql",
+  "files": [
+    {
+      "bytes": 7885,
+      "name": "api-list.csv",
+      "sha256": "db434ebd7de9647f7d4900a00d112e8f3570a0e4758c0ba1b5b5e6770d8df648"
+    },
+    {
+      "bytes": 832,
+      "name": "architecture-and-flow.md",
+      "sha256": "14e80fbacfe22a72fdf326822dfdc8efbeaaa98e7e05ec5d1407ad74dd57c3f9"
+    },
+    {
+      "bytes": 84089,
+      "name": "database-schema.json",
+      "sha256": "e6a1de67607be69895e43be63964388091462b4137f8dce3621b9bbb0e60c480"
+    },
+    {
+      "bytes": 18715,
+      "name": "database-schema.md",
+      "sha256": "c197eace786789a2efdd14f0a9ef474d452289b406b6692a0dcec5a32d702340"
+    },
+    {
+      "bytes": 3193,
+      "name": "knowledge-graph-sample.md",
+      "sha256": "ee771b16d53d4eb1a2fdf6db26a151ab415caed1778db93d3a086068555186bf"
+    },
+    {
+      "bytes": 175623,
+      "name": "openapi.json",
+      "sha256": "99baae531f079a0bfec6102b39b9e61a7bf81f0865271b081f542ef51e28fae2"
+    },
+    {
+      "bytes": 21096,
+      "name": "project-input-output-sample.json",
+      "sha256": "6fd4d8e4107c9f17f525150b70061230efec4c0d8699da3db7a23c869ef38b95"
+    },
+    {
+      "bytes": 34416,
+      "name": "validation-results.json",
+      "sha256": "6cf32bb161d45675f0ff878ae166f40f7621d5f9b355b0f1c57dfa3759f8b625"
+    },
+    {
+      "bytes": 2817,
+      "name": "validation-results.md",
+      "sha256": "2cfb89188f508903d0b58ba5e509404a0ae7ff12df7e04804ec1b3f4dfe89e8d"
+    }
+  ],
+  "generated_at": "2026-07-13T12:13:45.748983+00:00",
+  "project": {
+    "description": "NCBI GEO GSE111619 公开 RNA-seq 数据验证项目；仅以原始 GEO 文档作为向量语料，用冻结题集验证知识图谱关系补证。",
+    "id": 3,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目"
+  }
+}

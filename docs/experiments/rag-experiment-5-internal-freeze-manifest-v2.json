@@ -1,0 +1,77 @@
+{
+  "format_version": 2,
+  "frozen_at_utc": "2026-07-13T10:50:23.126946+00:00",
+  "path_base": "root_argument",
+  "files": [
+    {
+      "path": "backend/app/api/rag.py",
+      "size_bytes": 52772,
+      "sha256": "dbda1fbd122c69d80da5b9022849c1fefc2569da4459561fffb92e1c196a0daf"
+    },
+    {
+      "path": "backend/app/models/ai.py",
+      "size_bytes": 6291,
+      "sha256": "849ebf90a4660e092dbc2d2b1ca0246b34724f010463cc6eb36f80a265a835be"
+    },
+    {
+      "path": "backend/app/schemas/ai.py",
+      "size_bytes": 5256,
+      "sha256": "501523bbf11810e77f6ad1e673ccc663f968c834c8cfcbcae51a8c1f5bba3c70"
+    },
+    {
+      "path": "backend/app/services/knowledge_graph.py",
+      "size_bytes": 42678,
+      "sha256": "cda2cc568418bd9c2cf1f329f45c792f5fb15f00c9d279af00d0abc6304a8473"
+    },
+    {
+      "path": "backend/app/services/local_rag.py",
+      "size_bytes": 9610,
+      "sha256": "6274e4d11af213fec5d536c06f622d01b107bd6d39e4e9d4b07b5b1c90889e3d"
+    },
+    {
+      "path": "data/real/experiment-5/run-config.json",
+      "size_bytes": 2040,
+      "sha256": "0bbc5aafd2c98a7a40a1eac546fb60b728c09b339cb3f5b2d49fff71ddce1c6a"
+    },
+    {
+      "path": "data/real/GSE111619/gse111619_kg_holdout_freeze.json",
+      "size_bytes": 457,
+      "sha256": "ae6a9441ce4a378e04b8785cbfe5bbeb161527aa2da2e5d57a1153a449efe595"
+    },
+    {
+      "path": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+      "size_bytes": 7082,
+      "sha256": "ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889"
+    },
+    {
+      "path": "data/real/GSE111619/kg_benchmark_import_report.json",
+      "size_bytes": 7379,
+      "sha256": "54fad36d5d6f67be25af5f04eb2170f383a9637b52afff5c37c920e349200ba9"
+    },
+    {
+      "path": "docs/experiments/rag-experiment-5-blind-review-template.csv",
+      "size_bytes": 120,
+      "sha256": "41068b883c05115898765915fc9cc4a3023bbbe0797488d86e8ae2e2dc9c46e9"
+    },
+    {
+      "path": "docs/experiments/rag-experiment-5-preregistration.md",
+      "size_bytes": 5371,
+      "sha256": "870a0083edf6c4d3566ca3db8bcd2f4440cb0fb4ec083635f85e25cfdd82f530"
+    },
+    {
+      "path": "scripts/evaluate_retrieval.py",
+      "size_bytes": 30294,
+      "sha256": "097ce8ddb3e76841d7a3c32c4ff4251e1cfed8d6f74ea85dd5065d3b132caaa3"
+    },
+    {
+      "path": "scripts/run_gse111619_experiment.py",
+      "size_bytes": 28197,
+      "sha256": "fa1fd5a302af95425272d4b91d95685f7f71cb495b1242368f556f7e8c8b2fb4"
+    },
+    {
+      "path": "scripts/summarize_system_reviews.py",
+      "size_bytes": 12101,
+      "sha256": "b74d7017f884f3a80406fb755e619f325df4d85daada0d59183a25d5be09d3cf"
+    }
+  ]
+}

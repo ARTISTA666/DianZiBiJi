@@ -1,0 +1,575 @@
+{
+  "generated_at": "2026-07-29T16:41:15.597917+00:00",
+  "scope": "full-system release-candidate maturity gate",
+  "evidence_level": "internal automated gate; not independent human review",
+  "source_revision": null,
+  "thresholds": {
+    "retrieval_question_count_min": 20,
+    "retrieval_fact_count_min": 50,
+    "retrieval_chunk_count_min": 500,
+    "retrieval_graph_recall10_min": 0.9,
+    "retrieval_graph_ndcg10_min": 0.6,
+    "retrieval_graph_recall10_delta_min": 0.1,
+    "experiment_case_count_min": 12,
+    "experiment_kg_micro_fact_coverage_min": 0.85,
+    "experiment_kg_exact_accuracy_min": 0.6,
+    "experiment_forbidden_fact_hits_max": 0,
+    "citation_source_marker_rate_min": 0.95,
+    "citation_graph_marker_rate_min": 0.95,
+    "agent_completed_runs_min": 4,
+    "agent_failed_runs_max": 0,
+    "agent_invalid_citations_max": 0,
+    "agent_needs_review_max": 0,
+    "playwright_expected_min": 4,
+    "knowledge_graph_audit_f1_min": 0.8,
+    "load_smoke_successful_min": 60,
+    "load_smoke_p95_ms_max": 2000,
+    "soak_smoke_cycles_min": 2,
+    "soak_smoke_p95_ms_max": 2000,
+    "runtime_metrics_total_requests_min": 1,
+    "runtime_metrics_p95_ms_max": 2000,
+    "restore_drill_public_table_count_min": 1,
+    "system_evidence_max_age_hours": 168
+  },
+  "inputs": {
+    "retrieval_report": "/Users/yusong/Downloads/new/full-system/data/real/GSE111619/main-retrieval-evaluation/report.json",
+    "experiment_report": "/Users/yusong/Downloads/new/full-system/data/real/GSE111619/main_v8_kg_holdout_experiment_report.json",
+    "agent_report": "/Users/yusong/Downloads/new/full-system/data/real/GSE111619/main_v8_agent_probe_report.json",
+    "system_evidence_report": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/validation-results.json",
+    "evidence_manifest": "docs/system-evidence/maturity-evidence-manifest.json"
+  },
+  "groups": {
+    "retrieval": [
+      {
+        "name": "retrieval question count",
+        "actual": 20,
+        "operator": ">=",
+        "expected": 20,
+        "passed": true
+      },
+      {
+        "name": "retrieval gold fact count",
+        "actual": 56,
+        "operator": ">=",
+        "expected": 50,
+        "passed": true
+      },
+      {
+        "name": "retrieval corpus chunk count",
+        "actual": 984,
+        "operator": ">=",
+        "expected": 500,
+        "passed": true
+      },
+      {
+        "name": "graph Recall@10",
+        "actual": 0.902381,
+        "operator": ">=",
+        "expected": 0.9,
+        "passed": true
+      },
+      {
+        "name": "graph nDCG@10",
+        "actual": 0.607235,
+        "operator": ">=",
+        "expected": 0.6,
+        "passed": true
+      },
+      {
+        "name": "graph Recall@10 delta over hybrid",
+        "actual": 0.339286,
+        "operator": ">=",
+        "expected": 0.1,
+        "passed": true
+      }
+    ],
+    "rag_experiment": [
+      {
+        "name": "experiment required method coverage",
+        "actual": [],
+        "operator": "==",
+        "expected": [],
+        "passed": true
+      },
+      {
+        "name": "experiment required methods completed cases",
+        "actual": [],
+        "operator": "==",
+        "expected": [],
+        "passed": true
+      },
+      {
+        "name": "experiment required methods failed cases",
+        "actual": [],
+        "operator": "==",
+        "expected": [],
+        "passed": true
+      },
+      {
+        "name": "experiment completed kg cases",
+        "actual": 36,
+        "operator": ">=",
+        "expected": 12,
+        "passed": true
+      },
+      {
+        "name": "experiment failed kg cases",
+        "actual": 0,
+        "operator": "==",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "kg micro fact coverage",
+        "actual": 0.9062,
+        "operator": ">=",
+        "expected": 0.85,
+        "passed": true
+      },
+      {
+        "name": "kg exact case accuracy",
+        "actual": 0.8333,
+        "operator": ">=",
+        "expected": 0.6,
+        "passed": true
+      },
+      {
+        "name": "kg forbidden fact hits",
+        "actual": 0,
+        "operator": "<=",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "citation indices in range",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "kg source marker rate",
+        "actual": 0.9722,
+        "operator": ">=",
+        "expected": 0.95,
+        "passed": true
+      },
+      {
+        "name": "kg graph marker rate",
+        "actual": 1.0,
+        "operator": ">=",
+        "expected": 0.95,
+        "passed": true
+      }
+    ],
+    "agent": [
+      {
+        "name": "agent completed runs",
+        "actual": 4,
+        "operator": ">=",
+        "expected": 4,
+        "passed": true
+      },
+      {
+        "name": "agent failed runs",
+        "actual": 0,
+        "operator": "<=",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "agent needs_review runs",
+        "actual": 0,
+        "operator": "<=",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "agent invalid citations",
+        "actual": 0,
+        "operator": "<=",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "agent required task coverage",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      }
+    ],
+    "system": [
+      {
+        "name": "system evidence freshness hours",
+        "actual": 312.8103638880556,
+        "operator": "<=",
+        "expected": 168,
+        "passed": false
+      },
+      {
+        "name": "runtime evidence freshness hours",
+        "actual": 312.80996946722223,
+        "operator": "<=",
+        "expected": 168,
+        "passed": false
+      },
+      {
+        "name": "playwright evidence freshness hours",
+        "actual": 1000000000.0,
+        "operator": "<=",
+        "expected": 168,
+        "passed": false
+      },
+      {
+        "name": "runtime checks",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "runtime metrics endpoint",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "runtime metrics total requests",
+        "actual": 361,
+        "operator": ">=",
+        "expected": 1,
+        "passed": true
+      },
+      {
+        "name": "runtime metrics p95 latency ms",
+        "actual": 18,
+        "operator": "<=",
+        "expected": 2000,
+        "passed": true
+      },
+      {
+        "name": "load smoke ok",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "load smoke successful requests",
+        "actual": 90,
+        "operator": ">=",
+        "expected": 60,
+        "passed": true
+      },
+      {
+        "name": "load smoke p95 latency ms",
+        "actual": 31,
+        "operator": "<=",
+        "expected": 2000,
+        "passed": true
+      },
+      {
+        "name": "experiment restart recovery",
+        "actual": false,
+        "operator": "==",
+        "expected": true,
+        "passed": false
+      },
+      {
+        "name": "experiment interruption observed",
+        "actual": null,
+        "operator": "==",
+        "expected": true,
+        "passed": false
+      },
+      {
+        "name": "experiment resume completed",
+        "actual": null,
+        "operator": "==",
+        "expected": "completed",
+        "passed": false
+      },
+      {
+        "name": "short soak smoke ok",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "short soak smoke cycles",
+        "actual": 3,
+        "operator": ">=",
+        "expected": 2,
+        "passed": true
+      },
+      {
+        "name": "short soak smoke p95 latency ms",
+        "actual": 15,
+        "operator": "<=",
+        "expected": 2000,
+        "passed": true
+      },
+      {
+        "name": "npm production audit vulnerabilities",
+        "actual": 0,
+        "operator": "==",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "production config preflight",
+        "actual": "passed",
+        "operator": "==",
+        "expected": "passed",
+        "passed": true
+      },
+      {
+        "name": "secret hygiene",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "secret rotation runbook",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "backup policy runbook",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "monitoring alerts",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "reverse proxy TLS template",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "playwright expected tests",
+        "actual": 3,
+        "operator": ">=",
+        "expected": 4,
+        "passed": false
+      },
+      {
+        "name": "playwright critical flow coverage",
+        "actual": [
+          "系统管理员完成账号、小组和审计闭环"
+        ],
+        "operator": "==",
+        "expected": [],
+        "passed": false
+      },
+      {
+        "name": "playwright unexpected tests",
+        "actual": 0,
+        "operator": "==",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "playwright skipped tests",
+        "actual": 0,
+        "operator": "==",
+        "expected": 0,
+        "passed": true
+      },
+      {
+        "name": "playwright result count",
+        "actual": 3,
+        "operator": "==",
+        "expected": 3,
+        "passed": true
+      },
+      {
+        "name": "playwright unique test titles",
+        "actual": 3,
+        "operator": "==",
+        "expected": 3,
+        "passed": true
+      },
+      {
+        "name": "playwright all test results passed",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "backup smoke verified",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "backup dump readable",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "restore drill verified",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "restore drill public tables",
+        "actual": 26,
+        "operator": ">=",
+        "expected": 1,
+        "passed": true
+      },
+      {
+        "name": "restore drill storage restored",
+        "actual": true,
+        "operator": "==",
+        "expected": true,
+        "passed": true
+      },
+      {
+        "name": "knowledge graph audit F1",
+        "actual": 1.0,
+        "operator": ">=",
+        "expected": 0.8,
+        "passed": true
+      }
+    ],
+    "evidence_manifest": [
+      {
+        "name": "maturity evidence manifest verified",
+        "actual": false,
+        "operator": "==",
+        "expected": true,
+        "passed": false
+      },
+      {
+        "name": "maturity evidence manifest matches current checkout",
+        "actual": false,
+        "operator": "==",
+        "expected": true,
+        "passed": false
+      },
+      {
+        "name": "maturity evidence manifest file count",
+        "actual": 15,
+        "operator": ">=",
+        "expected": 10,
+        "passed": true
+      },
+      {
+        "name": "maturity evidence manifest covers gate inputs",
+        "actual": [],
+        "operator": "==",
+        "expected": [],
+        "passed": true
+      }
+    ]
+  },
+  "passed": false,
+  "failures": [
+    {
+      "group": "system",
+      "name": "system evidence freshness hours",
+      "actual": 312.8103638880556,
+      "operator": "<=",
+      "expected": 168,
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "runtime evidence freshness hours",
+      "actual": 312.80996946722223,
+      "operator": "<=",
+      "expected": 168,
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "playwright evidence freshness hours",
+      "actual": 1000000000.0,
+      "operator": "<=",
+      "expected": 168,
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "experiment restart recovery",
+      "actual": false,
+      "operator": "==",
+      "expected": true,
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "experiment interruption observed",
+      "actual": null,
+      "operator": "==",
+      "expected": true,
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "experiment resume completed",
+      "actual": null,
+      "operator": "==",
+      "expected": "completed",
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "playwright expected tests",
+      "actual": 3,
+      "operator": ">=",
+      "expected": 4,
+      "passed": false
+    },
+    {
+      "group": "system",
+      "name": "playwright critical flow coverage",
+      "actual": [
+        "系统管理员完成账号、小组和审计闭环"
+      ],
+      "operator": "==",
+      "expected": [],
+      "passed": false
+    },
+    {
+      "group": "evidence_manifest",
+      "name": "maturity evidence manifest verified",
+      "actual": false,
+      "operator": "==",
+      "expected": true,
+      "passed": false
+    },
+    {
+      "group": "evidence_manifest",
+      "name": "maturity evidence manifest matches current checkout",
+      "actual": false,
+      "operator": "==",
+      "expected": true,
+      "passed": false
+    }
+  ],
+  "next_blocker": "system evidence freshness hours"
+}

@@ -1,0 +1,32 @@
+{
+  "validated_at": "2026-07-12T12:04:31.696381+00:00",
+  "scope": "read-only method-masked review boundary; no ratings submitted",
+  "project_id": 3,
+  "evaluator_user_id": 2,
+  "manager_user_id": 1,
+  "evaluator_membership": {
+    "can_read": true,
+    "can_write": false,
+    "can_review": false,
+    "can_evaluate": true,
+    "can_manage": false,
+    "is_project_owner": false
+  },
+  "http_statuses": {
+    "evaluator_raw_logs": 403,
+    "evaluator_analytics": 403,
+    "evaluator_experiments": 403,
+    "evaluator_query_attempt": 403,
+    "evaluator_blind_batches": 200,
+    "evaluator_blind_items": 200,
+    "manager_blind_batches": 403,
+    "manager_raw_logs": 200
+  },
+  "batch_count": 3,
+  "selected_batch_item_count": 2,
+  "leaked_markers": [],
+  "evaluation_count_before": 0,
+  "evaluation_count_after": 0,
+  "ratings_submitted": 0,
+  "passed": true
+}
