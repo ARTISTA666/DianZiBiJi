@@ -1,13 +1,12 @@
-"""Tests for auth + user management endpoints (17 test cases)."""
+"""Tests for auth + user management endpoints (20 test cases)."""
 
 import pytest
 from fastapi import FastAPI, HTTPException, status
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.api import auth, users
+from app.api.auth import _reset_rate_limiter_state
 from app.api.deps import get_current_user
 from app.core.database import Base, get_db
 from app.core.security import create_access_token, hash_password
@@ -15,11 +14,18 @@ from app.models import *  # noqa: F403
 from app.models.user import User, UserRole, UserStatus
 
 
+@pytest.fixture(autouse=True)
+def _reset_rate_limiter():
+    """Ensure each test starts with a clean rate-limiter state."""
+    _reset_rate_limiter_state()
+    yield
+    _reset_rate_limiter_state()
+
+
 @pytest.fixture()
-def client():
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
-    SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
-    Base.metadata.create_all(bind=engine)
+def client(db_engine):
+    SessionLocal = sessionmaker(bind=db_engine, autoflush=False, autocommit=False, expire_on_commit=False)
+    Base.metadata.create_all(bind=db_engine)
 
     # Create seed users
     db = SessionLocal()
@@ -125,7 +131,7 @@ def test_create_user_as_admin(client):
     c, _, token = client
     token["value"] = "1"
     r = c.post("/users", json={
-        "username": "new_user", "password": "Pass123", "display_name": "New", "email": "new@test.com", "role": "member",
+        "username": "new_user", "password": "Pass1234", "display_name": "New", "email": "new@test.com", "role": "member",
     })
     assert r.status_code == 200
     body = r.json()
@@ -134,10 +140,22 @@ def test_create_user_as_admin(client):
     assert body["status"] == "active"
 
 
+def test_create_user_rejects_duplicate_username(client):
+    c, _, token = client
+    token["value"] = "1"
+
+    response = c.post("/users", json={
+        "username": "member", "password": "Pass1234", "display_name": "Duplicate",
+    })
+
+    assert response.status_code == 409
+    assert response.json()["detail"] == "Username already exists"
+
+
 def test_create_user_as_member_forbidden(client):
     c, _, token = client
     token["value"] = "2"
-    r = c.post("/users", json={"username": "x", "password": "x", "display_name": "X"})
+    r = c.post("/users", json={"username": "user_x", "password": "Password123", "display_name": "X"})
     assert r.status_code == 403
 
 
@@ -177,3 +195,128 @@ def test_disable_nonexistent_user(client):
     token["value"] = "1"
     r = c.post("/users/999/disable")
     assert r.status_code == 404
+
+
+def test_password_change_revokes_old_token_and_returns_replacement(client):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+    old_token = c.post("/auth/login", json={"username": "admin", "password": "admin123"}).json()["access_token"]
+
+    response = c.post(
+        "/users/me/password",
+        headers={"Authorization": f"Bearer {old_token}"},
+        json={"current_password": "admin123", "new_password": "NewPassword123"},
+    )
+
+    assert response.status_code == 200
+    new_token = response.json()["access_token"]
+    # The auth cookie must be refreshed alongside the auth_version bump.
+    assert "eln_access_token" in response.headers.get("set-cookie", "")
+    assert c.get("/auth/me", headers={"Authorization": f"Bearer {old_token}"}).status_code == 401
+    assert c.get("/auth/me", headers={"Authorization": f"Bearer {new_token}"}).status_code == 200
+    assert c.post("/auth/login", json={"username": "admin", "password": "admin123"}).status_code == 401
+    assert c.post("/auth/login", json={"username": "admin", "password": "NewPassword123"}).status_code == 200
+
+
+def test_logout_revokes_presented_token(client):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+    token = c.post("/auth/login", json={"username": "admin", "password": "admin123"}).json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+    assert c.post("/auth/logout", headers=headers).status_code == 200
+    assert c.get("/auth/me", headers=headers).status_code == 401
+
+
+# ── Cookie session ─────────────────────────────────────────
+
+def test_login_sets_httponly_cookie_that_authenticates(client):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+
+    r = c.post("/auth/login", json={"username": "admin", "password": "admin123"})
+
+    assert r.status_code == 200
+    set_cookie = r.headers.get("set-cookie", "")
+    assert "eln_access_token=" in set_cookie
+    assert "httponly" in set_cookie.lower()
+    assert "samesite=lax" in set_cookie.lower()
+    # No Authorization header: the HttpOnly cookie authenticates the browser.
+    me = c.get("/auth/me")
+    assert me.status_code == 200
+    assert me.json()["username"] == "admin"
+
+
+def test_logout_clears_cookie_session(client):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+    c.post("/auth/login", json={"username": "admin", "password": "admin123"})
+    assert c.get("/auth/me").status_code == 200
+
+    assert c.post("/auth/logout").status_code == 200
+
+    assert c.get("/auth/me").status_code == 401
+
+
+# ── IP rate limiting ───────────────────────────────────────
+
+
+def test_login_rate_limit_blocks_after_exhausting_attempts(client, monkeypatch):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+    monkeypatch.setattr("app.api.auth.get_settings", lambda: _FakeSettings(max_attempts=3, window=60))
+
+    for _ in range(3):
+        r = c.post("/auth/login", json={"username": "admin", "password": "wrong"})
+        assert r.status_code == 401
+
+    r = c.post("/auth/login", json={"username": "admin", "password": "wrong"})
+    assert r.status_code == 429
+    assert "Too many" in r.json()["detail"]
+
+
+def test_login_rate_limit_cleared_on_success(client, monkeypatch):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+    monkeypatch.setattr("app.api.auth.get_settings", lambda: _FakeSettings(max_attempts=3, window=60))
+
+    # Two failures then a success should reset the counter.
+    c.post("/auth/login", json={"username": "admin", "password": "wrong"})
+    c.post("/auth/login", json={"username": "admin", "password": "wrong"})
+    r = c.post("/auth/login", json={"username": "admin", "password": "admin123"})
+    assert r.status_code == 200
+
+    # Three more failures should NOT be blocked (counter was cleared).
+    for _ in range(3):
+        r = c.post("/auth/login", json={"username": "admin", "password": "wrong"})
+        assert r.status_code in (401, 200)  # 401 for bad password; still under limit
+
+
+def test_login_rate_limit_respects_x_forwarded_for(client, monkeypatch):
+    c, _, _ = client
+    c.app.dependency_overrides.pop(get_current_user)
+    monkeypatch.setattr("app.api.auth.get_settings", lambda: _FakeSettings(max_attempts=2, window=60))
+
+    headers_a = {"X-Forwarded-For": "10.0.0.1"}
+    headers_b = {"X-Forwarded-For": "10.0.0.2"}
+
+    # IP-A exhausts its limit.
+    c.post("/auth/login", json={"username": "admin", "password": "wrong"}, headers=headers_a)
+    c.post("/auth/login", json={"username": "admin", "password": "wrong"}, headers=headers_a)
+    r = c.post("/auth/login", json={"username": "admin", "password": "wrong"}, headers=headers_a)
+    assert r.status_code == 429
+
+    # IP-B is unaffected.
+    r = c.post("/auth/login", json={"username": "admin", "password": "wrong"}, headers=headers_b)
+    assert r.status_code == 401
+
+
+class _FakeSettings:
+    """Minimal stand-in for app.core.config.Settings."""
+
+    def __init__(self, max_attempts: int, window: int):
+        self.login_ip_rate_limit_max_attempts = max_attempts
+        self.login_ip_rate_limit_window_seconds = window
+        # Fields accessed by set_auth_cookie:
+        self.access_token_expire_minutes = 480
+        self.app_env = "test"

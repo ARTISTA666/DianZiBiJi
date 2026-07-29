@@ -17,6 +17,10 @@ class KnowledgeEntityType(StrEnum):
     INSTRUMENT = "instrument"
     SAMPLE = "sample"
     RESULT = "result"
+    BIOLOGICAL_SOURCE = "biological_source"
+    CONDITION = "condition"
+    SOFTWARE = "software"
+    IDENTIFIER = "identifier"
 
 
 class KnowledgeRelationType(StrEnum):
@@ -28,6 +32,10 @@ class KnowledgeRelationType(StrEnum):
     USES_INSTRUMENT = "uses_instrument"
     USES_SAMPLE = "uses_sample"
     PRODUCES_RESULT = "produces_result"
+    HAS_BIOLOGICAL_SOURCE = "has_biological_source"
+    HAS_CONDITION = "has_condition"
+    USES_SOFTWARE = "uses_software"
+    HAS_IDENTIFIER = "has_identifier"
 
 
 class KnowledgeExtractionStatus(StrEnum):

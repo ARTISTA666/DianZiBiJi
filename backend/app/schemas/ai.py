@@ -18,10 +18,38 @@ class AIQueryEvaluationRead(BaseModel):
     is_accurate: bool
     is_traceable: bool
     comment: str | None
+    review_protocol: str = "unblinded"
     created_at: datetime
     updated_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class BlindReviewEvaluationRead(BaseModel):
+    score: int
+    is_accurate: bool
+    is_traceable: bool
+    comment: str | None
+    updated_at: datetime
+
+
+class BlindReviewEvidenceRead(BaseModel):
+    evidence_id: str
+    content: str
+
+
+class BlindReviewItemRead(BaseModel):
+    blind_id: str
+    question: str
+    answer: str | None
+    evidence: list[BlindReviewEvidenceRead] = Field(default_factory=list)
+    evaluation: BlindReviewEvaluationRead | None = None
+
+
+class BlindReviewBatchRead(BaseModel):
+    batch_id: str
+    total_items: int = 0
+    completed_items: int = 0
 
 
 class AIQueryLogRead(BaseModel):
@@ -46,8 +74,11 @@ class AIQueryLogRead(BaseModel):
     error_message: str | None
     experiment_run_id: int | None = None
     experiment_case_index: int | None = None
+    experiment_repetition_index: int | None = None
+    experiment_execution_order: int | None = None
     created_at: datetime
     evaluation: AIQueryEvaluationRead | None = None
+    evaluations: list[AIQueryEvaluationRead] = Field(default_factory=list)
 
     model_config = {"from_attributes": True}
 
@@ -64,10 +95,18 @@ class AIQueryModeStats(BaseModel):
     avg_response_ms: float = 0
 
 
+class AIQueryAgreementMetric(BaseModel):
+    paired_ratings: int = 0
+    agreement_rate: float | None = None
+    cohens_kappa: float | None = None
+
+
 class AIQueryAnalyticsRead(BaseModel):
     project_id: int
     total_queries: int = 0
     evaluated_queries: int = 0
+    evaluation_count: int = 0
+    evaluator_count: int = 0
     evaluation_rate: float = 0
     project_rag_queries: int = 0
     kg_enhanced_queries: int = 0
@@ -79,6 +118,8 @@ class AIQueryAnalyticsRead(BaseModel):
     avg_graph_hit_count: float = 0
     avg_source_count: float = 0
     mode_stats: list[AIQueryModeStats] = Field(default_factory=list)
+    accuracy_agreement: AIQueryAgreementMetric = Field(default_factory=AIQueryAgreementMetric)
+    traceability_agreement: AIQueryAgreementMetric = Field(default_factory=AIQueryAgreementMetric)
 
 
 class AgentGenerateRequest(BaseModel):
@@ -117,8 +158,11 @@ class AIExperimentRunRequest(BaseModel):
     modes: list[str] = Field(
         default_factory=lambda: ["project_rag", "kg_enhanced_rag"],
         min_length=1,
-        max_length=2,
+        max_length=5,
     )
+    repetitions: int = Field(default=1, ge=1, le=10)
+    randomize_order: bool = True
+    random_seed: int | None = Field(default=None, ge=0, le=2_147_483_647)
 
 
 class AIExperimentRunRead(BaseModel):

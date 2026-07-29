@@ -3,9 +3,7 @@
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.api import projects
 from app.api.deps import get_current_user
@@ -17,10 +15,9 @@ from app.models.user import User, UserRole
 
 
 @pytest.fixture()
-def client():
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
-    SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
-    Base.metadata.create_all(bind=engine)
+def client(db_engine):
+    SessionLocal = sessionmaker(bind=db_engine, autoflush=False, autocommit=False, expire_on_commit=False)
+    Base.metadata.create_all(bind=db_engine)
 
     db = SessionLocal()
     db.add_all([
@@ -62,28 +59,28 @@ def test_admin_sees_all_projects(client):
     c, _, uid = client; uid["value"] = 1
     r = c.get("/projects")
     assert r.status_code == 200
-    assert len(r.json()) == 3
+    assert len(r.json()["items"]) == 3
 
 
 def test_member_sees_only_accessible(client):
     c, _, uid = client; uid["value"] = 4
     r = c.get("/projects")
     assert r.status_code == 200
-    assert r.json() == []
+    assert r.json()["items"] == []
 
 
 def test_member_with_assignment_sees_accessible(client):
     c, _, uid = client; uid["value"] = 3
     r = c.get("/projects")
     assert r.status_code == 200
-    assert len(r.json()) >= 2  # project 1 (viewer) + project 3 (owner)
+    assert len(r.json()["items"]) >= 2  # project 1 (viewer) + project 3 (owner)
 
 
 def test_pi_sees_non_sensitive_plus_assigned(client):
     c, _, uid = client; uid["value"] = 2
     r = c.get("/projects")
     assert r.status_code == 200
-    ids = {p["id"] for p in r.json()}
+    ids = {p["id"] for p in r.json()["items"]}
     assert 1 in ids  # non-sensitive
     assert 3 in ids  # non-sensitive
     # PI also sees projects they are members of (via ProjectMember)

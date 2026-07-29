@@ -1,9 +1,7 @@
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.api import notes
 from app.api.deps import get_current_user
@@ -11,18 +9,14 @@ from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
 from app.models.knowledge_graph import KnowledgeEntity, KnowledgeExtractionRun, KnowledgeRelation
 from app.models.project import Project
+from app.models.search_document import SearchDocument
 from app.models.user import User, UserRole
 
 
 @pytest.fixture()
-def test_app():
-    engine = create_engine(
-        "sqlite://",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-    SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
-    Base.metadata.create_all(bind=engine)
+def test_app(db_engine):
+    SessionLocal = sessionmaker(bind=db_engine, autoflush=False, autocommit=False, expire_on_commit=False)
+    Base.metadata.create_all(bind=db_engine)
 
     db = SessionLocal()
     db.add_all(
@@ -131,3 +125,57 @@ def test_draft_update_is_extracted_only_after_approval(test_app):
         assert "Tris buffer" in relation_targets
         assert "更新结果" in relation_targets
         assert db.query(KnowledgeExtractionRun).filter(KnowledgeExtractionRun.note_id == note_id).count() == 1
+
+
+@pytest.mark.parametrize(
+    ("endpoint", "payload", "expected_status"),
+    [
+        ("archive", None, "archived"),
+        ("void", {"comment": "invalid evidence"}, "voided"),
+    ],
+)
+def test_deactivated_note_is_removed_from_graph_and_search(test_app, endpoint, payload, expected_status):
+    client, SessionLocal = test_app
+    response = client.post(
+        "/projects/1/notes",
+        json={
+            "title": "Evidence to deactivate",
+            "experiment_type": "PCR",
+            "fixed_fields_json": {"reagents": "Taq polymerase"},
+            "content_json": {"text": "结果: 条带清晰"},
+        },
+    )
+    note_id = response.json()["id"]
+    assert client.post(f"/notes/{note_id}/submit").status_code == 200
+    assert client.post(f"/notes/{note_id}/approve", json={"comment": "ok"}).status_code == 200
+
+    with SessionLocal() as db:
+        db.add(
+            SearchDocument(
+                note_id=note_id,
+                project_id=1,
+                title="Evidence to deactivate",
+                search_text="Taq polymerase 条带清晰",
+                source_ids=str(note_id),
+            )
+        )
+        db.commit()
+
+    request = client.post(f"/notes/{note_id}/{endpoint}", json=payload) if payload else client.post(f"/notes/{note_id}/{endpoint}")
+    assert request.status_code == 200
+    assert request.json()["status"] == expected_status
+
+    with SessionLocal() as db:
+        assert (
+            db.query(KnowledgeRelation)
+            .filter(KnowledgeRelation.source_id == note_id, KnowledgeRelation.source_type.in_(("note", "note_extraction")))
+            .count()
+            == 0
+        )
+        assert (
+            db.query(KnowledgeEntity)
+            .filter(KnowledgeEntity.source_type == "note", KnowledgeEntity.source_id == note_id)
+            .count()
+            == 0
+        )
+        assert db.query(SearchDocument).filter(SearchDocument.note_id == note_id).count() == 0

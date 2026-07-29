@@ -31,6 +31,8 @@ def index_note(db: Session, note_id: int) -> SearchDocument:
     note = db.get(ExperimentNote, note_id)
     if note is None:
         raise LookupError(f"Note {note_id} not found")
+    if note.status != NoteStatus.APPROVED:
+        raise ValueError("Only approved notes can be indexed")
     version = db.get(NoteVersion, note.current_version_id) if note.current_version_id else None
     search_text = _build_search_text(note, version)
     source_ids = _build_source_ids(note)
@@ -58,6 +60,10 @@ def index_project(db: Session, project_id: int | None = None) -> list[SearchDocu
     query = db.query(ExperimentNote)
     if project_id is not None:
         query = query.filter(ExperimentNote.project_id == project_id)
+        db.query(SearchDocument).filter(SearchDocument.project_id == project_id).delete(synchronize_session=False)
+    else:
+        db.query(SearchDocument).delete(synchronize_session=False)
+    query = query.filter(ExperimentNote.status == NoteStatus.APPROVED)
     notes = query.all()
     indexed: list[SearchDocument] = []
     for note in notes:
@@ -70,7 +76,12 @@ def index_projects(db: Session, project_ids: list[int]) -> list[SearchDocument]:
     indexed: list[SearchDocument] = []
     if not project_ids:
         return indexed
-    notes = db.query(ExperimentNote).filter(ExperimentNote.project_id.in_(project_ids)).all()
+    db.query(SearchDocument).filter(SearchDocument.project_id.in_(project_ids)).delete(synchronize_session=False)
+    notes = (
+        db.query(ExperimentNote)
+        .filter(ExperimentNote.project_id.in_(project_ids), ExperimentNote.status == NoteStatus.APPROVED)
+        .all()
+    )
     for note in notes:
         indexed.append(index_note(db, note.id))
     return indexed
@@ -88,7 +99,11 @@ def search_documents(
     if not terms:
         return []
 
-    q = db.query(SearchDocument)
+    q = (
+        db.query(SearchDocument)
+        .join(ExperimentNote, ExperimentNote.id == SearchDocument.note_id)
+        .filter(ExperimentNote.status == NoteStatus.APPROVED)
+    )
     if project_id is not None:
         q = q.filter(SearchDocument.project_id == project_id)
     elif project_ids is not None:
@@ -111,6 +126,10 @@ def search_documents(
                 "source_ids": doc.source_ids.split(",") if doc.source_ids else [],
             })
     return results[:limit]
+
+
+def remove_note(db: Session, note_id: int) -> None:
+    db.query(SearchDocument).filter(SearchDocument.note_id == note_id).delete(synchronize_session=False)
 
 
 def _snippet(text: str, terms: list[str], context: int = 40) -> str:

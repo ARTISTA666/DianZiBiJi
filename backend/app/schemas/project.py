@@ -30,12 +30,20 @@ class ProjectRead(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ProjectListResponse(BaseModel):
+    items: list[ProjectRead]
+    total: int
+    skip: int = 0
+    limit: int = 20
+
+
 class ProjectMemberCreate(BaseModel):
     user_id: int
     project_role: str = "member"
     can_read: bool = True
     can_write: bool = True
     can_review: bool = False
+    can_evaluate: bool = False
     can_manage: bool = False
 
 
@@ -44,6 +52,7 @@ class ProjectMemberUpdate(BaseModel):
     can_read: bool | None = None
     can_write: bool | None = None
     can_review: bool | None = None
+    can_evaluate: bool | None = None
     can_manage: bool | None = None
 
 
@@ -55,6 +64,7 @@ class ProjectMemberRead(BaseModel):
     can_read: bool
     can_write: bool
     can_review: bool
+    can_evaluate: bool
     can_manage: bool
 
     model_config = {"from_attributes": True}

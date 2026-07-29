@@ -2,13 +2,14 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
-from app.api.deps import can_review_project, can_write_project, get_current_user, require_note_access, require_project_access
+from app.api.deps import can_review_project, can_write_project, get_current_user, require_note_access, require_project_access, reviewable_project_ids
 from app.core.database import get_db
 from app.models.note import ExperimentNote, NoteApproval, NoteStatus, NoteVersion
 from app.models.user import User
 from app.schemas.note import ApprovalRequest, NoteApprovalRead, NoteCreate, NoteRead, NoteUpdate, NoteVersionRead
 from app.services.audit import write_audit
 from app.services.knowledge_graph import KnowledgeGraphService
+from app.services.search import remove_note
 
 router = APIRouter(tags=["notes"])
 
@@ -175,6 +176,8 @@ def archive_note(note_id: int, user: User = Depends(get_current_user), db: Sessi
     if note.status not in {NoteStatus.APPROVED, NoteStatus.RETURNED, NoteStatus.DRAFT}:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Note cannot be archived")
     note.status = NoteStatus.ARCHIVED
+    KnowledgeGraphService().clear_note(db, note.id)
+    remove_note(db, note.id)
     write_audit(db, actor=user, action="archive_note", project_id=note.project_id, target_type="note", target_id=note.id)
     db.commit()
     db.refresh(note)
@@ -194,6 +197,8 @@ def void_note(
     if note.status == NoteStatus.VOIDED:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Note already voided")
     note.status = NoteStatus.VOIDED
+    KnowledgeGraphService().clear_note(db, note.id)
+    remove_note(db, note.id)
     db.add(
         NoteApproval(
             note_id=note.id,
@@ -211,8 +216,18 @@ def void_note(
 
 @router.get("/approvals/pending", response_model=list[NoteRead])
 def list_pending_approvals(user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[ExperimentNote]:
-    notes = db.query(ExperimentNote).filter(ExperimentNote.status == NoteStatus.SUBMITTED).order_by(ExperimentNote.updated_at.desc()).all()
-    return [note for note in notes if can_review_project(db, user, note.project_id)]
+    project_ids = reviewable_project_ids(db, user)
+    if not project_ids:
+        return []
+    return (
+        db.query(ExperimentNote)
+        .filter(
+            ExperimentNote.status == NoteStatus.SUBMITTED,
+            ExperimentNote.project_id.in_(project_ids),
+        )
+        .order_by(ExperimentNote.updated_at.desc())
+        .all()
+    )
 
 
 @router.post("/notes/{note_id}/approve", response_model=NoteRead)

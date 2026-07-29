@@ -1,28 +1,38 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Cookie, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.core.security import decode_access_token
+from app.core.security import decode_access_token_claims
 from app.models.note import ExperimentNote
 from app.models.project import Project, ProjectMember, ProjectReviewer, ProjectRole
 from app.models.user import User, UserRole, UserStatus
 
+
+AUTH_COOKIE_NAME = "eln_access_token"
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
 
 def get_current_user(
     credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+    cookie_token: str | None = Cookie(default=None, alias=AUTH_COOKIE_NAME),
     db: Session = Depends(get_db),
 ) -> User:
-    if credentials is None:
+    # Bearer header first (API scripts/tests), HttpOnly cookie for browsers.
+    token = credentials.credentials if credentials is not None else cookie_token
+    if not token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
-    user_id = decode_access_token(credentials.credentials)
-    if user_id is None:
+    claims = decode_access_token_claims(token)
+    if claims is None:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-    user = db.get(User, int(user_id))
-    if user is None or user.status != UserStatus.ACTIVE:
+    user_id, auth_version = claims
+    try:
+        user = db.get(User, int(user_id))
+    except ValueError:
+        user = None
+    if user is None or user.status != UserStatus.ACTIVE or user.auth_version != auth_version:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid user")
     return user
 
@@ -69,16 +79,18 @@ def accessible_project_ids(db: Session, user: User) -> list[int]:
     if user.role == UserRole.SUPER_ADMIN:
         return [project_id for (project_id,) in db.query(Project.id).all()]
 
-    project_ids = {project_id for (project_id,) in db.query(Project.id).filter(Project.owner_user_id == user.id).all()}
-    project_ids.update(
-        project_id
-        for (project_id,) in db.query(ProjectMember.project_id)
-        .filter(ProjectMember.user_id == user.id, ProjectMember.can_read.is_(True))
-        .all()
-    )
+    conditions = [
+        Project.owner_user_id == user.id,
+        Project.id.in_(
+            db.query(ProjectMember.project_id).filter(
+                ProjectMember.user_id == user.id, ProjectMember.can_read.is_(True)
+            )
+        ),
+    ]
     if user.role == UserRole.PI:
-        project_ids.update(project_id for (project_id,) in db.query(Project.id).filter(Project.is_sensitive.is_(False)).all())
-    return sorted(project_ids)
+        conditions.append(Project.is_sensitive.is_(False))
+
+    return [pid for (pid,) in db.query(Project.id).filter(or_(*conditions)).all()]
 
 
 def _project_membership(db: Session, user: User, project_id: int) -> ProjectMember | None:
@@ -127,3 +139,29 @@ def can_review_project(db: Session, user: User, project_id: int) -> bool:
         .first()
     )
     return reviewer is not None
+
+
+def reviewable_project_ids(db: Session, user: User) -> list[int]:
+    """Return project IDs where the user has review permission (single SQL query)."""
+    if user.role == UserRole.SUPER_ADMIN:
+        return [pid for (pid,) in db.query(Project.id).all()]
+
+    conditions = [
+        Project.id.in_(
+            db.query(ProjectMember.project_id).filter(
+                ProjectMember.user_id == user.id,
+                or_(ProjectMember.can_review.is_(True), ProjectMember.can_manage.is_(True)),
+            )
+        ),
+        Project.id.in_(
+            db.query(ProjectReviewer.project_id).filter(ProjectReviewer.user_id == user.id)
+        ),
+    ]
+    return [pid for (pid,) in db.query(Project.id).filter(or_(*conditions)).all()]
+
+
+def can_evaluate_project(db: Session, user: User, project_id: int) -> bool:
+    if user.role == UserRole.SUPER_ADMIN:
+        return True
+    membership = _project_membership(db, user, project_id)
+    return bool(membership and (membership.can_evaluate or membership.can_manage))

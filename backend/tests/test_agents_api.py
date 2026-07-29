@@ -4,9 +4,7 @@ from pathlib import Path
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.api import agents
 from app.api.deps import get_current_user
@@ -36,14 +34,9 @@ class FakeDeepSeekClient:
 
 
 @pytest.fixture()
-def test_app(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
-    engine = create_engine(
-        "sqlite://",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool,
-    )
-    SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
-    Base.metadata.create_all(bind=engine)
+def test_app(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, db_engine):
+    SessionLocal = sessionmaker(bind=db_engine, autoflush=False, autocommit=False, expire_on_commit=False)
+    Base.metadata.create_all(bind=db_engine)
 
     upload_path = tmp_path / "paper.pdf"
     upload_path.write_text("paper", encoding="utf-8")
@@ -180,9 +173,14 @@ def test_agent_generation_uses_approved_notes_and_records_run(test_app):
     assert body["source_file_ids_json"] == [1]
     assert body["source_graph_relation_ids_json"] == [1]
     assert "[N1]" in FakeDeepSeekClient.last_user_prompt
+    assert "[F1]" in FakeDeepSeekClient.last_user_prompt
     assert "[R1]" in FakeDeepSeekClient.last_user_prompt
     assert "Cell viability assay" in body["body"]
     assert "Draft note" not in body["body"]
+    steps = body["input_params_json"]["collaboration_steps"]
+    assert [step["key"] for step in steps] == ["evidence", "writer", "reviewer"]
+    assert [step["status"] for step in steps] == ["completed", "completed", "completed"]
+    assert body["input_params_json"]["review_result"]["passed"] is True
 
     with SessionLocal() as db:
         run = db.get(AgentGenerationRun, body["id"])
@@ -243,3 +241,53 @@ def test_agent_failure_is_persisted(test_app, monkeypatch: pytest.MonkeyPatch):
         run = db.query(AgentGenerationRun).order_by(AgentGenerationRun.id.desc()).first()
         assert run.status == "failed"
         assert run.message == "upstream unavailable"
+        assert run.input_params_json["collaboration_steps"][1]["status"] == "failed"
+
+
+def test_agent_reviewer_records_invalid_citations(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, _, active_user_id = test_app
+    active_user_id["value"] = 1
+
+    class InvalidCitationClient:
+        async def generate(self, **_kwargs):
+            return {"answer": "错误来源 [N999]，有效来源 [R1]。", "model": "deepseek-test", "usage": {}}
+
+    monkeypatch.setattr(agent_service, "DeepSeekClient", InvalidCitationClient)
+    response = client.post(
+        "/api/agents/generate",
+        json={"project_id": 1, "task_type": "experiment_summary"},
+    )
+    assert response.status_code == 200
+    review = response.json()["input_params_json"]["review_result"]
+    assert review["passed"] is False
+    assert review["invalid_citations"] == ["[N999]"]
+    assert response.json()["input_params_json"]["collaboration_steps"][-1]["status"] == "warning"
+    assert response.json()["input_params_json"]["repair_attempted"] is True
+    assert response.json()["status"] == "needs_review"
+
+
+def test_agent_repairs_invalid_citations_once(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, _, active_user_id = test_app
+    active_user_id["value"] = 1
+
+    class RepairingCitationClient:
+        calls = 0
+
+        async def generate(self, **_kwargs):
+            self.__class__.calls += 1
+            answer = "错误来源 [N999]。" if self.__class__.calls == 1 else "修订后结论 [N1] [F1] [R1]。"
+            return {"answer": answer, "model": "deepseek-test", "usage": {"completion_tokens": 5}}
+
+    monkeypatch.setattr(agent_service, "DeepSeekClient", RepairingCitationClient)
+    response = client.post(
+        "/api/agents/generate",
+        json={"project_id": 1, "task_type": "experiment_summary"},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert RepairingCitationClient.calls == 2
+    assert body["body"] == "修订后结论 [N1] [F1] [R1]。"
+    assert body["input_params_json"]["review_result"]["passed"] is True
+    assert body["status"] == "completed"
+    assert [step["key"] for step in body["input_params_json"]["collaboration_steps"]][-2:] == ["repair", "recheck"]

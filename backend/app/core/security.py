@@ -18,17 +18,25 @@ def verify_password(password: str, password_hash: str) -> bool:
     return pwd_context.verify(password, password_hash)
 
 
-def create_access_token(subject: str) -> str:
+def create_access_token(subject: str, auth_version: int = 0) -> str:
     settings = get_settings()
     expire = datetime.now(UTC) + timedelta(minutes=settings.access_token_expire_minutes)
-    payload = {"sub": subject, "exp": expire}
+    payload = {"sub": subject, "ver": auth_version, "exp": expire}
     return jwt.encode(payload, settings.secret_key, algorithm=ALGORITHM)
 
 
 def decode_access_token(token: str) -> str | None:
+    claims = decode_access_token_claims(token)
+    return claims[0] if claims else None
+
+
+def decode_access_token_claims(token: str) -> tuple[str, int] | None:
     try:
         payload = jwt.decode(token, get_settings().secret_key, algorithms=[ALGORITHM])
         subject = payload.get("sub")
-        return str(subject) if subject else None
+        auth_version = payload.get("ver", 0)
+        if not subject or not isinstance(auth_version, int):
+            return None
+        return str(subject), auth_version
     except JWTError:
         return None

@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from enum import StrEnum
 
-from sqlalchemy import Date, DateTime, Enum, ForeignKey, Integer, JSON, String, Text, func
+from sqlalchemy import Date, DateTime, Enum, ForeignKey, Index, Integer, JSON, String, Text, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.database import Base
@@ -18,22 +18,28 @@ class NoteStatus(StrEnum):
 
 class ExperimentNote(Base):
     __tablename__ = "experiment_notes"
+    __table_args__ = (
+        Index("ix_notes_status_updated", "status", "updated_at"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), index=True)
-    template_id: Mapped[int | None] = mapped_column(nullable=True)
+    template_id: Mapped[int | None] = mapped_column(ForeignKey("experiment_templates.id", ondelete="SET NULL"), nullable=True)
     title: Mapped[str] = mapped_column(String(200), index=True)
     experiment_type: Mapped[str] = mapped_column(String(120), index=True)
     experiment_date: Mapped[date | None] = mapped_column(Date, nullable=True)
     owner_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     status: Mapped[NoteStatus] = mapped_column(Enum(NoteStatus), default=NoteStatus.DRAFT, index=True)
-    current_version_id: Mapped[int | None] = mapped_column(nullable=True)
+    current_version_id: Mapped[int | None] = mapped_column(ForeignKey("note_versions.id", ondelete="SET NULL"), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
 
 class NoteVersion(Base):
     __tablename__ = "note_versions"
+    __table_args__ = (
+        UniqueConstraint("note_id", "version_number", name="uq_note_version_number"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True)
     note_id: Mapped[int] = mapped_column(ForeignKey("experiment_notes.id"), index=True)

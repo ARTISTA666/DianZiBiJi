@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
@@ -8,6 +8,7 @@ from app.models.project import Project, ProjectMember, ProjectReviewer, ProjectR
 from app.models.user import User, UserRole
 from app.schemas.project import (
     ProjectCreate,
+    ProjectListResponse,
     ProjectMemberCreate,
     ProjectMemberRead,
     ProjectMemberUpdate,
@@ -44,6 +45,7 @@ def _ensure_owner_membership(db: Session, project_id: int, user_id: int | None) 
                 can_read=True,
                 can_write=True,
                 can_review=True,
+                can_evaluate=True,
                 can_manage=True,
             )
         )
@@ -52,6 +54,7 @@ def _ensure_owner_membership(db: Session, project_id: int, user_id: int | None) 
     membership.can_read = True
     membership.can_write = True
     membership.can_review = True
+    membership.can_evaluate = True
     membership.can_manage = True
 
 
@@ -75,20 +78,27 @@ def _require_user(db: Session, user_id: int) -> User:
     return user
 
 
-@router.get("", response_model=list[ProjectRead])
-def list_projects(user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[Project]:
+@router.get("", response_model=ProjectListResponse)
+def list_projects(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(20, ge=1, le=100),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> ProjectListResponse:
+    base = db.query(Project)
     if user.role == UserRole.SUPER_ADMIN:
-        return db.query(Project).order_by(Project.id).all()
-    if user.role == UserRole.PI:
+        pass
+    elif user.role == UserRole.PI:
         member_project_ids = db.query(ProjectMember.project_id).filter(ProjectMember.user_id == user.id)
-        return (
-            db.query(Project)
-            .filter(or_(Project.is_sensitive.is_(False), Project.id.in_(member_project_ids)))
-            .order_by(Project.id)
-            .all()
+        base = base.filter(or_(Project.is_sensitive.is_(False), Project.id.in_(member_project_ids)))
+    else:
+        project_ids = db.query(ProjectMember.project_id).filter(
+            ProjectMember.user_id == user.id, ProjectMember.can_read.is_(True)
         )
-    project_ids = db.query(ProjectMember.project_id).filter(ProjectMember.user_id == user.id, ProjectMember.can_read.is_(True))
-    return db.query(Project).filter(Project.id.in_(project_ids)).order_by(Project.id).all()
+        base = base.filter(Project.id.in_(project_ids))
+    total = base.count()
+    items = base.order_by(Project.id.desc()).offset(skip).limit(limit).all()
+    return ProjectListResponse(items=items, total=total, skip=skip, limit=limit)
 
 
 @router.post("", response_model=ProjectRead)
@@ -129,11 +139,11 @@ def update_project(
         project.name = payload.name
     if "description" in fields:
         project.description = payload.description
-    if payload.is_sensitive is not None:
+    if "is_sensitive" in fields:
         project.is_sensitive = payload.is_sensitive
-    if payload.status is not None:
+    if "status" in fields:
         project.status = ProjectStatus(payload.status)
-    if payload.approval_enabled is not None:
+    if "approval_enabled" in fields:
         project.approval_enabled = payload.approval_enabled
     if "owner_user_id" in fields:
         if payload.owner_user_id is not None:
@@ -163,6 +173,7 @@ def add_project_member(
     membership.can_read = payload.can_read
     membership.can_write = payload.can_write
     membership.can_review = payload.can_review
+    membership.can_evaluate = payload.can_evaluate
     membership.can_manage = payload.can_manage
     write_audit(
         db,
@@ -215,6 +226,8 @@ def update_project_member(
         membership.can_write = payload.can_write
     if payload.can_review is not None:
         membership.can_review = payload.can_review
+    if payload.can_evaluate is not None:
+        membership.can_evaluate = payload.can_evaluate
     if payload.can_manage is not None:
         membership.can_manage = payload.can_manage
     write_audit(db, actor=user, action="update_project_member", project_id=project_id, target_type="user", target_id=user_id)
@@ -272,11 +285,13 @@ def add_project_reviewer(
                 can_read=True,
                 can_write=False,
                 can_review=True,
+                can_evaluate=True,
                 can_manage=False,
             )
         )
     else:
         membership.can_review = True
+        membership.can_evaluate = True
         membership.project_role = ProjectRole.REVIEWER
     write_audit(db, actor=user, action="change_permission", project_id=project_id, target_type="user", target_id=payload.user_id)
     db.commit()
@@ -303,6 +318,7 @@ def remove_project_reviewer(
     membership = _project_member(db, project_id, user_id)
     if membership is not None:
         membership.can_review = False
+        membership.can_evaluate = False
     write_audit(db, actor=user, action="change_permission", project_id=project_id, target_type="user", target_id=user_id)
     db.commit()
     return {"ok": True}

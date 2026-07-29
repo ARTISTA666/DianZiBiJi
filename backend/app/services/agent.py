@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from time import perf_counter
 
@@ -9,8 +10,10 @@ from app.models.ai import AgentGenerationRun, AgentRunStatus, AgentTaskType
 from app.models.file import FileCategory, FileStatus, StoredFile
 from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation
 from app.models.note import ExperimentNote, NoteStatus, NoteVersion
-from app.services.knowledge_graph import ENTITY_LABELS, RELATION_LABELS
+from app.services.knowledge_graph import ENTITY_LABELS, RELATION_LABELS, KnowledgeGraphService
+from app.services.citation_audit import audit_citations
 from app.services.deepseek import DeepSeekClient, DeepSeekConfigError, DeepSeekRequestError
+from app.services.prompts import PROMPTS
 
 
 TASK_LABELS = {
@@ -19,7 +22,24 @@ TASK_LABELS = {
     AgentTaskType.STAGE_REPORT.value: "项目阶段报告",
     AgentTaskType.GRAPH_OVERVIEW.value: "实验过程图谱概览",
 }
-AGENT_PROMPT_VERSION = "agent-v3-deepseek-grounded-ids"
+AGENT_PROMPT_VERSION = PROMPTS["agent_writer"].version
+
+# ── Tuning constants ──────────────────────────────────────────────────────
+MAX_SOURCE_FILES = 12              # Max source files loaded for agent context
+MAX_RELATIONS_FOR_CONTEXT = 40     # Max graph relations selected for prompt
+MAX_RELATIONS_DISPLAY = 12         # Max relations shown in body sections
+MAX_OVERVIEW_RELATIONS = 24        # Max relations shown in graph overview
+MAX_NOTE_FIELDS_DISPLAY = 4        # Max note fields included in context
+MAX_VALUE_DISPLAY_LENGTH = 180     # Truncation length for field values
+AGENT_GENERATION_MAX_TOKENS = 2200 # Max tokens for agent LLM calls
+WEEKLY_REPORT_DEFAULT_DAYS = 7     # Default look-back window for weekly reports
+
+
+@dataclass(frozen=True)
+class _NoteWithContext:
+    """ORM 对象与其关联版本的不可变组合，避免在 ORM 实例上挂载瞬态属性。"""
+    note: ExperimentNote
+    version: NoteVersion | None
 
 
 class AgentGenerationFailure(RuntimeError):
@@ -30,7 +50,7 @@ class AgentGenerationFailure(RuntimeError):
 
 
 class AgentGenerationService:
-    """固定任务型智能体：从笔记、资料和图谱生成可追溯草稿。"""
+    """按资料整理、内容生成、结果检查三个步骤生成可追溯草稿。"""
 
     async def generate(
         self,
@@ -45,41 +65,54 @@ class AgentGenerationService:
             raise ValueError("Unsupported agent task type")
         started = perf_counter()
         date_from, date_to = self._resolve_dates(task_type, date_from, date_to)
-        notes = self._load_notes(db, project_id, date_from, date_to)
-        attach_current_versions(db, notes)
+        raw_notes = self._load_notes(db, project_id, date_from, date_to)
+        notes = attach_current_versions(db, raw_notes)
         files = self._load_source_files(db, project_id)
         entities, relations = self._load_graph(db, project_id)
         relation_ids = self._select_relation_ids(entities, relations, notes, task_type)
         title = self._title(task_type, project_id, date_from, date_to)
         source_context = self._body(task_type, project_id, notes, files, entities, relations, relation_ids, date_from, date_to)
-        system_prompt = (
-            "你是科研电子实验笔记系统中的固定任务写作助手。只能依据用户提供的已审核实验记录、"
-            "资料列表和知识图谱关系生成内容，不得虚构实验、数据或结论。输出应结构清晰、语言正式，"
-            "并在关键结论后原样复用上下文中的 [N数字] 笔记编号或 [R数字] 图谱关系编号。"
-            "不得自行编造、重排或缩写编号；证据不足时明确说明。"
-        )
+        steps = [
+            {
+                "key": "evidence",
+                "name": "资料整理智能体",
+                "status": "completed",
+                "message": f"已读取 {len(notes)} 条审核笔记、{len(files)} 份资料和 {len(relation_ids)} 条图谱关系。",
+            },
+            {
+                "key": "writer",
+                "name": "内容生成智能体",
+                "status": "running",
+                "message": "正在调用 DeepSeek 生成草稿。",
+            },
+        ]
+        input_params = {
+            "date_from": date_from.isoformat() if date_from else None,
+            "date_to": date_to.isoformat() if date_to else None,
+            "collaboration_steps": steps,
+        }
+        system_prompt = PROMPTS["agent_writer"].system_prompt
         try:
-            result = await DeepSeekClient().generate(
+            client = DeepSeekClient()
+            result = await client.generate(
                 system_prompt=system_prompt,
                 user_prompt=(
                     f"任务类型：{TASK_LABELS[task_type]}\n"
                     f"请将以下可追溯项目数据整理为正式草稿：\n\n{source_context}"
                 ),
                 temperature=0.1,
-                max_tokens=2200,
+                max_tokens=AGENT_GENERATION_MAX_TOKENS,
             )
         except (DeepSeekConfigError, DeepSeekRequestError) as exc:
+            steps[1].update(status="failed", message=f"DeepSeek 调用失败：{exc}")
             run = AgentGenerationRun(
                 project_id=project_id,
                 user_id=user_id,
                 task_type=task_type,
-                input_params_json={
-                    "date_from": date_from.isoformat() if date_from else None,
-                    "date_to": date_to.isoformat() if date_to else None,
-                },
+                input_params_json=input_params,
                 title=title,
                 body="",
-                source_note_ids_json=[note.id for note in notes],
+                source_note_ids_json=[nw.note.id for nw in notes],
                 source_file_ids_json=[file.id for file in files],
                 source_graph_relation_ids_json=relation_ids,
                 provider="deepseek",
@@ -95,25 +128,93 @@ class AgentGenerationService:
             status_code = 503 if isinstance(exc, DeepSeekConfigError) else 502
             raise AgentGenerationFailure(str(exc), run, status_code) from exc
         body = result["answer"]
-        message = None if notes or task_type == AgentTaskType.GRAPH_OVERVIEW.value else "No approved notes in selected range"
+        model_name = result.get("model")
+        usage = dict(result.get("usage") or {})
+        steps[1].update(status="completed", message=f"DeepSeek 已生成草稿，模型为 {result.get('model') or '未返回'}。")
+        review = self._review_answer(
+            body,
+            note_ids={nw.note.id for nw in notes},
+            file_ids={file.id for file in files},
+            relation_ids=set(relation_ids),
+        )
+        steps.append(
+            {
+                "key": "reviewer",
+                "name": "结果检查智能体",
+                "status": "completed" if review["passed"] else "warning",
+                "message": review["message"],
+            }
+        )
+        repair_attempted = False
+        if not review["passed"]:
+            repair_attempted = True
+            repair_step = {
+                "key": "repair",
+                "name": "引用修订智能体",
+                "status": "running",
+                "message": "正在根据检查结果修订引用。",
+            }
+            steps.append(repair_step)
+            try:
+                repair_result = await client.generate(
+                    system_prompt=system_prompt,
+                    user_prompt=(
+                        f"原始任务：{TASK_LABELS[task_type]}\n"
+                        f"可用项目资料：\n{source_context}\n\n"
+                        f"待修订草稿：\n{body}\n\n"
+                        f"检查结果：{review['message']}\n"
+                        "请只输出修订后的完整草稿。只能使用上下文中真实存在的 [N数字]、[F数字]、[R数字] 编号；"
+                        "证据不足的结论应删除或明确写为无法确认。"
+                    ),
+                    temperature=0.0,
+                    max_tokens=AGENT_GENERATION_MAX_TOKENS,
+                )
+            except (DeepSeekConfigError, DeepSeekRequestError) as exc:
+                repair_step.update(status="failed", message=f"自动修订失败：{exc}")
+            else:
+                body = repair_result["answer"]
+                model_name = repair_result.get("model") or model_name
+                for key, value in (repair_result.get("usage") or {}).items():
+                    if isinstance(value, (int, float)) and isinstance(usage.get(key, 0), (int, float)):
+                        usage[key] = usage.get(key, 0) + value
+                repair_step.update(status="completed", message="已完成一次有上限的引用修订。")
+                review = self._review_answer(
+                    body,
+                    note_ids={nw.note.id for nw in notes},
+                    file_ids={file.id for file in files},
+                    relation_ids=set(relation_ids),
+                )
+                steps.append(
+                    {
+                        "key": "recheck",
+                        "name": "结果复核智能体",
+                        "status": "completed" if review["passed"] else "warning",
+                        "message": review["message"],
+                    }
+                )
+        input_params["repair_attempted"] = repair_attempted
+        input_params["review_result"] = review
+        messages: list[str] = []
+        if not notes and task_type != AgentTaskType.GRAPH_OVERVIEW.value:
+            messages.append("No approved notes in selected range")
+        if not review["passed"]:
+            messages.append("Citation validation still requires manual review")
+        message = "; ".join(messages) or None
         run = AgentGenerationRun(
             project_id=project_id,
             user_id=user_id,
             task_type=task_type,
-            input_params_json={
-                "date_from": date_from.isoformat() if date_from else None,
-                "date_to": date_to.isoformat() if date_to else None,
-            },
+            input_params_json=input_params,
             title=title,
             body=body,
-            source_note_ids_json=[note.id for note in notes],
+            source_note_ids_json=[nw.note.id for nw in notes],
             source_file_ids_json=[file.id for file in files],
             source_graph_relation_ids_json=relation_ids,
             provider="deepseek",
-            model_name=result.get("model"),
+            model_name=model_name,
             prompt_version=AGENT_PROMPT_VERSION,
-            usage_json=result.get("usage") or {},
-            status=AgentRunStatus.COMPLETED.value,
+            usage_json=usage,
+            status=(AgentRunStatus.COMPLETED.value if review["passed"] else AgentRunStatus.NEEDS_REVIEW.value),
             response_ms=max(0, int((perf_counter() - started) * 1000)),
             message=message,
         )
@@ -121,11 +222,24 @@ class AgentGenerationService:
         db.flush()
         return run
 
+    def _review_answer(
+        self,
+        body: str,
+        *,
+        note_ids: set[int],
+        file_ids: set[int],
+        relation_ids: set[int],
+    ) -> dict:
+        return audit_citations(
+            body,
+            allowed={"N": note_ids, "F": file_ids, "R": relation_ids},
+        )
+
     def _resolve_dates(self, task_type: str, date_from: date | None, date_to: date | None) -> tuple[date | None, date | None]:
         if date_to is None and task_type == AgentTaskType.WEEKLY_REPORT.value:
             date_to = datetime.now(timezone.utc).date()
         if date_from is None and task_type == AgentTaskType.WEEKLY_REPORT.value and date_to is not None:
-            date_from = date_to - timedelta(days=7)
+            date_from = date_to - timedelta(days=WEEKLY_REPORT_DEFAULT_DAYS)
         return date_from, date_to
 
     def _load_notes(self, db: Session, project_id: int, date_from: date | None, date_to: date | None) -> list[ExperimentNote]:
@@ -157,25 +271,23 @@ class AgentGenerationService:
                 StoredFile.status == FileStatus.APPROVED,
             )
             .order_by(StoredFile.id.asc())
-            .limit(12)
+            .limit(MAX_SOURCE_FILES)
             .all()
         )
 
     def _load_graph(self, db: Session, project_id: int) -> tuple[list[KnowledgeEntity], list[KnowledgeRelation]]:
-        entities = db.query(KnowledgeEntity).filter(KnowledgeEntity.project_id == project_id).order_by(KnowledgeEntity.id).all()
-        relations = db.query(KnowledgeRelation).filter(KnowledgeRelation.project_id == project_id).order_by(KnowledgeRelation.id).all()
-        return entities, relations
+        return KnowledgeGraphService().get_project_graph(db, project_id)
 
     def _select_relation_ids(
         self,
         entities: list[KnowledgeEntity],
         relations: list[KnowledgeRelation],
-        notes: list[ExperimentNote],
+        notes: list[_NoteWithContext],
         task_type: str,
     ) -> list[int]:
         if task_type == AgentTaskType.GRAPH_OVERVIEW.value:
-            return [relation.id for relation in relations[:40]]
-        note_ids = {note.id for note in notes}
+            return [relation.id for relation in relations[:MAX_RELATIONS_FOR_CONTEXT]]
+        note_ids = {nw.note.id for nw in notes}
         note_entity_ids = {
             entity.id
             for entity in entities
@@ -186,7 +298,7 @@ class AgentGenerationService:
             for relation in relations
             if relation.source_entity_id in note_entity_ids or relation.target_entity_id in note_entity_ids
         ]
-        return selected[:40]
+        return selected[:MAX_RELATIONS_FOR_CONTEXT]
 
     def _title(self, task_type: str, project_id: int, date_from: date | None, date_to: date | None) -> str:
         label = TASK_LABELS[task_type]
@@ -198,7 +310,7 @@ class AgentGenerationService:
         self,
         task_type: str,
         project_id: int,
-        notes: list[ExperimentNote],
+        notes: list[_NoteWithContext],
         files: list[StoredFile],
         entities: list[KnowledgeEntity],
         relations: list[KnowledgeRelation],
@@ -225,15 +337,15 @@ class AgentGenerationService:
             if files:
                 lines.append("")
                 lines.append("可用资料来源：")
-                lines.extend([f"- {file.original_filename}" for file in files])
+                lines.extend([f"- [F{file.id}] {file.original_filename}" for file in files])
             return "\n".join(lines)
         lines.append("### 实验记录概览")
-        for note in notes:
-            version = self._version_snapshot(note)
+        for nw in notes:
+            version = self._version_snapshot(nw)
             lines.append(
-                f"- [N{note.id}] {note.title}（{note.experiment_type}，{note.experiment_date or '未填日期'}）"
+                f"- [N{nw.note.id}] {nw.note.title}（{nw.note.experiment_type}，{nw.note.experiment_date or '未填日期'}）"
             )
-            for key, value in list(version.items())[:4]:
+            for key, value in list(version.items())[:MAX_NOTE_FIELDS_DISPLAY]:
                 text = self._short_value(value)
                 if text:
                     lines.append(f"  - {key}：{text}")
@@ -243,36 +355,35 @@ class AgentGenerationService:
         lines.extend(result_lines or ["- 已完成实验记录整理，后续可结合评价数据补充效果分析。"])
         lines.append("")
         lines.append("### 知识图谱依据")
-        lines.extend(self._relation_lines(entity_by_id, selected_relations[:12]) or ["- 当前范围内未检索到直接关联的图谱关系。"])
+        lines.extend(self._relation_lines(entity_by_id, selected_relations[:MAX_RELATIONS_DISPLAY]) or ["- 当前范围内未检索到直接关联的图谱关系。"])
         lines.append("")
         lines.append("### 资料来源")
-        lines.extend([f"- {file.original_filename}" for file in files] or ["- 当前项目暂无已审核资料库文件。"])
+        lines.extend([f"- [F{file.id}] {file.original_filename}" for file in files] or ["- 当前项目暂无已审核资料库文件。"])
         lines.append("")
         lines.append("### 后续建议")
         lines.append("- 对关键实验结果继续补充附件资料和结果字段，便于图谱抽取与 RAG 问答引用。")
         lines.append("- 对生成内容进行人工确认后，可作为论文实验管理流程截图和案例材料。")
         return "\n".join(lines)
 
-    def _version_snapshot(self, note: ExperimentNote) -> dict:
-        version = getattr(note, "_agent_version", None)
-        if version is None:
+    def _version_snapshot(self, nw: _NoteWithContext) -> dict:
+        if nw.version is None:
             return {}
-        return version.fixed_fields_json or {}
+        return nw.version.fixed_fields_json or {}
 
-    def _result_lines(self, notes: list[ExperimentNote]) -> list[str]:
+    def _result_lines(self, notes: list[_NoteWithContext]) -> list[str]:
         lines: list[str] = []
-        for note in notes:
-            version = self._version_snapshot(note)
+        for nw in notes:
+            version = self._version_snapshot(nw)
             for key, value in version.items():
                 if "result" in str(key).lower() or "结果" in str(key):
                     text = self._short_value(value)
                     if text:
-                        lines.append(f"- [N{note.id}] {note.title}：{text}")
+                        lines.append(f"- [N{nw.note.id}] {nw.note.title}：{text}")
         return lines
 
     def _graph_overview_lines(self, entity_by_id: dict[int, KnowledgeEntity], relations: list[KnowledgeRelation]) -> list[str]:
         lines = ["### 实验过程关联概览"]
-        lines.extend(self._relation_lines(entity_by_id, relations[:24]) or ["- 当前项目暂无知识图谱关系。"])
+        lines.extend(self._relation_lines(entity_by_id, relations[:MAX_OVERVIEW_RELATIONS]) or ["- 当前项目暂无知识图谱关系。"])
         lines.append("")
         lines.append("### 说明")
         lines.append("- 该概览基于系统已抽取的实验知识图谱生成，可用于论文中说明实验实体关系组织能力。")
@@ -300,16 +411,19 @@ class AgentGenerationService:
             text = "；".join(f"{key}: {val}" for key, val in value.items())
         else:
             text = str(value)
-        return text.strip()[:180]
+        return text.strip()[:MAX_VALUE_DISPLAY_LENGTH]
 
 
-def attach_current_versions(db: Session, notes: list[ExperimentNote]) -> None:
+def attach_current_versions(db: Session, notes: list[ExperimentNote]) -> list[_NoteWithContext]:
+    """将每条笔记与其当前版本打包为不可变的 _NoteWithContext，避免在 ORM 实例上挂载瞬态属性。"""
     version_ids = [note.current_version_id for note in notes if note.current_version_id]
-    if not version_ids:
-        return
-    versions = {
-        version.id: version
-        for version in db.query(NoteVersion).filter(NoteVersion.id.in_(version_ids)).all()
-    }
-    for note in notes:
-        setattr(note, "_agent_version", versions.get(note.current_version_id))
+    versions: dict[int, NoteVersion] = {}
+    if version_ids:
+        versions = {
+            version.id: version
+            for version in db.query(NoteVersion).filter(NoteVersion.id.in_(version_ids)).all()
+        }
+    return [
+        _NoteWithContext(note=note, version=versions.get(note.current_version_id))
+        for note in notes
+    ]

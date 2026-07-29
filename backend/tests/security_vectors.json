@@ -1,0 +1,56 @@
+{
+  "_comment": "Shared security test vectors executed by BOTH backends: Python (backend/tests/test_security_vectors.py) and Rust (backend/src/security.rs). Regenerate only when the hashing/JWT contract intentionally changes, and keep both test suites green.",
+  "password_vectors": [
+    {
+      "name": "passlib pbkdf2_sha256 hash produced by the Python backend",
+      "password": "shared-vector-password",
+      "hash": "$pbkdf2-sha256$29000$XUvpvbc25nwvpTSGcA6hNA$TE4u9iAbHItXcm0SfJPrDJFTm.kXD1JNv15GK.zssmU",
+      "matches": true
+    },
+    {
+      "name": "bcrypt hash must verify on both sides",
+      "password": "shared-vector-password",
+      "hash": "$2b$12$N/AojouE98mr7MSvSo3Hq.JImSClTofypbzqx0t.DXl2cwyeN4IwG",
+      "matches": true
+    },
+    {
+      "name": "wrong password is rejected against pbkdf2 hash",
+      "password": "wrong-password",
+      "hash": "$pbkdf2-sha256$29000$XUvpvbc25nwvpTSGcA6hNA$TE4u9iAbHItXcm0SfJPrDJFTm.kXD1JNv15GK.zssmU",
+      "matches": false
+    },
+    {
+      "name": "wrong password is rejected against bcrypt hash",
+      "password": "wrong-password",
+      "hash": "$2b$12$N/AojouE98mr7MSvSo3Hq.JImSClTofypbzqx0t.DXl2cwyeN4IwG",
+      "matches": false
+    }
+  ],
+  "jwt_secret": "shared-vector-secret",
+  "jwt_vectors": [
+    {
+      "name": "valid HS256 token with sub/ver/exp claims",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MiIsInZlciI6NywiZXhwIjo0MTAyNDQ0ODAwfQ.WhUFAi_iQvRvO1HWXOApI2K_QlTD4WGzLkFhdvLFNSU",
+      "valid": true,
+      "subject": "42",
+      "auth_version": 7
+    },
+    {
+      "name": "token without ver claim defaults auth_version to 0",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5IiwiZXhwIjo0MTAyNDQ0ODAwfQ.Jd6fYxwUC4WC9Gz7zY7nYEfxT4IVj_1DGSRA7xI-AZk",
+      "valid": true,
+      "subject": "9",
+      "auth_version": 0
+    },
+    {
+      "name": "expired token is rejected",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MiIsInZlciI6NywiZXhwIjo5NDY2ODQ4MDB9.YpnAFLdgawot9f_47AgXAW8hDm_ABdA0N3-9Wt6Qno8",
+      "valid": false
+    },
+    {
+      "name": "tampered signature is rejected",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MiIsInZlciI6NywiZXhwIjo0MTAyNDQ0ODAwfQ.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "valid": false
+    }
+  ]
+}

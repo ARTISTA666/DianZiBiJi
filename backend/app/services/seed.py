@@ -1,26 +1,26 @@
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from sqlalchemy.orm import Session
 
-from app.models.ai import AgentGenerationRun, AIQueryEvaluation, AIQueryLog
+from app.core.config import Settings, get_settings
+from app.models.ai import AIExperimentRun, AIQueryLog
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.note import ExperimentNote, NoteApproval, NoteStatus, NoteVersion
 from app.models.project import Project
-from app.models.rag import ProjectRagDataset, RagDocumentChunk, RagFileSync, RagSyncStatus
 from app.core.security import hash_password
 from app.models.template import ExperimentTemplate
 from app.models.user import User, UserRole
 from app.services.knowledge_graph import KnowledgeGraphService
 
 
-def ensure_seed_data(db: Session) -> None:
-    purge_legacy_synthetic_ai_data(db)
-    admin = db.query(User).filter(User.username == "admin").first()
+def ensure_seed_data(db: Session, settings: Settings | None = None) -> None:
+    settings = settings or get_settings()
+    admin = db.query(User).filter(User.username == settings.bootstrap_admin_username).first()
     if not admin:
         admin = User(
-            username="admin",
-            password_hash=hash_password("admin123"),
+            username=settings.bootstrap_admin_username,
+            password_hash=hash_password(settings.bootstrap_admin_password),
             display_name="系统管理员",
             email="admin@example.local",
             role=UserRole.SUPER_ADMIN,
@@ -28,8 +28,44 @@ def ensure_seed_data(db: Session) -> None:
         db.add(admin)
         db.flush()
     ensure_templates(db)
-    ensure_thesis_demo_data(db, admin)
+    if settings.seed_demo_data:
+        ensure_thesis_demo_data(db, admin)
     db.commit()
+
+
+def recover_interrupted_experiment_runs(db: Session) -> int:
+    """Close runs left in progress when the single backend process stopped."""
+    runs = db.query(AIExperimentRun).filter(AIExperimentRun.status == "running").all()
+    now = datetime.now(timezone.utc)
+    for run in runs:
+        logs = db.query(AIQueryLog).filter(AIQueryLog.experiment_run_id == run.id).all()
+        successful_orders = {
+            log.experiment_execution_order
+            for log in logs
+            if log.experiment_execution_order is not None and not log.error_message
+        }
+        failed_orders = {
+            log.experiment_execution_order
+            for log in logs
+            if log.experiment_execution_order is not None and log.error_message
+        } - successful_orders
+        run.completed_cases = max(run.completed_cases, len(successful_orders))
+        run.failed_cases = max(run.failed_cases, len(failed_orders))
+        summary = dict(run.summary_json or {})
+        summary.update(
+            {
+                "interruption": "Backend process stopped before the experiment completed",
+                "recovered_at": now.isoformat(),
+                "unexecuted_cases": max(0, run.total_cases - run.completed_cases - run.failed_cases),
+            }
+        )
+        run.summary_json = summary
+        run.status = "interrupted"
+        run.completed_at = now
+    if runs:
+        # ponytail: startup recovery assumes the deployed single-process backend; use leases before adding workers.
+        db.commit()
+    return len(runs)
 
 
 def ensure_templates(db: Session) -> None:
@@ -108,6 +144,18 @@ def ensure_thesis_demo_data(db: Session, admin: User) -> None:
             },
             "试剂: RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器: 电泳仪、转膜仪、凝胶成像系统\n样本: 蛋白样本 P1、蛋白样本 P2\n结果: 处理组目标蛋白表达降低。",
         ),
+        (
+            "qPCR 定量验证实验",
+            "PCR",
+            date(2026, 5, 28),
+            {
+                "reagents": "SYBR Green Master Mix、cDNA 模板、引物对、无酶水",
+                "instrument": "荧光定量 PCR 仪、微量分光光度计",
+                "sample": "cDNA 样本 1、cDNA 样本 2、阴性对照",
+                "result": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。",
+            },
+            "试剂: SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器: 荧光定量 PCR 仪、微量分光光度计\n样本: cDNA 样本 1、2、阴性对照\n结果: 目标基因差异表达约 2.3 倍。",
+        ),
     ]
     notes: list[ExperimentNote] = []
     new_notes: list[ExperimentNote] = []
@@ -152,7 +200,7 @@ def ensure_thesis_demo_data(db: Session, admin: User) -> None:
             new_notes.append(note)
         notes.append(note)
 
-    demo_dir = Path("storage/demo")
+    demo_dir = Path("/storage/demo")
     demo_dir.mkdir(parents=True, exist_ok=True)
     file_payloads = [
         ("PCR_protocol_demo.txt", "PCR 体系配置、循环条件和退火温度优化说明。"),
@@ -188,72 +236,3 @@ def ensure_thesis_demo_data(db: Session, admin: User) -> None:
     for note in new_notes:
         graph_service.extract_note(db, note, triggered_by=admin.id, rebuild=True)
     db.flush()
-
-
-def purge_legacy_synthetic_ai_data(db: Session) -> None:
-    """Remove only records created by the old built-in mock/demo generators."""
-    db.query(AgentGenerationRun).filter(
-        AgentGenerationRun.status == "completed",
-        AgentGenerationRun.model_name.is_(None),
-        AgentGenerationRun.prompt_version == "agent-v1",
-        AgentGenerationRun.response_ms < 100,
-    ).delete(synchronize_session=False)
-
-    mock_logs = (
-        db.query(AIQueryLog)
-        .filter(
-            (AIQueryLog.conversation_id == "demo-conversation-1")
-            | AIQueryLog.conversation_id.like("mock-conv-%")
-        )
-        .all()
-    )
-    mock_log_ids = [log.id for log in mock_logs]
-    if mock_log_ids:
-        db.query(AIQueryEvaluation).filter(
-            AIQueryEvaluation.query_log_id.in_(mock_log_ids)
-        ).delete(synchronize_session=False)
-        db.query(AIQueryLog).filter(AIQueryLog.id.in_(mock_log_ids)).delete(
-            synchronize_session=False
-        )
-
-    demo_datasets = (
-        db.query(ProjectRagDataset)
-        .filter(
-            ProjectRagDataset.dify_dataset_id.like("demo-dataset-%")
-            | ProjectRagDataset.dify_dataset_id.like("demo-ds-%")
-        )
-        .all()
-    )
-    demo_dataset_ids = [dataset.dify_dataset_id for dataset in demo_datasets]
-    if demo_dataset_ids:
-        db.query(RagFileSync).filter(
-            RagFileSync.dify_dataset_id.in_(demo_dataset_ids)
-        ).delete(synchronize_session=False)
-        db.query(ProjectRagDataset).filter(
-            ProjectRagDataset.dify_dataset_id.in_(demo_dataset_ids)
-        ).delete(synchronize_session=False)
-
-    indexed_file_ids = {
-        file_id for (file_id,) in db.query(RagDocumentChunk.file_id).distinct().all()
-    }
-    stale_synced_files = (
-        db.query(StoredFile)
-        .filter(
-            StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT,
-            StoredFile.knowledge_sync_status == KnowledgeSyncStatus.SYNCED.value,
-        )
-        .all()
-    )
-    stale_file_ids = [record.id for record in stale_synced_files if record.id not in indexed_file_ids]
-    if stale_file_ids:
-        db.query(RagFileSync).filter(RagFileSync.file_id.in_(stale_file_ids)).delete(
-            synchronize_session=False
-        )
-        db.query(StoredFile).filter(StoredFile.id.in_(stale_file_ids)).update(
-            {
-                StoredFile.knowledge_sync_status: KnowledgeSyncStatus.PENDING_SYNC.value,
-                StoredFile.knowledge_sync_message: "等待本地向量入库",
-                StoredFile.knowledge_synced_at: None,
-            },
-            synchronize_session=False,
-        )

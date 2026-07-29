@@ -1,0 +1,13 @@
+# Legacy Alembic migration history
+
+The Alembic revisions in this directory are retained for databases created by
+the former Python backend. Revision `0005_rag_chunks_hnsw_index` is the final
+Alembic-owned revision and must remain available because it may already have
+been applied in deployed databases.
+
+The production Rust image does not execute Alembic. The Rust backend bootstraps
+fresh databases from `sql/0001_initial.sql`, accepts databases upgraded through
+Alembic 0005, and is the only forward schema owner beginning with
+`rust_schema_versions` version 3. Do not add new Alembic revisions; add future
+schema upgrades to the Rust initialization path with PostgreSQL integration
+coverage instead.

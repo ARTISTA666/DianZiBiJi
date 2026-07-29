@@ -1,11 +1,11 @@
 """Tests for file upload / CRUD / review endpoints (15 test cases)."""
 
+from types import SimpleNamespace
+
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
 from app.api import files
 from app.api.deps import get_current_user
@@ -15,14 +15,14 @@ from app.models import *  # noqa: F403
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.note import ExperimentNote, NoteStatus
 from app.models.project import Project, ProjectMember, ProjectRole
+from app.models.rag import RagDocumentChunk, RagFileSync, RagSyncStatus
 from app.models.user import User, UserRole
 
 
 @pytest.fixture()
-def client(tmp_path):
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
-    SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, expire_on_commit=False)
-    Base.metadata.create_all(bind=engine)
+def client(tmp_path, db_engine):
+    SessionLocal = sessionmaker(bind=db_engine, autoflush=False, autocommit=False, expire_on_commit=False)
+    Base.metadata.create_all(bind=db_engine)
 
     db = SessionLocal()
     db.add_all([
@@ -91,6 +91,19 @@ def test_upload_file_forbidden(client):
     assert r.status_code == 403
 
 
+def test_upload_over_limit_is_rejected_without_partial_file(client, monkeypatch):
+    c, _, uid, tmp = client; uid["value"] = 2
+    monkeypatch.setattr(files, "get_settings", lambda: SimpleNamespace(upload_max_bytes=4))
+
+    r = c.post(
+        "/projects/1/files?file_category=knowledge_document",
+        files={"upload": ("too-large.txt", b"12345", "text/plain")},
+    )
+
+    assert r.status_code == 413
+    assert list(tmp.rglob("*.*")) == []
+
+
 def test_list_project_files(client):
     c, _, uid, tmp = client; uid["value"] = 2
     c.post("/projects/1/files?file_category=knowledge_document", files={"upload": ("f1.txt", b"aa", "text/plain")})
@@ -127,13 +140,39 @@ def test_update_file_empty_name(client):
 
 
 def test_archive_file(client):
-    c, _, uid, tmp = client; uid["value"] = 2
+    c, SessionLocal, uid, tmp = client; uid["value"] = 2
     created = c.post("/projects/1/files?file_category=knowledge_document", files={"upload": ("to_archive.txt", b"x", "text/plain")})
     file_id = created.json()["id"]
+    with SessionLocal() as db:
+        record = db.get(StoredFile, file_id)
+        record.status = FileStatus.APPROVED
+        record.knowledge_sync_status = KnowledgeSyncStatus.SYNCED.value
+        db.add(
+            RagFileSync(
+                file_id=file_id,
+                project_id=1,
+                dify_dataset_id="dataset-1",
+                sync_status=RagSyncStatus.SYNCED.value,
+            )
+        )
+        db.add(
+            RagDocumentChunk(
+                file_id=file_id,
+                project_id=1,
+                chunk_index=0,
+                content="stale evidence",
+                content_hash="chunk-hash",
+                embedding=[1.0, 0.0],
+            )
+        )
+        db.commit()
     r = c.post(f"/files/{file_id}/archive")
     assert r.status_code == 200
     assert r.json()["status"] == "archived"
     assert r.json()["knowledge_sync_status"] == "not_applicable"
+    with SessionLocal() as db:
+        assert db.query(RagDocumentChunk).filter(RagDocumentChunk.file_id == file_id).count() == 0
+        assert db.query(RagFileSync).filter(RagFileSync.file_id == file_id).count() == 0
 
 
 def test_download_file(client):

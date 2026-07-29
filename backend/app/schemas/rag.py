@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import Literal
 
 from pydantic import BaseModel, Field
+
+from app.models.ai import RagMode
 
 
 class RagDatasetRead(BaseModel):
@@ -20,21 +21,6 @@ class RagDatasetRead(BaseModel):
     model_config = {"from_attributes": True}
 
 
-class RagFileSyncRead(BaseModel):
-    id: int
-    file_id: int
-    project_id: int
-    dify_dataset_id: str
-    dify_document_id: str | None
-    sync_status: str
-    sync_message: str | None
-    synced_at: datetime | None
-    created_at: datetime
-    updated_at: datetime
-
-    model_config = {"from_attributes": True}
-
-
 class RagStatusRead(BaseModel):
     initialized: bool
     dataset: RagDatasetRead | None
@@ -44,8 +30,8 @@ class RagStatusRead(BaseModel):
 
 
 class RagQueryRequest(BaseModel):
-    query: str
-    mode: Literal["auto", "project_rag", "kg_enhanced_rag"] = "auto"
+    query: str = Field(min_length=1, max_length=2000)
+    mode: RagMode = RagMode.AUTO
 
 
 class RagSourceRead(BaseModel):
@@ -75,14 +61,23 @@ class RagGraphContextRead(BaseModel):
     retrieval_score: float = 0
 
 
+class RagCitationAuditRead(BaseModel):
+    passed: bool
+    citation_count: int
+    invalid_citations: list[str] = Field(default_factory=list)
+    has_evidence: bool
+    message: str
+
+
 class RagQueryResponse(BaseModel):
     answer: str
     conversation_id: str | None = None
     sources: list[RagSourceRead] = Field(default_factory=list)
     graph_context: list[RagGraphContextRead] = Field(default_factory=list)
-    rag_mode: str = "project_rag"
+    rag_mode: RagMode = RagMode.PROJECT_RAG
     query_log_id: int | None = None
     response_ms: int | None = None
     provider: str = "deepseek"
     model_name: str | None = None
     fallback_reason: str | None = None
+    citation_audit: RagCitationAuditRead | None = None

@@ -5,12 +5,15 @@ import math
 import re
 from dataclasses import dataclass
 
+import jieba
+from rank_bm25 import BM25Okapi
 from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
-from app.models.file import StoredFile
+from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.rag import RagDocumentChunk
 from app.services.embedding import EmbeddingClient
+from app.services.knowledge_graph import COLLECTION_QUERY_KEYWORDS
 from app.services.ocr import OcrService
 
 
@@ -42,7 +45,7 @@ class LocalRagService:
         self.embedding_client = embedding_client or EmbeddingClient()
 
     async def index_file(self, db: Session, record: StoredFile) -> int:
-        extracted = OcrService().extract(db, record.id)["extracted_text"]
+        extracted = OcrService().extract_for_indexing(db, record)
         chunks = self.chunk_text(extracted)
         if not chunks:
             raise ValueError("No extractable text was found in the document")
@@ -67,25 +70,46 @@ class LocalRagService:
     async def retrieve(self, db: Session, project_id: int, query: str) -> list[RetrievedChunk]:
         query_vector = await self.embedding_client.embed_query(query)
         candidate_k = self.settings.rag_vector_candidate_k
+        active_query = (
+            db.query(RagDocumentChunk)
+            .join(StoredFile, StoredFile.id == RagDocumentChunk.file_id)
+            .filter(RagDocumentChunk.project_id == project_id)
+            .filter(
+                StoredFile.status == FileStatus.APPROVED,
+                StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT,
+                StoredFile.knowledge_sync_status == KnowledgeSyncStatus.SYNCED.value,
+            )
+        )
+        all_chunks = active_query.all()
+        if not all_chunks:
+            return []
         if db.bind is not None and db.bind.dialect.name == "postgresql":
-            candidates = (
-                db.query(RagDocumentChunk)
-                .filter(RagDocumentChunk.project_id == project_id)
+            vector_candidates = (
+                active_query
                 .order_by(RagDocumentChunk.embedding.cosine_distance(query_vector))
                 .limit(candidate_k)
                 .all()
             )
         else:
-            candidates = (
-                db.query(RagDocumentChunk)
-                .filter(RagDocumentChunk.project_id == project_id)
-                .all()
-            )
-            candidates.sort(
+            vector_candidates = list(all_chunks)
+            vector_candidates.sort(
                 key=lambda chunk: self._cosine(query_vector, chunk.embedding or []),
                 reverse=True,
             )
-            candidates = candidates[:candidate_k]
+            vector_candidates = vector_candidates[:candidate_k]
+
+        raw_bm25_scores = self._bm25_scores(query, [chunk.content for chunk in all_chunks])
+        bm25_by_id = {
+            chunk.id: score
+            for chunk, score in zip(all_chunks, raw_bm25_scores, strict=True)
+        }
+        lexical_candidates = sorted(
+            (chunk for chunk in all_chunks if bm25_by_id[chunk.id] > 0),
+            key=lambda chunk: (bm25_by_id[chunk.id], -chunk.id),
+            reverse=True,
+        )[:candidate_k]
+        candidates = list({chunk.id: chunk for chunk in [*vector_candidates, *lexical_candidates]}.values())
+        max_bm25 = max((score for score in raw_bm25_scores if score > 0), default=0.0)
 
         files = {
             record.id: record
@@ -93,13 +117,11 @@ class LocalRagService:
             .filter(StoredFile.id.in_([chunk.file_id for chunk in candidates] or [0]))
             .all()
         }
-        tokens = self._tokens(query)
         results: list[RetrievedChunk] = []
         for chunk in candidates:
             vector_score = max(0.0, self._cosine(query_vector, chunk.embedding or []))
-            chunk_tokens = self._tokens(chunk.content)
-            lexical_score = len(tokens & chunk_tokens) / max(1, len(tokens))
-            retrieval_score = 0.8 * vector_score + 0.2 * lexical_score
+            lexical_score = max(0.0, bm25_by_id[chunk.id]) / max_bm25 if max_bm25 else 0.0
+            retrieval_score = 0.7 * vector_score + 0.3 * lexical_score
             file_record = files.get(chunk.file_id)
             results.append(
                 RetrievedChunk(
@@ -113,7 +135,53 @@ class LocalRagService:
                 )
             )
         results.sort(key=lambda item: (item.retrieval_score, item.vector_score), reverse=True)
-        return results[: self.settings.rag_retrieval_top_k]
+        return results[: self._retrieval_limit(query)]
+
+    async def retrieve_bm25(self, db: Session, project_id: int, query: str) -> list[RetrievedChunk]:
+        chunks = (
+            db.query(RagDocumentChunk)
+            .join(StoredFile, StoredFile.id == RagDocumentChunk.file_id)
+            .filter(RagDocumentChunk.project_id == project_id)
+            .filter(
+                StoredFile.status == FileStatus.APPROVED,
+                StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT,
+                StoredFile.knowledge_sync_status == KnowledgeSyncStatus.SYNCED.value,
+            )
+            .all()
+        )
+        if not chunks:
+            return []
+        scores = self._bm25_scores(query, [chunk.content for chunk in chunks])
+        files = {
+            record.id: record
+            for record in db.query(StoredFile)
+            .filter(StoredFile.id.in_([chunk.file_id for chunk in chunks]))
+            .all()
+        }
+        results = [
+            RetrievedChunk(
+                chunk_id=chunk.id,
+                file_id=chunk.file_id,
+                filename=(files[chunk.file_id].original_filename if chunk.file_id in files else f"file-{chunk.file_id}"),
+                snippet=chunk.content,
+                vector_score=0.0,
+                lexical_score=score,
+                retrieval_score=score,
+            )
+            for chunk, score in zip(chunks, scores, strict=True)
+        ]
+        results.sort(key=lambda item: (item.retrieval_score, -item.chunk_id), reverse=True)
+        return results[: self._retrieval_limit(query)]
+
+    def _retrieval_limit(self, query: str) -> int:
+        default = self.settings.rag_retrieval_top_k
+        normalized = query.lower()
+        if any(keyword in normalized for keyword in COLLECTION_QUERY_KEYWORDS):
+            return min(
+                self.settings.rag_vector_candidate_k,
+                max(default, self.settings.rag_collection_retrieval_top_k),
+            )
+        return default
 
     def chunk_text(self, text: str) -> list[str]:
         normalized = re.sub(r"\r\n?", "\n", text or "").strip()
@@ -150,7 +218,7 @@ class LocalRagService:
         return [chunk for chunk in chunks if chunk]
 
     @staticmethod
-    def format_sources(sources: list[RetrievedChunk], max_chars: int = 6000) -> str:
+    def format_sources(sources: list[RetrievedChunk], max_chars: int = 9000) -> str:
         lines = ["项目资料检索结果："]
         for index, source in enumerate(sources, start=1):
             lines.append(
@@ -168,6 +236,25 @@ class LocalRagService:
         }
 
     @staticmethod
+    def _bm25_tokens(text: str) -> list[str]:
+        normalized = (text or "").lower()
+        return [
+            token
+            for segment in jieba.cut_for_search(normalized)
+            for token in re.findall(r"[a-z0-9µ><=_./-]+|[\u4e00-\u9fff]+", segment)
+            if token.strip()
+        ]
+
+    @classmethod
+    def _bm25_scores(cls, query: str, documents: list[str]) -> list[float]:
+        tokenized_documents = [cls._bm25_tokens(document) for document in documents]
+        query_tokens = cls._bm25_tokens(query)
+        if not query_tokens or not any(tokenized_documents):
+            return [0.0] * len(documents)
+        model = BM25Okapi(tokenized_documents)
+        return [float(score) for score in model.get_scores(query_tokens)]
+
+    @staticmethod
     def _cosine(left: list[float], right: list[float]) -> float:
         if not left or len(left) != len(right):
             return 0.0
@@ -177,4 +264,3 @@ class LocalRagService:
         if left_norm == 0 or right_norm == 0:
             return 0.0
         return dot / (left_norm * right_norm)
-

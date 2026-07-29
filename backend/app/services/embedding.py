@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import Any
-
-import httpx
+import asyncio
+from functools import lru_cache
 
 from app.core.config import get_settings
 
@@ -14,36 +13,30 @@ class EmbeddingServiceError(RuntimeError):
 class EmbeddingClient:
     def __init__(self) -> None:
         settings = get_settings()
-        self.base_url = settings.embedding_service_url.rstrip("/")
         self.model = settings.embedding_model
         self.dimensions = settings.embedding_dimension
+        self.cache_dir = settings.embedding_cache_path
 
     async def embed_documents(self, texts: list[str]) -> list[list[float]]:
-        return await self._embed(texts, kind="document")
+        return await self._embed(texts)
 
     async def embed_query(self, text: str) -> list[float]:
-        vectors = await self._embed([text], kind="query")
+        vectors = await self._embed([text])
         return vectors[0]
 
-    async def _embed(self, texts: list[str], *, kind: str) -> list[list[float]]:
+    async def _embed(self, texts: list[str]) -> list[list[float]]:
         if not texts:
             return []
         try:
-            async with httpx.AsyncClient(timeout=180) as client:
-                response = await client.post(
-                    f"{self.base_url}/embed",
-                    json={"texts": texts, "kind": kind},
-                )
-        except httpx.HTTPError as exc:
-            raise EmbeddingServiceError(f"Embedding service unavailable: {exc}") from exc
-        if not response.is_success:
-            raise EmbeddingServiceError(
-                f"Embedding service failed: {response.status_code} {response.text}"
+            vectors = await asyncio.to_thread(
+                _encode,
+                texts,
+                self.model,
+                self.cache_dir,
+                self.dimensions,
             )
-        payload: dict[str, Any] = response.json()
-        vectors = payload.get("vectors")
-        if not isinstance(vectors, list) or len(vectors) != len(texts):
-            raise EmbeddingServiceError("Embedding service returned an invalid vector count")
+        except Exception as exc:
+            raise EmbeddingServiceError(f"Embedding failed: {exc}") from exc
         for vector in vectors:
             if not isinstance(vector, list) or len(vector) != self.dimensions:
                 raise EmbeddingServiceError(
@@ -51,3 +44,22 @@ class EmbeddingClient:
                 )
         return vectors
 
+
+@lru_cache(maxsize=1)
+def _model(model_name: str, cache_dir: str):
+    from fastembed import TextEmbedding
+
+    return TextEmbedding(model_name=model_name, cache_dir=cache_dir, threads=4)
+
+
+def _encode(texts: list[str], model_name: str, cache_dir: str, dimensions: int) -> list[list[float]]:
+    import numpy as np
+
+    vectors = np.asarray(list(_model(model_name, cache_dir).embed(texts, batch_size=min(16, len(texts)))))
+    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+    normalized = vectors / np.maximum(norms, 1e-12)
+    if normalized.shape[1] != dimensions:
+        raise EmbeddingServiceError(
+            f"Embedding dimension mismatch: expected {dimensions}, got {normalized.shape[1]}"
+        )
+    return normalized.tolist()
