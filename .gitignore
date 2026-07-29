@@ -3,17 +3,21 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .venv/
+.htrflow-venv/
 venv/
 .pytest_cache/
 
 # Node
 node_modules/
 .next/
+*.tsbuildinfo
 npm-debug.log*
 
 # IDE
 .idea/
 .vscode/
+.qoder/
+.reasonix/
 *.swp
 *.swo
 
@@ -30,3 +34,10 @@ docker-data/
 # Build
 dist/
 build/
+target/
+tmp/
+output/
+storage/
+backups/
+storage.pre-restore-*/
+frontend/.codex-home/
