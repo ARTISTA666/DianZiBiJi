@@ -1,0 +1,53 @@
+GEO series GSE111619 structured validation document
+研究标题：Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible Control (non-targeting) and p63-targeting shRNAs
+研究设计：H226 肺鳞状细胞癌细胞中，比较 doxycycline 诱导的非靶向 shRNA 对照与 p63 靶向 shRNA；每组两个生物学重复。
+数据边界：下载并处理的是 GEO 提供的基因级 HTSeq 计数矩阵和 SOFT 元数据，不是本地实验室原始笔记，也不是原始 FASTQ 读段。
+来源：https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111619
+
+GSE111619 GSM3035185 RNA-seq record
+数据来源：NCBI GEO GSE111619，样本登录号 GSM3035185。
+样本信息为 GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。
+处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。
+使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。
+仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。
+计数摘要为 RNA quality RIN > 9；GSM3035185: total_count=53924761, detected_gene_rows=17926；count_matrix_gene_rows=25369。
+处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。
+结构化样本字段：GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。
+结构化结果字段：GSM3035185: total_count=53924761, detected_gene_rows=17926; RNA quality: RIN > 9。
+元数据处理软件包括 bcl2fastq v1.8.4、FASTQC v0.11.2、TopHat2 v2.0.13、SAMtools v0.1.19、Picard v1.129、RSeQC v2.6 和 HTSeq v0.6.1。
+
+GSE111619 GSM3035186 RNA-seq record
+数据来源：NCBI GEO GSE111619，样本登录号 GSM3035186。
+样本信息为 GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]。
+处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。
+使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。
+仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。
+计数摘要为 RNA quality RIN > 9；GSM3035186: total_count=52016366, detected_gene_rows=17953；count_matrix_gene_rows=25369。
+处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。
+结构化样本字段：GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]。
+结构化结果字段：GSM3035186: total_count=52016366, detected_gene_rows=17953; RNA quality: RIN > 9。
+元数据处理软件包括 bcl2fastq v1.8.4、FASTQC v0.11.2、TopHat2 v2.0.13、SAMtools v0.1.19、Picard v1.129、RSeQC v2.6 和 HTSeq v0.6.1。
+
+GSE111619 GSM3035187 RNA-seq record
+数据来源：NCBI GEO GSE111619，样本登录号 GSM3035187。
+样本信息为 GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]。
+处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。
+使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。
+仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。
+计数摘要为 RNA quality RIN > 9；GSM3035187: total_count=53416511, detected_gene_rows=18137；count_matrix_gene_rows=25369。
+处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。
+结构化样本字段：GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]。
+结构化结果字段：GSM3035187: total_count=53416511, detected_gene_rows=18137; RNA quality: RIN > 9。
+元数据处理软件包括 bcl2fastq v1.8.4、FASTQC v0.11.2、TopHat2 v2.0.13、SAMtools v0.1.19、Picard v1.129、RSeQC v2.6 和 HTSeq v0.6.1。
+
+GSE111619 GSM3035188 RNA-seq record
+数据来源：NCBI GEO GSE111619，样本登录号 GSM3035188。
+样本信息为 GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]。
+处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。
+使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。
+仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。
+计数摘要为 RNA quality RIN > 9；GSM3035188: total_count=51926832, detected_gene_rows=18092；count_matrix_gene_rows=25369。
+处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。
+结构化样本字段：GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]。
+结构化结果字段：GSM3035188: total_count=51926832, detected_gene_rows=18092; RNA quality: RIN > 9。
+元数据处理软件包括 bcl2fastq v1.8.4、FASTQC v0.11.2、TopHat2 v2.0.13、SAMtools v0.1.19、Picard v1.129、RSeQC v2.6 和 HTSeq v0.6.1。

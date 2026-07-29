@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6642",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6642",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6642",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "96 Oct.<BR/>Thursday 26 1843<BR/>The negative conductor has however less negative electricity than is equal to the positive in the other, on account of the distance, but the remainder is made up by the induction of the other bodies in the room around, but at a distance. The two electrics must be equals, for the same reason that the attraction of gravitation may be said to be the  same at all distances, when we consider the increasing spherecal surface which surrounds the attracting body. <BR/><BR/>[[margin note]] See page 184 [[/margin note]]<BR/><BR/>When the two bodies are near to each other, they act on the distant bodies as one, and tend to neutralize each other. From this consideration, we may perhaps get a more intimate acquaintance with the phenomenon which is exhibited by electrical light in a vacuum.<BR/><BR/>I noticed one fact, which I have not seen described, [[underlined]] viz [[/underlined]], spots of light in the beams of electricity, as they were given off from the upper ball, they were about a fourth of the distance (6 inches) downwards.<BR/><BR/>I also passed the secondary spark through the vacuum, and observed that it produced the same coloured appearance as the ordinary spark.<BR/><BR/>The experiments I have made this evening have a bearing on the [[word circled]] speed [[/word circled]] of electricity in passing along a wire. See page 54 --<BR/><BR/>Friday, rain, weather unfavourable for elect exp. <BR/>[[end page]]<BR/><BR/>[[start page]]<BR/>Saturday 28th 1843 97<BR/>We cannot explain all the phenomena of electricity, I think without admitting the existance of a plenum of an ethereal medium, the atoms of which repel each other and are possessed of inertia. When a Leyden jar is grasped by the hand, and a spark from a long conductor is thrown on it, the induction takes place with such intensity as to give a very unpleasant shock to the hand. When the outside of the jar is connected with an insulated ball, the jar being also insulated at the moment the jar receives a spark, the electricity is propelled from the outside of the jar to the connected insulated ball and immediately afterward a return wave is produced, which may be exhibited by the effect produced on the needles of the two sets of spirals. The equilibrium in this experiment is evidently produced by a series of oscillations. The return wave is not as strong as the direct wave, and when the wire conveying the wave to and from the jar is connected with the earth, instead of the insulated ball, the needle is always magnetized by a current from the jar.<BR/><BR/>The return wave should perhaps be increased on the direct waves, diminished by the [[?]] of repulsion of the end of the conductor at the moment of the discharge, but this is not [[image of drawing]] sufficient to neutralize the current, particularly when it is drawn from the outside of the jar near the bottom. <BR/><BR/>The fact of the evolution of oxygen and hydrogen from both poles of the decomposing apparatus, in case of ordinary elect. noticed by Waloston, is probably due to the oscillations.",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6642#xywh=10,10,2990,2363"
+    }
+  ]
+}

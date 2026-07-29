@@ -1,0 +1,207 @@
+{
+  "imported_at": "2026-07-11T06:52:52.217011+00:00",
+  "dataset": "NCBI GEO GSE111619",
+  "project": {
+    "id": 3,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目",
+    "description": "NCBI GEO GSE111619 公开 RNA-seq 数据验证项目；仅以原始 GEO 文档作为向量语料，用冻结题集验证知识图谱关系补证。",
+    "is_sensitive": false,
+    "status": "active",
+    "approval_enabled": true,
+    "owner_user_id": null
+  },
+  "notes": [
+    {
+      "id": 8,
+      "title": "GSE111619 GSM3035185 RNA-seq record",
+      "status": "approved"
+    },
+    {
+      "id": 9,
+      "title": "GSE111619 GSM3035186 RNA-seq record",
+      "status": "approved"
+    },
+    {
+      "id": 10,
+      "title": "GSE111619 GSM3035187 RNA-seq record",
+      "status": "approved"
+    },
+    {
+      "id": 11,
+      "title": "GSE111619 GSM3035188 RNA-seq record",
+      "status": "approved"
+    }
+  ],
+  "files": [
+    {
+      "id": 9,
+      "filename": "GSE111619_family.soft.gz",
+      "category": "note_attachment",
+      "sha256": "fbfb8aa0a5b0bee99c8ec44d641eec82568a4ce24706b1d16a3010c9403c6043",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 10,
+      "filename": "GSE111619_series_matrix.txt.gz",
+      "category": "note_attachment",
+      "sha256": "b8086b3dad39d1120d6e03fc62ee22007692e86c7ad688e4da300c38822b8849",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 11,
+      "filename": "GSE111619_HTSeq_counts.txt.gz",
+      "category": "note_attachment",
+      "sha256": "662eeaa22c55beb5457b447a27be6f9c5df70f831addd3b04ed6bc718de569f5",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 12,
+      "filename": "gse111619_notes.json",
+      "category": "note_attachment",
+      "sha256": "48fac5e897b655e25315a0351f910bac3afff9e381dfa91313269c4c47b13f5d",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 13,
+      "filename": "GSE111619_family.soft",
+      "category": "knowledge_document",
+      "sha256": "b84b094bcc6bbbe40b57220ba7c219284200f35834627b6f3e8723b836016469",
+      "status": "approved",
+      "knowledge_sync_status": "synced",
+      "knowledge_sync_message": "Indexed 36 chunks with BAAI/bge-small-zh-v1.5"
+    },
+    {
+      "id": 14,
+      "filename": "GSE111619_series_matrix.txt",
+      "category": "knowledge_document",
+      "sha256": "cc51ac118c73c1d64f4268115a2688db19ee844672c0dc3a80323a1fff7aeab1",
+      "status": "approved",
+      "knowledge_sync_status": "synced",
+      "knowledge_sync_message": "Indexed 28 chunks with BAAI/bge-small-zh-v1.5"
+    },
+    {
+      "id": 15,
+      "filename": "GSE111619_HTSeq_counts.txt",
+      "category": "knowledge_document",
+      "sha256": "09275fe1d4576968d5f2fc9bf45b26812103dcef0c5a43108f283cb8c7519826",
+      "status": "approved",
+      "knowledge_sync_status": "synced",
+      "knowledge_sync_message": "Indexed 917 chunks with BAAI/bge-small-zh-v1.5"
+    },
+    {
+      "id": 16,
+      "filename": "gse111619_samples.csv",
+      "category": "knowledge_document",
+      "sha256": "7aec664d8f87f24c01979206e8561d5c008482b8239fb0d853a4cf1a83b8e55d",
+      "status": "approved",
+      "knowledge_sync_status": "synced",
+      "knowledge_sync_message": "Indexed 3 chunks with BAAI/bge-small-zh-v1.5"
+    }
+  ],
+  "source_extraction": [
+    {
+      "file_id": 9,
+      "filename": "GSE111619_family.soft.gz",
+      "extraction_method": "gzip_text",
+      "character_count": 20659,
+      "truncated": false,
+      "first_line": "^DATABASE = GeoMiame",
+      "extracted_text_sha256": "b84b094bcc6bbbe40b57220ba7c219284200f35834627b6f3e8723b836016469"
+    },
+    {
+      "file_id": 10,
+      "filename": "GSE111619_series_matrix.txt.gz",
+      "extraction_method": "gzip_text",
+      "character_count": 16034,
+      "truncated": false,
+      "first_line": "!Series_title\t\"Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible Control (non-targeting) and p63-targeting shRNAs\"",
+      "extracted_text_sha256": "cc51ac118c73c1d64f4268115a2688db19ee844672c0dc3a80323a1fff7aeab1"
+    },
+    {
+      "file_id": 11,
+      "filename": "GSE111619_HTSeq_counts.txt.gz",
+      "extraction_method": "gzip_text",
+      "character_count": 531542,
+      "truncated": false,
+      "first_line": "GeneID\tNonTargeting_rep1\tNonTargeting_rep2\tp63KD_rep1\tp63KD_rep2",
+      "extracted_text_sha256": "09275fe1d4576968d5f2fc9bf45b26812103dcef0c5a43108f283cb8c7519826"
+    },
+    {
+      "file_id": 12,
+      "filename": "gse111619_notes.json",
+      "extraction_method": "plain_text",
+      "character_count": 6387,
+      "truncated": false,
+      "first_line": "[",
+      "extracted_text_sha256": "48fac5e897b655e25315a0351f910bac3afff9e381dfa91313269c4c47b13f5d"
+    },
+    {
+      "file_id": 13,
+      "filename": "GSE111619_family.soft",
+      "extraction_method": "plain_text",
+      "character_count": 20659,
+      "truncated": false,
+      "first_line": "^DATABASE = GeoMiame",
+      "extracted_text_sha256": "b84b094bcc6bbbe40b57220ba7c219284200f35834627b6f3e8723b836016469"
+    },
+    {
+      "file_id": 14,
+      "filename": "GSE111619_series_matrix.txt",
+      "extraction_method": "plain_text",
+      "character_count": 16034,
+      "truncated": false,
+      "first_line": "!Series_title\t\"Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible Control (non-targeting) and p63-targeting shRNAs\"",
+      "extracted_text_sha256": "cc51ac118c73c1d64f4268115a2688db19ee844672c0dc3a80323a1fff7aeab1"
+    },
+    {
+      "file_id": 15,
+      "filename": "GSE111619_HTSeq_counts.txt",
+      "extraction_method": "plain_text",
+      "character_count": 531542,
+      "truncated": false,
+      "first_line": "GeneID\tNonTargeting_rep1\tNonTargeting_rep2\tp63KD_rep1\tp63KD_rep2",
+      "extracted_text_sha256": "09275fe1d4576968d5f2fc9bf45b26812103dcef0c5a43108f283cb8c7519826"
+    },
+    {
+      "file_id": 16,
+      "filename": "gse111619_samples.csv",
+      "extraction_method": "plain_text",
+      "character_count": 1381,
+      "truncated": false,
+      "first_line": "geo_accession,count_column,title,condition,replicate,cell_line,cell_type,shrna_construct,treatment,culture_condition,molecule,instrument,library_strategy,biosample,sra,total_gene_count,detected_gene_rows,zero_gene_rows",
+      "extracted_text_sha256": "85b353d7838480158bd3b2dbbbbbc486b3dd0e0f0bee82216beaa8b6aba85627"
+    }
+  ],
+  "knowledge_graph": {
+    "entity_count": 56,
+    "relation_count": 126
+  },
+  "rag_status": {
+    "initialized": true,
+    "dataset": {
+      "id": 3,
+      "project_id": 3,
+      "dify_dataset_id": "local-project-3",
+      "dify_dataset_name": "ELN Project 3 - GSE111619 KG-RAG 原始语料盲测项目",
+      "provider": "local_deepseek",
+      "embedding_model": "BAAI/bge-small-zh-v1.5",
+      "generation_model": "deepseek-v4-flash",
+      "status": "active",
+      "created_by": 1,
+      "created_at": "2026-07-11T01:33:25.138255Z",
+      "updated_at": "2026-07-11T01:33:25.138255Z"
+    },
+    "pending_sync_count": 0,
+    "failed_sync_count": 0,
+    "synced_count": 4
+  },
+  "verification_query": null
+}

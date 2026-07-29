@@ -1,0 +1,178 @@
+{
+  "generated_at": "2026-07-13T07:08:10.724617+00:00",
+  "manifest": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/evaluation.csv",
+  "metric_definition": {
+    "character_error_rate": "Levenshtein edit distance divided by reference character count; lower is better.",
+    "compact_character_error_rate": "The same formula after removing whitespace; lower is better.",
+    "numeric_f1": "Exact numeric-token overlap F1; higher is better.",
+    "normalization": "Unicode NFKC and collapsed whitespace; case and punctuation are preserved."
+  },
+  "sample_count": 5,
+  "summary": {
+    "raw": {
+      "sample_count": 5,
+      "micro_character_error_rate": 0.789278,
+      "macro_character_error_rate": 0.781213,
+      "micro_compact_character_error_rate": 0.840055,
+      "macro_compact_character_error_rate": 0.831451,
+      "numeric_tokens": {
+        "reference_count": 50,
+        "prediction_count": 24,
+        "matched_count": 6,
+        "precision": 0.25,
+        "recall": 0.12,
+        "f1": 0.162162,
+        "exact_sequence_sample_count": 0
+      }
+    },
+    "corrected": null,
+    "paired_change": null
+  },
+  "samples": [
+    {
+      "sample_id": "SIA-SIA2012-6685",
+      "source_url": "https://transcription.si.edu/view/6778/SIA-SIA2012-6685",
+      "reference": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6685.txt",
+        "sha256": "a1175f3a1590d3e0c0bd5e8cc1ab7de0a6ad9e555795e229e3255c57d53cf009"
+      },
+      "raw_ocr": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/raw/htrflow-development-manifest/SIA-SIA2012-6685.txt",
+        "sha256": "5e624b16ced30b31fa7898fe1e2cee43bf4c46fe3b3b5e5f5b0391c90f6a2d50",
+        "reference_characters": 1229,
+        "prediction_characters": 1015,
+        "edit_distance": 864,
+        "character_error_rate": 0.703011,
+        "compact_reference_characters": 1008,
+        "compact_edit_distance": 755,
+        "compact_character_error_rate": 0.749008,
+        "numeric_tokens": {
+          "reference_count": 7,
+          "prediction_count": 2,
+          "matched_count": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_sequence_match": false
+        }
+      },
+      "corrected_ocr": null
+    },
+    {
+      "sample_id": "SIA-SIA2012-6699",
+      "source_url": "https://transcription.si.edu/view/6778/SIA-SIA2012-6699",
+      "reference": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6699.txt",
+        "sha256": "8ece1ef99b0b96232f87602244a5c2920b87df8561b02bd520e5f6b61800339a"
+      },
+      "raw_ocr": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/raw/htrflow-development-manifest/SIA-SIA2012-6699.txt",
+        "sha256": "4b424be2943db8ed2a8356b9b669b33c36b327e519a5669059d220bf98e7b3b3",
+        "reference_characters": 2565,
+        "prediction_characters": 2656,
+        "edit_distance": 1993,
+        "character_error_rate": 0.776998,
+        "compact_reference_characters": 2075,
+        "compact_edit_distance": 1711,
+        "compact_character_error_rate": 0.824578,
+        "numeric_tokens": {
+          "reference_count": 20,
+          "prediction_count": 5,
+          "matched_count": 1,
+          "precision": 0.2,
+          "recall": 0.05,
+          "f1": 0.08,
+          "exact_sequence_match": false
+        }
+      },
+      "corrected_ocr": null
+    },
+    {
+      "sample_id": "SIA-SIA2012-6671",
+      "source_url": "https://transcription.si.edu/view/6778/SIA-SIA2012-6671",
+      "reference": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6671.txt",
+        "sha256": "f9ad18f5ffc1da536814b99e2288f532eee14858a50569b93b2be9a1b6959e1f"
+      },
+      "raw_ocr": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/raw/htrflow-development-manifest/SIA-SIA2012-6671.txt",
+        "sha256": "8267ec29ffebd008da3124f24039a4cb927b6cc5becfae9c17a17c56f6e2a8f5",
+        "reference_characters": 2165,
+        "prediction_characters": 2522,
+        "edit_distance": 1797,
+        "character_error_rate": 0.830023,
+        "compact_reference_characters": 1762,
+        "compact_edit_distance": 1553,
+        "compact_character_error_rate": 0.881385,
+        "numeric_tokens": {
+          "reference_count": 10,
+          "prediction_count": 6,
+          "matched_count": 3,
+          "precision": 0.5,
+          "recall": 0.3,
+          "f1": 0.375,
+          "exact_sequence_match": false
+        }
+      },
+      "corrected_ocr": null
+    },
+    {
+      "sample_id": "SIA-SIA2012-6647",
+      "source_url": "https://transcription.si.edu/view/6778/SIA-SIA2012-6647",
+      "reference": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6647.txt",
+        "sha256": "3f653fa33ba4c44d424ed32c570b601e0295253329a2698970d1a4f3114680de"
+      },
+      "raw_ocr": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/raw/htrflow-development-manifest/SIA-SIA2012-6647.txt",
+        "sha256": "e0c7fd5b25329b86a55dd46a445c674241a0dbc5ba477897a0ab77b166056e85",
+        "reference_characters": 2780,
+        "prediction_characters": 3049,
+        "edit_distance": 2199,
+        "character_error_rate": 0.791007,
+        "compact_reference_characters": 2254,
+        "compact_edit_distance": 1908,
+        "compact_character_error_rate": 0.846495,
+        "numeric_tokens": {
+          "reference_count": 4,
+          "prediction_count": 4,
+          "matched_count": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact_sequence_match": false
+        }
+      },
+      "corrected_ocr": null
+    },
+    {
+      "sample_id": "SIA-SIA2012-6642",
+      "source_url": "https://transcription.si.edu/view/6778/SIA-SIA2012-6642",
+      "reference": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6642.txt",
+        "sha256": "e1ea0d9197e67ebce5870fba2fe4f9ae03938bc2f2a0fd660b8a28f7508cf980"
+      },
+      "raw_ocr": {
+        "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-simple/raw/htrflow-development-manifest/SIA-SIA2012-6642.txt",
+        "sha256": "9543a5035f8a8c412b9fa6275be283879d9a6dbb96896593478c41e6bfa6f628",
+        "reference_characters": 2826,
+        "prediction_characters": 3198,
+        "edit_distance": 2275,
+        "character_error_rate": 0.805025,
+        "compact_reference_characters": 2323,
+        "compact_edit_distance": 1988,
+        "compact_character_error_rate": 0.85579,
+        "numeric_tokens": {
+          "reference_count": 9,
+          "prediction_count": 7,
+          "matched_count": 2,
+          "precision": 0.285714,
+          "recall": 0.222222,
+          "f1": 0.25,
+          "exact_sequence_match": false
+        }
+      },
+      "corrected_ocr": null
+    }
+  ]
+}

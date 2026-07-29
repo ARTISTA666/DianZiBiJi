@@ -1,0 +1,139 @@
+{
+  "generated_at": "2026-07-13T06:58:26.109260+00:00",
+  "engine": "tesseract 5.5.0",
+  "language": "eng",
+  "page_segmentation_mode": 6,
+  "dpi": null,
+  "tesseract_configs": [],
+  "preprocessing_mode": "grayscale_otsu",
+  "manifest_path": "/workspace/data/real/smithsonian_joseph_henry/development-manifest.csv",
+  "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58",
+  "sample_count": 5,
+  "samples": [
+    {
+      "sample_id": "SIA-SIA2012-6685",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6685.jpg",
+      "image_sha256": "3ece29574e66535f5ef9f226565e15e3905893dff83a3c828cf33513a989c04f",
+      "processed_image_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/processed/SIA-SIA2012-6685.png",
+      "processed_image_sha256": "6457ff183fc51962b328feca4bfcc8b5d9197e8e4e1579b1b15437f55d40a3b8",
+      "preprocessing": {
+        "mode": "grayscale_otsu",
+        "original_size": [
+          1800,
+          1414
+        ],
+        "processed_size": [
+          1840,
+          1454
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": 138
+      },
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/raw/SIA-SIA2012-6685.txt",
+      "raw_ocr_sha256": "8ae96d7db44cab0666bda2ce59975026a7d61ebb614f71f57270bb7a5df920fe",
+      "raw_characters": 963,
+      "elapsed_ms": 1059.331,
+      "stderr": ""
+    },
+    {
+      "sample_id": "SIA-SIA2012-6699",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6699.jpg",
+      "image_sha256": "fe14724c810526e07bcf882c5d168b275480e0d472d79f3633cab7eef1389367",
+      "processed_image_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/processed/SIA-SIA2012-6699.png",
+      "processed_image_sha256": "1a978ad1cd18fb2e735a70758dcd70f19c7f67079f363979e0c6948a3bd7015f",
+      "preprocessing": {
+        "mode": "grayscale_otsu",
+        "original_size": [
+          1800,
+          1414
+        ],
+        "processed_size": [
+          1840,
+          1454
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": 138
+      },
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/raw/SIA-SIA2012-6699.txt",
+      "raw_ocr_sha256": "07fc858d3ed7c79cd08e7aec930bc00b292e65394907ee4f019ec97f2cbc1c2e",
+      "raw_characters": 2215,
+      "elapsed_ms": 2351.913,
+      "stderr": ""
+    },
+    {
+      "sample_id": "SIA-SIA2012-6671",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6671.jpg",
+      "image_sha256": "20191742f30df98c514f3207b10252517485f442b76983c98d84c37c204b3314",
+      "processed_image_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/processed/SIA-SIA2012-6671.png",
+      "processed_image_sha256": "f029227a1a9c3395a2cc5c6fb845e2e0bcdf14158b1a38d29a41b2c8d927aaf4",
+      "preprocessing": {
+        "mode": "grayscale_otsu",
+        "original_size": [
+          1800,
+          1414
+        ],
+        "processed_size": [
+          1840,
+          1454
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": 137
+      },
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/raw/SIA-SIA2012-6671.txt",
+      "raw_ocr_sha256": "c8f94df221bd5ee2a7d58a648b1e4a405af04b94cc560c4f4d4b0c137f1103c9",
+      "raw_characters": 1963,
+      "elapsed_ms": 1935.184,
+      "stderr": ""
+    },
+    {
+      "sample_id": "SIA-SIA2012-6647",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6647.jpg",
+      "image_sha256": "ccee3625ad258d54877a3663216af3e312a91c43407e289029a8548e7afce85f",
+      "processed_image_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/processed/SIA-SIA2012-6647.png",
+      "processed_image_sha256": "b131106b3da6721cc5f122cf3cf6cda732370089f197bf96f2b59d7f3d262a35",
+      "preprocessing": {
+        "mode": "grayscale_otsu",
+        "original_size": [
+          1800,
+          1414
+        ],
+        "processed_size": [
+          1840,
+          1454
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": 135
+      },
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/raw/SIA-SIA2012-6647.txt",
+      "raw_ocr_sha256": "6c27a399dabd014b68c3941539e02d055a93296a080f1b49c153abce42f40f1a",
+      "raw_characters": 1982,
+      "elapsed_ms": 1860.286,
+      "stderr": ""
+    },
+    {
+      "sample_id": "SIA-SIA2012-6642",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6642.jpg",
+      "image_sha256": "a2d69e7e4cf65afe30c9784d33165e724d4232036f0d97a429731c74c3877518",
+      "processed_image_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/processed/SIA-SIA2012-6642.png",
+      "processed_image_sha256": "29f357f9917ba95f8e8e5af3a571c5e9994ea1096a6069a56a699808be50e6c6",
+      "preprocessing": {
+        "mode": "grayscale_otsu",
+        "original_size": [
+          1800,
+          1423
+        ],
+        "processed_size": [
+          1840,
+          1463
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": 135
+      },
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-otsu/raw/SIA-SIA2012-6642.txt",
+      "raw_ocr_sha256": "c76b124426d5f89e57e81da223030ffe20042406acbc25621eb88ea4ea722413",
+      "raw_characters": 1237,
+      "elapsed_ms": 1431.646,
+      "stderr": ""
+    }
+  ]
+}

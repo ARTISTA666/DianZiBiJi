@@ -1,0 +1,160 @@
+[
+  {
+    "id": "H01",
+    "category": "identifier_relation",
+    "question": "请只列出 p63 敲低组两个样本各自对应的 GEO 样本号和 SRA 实验号。",
+    "facts": [
+      {"label": "GSM3035187 -> SRX3777458", "terms": [["GSM3035187"], ["SRX3777458"]], "max_span": 100},
+      {"label": "GSM3035188 -> SRX3777459", "terms": [["GSM3035188"], ["SRX3777459"]], "max_span": 100}
+    ],
+    "forbidden_facts": [
+      {"label": "GSM3035185", "aliases": ["GSM3035185"]},
+      {"label": "GSM3035186", "aliases": ["GSM3035186"]},
+      {"label": "SRX3777456", "aliases": ["SRX3777456"]},
+      {"label": "SRX3777457", "aliases": ["SRX3777457"]}
+    ]
+  },
+  {
+    "id": "H02",
+    "category": "identifier_relation",
+    "question": "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+    "facts": [
+      {"label": "GSM3035185 -> SRX3777456", "terms": [["GSM3035185"], ["SRX3777456"]], "max_span": 100},
+      {"label": "GSM3035186 -> SRX3777457", "terms": [["GSM3035186"], ["SRX3777457"]], "max_span": 100}
+    ],
+    "forbidden_facts": [
+      {"label": "GSM3035187", "aliases": ["GSM3035187"]},
+      {"label": "GSM3035188", "aliases": ["GSM3035188"]},
+      {"label": "SRX3777458", "aliases": ["SRX3777458"]},
+      {"label": "SRX3777459", "aliases": ["SRX3777459"]}
+    ]
+  },
+  {
+    "id": "H03",
+    "category": "cross_record_reasoning",
+    "question": "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+    "facts": [
+      {"label": "GSM3035185 -> 53924761", "terms": [["GSM3035185"], ["53924761", "53,924,761"]], "max_span": 120},
+      {"label": "GSM3035185 -> control", "terms": [["GSM3035185"], ["control", "对照组", "非靶向"]], "max_span": 140}
+    ],
+    "forbidden_facts": [
+      {"label": "GSM3035186", "aliases": ["GSM3035186"]},
+      {"label": "GSM3035187", "aliases": ["GSM3035187"]},
+      {"label": "GSM3035188", "aliases": ["GSM3035188"]}
+    ]
+  },
+  {
+    "id": "H04",
+    "category": "cross_record_reasoning",
+    "question": "检测到的非零基因行数最高的样本属于哪一组？请给出样本号和行数。",
+    "facts": [
+      {"label": "GSM3035187 -> 18137", "terms": [["GSM3035187"], ["18137", "18,137"]], "max_span": 120},
+      {"label": "GSM3035187 -> p63_knockdown", "terms": [["GSM3035187"], ["p63_knockdown", "p63 敲低组", "p63靶向"]], "max_span": 150}
+    ],
+    "forbidden_facts": [
+      {"label": "GSM3035185", "aliases": ["GSM3035185"]},
+      {"label": "GSM3035186", "aliases": ["GSM3035186"]},
+      {"label": "GSM3035188", "aliases": ["GSM3035188"]}
+    ]
+  },
+  {
+    "id": "H05",
+    "category": "cross_record_reasoning",
+    "question": "总基因计数最低的样本是什么？请同时给出其 SRA 实验号和总计数。",
+    "facts": [
+      {"label": "GSM3035188 -> SRX3777459", "terms": [["GSM3035188"], ["SRX3777459"]], "max_span": 120},
+      {"label": "GSM3035188 -> 51926832", "terms": [["GSM3035188"], ["51926832", "51,926,832"]], "max_span": 140}
+    ],
+    "forbidden_facts": [
+      {"label": "GSM3035185", "aliases": ["GSM3035185"]},
+      {"label": "GSM3035186", "aliases": ["GSM3035186"]},
+      {"label": "GSM3035187", "aliases": ["GSM3035187"]}
+    ]
+  },
+  {
+    "id": "H06",
+    "category": "column_mapping",
+    "question": "把四个 GEO 样本号与 HTSeq 计数矩阵中的列名逐一对应。",
+    "facts": [
+      {"label": "GSM3035185 -> NonTargeting_rep1", "terms": [["GSM3035185"], ["NonTargeting_rep1"]], "max_span": 100},
+      {"label": "GSM3035186 -> NonTargeting_rep2", "terms": [["GSM3035186"], ["NonTargeting_rep2"]], "max_span": 100},
+      {"label": "GSM3035187 -> p63KD_rep1", "terms": [["GSM3035187"], ["p63KD_rep1"]], "max_span": 100},
+      {"label": "GSM3035188 -> p63KD_rep2", "terms": [["GSM3035188"], ["p63KD_rep2"]], "max_span": 100}
+    ],
+    "forbidden_facts": []
+  },
+  {
+    "id": "H07",
+    "category": "result_relation",
+    "question": "分别报告两个 p63 敲低样本检测到的非零基因行数。",
+    "facts": [
+      {"label": "GSM3035187 -> 18137", "terms": [["GSM3035187"], ["18137", "18,137"]], "max_span": 100},
+      {"label": "GSM3035188 -> 18092", "terms": [["GSM3035188"], ["18092", "18,092"]], "max_span": 100}
+    ],
+    "forbidden_facts": [
+      {"label": "17926", "aliases": ["17926", "17,926"]},
+      {"label": "17953", "aliases": ["17953", "17,953"]}
+    ]
+  },
+  {
+    "id": "H08",
+    "category": "result_relation",
+    "question": "分别报告两个非靶向对照样本的总基因计数。",
+    "facts": [
+      {"label": "GSM3035185 -> 53924761", "terms": [["GSM3035185"], ["53924761", "53,924,761"]], "max_span": 100},
+      {"label": "GSM3035186 -> 52016366", "terms": [["GSM3035186"], ["52016366", "52,016,366"]], "max_span": 100}
+    ],
+    "forbidden_facts": [
+      {"label": "53416511", "aliases": ["53416511", "53,416,511"]},
+      {"label": "51926832", "aliases": ["51926832", "51,926,832"]}
+    ]
+  },
+  {
+    "id": "H09",
+    "category": "identifier_relation",
+    "question": "列出四个 GEO 样本各自对应的 BioSample 登录号。",
+    "facts": [
+      {"label": "GSM3035185 -> SAMN08667775", "terms": [["GSM3035185"], ["SAMN08667775"]], "max_span": 120},
+      {"label": "GSM3035186 -> SAMN08667774", "terms": [["GSM3035186"], ["SAMN08667774"]], "max_span": 120},
+      {"label": "GSM3035187 -> SAMN08667770", "terms": [["GSM3035187"], ["SAMN08667770"]], "max_span": 120},
+      {"label": "GSM3035188 -> SAMN08667769", "terms": [["GSM3035188"], ["SAMN08667769"]], "max_span": 120}
+    ],
+    "forbidden_facts": []
+  },
+  {
+    "id": "H10",
+    "category": "processing_pipeline",
+    "question": "指出比对软件及版本、参考基因组，以及基因计数软件及版本。",
+    "facts": [
+      {"label": "TopHat2 v2.0.13", "aliases": ["TopHat2 v2.0.13", "TopHat2 2.0.13"]},
+      {"label": "GRCh37/hg19", "aliases": ["GRCh37/hg19", "GRCh37", "hg19"]},
+      {"label": "HTSeq v0.6.1", "aliases": ["HTSeq v0.6.1", "HTSeq 0.6.1"]}
+    ],
+    "forbidden_facts": []
+  },
+  {
+    "id": "H11",
+    "category": "experimental_condition",
+    "question": "概括细胞来源、诱导处理剂量、培养温度、CO2 条件和处理时长。",
+    "facts": [
+      {"label": "H226", "aliases": ["H226"]},
+      {"label": "1 µg/mL doxycycline", "aliases": ["1 µg/mL doxycycline", "1 μg/mL doxycycline"]},
+      {"label": "37°C", "aliases": ["37°C", "37 °C"]},
+      {"label": "5% CO2", "aliases": ["5% CO2", "5% CO₂"]},
+      {"label": "6 days", "aliases": ["6 days", "6 天"]}
+    ],
+    "forbidden_facts": []
+  },
+  {
+    "id": "H12",
+    "category": "numeric_reasoning",
+    "question": "p63 敲低组两个生物学重复的总基因计数相差多少？哪个样本较低？",
+    "facts": [
+      {"label": "GSM3035188", "aliases": ["GSM3035188"]},
+      {"label": "1489679", "aliases": ["1489679", "1,489,679"]}
+    ],
+    "forbidden_facts": [
+      {"label": "GSM3035187 is lower", "aliases": ["GSM3035187 较低", "GSM3035187更低", "GSM3035187 的计数较低"]}
+    ]
+  }
+]

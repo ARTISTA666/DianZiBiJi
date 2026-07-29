@@ -1,0 +1,75 @@
+{
+  "format_version": 1,
+  "experiment_id": "rag-experiment-5",
+  "status": "internal_ready_external_blocked",
+  "scope": "internal developer-authored automatic experiment; not independent external confirmation",
+  "question_set": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+  "corpus_source": "data/real/GSE111619/kg_benchmark_import_report.json",
+  "methods": [
+    {
+      "id": "pure_llm",
+      "documents": false,
+      "graph": false,
+      "generation": true,
+      "prompt_version": "pure-llm-v1"
+    },
+    {
+      "id": "bm25_rag",
+      "documents": "bm25_all_project_chunks",
+      "graph": false,
+      "generation": true,
+      "prompt_version": "bm25-rag-v1"
+    },
+    {
+      "id": "project_rag",
+      "documents": "vector_lexical_hybrid",
+      "graph": false,
+      "generation": true,
+      "prompt_version": "rag-v4-local-hybrid-kg-numeric"
+    },
+    {
+      "id": "structured_query",
+      "documents": false,
+      "graph": "deterministic_relevant_relation_output",
+      "generation": false,
+      "prompt_version": "structured-query-v1"
+    },
+    {
+      "id": "kg_enhanced_rag",
+      "documents": "vector_lexical_hybrid",
+      "graph": "relevant_one_hop_relations",
+      "generation": true,
+      "prompt_version": "rag-v4-local-hybrid-kg-numeric"
+    }
+  ],
+  "execution": {
+    "repetitions": 3,
+    "randomize_order": true,
+    "random_seed": 20260713
+  },
+  "generation": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "temperature": 0.1,
+    "max_tokens": 1800
+  },
+  "retrieval": {
+    "chunk_size": 700,
+    "chunk_overlap": 120,
+    "retrieval_top_k": 6,
+    "collection_retrieval_top_k": 12,
+    "vector_candidate_k": 30,
+    "graph_top_k": 10,
+    "graph_min_score": 1.0
+  },
+  "review": {
+    "protocol": "method_masked",
+    "expected_reviewers": 2,
+    "ratings_are_immutable": true
+  },
+  "blocking_inputs": [
+    "data/real/experiment-5/corpus-manifest.json",
+    "data/real/experiment-5/questions.json",
+    "data/real/experiment-5/gold-facts.json"
+  ]
+}

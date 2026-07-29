@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6594",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6594",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6594",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "[[term.?]] Aug. 21 st '94<BR/><BR/>[[end page]]<BR/>[[start page]]<BR/>1<BR/>Oct 5th 1842 [[vertical line]]  Phenomenon of a drop of water on heated metal<BR/><BR/>Made to day a few experiments on the slow evaporation of water from the surface of heated metal.<BR/>1. Supported a silver spoon over a [[torch?]] lamp with a larger wick. Then after the metal was heatedpoured in water from a pipe, until [[strikethrough]] the [[?]] [[/strikethrough]] the spoon was nearly, or quite half full. The water was considerably aggitated,but remained without boiling and very slowly evaporated.<BR/><BR/>2. Made the same experiment with alcohol, the effect was produced as a lower temperature than with water,— also reheated the same with eather.<BR/><BR/>3. ^[[See page 222, this book]] Placed a quantity of [[?]] filings in the spoon, these were much agitated, and gathered up with the drop of water, and then floated, as it were, at some distance from the metal until the whole of the liquid was evaporated. It appears evident from the experiment, that the water is not in contact with the surface of the metal. Then is [??] [??] attraction of cohesion between the water and the metal, or if any, it is very small, for when a stick or [piece?] of wine is thrust into the drop, the water adheres to the wine on stick.<BR/>4. ^[[See page 222 of this book]] A piece of this metal ([filale?]) was thrown into the drop. The metal remained suspended, and moved with the gliding motion of the drop showing, as is the case of the filings, that the drop is not in close approximation with the surface of the metal.<BR/>5.Next tried mercury on a slip of platinum<BR/>",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6594#xywh=10,10,2990,2441"
+    }
+  ]
+}

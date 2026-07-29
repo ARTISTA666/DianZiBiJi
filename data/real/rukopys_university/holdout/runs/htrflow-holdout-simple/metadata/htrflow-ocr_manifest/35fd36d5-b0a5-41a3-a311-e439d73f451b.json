@@ -1,0 +1,850 @@
+{
+    "file_name": "35fd36d5-b0a5-41a3-a311-e439d73f451b.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/35fd36d5-b0a5-41a3-a311-e439d73f451b.jpg",
+    "image_name": "35fd36d5-b0a5-41a3-a311-e439d73f451b",
+    "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "\" Alabremunobui measurements - no longer made"
+                ],
+                "scores": [
+                    0.35725518645748255
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8465798497200012,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 10,
+                "xmax": 1606,
+                "ymax": 87
+            },
+            "polygon": "1606,14 118,10 118,80 1068,62 1178,87 1244,69 1507,84 1602,65"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "enharesit Apocrylasmie in Rogynin' if zagoboneme notified"
+                ],
+                "scores": [
+                    0.5216479378275327
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8570457696914673,
+            "bbox": {
+                "xmin": 122,
+                "ymin": 65,
+                "xmax": 1624,
+                "ymax": 168
+            },
+            "polygon": "1624,69 1193,91 1068,65 122,84 122,131 381,116 480,164 718,146 798,168 937,146 1620,131"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "unicumb ."
+                ],
+                "scores": [
+                    0.7561457130848837
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8459174633026123,
+            "bbox": {
+                "xmin": 129,
+                "ymin": 120,
+                "xmax": 381,
+                "ymax": 193
+            },
+            "polygon": "129,135 129,190 228,186 232,190 308,193 330,186 356,190 381,186 381,120 349,120 323,131 261,131 213,120 169,138"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "8 . Buptosturui management - nonresource shown with"
+                ],
+                "scores": [
+                    0.4465564759342989
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8423507213592529,
+            "bbox": {
+                "xmin": 104,
+                "ymin": 179,
+                "xmax": 1631,
+                "ymax": 281
+            },
+            "polygon": "1631,179 104,186 104,259 550,252 659,281 875,252 1628,259"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "pannie modafil run nogyn , it covers 1, eapemumbers"
+                ],
+                "scores": [
+                    0.5206785392633947
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8734139204025269,
+            "bbox": {
+                "xmin": 104,
+                "ymin": 248,
+                "xmax": 1613,
+                "ymax": 372
+            },
+            "polygon": "1613,270 1507,248 1379,274 904,252 656,285 539,255 104,259 104,336 246,314 634,339 740,372 984,343 1606,339"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Sabgarne 3"
+                ],
+                "scores": [
+                    0.6853813766455013
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8755100965499878,
+            "bbox": {
+                "xmin": 126,
+                "ymin": 317,
+                "xmax": 447,
+                "ymax": 431
+            },
+            "polygon": "126,328 129,409 184,412 221,431 239,431 268,416 308,409 447,409 447,339 396,347 305,343 275,332 257,317 140,317"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "1Ulombastix - whose everyone are arguing to give an earlier"
+                ],
+                "scores": [
+                    0.39421929788500903
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8209193348884583,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 427,
+                "xmax": 1642,
+                "ymax": 533
+            },
+            "polygon": "118,427 118,482 637,489 780,515 911,497 1266,533 1642,508 1624,427 1218,445"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gua goaverneme nebuux viiveni ."
+                ],
+                "scores": [
+                    0.455907483680455
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8366997838020325,
+            "bbox": {
+                "xmin": 104,
+                "ymin": 482,
+                "xmax": 919,
+                "ymax": 581
+            },
+            "polygon": "104,482 104,566 166,548 235,573 319,555 721,581 919,566 919,508 908,500 791,522 637,493 509,508 447,493"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "a Operanizations , empty-employ the 1mphabriure - could nothing"
+                ],
+                "scores": [
+                    0.3783597808158459
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8922958374023438,
+            "bbox": {
+                "xmin": 89,
+                "ymin": 551,
+                "xmax": 1642,
+                "ymax": 679
+            },
+            "polygon": "89,570 89,639 330,617 641,665 703,643 758,668 820,646 1460,650 1642,679 1642,592 1613,581 1248,592 1079,555 597,592 418,562 235,577 177,551"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ympublicuous gymnoles . \" \" not notablancers using platinum"
+                ],
+                "scores": [
+                    0.4236698053701168
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8632535934448242,
+            "bbox": {
+                "xmin": 129,
+                "ymin": 621,
+                "xmax": 1639,
+                "ymax": 741
+            },
+            "polygon": "129,639 129,709 243,687 506,723 838,709 922,738 1639,741 1631,687 1471,657 820,650 758,672 718,646 641,668 334,621"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "mighoginaum of manigauris ."
+                ],
+                "scores": [
+                    0.6176608397067405
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8723265528678894,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 690,
+                "xmax": 867,
+                "ymax": 814
+            },
+            "polygon": "118,709 118,785 228,804 323,782 418,782 707,814 867,785 867,723 849,716 582,712 513,730 257,690"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3Appearance finance - cligourei built anempenamed ."
+                ],
+                "scores": [
+                    0.44237929128297604
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.786636471748352,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 793,
+                "xmax": 1642,
+                "ymax": 913
+            },
+            "polygon": "93,796 93,877 1050,880 1145,913 1642,902 1635,833 1427,811 908,822 820,804 703,829 513,793"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gue governance issues of marijuana"
+                ],
+                "scores": [
+                    0.4814636855127222
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8721897006034851,
+            "bbox": {
+                "xmin": 126,
+                "ymin": 880,
+                "xmax": 1065,
+                "ymax": 975
+            },
+            "polygon": "126,880 126,964 213,950 275,968 349,939 476,968 718,953 930,975 1065,961 1054,888 831,902 740,884"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "4 . Brymline copagogue oceanizers ;"
+                ],
+                "scores": [
+                    0.5223855243352893
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6388105154037476,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 942,
+                "xmax": 1153,
+                "ymax": 1070
+            },
+            "polygon": "118,968 118,1037 235,1056 469,1030 612,1052 729,1037 922,1045 1003,1070 1153,1052 1153,968 809,979 677,961 469,975 370,942 279,972 206,953"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "4 . Brymature ceregobause oceanizayir - syrynniers"
+                ],
+                "scores": [
+                    0.3848463784792657
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7549927234649658,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 946,
+                "xmax": 1642,
+                "ymax": 1078
+            },
+            "polygon": "118,968 118,1037 228,1052 495,1030 922,1045 988,1067 1174,1052 1321,1078 1642,1059 1635,986 1357,997 1153,968 809,979 721,961 469,975 378,946 264,975"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "cyryn\" etc."
+                ],
+                "scores": [
+                    0.2505193365508232
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4893434941768646,
+            "bbox": {
+                "xmin": 1233,
+                "ymin": 983,
+                "xmax": 1646,
+                "ymax": 1081
+            },
+            "polygon": "1646,990 1639,983 1558,983 1540,990 1394,997 1233,986 1233,1074 1273,1078 1302,1070 1335,1081 1394,1067 1646,1059"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Boepezani or navigaris , Inchoonan , only-mayha , eyeem"
+                ],
+                "scores": [
+                    0.549838172880199
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.893336832523346,
+            "bbox": {
+                "xmin": 144,
+                "ymin": 1034,
+                "xmax": 1642,
+                "ymax": 1162
+            },
+            "polygon": "144,1041 144,1111 272,1129 528,1103 582,1125 674,1111 1112,1140 1204,1121 1405,1162 1642,1140 1631,1070 1251,1081 1160,1056 992,1074 813,1041 608,1056 469,1034 257,1059"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "psychology , who brumbacons has its gimmostics"
+                ],
+                "scores": [
+                    0.4304934767160887
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8779251575469971,
+            "bbox": {
+                "xmin": 126,
+                "ymin": 1107,
+                "xmax": 1277,
+                "ymax": 1209
+            },
+            "polygon": "126,1111 126,1206 283,1184 1277,1209 1277,1143 1200,1125 1134,1140 1006,1125 780,1136 674,1114 582,1129 513,1107 473,1121 345,1111 272,1132"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Batgarre 4"
+                ],
+                "scores": [
+                    0.47360547356407073
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8794777989387512,
+            "bbox": {
+                "xmin": 166,
+                "ymin": 1191,
+                "xmax": 531,
+                "ymax": 1304
+            },
+            "polygon": "166,1209 166,1282 217,1286 261,1304 341,1279 524,1279 531,1271 531,1202 509,1195 469,1206 330,1202 312,1191 257,1191 250,1198"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Pagana"
+                ],
+                "scores": [
+                    0.6371900292384394
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8264021873474121,
+            "bbox": {
+                "xmin": 685,
+                "ymin": 1242,
+                "xmax": 911,
+                "ymax": 1366
+            },
+            "polygon": "685,1242 685,1352 721,1355 754,1366 780,1366 824,1352 904,1352 911,1344 911,1268 904,1253 889,1242 835,1246 809,1253 780,1253 754,1242"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Parganese 1 ."
+                ],
+                "scores": [
+                    0.4919488701058292
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8156992793083191,
+            "bbox": {
+                "xmin": 148,
+                "ymin": 1326,
+                "xmax": 487,
+                "ymax": 1439
+            },
+            "polygon": "148,1330 148,1428 191,1428 221,1439 243,1439 283,1428 487,1421 484,1333 378,1344 275,1337 246,1326"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Tenehausrui gufersch"
+                ],
+                "scores": [
+                    0.4369022651972275
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8177130818367004,
+            "bbox": {
+                "xmin": 663,
+                "ymin": 1381,
+                "xmax": 1262,
+                "ymax": 1509
+            },
+            "polygon": "663,1388 663,1491 791,1491 893,1472 1017,1509 1116,1487 1185,1491 1262,1476 1255,1385 1116,1385 1050,1403 897,1403 783,1381"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "recommearance"
+                ],
+                "scores": [
+                    0.39865493602741936
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7935883402824402,
+            "bbox": {
+                "xmin": 1259,
+                "ymin": 1498,
+                "xmax": 1639,
+                "ymax": 1593
+            },
+            "polygon": "1639,1520 1598,1505 1536,1498 1412,1524 1386,1524 1339,1502 1280,1502 1259,1513 1259,1589 1427,1593 1540,1582 1635,1582"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "cllapremune ."
+                ],
+                "scores": [
+                    0.6622246586770608
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8307897448539734,
+            "bbox": {
+                "xmin": 180,
+                "ymin": 1491,
+                "xmax": 491,
+                "ymax": 1611
+            },
+            "polygon": "180,1498 180,1600 235,1600 272,1611 308,1597 447,1597 473,1604 491,1589 491,1524 484,1516 396,1513 330,1491 199,1491"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "phicanum ."
+                ],
+                "scores": [
+                    0.4643046163985123
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8230925798416138,
+            "bbox": {
+                "xmin": 732,
+                "ymin": 1505,
+                "xmax": 981,
+                "ymax": 1600
+            },
+            "polygon": "732,1505 732,1582 783,1593 846,1593 878,1600 977,1600 981,1597 981,1534 966,1527 860,1527 820,1516 802,1505"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "dupeumpomu"
+                ],
+                "scores": [
+                    0.7638885158053365
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7179709076881409,
+            "bbox": {
+                "xmin": 535,
+                "ymin": 1633,
+                "xmax": 864,
+                "ymax": 1743
+            },
+            "polygon": "535,1640 535,1728 615,1735 663,1721 688,1721 740,1743 864,1743 864,1677 762,1648 674,1640 656,1633 557,1633"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "dupteemptomu giniis the legionary"
+                ],
+                "scores": [
+                    0.5305765837749993
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.40725597739219666,
+            "bbox": {
+                "xmin": 535,
+                "ymin": 1637,
+                "xmax": 1430,
+                "ymax": 1754
+            },
+            "polygon": "535,1644 535,1728 579,1735 688,1721 743,1743 897,1754 1021,1721 1160,1754 1273,1728 1390,1746 1430,1735 1423,1651 1299,1662 970,1651 864,1677 656,1637"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "similar two perionary"
+                ],
+                "scores": [
+                    0.6008714738367207
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5743065476417542,
+            "bbox": {
+                "xmin": 893,
+                "ymin": 1651,
+                "xmax": 1430,
+                "ymax": 1754
+            },
+            "polygon": "893,1670 893,1754 970,1743 1021,1721 1156,1754 1273,1728 1416,1746 1430,1735 1430,1659 1423,1651 1295,1662 1083,1662 963,1651"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "uncement #"
+                ],
+                "scores": [
+                    0.2636996061281229
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8431474566459656,
+            "bbox": {
+                "xmin": 871,
+                "ymin": 1725,
+                "xmax": 1167,
+                "ymax": 1845
+            },
+            "polygon": "871,1765 871,1816 878,1820 911,1820 959,1830 1036,1830 1068,1845 1083,1845 1120,1830 1156,1834 1167,1827 1167,1768 1153,1761 1090,1754 1054,1725 1017,1725 995,1743 963,1757"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "clegregingly unceagury"
+                ],
+                "scores": [
+                    0.5366440191122693
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8169590830802917,
+            "bbox": {
+                "xmin": 254,
+                "ymin": 1721,
+                "xmax": 776,
+                "ymax": 1860
+            },
+            "polygon": "254,1721 254,1798 312,1794 374,1823 568,1809 656,1820 681,1845 725,1860 758,1860 776,1849 776,1772 762,1761 601,1768 444,1735 436,1721"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ellevegan"
+                ],
+                "scores": [
+                    0.5732303270174942
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.812674343585968,
+            "bbox": {
+                "xmin": 1405,
+                "ymin": 1757,
+                "xmax": 1642,
+                "ymax": 1849
+            },
+            "polygon": "1405,1772 1405,1823 1449,1823 1452,1827 1500,1830 1525,1838 1540,1849 1569,1849 1595,1834 1639,1830 1642,1827 1642,1776 1635,1768 1544,1765 1518,1757 1456,1757 1416,1765"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Ibrereux opinionly"
+                ],
+                "scores": [
+                    0.489401728946374
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline31",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8680300712585449,
+            "bbox": {
+                "xmin": 246,
+                "ymin": 1798,
+                "xmax": 666,
+                "ymax": 1907
+            },
+            "polygon": "246,1801 246,1900 429,1893 487,1904 648,1907 666,1900 666,1820 604,1823 546,1816 498,1827 378,1830 319,1798"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "linceux una ragum )"
+                ],
+                "scores": [
+                    0.6510283217322317
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline32",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8125919103622437,
+            "bbox": {
+                "xmin": 831,
+                "ymin": 1805,
+                "xmax": 1288,
+                "ymax": 1911
+            },
+            "polygon": "831,1805 831,1882 1054,1885 1094,1893 1131,1911 1273,1911 1288,1900 1288,1805 1237,1805 1218,1820 1160,1838 1109,1838 1087,1849 882,1823 860,1805"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    " ( revenue issues"
+                ],
+                "scores": [
+                    0.4094823713276375
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline33",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8123314380645752,
+            "bbox": {
+                "xmin": 1365,
+                "ymin": 1820,
+                "xmax": 1646,
+                "ymax": 1907
+            },
+            "polygon": "1365,1820 1365,1904 1372,1907 1460,1896 1639,1893 1646,1885 1646,1841 1635,1834 1595,1838 1566,1852 1540,1852 1525,1841 1412,1820"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Fabbeanne 2"
+                ],
+                "scores": [
+                    0.6826724070892486
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline34",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8474650979042053,
+            "bbox": {
+                "xmin": 180,
+                "ymin": 1904,
+                "xmax": 524,
+                "ymax": 2010
+            },
+            "polygon": "180,1904 180,1991 254,1988 268,1995 305,1995 352,1988 392,1999 469,1995 498,2010 524,2002 524,1933 517,1926 425,1929 403,1922 279,1915 243,1904"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Teppebour :"
+                ],
+                "scores": [
+                    0.3642672963288466
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline35",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8658530712127686,
+            "bbox": {
+                "xmin": 188,
+                "ymin": 1991,
+                "xmax": 476,
+                "ymax": 2064
+            },
+            "polygon": "188,1991 188,2053 232,2057 283,2053 308,2061 403,2064 476,2053 473,2002 396,2006 356,1991 327,1991 279,2002 257,1991"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "1 Timna iepphire"
+                ],
+                "scores": [
+                    0.3301414999556473
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline36",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.29717516899108887,
+            "bbox": {
+                "xmin": 158,
+                "ymin": 2032,
+                "xmax": 652,
+                "ymax": 2134
+            },
+            "polygon": "652,2046 553,2032 495,2046 473,2061 422,2068 246,2064 158,2046 158,2108 327,2108 429,2119 582,2112 652,2134"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "1 Limna ichatrix - ghogyrinsus prognosis asologic"
+                ],
+                "scores": [
+                    0.4052612080696929
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline37",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8297553062438965,
+            "bbox": {
+                "xmin": 158,
+                "ymin": 2032,
+                "xmax": 1624,
+                "ymax": 2156
+            },
+            "polygon": "158,2046 158,2108 582,2112 696,2152 1222,2152 1328,2123 1481,2156 1624,2141 1620,2042 897,2057 550,2032 422,2068"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "bignobiguous no cimi ."
+                ],
+                "scores": [
+                    0.8502118729630698
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline38",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8829818964004517,
+            "bbox": {
+                "xmin": 155,
+                "ymin": 2105,
+                "xmax": 586,
+                "ymax": 2203
+            },
+            "polygon": "155,2112 155,2192 202,2203 232,2189 268,2189 308,2203 389,2185 506,2192 564,2185 586,2170 586,2123 575,2116 444,2127 407,2116 246,2116 217,2105"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "R. U.U.MARKANIGOLASUE YNPAOKIAMS -"
+                ],
+                "scores": [
+                    0.365633110773587
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline39",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8745586276054382,
+            "bbox": {
+                "xmin": 140,
+                "ymin": 2170,
+                "xmax": 1642,
+                "ymax": 2276
+            },
+            "polygon": "140,2203 140,2262 455,2276 1642,2258 1639,2207 1397,2185 930,2196 827,2170 656,2203"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "many permanently aged , us a gadejneseye against nonim-"
+                ],
+                "scores": [
+                    0.32452972912199995
+                ]
+            },
+            "label": "35fd36d5-b0a5-41a3-a311-e439d73f451b_textline40",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9050868153572083,
+            "bbox": {
+                "xmin": 140,
+                "ymin": 2254,
+                "xmax": 1646,
+                "ymax": 2324
+            },
+            "polygon": "1646,2269 966,2254 455,2280 140,2265 140,2324 1639,2324"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

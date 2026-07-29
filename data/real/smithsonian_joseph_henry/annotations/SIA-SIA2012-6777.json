@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6777",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6777",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6777",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "554  <BR/>Make experiments on the velocity of the diffusn of gas in air.- Close the two enterances of one of the upper halls in the old college, then liberate a quantity of sulphuratted hydrogen at one extremity of the gallery, and with a stop watch, note the moment of the arrival of the smell at the other extremity.<BR/>Perhaps the sense may be assisted by placing a smelling trumpet in the nostril. Use Mrs H's accute sense in these exp. Note the barometer, Thermometer, & the Hygrometer.<BR/> M. Masson has studied with care the intensity of the electrical light under different circumstances of development, by using a revolving disc which makes 300 turns in a [[strikeout]] minute [[/strikeout]] second. He sais that he has been induced by his experiments to admit that the electrical light is a simple explosion in the fluid ether, which it puts in movement, and to believe that the [[word circled]] transportation [[/word circled} of the metal by the spark is not the cause of the light, ^ [[but]] that it augments it in  [[strikeout]] increasing the [[/strikeout]] causing an increase in the conductability of the circuit. We think besides (sais he), that the electrical spark acts in the combination, and decomposition of substances chemically operates in two manners, 1st as a current of electricity, in this case it decomposes; - 2ndly as a heated body in ignition, in consequence of the incandescence of ponderable matter in the act of transportation, and then it produces combinations. Compt Rendus, 19th July 1844.<BR/>[[image]] A simple constant battery, fill an old brass kettle with earth, saturated with a solution of sal ammoniac, plunge into this a cylinder of zinc, and the apparatus is complete. The pile will continue in action for months, by occasionally renewing the sal ammoniac. The zinc should first be dipped into a strong solution of ammoniac, so as to incrust it with the salt.<BR/>Bib Geneva 1844<BR/>[[end page]]<BR/>[[start page]]<BR/>555<BR/>According to Mr Grove, all physical phenomena maybe refered to matter and motion. We may talk of light or heat or magnetism or electricity, but they may be conceived as only modes of motion, and their existence is principally known to us by the effects of motion associated with matter.",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6777#xywh=10,10,2990,2202"
+    }
+  ]
+}

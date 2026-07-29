@@ -1,0 +1,68 @@
+{
+  "generated_at": "2026-07-16T14:00:36.694687+00:00",
+  "project": {
+    "id": 3,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目"
+  },
+  "task_types": [
+    "experiment_summary",
+    "weekly_report",
+    "stage_report",
+    "graph_overview"
+  ],
+  "completed_runs": 4,
+  "needs_review_runs": 0,
+  "failed_runs": 0,
+  "invalid_citations": 0,
+  "invalid_citation_values": [],
+  "runs": [
+    {
+      "id": 3,
+      "task_type": "experiment_summary",
+      "status": "completed",
+      "message": null,
+      "review_result": {
+        "passed": true,
+        "citation_count": 26,
+        "invalid_citations": [],
+        "message": "引用检查通过，共检查 26 个来源编号。"
+      }
+    },
+    {
+      "id": 4,
+      "task_type": "weekly_report",
+      "status": "completed",
+      "message": "No approved notes in selected range",
+      "review_result": {
+        "passed": true,
+        "citation_count": 6,
+        "invalid_citations": [],
+        "message": "引用检查通过，共检查 6 个来源编号。"
+      }
+    },
+    {
+      "id": 5,
+      "task_type": "stage_report",
+      "status": "completed",
+      "message": null,
+      "review_result": {
+        "passed": true,
+        "citation_count": 28,
+        "invalid_citations": [],
+        "message": "引用检查通过，共检查 28 个来源编号。"
+      }
+    },
+    {
+      "id": 6,
+      "task_type": "graph_overview",
+      "status": "completed",
+      "message": null,
+      "review_result": {
+        "passed": true,
+        "citation_count": 24,
+        "invalid_citations": [],
+        "message": "引用检查通过，共检查 24 个来源编号。"
+      }
+    }
+  ]
+}

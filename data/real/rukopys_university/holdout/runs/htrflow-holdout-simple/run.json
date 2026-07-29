@@ -1,0 +1,217 @@
+{
+  "generated_at": "2026-07-13T12:04:17.796670+00:00",
+  "engine": "HTRflow",
+  "package_versions": {
+    "htrflow": "0.2.6",
+    "transformers": "4.57.6",
+    "torch": "2.13.0",
+    "ultralytics": "8.4.93"
+  },
+  "device": "cpu",
+  "layout": "simple",
+  "models": {
+    "region": null,
+    "segmentation": {
+      "id": "Riksarkivet/yolov9-lines-within-regions-1",
+      "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+    },
+    "recognition": {
+      "id": "microsoft/trocr-base-handwritten",
+      "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+      "batch_size": 8
+    }
+  },
+  "manifest_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/ocr_manifest.csv",
+  "manifest_sha256": "37bbaa8454e913a48b526e68582c987cd723a49702d5610d08b43765ad890fad",
+  "pipeline_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/pipeline.json",
+  "pipeline_sha256": "23de5bca0c74b86eee7d7e263310b1d4a02534e6ca633c4e9571d0b4320dea22",
+  "command": [
+    ".htrflow-venv/bin/htrflow",
+    "pipeline",
+    "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/pipeline.json",
+    "--inputs-file",
+    "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/inputs.txt",
+    "--label",
+    "htrflow-ocr_manifest",
+    "--logfile",
+    "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/htrflow.log",
+    "--loglevel",
+    "info",
+    "--batch-output",
+    "10"
+  ],
+  "elapsed_seconds": 437.84,
+  "sample_count": 10,
+  "samples": [
+    {
+      "sample_id": "12d93633-48dd-4138-863e-075b7bfc2de5",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/12d93633-48dd-4138-863e-075b7bfc2de5.jpg",
+      "image_sha256": "8852f10c302f5eb39da1f24f52b7f50c44abcd049bfcdd0e9dab5d8e30e699a2",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/12d93633-48dd-4138-863e-075b7bfc2de5.txt",
+      "reference_sha256": "0718e361fe5d6bbd0e63ec446d0f7b3c81d111140e54895734149f3838b51a74",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/12d93633-48dd-4138-863e-075b7bfc2de5.txt",
+      "raw_ocr_sha256": "b9c6f0e46cba54e40dc027dfadc3307973d9db63fb6b27d9acf8fc556474f8dd",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/12d93633-48dd-4138-863e-075b7bfc2de5.json",
+          "sha256": "ced93876f7e166282f4fe95fcf982dce8175f9ef65a4e6d4987d254179caef20"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 61
+    },
+    {
+      "sample_id": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa.jpg",
+      "image_sha256": "5bc8b17bfefff97b35085b2b54012fe152af8d399ab37d2ab15d9f9d9313576e",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa.txt",
+      "reference_sha256": "693a7613f79450b261243389f26aa46e26cfd52461f60b3225d605ef49b1e4e1",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa.txt",
+      "raw_ocr_sha256": "80739b21b2075997f0bf0802b8552571d42a6f8750e4bf70d926dfe924b7e26d",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa.json",
+          "sha256": "31adba0e496644e8f95d7dedf5a65ec9a162541b7b4433bae13a8dd0539d58b2"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 601
+    },
+    {
+      "sample_id": "27b1d939-a043-40b7-b1ab-986df815bb2b",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/27b1d939-a043-40b7-b1ab-986df815bb2b.jpg",
+      "image_sha256": "dbf5fa1081634658d7fc0e9c0c6bf62dc0c753c52e26ee4ceffb501981ad12a6",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/27b1d939-a043-40b7-b1ab-986df815bb2b.txt",
+      "reference_sha256": "fd6daf428d0449b197bf14aeeda1b64870049a410a17c8bd31499189b0df6a5e",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/27b1d939-a043-40b7-b1ab-986df815bb2b.txt",
+      "raw_ocr_sha256": "d18231dfe18bf793c08141af817b0f6699d81e202be4e8d110bf0d2bc39a6eca",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/27b1d939-a043-40b7-b1ab-986df815bb2b.json",
+          "sha256": "be52619183a15658eb159ab44b2f2133ee53dc5af350077bfa5986945fee617e"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 1085
+    },
+    {
+      "sample_id": "28e7bc6a-9653-440c-aa72-861ef9a4c20a",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/28e7bc6a-9653-440c-aa72-861ef9a4c20a.jpg",
+      "image_sha256": "6d5d7ec124e9d08d164cb2f8d1f605d4b82bf63a722a09602e645808694827c8",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/28e7bc6a-9653-440c-aa72-861ef9a4c20a.txt",
+      "reference_sha256": "de23a7b4c42be1c180a152fe5775912f5d8aa7859ade1169970c8a0243b24a5d",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/28e7bc6a-9653-440c-aa72-861ef9a4c20a.txt",
+      "raw_ocr_sha256": "6ef3669a35eef12c04e19e1f9a2de6efa7353c794da2d7ac3b27bc16a86e5b21",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/28e7bc6a-9653-440c-aa72-861ef9a4c20a.json",
+          "sha256": "f0f50349496c3363bf890011160c5b649d69ce3fc29d1d67512d3d88b1770ea7"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 378
+    },
+    {
+      "sample_id": "2c32de01-de4f-4392-882e-35e1a277f16f",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/2c32de01-de4f-4392-882e-35e1a277f16f.jpg",
+      "image_sha256": "3bd260efa4ccf9bd3b2a60370e71df727fb4a7b4e385d788857e2eddcf19433f",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/2c32de01-de4f-4392-882e-35e1a277f16f.txt",
+      "reference_sha256": "7a462686991dbf24956faea428c18450fc41f43a5f3a5bb7584d2d860b204a4a",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/2c32de01-de4f-4392-882e-35e1a277f16f.txt",
+      "raw_ocr_sha256": "2878a078e5a6298b85957ca54bc06b9b26f010127531582d7559c500ea3d702c",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/2c32de01-de4f-4392-882e-35e1a277f16f.json",
+          "sha256": "120f7620dad637026421dd286ea30a0a047f1442b1a1172bb3d43778f0b6d6f1"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 1176
+    },
+    {
+      "sample_id": "2d403cd3-b70a-4d04-b0ce-167264009361",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/2d403cd3-b70a-4d04-b0ce-167264009361.jpg",
+      "image_sha256": "c0faf43239760d81a522f1043c0321d97fce7a4b1f07292f410f56fe69c62ae7",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/2d403cd3-b70a-4d04-b0ce-167264009361.txt",
+      "reference_sha256": "9da7aaa6c0d85470bc5708af77b14267e14f496e30a2b4582497248c60d0e5e4",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/2d403cd3-b70a-4d04-b0ce-167264009361.txt",
+      "raw_ocr_sha256": "710347749a3a0a8f1d29b67c915feb44294559ce99102e32952c7dad25891ec9",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/2d403cd3-b70a-4d04-b0ce-167264009361.json",
+          "sha256": "69fb523e1ae7bcb047e85e4ed28d312da6dd47731a32e61ef8496bad2e503477"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 1517
+    },
+    {
+      "sample_id": "35fd36d5-b0a5-41a3-a311-e439d73f451b",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/35fd36d5-b0a5-41a3-a311-e439d73f451b.jpg",
+      "image_sha256": "b9f56961f05c4db223de8c202efa0624aab35c3b1d9b10a285302d7cf9290f36",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/35fd36d5-b0a5-41a3-a311-e439d73f451b.txt",
+      "reference_sha256": "a24d8ec282bfcfb4c427bd99a25560db694fc31e30b62f6900c63a0753790f93",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/35fd36d5-b0a5-41a3-a311-e439d73f451b.txt",
+      "raw_ocr_sha256": "49242ae4a64c4a68f81cf2ee1bd40e1716b89b2a985d9f4ec2ba799ae6ee1828",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/35fd36d5-b0a5-41a3-a311-e439d73f451b.json",
+          "sha256": "2e8570f0762687dc8a363c8be04c39dcc90bdcfc495d2ed7ed94a5fc9ec3afab"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 1227
+    },
+    {
+      "sample_id": "3924b767-f785-4d6b-92fb-fc7c5eaac8b7",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/3924b767-f785-4d6b-92fb-fc7c5eaac8b7.jpg",
+      "image_sha256": "feb0f618f348f350994711b4a109d3176f4449b17b93a0318d265d3c9ec36cc5",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/3924b767-f785-4d6b-92fb-fc7c5eaac8b7.txt",
+      "reference_sha256": "02f731e4674e2c81f4e504d52b4a8e466bdaae4f1724bfaedb15b711dfcd9b4f",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/3924b767-f785-4d6b-92fb-fc7c5eaac8b7.txt",
+      "raw_ocr_sha256": "b48cce5e534bab319f9d2a49598bd4072128834dab3a8ba73fdef6ad6e1a325e",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/3924b767-f785-4d6b-92fb-fc7c5eaac8b7.json",
+          "sha256": "625ae3cc2e9e08f189cda2cea7726b97caa5ca4710ef2f290e1a83ab64b3b92a"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 489
+    },
+    {
+      "sample_id": "393248a6-7722-4485-8595-bf609f61b125",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/393248a6-7722-4485-8595-bf609f61b125.jpg",
+      "image_sha256": "b840c023c70d7a0df7dfabeea1e9cc6923ef587532cd8a0512c65458f3aa4662",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/393248a6-7722-4485-8595-bf609f61b125.txt",
+      "reference_sha256": "e0778ddea755b92ebbed3f9ea2801a3c5bc7c8edd370869676d7e85a15f853ab",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/393248a6-7722-4485-8595-bf609f61b125.txt",
+      "raw_ocr_sha256": "ee04b27b5fd784a505941c30b6ab0ecf35aa8af78a6e83d1ea5abdf51a3edd8d",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/393248a6-7722-4485-8595-bf609f61b125.json",
+          "sha256": "6a2955da2ddb654151e823be5036f88073c83065d9a80be061a901532f0db01c"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 185
+    },
+    {
+      "sample_id": "ec12ba43-51b1-4ac0-a52a-b3a895b18a81",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/ec12ba43-51b1-4ac0-a52a-b3a895b18a81.jpg",
+      "image_sha256": "ee16f280b3f12b33d3250c71947d98a6555832396fb98bac506485cd92bd3207",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/references/ec12ba43-51b1-4ac0-a52a-b3a895b18a81.txt",
+      "reference_sha256": "b04ed625a7442e35afbfeeeeaf7ea591200219ddce03f6dc40546fa3e59a6360",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/raw/htrflow-ocr_manifest/ec12ba43-51b1-4ac0-a52a-b3a895b18a81.txt",
+      "raw_ocr_sha256": "d8b0c2cde8562d367509db46c4914dd0f5991581536e15d528227f75501f76ec",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/holdout/runs/htrflow-holdout-simple/metadata/htrflow-ocr_manifest/ec12ba43-51b1-4ac0-a52a-b3a895b18a81.json",
+          "sha256": "74bedb43cdda4070ec67870aac91d4c1e47d32b052443c43eee11c965a0f5531"
+        }
+      ],
+      "preprocessing": null,
+      "raw_characters": 570
+    }
+  ]
+}

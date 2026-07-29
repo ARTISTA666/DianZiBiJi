@@ -1,0 +1,686 @@
+{
+    "file_name": "SIA-SIA2012-6685.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6685.jpg",
+    "image_name": "SIA-SIA2012-6685",
+    "label": "SIA-SIA2012-6685",
+    "contains": [
+        {
+            "label": "SIA-SIA2012-6685_textregion0",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            "arranged needles on the outside of the"
+                        ],
+                        "scores": [
+                            0.7967797946372142
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8780155777931213,
+                    "bbox": {
+                        "xmin": 229,
+                        "ymin": 620,
+                        "xmax": 830,
+                        "ymax": 659
+                    },
+                    "polygon": "229,620 229,645 284,641 334,654 400,641 703,643 737,659 778,643 830,645 830,620"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "Tests forbes as I'm the fragment , found their call"
+                        ],
+                        "scores": [
+                            0.5183805588538377
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline1",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8317692875862122,
+                    "bbox": {
+                        "xmin": 204,
+                        "ymin": 640,
+                        "xmax": 831,
+                        "ymax": 685
+                    },
+                    "polygon": "204,640 204,676 255,682 385,673 519,684 560,673 593,685 645,674 831,674 831,652 820,648 745,660 701,645 525,653 436,646 332,658 292,643 254,651"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "preorganized Minister of Physics as an instructor"
+                        ],
+                        "scores": [
+                            0.48954003665385987
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline2",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8417652249336243,
+                    "bbox": {
+                        "xmin": 207,
+                        "ymin": 675,
+                        "xmax": 854,
+                        "ymax": 715
+                    },
+                    "polygon": "854,677 607,688 564,675 524,687 380,675 207,682 207,707 267,715 670,703 848,711"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "appearance , from Whits it would otherwise"
+                        ],
+                        "scores": [
+                            0.44860758427862696
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline3",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.844115674495697,
+                    "bbox": {
+                        "xmin": 205,
+                        "ymin": 706,
+                        "xmax": 842,
+                        "ymax": 752
+                    },
+                    "polygon": "842,719 690,706 445,720 378,713 273,721 205,713 205,744 324,737 370,752 440,739 842,738"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "those the lines of current one numbers is"
+                        ],
+                        "scores": [
+                            0.5528073697286744
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline4",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8648948073387146,
+                    "bbox": {
+                        "xmin": 204,
+                        "ymin": 739,
+                        "xmax": 836,
+                        "ymax": 787
+                    },
+                    "polygon": "204,747 204,772 371,767 434,787 486,770 836,768 829,741 454,744 373,753 304,739"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "# now then transferred to the New Zealand Times"
+                        ],
+                        "scores": [
+                            0.18006934335562114
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline5",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8464086651802063,
+                    "bbox": {
+                        "xmin": 207,
+                        "ymin": 770,
+                        "xmax": 877,
+                        "ymax": 820
+                    },
+                    "polygon": "207,775 207,800 738,799 821,820 877,817 877,775 561,771 439,789 375,770"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "shown here received all over a marginal ."
+                        ],
+                        "scores": [
+                            0.48575838053130505
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline6",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.7412793040275574,
+                    "bbox": {
+                        "xmin": 207,
+                        "ymin": 797,
+                        "xmax": 776,
+                        "ymax": 835
+                    },
+                    "polygon": "776,820 730,802 664,810 561,809 536,797 491,808 210,804 207,835 380,830 740,835 754,816"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "Stalker in the reserve of these appeals"
+                        ],
+                        "scores": [
+                            0.47307093338412
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline7",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8272524476051331,
+                    "bbox": {
+                        "xmin": 279,
+                        "ymin": 835,
+                        "xmax": 867,
+                        "ymax": 896
+                    },
+                    "polygon": "279,836 279,890 334,877 549,885 596,879 632,896 666,880 751,890 795,878 867,884 867,856 792,849 735,859 683,845 593,860 464,848 375,857 319,835"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "to those of Professor . Ocwill on the"
+                        ],
+                        "scores": [
+                            0.4583709229962633
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline8",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8438413143157959,
+                    "bbox": {
+                        "xmin": 279,
+                        "ymin": 877,
+                        "xmax": 845,
+                        "ymax": 915
+                    },
+                    "polygon": "279,892 279,915 845,910 845,890 819,879 757,891 670,881 632,897 596,880 565,891 458,880 387,891 336,877"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "# diverging of a galiteric compost"
+                        ],
+                        "scores": [
+                            0.3986306111397095
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline9",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.803654134273529,
+                    "bbox": {
+                        "xmin": 279,
+                        "ymin": 910,
+                        "xmax": 808,
+                        "ymax": 952
+                    },
+                    "polygon": "279,916 279,945 323,935 363,951 400,939 443,947 479,941 515,952 598,939 808,942 808,918 792,914 725,921 573,911 523,920 475,910 431,920"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "\" There's # the Tatsenets 1807 ,"
+                        ],
+                        "scores": [
+                            0.2442997627869422
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline10",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.7926270961761475,
+                    "bbox": {
+                        "xmin": 280,
+                        "ymin": 936,
+                        "xmax": 608,
+                        "ymax": 976
+                    },
+                    "polygon": "608,941 574,942 517,955 475,949 467,938 474,951 450,955 418,940 360,951 327,936 292,938 280,944 280,976 340,970 585,970 608,975"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "Most joined a wave a bleading to the well to"
+                        ],
+                        "scores": [
+                            0.5134277074493457
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline11",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8302735090255737,
+                    "bbox": {
+                        "xmin": 207,
+                        "ymin": 1019,
+                        "xmax": 850,
+                        "ymax": 1069
+                    },
+                    "polygon": "207,1019 207,1056 622,1054 654,1069 677,1054 850,1055 850,1028 824,1020 770,1031 708,1024 651,1038 620,1027 526,1025 459,1038 363,1028 309,1034"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "the kind of the theatre who as the brother being as before-"
+                        ],
+                        "scores": [
+                            0.6301790732889325
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline12",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8835375905036926,
+                    "bbox": {
+                        "xmin": 207,
+                        "ymin": 1055,
+                        "xmax": 861,
+                        "ymax": 1099
+                    },
+                    "polygon": "207,1059 209,1087 652,1081 702,1093 745,1085 781,1099 861,1089 861,1064 812,1055 720,1065 679,1055 654,1070 595,1056 529,1065 376,1055"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "needle slightly magnetized with a curricule"
+                        ],
+                        "scores": [
+                            0.698038513435494
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline13",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8083657026290894,
+                    "bbox": {
+                        "xmin": 206,
+                        "ymin": 1080,
+                        "xmax": 845,
+                        "ymax": 1126
+                    },
+                    "polygon": "206,1090 206,1113 378,1126 420,1111 542,1122 571,1112 820,1115 845,1102 825,1089 778,1099 654,1082 597,1095 568,1086 355,1090 328,1080"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "otherants . Many large heart-transplaces"
+                        ],
+                        "scores": [
+                            0.33814122380140066
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline14",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8487924933433533,
+                    "bbox": {
+                        "xmin": 207,
+                        "ymin": 1111,
+                        "xmax": 856,
+                        "ymax": 1142
+                    },
+                    "polygon": "856,1111 742,1125 691,1112 542,1124 503,1114 478,1125 421,1112 389,1126 259,1114 207,1120 207,1140 856,1142"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "in some special , and magnetism :"
+                        ],
+                        "scores": [
+                            0.5748658078815188
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline15",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8856177926063538,
+                    "bbox": {
+                        "xmin": 206,
+                        "ymin": 1141,
+                        "xmax": 685,
+                        "ymax": 1184
+                    },
+                    "polygon": "685,1154 615,1141 552,1153 419,1144 367,1151 343,1142 315,1152 206,1151 206,1173 296,1169 342,1178 373,1169 424,1177 504,1171 554,1184 595,1171 685,1172"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "agherwartz hostile places in Spiral convulsable"
+                        ],
+                        "scores": [
+                            0.4759397984441495
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline16",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8187258839607239,
+                    "bbox": {
+                        "xmin": 245,
+                        "ymin": 1165,
+                        "xmax": 866,
+                        "ymax": 1215
+                    },
+                    "polygon": "866,1165 801,1179 730,1169 596,1173 563,1185 498,1173 424,1180 378,1172 340,1183 280,1174 245,1180 245,1204 270,1215 339,1199 476,1201 507,1211 614,1200 661,1209 860,1202"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "possible , a magnetification , Recall ."
+                        ],
+                        "scores": [
+                            0.38297902114664567
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion0_textline17",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8062782883644104,
+                    "bbox": {
+                        "xmin": 205,
+                        "ymin": 1201,
+                        "xmax": 653,
+                        "ymax": 1247
+                    },
+                    "polygon": "653,1209 620,1201 511,1215 451,1203 424,1210 292,1208 269,1217 232,1205 205,1208 205,1236 356,1233 409,1247 452,1235 653,1237"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.48779478669166565,
+            "bbox": {
+                "xmin": 191,
+                "ymin": 620,
+                "xmax": 888,
+                "ymax": 1269
+            },
+            "polygon": "191,620 191,1269 888,1269 888,620"
+        },
+        {
+            "label": "SIA-SIA2012-6685_textregion1",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            "whose"
+                        ],
+                        "scores": [
+                            0.35272482771119057
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.6851502060890198,
+                    "bbox": {
+                        "xmin": 1239,
+                        "ymin": 864,
+                        "xmax": 1318,
+                        "ymax": 883
+                    },
+                    "polygon": "1239,864 1239,880 1246,883 1258,883 1273,878 1290,878 1292,880 1293,878 1317,877 1318,876 1318,864"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "\" Saul observes or Franklin battery"
+                        ],
+                        "scores": [
+                            0.4366546437620057
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline1",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.7965186834335327,
+                    "bbox": {
+                        "xmin": 998,
+                        "ymin": 865,
+                        "xmax": 1645,
+                        "ymax": 919
+                    },
+                    "polygon": "1645,872 1436,865 1394,878 1325,875 1243,889 1192,884 1161,867 1081,878 1016,866 998,877 998,899 1047,908 1298,904 1326,913 1355,904 1591,901 1630,907 1628,917 1639,919"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "Through good health spread over 17th century"
+                        ],
+                        "scores": [
+                            0.6062084297767402
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline2",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8294468522071838,
+                    "bbox": {
+                        "xmin": 970,
+                        "ymin": 899,
+                        "xmax": 1633,
+                        "ymax": 948
+                    },
+                    "polygon": "970,901 970,939 1040,937 1077,948 1311,935 1333,947 1500,931 1633,939 1633,921 1582,902 1540,916 1428,904 1399,914 1179,907 1052,919 1005,899"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "suppression VI on cash . It may then forget an"
+                        ],
+                        "scores": [
+                            0.33528445748798247
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline3",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8880363702774048,
+                    "bbox": {
+                        "xmin": 961,
+                        "ymin": 936,
+                        "xmax": 1608,
+                        "ymax": 989
+                    },
+                    "polygon": "1608,944 1410,937 1335,951 1304,936 1261,946 1069,951 961,944 961,968 993,969 1021,989 1072,969 1113,971 1146,989 1180,971 1457,966 1500,979 1546,963 1608,963"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "these represented in the Deception . The"
+                        ],
+                        "scores": [
+                            0.6302266578815404
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline4",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.864587128162384,
+                    "bbox": {
+                        "xmin": 960,
+                        "ymin": 963,
+                        "xmax": 1654,
+                        "ymax": 1005
+                    },
+                    "polygon": "1654,969 1606,963 1491,980 1374,963 1326,978 1256,971 1149,990 1107,976 1021,990 988,969 960,975 960,1005 1646,1005"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "leaf was defluquated around each of"
+                        ],
+                        "scores": [
+                            0.6060697084001407
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline5",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8668012022972107,
+                    "bbox": {
+                        "xmin": 961,
+                        "ymin": 1008,
+                        "xmax": 1677,
+                        "ymax": 1054
+                    },
+                    "polygon": "1677,1008 961,1010 961,1037 1012,1054 1069,1033 1153,1048 1326,1030 1676,1040"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "free but more around the mines than the"
+                        ],
+                        "scores": [
+                            0.7149619060040925
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline6",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8382899165153503,
+                    "bbox": {
+                        "xmin": 966,
+                        "ymin": 1032,
+                        "xmax": 1663,
+                        "ymax": 1078
+                    },
+                    "polygon": "1663,1040 1321,1032 1152,1052 1072,1034 1019,1057 966,1042 966,1078 1108,1065 1663,1063"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "positive . Then heaf was also more removed"
+                        ],
+                        "scores": [
+                            0.7620504192579025
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline7",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8481209874153137,
+                    "bbox": {
+                        "xmin": 967,
+                        "ymin": 1061,
+                        "xmax": 1675,
+                        "ymax": 1101
+                    },
+                    "polygon": "1675,1068 1472,1061 1116,1079 976,1076 967,1079 967,1101 1671,1083"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "to outer edges , There is the middle . Flow above"
+                        ],
+                        "scores": [
+                            0.5862487299828345
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline8",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.796556830406189,
+                    "bbox": {
+                        "xmin": 1029,
+                        "ymin": 1086,
+                        "xmax": 1680,
+                        "ymax": 1133
+                    },
+                    "polygon": "1680,1097 1595,1086 1274,1094 1233,1105 1100,1097 1063,1108 1029,1097 1029,1125 1145,1124 1188,1133 1290,1119 1680,1112"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "skate's will serve to show the general officer"
+                        ],
+                        "scores": [
+                            0.708879857118225
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline9",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8693633675575256,
+                    "bbox": {
+                        "xmin": 972,
+                        "ymin": 1116,
+                        "xmax": 1680,
+                        "ymax": 1165
+                    },
+                    "polygon": "1680,1130 1637,1118 1496,1116 1192,1136 972,1131 972,1161 1396,1153 1470,1165 1506,1148 1680,1149"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "g the civil after the exploration . When the"
+                        ],
+                        "scores": [
+                            0.5540156235486623
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline10",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8691391944885254,
+                    "bbox": {
+                        "xmin": 975,
+                        "ymin": 1151,
+                        "xmax": 1649,
+                        "ymax": 1205
+                    },
+                    "polygon": "1649,1151 1591,1164 1538,1154 1495,1171 1242,1154 1052,1170 1012,1161 975,1164 975,1203 1075,1190 1141,1205 1215,1188 1645,1186"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "sheets of gold over locked . The mutual was not"
+                        ],
+                        "scores": [
+                            0.7173997475324452
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline11",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8618209362030029,
+                    "bbox": {
+                        "xmin": 975,
+                        "ymin": 1194,
+                        "xmax": 1624,
+                        "ymax": 1248
+                    },
+                    "polygon": "1624,1194 1548,1202 1232,1197 1152,1208 997,1198 975,1206 975,1226 1032,1229 1060,1248 1140,1227 1624,1224"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "defluaginalists are a letter"
+                        ],
+                        "scores": [
+                            0.5334598031645521
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6685_textregion1_textline12",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.9025784134864807,
+                    "bbox": {
+                        "xmin": 974,
+                        "ymin": 1228,
+                        "xmax": 1442,
+                        "ymax": 1279
+                    },
+                    "polygon": "1442,1234 1426,1228 1259,1233 1215,1242 1145,1229 1059,1249 1021,1231 974,1235 974,1268 1076,1279 1116,1261 1304,1267 1442,1259"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.8740059733390808,
+            "bbox": {
+                "xmin": 956,
+                "ymin": 864,
+                "xmax": 1690,
+                "ymax": 1281
+            },
+            "polygon": "956,864 956,1281 1690,1281 1690,864"
+        }
+    ],
+    "height": 1414,
+    "width": 1800,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-regions-1",
+                "model_version": "6fb01d223f39ac325280d99e4a2d1804694e5e99"
+            }
+        },
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

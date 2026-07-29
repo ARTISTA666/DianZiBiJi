@@ -1,0 +1,690 @@
+{
+    "file_name": "SIA-SIA2012-6699__right.png",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6699__right.png",
+    "image_name": "SIA-SIA2012-6699__right",
+    "label": "SIA-SIA2012-6699__right",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "\" If it appears , you see the places , and her , ideas change ? Where"
+                ],
+                "scores": [
+                    0.4288069059855838
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.32928523421287537,
+            "bbox": {
+                "xmin": 25,
+                "ymin": 258,
+                "xmax": 730,
+                "ymax": 298
+            },
+            "polygon": "25,258 27,298 730,296 730,267 699,258 383,267"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "in this way . on federal efforts on retirement at"
+                ],
+                "scores": [
+                    0.30558696826819776
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5388599634170532,
+            "bbox": {
+                "xmin": 87,
+                "ymin": 291,
+                "xmax": 730,
+                "ymax": 326
+            },
+            "polygon": "87,291 87,322 730,326 730,298"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "greens of the Allies"
+                ],
+                "scores": [
+                    0.4722179539893388
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.858836829662323,
+            "bbox": {
+                "xmin": 85,
+                "ymin": 324,
+                "xmax": 376,
+                "ymax": 368
+            },
+            "polygon": "85,324 85,362 144,357 169,368 204,368 219,360 239,357 314,368 339,357 376,357 376,335 352,326 213,324 142,331"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "heptiches ."
+                ],
+                "scores": [
+                    0.5222601626559114
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5279431939125061,
+            "bbox": {
+                "xmin": 25,
+                "ymin": 364,
+                "xmax": 76,
+                "ymax": 417
+            },
+            "polygon": "25,364 25,415 27,417 38,417 40,415 54,415 56,413 69,413 74,410 76,406 76,371 74,368 74,364"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Pinnacle the same , gain its on the regular sense"
+                ],
+                "scores": [
+                    0.4656344531817447
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7468774914741516,
+            "bbox": {
+                "xmin": 107,
+                "ymin": 377,
+                "xmax": 763,
+                "ymax": 415
+            },
+            "polygon": "107,377 107,410 763,415 763,380"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "7 . In. however somewhat captured the children's"
+                ],
+                "scores": [
+                    0.3630841507828217
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7939240336418152,
+            "bbox": {
+                "xmin": 98,
+                "ymin": 410,
+                "xmax": 758,
+                "ymax": 444
+            },
+            "polygon": "98,410 98,439 758,444 758,419 732,410 648,419 210,410 151,419"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "other spending them , it covers their lines ."
+                ],
+                "scores": [
+                    0.311840968899344
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7936719655990601,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 439,
+                "xmax": 522,
+                "ymax": 483
+            },
+            "polygon": "78,439 80,472 129,483 188,483 208,477 252,483 277,475 440,483 522,475 522,450 513,446 131,446 118,439"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "MR. Patwalk again , join very slightly sizes . \""
+                ],
+                "scores": [
+                    0.4398377849115821
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.41796451807022095,
+            "bbox": {
+                "xmin": 43,
+                "ymin": 494,
+                "xmax": 758,
+                "ymax": 541
+            },
+            "polygon": "43,494 43,541 71,541 87,525 261,541 294,532 599,541 758,530 758,501"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "psychosis since"
+                ],
+                "scores": [
+                    0.5229396240079878
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.631614089012146,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 530,
+                "xmax": 237,
+                "ymax": 561
+            },
+            "polygon": "82,530 82,558 142,558 144,561 230,561 237,558 237,539 228,534 215,534 202,530 171,530 155,534 131,530"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "litzyfy"
+                ],
+                "scores": [
+                    0.28651616354794085
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5694776773452759,
+            "bbox": {
+                "xmin": 25,
+                "ymin": 574,
+                "xmax": 71,
+                "ymax": 618
+            },
+            "polygon": "25,574 25,618 65,618 71,611 71,583 67,578 67,574"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Mr. Angleson joins the heart track . Theaters was a"
+                ],
+                "scores": [
+                    0.430561804595723
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.44240790605545044,
+            "bbox": {
+                "xmin": 58,
+                "ymin": 581,
+                "xmax": 657,
+                "ymax": 618
+            },
+            "polygon": "58,581 58,618 80,609 124,618 657,614 657,587"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Defense # investment to openaway"
+                ],
+                "scores": [
+                    0.2579202839118804
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.43242377042770386,
+            "bbox": {
+                "xmin": 109,
+                "ymin": 583,
+                "xmax": 546,
+                "ymax": 620
+            },
+            "polygon": "109,583 109,614 129,618 425,614 456,620 546,614 546,589 465,583"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "storage was prepared , at Wilmington . The time will happen"
+                ],
+                "scores": [
+                    0.43893989506626646
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7890951633453369,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 614,
+                "xmax": 747,
+                "ymax": 651
+            },
+            "polygon": "80,614 80,640 131,645 206,636 352,651 747,647 747,616 438,623"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Masteringle the Heart to ."
+                ],
+                "scores": [
+                    0.4549335228451725
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8253685235977173,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 642,
+                "xmax": 343,
+                "ymax": 678
+            },
+            "polygon": "80,642 80,673 138,673 153,678 317,678 343,673 343,653 314,642 294,649 272,649 261,642 155,642 146,647"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "drops .28"
+                ],
+                "scores": [
+                    0.42012666095807627
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4874148666858673,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 693,
+                "xmax": 76,
+                "ymax": 735
+            },
+            "polygon": "27,693 27,733 32,733 34,735 49,735 51,733 60,733 62,731 71,731 74,729 76,729 76,693"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "1 Repeated again , joined the regular side , the change"
+                ],
+                "scores": [
+                    0.6210159551551184
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8140736222267151,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 698,
+                "xmax": 776,
+                "ymax": 737
+            },
+            "polygon": "78,698 78,731 129,737 776,735 774,707 723,698"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Again the Pleasant Market became change more"
+                ],
+                "scores": [
+                    0.3557636224812933
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8302044868469238,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 764,
+                "xmax": 765,
+                "ymax": 802
+            },
+            "polygon": "93,764 93,799 765,802 765,782 613,764 562,764 571,773 535,764 244,764 206,773"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "helps ,"
+                ],
+                "scores": [
+                    0.6904253396945658
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5859991312026978,
+            "bbox": {
+                "xmin": 23,
+                "ymin": 757,
+                "xmax": 69,
+                "ymax": 810
+            },
+            "polygon": "23,757 23,806 25,806 27,808 45,808 47,810 62,810 69,804 69,766 67,764 67,757"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "shiftable holes , when this course then benchmark was still"
+                ],
+                "scores": [
+                    0.37591780938807334
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8240708708763123,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 799,
+                "xmax": 781,
+                "ymax": 835
+            },
+            "polygon": "78,799 78,828 781,835 772,804 387,808 339,799 248,808"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "and instructions has \" had in the previous titles \" the plurality"
+                ],
+                "scores": [
+                    0.3272851469856682
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3908165991306305,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 828,
+                "xmax": 763,
+                "ymax": 861
+            },
+            "polygon": "80,828 80,857 763,861 758,839 657,830"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Trichitecturehouses , had in German unions ."
+                ],
+                "scores": [
+                    0.43661378384131516
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.25640419125556946,
+            "bbox": {
+                "xmin": 124,
+                "ymin": 828,
+                "xmax": 650,
+                "ymax": 861
+            },
+            "polygon": "124,828 124,857 650,861 648,828 621,835"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "atheurs have had , and then I crosses the jackhaven ?"
+                ],
+                "scores": [
+                    0.38247827979772714
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8147822618484497,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 855,
+                "xmax": 761,
+                "ymax": 894
+            },
+            "polygon": "80,855 80,881 270,881 308,894 761,890 761,863"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "the film-employed offices"
+                ],
+                "scores": [
+                    0.2442995626611085
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8331491351127625,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 883,
+                "xmax": 299,
+                "ymax": 919
+            },
+            "polygon": "82,883 82,914 151,914 171,919 246,919 299,914 299,894 294,890 270,883 206,883 199,888 169,888 155,883"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Flore should be a backward entrance to their class"
+                ],
+                "scores": [
+                    0.3457248581431366
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8281723856925964,
+            "bbox": {
+                "xmin": 107,
+                "ymin": 958,
+                "xmax": 765,
+                "ymax": 994
+            },
+            "polygon": "107,961 107,994 765,994 763,967 630,958 586,969 434,958 199,967"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "for all these experiment becomes in clampling the \" for other"
+                ],
+                "scores": [
+                    0.4574563364063406
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8482609987258911,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 994,
+                "xmax": 767,
+                "ymax": 1025
+            },
+            "polygon": "80,994 80,1025 767,1022 767,1003 747,996 414,1003"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "was colour and white speeds on the surrender . \" We consider them"
+                ],
+                "scores": [
+                    0.4007502522178369
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8492443561553955,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 1025,
+                "xmax": 765,
+                "ymax": 1053
+            },
+            "polygon": "80,1025 85,1053 765,1051 765,1029"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "services sit in particular literature written because of extra"
+                ],
+                "scores": [
+                    0.3568960804342569
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8561654686927795,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 1053,
+                "xmax": 769,
+                "ymax": 1084
+            },
+            "polygon": "82,1053 82,1084 769,1082 767,1056"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "most in Japan uniforms and will sides , as it shares ! because"
+                ],
+                "scores": [
+                    0.4707559291337112
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8315151929855347,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 1080,
+                "xmax": 772,
+                "ymax": 1111
+            },
+            "polygon": "82,1080 82,1109 111,1111 772,1109 772,1087 721,1080 290,1089"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "known was the nonphonedising on the final heart-making action"
+                ],
+                "scores": [
+                    0.36120718945990676
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7646282911300659,
+            "bbox": {
+                "xmin": 80,
+                "ymin": 1109,
+                "xmax": 776,
+                "ymax": 1151
+            },
+            "polygon": "80,1109 80,1140 407,1151 663,1142 699,1151 776,1140 772,1113 180,1117"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Refriculated tax assessment with a severe balance"
+                ],
+                "scores": [
+                    0.5564098508665125
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8351460099220276,
+            "bbox": {
+                "xmin": 127,
+                "ymin": 1166,
+                "xmax": 774,
+                "ymax": 1199
+            },
+            "polygon": "127,1166 127,1199 774,1197 767,1166"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Elections the rise of colour houses had been used in"
+                ],
+                "scores": [
+                    0.47116888562486675
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.844110906124115,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 1197,
+                "xmax": 752,
+                "ymax": 1230
+            },
+            "polygon": "78,1197 78,1230 752,1226 747,1204 330,1208"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "tell the names made at this time with more . I had got"
+                ],
+                "scores": [
+                    0.5206499564498536
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline31",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8633397817611694,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 1232,
+                "xmax": 752,
+                "ymax": 1270
+            },
+            "polygon": "78,1232 78,1257 526,1259 677,1270 752,1261 747,1232"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "leaf abolitionists self-inish their best imp"
+                ],
+                "scores": [
+                    0.436493180655979
+                ]
+            },
+            "label": "SIA-SIA2012-6699__right_textline32",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8294374942779541,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 1259,
+                "xmax": 564,
+                "ymax": 1296
+            },
+            "polygon": "78,1259 78,1292 107,1296 564,1296 564,1268 524,1261 436,1268 376,1259 321,1268 264,1259"
+        }
+    ],
+    "height": 1414,
+    "width": 900,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

@@ -1,0 +1,106 @@
+{
+    "file_name": "SIA-SIA2012-6647.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6647.jpg",
+    "image_name": "SIA-SIA2012-6647",
+    "label": "SIA-SIA2012-6647",
+    "contains": [
+        {
+            "label": "SIA-SIA2012-6647_textregion0",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            ".406"
+                        ],
+                        "scores": [
+                            0.24862746958987714
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6647_textregion0_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.6460180878639221,
+                    "bbox": {
+                        "xmin": 153,
+                        "ymin": 139,
+                        "xmax": 204,
+                        "ymax": 163
+                    },
+                    "polygon": "153,139 153,163 204,163 204,139"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.39722323417663574,
+            "bbox": {
+                "xmin": 151,
+                "ymin": 139,
+                "xmax": 205,
+                "ymax": 164
+            },
+            "polygon": "151,139 151,164 205,164 205,139"
+        },
+        {
+            "label": "SIA-SIA2012-6647_textregion1",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            "livingly the 18aft"
+                        ],
+                        "scores": [
+                            0.5720442595690497
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6647_textregion1_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.9279004335403442,
+                    "bbox": {
+                        "xmin": 165,
+                        "ymin": 161,
+                        "xmax": 337,
+                        "ymax": 214
+                    },
+                    "polygon": "165,181 165,214 337,214 337,164 324,162 327,161 203,161 176,178"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.39457279443740845,
+            "bbox": {
+                "xmin": 157,
+                "ymin": 161,
+                "xmax": 345,
+                "ymax": 215
+            },
+            "polygon": "157,161 157,215 345,215 345,161"
+        }
+    ],
+    "height": 1414,
+    "width": 1800,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-regions-1",
+                "model_version": "6fb01d223f39ac325280d99e4a2d1804694e5e99"
+            }
+        },
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

@@ -1,0 +1,252 @@
+{
+    "file_name": "SIA-SIA2012-6699.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6699.jpg",
+    "image_name": "SIA-SIA2012-6699",
+    "label": "SIA-SIA2012-6699",
+    "contains": [
+        {
+            "label": "SIA-SIA2012-6699_textregion0",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            "House should be a preferred commune a clear change"
+                        ],
+                        "scores": [
+                            0.4679164314059938
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8858518004417419,
+                    "bbox": {
+                        "xmin": 1010,
+                        "ymin": 967,
+                        "xmax": 1661,
+                        "ymax": 1005
+                    },
+                    "polygon": "1010,967 1010,995 1316,1005 1501,991 1532,1000 1661,998 1661,967"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "the table there experiment , becomes the changing that gentlemen"
+                        ],
+                        "scores": [
+                            0.41815374330908406
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline1",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8832494616508484,
+                    "bbox": {
+                        "xmin": 979,
+                        "ymin": 991,
+                        "xmax": 1670,
+                        "ymax": 1040
+                    },
+                    "polygon": "1670,1006 1532,1004 1508,991 1326,1007 979,998 979,1024 1256,1032 1443,1024 1485,1040 1506,1027 1589,1036 1668,1026"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "treats always in which speaks on the surrender , businesses then"
+                        ],
+                        "scores": [
+                            0.4168845102906602
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline2",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8625721335411072,
+                    "bbox": {
+                        "xmin": 981,
+                        "ymin": 1024,
+                        "xmax": 1663,
+                        "ymax": 1069
+                    },
+                    "polygon": "1663,1030 1641,1024 1588,1039 1504,1030 1481,1041 1449,1029 1371,1026 1281,1035 1186,1027 1160,1038 981,1027 981,1052 1063,1056 1096,1069 1136,1054 1196,1062 1295,1051 1349,1060 1660,1057"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "services not a perfect challenge better because it ended"
+                        ],
+                        "scores": [
+                            0.47167561090263366
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline3",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8640827536582947,
+                    "bbox": {
+                        "xmin": 979,
+                        "ymin": 1052,
+                        "xmax": 1674,
+                        "ymax": 1094
+                    },
+                    "polygon": "979,1061 979,1092 1011,1081 1186,1094 1210,1085 1674,1083 1670,1058 1475,1063 1429,1054 1371,1066 1295,1052 1103,1070"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "There is a German involvement from which he lives , as the shipwrecked husband"
+                        ],
+                        "scores": [
+                            0.38995252623374965
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline4",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8395406007766724,
+                    "bbox": {
+                        "xmin": 979,
+                        "ymin": 1081,
+                        "xmax": 1677,
+                        "ymax": 1115
+                    },
+                    "polygon": "979,1092 979,1107 1065,1115 1677,1107 1673,1089 1613,1083 1150,1095 1013,1081"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "known was the confluorative of a tropical heart-making between"
+                        ],
+                        "scores": [
+                            0.3283118361813485
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline5",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8393380641937256,
+                    "bbox": {
+                        "xmin": 980,
+                        "ymin": 1107,
+                        "xmax": 1676,
+                        "ymax": 1156
+                    },
+                    "polygon": "980,1107 980,1139 1196,1152 1287,1144 1319,1156 1412,1155 1452,1142 1598,1151 1676,1140 1676,1119 1118,1113 1047,1123"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "Repealed to the government with a naval defence"
+                        ],
+                        "scores": [
+                            0.6133322718060721
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline6",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8484410643577576,
+                    "bbox": {
+                        "xmin": 1028,
+                        "ymin": 1161,
+                        "xmax": 1676,
+                        "ymax": 1211
+                    },
+                    "polygon": "1028,1169 1028,1201 1171,1200 1244,1211 1354,1200 1676,1200 1669,1170 1236,1177 1199,1161 1109,1174"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "Electimates , this issue or deliver harmless local houses called the"
+                        ],
+                        "scores": [
+                            0.500164993581415
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline7",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8334236145019531,
+                    "bbox": {
+                        "xmin": 981,
+                        "ymin": 1195,
+                        "xmax": 1655,
+                        "ymax": 1241
+                    },
+                    "polygon": "981,1195 981,1233 1082,1229 1138,1241 1254,1229 1655,1228 1655,1210 1619,1201 1548,1211 1471,1201 1235,1213 1166,1201 1083,1209"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "call the express made ) of this year match never , a small goal"
+                        ],
+                        "scores": [
+                            0.4232036885859027
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline8",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.8654028177261353,
+                    "bbox": {
+                        "xmin": 979,
+                        "ymin": 1230,
+                        "xmax": 1654,
+                        "ymax": 1276
+                    },
+                    "polygon": "979,1236 979,1257 1188,1263 1220,1274 1267,1261 1429,1260 1604,1276 1654,1263 1654,1237 1636,1232 1587,1242 1409,1231 1299,1240 1254,1231 1162,1245 1045,1230"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "half administrator responsible that the first image"
+                        ],
+                        "scores": [
+                            0.3976957079331739
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6699_textregion0_textline9",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.860863983631134,
+                    "bbox": {
+                        "xmin": 980,
+                        "ymin": 1258,
+                        "xmax": 1468,
+                        "ymax": 1302
+                    },
+                    "polygon": "980,1258 980,1297 1013,1302 1055,1293 1195,1302 1468,1302 1468,1268 1279,1264 1220,1275 1164,1264 1106,1269"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.3585489094257355,
+            "bbox": {
+                "xmin": 970,
+                "ymin": 966,
+                "xmax": 1690,
+                "ymax": 1303
+            },
+            "polygon": "970,966 970,1303 1690,1303 1690,966"
+        }
+    ],
+    "height": 1414,
+    "width": 1800,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-regions-1",
+                "model_version": "6fb01d223f39ac325280d99e4a2d1804694e5e99"
+            }
+        },
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

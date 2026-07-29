@@ -1,0 +1,490 @@
+{
+    "file_name": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa.jpg",
+    "image_name": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa",
+    "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "encordation"
+                ],
+                "scores": [
+                    0.7099363711788039
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.744820773601532,
+            "bbox": {
+                "xmin": 696,
+                "ymin": 3,
+                "xmax": 937,
+                "ymax": 47
+            },
+            "polygon": "696,3 696,43 699,47 809,47 813,43 937,47 937,3"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "MR. Geological - we companions"
+                ],
+                "scores": [
+                    0.2996411119447963
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6851488947868347,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 0,
+                "xmax": 656,
+                "ymax": 54
+            },
+            "polygon": "42,0 42,47 148,54 327,40 480,54 656,47 656,0"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "always , more encludes"
+                ],
+                "scores": [
+                    0.3015496047184236
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8266957998275757,
+            "bbox": {
+                "xmin": 981,
+                "ymin": 3,
+                "xmax": 1511,
+                "ymax": 54
+            },
+            "polygon": "981,3 981,47 1076,54 1178,51 1248,32 1456,47 1511,43 1511,3"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "shakespeare measures , and getting it rosere theynolars in"
+                ],
+                "scores": [
+                    0.512418587709476
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7491869926452637,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 36,
+                "xmax": 1489,
+                "ymax": 127
+            },
+            "polygon": "1489,54 1248,36 1178,58 487,62 334,43 93,54 93,102 520,87 772,120 1149,109 1251,127 1481,113"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "severe anniversary"
+                ],
+                "scores": [
+                    0.30884410264567574
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8658623695373535,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 91,
+                "xmax": 615,
+                "ymax": 171
+            },
+            "polygon": "93,105 93,157 217,157 257,168 349,157 447,168 509,160 542,171 615,164 615,102 586,95 480,91 436,102 403,91 349,91 268,105"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Fulgreens 4 ."
+                ],
+                "scores": [
+                    0.6234324237565481
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8573831915855408,
+            "bbox": {
+                "xmin": 74,
+                "ymin": 179,
+                "xmax": 392,
+                "ymax": 288
+            },
+            "polygon": "74,186 74,274 82,277 129,277 155,288 173,288 202,277 334,266 363,277 385,277 392,270 392,204 381,197 341,204 243,201 173,179 82,179"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "8009 - 480 x lb."
+                ],
+                "scores": [
+                    0.5901752085152001
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8422752022743225,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 285,
+                "xmax": 316,
+                "ymax": 361
+            },
+            "polygon": "316,285 264,285 250,292 199,296 166,306 42,303 42,361 63,354 122,361 140,354 173,358 232,347 301,347 316,339"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "1090op-000x-bb."
+                ],
+                "scores": [
+                    0.5416082121641773
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8297456502914429,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 336,
+                "xmax": 356,
+                "ymax": 412
+            },
+            "polygon": "356,336 327,336 316,347 290,354 235,350 180,361 140,358 126,365 100,365 89,358 49,361 49,402 118,405 126,412 144,412 155,402 188,394 349,394 356,387"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "useis : 120 - yorinogue , a good-phoned"
+                ],
+                "scores": [
+                    0.5253728204090036
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8104348182678223,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 376,
+                "xmax": 645,
+                "ymax": 445
+            },
+            "polygon": "645,398 626,383 590,376 425,376 345,402 173,402 144,416 60,409 60,442 484,445 641,431"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "480.60-8,apologetic acid , 0 iricoy , 18"
+                ],
+                "scores": [
+                    0.2839830967968731
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8861535787582397,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 438,
+                "xmax": 630,
+                "ymax": 497
+            },
+            "polygon": "630,438 484,449 56,445 56,497 250,497 480,482 582,489 630,478"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "600. 120.5 rainoy ,6, 0 (Orethanoi"
+                ],
+                "scores": [
+                    0.43298834098977723
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8649036288261414,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 482,
+                "xmax": 666,
+                "ymax": 548
+            },
+            "polygon": "666,482 235,504 49,500 49,548 659,533"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "800. 60-10 geographically , 0 carriage"
+                ],
+                "scores": [
+                    0.7201980424266388
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8511221408843994,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 537,
+                "xmax": 659,
+                "ymax": 599
+            },
+            "polygon": "659,540 403,537 385,548 52,551 52,599 213,588 352,595 550,588 634,599 659,584"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Tobag unise nonceal"
+                ],
+                "scores": [
+                    0.581844520515672
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8287966251373291,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 621,
+                "xmax": 487,
+                "ymax": 701
+            },
+            "polygon": "45,621 45,701 93,690 151,701 254,687 349,698 403,690 487,694 484,639 374,639 334,646 279,635 166,639 133,621"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "infinity Enforcement in a more-school basis"
+                ],
+                "scores": [
+                    0.3545956634365498
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8136473298072815,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 661,
+                "xmax": 681,
+                "ymax": 749
+            },
+            "polygon": "681,683 659,661 604,661 553,687 476,701 433,694 323,701 254,690 140,705 93,694 45,705 45,749 93,741 144,749 166,738 239,745 272,730 550,730 586,745 663,745 681,730"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" good # # # # # # tomorrow , and , a"
+                ],
+                "scores": [
+                    0.2800127335723181
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.875763475894928,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 734,
+                "xmax": 550,
+                "ymax": 804
+            },
+            "polygon": "42,804 71,793 546,782 550,734 264,734 235,752 195,741 144,752 93,745 42,756"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "eust"
+                ],
+                "scores": [
+                    0.47561152116504696
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.42044952511787415,
+            "bbox": {
+                "xmin": 681,
+                "ymin": 734,
+                "xmax": 772,
+                "ymax": 814
+            },
+            "polygon": "681,734 681,814 696,814 699,811 725,814 729,811 751,811 765,804 772,804 772,752 758,752 732,738 721,738 714,741 703,734"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" round wins out to 20"
+                ],
+                "scores": [
+                    0.4681864235482694
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.829362690448761,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 785,
+                "xmax": 506,
+                "ymax": 844
+            },
+            "polygon": "506,785 436,785 411,796 378,785 239,800 74,796 42,807 42,836 71,829 246,836 261,829 308,833 338,822 363,836 403,844 498,844 506,836"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "porteened gold ."
+                ],
+                "scores": [
+                    0.49505973870285075
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8678048849105835,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 829,
+                "xmax": 352,
+                "ymax": 891
+            },
+            "polygon": "352,833 275,829 250,840 217,840 195,833 56,833 38,840 38,891 74,877 195,880 228,891 246,891 275,880 341,877 352,869"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "the announcement race owners"
+                ],
+                "scores": [
+                    0.6712178259988647
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8386865854263306,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 858,
+                "xmax": 604,
+                "ymax": 935
+            },
+            "polygon": "604,869 593,858 473,858 250,895 78,880 45,891 45,935 217,917 308,928 418,910 531,910 550,920 604,917"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "meosemplex sometimes"
+                ],
+                "scores": [
+                    0.4781915691382369
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8508718013763428,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 913,
+                "xmax": 535,
+                "ymax": 972
+            },
+            "polygon": "535,913 418,913 378,928 279,935 235,920 155,935 85,931 60,935 60,972 363,972 429,961 469,968 491,957 531,953"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "hogambio someumbo , baby"
+                ],
+                "scores": [
+                    0.40895697266015596
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8563533425331116,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 935,
+                "xmax": 630,
+                "ymax": 1034
+            },
+            "polygon": "630,953 623,935 553,935 528,961 473,972 45,975 45,1034 279,1023 615,1034 630,1016"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "innoureux cornelight ."
+                ],
+                "scores": [
+                    0.35878590946329075
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4637024998664856,
+            "bbox": {
+                "xmin": 948,
+                "ymin": 975,
+                "xmax": 1306,
+                "ymax": 1056
+            },
+            "polygon": "948,975 948,1041 1174,1041 1251,1056 1288,1052 1306,1037 1306,979 1266,975 1240,986 1174,979 1149,990 1054,975"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "17.06.2005"
+                ],
+                "scores": [
+                    0.6676221522020304
+                ]
+            },
+            "label": "2522fb54-aadd-4bd3-8d52-ccbf9bdd6faa_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.34725335240364075,
+            "bbox": {
+                "xmin": 656,
+                "ymin": 1995,
+                "xmax": 955,
+                "ymax": 2116
+            },
+            "polygon": "656,1995 656,2105 816,2105 860,2116 922,2116 926,2105 955,2079 952,1995 911,1995 860,2010 820,2010 758,1995"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

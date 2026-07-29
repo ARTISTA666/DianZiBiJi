@@ -1,0 +1,264 @@
+{
+  "generated_at": "2026-07-12T22:24:58.212438+00:00",
+  "engine": "tesseract 5.5.0",
+  "language": "ukr",
+  "page_segmentation_mode": 3,
+  "dpi": null,
+  "tesseract_configs": [],
+  "preprocessing_mode": "grayscale_autocontrast",
+  "manifest_path": "/workspace/data/real/rukopys_university/ocr_manifest.csv",
+  "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d",
+  "sample_count": 10,
+  "samples": [
+    {
+      "sample_id": "015032c0-8cd9-4b22-a474-3118445cf022",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/015032c0-8cd9-4b22-a474-3118445cf022.jpg",
+      "image_sha256": "5b86f3c4934e2c366f9664dc6e8dc5a4cb60213e43a4d5dfd5b5c433dfe22c2b",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/015032c0-8cd9-4b22-a474-3118445cf022.png",
+      "processed_image_sha256": "54b199aefb13b6be3b341a787d055f2397a557bed72b3213b15d67c72e1a9158",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/015032c0-8cd9-4b22-a474-3118445cf022.txt",
+      "raw_ocr_sha256": "1fd8eb8113a5a9e215895cd1d8ea738768b94fc12259e107c590b121df01647d",
+      "raw_characters": 752,
+      "elapsed_ms": 886.029,
+      "stderr": ""
+    },
+    {
+      "sample_id": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.jpg",
+      "image_sha256": "70191d13218e36005095848e40c1ddb884318c9729cc2aff7289bbdb78173fb7",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.png",
+      "processed_image_sha256": "3d00277cdeab72907aff3a18110250896a830c5339928debf0a822b212208a88",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.txt",
+      "raw_ocr_sha256": "211c5acc868175ab56c15b6c5f5c8a96a164fc716f4c0174b14e107f4cffad6d",
+      "raw_characters": 1110,
+      "elapsed_ms": 1190.271,
+      "stderr": ""
+    },
+    {
+      "sample_id": "2392f282-19c9-446b-b743-092281a783d5",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/2392f282-19c9-446b-b743-092281a783d5.jpg",
+      "image_sha256": "cc38d8652fc3be822e0785d9df7bf77dcb835bac2fcc0e93342ddac48a110282",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/2392f282-19c9-446b-b743-092281a783d5.png",
+      "processed_image_sha256": "8ad5f7e5155aa3bb20407e964ac25764c0dd046d7f9701f80011ef09fc925265",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/2392f282-19c9-446b-b743-092281a783d5.txt",
+      "raw_ocr_sha256": "062483310c4f7c3327cdb8c32141f5608fd362cdbe9ed0ea78f5acb99292876d",
+      "raw_characters": 356,
+      "elapsed_ms": 562.985,
+      "stderr": ""
+    },
+    {
+      "sample_id": "23cbc409-0a74-4cd0-a211-1a6d655747a4",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/23cbc409-0a74-4cd0-a211-1a6d655747a4.jpg",
+      "image_sha256": "e0acd6d50668e138636f0677b93090f339b844c25d1598b5c1d627b210bc33a1",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/23cbc409-0a74-4cd0-a211-1a6d655747a4.png",
+      "processed_image_sha256": "49eeccb89993774416e9642f9e737b4955674baf8c0b4b77ab03e1fdd67effd1",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/23cbc409-0a74-4cd0-a211-1a6d655747a4.txt",
+      "raw_ocr_sha256": "9e7990cb6339b76a6877cff1aaabc78916bcbda8f03772cadabc01933cfabba7",
+      "raw_characters": 1028,
+      "elapsed_ms": 1109.978,
+      "stderr": ""
+    },
+    {
+      "sample_id": "3033749a-df7e-41e3-a2d2-1a1c6880fd68",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/3033749a-df7e-41e3-a2d2-1a1c6880fd68.jpg",
+      "image_sha256": "fe5c0922b66837842bf8ed7c9b88e20576cc84f9d110c9c83ce77b9ee6fa14b7",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/3033749a-df7e-41e3-a2d2-1a1c6880fd68.png",
+      "processed_image_sha256": "2366030ad6255380ce03f44531b9e15f6352d635792293cf1672927f01db6d6f",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/3033749a-df7e-41e3-a2d2-1a1c6880fd68.txt",
+      "raw_ocr_sha256": "6ac05dbe2d9dce284c40dc976b52947cc124d32c43214b0086f40faf9a2722bb",
+      "raw_characters": 513,
+      "elapsed_ms": 990.306,
+      "stderr": "Detected 162 diacritics"
+    },
+    {
+      "sample_id": "39d84e50-1f63-48e2-a5e8-8b2d95bbf805",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.jpg",
+      "image_sha256": "911b848c61e526ce12940fea9f082f3d0fbe745f89dc472b17ae6a852645c4f2",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.png",
+      "processed_image_sha256": "f016718526cc65f31b4c926daa54d92f0e4169528e7a0450a4d3c057952f7e1c",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1654,
+          2339
+        ],
+        "processed_size": [
+          1694,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.txt",
+      "raw_ocr_sha256": "b8bcc10bae85d2a585975a2438eb5f8973ac1a7e581e65c381716656965da915",
+      "raw_characters": 390,
+      "elapsed_ms": 604.678,
+      "stderr": "Detected 194 diacritics"
+    },
+    {
+      "sample_id": "3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.jpg",
+      "image_sha256": "ae887e7f209d99c6f16a2b1c21655f2105ec1ee963d9f6db3c47f410cd3dda0d",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.png",
+      "processed_image_sha256": "125773942e55413b77019a513d9e9fef5273870f470d8211369570cef6bbadb8",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.txt",
+      "raw_ocr_sha256": "fe1698744d2ef8102a4b399e832ba0c5f44425db0c54e679df246ba19a63e40d",
+      "raw_characters": 1261,
+      "elapsed_ms": 1322.851,
+      "stderr": ""
+    },
+    {
+      "sample_id": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.jpg",
+      "image_sha256": "1fdca552f5f2dd033c2a27fe32963c1f6e449ffad1700f8649c84f673ce2c13f",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.png",
+      "processed_image_sha256": "1a2e3d2f346ea084d74f532ebe18b672c91c220d32101794650f3dfe3d975183",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.txt",
+      "raw_ocr_sha256": "421a4fb6431b67740c8560e9e0a2d43497539fe7438a48f3e74f371b6bc540ba",
+      "raw_characters": 849,
+      "elapsed_ms": 892.064,
+      "stderr": ""
+    },
+    {
+      "sample_id": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.jpg",
+      "image_sha256": "8df85fab998294b001e29b1e0b44e45a5a9ae37d1e4fbd97983ecde899151be8",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.png",
+      "processed_image_sha256": "9a5b762ce3a5f170a022e2be7d413eb7556af33944ce42a234ac43e130a3e4d9",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1656,
+          2339
+        ],
+        "processed_size": [
+          1696,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.txt",
+      "raw_ocr_sha256": "e29274463cb610804097b237c890894691aecb7fb1a2db40611363bc97045029",
+      "raw_characters": 1002,
+      "elapsed_ms": 1604.944,
+      "stderr": "Detected 504 diacritics"
+    },
+    {
+      "sample_id": "c30c3eba-5005-4a9b-9ebc-3c18d1d601d3",
+      "image_path": "/workspace/data/real/rukopys_university/train/images/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.jpg",
+      "image_sha256": "e0b1fed59194bc090b4180ba6811b423ce64a27b011fa85b365b8982e55a15a1",
+      "processed_image_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/processed/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.png",
+      "processed_image_sha256": "a8cdbbd789551b3922ce02a9bf9224b8b6184b1021293856bd7c77ad730b1fe4",
+      "preprocessing": {
+        "mode": "grayscale_autocontrast",
+        "original_size": [
+          1654,
+          2339
+        ],
+        "processed_size": [
+          1694,
+          2379
+        ],
+        "crop_bbox": null,
+        "otsu_threshold": null
+      },
+      "raw_ocr_path": "/workspace/data/real/rukopys_university/development_variants/psm3_grayscale_autocontrast/raw/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.txt",
+      "raw_ocr_sha256": "bae9626fe1a5bd6226c3174c68fd2a9de05ac0f3898ee372062462027b4d37f1",
+      "raw_characters": 741,
+      "elapsed_ms": 1086.403,
+      "stderr": "Detected 348 diacritics"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6714",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6714",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6714",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "[[top margin]] 238 April 10th 1846[[/top margin]]<BR/>A few days ago I was reminded of an experiment in electricity which had previously been mentioned to me by Professor Loomis, namely a metallic wire is placed in the axis of a glass tube, and ^[[the point]] so drawn in it will not act to draw off the discharge from a conductor after the manner of an ordinary point. The explanation I am enabled to give <BR/>[[indent to allow figure to left]] of the phenomenon is as follows. The several parts of the discharge repel each other, and the lines of transfer will be as shown in the figure. the induction will take place through the tube, and the greater pass to the out side which will thus become charged in the form of a ring around the tube opposite the point, and the redundant electricity of this ring repels the electricity of the conductor, as much as the point attracts it. <BR/>This may be verified in several ways. <BR/><BR/>May 1st 1846<BR/>Observed in paste which had grown cold bubbles consisting of a thin film of considerable tenacity. The contractile force of their formation was exhibited by a concave impression in the surface of the paste. I have also observed<BR/>[[indent to allow for figure to left]] that by placing the mouth of a tobacco<BR/>pipe in melted cement of bees_wax and rosin, a thin [[circled] plate[[/circled]] can be obtained. <BR/><BR/>Since the last date (April 10th), I have repeated for my class the experiment of Mr Faraday on the circular polarization of water, by means of electricity (see page   ), and I found the truest of the plane the same as he has stated, namely in the direction of the current.<BR/>[[end page]]<BR/>[[start page]]<BR/>[[top margin]]239[[/top margin]]<BR/>according to the theory of Ampre, the currents in the inside of a gun barrel ought to be different from those on the outside in direction, and hence the currents within a gun barrel should neutralize those without with a certain thickness of the metal. This is in accordance with the results obtained by Dr. Faraday. This not surprising after a little reflection, that the rotatory action of the current should be greater within a gun barrel than without, since before the thickness sufficient to produce neutralization is all aimed ^[[on the outside]] the action of the magnetism developed will more than counteract that developed on the inside. ___<BR/>I found the effect greater when the 24 cups of the battery were arranged as a single series, than when the same number were arranged as a double series of 12 cups.<BR/><BR/>May 6. The idea that the universe is a machine moving by its own inherent energies, is contrary to strict deductions from analogy. A machine is an instrument devised by an intelligent agent for the application of a power to the production of some effect or design. The world, or I should say the universe ^[[if it be a machine]] from this analogy must be the production of an intelligent agent for the application of a power, but the power is never in the machine itself, but is applied to it. A machine cannot generate power, it merely applies it, hence the universe, if a machine, must move with power derived [[underline]] ab extra[[/underline]]! If the universe be not such a machine as that constructed by human intelligence, then all analogy in reference to the mechanical arrangement and motion of creation must cease, and that which is offered as an Atheistical hypothesis for the existence of the universe has no philosophical basis. <BR/>",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6714#xywh=10,10,2990,2306"
+    }
+  ]
+}

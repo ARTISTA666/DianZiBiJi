@@ -1,0 +1,68 @@
+{
+  "generated_at": "2026-07-16T13:42:19.567093+00:00",
+  "project": {
+    "id": 2,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目"
+  },
+  "task_types": [
+    "experiment_summary",
+    "weekly_report",
+    "stage_report",
+    "graph_overview"
+  ],
+  "completed_runs": 0,
+  "needs_review_runs": 4,
+  "failed_runs": 0,
+  "invalid_citations": 0,
+  "invalid_citation_values": [],
+  "runs": [
+    {
+      "id": 1,
+      "task_type": "experiment_summary",
+      "status": "needs_review",
+      "message": "Citation validation still requires manual review",
+      "review_result": {
+        "passed": false,
+        "citation_count": 0,
+        "invalid_citations": [],
+        "message": "草稿没有引用来源编号，需要人工检查。"
+      }
+    },
+    {
+      "id": 2,
+      "task_type": "weekly_report",
+      "status": "needs_review",
+      "message": "No approved notes in selected range; Citation validation still requires manual review",
+      "review_result": {
+        "passed": false,
+        "citation_count": 0,
+        "invalid_citations": [],
+        "message": "草稿没有引用来源编号，需要人工检查。"
+      }
+    },
+    {
+      "id": 3,
+      "task_type": "stage_report",
+      "status": "needs_review",
+      "message": "Citation validation still requires manual review",
+      "review_result": {
+        "passed": false,
+        "citation_count": 0,
+        "invalid_citations": [],
+        "message": "草稿没有引用来源编号，需要人工检查。"
+      }
+    },
+    {
+      "id": 4,
+      "task_type": "graph_overview",
+      "status": "needs_review",
+      "message": "Citation validation still requires manual review",
+      "review_result": {
+        "passed": false,
+        "citation_count": 0,
+        "invalid_citations": [],
+        "message": "草稿没有引用来源编号，需要人工检查。"
+      }
+    }
+  ]
+}

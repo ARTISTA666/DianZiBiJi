@@ -1,0 +1,172 @@
+{
+  "generated_at": "2026-07-13T06:21:23.757044+00:00",
+  "dataset": "Joseph Henry's Record of Experiments, Book 3",
+  "collection_url": "https://siarchives.si.edu/collections/siris_sic_13447",
+  "transcription_project_id": 6778,
+  "source_asset_range": [
+    "SIA-SIA2012-6592",
+    "SIA-SIA2012-6786"
+  ],
+  "source_page_count": 195,
+  "rights": "Smithsonian Institution Archives permits personal and educational use; the collection record states no restrictions.",
+  "selection": {
+    "method": "Python random.Random(seed).shuffle over the complete numeric asset range",
+    "seed": 20260713,
+    "minimum_reference_characters": 500,
+    "development_count": 5,
+    "holdout_count": 10,
+    "selected_in_order": [
+      "SIA-SIA2012-6685",
+      "SIA-SIA2012-6699",
+      "SIA-SIA2012-6671",
+      "SIA-SIA2012-6647",
+      "SIA-SIA2012-6642",
+      "SIA-SIA2012-6758",
+      "SIA-SIA2012-6776",
+      "SIA-SIA2012-6678",
+      "SIA-SIA2012-6633",
+      "SIA-SIA2012-6714",
+      "SIA-SIA2012-6747",
+      "SIA-SIA2012-6646",
+      "SIA-SIA2012-6654",
+      "SIA-SIA2012-6777",
+      "SIA-SIA2012-6594"
+    ],
+    "assessed_before_target_reached": [
+      {
+        "asset_id": "SIA-SIA2012-6755",
+        "eligible": false,
+        "reason": "image_not_available",
+        "reference_characters": 1967,
+        "annotation_sha256": "28084e7559cb569618483f88c2ce7b217f20d7b2cba33022c6e5e1529cef9972"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6685",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 1229,
+        "annotation_sha256": "b1d30c169d46e61d0fe25a8454fbd355dcb4c00828d456fc7a99c0ce7c0b03b1"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6699",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2565,
+        "annotation_sha256": "48b88658393241126313b44f3fcc1e099f8dfe5470047d26088d4211e2f44389"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6671",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2165,
+        "annotation_sha256": "206d3fcfa2ba4edcb272e5ede10ede401c09cce2989d2debd48fa2870377ccb8"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6647",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2780,
+        "annotation_sha256": "c02fbc5d4f84e2211e9491a3773ea94039c2327a989e5b752941584e8560baa8"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6642",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2826,
+        "annotation_sha256": "40e35cb01f0c4f21e261103f4ce9d634e0286c13cb117cd040c707aa5d00ebe3"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6758",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2100,
+        "annotation_sha256": "a04edd0fd68cf1c7da37819d9348a3524104a83002ebc3bb1d81dac378bac7e9"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6611",
+        "eligible": false,
+        "reason": "image_not_available",
+        "reference_characters": 2904,
+        "annotation_sha256": "57ef8b75838e111602de7ef3e31135c730ccd2705f6ed2ce2cd0d701a0435303"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6776",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 1779,
+        "annotation_sha256": "aaf588da0734aab763e7774e24c9801aad87428d6b47bd0e834599a971a4046a"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6678",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2472,
+        "annotation_sha256": "1454bcc8ce469907a313f029da95ba8d4e0b332d9eb51970d89dc4a96ac09201"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6633",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2111,
+        "annotation_sha256": "a6ce40b1f794e6fcca0bd7d366d4217a4a9a9baa1c861bae574715493b7ee619"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6714",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 3147,
+        "annotation_sha256": "6d009987e0abf68e920b1643f5178c339854cdd5a9bc7b120459b906a342dcf1"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6747",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 1060,
+        "annotation_sha256": "e70d56331d36dab7e76b11d14d2bc7f1c6501fb8eecb1c16fe06ebff7b579445"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6646",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 3255,
+        "annotation_sha256": "206e9c5e78036a22501f8a3ebf60e908ec10199f150b61ac3086c06a0e2d2572"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6654",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 3201,
+        "annotation_sha256": "b17bb79f176398dd2103d5faca780e8a1cc9034a5ae461ceb761062845387484"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6777",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 2028,
+        "annotation_sha256": "8779112c686b696b3e3c6de573f2c81f3ffbd318cfabb50ff3053cd0d2b80ec4"
+      },
+      {
+        "asset_id": "SIA-SIA2012-6594",
+        "eligible": true,
+        "reason": "eligible",
+        "reference_characters": 1411,
+        "annotation_sha256": "330ded3a9a6db4a05e79d770584a07dff699a9c446591771ef4441fa634c80ba"
+      }
+    ]
+  },
+  "image_max_pixels": 1800,
+  "manifests": {
+    "all": {
+      "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/manifest.csv",
+      "sha256": "72c04be95af577b6bea37c1bebe6a55289b5894af2d6b4d26f2062fda3d27a46"
+    },
+    "development": {
+      "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/development-manifest.csv",
+      "sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58"
+    },
+    "holdout": {
+      "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/holdout-manifest.csv",
+      "sha256": "30827e7cad6413b2e3c36901115cb9d470b7c3e3dc5564b5c869228055d9e0b5"
+    }
+  }
+}

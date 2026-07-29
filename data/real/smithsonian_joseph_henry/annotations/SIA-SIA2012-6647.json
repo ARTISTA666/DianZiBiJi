@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6647",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6647",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6647",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "106<BR/>Jany 19th 1844<BR/><BR/>I gave a lecture today on Dynamic induction, and in the course made the following attempt to explain the fact of the lateral currents or those produced in lateral adjacent wires. [[image - a diagram illustrating the following description]] In the moment the spark passes into the wire [[underline]]a[[/underline]], the fluid in it will be thrown into the condition as marked by the the [[?]] +, and minus.  The natural electricity will be drawn to the farther end by the [[?]] elect of the jar as it is entering the upper part of the wire, and at the same moment, a part of the interior repulsion of the jar is removed by the rushing of the electricity to to knob, therefore, as I have before said, the wire will assume the condition [[crossed out]][[/crossed out]] shown in the figure.  The effect that this will have on the adjacent wire, is readily seen, the upper end will become plus, and the lower minus, or the effect of a current from the lower to the upper end will be experienced.  In the next moment, the electricity of the jar will pass to the outside through the wire, and the natural state  will be restored with perhaps an effect something like a momentum, a current in the opposite direction will then be the result in the adjacent wire.<BR/><BR/>The effect of this induction is perceived as so great a distance, that I cannot for a moment think that the effect is the result of mere [[strikeout]] repulsion acting at a distance, but from all analogy, I would contend that the result is produced by a wave motion communicated from atom to atom of the etherial medium, and this is the case of the intervening medium being air, would give rise to a progressive polarization of the particles.  Perhaps this will be rendered more clear by the following figure:<BR/>[[end page]]<BR/>[[start page]]<BR/>[[image]]                107<BR/>Let [[underline]]a b [[/underline]] be a row of etherial attoms extending in space [[strikeout]] from one wire to the other, then if the wire [[underline]]a [[/underline]] becomes polar as a whole, the atom [[underline]]a [[/underline]] will be attracted, and this will give motion to [[underline]]b[[/underline]] in the same direction, and then to the next, and so on to the last, which will [[strikethough]]rush to?[[/strikethrough]] and the electricity, will rush from the rod or will be drawn up in the rod to supply the tendancy to a vacuum, while the electricity in the lower end will be drawn up the rod by the increase of the pressure at the lower end. If an [[?]] the atoms in succession will be thrown in a polar state for an instant, and the [[force?]] will be transmitted wave pushing from one wave to the other.  The effect will only be instantaneous.  When the primary wave returns to its natural state, the reverse [[motion?]] will take place.<BR/> To explain the phenomena of galvanic induction, the conducting wire may be considered as during all the time of discharge in a state of polarization as a whole.  [[image of drawing]]<BR/>Consequently when a second wire is brought up to it, induction is produced so as to produce a current in a definite direction.  Also when the wire returns to its natrual condition, a return current will be produced.",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6647#xywh=10,10,2990,2347"
+    }
+  ]
+}

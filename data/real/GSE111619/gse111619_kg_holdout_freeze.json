@@ -1,0 +1,8 @@
+{
+  "frozen_at": "2026-07-11T01:28:52Z",
+  "question_file": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+  "sha256": "ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889",
+  "question_count": 12,
+  "gold_relation_or_fact_count": 32,
+  "policy": "The question text, gold facts, forbidden facts and scoring spans are frozen before the knowledge-graph schema and benchmark corpus are changed. Do not tune against holdout answers."
+}

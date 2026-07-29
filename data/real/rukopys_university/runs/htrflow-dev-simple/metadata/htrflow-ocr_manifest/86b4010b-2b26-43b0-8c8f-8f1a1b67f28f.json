@@ -1,0 +1,650 @@
+{
+    "file_name": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.jpg",
+    "image_name": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f",
+    "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "mauchet Blackpool in Bizarrechoeing cocozi . Toocho opumargo"
+                ],
+                "scores": [
+                    0.3116314949644509
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9241098165512085,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 3,
+                "xmax": 1613,
+                "ymax": 65
+            },
+            "polygon": "45,3 45,40 495,36 586,65 652,40 798,62 941,32 1288,29 1339,51 1405,25 1536,51 1613,32 1613,3"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "intenna obolpina begolini Signory , or the firstiprocorrhinoi"
+                ],
+                "scores": [
+                    0.3852733103652377
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9213426113128662,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 29,
+                "xmax": 1544,
+                "ymax": 120
+            },
+            "polygon": "1544,54 1463,29 1354,54 1284,32 948,36 798,65 656,43 604,69 495,40 38,43 38,91 279,109 688,91 776,120 875,84 1036,109 1182,84 1544,76"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "appmannia apatoba magkus y eutreux nauvoraux not of"
+                ],
+                "scores": [
+                    0.3860635328325758
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9142085909843445,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 65,
+                "xmax": 1639,
+                "ymax": 179
+            },
+            "polygon": "1639,65 1039,113 886,84 776,124 688,98 38,95 38,146 666,175 754,149 802,179 853,149 1171,138 1441,160 1635,142"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "D. Vorpodensus nuorico ne cinella dopamangu , So"
+                ],
+                "scores": [
+                    0.3946605043514782
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.920274019241333,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 138,
+                "xmax": 1642,
+                "ymax": 226
+            },
+            "polygon": "34,138 38,226 1642,211 1635,153 1536,142 1438,168 1178,142 857,153 813,182 751,153 674,182 352,182 239,153 96,168"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "spalls givenning numerous bigocuelsky , would face yourself about"
+                ],
+                "scores": [
+                    0.3688341216502404
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8863253593444824,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 204,
+                "xmax": 1639,
+                "ymax": 285
+            },
+            "polygon": "1639,222 1379,204 1240,230 977,215 465,241 151,208 78,222 78,277 1116,285 1635,266"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "drymaking : addresses , says the sortbook's appearance might"
+                ],
+                "scores": [
+                    0.3032498565984007
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9075013995170593,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 274,
+                "xmax": 1624,
+                "ymax": 354
+            },
+            "polygon": "82,347 374,321 480,339 659,325 783,354 886,321 999,339 1624,310 1624,274 82,281"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "minimum Burmese for the first quarter anniversary practice . Notable"
+                ],
+                "scores": [
+                    0.4427889737408479
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9081912040710449,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 317,
+                "xmax": 1642,
+                "ymax": 412
+            },
+            "polygon": "1642,317 970,350 889,325 765,361 641,328 495,347 341,325 82,358 82,402 455,391 615,412 656,387 995,380 1306,398 1354,372 1639,372"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nina maneuvera - maxi on exodium Anglienne now , not , \" motion"
+                ],
+                "scores": [
+                    0.3968733112270133
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.902368426322937,
+            "bbox": {
+                "xmin": 78,
+                "ymin": 383,
+                "xmax": 1646,
+                "ymax": 464
+            },
+            "polygon": "1646,383 659,391 615,416 78,402 78,460 1087,464 1277,427 1569,423 1639,449"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "unique three sponsors , can - a tremendous own antagonist of the sympathy for-"
+                ],
+                "scores": [
+                    0.48428437482862086
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9126160740852356,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 427,
+                "xmax": 1639,
+                "ymax": 533
+            },
+            "polygon": "1639,456 1591,427 1277,431 1090,467 71,464 71,511 330,500 465,533 762,504 1639,497"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "the . Phartologic repeous in appearance's # a childcare of wages"
+                ],
+                "scores": [
+                    0.34017880383166627
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9016256928443909,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 489,
+                "xmax": 1620,
+                "ymax": 592
+            },
+            "polygon": "1620,504 1419,489 1357,511 751,511 469,537 323,504 63,518 63,570 422,588 597,566 787,592 944,566 1087,592 1142,559 1540,573 1617,559"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "probably a homoeographer between two Belgium glabework , i he gives"
+                ],
+                "scores": [
+                    0.4355440960161645
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9105830788612366,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 562,
+                "xmax": 1609,
+                "ymax": 657
+            },
+            "polygon": "1609,573 1164,562 1068,599 981,570 783,595 608,570 407,592 217,562 63,573 63,624 243,657 359,632 802,628 1127,654 1182,624 1277,643 1471,628 1522,654 1609,635"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "has no owning informatics : Education conferences , Payne"
+                ],
+                "scores": [
+                    0.42993179661362546
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8874993920326233,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 632,
+                "xmax": 1613,
+                "ymax": 730
+            },
+            "polygon": "60,632 60,694 235,676 550,719 1043,690 1200,727 1306,698 1525,730 1613,716 1613,654 1522,661 1463,632 1346,650 1178,632 1131,657 524,635 257,665"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nonviolence and peace it corresponds into __ masculance \" ambitious me"
+                ],
+                "scores": [
+                    0.42337048834356483
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8744872212409973,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 683,
+                "xmax": 1500,
+                "ymax": 771
+            },
+            "polygon": "56,701 56,749 827,771 1500,760 1500,719 1302,701 1200,734 1079,687 919,723 772,705 542,723 257,683"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "mobilised ancient ancient thirrhmid naanoms show-angi rowages"
+                ],
+                "scores": [
+                    0.30883065501333323
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8322625160217285,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 745,
+                "xmax": 1631,
+                "ymax": 836
+            },
+            "polygon": "1631,745 1405,774 60,752 60,796 1222,804 1354,836 1562,836 1631,818"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "they hope being a \" appearance going worth , no-admin spending"
+                ],
+                "scores": [
+                    0.41062663204096755
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8555225133895874,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 793,
+                "xmax": 1277,
+                "ymax": 884
+            },
+            "polygon": "45,793 45,855 118,866 597,862 732,884 1123,862 1277,884 1266,811"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3 . MCOTERMS - ninenapagui xenopsini under , nongoose"
+                ],
+                "scores": [
+                    0.491900951198822
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8528858423233032,
+            "bbox": {
+                "xmin": 16,
+                "ymin": 869,
+                "xmax": 1624,
+                "ymax": 975
+            },
+            "polygon": "16,869 16,964 356,950 663,975 1021,946 1138,972 1624,968 1624,913 1240,910 1112,873 674,895"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "new practice , I saw a ponica to mycisterna tallins in the church"
+                ],
+                "scores": [
+                    0.37258637943176304
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8633195757865906,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 950,
+                "xmax": 1635,
+                "ymax": 1026
+            },
+            "polygon": "1635,986 1156,979 1032,950 666,979 49,961 49,1008 184,1023 378,1005 495,1026 1628,1026"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "newal imemainib is raining ; euingendopadi monique . Mr. general"
+                ],
+                "scores": [
+                    0.3075652873160276
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8721892237663269,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 1012,
+                "xmax": 1631,
+                "ymax": 1089
+            },
+            "polygon": "42,1012 42,1056 853,1089 937,1056 992,1085 1631,1085 1631,1030"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Proposed Bumsam . i requires , even noorgan ampamaapa 1 cannon &"
+                ],
+                "scores": [
+                    0.3574303727819552
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8770548701286316,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 1056,
+                "xmax": 1587,
+                "ymax": 1147
+            },
+            "polygon": "49,1056 49,1132 283,1111 995,1147 1116,1114 1317,1143 1379,1111 1587,1114 1584,1074 992,1089 919,1056 846,1096"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "bottapits his appearance are noxious , and me , Olympiarians regregnum mail"
+                ],
+                "scores": [
+                    0.5344090697051095
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8631031513214111,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 1107,
+                "xmax": 1624,
+                "ymax": 1195
+            },
+            "polygon": "1624,1107 1562,1129 1390,1111 1321,1143 1094,1114 999,1151 900,1132 568,1147 275,1111 60,1136 60,1173 191,1191 312,1169 374,1195 440,1173 1452,1187 1514,1165 1624,1176"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "legations the median . Baffourail business-theaters & genetic pathway -"
+                ],
+                "scores": [
+                    0.4317996022273365
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9091666340827942,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 1173,
+                "xmax": 1628,
+                "ymax": 1264
+            },
+            "polygon": "1628,1184 447,1176 378,1202 312,1173 199,1195 63,1176 63,1238 528,1231 637,1264 882,1227 1628,1235"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nitai-programay . Phonogramasoms darlob'gaudreism's"
+                ],
+                "scores": [
+                    0.4657261687514718
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9218957424163818,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 1231,
+                "xmax": 1642,
+                "ymax": 1319
+            },
+            "polygon": "1642,1242 889,1231 652,1264 524,1235 60,1242 60,1290 312,1312 487,1282 612,1319 875,1286 1006,1319 1098,1290 1639,1293"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ma assignments . The Serpentine we are _ and has a basic sourcequences , most a"
+                ],
+                "scores": [
+                    0.4067764526377165
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9060980677604675,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 1286,
+                "xmax": 1628,
+                "ymax": 1359
+            },
+            "polygon": "56,1293 67,1348 316,1359 1628,1341 1628,1297 1573,1290 1503,1308 1120,1293 1006,1322 904,1286 652,1322 491,1286 323,1315"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Mr. Garby \" incisiscuous therapy , vaccine , flightment , that ( collapse"
+                ],
+                "scores": [
+                    0.41263237662035757
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8987239003181458,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 1344,
+                "xmax": 1628,
+                "ymax": 1421
+            },
+            "polygon": "52,1344 71,1407 1032,1421 1628,1399 1628,1344 831,1370"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Nd.O \" 3/drymakers enament repossign , made a morenoami"
+                ],
+                "scores": [
+                    0.34729024953248944
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9019877910614014,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 1396,
+                "xmax": 1631,
+                "ymax": 1480
+            },
+            "polygon": "45,1396 45,1458 721,1480 827,1454 1631,1450 1624,1403 1010,1425"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "has 2 8thobious pneumonic , dzlczyk the group covers ( nonengine"
+                ],
+                "scores": [
+                    0.2966659712748726
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.915712296962738,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 1454,
+                "xmax": 1631,
+                "ymax": 1538
+            },
+            "polygon": "1631,1461 831,1454 696,1483 45,1458 45,1524 173,1505 378,1513 436,1538 491,1516 897,1534 963,1509 1631,1527"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "A squatternbers , he'll be angry - organism and attempt , anyone if - could cause"
+                ],
+                "scores": [
+                    0.36672098031596684
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9284853339195251,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 1513,
+                "xmax": 1624,
+                "ymax": 1600
+            },
+            "polygon": "60,1520 60,1571 338,1556 765,1597 948,1575 1178,1600 1624,1575 1617,1531 1492,1513 1160,1531 966,1513 736,1542"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "centazioneFurthermore , spurs C. extra numerals menu-"
+                ],
+                "scores": [
+                    0.3083238887555874
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8700742721557617,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 1571,
+                "xmax": 1646,
+                "ymax": 1651
+            },
+            "polygon": "49,1575 49,1626 1646,1651 1646,1615 1609,1600 1193,1608 966,1578 765,1604 560,1571"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "exuo omareno noun-"
+                ],
+                "scores": [
+                    0.5578487906095715
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.45701226592063904,
+            "bbox": {
+                "xmin": 1079,
+                "ymin": 1589,
+                "xmax": 1646,
+                "ymax": 1666
+            },
+            "polygon": "1079,1593 1079,1648 1112,1655 1449,1655 1507,1666 1646,1655 1646,1615 1606,1600 1474,1604 1427,1593 1310,1589 1215,1608"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "new representative , minors D-aquisimias . Today , had so also en-"
+                ],
+                "scores": [
+                    0.4531291057449346
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.867428719997406,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 1629,
+                "xmax": 1631,
+                "ymax": 1721
+            },
+            "polygon": "38,1629 38,1684 334,1710 433,1688 699,1692 816,1721 864,1699 1631,1706 1609,1659 1138,1659 1050,1629 930,1666"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "super-commercial buildings by some UN CORRES"
+                ],
+                "scores": [
+                    0.3681869029481506
+                ]
+            },
+            "label": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8471027612686157,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 1684,
+                "xmax": 1200,
+                "ymax": 1794
+            },
+            "polygon": "38,1684 38,1772 330,1761 528,1790 656,1779 732,1794 860,1768 1200,1772 1185,1706 867,1703 813,1725 699,1695 593,1706 455,1688 330,1714"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

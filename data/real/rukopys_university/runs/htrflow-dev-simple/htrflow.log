@@ -1,0 +1,109 @@
+yusongdeMacBook-Air.local - 2026-07-13 11:06:03 UTC - INFO - Include schema from 'file:///Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/xmlschema/schemas/XSD_1.1/xsd11-extra.xsd'
+yusongdeMacBook-Air.local - 2026-07-13 11:06:03 UTC - ERROR - Could not import OpenMMLab models: [].
+Traceback (most recent call last):
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/importer.py", line 26, in all_models
+    from htrflow.models.openmmlab.rtmdet import RTMDet
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/openmmlab/rtmdet.py", line 5, in <module>
+    from mmdet.apis import DetInferencer
+ModuleNotFoundError: No module named 'mmdet'
+yusongdeMacBook-Air.local - 2026-07-13 11:06:03 UTC - ERROR - Could not import Teklia models: [].
+Traceback (most recent call last):
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/importer.py", line 37, in all_models
+    from htrflow.models.teklia.pylaia import PyLaia
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/teklia/pylaia.py", line 14, in <module>
+    from laia.common.arguments import CommonArgs, DataArgs, DecodeArgs, TrainerArgs
+ModuleNotFoundError: No module named 'laia'
+yusongdeMacBook-Air.local - 2026-07-13 11:06:03 UTC - INFO - Importing 10 input images with batch size 10
+yusongdeMacBook-Air.local - 2026-07-13 11:06:03 UTC - INFO - Initialized collection 'None' with 10 pages
+yusongdeMacBook-Air.local - 2026-07-13 11:06:03 UTC - INFO - Running step Segmentation (step 1 / 5)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:05 UTC - INFO - Initialized YOLO model 'Riksarkivet/yolov9-lines-within-regions-1' from /Users/yusong/.cache/huggingface/hub/models--Riksarkivet--yolov9-lines-within-regions-1/snapshots/f62260d9ae6e782c43c3fd789b7d7e19d64608d9/model.pt on device cpu
+yusongdeMacBook-Air.local - 2026-07-13 11:06:05 UTC - INFO - Model 'YOLO' on device 'cpu' received 10 images in batches of 1 images per batch (10 batches)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:05 UTC - INFO - YOLO: Running inference on 1 images (batch 1 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:07 UTC - INFO - YOLO: Running inference on 1 images (batch 2 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:08 UTC - INFO - YOLO: Running inference on 1 images (batch 3 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:09 UTC - INFO - YOLO: Running inference on 1 images (batch 4 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:11 UTC - INFO - YOLO: Running inference on 1 images (batch 5 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:12 UTC - INFO - YOLO: Running inference on 1 images (batch 6 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:13 UTC - INFO - YOLO: Running inference on 1 images (batch 7 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:14 UTC - INFO - YOLO: Running inference on 1 images (batch 8 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:16 UTC - INFO - YOLO: Running inference on 1 images (batch 9 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:17 UTC - INFO - YOLO: Running inference on 1 images (batch 10 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:18 UTC - INFO - Running step TextRecognition (step 2 / 5)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:20 UTC - INFO - Initialized TrOCR model from microsoft/trocr-base-handwritten on device cpu.
+yusongdeMacBook-Air.local - 2026-07-13 11:06:26 UTC - INFO - Initialized TrOCR processor from microsoft/trocr-base-handwritten.
+yusongdeMacBook-Air.local - 2026-07-13 11:06:28 UTC - INFO - Model 'TrOCR' on device 'cpu' received 406 images in batches of 8 images per batch (51 batches)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:28 UTC - INFO - TrOCR: Running inference on 8 images (batch 1 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:06:46 UTC - INFO - TrOCR: Running inference on 8 images (batch 2 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:07:00 UTC - INFO - TrOCR: Running inference on 8 images (batch 3 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:07:14 UTC - INFO - TrOCR: Running inference on 8 images (batch 4 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:07:29 UTC - INFO - TrOCR: Running inference on 8 images (batch 5 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:07:44 UTC - INFO - TrOCR: Running inference on 8 images (batch 6 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:07:50 UTC - INFO - TrOCR: Running inference on 8 images (batch 7 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:07:57 UTC - INFO - TrOCR: Running inference on 8 images (batch 8 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:08:11 UTC - INFO - TrOCR: Running inference on 8 images (batch 9 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:08:21 UTC - INFO - TrOCR: Running inference on 8 images (batch 10 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:08:36 UTC - INFO - TrOCR: Running inference on 8 images (batch 11 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:08:49 UTC - INFO - TrOCR: Running inference on 8 images (batch 12 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:08:59 UTC - INFO - TrOCR: Running inference on 8 images (batch 13 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:09:08 UTC - INFO - TrOCR: Running inference on 8 images (batch 14 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:09:18 UTC - INFO - TrOCR: Running inference on 8 images (batch 15 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:09:27 UTC - INFO - TrOCR: Running inference on 8 images (batch 16 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:09:40 UTC - INFO - TrOCR: Running inference on 8 images (batch 17 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:09:53 UTC - INFO - TrOCR: Running inference on 8 images (batch 18 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:49:06 UTC - INFO - TrOCR: Running inference on 8 images (batch 19 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:49:22 UTC - INFO - TrOCR: Running inference on 8 images (batch 20 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:49:36 UTC - INFO - TrOCR: Running inference on 8 images (batch 21 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:49:50 UTC - INFO - TrOCR: Running inference on 8 images (batch 22 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:50:03 UTC - INFO - TrOCR: Running inference on 8 images (batch 23 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:50:16 UTC - INFO - TrOCR: Running inference on 8 images (batch 24 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:50:28 UTC - INFO - TrOCR: Running inference on 8 images (batch 25 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:50:42 UTC - INFO - TrOCR: Running inference on 8 images (batch 26 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:50:55 UTC - INFO - TrOCR: Running inference on 8 images (batch 27 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:51:09 UTC - INFO - TrOCR: Running inference on 8 images (batch 28 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:51:19 UTC - INFO - TrOCR: Running inference on 8 images (batch 29 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:51:29 UTC - INFO - TrOCR: Running inference on 8 images (batch 30 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:51:35 UTC - INFO - TrOCR: Running inference on 8 images (batch 31 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:51:45 UTC - INFO - TrOCR: Running inference on 8 images (batch 32 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:51:59 UTC - INFO - TrOCR: Running inference on 8 images (batch 33 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:52:08 UTC - INFO - TrOCR: Running inference on 8 images (batch 34 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:52:20 UTC - INFO - TrOCR: Running inference on 8 images (batch 35 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:52:29 UTC - INFO - TrOCR: Running inference on 8 images (batch 36 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:52:45 UTC - INFO - TrOCR: Running inference on 8 images (batch 37 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:53:00 UTC - INFO - TrOCR: Running inference on 8 images (batch 38 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:53:11 UTC - INFO - TrOCR: Running inference on 8 images (batch 39 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:53:26 UTC - INFO - TrOCR: Running inference on 8 images (batch 40 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:53:42 UTC - INFO - TrOCR: Running inference on 8 images (batch 41 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:53:54 UTC - INFO - TrOCR: Running inference on 8 images (batch 42 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:54:08 UTC - INFO - TrOCR: Running inference on 8 images (batch 43 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:54:22 UTC - INFO - TrOCR: Running inference on 8 images (batch 44 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:54:37 UTC - INFO - TrOCR: Running inference on 8 images (batch 45 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:54:51 UTC - INFO - TrOCR: Running inference on 8 images (batch 46 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:55:06 UTC - INFO - TrOCR: Running inference on 8 images (batch 47 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:55:21 UTC - INFO - TrOCR: Running inference on 8 images (batch 48 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:55:37 UTC - INFO - TrOCR: Running inference on 8 images (batch 49 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:55:51 UTC - INFO - TrOCR: Running inference on 8 images (batch 50 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:56:03 UTC - INFO - TrOCR: Running inference on 6 images (batch 51 of 51)
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Running step OrderLines (step 3 / 5)
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Running step Export (step 4 / 5)
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/015032c0-8cd9-4b22-a474-3118445cf022.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/2392f282-19c9-446b-b743-092281a783d5.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/23cbc409-0a74-4cd0-a211-1a6d655747a4.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/3033749a-df7e-41e3-a2d2-1a1c6880fd68.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw/htrflow-ocr_manifest/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.txt
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Running step Export (step 5 / 5)
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/015032c0-8cd9-4b22-a474-3118445cf022.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/2392f282-19c9-446b-b743-092281a783d5.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/23cbc409-0a74-4cd0-a211-1a6d655747a4.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/3033749a-df7e-41e3-a2d2-1a1c6880fd68.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata/htrflow-ocr_manifest/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.json
+yusongdeMacBook-Air.local - 2026-07-13 11:56:12 UTC - INFO - Processed 10 pages in 3009 seconds (average 300.907 seconds per page)

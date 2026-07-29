@@ -1,0 +1,81 @@
+﻿mode,question_id,category,question,fact_count,Recall@1,Recall@3,Recall@5,Recall@10,MRR,nDCG@10
+bm25,Q01,sample_set,GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。,4,0.0,0.0,0.25,1.0,0.2,0.543354
+bm25,Q02,sample_group,哪些样本属于 p63 敲低组？,2,0.5,1.0,1.0,1.0,1.0,1.0
+bm25,Q03,sample_group,哪些样本属于非靶向 shRNA 对照组？,2,0.0,0.0,0.5,1.0,0.2,0.455605
+bm25,Q04,sample_mapping,HTSeq 计数矩阵的四个样本列名分别是什么？,4,0.0,0.0,0.0,0.0,0.076923,0.0
+bm25,Q05,study_design,GSE111619 的分组设计和生物学重复数量是什么？,3,0.0,0.333333,0.333333,0.333333,0.5,0.296082
+bm25,Q06,biological_source,该研究使用了什么细胞系和细胞类型？,2,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q07,culture_condition,样本接受了什么处理，并在什么培养条件下培养多久？,4,0.0,0.0,0.0,0.25,0.125,0.123151
+bm25,Q08,library_material,RNA 提取和文库构建使用了哪些主要试剂盒？,2,0.5,1.0,1.0,1.0,1.0,1.0
+bm25,Q09,instrument,该实验记录中使用了哪些主要仪器或检测芯片？,2,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q10,library_strategy,测序分子类型和文库策略分别是什么？,2,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q11,processing_pipeline,序列比对、参考基因组和基因计数分别使用了什么工具或版本？,3,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q12,processing_pipeline,元数据记录的完整处理软件链包括哪些工具？,7,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q13,quality_control,RNA 质量记录中的 RIN 要求是什么？,1,1.0,1.0,1.0,1.0,1.0,1.0
+bm25,Q14,numeric_result,两个非靶向对照样本的总基因计数分别是多少？,2,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q15,numeric_result,两个 p63 敲低样本的总基因计数分别是多少？,2,0.5,1.0,1.0,1.0,1.0,1.0
+bm25,Q16,numeric_result,四个样本各自检测到的非零基因行数是多少？,4,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q17,numeric_result,HTSeq 计数矩阵共有多少个基因条目？,1,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q18,external_identifier,四个 GEO 样本分别对应哪些 SRA 实验登录号？,4,0.0,0.0,0.25,1.0,0.25,0.554827
+bm25,Q19,data_boundary,本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？,3,0.0,0.0,0.0,0.0,0.0,0.0
+bm25,Q20,numeric_reasoning,哪个样本检测到的非零基因行数最高，数值是多少？,2,0.0,0.0,0.0,0.0,0.0,0.0
+graph_enhanced_rag,Q01,sample_set,GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。,4,0.0,0.5,0.75,1.0,0.5,0.732771
+graph_enhanced_rag,Q02,sample_group,哪些样本属于 p63 敲低组？,2,0.0,1.0,1.0,1.0,0.5,0.693426
+graph_enhanced_rag,Q03,sample_group,哪些样本属于非靶向 shRNA 对照组？,2,0.0,0.5,1.0,1.0,0.5,0.650921
+graph_enhanced_rag,Q04,sample_mapping,HTSeq 计数矩阵的四个样本列名分别是什么？,4,0.0,0.25,0.5,1.0,0.5,0.676637
+graph_enhanced_rag,Q05,study_design,GSE111619 的分组设计和生物学重复数量是什么？,3,0.0,0.0,0.333333,0.333333,0.25,0.202107
+graph_enhanced_rag,Q06,biological_source,该研究使用了什么细胞系和细胞类型？,2,0.0,0.5,1.0,1.0,0.5,0.650921
+graph_enhanced_rag,Q07,culture_condition,样本接受了什么处理，并在什么培养条件下培养多久？,4,0.0,0.25,0.5,0.5,0.5,0.41443
+graph_enhanced_rag,Q08,library_material,RNA 提取和文库构建使用了哪些主要试剂盒？,2,0.0,1.0,1.0,1.0,0.5,0.693426
+graph_enhanced_rag,Q09,instrument,该实验记录中使用了哪些主要仪器或检测芯片？,2,0.0,1.0,1.0,1.0,0.5,0.693426
+graph_enhanced_rag,Q10,library_strategy,测序分子类型和文库策略分别是什么？,2,0.0,0.5,0.5,0.5,0.5,0.386853
+graph_enhanced_rag,Q11,processing_pipeline,序列比对、参考基因组和基因计数分别使用了什么工具或版本？,3,0.0,0.333333,0.666667,1.0,0.5,0.66535
+graph_enhanced_rag,Q12,processing_pipeline,元数据记录的完整处理软件链包括哪些工具？,7,0.0,0.142857,0.285714,0.714286,0.5,0.555894
+graph_enhanced_rag,Q13,quality_control,RNA 质量记录中的 RIN 要求是什么？,1,1.0,1.0,1.0,1.0,1.0,1.0
+graph_enhanced_rag,Q14,numeric_result,两个非靶向对照样本的总基因计数分别是多少？,2,0.0,0.0,0.0,1.0,0.166667,0.411834
+graph_enhanced_rag,Q15,numeric_result,两个 p63 敲低样本的总基因计数分别是多少？,2,0.0,0.5,0.5,1.0,0.333333,0.510956
+graph_enhanced_rag,Q16,numeric_result,四个样本各自检测到的非零基因行数是多少？,4,0.0,0.25,0.5,1.0,0.5,0.676637
+graph_enhanced_rag,Q17,numeric_result,HTSeq 计数矩阵共有多少个基因条目？,1,0.0,1.0,1.0,1.0,0.5,0.63093
+graph_enhanced_rag,Q18,external_identifier,四个 GEO 样本分别对应哪些 SRA 实验登录号？,4,0.0,0.5,0.75,1.0,0.5,0.731568
+graph_enhanced_rag,Q19,data_boundary,本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？,3,0.0,0.333333,0.666667,1.0,0.5,0.66535
+graph_enhanced_rag,Q20,numeric_reasoning,哪个样本检测到的非零基因行数最高，数值是多少？,2,0.0,0.0,1.0,1.0,0.25,0.501266
+hybrid_rag,Q01,sample_set,GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。,4,0.0,0.25,0.5,0.75,0.5,0.553486
+hybrid_rag,Q02,sample_group,哪些样本属于 p63 敲低组？,2,0.0,1.0,1.0,1.0,0.5,0.693426
+hybrid_rag,Q03,sample_group,哪些样本属于非靶向 shRNA 对照组？,2,0.0,0.0,0.0,1.0,0.142857,0.397809
+hybrid_rag,Q04,sample_mapping,HTSeq 计数矩阵的四个样本列名分别是什么？,4,0.0,0.0,0.0,0.0,0.038462,0.0
+hybrid_rag,Q05,study_design,GSE111619 的分组设计和生物学重复数量是什么？,3,0.0,0.0,0.333333,0.333333,0.25,0.202107
+hybrid_rag,Q06,biological_source,该研究使用了什么细胞系和细胞类型？,2,0.0,0.5,1.0,1.0,0.5,0.650921
+hybrid_rag,Q07,culture_condition,样本接受了什么处理，并在什么培养条件下培养多久？,4,0.0,0.0,0.0,1.0,0.166667,0.492569
+hybrid_rag,Q08,library_material,RNA 提取和文库构建使用了哪些主要试剂盒？,2,0.0,1.0,1.0,1.0,0.5,0.693426
+hybrid_rag,Q09,instrument,该实验记录中使用了哪些主要仪器或检测芯片？,2,0.0,0.5,0.5,1.0,0.5,0.564092
+hybrid_rag,Q10,library_strategy,测序分子类型和文库策略分别是什么？,2,0.0,0.0,0.0,0.0,0.0625,0.0
+hybrid_rag,Q11,processing_pipeline,序列比对、参考基因组和基因计数分别使用了什么工具或版本？,3,0.0,0.0,0.666667,1.0,0.25,0.524916
+hybrid_rag,Q12,processing_pipeline,元数据记录的完整处理软件链包括哪些工具？,7,0.0,0.0,0.0,0.428571,0.166667,0.276252
+hybrid_rag,Q13,quality_control,RNA 质量记录中的 RIN 要求是什么？,1,1.0,1.0,1.0,1.0,1.0,1.0
+hybrid_rag,Q14,numeric_result,两个非靶向对照样本的总基因计数分别是多少？,2,0.0,0.0,0.0,0.0,0.02381,0.0
+hybrid_rag,Q15,numeric_result,两个 p63 敲低样本的总基因计数分别是多少？,2,0.0,0.5,1.0,1.0,0.5,0.650921
+hybrid_rag,Q16,numeric_result,四个样本各自检测到的非零基因行数是多少？,4,0.0,0.0,0.0,0.0,0.0,0.0
+hybrid_rag,Q17,numeric_result,HTSeq 计数矩阵共有多少个基因条目？,1,0.0,0.0,0.0,0.0,0.0,0.0
+hybrid_rag,Q18,external_identifier,四个 GEO 样本分别对应哪些 SRA 实验登录号？,4,0.0,0.5,0.75,0.75,0.5,0.592512
+hybrid_rag,Q19,data_boundary,本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？,3,0.0,0.0,0.0,0.0,0.0,0.0
+hybrid_rag,Q20,numeric_reasoning,哪个样本检测到的非零基因行数最高，数值是多少？,2,0.0,0.0,0.0,0.0,0.041667,0.0
+vector,Q01,sample_set,GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。,4,0.0,0.25,0.25,0.5,0.333333,0.318341
+vector,Q02,sample_group,哪些样本属于 p63 敲低组？,2,0.0,0.5,1.0,1.0,0.333333,0.570642
+vector,Q03,sample_group,哪些样本属于非靶向 shRNA 对照组？,2,0.0,0.5,1.0,1.0,0.333333,0.570642
+vector,Q04,sample_mapping,HTSeq 计数矩阵的四个样本列名分别是什么？,4,0.0,0.0,0.0,0.0,0.0,0.0
+vector,Q05,study_design,GSE111619 的分组设计和生物学重复数量是什么？,3,0.0,0.0,0.0,0.0,0.071429,0.0
+vector,Q06,biological_source,该研究使用了什么细胞系和细胞类型？,2,0.5,1.0,1.0,1.0,1.0,1.0
+vector,Q07,culture_condition,样本接受了什么处理，并在什么培养条件下培养多久？,4,0.0,0.25,0.75,1.0,0.333333,0.653393
+vector,Q08,library_material,RNA 提取和文库构建使用了哪些主要试剂盒？,2,0.0,0.0,0.0,0.5,0.125,0.193426
+vector,Q09,instrument,该实验记录中使用了哪些主要仪器或检测芯片？,2,0.5,0.5,1.0,1.0,1.0,0.850345
+vector,Q10,library_strategy,测序分子类型和文库策略分别是什么？,2,0.0,0.0,0.0,0.5,0.125,0.193426
+vector,Q11,processing_pipeline,序列比对、参考基因组和基因计数分别使用了什么工具或版本？,3,0.0,0.666667,1.0,1.0,0.5,0.712263
+vector,Q12,processing_pipeline,元数据记录的完整处理软件链包括哪些工具？,7,0.0,0.142857,0.428571,1.0,0.333333,0.7027
+vector,Q13,quality_control,RNA 质量记录中的 RIN 要求是什么？,1,0.0,1.0,1.0,1.0,0.5,0.63093
+vector,Q14,numeric_result,两个非靶向对照样本的总基因计数分别是多少？,2,0.0,0.0,0.0,0.0,0.047619,0.0
+vector,Q15,numeric_result,两个 p63 敲低样本的总基因计数分别是多少？,2,0.0,0.0,0.0,0.0,0.041667,0.0
+vector,Q16,numeric_result,四个样本各自检测到的非零基因行数是多少？,4,0.0,0.0,0.0,0.0,0.0,0.0
+vector,Q17,numeric_result,HTSeq 计数矩阵共有多少个基因条目？,1,0.0,0.0,0.0,0.0,0.0,0.0
+vector,Q18,external_identifier,四个 GEO 样本分别对应哪些 SRA 实验登录号？,4,0.0,0.0,0.0,0.25,0.1,0.112845
+vector,Q19,data_boundary,本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？,3,0.0,0.0,0.0,0.0,0.0,0.0
+vector,Q20,numeric_reasoning,哪个样本检测到的非零基因行数最高，数值是多少？,2,0.0,0.0,0.0,0.0,0.083333,0.0

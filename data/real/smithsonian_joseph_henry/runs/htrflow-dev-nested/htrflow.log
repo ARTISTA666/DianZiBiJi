@@ -1,0 +1,62 @@
+yusongdeMacBook-Air.local - 2026-07-13 07:08:44 UTC - INFO - Include schema from 'file:///Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/xmlschema/schemas/XSD_1.1/xsd11-extra.xsd'
+yusongdeMacBook-Air.local - 2026-07-13 07:08:44 UTC - ERROR - Could not import OpenMMLab models: [].
+Traceback (most recent call last):
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/importer.py", line 26, in all_models
+    from htrflow.models.openmmlab.rtmdet import RTMDet
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/openmmlab/rtmdet.py", line 5, in <module>
+    from mmdet.apis import DetInferencer
+ModuleNotFoundError: No module named 'mmdet'
+yusongdeMacBook-Air.local - 2026-07-13 07:08:44 UTC - ERROR - Could not import Teklia models: [].
+Traceback (most recent call last):
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/importer.py", line 37, in all_models
+    from htrflow.models.teklia.pylaia import PyLaia
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/teklia/pylaia.py", line 14, in <module>
+    from laia.common.arguments import CommonArgs, DataArgs, DecodeArgs, TrainerArgs
+ModuleNotFoundError: No module named 'laia'
+yusongdeMacBook-Air.local - 2026-07-13 07:08:44 UTC - INFO - Importing 5 input images with batch size 5
+yusongdeMacBook-Air.local - 2026-07-13 07:08:44 UTC - INFO - Initialized collection 'None' with 5 pages
+yusongdeMacBook-Air.local - 2026-07-13 07:08:44 UTC - INFO - Running step Segmentation (step 1 / 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:11 UTC - INFO - Initialized YOLO model 'Riksarkivet/yolov9-regions-1' from /Users/yusong/.cache/huggingface/hub/models--Riksarkivet--yolov9-regions-1/snapshots/6fb01d223f39ac325280d99e4a2d1804694e5e99/model.pt on device mps:0
+yusongdeMacBook-Air.local - 2026-07-13 07:09:11 UTC - INFO - Model 'YOLO' on device 'mps' received 5 images in batches of 1 images per batch (5 batches)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:11 UTC - INFO - YOLO: Running inference on 1 images (batch 1 of 5)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:12 UTC - INFO - YOLO: Running inference on 1 images (batch 2 of 5)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:13 UTC - INFO - YOLO: Running inference on 1 images (batch 3 of 5)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:13 UTC - INFO - YOLO: Running inference on 1 images (batch 4 of 5)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:13 UTC - INFO - YOLO: Running inference on 1 images (batch 5 of 5)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:13 UTC - INFO - Running step Segmentation (step 2 / 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:15 UTC - INFO - Initialized YOLO model 'Riksarkivet/yolov9-lines-within-regions-1' from /Users/yusong/.cache/huggingface/hub/models--Riksarkivet--yolov9-lines-within-regions-1/snapshots/f62260d9ae6e782c43c3fd789b7d7e19d64608d9/model.pt on device mps:0
+yusongdeMacBook-Air.local - 2026-07-13 07:09:15 UTC - INFO - Model 'YOLO' on device 'mps' received 8 images in batches of 1 images per batch (8 batches)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:15 UTC - INFO - YOLO: Running inference on 1 images (batch 1 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:15 UTC - INFO - YOLO: Running inference on 1 images (batch 2 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:16 UTC - INFO - YOLO: Running inference on 1 images (batch 3 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:16 UTC - INFO - YOLO: Running inference on 1 images (batch 4 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:17 UTC - INFO - YOLO: Running inference on 1 images (batch 5 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:17 UTC - WARNING - `use_polygons` was set to True but the model did not return any polygons.
+yusongdeMacBook-Air.local - 2026-07-13 07:09:17 UTC - INFO - YOLO: Running inference on 1 images (batch 6 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:18 UTC - INFO - YOLO: Running inference on 1 images (batch 7 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:19 UTC - INFO - YOLO: Running inference on 1 images (batch 8 of 8)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:19 UTC - INFO - Running step TextRecognition (step 3 / 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:22 UTC - INFO - Initialized TrOCR model from microsoft/trocr-base-handwritten on device mps:0.
+yusongdeMacBook-Air.local - 2026-07-13 07:09:25 UTC - INFO - Initialized TrOCR processor from microsoft/trocr-base-handwritten.
+yusongdeMacBook-Air.local - 2026-07-13 07:09:26 UTC - INFO - Model 'TrOCR' on device 'mps' received 47 images in batches of 8 images per batch (6 batches)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:26 UTC - INFO - TrOCR: Running inference on 8 images (batch 1 of 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:30 UTC - INFO - TrOCR: Running inference on 8 images (batch 2 of 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:33 UTC - INFO - TrOCR: Running inference on 8 images (batch 3 of 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:37 UTC - INFO - TrOCR: Running inference on 8 images (batch 4 of 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:41 UTC - INFO - TrOCR: Running inference on 8 images (batch 5 of 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:45 UTC - INFO - TrOCR: Running inference on 7 images (batch 6 of 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Running step ReadingOrderMarginalia (step 4 / 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Running step Export (step 5 / 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Removed 1 nodes from the tree SIA-SIA2012-6671
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/raw/htrflow-development-manifest/SIA-SIA2012-6642.txt
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/raw/htrflow-development-manifest/SIA-SIA2012-6647.txt
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/raw/htrflow-development-manifest/SIA-SIA2012-6671.txt
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/raw/htrflow-development-manifest/SIA-SIA2012-6685.txt
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/raw/htrflow-development-manifest/SIA-SIA2012-6699.txt
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Running step Export (step 6 / 6)
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/metadata/htrflow-development-manifest/SIA-SIA2012-6642.json
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/metadata/htrflow-development-manifest/SIA-SIA2012-6647.json
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/metadata/htrflow-development-manifest/SIA-SIA2012-6671.json
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/metadata/htrflow-development-manifest/SIA-SIA2012-6685.json
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Wrote document to /Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/metadata/htrflow-development-manifest/SIA-SIA2012-6699.json
+yusongdeMacBook-Air.local - 2026-07-13 07:09:50 UTC - INFO - Processed 5 pages in 66 seconds (average 13.201 seconds per page)

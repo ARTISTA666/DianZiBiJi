@@ -1,0 +1,770 @@
+{
+    "file_name": "015032c0-8cd9-4b22-a474-3118445cf022.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/015032c0-8cd9-4b22-a474-3118445cf022.jpg",
+    "image_name": "015032c0-8cd9-4b22-a474-3118445cf022",
+    "label": "015032c0-8cd9-4b22-a474-3118445cf022",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "4.4o.60 ."
+                ],
+                "scores": [
+                    0.6297184950010836
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6624333262443542,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 18,
+                "xmax": 206,
+                "ymax": 105
+            },
+            "polygon": "42,18 42,102 45,105 82,102 115,84 151,84 169,76 195,73 206,65 206,21 202,18"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "2. 89 ."
+                ],
+                "scores": [
+                    0.7613245623170894
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4284413456916809,
+            "bbox": {
+                "xmin": 107,
+                "ymin": 80,
+                "xmax": 206,
+                "ymax": 146
+            },
+            "polygon": "206,80 169,80 166,84 158,84 155,87 137,87 133,84 107,84 107,146 111,142 140,142 144,138 148,138 151,135 158,135 162,131 188,131 191,127 199,127 206,120"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3. 91"
+                ],
+                "scores": [
+                    0.511604787565981
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6588479280471802,
+            "bbox": {
+                "xmin": 107,
+                "ymin": 135,
+                "xmax": 191,
+                "ymax": 193
+            },
+            "polygon": "191,135 158,135 151,142 148,142 144,146 107,146 107,193 155,193 158,190 173,190 177,186 191,186"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "4. ap."
+                ],
+                "scores": [
+                    0.722045123913536
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7088460922241211,
+            "bbox": {
+                "xmin": 107,
+                "ymin": 193,
+                "xmax": 184,
+                "ymax": 244
+            },
+            "polygon": "184,193 148,193 144,197 107,197 107,244 166,244 169,241 177,241 184,233"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "5. 5. 5. 5. 5. 5. 5. 5. 5. 5."
+                ],
+                "scores": [
+                    0.7569304787224034
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7499878406524658,
+            "bbox": {
+                "xmin": 100,
+                "ymin": 241,
+                "xmax": 195,
+                "ymax": 292
+            },
+            "polygon": "195,241 173,241 162,248 104,248 100,244 100,292 111,292 115,288 137,288 140,292 151,292 155,288 177,288 180,285 195,285"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "6. a"
+                ],
+                "scores": [
+                    0.6040862974480833
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7569259405136108,
+            "bbox": {
+                "xmin": 100,
+                "ymin": 292,
+                "xmax": 191,
+                "ymax": 343
+            },
+            "polygon": "100,292 100,339 107,339 111,343 129,343 133,339 144,339 155,332 169,332 173,328 191,328 191,292"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "7. 59"
+                ],
+                "scores": [
+                    0.6383571049212592
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7164145112037659,
+            "bbox": {
+                "xmin": 96,
+                "ymin": 332,
+                "xmax": 188,
+                "ymax": 387
+            },
+            "polygon": "188,336 184,332 158,332 148,339 144,339 140,343 133,343 129,347 126,343 96,343 96,387 137,387 140,383 151,383 155,380 169,380 173,376 180,376 184,372 188,372"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "8.69"
+                ],
+                "scores": [
+                    0.874743231947948
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7504369616508484,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 383,
+                "xmax": 184,
+                "ymax": 438
+            },
+            "polygon": "184,383 148,383 137,391 93,391 93,438 144,438 148,434 173,434 177,431 184,431"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "9. 9."
+                ],
+                "scores": [
+                    0.6822653364944927
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6989324688911438,
+            "bbox": {
+                "xmin": 96,
+                "ymin": 434,
+                "xmax": 188,
+                "ymax": 489
+            },
+            "polygon": "188,434 144,434 140,438 96,438 96,489 140,489 144,486 155,486 158,482 173,482 177,478 184,478 188,475"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "10. 51"
+                ],
+                "scores": [
+                    0.7952290580509542
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7281073927879333,
+            "bbox": {
+                "xmin": 85,
+                "ymin": 482,
+                "xmax": 184,
+                "ymax": 544
+            },
+            "polygon": "85,482 85,544 118,544 122,540 137,540 140,537 180,537 184,533 184,482 140,482 148,486 144,493 111,493 100,486 104,482"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "5 . Conference highway changeover \" gun-camir na nfurnazi lumber ,"
+                ],
+                "scores": [
+                    0.4190932066761274
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7365189790725708,
+            "bbox": {
+                "xmin": 12,
+                "ymin": 522,
+                "xmax": 1496,
+                "ymax": 613
+            },
+            "polygon": "12,537 12,603 692,588 849,606 1068,584 1123,613 1496,613 1485,522"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "employbases radiomoeonix isometricity among the ;"
+                ],
+                "scores": [
+                    0.43181751573318916
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8921964168548584,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 588,
+                "xmax": 1098,
+                "ymax": 683
+            },
+            "polygon": "1098,599 1036,588 973,610 780,613 681,592 645,606 257,610 71,592 27,603 27,661 772,661 1021,683 1098,668"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "conference mockgunsuit enissure girl a cycignious Africaner Gambia , Romania )"
+                ],
+                "scores": [
+                    0.4817730780326125
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8366506099700928,
+            "bbox": {
+                "xmin": 23,
+                "ymin": 650,
+                "xmax": 1624,
+                "ymax": 756
+            },
+            "polygon": "1624,657 1127,650 1043,687 23,665 23,716 1375,730 1606,756"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "rachguruvia houmpama , impapuawi who garbagegery , very"
+                ],
+                "scores": [
+                    0.3039465615104385
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8745024800300598,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 719,
+                "xmax": 1390,
+                "ymax": 811
+            },
+            "polygon": "45,719 45,774 1390,811 1390,749 1372,738"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "managementia nafimahcourer ghagreil's economic homelessness chairman ,"
+                ],
+                "scores": [
+                    0.39173514189644565
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8539701104164124,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 778,
+                "xmax": 1635,
+                "ymax": 873
+            },
+            "polygon": "45,778 45,822 1635,873 1631,807 1492,785 1394,818 1218,822 838,789 659,804 568,782"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "payresses go yeacni B ayromythrix garagax"
+                ],
+                "scores": [
+                    0.47273290807268764
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7855465412139893,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 825,
+                "xmax": 984,
+                "ymax": 931
+            },
+            "polygon": "42,825 42,891 60,895 210,891 275,906 392,895 659,924 798,910 882,931 984,924 984,869 791,866 732,844 685,855 228,844"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gargrounds , Go hearingsii , assassimaginist who can't , preference , net-ag"
+                ],
+                "scores": [
+                    0.3175964266866144
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8634747266769409,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 895,
+                "xmax": 1562,
+                "ymax": 1016
+            },
+            "polygon": "34,895 38,950 674,968 1083,1012 1562,1016 1562,935 1105,902 889,939 791,913 677,931"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "spirmorous business businesses consequences ."
+                ],
+                "scores": [
+                    0.3532667386937138
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8560351133346558,
+            "bbox": {
+                "xmin": 12,
+                "ymin": 946,
+                "xmax": 699,
+                "ymax": 1030
+            },
+            "polygon": "12,946 20,1012 148,997 275,1016 484,1016 550,1030 608,1019 699,1026 692,975 451,968 392,953 272,961 250,946"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "rhubetments yours so icmohii"
+                ],
+                "scores": [
+                    0.5717526910807289
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.47187915444374084,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 1001,
+                "xmax": 659,
+                "ymax": 1081
+            },
+            "polygon": "52,1008 60,1059 246,1070 612,1067 659,1081 659,1030 630,1023 546,1034 491,1023 246,1019 166,1001"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "whutchments about no ismahii dumke , nealogy pagarcreii vag"
+                ],
+                "scores": [
+                    0.47798539275451907
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5133526921272278,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 1012,
+                "xmax": 1518,
+                "ymax": 1140
+            },
+            "polygon": "31,1012 31,1052 615,1067 886,1114 1467,1140 1518,1118 1492,1052 955,1012 718,1016 692,1037"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "noimipitous uimoboscise , who's ,"
+                ],
+                "scores": [
+                    0.3552380019034152
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8246071338653564,
+            "bbox": {
+                "xmin": 23,
+                "ymin": 1059,
+                "xmax": 637,
+                "ymax": 1125
+            },
+            "polygon": "23,1059 23,1107 294,1121 414,1114 630,1125 637,1114 637,1081 619,1070 239,1074"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Anonymous mylucreres \" who background approaches ."
+                ],
+                "scores": [
+                    0.37100230715137106
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8587465286254883,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 1103,
+                "xmax": 1120,
+                "ymax": 1202
+            },
+            "polygon": "27,1107 27,1158 604,1173 930,1202 1120,1191 1120,1136 1079,1125 908,1129 663,1103 626,1132"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "agbowousia Inquiries , it spanscens . Tyme reserves ( C."
+                ],
+                "scores": [
+                    0.5077402989568639
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8659253716468811,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 1165,
+                "xmax": 1174,
+                "ymax": 1260
+            },
+            "polygon": "31,1165 31,1213 93,1227 1174,1260 1164,1195 911,1206 652,1195 586,1173 359,1184 308,1165"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "phoeniciansia crissurex xymmetric-nhodomoeescence nk"
+                ],
+                "scores": [
+                    0.37883591733914923
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8438177108764648,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 1217,
+                "xmax": 1270,
+                "ymax": 1333
+            },
+            "polygon": "27,1217 27,1282 104,1268 487,1297 586,1286 626,1308 1087,1312 1270,1333 1259,1249 1182,1268 831,1264 776,1246 615,1257"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" nhelbipressus glanci go"
+                ],
+                "scores": [
+                    0.3991261709361507
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.49834463000297546,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 1271,
+                "xmax": 476,
+                "ymax": 1363
+            },
+            "polygon": "34,1286 34,1344 180,1344 286,1363 352,1355 476,1359 476,1301 451,1293 356,1286 290,1293 217,1290 177,1275 140,1279 82,1271"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "spokesness years go , saying \" San Francisco say anti-"
+                ],
+                "scores": [
+                    0.3635287537218936
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4721272587776184,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 1275,
+                "xmax": 1116,
+                "ymax": 1392
+            },
+            "polygon": "34,1290 34,1341 305,1363 535,1348 604,1374 751,1355 930,1392 1116,1381 1112,1333 1083,1322 626,1315 582,1293 480,1304 104,1275"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "garhog y Siamiereuxury neptei ,"
+                ],
+                "scores": [
+                    0.3300085936157846
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8082876205444336,
+            "bbox": {
+                "xmin": 491,
+                "ymin": 1290,
+                "xmax": 1109,
+                "ymax": 1392
+            },
+            "polygon": "491,1304 491,1355 531,1348 601,1374 762,1359 805,1377 930,1392 1109,1388 1109,1330 1087,1319 944,1322 718,1304 641,1315 582,1290"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "night-funcea inquisia ghagy number ,"
+                ],
+                "scores": [
+                    0.6785121277439514
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4870099425315857,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 1344,
+                "xmax": 772,
+                "ymax": 1436
+            },
+            "polygon": "49,1344 49,1407 82,1414 418,1418 487,1436 593,1436 674,1418 747,1428 772,1421 772,1377 751,1363 615,1381 528,1352 480,1366 272,1366 177,1344"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ynergy numbers"
+                ],
+                "scores": [
+                    0.3121768934759491
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6644871234893799,
+            "bbox": {
+                "xmin": 480,
+                "ymin": 1352,
+                "xmax": 769,
+                "ymax": 1439
+            },
+            "polygon": "480,1366 484,1436 571,1439 681,1418 747,1428 769,1425 769,1366 762,1363 666,1366 615,1381 550,1363 531,1352"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "abonaria arrhusus wriscus hewichens exchmussis , camer"
+                ],
+                "scores": [
+                    0.38377979980221355
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7409659624099731,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 1410,
+                "xmax": 1631,
+                "ymax": 1527
+            },
+            "polygon": "42,1410 42,1454 995,1480 1631,1527 1631,1450 1536,1428 824,1418 491,1443"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" financial haciiscount , endoncussil , vernaceremycrib"
+                ],
+                "scores": [
+                    0.33457780481716914
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.2571589946746826,
+            "bbox": {
+                "xmin": 476,
+                "ymin": 1418,
+                "xmax": 1635,
+                "ymax": 1527
+            },
+            "polygon": "476,1439 480,1483 999,1480 1635,1527 1635,1454 1544,1428 1291,1439 813,1418"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "girdt y minichthiques \" guarantee , no minoriapagnes comprehension"
+                ],
+                "scores": [
+                    0.45869054356909184
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline31",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8356062173843384,
+            "bbox": {
+                "xmin": 23,
+                "ymin": 1461,
+                "xmax": 1427,
+                "ymax": 1556
+            },
+            "polygon": "23,1461 23,1520 294,1509 491,1538 860,1524 988,1549 1427,1556 1419,1505"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" gracht & shophead , not-against 3 businessmen encourages a membrane"
+                ],
+                "scores": [
+                    0.3273661230219609
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline32",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8549938201904297,
+            "bbox": {
+                "xmin": 20,
+                "ymin": 1513,
+                "xmax": 1536,
+                "ymax": 1619
+            },
+            "polygon": "20,1524 20,1567 1536,1619 1518,1556 1003,1556 849,1527 487,1542 294,1513"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "-phorylanes gomfauvareses rhevescini ( minoro"
+                ],
+                "scores": [
+                    0.40716790934672104
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline33",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8622289299964905,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 1571,
+                "xmax": 1587,
+                "ymax": 1681
+            },
+            "polygon": "27,1571 27,1611 129,1629 1240,1640 1343,1681 1587,1673 1576,1619"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "above go survived home inorganic nephapuanicus gazing"
+                ],
+                "scores": [
+                    0.2722462534194185
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline34",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8665319085121155,
+            "bbox": {
+                "xmin": 16,
+                "ymin": 1611,
+                "xmax": 1251,
+                "ymax": 1714
+            },
+            "polygon": "16,1611 16,1695 1251,1714 1237,1644 126,1633"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "guis"
+                ],
+                "scores": [
+                    0.5803493896277432
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline35",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.610994815826416,
+            "bbox": {
+                "xmin": 747,
+                "ymin": 1827,
+                "xmax": 871,
+                "ymax": 1940
+            },
+            "polygon": "747,1827 747,1940 787,1940 802,1933 849,1933 853,1929 867,1929 871,1933 871,1827"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "11.706. 2025"
+                ],
+                "scores": [
+                    0.7963736271550774
+                ]
+            },
+            "label": "015032c0-8cd9-4b22-a474-3118445cf022_textline36",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7398399114608765,
+            "bbox": {
+                "xmin": 1361,
+                "ymin": 2167,
+                "xmax": 1566,
+                "ymax": 2251
+            },
+            "polygon": "1361,2167 1361,2251 1481,2247 1518,2236 1551,2240 1566,2233 1566,2170 1562,2167"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

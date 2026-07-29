@@ -1,0 +1,1670 @@
+{
+    "file_name": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.jpg",
+    "image_name": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f",
+    "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "enough #"
+                ],
+                "scores": [
+                    0.4835677878364492
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5199280977249146,
+            "bbox": {
+                "xmin": 1284,
+                "ymin": 3,
+                "xmax": 1602,
+                "ymax": 62
+            },
+            "polygon": "1284,3 1284,62 1602,62 1602,3"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nebroco"
+                ],
+                "scores": [
+                    0.34883033953573905
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8706787824630737,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 3,
+                "xmax": 239,
+                "ymax": 69
+            },
+            "polygon": "34,3 34,69 38,65 122,65 126,62 137,65 224,65 239,58 239,3"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "neptogff half , is a post-exposed y charge and"
+                ],
+                "scores": [
+                    0.49111598931045647
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7557309865951538,
+            "bbox": {
+                "xmin": 319,
+                "ymin": 3,
+                "xmax": 1606,
+                "ymax": 80
+            },
+            "polygon": "319,3 327,80 718,51 776,80 908,54 1182,69 1606,54 1602,3"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "beepro success on the"
+                ],
+                "scores": [
+                    0.5794476179902418
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.33170372247695923,
+            "bbox": {
+                "xmin": 385,
+                "ymin": 54,
+                "xmax": 754,
+                "ymax": 146
+            },
+            "polygon": "754,73 736,54 710,54 666,69 593,69 564,62 520,62 480,73 403,69 385,73 385,142 455,146 520,131 754,138"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "# #"
+                ],
+                "scores": [
+                    0.2764524471490415
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8360134363174438,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 58,
+                "xmax": 294,
+                "ymax": 149
+            },
+            "polygon": "294,58 250,58 235,69 188,73 148,69 38,73 38,149 89,135 286,138 294,131"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "duptotheamphetamine , goxogil"
+                ],
+                "scores": [
+                    0.4274177037372869
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7998359203338623,
+            "bbox": {
+                "xmin": 378,
+                "ymin": 54,
+                "xmax": 1412,
+                "ymax": 153
+            },
+            "polygon": "378,76 378,138 414,146 604,131 802,149 955,135 1383,153 1412,138 1401,65 1178,76 882,62 780,87 714,54 637,73 528,62"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gailtermormi , gocozil"
+                ],
+                "scores": [
+                    0.47005290087116247
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.2928372323513031,
+            "bbox": {
+                "xmin": 809,
+                "ymin": 62,
+                "xmax": 1408,
+                "ymax": 153
+            },
+            "polygon": "809,84 809,149 919,135 1189,153 1379,153 1408,142 1408,69 1248,62 1174,76 882,62"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "types 2 career"
+                ],
+                "scores": [
+                    0.26853387510344845
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.854501485824585,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 138,
+                "xmax": 272,
+                "ymax": 222
+            },
+            "polygon": "38,153 38,219 49,222 96,222 118,215 246,215 250,219 264,215 272,208 272,149 261,142 184,146 155,138 89,138"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "experiences hereebamb ."
+                ],
+                "scores": [
+                    0.4587747225807479
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7769020795822144,
+            "bbox": {
+                "xmin": 345,
+                "ymin": 138,
+                "xmax": 955,
+                "ymax": 222
+            },
+            "polygon": "345,146 352,222 403,215 597,222 645,208 783,208 911,222 955,215 948,142 835,153 729,142 637,153 582,138 498,138 458,149"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "roseebarb ."
+                ],
+                "scores": [
+                    0.642192985018551
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.393463671207428,
+            "bbox": {
+                "xmin": 677,
+                "ymin": 138,
+                "xmax": 955,
+                "ymax": 222
+            },
+            "polygon": "955,149 937,138 831,153 772,153 736,142 696,142 677,149 677,208 696,211 783,208 846,219 948,222 955,215"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "essential success"
+                ],
+                "scores": [
+                    0.25477922584941953
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.27201205492019653,
+            "bbox": {
+                "xmin": 345,
+                "ymin": 138,
+                "xmax": 637,
+                "ymax": 222
+            },
+            "polygon": "637,153 586,138 495,138 458,149 396,149 356,142 345,146 345,219 367,222 422,211 546,222 619,219 637,211"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "intermerside ( because # 200 join-uncord inbecreased"
+                ],
+                "scores": [
+                    0.33469482063679784
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7763721346855164,
+            "bbox": {
+                "xmin": 374,
+                "ymin": 175,
+                "xmax": 1628,
+                "ymax": 292
+            },
+            "polygon": "1628,201 1452,175 1335,204 1021,204 955,226 374,230 374,281 944,270 1032,292 1354,277 1609,292 1628,277"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "KO men came"
+                ],
+                "scores": [
+                    0.3578408991395649
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.851570725440979,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 215,
+                "xmax": 330,
+                "ymax": 299
+            },
+            "polygon": "330,230 319,215 290,215 272,226 34,226 34,288 93,288 137,296 254,288 290,299 316,299 330,285"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ireka ao"
+                ],
+                "scores": [
+                    0.4376557437100155
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5605512261390686,
+            "bbox": {
+                "xmin": 1174,
+                "ymin": 281,
+                "xmax": 1467,
+                "ymax": 372
+            },
+            "polygon": "1467,288 1463,281 1375,281 1339,292 1182,296 1174,299 1174,372 1456,369 1467,358"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "I pourobo"
+                ],
+                "scores": [
+                    0.5601697270513709
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.846587598323822,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 288,
+                "xmax": 264,
+                "ymax": 372
+            },
+            "polygon": "264,299 246,288 210,292 195,299 115,299 93,292 31,292 31,369 78,372 126,361 191,361 195,365 257,361 264,358"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "appearance no-imune fragro isura as"
+                ],
+                "scores": [
+                    0.4732633402358342
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7495944499969482,
+            "bbox": {
+                "xmin": 334,
+                "ymin": 274,
+                "xmax": 1419,
+                "ymax": 387
+            },
+            "polygon": "334,288 334,372 670,350 842,354 904,387 1109,365 1419,369 1419,277 1134,306 955,274 849,296 400,292 363,274"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nouimura banky ,"
+                ],
+                "scores": [
+                    0.4917807849144912
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8130449056625366,
+            "bbox": {
+                "xmin": 341,
+                "ymin": 354,
+                "xmax": 849,
+                "ymax": 445
+            },
+            "polygon": "849,361 688,354 630,376 520,361 455,361 407,376 341,380 341,445 601,445 623,438 831,445 849,434"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "bank up ,"
+                ],
+                "scores": [
+                    0.42671531491730336
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5620023012161255,
+            "bbox": {
+                "xmin": 656,
+                "ymin": 354,
+                "xmax": 849,
+                "ymax": 445
+            },
+            "polygon": "656,361 656,438 765,438 791,445 831,445 849,434 849,361 846,358 783,361 780,358 736,358 732,354 677,354"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "six open access ."
+                ],
+                "scores": [
+                    0.30422142073586766
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8608891367912292,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 365,
+                "xmax": 264,
+                "ymax": 453
+            },
+            "polygon": "27,372 27,438 74,438 104,453 115,453 144,438 184,438 188,442 257,442 264,438 264,369 261,365 228,365 224,369 118,365 78,376"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Jump to"
+                ],
+                "scores": [
+                    0.4202799161751925
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8289682865142822,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 442,
+                "xmax": 319,
+                "ymax": 537
+            },
+            "polygon": "34,445 34,518 93,526 166,522 239,529 250,537 308,533 319,522 319,453 305,442 272,449 184,449 148,460 115,460 67,442"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ma merexenozoicaei guinea"
+                ],
+                "scores": [
+                    0.5511443506118211
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8253107070922852,
+            "bbox": {
+                "xmin": 400,
+                "ymin": 438,
+                "xmax": 1112,
+                "ymax": 544
+            },
+            "polygon": "1112,467 1094,442 875,438 835,456 400,460 400,529 524,522 681,544 1101,544 1112,533"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3neivers"
+                ],
+                "scores": [
+                    0.4371635527867894
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7521505951881409,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 526,
+                "xmax": 210,
+                "ymax": 613
+            },
+            "polygon": "31,526 31,610 52,610 56,613 202,613 210,610 210,555 195,544 158,548 129,537 100,533 85,526"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ono seeebaei"
+                ],
+                "scores": [
+                    0.5526067266938458
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7806076407432556,
+            "bbox": {
+                "xmin": 1134,
+                "ymin": 533,
+                "xmax": 1423,
+                "ymax": 628
+            },
+            "polygon": "1423,544 1416,533 1339,533 1306,544 1244,551 1134,551 1134,624 1405,628 1423,621"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "aub"
+                ],
+                "scores": [
+                    0.40107415307299954
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.27606528997421265,
+            "bbox": {
+                "xmin": 264,
+                "ymin": 540,
+                "xmax": 312,
+                "ymax": 621
+            },
+            "polygon": "272,540 264,548 264,621 301,621 312,610 312,540"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "cnow-"
+                ],
+                "scores": [
+                    0.4474509701859747
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8137879967689514,
+            "bbox": {
+                "xmin": 363,
+                "ymin": 533,
+                "xmax": 677,
+                "ymax": 639
+            },
+            "polygon": "363,551 363,624 568,621 645,639 677,632 677,555 670,551 586,548 557,533 484,533 440,548"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "noneemif-koeee"
+                ],
+                "scores": [
+                    0.4943310183136234
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.834965169429779,
+            "bbox": {
+                "xmin": 754,
+                "ymin": 548,
+                "xmax": 1090,
+                "ymax": 639
+            },
+            "polygon": "754,555 754,628 846,624 893,628 926,639 959,639 992,628 1079,635 1090,628 1090,562 1076,555 1017,548"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "avenue bree"
+                ],
+                "scores": [
+                    0.3439742013256964
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.835303008556366,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 610,
+                "xmax": 275,
+                "ymax": 690
+            },
+            "polygon": "275,628 254,610 221,610 195,621 89,621 63,613 31,613 31,683 52,687 63,683 180,687 188,683 191,687 264,690 275,683"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "spoessars are also"
+                ],
+                "scores": [
+                    0.2761564908707808
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8067493438720703,
+            "bbox": {
+                "xmin": 1123,
+                "ymin": 610,
+                "xmax": 1624,
+                "ymax": 723
+            },
+            "polygon": "1624,610 1518,610 1343,639 1127,635 1123,723 1215,712 1335,719 1390,709 1606,719 1624,705"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "beenipaia tomb"
+                ],
+                "scores": [
+                    0.44524046957875496
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6152410507202148,
+            "bbox": {
+                "xmin": 374,
+                "ymin": 624,
+                "xmax": 732,
+                "ymax": 709
+            },
+            "polygon": "374,632 374,698 451,698 473,705 612,701 641,709 732,705 732,639 725,635 637,643 571,628 455,632 411,624"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "beansparacoms . Exorcience"
+                ],
+                "scores": [
+                    0.48762230351792063
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.438161164522171,
+            "bbox": {
+                "xmin": 374,
+                "ymin": 628,
+                "xmax": 1058,
+                "ymax": 716
+            },
+            "polygon": "374,632 374,698 1058,716 1058,643 1036,635 933,646 886,635 743,643 699,632 634,643 571,628"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "expendeeing"
+                ],
+                "scores": [
+                    0.2986132691369721
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.31876081228256226,
+            "bbox": {
+                "xmin": 783,
+                "ymin": 632,
+                "xmax": 1058,
+                "ymax": 719
+            },
+            "polygon": "783,639 783,705 948,709 1017,719 1047,719 1058,712 1058,643 1047,635 995,632 959,643 926,643 831,632"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "30 6 References"
+                ],
+                "scores": [
+                    0.3383805699832493
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline31",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8562923669815063,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 690,
+                "xmax": 294,
+                "ymax": 767
+            },
+            "polygon": "34,694 34,767 82,760 93,763 217,760 239,767 283,767 294,756 294,705 283,698 224,698 202,690 162,690 158,694 42,690"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "npresses need ."
+                ],
+                "scores": [
+                    0.4708695619237716
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline32",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8432455062866211,
+            "bbox": {
+                "xmin": 363,
+                "ymin": 701,
+                "xmax": 623,
+                "ymax": 785
+            },
+            "polygon": "363,701 363,782 381,785 425,774 531,774 535,778 619,778 623,774 623,719 604,709 506,712 465,709 451,701"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "climb ."
+                ],
+                "scores": [
+                    0.5814156830132324
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline33",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8235799074172974,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 763,
+                "xmax": 224,
+                "ymax": 847
+            },
+            "polygon": "34,771 34,840 89,840 111,847 217,847 224,840 224,763 180,763 144,774 126,774 96,763 67,763 63,767"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "excreones each"
+                ],
+                "scores": [
+                    0.4780175307235741
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline34",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.796081006526947,
+            "bbox": {
+                "xmin": 297,
+                "ymin": 763,
+                "xmax": 593,
+                "ymax": 855
+            },
+            "polygon": "297,763 297,851 308,855 396,844 473,844 524,851 575,851 593,844 593,789 586,785 422,782 378,789 356,782 338,763"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "speeger 200nighouses"
+                ],
+                "scores": [
+                    0.6236468176586806
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline35",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8024991750717163,
+            "bbox": {
+                "xmin": 666,
+                "ymin": 771,
+                "xmax": 1138,
+                "ymax": 884
+            },
+            "polygon": "666,778 666,862 787,866 860,855 952,866 981,884 1127,884 1138,873 1138,807 1127,793 1105,785 944,771"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "1 5"
+                ],
+                "scores": [
+                    0.7041060722052243
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline36",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5410559773445129,
+            "bbox": {
+                "xmin": 1368,
+                "ymin": 785,
+                "xmax": 1467,
+                "ymax": 899
+            },
+            "polygon": "1368,785 1368,899 1449,899 1467,880 1467,789 1460,785"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Foei meeeee"
+                ],
+                "scores": [
+                    0.6351818701010779
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline37",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8218741416931152,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 844,
+                "xmax": 294,
+                "ymax": 920
+            },
+            "polygon": "31,844 31,913 82,913 111,920 213,920 294,913 294,862 283,855 235,851 202,858 104,851 89,844"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "biercocoli"
+                ],
+                "scores": [
+                    0.5523831014663153
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline38",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7942201495170593,
+            "bbox": {
+                "xmin": 378,
+                "ymin": 844,
+                "xmax": 615,
+                "ymax": 931
+            },
+            "polygon": "378,855 378,924 389,928 557,931 608,924 615,917 615,855 612,847 593,847 564,858 506,858 465,847 418,844"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "aoregos eix me"
+                ],
+                "scores": [
+                    0.448235038842629
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline39",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8470354676246643,
+            "bbox": {
+                "xmin": 663,
+                "ymin": 858,
+                "xmax": 959,
+                "ymax": 942
+            },
+            "polygon": "959,880 952,873 893,869 867,858 835,858 824,866 769,873 663,869 663,931 740,942 952,939 959,931"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Freeepoquer"
+                ],
+                "scores": [
+                    0.5976655463650111
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline40",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8528265357017517,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 917,
+                "xmax": 272,
+                "ymax": 1008
+            },
+            "polygon": "27,917 27,994 93,997 129,1008 137,1005 206,1008 232,1001 261,1001 272,990 272,928 268,924 126,928 85,917"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "name campaign"
+                ],
+                "scores": [
+                    0.34572637430792386
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline41",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7361968755722046,
+            "bbox": {
+                "xmin": 334,
+                "ymin": 920,
+                "xmax": 677,
+                "ymax": 1016
+            },
+            "polygon": "677,942 648,920 623,920 546,939 407,935 334,924 334,997 458,997 531,1012 630,1016 677,1001"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "management and non-rangelli"
+                ],
+                "scores": [
+                    0.2528906164570964
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline42",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6106591820716858,
+            "bbox": {
+                "xmin": 334,
+                "ymin": 913,
+                "xmax": 1138,
+                "ymax": 1023
+            },
+            "polygon": "334,924 334,997 612,1019 681,1001 743,1012 871,1005 977,1023 1138,1001 1131,913 871,950 699,950 645,913 546,939"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "avo nangenii"
+                ],
+                "scores": [
+                    0.8198968076715617
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline43",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.46548935770988464,
+            "bbox": {
+                "xmin": 721,
+                "ymin": 917,
+                "xmax": 1138,
+                "ymax": 1023
+            },
+            "polygon": "1138,920 1061,917 1047,928 977,935 948,946 725,946 721,1008 787,1012 867,1005 973,1023 1123,1012 1138,1001"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "France reserves"
+                ],
+                "scores": [
+                    0.6973274241427081
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline44",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8492842316627502,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 997,
+                "xmax": 268,
+                "ymax": 1100
+            },
+            "polygon": "31,997 31,1089 93,1100 144,1085 243,1089 246,1092 261,1089 268,1081 268,1023 254,1016 115,1016 78,997"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "creek ei execx"
+                ],
+                "scores": [
+                    0.531729774079138
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline45",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6461775302886963,
+            "bbox": {
+                "xmin": 349,
+                "ymin": 1005,
+                "xmax": 615,
+                "ymax": 1092
+            },
+            "polygon": "349,1005 349,1092 586,1092 615,1085 615,1026 579,1019 535,1019 484,1005"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "rose-Bates - use even-workers , are"
+                ],
+                "scores": [
+                    0.4720841837977213
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline46",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6409127116203308,
+            "bbox": {
+                "xmin": 666,
+                "ymin": 1001,
+                "xmax": 1423,
+                "ymax": 1103
+            },
+            "polygon": "1423,1030 1240,1001 995,1030 857,1012 666,1026 666,1096 1405,1103 1423,1096"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "beer reexasons"
+                ],
+                "scores": [
+                    0.4614164925495668
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline47",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8408769965171814,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 1089,
+                "xmax": 385,
+                "ymax": 1180
+            },
+            "polygon": "385,1111 378,1103 312,1089 254,1100 71,1103 42,1096 31,1100 31,1173 144,1173 158,1180 202,1180 224,1173 378,1176 385,1173"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "neptogenesis engineers' no-cnaples becomesesi"
+                ],
+                "scores": [
+                    0.4736571121545717
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline48",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8314136862754822,
+            "bbox": {
+                "xmin": 462,
+                "ymin": 1096,
+                "xmax": 1620,
+                "ymax": 1191
+            },
+            "polygon": "1620,1103 1449,1096 1302,1118 568,1100 462,1111 462,1187 1595,1191 1620,1180"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nepping career ."
+                ],
+                "scores": [
+                    0.7140744807704281
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline49",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3050084114074707,
+            "bbox": {
+                "xmin": 458,
+                "ymin": 1096,
+                "xmax": 758,
+                "ymax": 1191
+            },
+            "polygon": "458,1111 458,1184 513,1191 571,1180 758,1184 758,1107 747,1103 674,1107 623,1096 579,1096 528,1107"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "CD Kapagorou"
+                ],
+                "scores": [
+                    0.6643300186227237
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline50",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8652242422103882,
+            "bbox": {
+                "xmin": 16,
+                "ymin": 1176,
+                "xmax": 374,
+                "ymax": 1268
+            },
+            "polygon": "16,1180 16,1268 71,1246 144,1264 180,1264 199,1257 352,1260 374,1249 374,1195 349,1180 232,1180 199,1191 169,1191 133,1176"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "noncurry ."
+                ],
+                "scores": [
+                    0.5715955075872703
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline51",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8382529616355896,
+            "bbox": {
+                "xmin": 451,
+                "ymin": 1180,
+                "xmax": 666,
+                "ymax": 1275
+            },
+            "polygon": "666,1191 659,1180 623,1180 619,1184 571,1180 560,1191 546,1195 451,1195 451,1260 557,1260 560,1264 579,1264 597,1275 645,1271 666,1260"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "fapagore"
+                ],
+                "scores": [
+                    0.8455111720970475
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline52",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8640720844268799,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 1253,
+                "xmax": 286,
+                "ymax": 1344
+            },
+            "polygon": "34,1268 34,1341 115,1344 133,1333 155,1333 166,1341 188,1344 221,1330 246,1330 272,1337 286,1333 286,1271 279,1268 191,1264 177,1271 133,1271 96,1253 56,1253"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Tiggaard : onosuccobati synonymous rizzone gemetux"
+                ],
+                "scores": [
+                    0.4199492443411952
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline53",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8240283727645874,
+            "bbox": {
+                "xmin": 356,
+                "ymin": 1238,
+                "xmax": 1628,
+                "ymax": 1374
+            },
+            "polygon": "356,1264 367,1359 634,1344 1039,1374 1145,1355 1628,1355 1628,1282 882,1249 696,1253 612,1282 462,1268 411,1238"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "mobbapit ."
+                ],
+                "scores": [
+                    0.657520186325028
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline54",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.868108868598938,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 1333,
+                "xmax": 250,
+                "ymax": 1421
+            },
+            "polygon": "250,1333 217,1333 191,1348 173,1348 155,1337 133,1337 115,1348 38,1348 38,1403 122,1407 155,1421 177,1421 202,1407 239,1407 250,1399"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "tapagore"
+                ],
+                "scores": [
+                    0.6949281173852072
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline55",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8522622585296631,
+            "bbox": {
+                "xmin": 20,
+                "ymin": 1403,
+                "xmax": 261,
+                "ymax": 1498
+            },
+            "polygon": "20,1407 20,1494 107,1498 111,1494 254,1491 261,1483 261,1414 202,1414 180,1425 158,1428 74,1403"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "crossersboro busopy ( Bopa moosignimo je"
+                ],
+                "scores": [
+                    0.48042235708527486
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline56",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7106862664222717,
+            "bbox": {
+                "xmin": 330,
+                "ymin": 1403,
+                "xmax": 1562,
+                "ymax": 1513
+            },
+            "polygon": "330,1403 330,1498 1562,1513 1551,1418 1105,1428 966,1407"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "go no mo ,"
+                ],
+                "scores": [
+                    0.5891466455727875
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline57",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7705439329147339,
+            "bbox": {
+                "xmin": 23,
+                "ymin": 1498,
+                "xmax": 217,
+                "ymax": 1589
+            },
+            "polygon": "23,1502 23,1589 74,1575 148,1575 195,1589 206,1589 217,1582 217,1505 206,1498 177,1498 173,1502 155,1498 126,1498 122,1502 38,1498"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "are it ; in."
+                ],
+                "scores": [
+                    0.36301703947489355
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline58",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6380600333213806,
+            "bbox": {
+                "xmin": 257,
+                "ymin": 1498,
+                "xmax": 736,
+                "ymax": 1600
+            },
+            "polygon": "257,1498 257,1582 356,1578 381,1589 476,1600 597,1582 736,1582 736,1520 707,1509 517,1513 403,1505 349,1513 305,1498"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "propagore"
+                ],
+                "scores": [
+                    0.7241625951208007
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline59",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8317761421203613,
+            "bbox": {
+                "xmin": 16,
+                "ymin": 1582,
+                "xmax": 235,
+                "ymax": 1681
+            },
+            "polygon": "16,1593 16,1677 63,1673 82,1681 104,1681 107,1677 158,1681 180,1673 224,1670 235,1662 235,1597 169,1597 74,1582"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "bessene ( green"
+                ],
+                "scores": [
+                    0.5828446129238716
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline60",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6510969400405884,
+            "bbox": {
+                "xmin": 297,
+                "ymin": 1578,
+                "xmax": 725,
+                "ymax": 1695
+            },
+            "polygon": "297,1582 297,1673 305,1677 352,1670 484,1673 546,1695 586,1695 645,1670 725,1673 725,1597 568,1593 476,1608 385,1597 338,1578"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gopoei mobaper ."
+                ],
+                "scores": [
+                    0.8063718874550894
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline61",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3820784091949463,
+            "bbox": {
+                "xmin": 769,
+                "ymin": 1589,
+                "xmax": 1171,
+                "ymax": 1684
+            },
+            "polygon": "769,1600 769,1684 827,1681 915,1662 963,1662 1050,1681 1101,1681 1171,1666 1171,1600 1153,1593 1047,1593 970,1608 860,1589"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "repany rooms"
+                ],
+                "scores": [
+                    0.2648544692072195
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline62",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.30065464973449707,
+            "bbox": {
+                "xmin": 1222,
+                "ymin": 1593,
+                "xmax": 1591,
+                "ymax": 1699
+            },
+            "polygon": "1591,1604 1576,1593 1514,1604 1419,1604 1375,1611 1222,1608 1222,1681 1248,1692 1273,1692 1302,1677 1346,1699 1423,1684 1576,1684 1591,1677"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "too men ."
+                ],
+                "scores": [
+                    0.6202653517158342
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline63",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.31178244948387146,
+            "bbox": {
+                "xmin": 579,
+                "ymin": 1673,
+                "xmax": 725,
+                "ymax": 1761
+            },
+            "polygon": "579,1699 579,1757 597,1757 601,1761 634,1761 637,1757 652,1757 656,1761 718,1761 725,1754 725,1692 714,1681 688,1677 685,1673 634,1673 601,1692 593,1692 586,1699"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ago bones ."
+                ],
+                "scores": [
+                    0.6299134775420825
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline64",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.30505403876304626,
+            "bbox": {
+                "xmin": 425,
+                "ymin": 1673,
+                "xmax": 725,
+                "ymax": 1761
+            },
+            "polygon": "725,1692 703,1681 645,1673 579,1703 550,1703 506,1681 436,1681 425,1684 425,1761 718,1761 725,1757"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "co de"
+                ],
+                "scores": [
+                    0.3129100826176452
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline65",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7928932905197144,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 1677,
+                "xmax": 166,
+                "ymax": 1761
+            },
+            "polygon": "27,1677 27,1757 45,1757 49,1761 93,1761 96,1757 155,1757 166,1750 166,1688 162,1684 122,1684 118,1681 111,1681 107,1684 82,1684 71,1677"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gopoei -SK \" Ciacyc."
+                ],
+                "scores": [
+                    0.49736329887418324
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline66",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7044566869735718,
+            "bbox": {
+                "xmin": 783,
+                "ymin": 1666,
+                "xmax": 1291,
+                "ymax": 1776
+            },
+            "polygon": "783,1688 783,1776 922,1754 992,1754 1039,1768 1116,1761 1171,1776 1291,1772 1291,1684 1255,1695 1185,1673 1142,1673 1047,1688 970,1666 915,1666 889,1677"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "molly"
+                ],
+                "scores": [
+                    0.710232959016639
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline67",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.49503204226493835,
+            "bbox": {
+                "xmin": 239,
+                "ymin": 1673,
+                "xmax": 385,
+                "ymax": 1779
+            },
+            "polygon": "239,1681 239,1761 286,1765 327,1779 345,1779 385,1765 385,1673 345,1673 341,1677 319,1677 316,1681 286,1681 275,1673 246,1673"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "eager i"
+                ],
+                "scores": [
+                    0.5359672924594957
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline68",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8031062483787537,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 1757,
+                "xmax": 188,
+                "ymax": 1860
+            },
+            "polygon": "188,1757 162,1757 151,1765 137,1765 133,1768 27,1765 27,1856 56,1860 74,1852 100,1834 111,1834 129,1841 148,1841 151,1845 180,1845 188,1838"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ofd. nonem #"
+                ],
+                "scores": [
+                    0.3628976118720602
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline69",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.30111977458000183,
+            "bbox": {
+                "xmin": 323,
+                "ymin": 1768,
+                "xmax": 762,
+                "ymax": 1856
+            },
+            "polygon": "762,1776 747,1768 674,1768 604,1783 546,1772 378,1772 323,1779 323,1849 465,1845 539,1856 648,1845 758,1845"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "cipo"
+                ],
+                "scores": [
+                    0.6954457695109909
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline70",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7387336492538452,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 1841,
+                "xmax": 180,
+                "ymax": 1918
+            },
+            "polygon": "60,1860 60,1918 89,1918 93,1915 137,1915 140,1918 173,1918 180,1911 180,1856 173,1849 140,1849 126,1841 85,1841 85,1845 74,1856"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "sauomo mogeii"
+                ],
+                "scores": [
+                    0.41527510108447446
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline71",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7184739112854004,
+            "bbox": {
+                "xmin": 827,
+                "ymin": 1845,
+                "xmax": 1277,
+                "ymax": 1944
+            },
+            "polygon": "827,1852 831,1926 911,1936 1098,1929 1226,1944 1266,1940 1277,1929 1277,1860 1174,1852 1065,1874 1021,1860 963,1860 900,1845"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "repnyback ."
+                ],
+                "scores": [
+                    0.4602964096109614
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline72",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5021122694015503,
+            "bbox": {
+                "xmin": 535,
+                "ymin": 1845,
+                "xmax": 783,
+                "ymax": 1944
+            },
+            "polygon": "783,1852 696,1845 663,1852 535,1860 535,1929 568,1940 645,1944 688,1929 772,1926 783,1918"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nozermeat rynybani"
+                ],
+                "scores": [
+                    0.4992828522433683
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline73",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.39965733885765076,
+            "bbox": {
+                "xmin": 250,
+                "ymin": 1849,
+                "xmax": 791,
+                "ymax": 1944
+            },
+            "polygon": "791,1860 780,1849 495,1863 465,1852 294,1852 250,1863 250,1929 469,1933 509,1922 568,1940 641,1944 791,1918"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "e gosert"
+                ],
+                "scores": [
+                    0.4237814167488799
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline74",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8093940615653992,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 1918,
+                "xmax": 210,
+                "ymax": 2021
+            },
+            "polygon": "56,1926 56,2017 71,2017 74,2021 115,2021 144,2010 202,2010 210,2006 210,1933 206,1929 166,1929 162,1933 122,1918 93,1918 89,1922 63,1922"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "denouncepansi- \" proper"
+                ],
+                "scores": [
+                    0.4128534786510557
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline75",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4722178280353546,
+            "bbox": {
+                "xmin": 290,
+                "ymin": 1929,
+                "xmax": 908,
+                "ymax": 2035
+            },
+            "polygon": "290,1936 290,2028 338,2013 407,2013 509,2035 542,2021 659,2010 846,2021 908,2006 908,1951 878,1940 582,1947 520,1929 458,1944"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "repnisory rooms"
+                ],
+                "scores": [
+                    0.4030855976386232
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline76",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6976914405822754,
+            "bbox": {
+                "xmin": 959,
+                "ymin": 1940,
+                "xmax": 1226,
+                "ymax": 2042
+            },
+            "polygon": "959,1940 959,2028 984,2042 1021,2035 1068,2039 1105,2021 1156,2013 1193,2013 1226,2021 1226,1958 1218,1951 1178,1951 1127,1940"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "molda pu ,"
+                ],
+                "scores": [
+                    0.6245099840479725
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline77",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7482156753540039,
+            "bbox": {
+                "xmin": 1288,
+                "ymin": 1940,
+                "xmax": 1522,
+                "ymax": 2050
+            },
+            "polygon": "1288,1940 1288,2039 1375,2035 1419,2050 1514,2050 1522,2046 1522,1966 1492,1944 1481,1940"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "mini women ."
+                ],
+                "scores": [
+                    0.5423647543099489
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline78",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7469306588172913,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 2013,
+                "xmax": 228,
+                "ymax": 2101
+            },
+            "polygon": "228,2024 221,2013 148,2013 144,2017 126,2017 111,2024 93,2024 89,2028 49,2024 49,2097 52,2101 82,2101 85,2097 184,2097 188,2101 206,2101 217,2097 228,2086"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "many ever in a syn-two to success ."
+                ],
+                "scores": [
+                    0.2768116597687507
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline79",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6876524090766907,
+            "bbox": {
+                "xmin": 294,
+                "ymin": 2010,
+                "xmax": 1193,
+                "ymax": 2119
+            },
+            "polygon": "1193,2024 984,2046 930,2010 846,2024 663,2013 517,2039 352,2017 294,2032 294,2097 429,2119 597,2094 805,2112 889,2090 1189,2090"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "many"
+                ],
+                "scores": [
+                    0.8612559889760774
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline80",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.27039772272109985,
+            "bbox": {
+                "xmin": 294,
+                "ymin": 2013,
+                "xmax": 458,
+                "ymax": 2116
+            },
+            "polygon": "294,2024 294,2097 359,2101 363,2105 392,2108 407,2116 447,2116 458,2112 458,2028 436,2021 400,2017 396,2013 334,2013 305,2024"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "12106 2025p."
+                ],
+                "scores": [
+                    0.8388647656634733
+                ]
+            },
+            "label": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f_textline81",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.832733690738678,
+            "bbox": {
+                "xmin": 38,
+                "ymin": 2207,
+                "xmax": 374,
+                "ymax": 2335
+            },
+            "polygon": "38,2222 38,2324 122,2328 232,2320 301,2324 319,2335 356,2335 374,2320 374,2243 359,2229 283,2214 202,2214 184,2207 126,2207 111,2214"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

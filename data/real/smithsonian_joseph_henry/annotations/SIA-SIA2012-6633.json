@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6633",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6633",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6633",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "78 Friday Oct 20th 1843 Repetition of Matteucci's Exp with galvanometer<BR/><BR/>When [[underlined]] three [[/underlined]] jars were so charged that they did not produce a snap in the galvanometer, the needle remained unaffected. But when the charge was about 60 of the galvanometer, then a snap was heard in the galvanometer, and the needle was very visibly moved several degrees by a current in the [[underlined]] direction [[/underlined]] of the [[underlined]] primary [[/underlined]].<BR/>When the direction of the discharge was changed, in reference to the conductors, the result was still the same.<BR/>When the snap ^did not appear in the galvanometer, then the needle was affected with a mere tremulous motion.<BR/>[[underlined]] One Small [[/underlined]] jar charged with [[underlined]] 10 s/l [[/underlined]] of the unit jar, the needle moved 3 or 4 degrees current [[underlined]] direct [[/underlined]].[[underlined]] Snap in galvanometer [[/underlined]].<BR/>3 jars charged with 10 s/l of the unit jar, no spark ---- [[underlined]] direct [[/underlined]] 4 [[degree symbol]].<BR/>[[+ in margin and a vertical line next to the next 4 entries]] <BR/>3 Jars Charge 20 s/l - no spark [[underlined]] adverse[[/underlined]]<BR/>3 Jars Charge 15 - no spark [[underlined]] direct [[/underlined]]<BR/>3 Jars charge 25 - \"    \"  no motion<BR/>3 Jars charge 30   a spark   Direct 5[[degree symbol]]<BR/>[[line across page]]<BR/>[[+ in margin]] <BR/>N B In this series, the shock might have, and probably did cut across in some cases either wholy or in part.<BR/>[[end page]] <BR/><BR/>[[Start page]]<BR/>Friday Oct 20th 1843 Repetition of Matteucci's exp with the galvanometer  79           <BR/>3 Jars charge of unit jar  <BR/>\"    \"    \"  5   no spark in galvanometer  [[underline]] no effect [[/underline]]<BR/>\"   \"   \"   \"  10   \"   [[underlined]] direct [[/underlined]]<BR/>\"   \"   \"   \"   15   \"  adverse<BR/>\"   \"   \"   \"   20   \"   adverse<BR/>\"   \"   \"   \"   25   spark   adverse<BR/>\"   \"   \"   \"   30   \"   low spark   [[underlined]] direct [[/underlined]]<BR/>[[the next chart contained in a box]]<BR/>3 Jars change of unit jar in   0<BR/>\"   \"    \"    \"    \"  5  No snap in galvanometer  0<BR/>\"   \"   \"   \"   \" 10   0<BR/>\"   \"    \"    \"    \"  15  Do           Direct strong <BR/>\"   \"    \"    \"    \"  20  Do           Adverse  <BR/>\"   \"    \"    \"    \"  25  Do           Adverse  <BR/>\"   \"    \"    \"    \"  30  Snap         Adverse strong<BR/>\"   \"    \"    \"    \"  35  Snap         Adverse<BR/>\"   \"    \"    \"    \"  40  strong snap  Direct strong<BR/>\"   \"    \"    \"    \"  45  Loud spark   Direct feeble<BR/>\"   \"    \"    \"    \"  50   \"   Do      Adverse feeble<BR/>   See bottom of page 91<BR/>From the above series of results, it is evident that the changes in the direction of the galvanometer are as great as with the magnetization of steel needle, and hence the results obtained by Matteucci the Italian, are not to be considered as absolutely -----<BR/>All these results are in conformity with the supposition that the reduced current is not a simple disturbance of the electricity of the wire in a surge discharge, but that it consists<BR/><BR/>[[end page]]<BR/><BR/><BR/>       <BR/> ",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6633#xywh=10,10,2990,2408"
+    }
+  ]
+}

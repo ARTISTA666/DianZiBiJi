@@ -1,0 +1,350 @@
+{
+    "file_name": "SIA-SIA2012-6685__left.png",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6685__left.png",
+    "image_name": "SIA-SIA2012-6685__left",
+    "label": "SIA-SIA2012-6685__left",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "appointment from Canada it would otherwise"
+                ],
+                "scores": [
+                    0.49189362135806847
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3120291531085968,
+            "bbox": {
+                "xmin": 204,
+                "ymin": 707,
+                "xmax": 838,
+                "ymax": 740
+            },
+            "polygon": "204,709 204,740 838,737 834,713 772,707"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "that the lines of current one similar a"
+                ],
+                "scores": [
+                    0.7146388811561462
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4095448851585388,
+            "bbox": {
+                "xmin": 204,
+                "ymin": 742,
+                "xmax": 834,
+                "ymax": 771
+            },
+            "polygon": "834,744 204,742 204,771 811,771 834,764"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "# on the wingspan ! I believe , the identified filing"
+                ],
+                "scores": [
+                    0.4159956798122695
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6174006462097168,
+            "bbox": {
+                "xmin": 206,
+                "ymin": 768,
+                "xmax": 873,
+                "ymax": 813
+            },
+            "polygon": "873,775 566,768 425,782 372,771 206,773 206,799 730,799 869,813"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "before here started all over a marginal"
+                ],
+                "scores": [
+                    0.550105422225293
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.44563204050064087,
+            "bbox": {
+                "xmin": 213,
+                "ymin": 802,
+                "xmax": 743,
+                "ymax": 835
+            },
+            "polygon": "213,802 213,835 743,830 741,802"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Thebes in the communist , These generals"
+                ],
+                "scores": [
+                    0.4765340311907592
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5822460651397705,
+            "bbox": {
+                "xmin": 277,
+                "ymin": 841,
+                "xmax": 864,
+                "ymax": 885
+            },
+            "polygon": "277,841 277,883 597,877 635,885 666,877 758,883 864,874 864,848 796,843 725,855 686,841 619,852 509,852 476,841 370,852 350,841"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "# three of Professor Dallitt on the"
+                ],
+                "scores": [
+                    0.44863898777172695
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7469532489776611,
+            "bbox": {
+                "xmin": 277,
+                "ymin": 879,
+                "xmax": 847,
+                "ymax": 912
+            },
+            "polygon": "277,885 277,912 822,912 847,905 847,881 752,888 688,881 621,888 597,879"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Auvergulsky of a galvanic current"
+                ],
+                "scores": [
+                    0.5396837622584855
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7624821662902832,
+            "bbox": {
+                "xmin": 277,
+                "ymin": 910,
+                "xmax": 811,
+                "ymax": 945
+            },
+            "polygon": "277,912 277,943 294,936 361,945 383,938 513,945 551,938 811,941 811,916 789,910"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Third Senate from 1887 ,"
+                ],
+                "scores": [
+                    0.5140425274627358
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7352074384689331,
+            "bbox": {
+                "xmin": 279,
+                "ymin": 936,
+                "xmax": 610,
+                "ymax": 978
+            },
+            "polygon": "279,941 279,976 310,972 526,972 595,978 610,972 610,945 595,938 564,938 535,947 471,941 442,945 420,936 352,945 330,936"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Most joined a wave or bleading to the well to"
+                ],
+                "scores": [
+                    0.5948394523643572
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8119503259658813,
+            "bbox": {
+                "xmin": 206,
+                "ymin": 1020,
+                "xmax": 847,
+                "ymax": 1062
+            },
+            "polygon": "206,1020 206,1056 568,1053 657,1062 677,1053 847,1053 840,1020 688,1020 666,1029 613,1020 489,1029"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "than kind of the delicate arc as , the probe being as before"
+                ],
+                "scores": [
+                    0.4416058304522391
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8531882166862488,
+            "bbox": {
+                "xmin": 204,
+                "ymin": 1058,
+                "xmax": 858,
+                "ymax": 1087
+            },
+            "polygon": "204,1058 204,1084 858,1087 853,1058"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "needle slightly unregistered with a cum-clad"
+                ],
+                "scores": [
+                    0.41416347245366253
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.827918529510498,
+            "bbox": {
+                "xmin": 206,
+                "ymin": 1084,
+                "xmax": 829,
+                "ymax": 1117
+            },
+            "polygon": "206,1084 206,1111 374,1117 407,1109 811,1113 829,1104 827,1089"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "otheron's \" Miss large beetle was placed"
+                ],
+                "scores": [
+                    0.4785082790597632
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.728574812412262,
+            "bbox": {
+                "xmin": 206,
+                "ymin": 1109,
+                "xmax": 856,
+                "ymax": 1144
+            },
+            "polygon": "856,1109 544,1120 206,1113 206,1140 814,1144 856,1140"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "in some spiral , no magnificent-trem ."
+                ],
+                "scores": [
+                    0.5353335249646687
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7780461311340332,
+            "bbox": {
+                "xmin": 206,
+                "ymin": 1142,
+                "xmax": 681,
+                "ymax": 1179
+            },
+            "polygon": "206,1144 206,1173 312,1170 336,1177 363,1170 489,1170 560,1179 681,1170 679,1148 630,1142 555,1148"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "attervatory hostile places in Spiral command"
+                ],
+                "scores": [
+                    0.3920968324685708
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8123019337654114,
+            "bbox": {
+                "xmin": 244,
+                "ymin": 1166,
+                "xmax": 864,
+                "ymax": 1204
+            },
+            "polygon": "864,1166 721,1166 551,1184 515,1175 261,1173 244,1175 244,1199 853,1204 864,1199"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "withdrawn , \" a magnetologicist Recall"
+                ],
+                "scores": [
+                    0.25721601749310774
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7436568737030029,
+            "bbox": {
+                "xmin": 204,
+                "ymin": 1201,
+                "xmax": 650,
+                "ymax": 1237
+            },
+            "polygon": "204,1201 204,1235 650,1237 650,1208 632,1201 522,1208 460,1201 389,1208 356,1201 341,1208 272,1210 246,1201"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "subspinning needle"
+                ],
+                "scores": [
+                    0.5881830401270323
+                ]
+            },
+            "label": "SIA-SIA2012-6685__left_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5514999032020569,
+            "bbox": {
+                "xmin": 405,
+                "ymin": 1296,
+                "xmax": 648,
+                "ymax": 1347
+            },
+            "polygon": "648,1299 586,1296 533,1312 482,1312 462,1303 405,1310 405,1347 478,1343 529,1347 557,1343 639,1343 648,1336"
+        }
+    ],
+    "height": 1414,
+    "width": 900,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

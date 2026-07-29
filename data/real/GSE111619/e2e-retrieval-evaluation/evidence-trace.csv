@@ -1,0 +1,159 @@
+﻿mode,question_id,fact_id,evidence_rank,fact_rank,evidence_id,evidence_type,source
+bm25,Q01,Q01:F02,5,5,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+bm25,Q01,Q01:F04,6,6,chunk:GSE111619_family.soft:27:0811d4a4f618,document_chunk,GSE111619_family.soft
+bm25,Q01,Q01:F03,7,7,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+bm25,Q01,Q01:F01,8,8,chunk:GSE111619_family.soft:5:5769fda80faf,document_chunk,GSE111619_family.soft
+vector,Q01,Q01:F02,3,3,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+vector,Q01,Q01:F03,8,8,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+vector,Q01,Q01:F04,13,13,chunk:GSE111619_family.soft:27:0811d4a4f618,document_chunk,GSE111619_family.soft
+vector,Q01,Q01:F01,19,19,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q01,Q01:F02,2,2,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+hybrid_rag,Q01,Q01:F03,4,4,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+hybrid_rag,Q01,Q01:F04,6,6,chunk:GSE111619_family.soft:27:0811d4a4f618,document_chunk,GSE111619_family.soft
+hybrid_rag,Q01,Q01:F01,13,13,chunk:GSE111619_family.soft:5:5769fda80faf,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q01,Q01:F04,2,2,graph:406cf8c7e523f5aa,graph_relation,GSE111619 GSM3035188 RNA-seq record -> GSM3035188
+graph_enhanced_rag,Q01,Q01:F02,3,3,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q01,Q01:F03,4,4,graph:a847410fb3009181,graph_relation,GSE111619 GSM3035187 RNA-seq record -> GSM3035187
+graph_enhanced_rag,Q01,Q01:F01,8,8,graph:5f7ea604febb27d1,graph_relation,GSE111619 GSM3035185 RNA-seq record -> GSM3035185
+bm25,Q02,Q02:F01,1,1,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+bm25,Q02,Q02:F02,1,2,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+vector,Q02,Q02:F01,3,3,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+vector,Q02,Q02:F02,3,4,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q02,Q02:F01,2,2,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+hybrid_rag,Q02,Q02:F02,2,3,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+graph_enhanced_rag,Q02,Q02:F02,2,2,graph:a7dbb9eadcc7afc7,graph_relation,GSE111619 GSM3035188 RNA-seq record -> p63
+graph_enhanced_rag,Q02,Q02:F01,3,3,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+bm25,Q03,Q03:F01,5,5,chunk:gse111619_samples.csv:0:a333971634bd,document_chunk,gse111619_samples.csv
+bm25,Q03,Q03:F02,5,6,chunk:gse111619_samples.csv:0:a333971634bd,document_chunk,gse111619_samples.csv
+vector,Q03,Q03:F01,3,3,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+vector,Q03,Q03:F02,3,4,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q03,Q03:F01,7,7,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q03,Q03:F02,7,8,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+graph_enhanced_rag,Q03,Q03:F02,2,2,graph:b43578ce1b7a1a32,graph_relation,GSE111619 GSM3035186 RNA-seq record -> Control
+graph_enhanced_rag,Q03,Q03:F01,4,4,graph:fea2400baa268b47,graph_relation,GSE111619 GSM3035185 RNA-seq record -> Control
+bm25,Q04,Q04:F01,13,13,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+bm25,Q04,Q04:F02,13,14,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+bm25,Q04,Q04:F03,13,15,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+bm25,Q04,Q04:F04,13,16,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+hybrid_rag,Q04,Q04:F01,26,26,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+hybrid_rag,Q04,Q04:F02,26,27,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+hybrid_rag,Q04,Q04:F03,26,28,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+hybrid_rag,Q04,Q04:F04,26,29,chunk:GSE111619_HTSeq_counts.txt:0:41d025abdeaa,document_chunk,GSE111619_HTSeq_counts.txt
+graph_enhanced_rag,Q04,Q04:F04,2,2,graph:bd6c91e0552f902e,graph_relation,GSE111619 GSM3035188 RNA-seq record -> p63KD_rep2
+graph_enhanced_rag,Q04,Q04:F03,4,4,graph:145b1abbe344e5e9,graph_relation,GSE111619 GSM3035187 RNA-seq record -> p63KD_rep1
+graph_enhanced_rag,Q04,Q04:F02,6,6,graph:527f711fb8e02cd5,graph_relation,GSE111619 GSM3035186 RNA-seq record -> NonTargeting_rep2
+graph_enhanced_rag,Q04,Q04:F01,8,8,graph:e9d5c9a296c3df31,graph_relation,GSE111619 GSM3035185 RNA-seq record -> NonTargeting_rep1
+bm25,Q05,Q05:F02,2,2,chunk:GSE111619_family.soft:0:80d433564abe,document_chunk,GSE111619_family.soft
+vector,Q05,Q05:F02,14,14,chunk:GSE111619_series_matrix.txt:0:bc80d80b6fb6,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q05,Q05:F02,4,4,chunk:GSE111619_series_matrix.txt:0:bc80d80b6fb6,document_chunk,GSE111619_series_matrix.txt
+graph_enhanced_rag,Q05,Q05:F02,4,4,graph:c3902ae5e67d44e3,graph_relation,GSE111619 GSM3035188 RNA-seq record -> p63_knockdown
+vector,Q06,Q06:F02,1,1,chunk:GSE111619_family.soft:6:762f7f70cff7,document_chunk,GSE111619_family.soft
+vector,Q06,Q06:F01,2,2,chunk:GSE111619_family.soft:0:80d433564abe,document_chunk,GSE111619_family.soft
+hybrid_rag,Q06,Q06:F02,2,2,chunk:GSE111619_family.soft:6:762f7f70cff7,document_chunk,GSE111619_family.soft
+hybrid_rag,Q06,Q06:F01,4,4,chunk:GSE111619_family.soft:0:80d433564abe,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q06,Q06:F02,2,2,graph:4ac11a6145dd8d34,graph_relation,GSE111619 GSM3035188 RNA-seq record -> lung squamous cell carcinoma
+graph_enhanced_rag,Q06,Q06:F01,4,4,graph:af6801b3b0a7f642,graph_relation,GSE111619 GSM3035188 RNA-seq record -> H226
+bm25,Q07,Q07:F02,8,8,chunk:GSE111619_HTSeq_counts.txt:106:5f435dce7fb9,document_chunk,GSE111619_HTSeq_counts.txt
+vector,Q07,Q07:F01,3,3,chunk:GSE111619_series_matrix.txt:1:437999cf07da,document_chunk,GSE111619_series_matrix.txt
+vector,Q07,Q07:F02,4,4,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+vector,Q07,Q07:F03,4,5,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+vector,Q07,Q07:F04,4,6,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+hybrid_rag,Q07,Q07:F01,6,6,chunk:GSE111619_series_matrix.txt:1:437999cf07da,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q07,Q07:F02,8,8,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+hybrid_rag,Q07,Q07:F03,8,9,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+hybrid_rag,Q07,Q07:F04,8,10,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q07,Q07:F01,2,2,graph:c7edb151efb22a2e,graph_relation,GSE111619 GSM3035188 RNA-seq record -> 1 µg/mL doxycycline
+graph_enhanced_rag,Q07,Q07:F04,4,4,graph:811ae88d7cb7c42b,graph_relation,GSE111619 GSM3035188 RNA-seq record -> 6 days
+graph_enhanced_rag,Q07,Q07:F02,15,15,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q07,Q07:F03,15,16,chunk:GSE111619_family.soft:29:a3b5fcce1e2e,document_chunk,GSE111619_family.soft
+bm25,Q08,Q08:F01,1,1,chunk:GSE111619_series_matrix.txt:8:a580f6b5c68c,document_chunk,GSE111619_series_matrix.txt
+bm25,Q08,Q08:F02,2,2,chunk:GSE111619_series_matrix.txt:9:b24378127079,document_chunk,GSE111619_series_matrix.txt
+vector,Q08,Q08:F02,8,8,chunk:GSE111619_series_matrix.txt:1:437999cf07da,document_chunk,GSE111619_series_matrix.txt
+vector,Q08,Q08:F01,23,23,chunk:GSE111619_family.soft:22:259d8e7436e6,document_chunk,GSE111619_family.soft
+hybrid_rag,Q08,Q08:F01,2,2,chunk:GSE111619_family.soft:22:259d8e7436e6,document_chunk,GSE111619_family.soft
+hybrid_rag,Q08,Q08:F02,2,3,chunk:GSE111619_family.soft:22:259d8e7436e6,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q08,Q08:F02,2,2,graph:3f0c342c10ca8c4b,graph_relation,GSE111619 GSM3035188 RNA-seq record -> TruSeq Stranded mRNA Library Prep Kit
+graph_enhanced_rag,Q08,Q08:F01,3,3,chunk:GSE111619_family.soft:22:259d8e7436e6,document_chunk,GSE111619_family.soft
+vector,Q09,Q09:F01,1,1,chunk:GSE111619_family.soft:15:044bb04e836b,document_chunk,GSE111619_family.soft
+vector,Q09,Q09:F02,5,5,chunk:GSE111619_family.soft:6:762f7f70cff7,document_chunk,GSE111619_family.soft
+hybrid_rag,Q09,Q09:F01,2,2,chunk:GSE111619_family.soft:15:044bb04e836b,document_chunk,GSE111619_family.soft
+hybrid_rag,Q09,Q09:F02,10,10,chunk:GSE111619_family.soft:6:762f7f70cff7,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q09,Q09:F02,2,2,graph:19cfcce5ddad307c,graph_relation,GSE111619 GSM3035188 RNA-seq record -> Bioanalyzer RNA Pico chips
+graph_enhanced_rag,Q09,Q09:F01,3,3,chunk:GSE111619_family.soft:15:044bb04e836b,document_chunk,GSE111619_family.soft
+vector,Q10,Q10:F02,8,8,chunk:GSE111619_family.soft:35:a3b6b9cab079,document_chunk,GSE111619_family.soft
+vector,Q10,Q10:F01,20,20,chunk:GSE111619_series_matrix.txt:1:437999cf07da,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q10,Q10:F02,16,16,chunk:GSE111619_family.soft:35:a3b6b9cab079,document_chunk,GSE111619_family.soft
+hybrid_rag,Q10,Q10:F01,40,40,chunk:GSE111619_series_matrix.txt:1:437999cf07da,document_chunk,GSE111619_series_matrix.txt
+graph_enhanced_rag,Q10,Q10:F02,2,2,graph:f2d42f4c923a2f14,graph_relation,GSE111619 GSM3035188 RNA-seq record -> RNA-Seq
+vector,Q11,Q11:F02,2,2,chunk:GSE111619_series_matrix.txt:21:f1c4916c4d2a,document_chunk,GSE111619_series_matrix.txt
+vector,Q11,Q11:F03,2,3,chunk:GSE111619_series_matrix.txt:21:f1c4916c4d2a,document_chunk,GSE111619_series_matrix.txt
+vector,Q11,Q11:F01,4,5,chunk:GSE111619_family.soft:2:012548a6835c,document_chunk,GSE111619_family.soft
+hybrid_rag,Q11,Q11:F02,4,4,chunk:GSE111619_series_matrix.txt:21:f1c4916c4d2a,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q11,Q11:F03,4,5,chunk:GSE111619_series_matrix.txt:21:f1c4916c4d2a,document_chunk,GSE111619_series_matrix.txt
+hybrid_rag,Q11,Q11:F01,8,9,chunk:GSE111619_family.soft:2:012548a6835c,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q11,Q11:F02,2,2,graph:4facc9b3370b561b,graph_relation,GSE111619 GSM3035188 RNA-seq record -> GRCh37/hg19
+graph_enhanced_rag,Q11,Q11:F01,4,4,graph:f511123f4a0b1698,graph_relation,GSE111619 GSM3035188 RNA-seq record -> TopHat2 v2.0.13
+graph_enhanced_rag,Q11,Q11:F03,6,6,graph:81e54235b31df056,graph_relation,GSE111619 GSM3035188 RNA-seq record -> HTSeq v0.6.1
+vector,Q12,Q12:F01,3,3,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+vector,Q12,Q12:F02,3,4,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+vector,Q12,Q12:F03,3,5,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+vector,Q12,Q12:F04,5,7,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+vector,Q12,Q12:F05,5,8,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+vector,Q12,Q12:F06,5,9,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+vector,Q12,Q12:F07,5,10,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F01,6,6,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F02,6,7,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F03,6,8,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F04,10,12,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F05,10,13,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F06,10,14,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+hybrid_rag,Q12,Q12:F07,10,15,chunk:GSE111619_family.soft:32:fa5e23883aa9,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q12,Q12:F06,2,2,graph:27b4a9ec89ef6112,graph_relation,GSE111619 GSM3035188 RNA-seq record -> RSeQC v2.6
+graph_enhanced_rag,Q12,Q12:F05,4,4,graph:195b3183c8031b12,graph_relation,GSE111619 GSM3035188 RNA-seq record -> Picard v1.129
+graph_enhanced_rag,Q12,Q12:F04,6,6,graph:99119f3807723750,graph_relation,GSE111619 GSM3035188 RNA-seq record -> SAMtools v0.1.19
+graph_enhanced_rag,Q12,Q12:F02,8,8,graph:77daa74935edfbb6,graph_relation,GSE111619 GSM3035188 RNA-seq record -> FASTQC v0.11.2
+graph_enhanced_rag,Q12,Q12:F01,10,10,graph:98c97218cc8783dc,graph_relation,GSE111619 GSM3035188 RNA-seq record -> bcl2fastq v1.8.4
+graph_enhanced_rag,Q12,Q12:F03,11,11,chunk:GSE111619_family.soft:8:6e1741a6dd43,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q12,Q12:F07,14,14,graph:81e54235b31df056,graph_relation,GSE111619 GSM3035188 RNA-seq record -> HTSeq v0.6.1
+bm25,Q13,Q13:F01,1,1,chunk:GSE111619_series_matrix.txt:8:a580f6b5c68c,document_chunk,GSE111619_series_matrix.txt
+vector,Q13,Q13:F01,2,2,chunk:GSE111619_family.soft:7:e44acfaf8b21,document_chunk,GSE111619_family.soft
+hybrid_rag,Q13,Q13:F01,1,1,chunk:GSE111619_series_matrix.txt:8:a580f6b5c68c,document_chunk,GSE111619_series_matrix.txt
+graph_enhanced_rag,Q13,Q13:F01,1,1,chunk:GSE111619_series_matrix.txt:8:a580f6b5c68c,document_chunk,GSE111619_series_matrix.txt
+vector,Q14,Q14:F01,21,21,chunk:gse111619_samples.csv:0:a333971634bd,document_chunk,gse111619_samples.csv
+hybrid_rag,Q14,Q14:F01,42,42,chunk:gse111619_samples.csv:0:a333971634bd,document_chunk,gse111619_samples.csv
+graph_enhanced_rag,Q14,Q14:F02,6,6,graph:0d7cd911b092ed97,graph_relation,"GSE111619 GSM3035186 RNA-seq record -> GSM3035186: total_count=52016366, detected_gene_rows=17953"
+graph_enhanced_rag,Q14,Q14:F01,8,8,graph:94fb1e3838c7184c,graph_relation,"GSE111619 GSM3035185 RNA-seq record -> GSM3035185: total_count=53924761, detected_gene_rows=17926"
+bm25,Q15,Q15:F01,1,1,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+bm25,Q15,Q15:F02,2,2,chunk:gse111619_samples.csv:2:cbce0fc285fd,document_chunk,gse111619_samples.csv
+vector,Q15,Q15:F02,24,24,chunk:gse111619_samples.csv:2:cbce0fc285fd,document_chunk,gse111619_samples.csv
+hybrid_rag,Q15,Q15:F02,2,2,chunk:gse111619_samples.csv:2:cbce0fc285fd,document_chunk,gse111619_samples.csv
+hybrid_rag,Q15,Q15:F01,4,4,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+graph_enhanced_rag,Q15,Q15:F02,3,3,chunk:gse111619_samples.csv:2:cbce0fc285fd,document_chunk,gse111619_samples.csv
+graph_enhanced_rag,Q15,Q15:F01,7,7,chunk:gse111619_samples.csv:1:30b170a15a22,document_chunk,gse111619_samples.csv
+graph_enhanced_rag,Q16,Q16:F04,2,2,graph:64a58e48cd6e3d03,graph_relation,"GSE111619 GSM3035188 RNA-seq record -> GSM3035188: total_count=51926832, detected_gene_rows=18092"
+graph_enhanced_rag,Q16,Q16:F03,4,4,graph:6738d3fa66490dbc,graph_relation,"GSE111619 GSM3035187 RNA-seq record -> GSM3035187: total_count=53416511, detected_gene_rows=18137"
+graph_enhanced_rag,Q16,Q16:F02,6,6,graph:0d7cd911b092ed97,graph_relation,"GSE111619 GSM3035186 RNA-seq record -> GSM3035186: total_count=52016366, detected_gene_rows=17953"
+graph_enhanced_rag,Q16,Q16:F01,8,8,graph:94fb1e3838c7184c,graph_relation,"GSE111619 GSM3035185 RNA-seq record -> GSM3035185: total_count=53924761, detected_gene_rows=17926"
+graph_enhanced_rag,Q17,Q17:F01,2,2,graph:c68b6c58da085738,graph_relation,GSE111619 GSM3035188 RNA-seq record -> count_matrix_gene_rows=25369
+bm25,Q18,Q18:F02,4,4,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+bm25,Q18,Q18:F01,6,6,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+bm25,Q18,Q18:F03,7,7,chunk:GSE111619_family.soft:27:0811d4a4f618,document_chunk,GSE111619_family.soft
+bm25,Q18,Q18:F04,9,9,chunk:GSE111619_series_matrix.txt:27:426a10e70046,document_chunk,GSE111619_series_matrix.txt
+vector,Q18,Q18:F04,10,10,chunk:GSE111619_family.soft:35:a3b6b9cab079,document_chunk,GSE111619_family.soft
+vector,Q18,Q18:F01,13,13,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+vector,Q18,Q18:F02,15,15,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+hybrid_rag,Q18,Q18:F02,2,2,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+hybrid_rag,Q18,Q18:F01,3,3,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+hybrid_rag,Q18,Q18:F04,5,5,chunk:GSE111619_family.soft:35:a3b6b9cab079,document_chunk,GSE111619_family.soft
+hybrid_rag,Q18,Q18:F03,16,16,chunk:GSE111619_family.soft:27:0811d4a4f618,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q18,Q18:F04,2,2,graph:fbf675dd7eea15dd,graph_relation,GSE111619 GSM3035188 RNA-seq record -> SRX3777459
+graph_enhanced_rag,Q18,Q18:F02,3,3,chunk:GSE111619_family.soft:20:9af496ac6e9a,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q18,Q18:F01,5,5,chunk:GSE111619_family.soft:12:70d15f8f2b25,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q18,Q18:F03,6,6,graph:590c40c4a7ae5bad,graph_relation,GSE111619 GSM3035187 RNA-seq record -> SRX3777458
+graph_enhanced_rag,Q19,Q19:F03,2,2,graph:47f8a18c994ed532,graph_relation,GSE111619 GSM3035188 RNA-seq record -> 不据此进行差异表达显著性推断
+graph_enhanced_rag,Q19,Q19:F02,4,4,graph:8f7691b9e8fe580b,graph_relation,GSE111619 GSM3035188 RNA-seq record -> 不是原始 FASTQ
+graph_enhanced_rag,Q19,Q19:F01,6,6,graph:c70a39adaa497f8c,graph_relation,GSE111619 GSM3035188 RNA-seq record -> 基因级 HTSeq 计数矩阵
+vector,Q20,Q20:F01,12,12,chunk:GSE111619_family.soft:2:012548a6835c,document_chunk,GSE111619_family.soft
+hybrid_rag,Q20,Q20:F01,24,24,chunk:GSE111619_family.soft:2:012548a6835c,document_chunk,GSE111619_family.soft
+graph_enhanced_rag,Q20,Q20:F01,4,4,graph:6738d3fa66490dbc,graph_relation,"GSE111619 GSM3035187 RNA-seq record -> GSM3035187: total_count=53416511, detected_gene_rows=18137"
+graph_enhanced_rag,Q20,Q20:F02,4,5,graph:6738d3fa66490dbc,graph_relation,"GSE111619 GSM3035187 RNA-seq record -> GSM3035187: total_count=53416511, detected_gene_rows=18137"

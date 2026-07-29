@@ -1,0 +1,810 @@
+{
+    "file_name": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.jpg",
+    "image_name": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08",
+    "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "thrainer-inmospreciate"
+                ],
+                "scores": [
+                    0.3763865025591553
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8268752694129944,
+            "bbox": {
+                "xmin": 115,
+                "ymin": 0,
+                "xmax": 641,
+                "ymax": 76
+            },
+            "polygon": "115,0 115,76 213,58 294,65 542,54 564,65 623,65 641,54 641,7 634,0 367,0 341,10"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Poghumenei repoirm"
+                ],
+                "scores": [
+                    0.34776661964173716
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.841789722442627,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 58,
+                "xmax": 557,
+                "ymax": 138
+            },
+            "polygon": "557,69 546,58 338,62 294,73 213,62 191,73 140,73 118,80 118,131 166,127 206,138 275,124 374,116 444,120 498,109 557,105"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "tipscience , also higher-house-"
+                ],
+                "scores": [
+                    0.48312358151090534
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8317695260047913,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 84,
+                "xmax": 776,
+                "ymax": 186
+            },
+            "polygon": "776,91 597,84 550,113 425,127 290,127 206,142 118,131 118,186 144,175 539,164 758,146 776,138"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Hohl ingyempiausui requires ."
+                ],
+                "scores": [
+                    0.44971266885809685
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8325690031051636,
+            "bbox": {
+                "xmin": 137,
+                "ymin": 142,
+                "xmax": 813,
+                "ymax": 237
+            },
+            "polygon": "813,146 765,142 626,164 137,179 137,233 356,237 403,222 590,204 798,201 813,193"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "a boushaus mangeussii evenoprino-iiemoprucci original z"
+                ],
+                "scores": [
+                    0.39006550895860037
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6606378555297852,
+            "bbox": {
+                "xmin": 20,
+                "ymin": 157,
+                "xmax": 1471,
+                "ymax": 314
+            },
+            "polygon": "1471,157 919,168 802,204 359,241 23,230 20,314 352,296 568,248 699,266 1471,233"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "a Dowdini menganesii evenoprano- ill"
+                ],
+                "scores": [
+                    0.3551743893002452
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.26314058899879456,
+            "bbox": {
+                "xmin": 16,
+                "ymin": 179,
+                "xmax": 875,
+                "ymax": 314
+            },
+            "polygon": "875,179 835,182 802,204 601,208 359,241 23,230 16,314 96,296 352,296 568,248 663,266 875,255"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "reaccurer Atzir"
+                ],
+                "scores": [
+                    0.33230645342411264
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6035476326942444,
+            "bbox": {
+                "xmin": 359,
+                "ymin": 255,
+                "xmax": 645,
+                "ymax": 339
+            },
+            "polygon": "645,266 634,255 553,255 546,263 509,274 465,274 436,281 378,285 359,292 359,336 436,339 502,325 539,328 612,325 641,310"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "6 B. Brocranews ."
+                ],
+                "scores": [
+                    0.35279743819524406
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4657914638519287,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 299,
+                "xmax": 327,
+                "ymax": 372
+            },
+            "polygon": "56,310 56,365 111,365 129,372 151,372 155,369 290,361 327,350 327,303 323,299 195,303 191,306 144,306 122,299 93,299"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "funkeys discuss to"
+                ],
+                "scores": [
+                    0.34141944399422813
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.49590036273002625,
+            "bbox": {
+                "xmin": 367,
+                "ymin": 321,
+                "xmax": 677,
+                "ymax": 402
+            },
+            "polygon": "677,321 615,321 590,332 495,328 451,343 367,339 367,402 451,402 495,391 557,391 579,383 674,372"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Businessmen's huge success to"
+                ],
+                "scores": [
+                    0.4186134916881854
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5240728259086609,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 314,
+                "xmax": 681,
+                "ymax": 420
+            },
+            "polygon": "681,314 645,314 571,336 352,343 330,358 257,369 122,372 60,361 60,420 319,409 338,398 440,402 666,372 681,358"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Two-accussi maneuvers no-smakers"
+                ],
+                "scores": [
+                    0.3240195611648365
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7479904294013977,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 350,
+                "xmax": 787,
+                "ymax": 478
+            },
+            "polygon": "787,350 699,350 670,380 553,398 349,405 221,423 60,420 60,478 783,412"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "# permanently so \" general \" mervocorii"
+                ],
+                "scores": [
+                    0.4296037980416887
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8136319518089294,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 391,
+                "xmax": 1138,
+                "ymax": 540
+            },
+            "polygon": "1134,391 835,398 776,423 60,478 60,540 356,500 707,489 860,460 977,456 1065,475 1138,456"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bunch rambobrei represses eachoi patronogie ."
+                ],
+                "scores": [
+                    0.42232667767898324
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8474745154380798,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 449,
+                "xmax": 1156,
+                "ymax": 595
+            },
+            "polygon": "1156,449 816,467 535,508 363,504 297,526 63,544 63,588 221,595 1131,533 1153,515"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Babganum 3 ) 1"
+                ],
+                "scores": [
+                    0.5748651416243885
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8729287385940552,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 584,
+                "xmax": 407,
+                "ymax": 687
+            },
+            "polygon": "407,595 396,584 308,584 246,606 155,610 63,592 63,672 126,672 155,687 173,687 301,654 400,654 407,650"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Babgarines 40 1 ."
+                ],
+                "scores": [
+                    0.5570073599856581
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8863092064857483,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 654,
+                "xmax": 414,
+                "ymax": 752
+            },
+            "polygon": "414,665 411,657 334,654 180,690 155,690 126,676 67,672 67,738 118,738 155,752 177,752 232,734 268,730 290,719 392,719 414,709"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Babganee 51 3"
+                ],
+                "scores": [
+                    0.5569213970063364
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8801195025444031,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 719,
+                "xmax": 414,
+                "ymax": 814
+            },
+            "polygon": "414,727 407,719 294,723 275,734 177,756 60,738 60,800 118,796 158,814 177,814 235,796 268,796 334,778 407,778 414,771"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bobganne 6 ) 1"
+                ],
+                "scores": [
+                    0.649007731551367
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8689508438110352,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 782,
+                "xmax": 407,
+                "ymax": 873
+            },
+            "polygon": "407,782 330,782 283,800 235,804 184,818 155,818 115,800 63,804 63,862 118,862 144,873 162,873 177,866 261,855 297,840 378,836 400,844 407,840"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Babgarine T. 3"
+                ],
+                "scores": [
+                    0.5603591398738756
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8604769110679626,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 840,
+                "xmax": 396,
+                "ymax": 935
+            },
+            "polygon": "396,851 381,840 305,844 250,862 184,869 148,880 126,869 67,866 67,928 126,928 158,935 199,920 243,917 323,895 385,899 396,891"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bobganee 8 ) 1 ."
+                ],
+                "scores": [
+                    0.6338640273378388
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8471025824546814,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 895,
+                "xmax": 392,
+                "ymax": 1005
+            },
+            "polygon": "392,913 381,902 341,895 261,924 191,928 166,939 140,939 122,931 63,931 63,994 162,1005 279,968 345,957 385,957 392,946"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bobganne 9 1/"
+                ],
+                "scores": [
+                    0.6464783709512947
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8509861826896667,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 957,
+                "xmax": 392,
+                "ymax": 1067
+            },
+            "polygon": "392,964 352,957 286,975 257,990 166,1008 52,997 52,1059 115,1056 140,1067 169,1067 199,1056 224,1056 286,1037 378,1023 392,1016"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bob-B. B. B. B. B. B. B.B.C."
+                ],
+                "scores": [
+                    0.36788238821551295
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8724257946014404,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 1023,
+                "xmax": 400,
+                "ymax": 1140
+            },
+            "polygon": "400,1023 374,1023 345,1037 286,1045 239,1063 173,1074 144,1074 122,1063 56,1063 56,1129 133,1129 166,1140 378,1089 400,1078"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Batsgarume 1971"
+                ],
+                "scores": [
+                    0.3523758892614773
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8632774949073792,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 1085,
+                "xmax": 407,
+                "ymax": 1209
+            },
+            "polygon": "407,1085 323,1103 268,1125 177,1143 148,1143 122,1132 63,1132 63,1202 118,1195 162,1209 268,1184 319,1162 407,1151"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bahgoune 17 ) 1"
+                ],
+                "scores": [
+                    0.5946270900304953
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8484106659889221,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 1158,
+                "xmax": 418,
+                "ymax": 1271
+            },
+            "polygon": "418,1162 385,1158 334,1165 279,1187 173,1213 151,1213 129,1202 56,1202 56,1268 122,1264 169,1271 305,1231 356,1231 400,1242 411,1238 418,1224"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Babganne 139"
+                ],
+                "scores": [
+                    0.49214757113466906
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8521745204925537,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 1235,
+                "xmax": 370,
+                "ymax": 1341
+            },
+            "polygon": "370,1242 359,1235 305,1235 254,1260 166,1279 148,1279 118,1268 56,1271 52,1330 74,1337 148,1341 191,1326 254,1322 279,1315 352,1319 370,1308"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "dnospocampomorphic CPTratt - we as a semi cross base march against"
+                ],
+                "scores": [
+                    0.40002800529938065
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6671417951583862,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 1260,
+                "xmax": 1635,
+                "ymax": 1392
+            },
+            "polygon": "1635,1260 557,1271 359,1322 31,1326 31,1392 721,1333 1478,1315 1631,1341"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gomaub , opaasisaint anamen mo nezzerni jail , en"
+                ],
+                "scores": [
+                    0.35359528603266904
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8699100017547607,
+            "bbox": {
+                "xmin": 27,
+                "ymin": 1322,
+                "xmax": 1492,
+                "ymax": 1454
+            },
+            "polygon": "1492,1322 524,1348 414,1377 27,1396 27,1454 104,1428 615,1392 1492,1370"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" God-they want # experience anyway anything bound , \" he agree back"
+                ],
+                "scores": [
+                    0.281259362838035
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8442476987838745,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 1370,
+                "xmax": 1591,
+                "ymax": 1498
+            },
+            "polygon": "1591,1370 34,1447 34,1498 707,1443 1569,1432"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "trade greee , even"
+                ],
+                "scores": [
+                    0.24819046585883303
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.39037615060806274,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 1414,
+                "xmax": 378,
+                "ymax": 1502
+            },
+            "polygon": "378,1418 356,1414 323,1425 74,1436 34,1450 34,1502 71,1494 140,1498 180,1480 239,1487 338,1465 370,1465 378,1461"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "mavocingraphybaiars unissued to those but not appear"
+                ],
+                "scores": [
+                    0.3514076144787005
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8783519268035889,
+            "bbox": {
+                "xmin": 34,
+                "ymin": 1432,
+                "xmax": 1576,
+                "ymax": 1534
+            },
+            "polygon": "1576,1443 1182,1432 385,1461 49,1502 34,1534 1566,1498"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "receding a cuerer"
+                ],
+                "scores": [
+                    0.35614607826042116
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8241328597068787,
+            "bbox": {
+                "xmin": 173,
+                "ymin": 1524,
+                "xmax": 455,
+                "ymax": 1586
+            },
+            "polygon": "455,1524 396,1524 367,1531 305,1527 268,1538 173,1531 173,1582 250,1575 283,1586 308,1586 334,1575 367,1571 370,1575 381,1571 440,1575 455,1567"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "we can"
+                ],
+                "scores": [
+                    0.4798397919377392
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4561772048473358,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 1538,
+                "xmax": 107,
+                "ymax": 1586
+            },
+            "polygon": "31,1538 31,1586 34,1582 78,1582 82,1586 104,1586 107,1582 107,1538"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bosia tenmoreate ."
+                ],
+                "scores": [
+                    0.5373885405315498
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline31",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7918088436126709,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 1575,
+                "xmax": 444,
+                "ymax": 1640
+            },
+            "polygon": "42,1586 42,1640 100,1629 169,1637 191,1629 275,1626 425,1629 444,1622 444,1582 425,1575 349,1575 305,1589 235,1575 191,1589 158,1582 107,1589"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ine appropriate safety"
+                ],
+                "scores": [
+                    0.6087661639104696
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline32",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6843543648719788,
+            "bbox": {
+                "xmin": 455,
+                "ymin": 1589,
+                "xmax": 922,
+                "ymax": 1688
+            },
+            "polygon": "455,1622 455,1677 553,1684 645,1670 732,1681 765,1670 802,1670 831,1681 908,1688 922,1677 922,1600 908,1589 831,1597 681,1589 582,1604 487,1604"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" It pave sure ."
+                ],
+                "scores": [
+                    0.2569415666742648
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline33",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6735913753509521,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 1629,
+                "xmax": 414,
+                "ymax": 1703
+            },
+            "polygon": "52,1637 52,1703 104,1703 184,1688 403,1688 414,1681 414,1637 389,1629 283,1629 148,1640 115,1629"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Importancies many minorities expectancy may"
+                ],
+                "scores": [
+                    0.2732720302112237
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline34",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8082966208457947,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 1633,
+                "xmax": 1346,
+                "ymax": 1757
+            },
+            "polygon": "1346,1655 1076,1633 952,1659 908,1692 772,1673 180,1695 60,1714 60,1746 210,1757 1065,1706 1332,1732"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Pinauche-Sauvraborty inoppocampymyty"
+                ],
+                "scores": [
+                    0.4215365495790335
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline35",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8712735772132874,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 1706,
+                "xmax": 1156,
+                "ymax": 1816
+            },
+            "polygon": "1156,1725 1076,1706 1010,1725 645,1746 370,1743 191,1765 67,1750 67,1809 246,1816 469,1787 615,1805 663,1787 937,1790 1006,1772 1142,1783"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Ojuguano - what they're a pregnancy was paripyricy by"
+                ],
+                "scores": [
+                    0.3467757325356668
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline36",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8017633557319641,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 1750,
+                "xmax": 1500,
+                "ymax": 1878
+            },
+            "polygon": "1500,1757 1251,1750 1131,1790 71,1812 71,1878 433,1849 1050,1845 1248,1816 1492,1830"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "effair-man , who made a guest-"
+                ],
+                "scores": [
+                    0.17585489859416187
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline37",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8500455021858215,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 1820,
+                "xmax": 1492,
+                "ymax": 1936
+            },
+            "polygon": "1492,1845 1255,1820 1039,1852 433,1856 85,1882 71,1936 458,1929 623,1904 955,1922 1149,1900 1463,1911 1492,1896"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "obaccommunity in a property very-they"
+                ],
+                "scores": [
+                    0.2824879676619715
+                ]
+            },
+            "label": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08_textline38",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7799152135848999,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 1907,
+                "xmax": 889,
+                "ymax": 2021
+            },
+            "polygon": "889,1929 860,1907 769,1926 626,1907 480,1933 199,1947 93,1940 71,1947 71,2021 878,2006 889,1999"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

@@ -1,0 +1,390 @@
+{
+    "file_name": "28e7bc6a-9653-440c-aa72-861ef9a4c20a.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/28e7bc6a-9653-440c-aa72-861ef9a4c20a.jpg",
+    "image_name": "28e7bc6a-9653-440c-aa72-861ef9a4c20a",
+    "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "jitney ."
+                ],
+                "scores": [
+                    0.44547932968892845
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.2709499001502991,
+            "bbox": {
+                "xmin": 654,
+                "ymin": 237,
+                "xmax": 970,
+                "ymax": 430
+            },
+            "polygon": "654,237 654,430 689,430 697,421 768,421 777,412 917,412 926,403 952,403 970,386 970,237"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "applarkship"
+                ],
+                "scores": [
+                    0.22349143520579723
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3239450752735138,
+            "bbox": {
+                "xmin": 601,
+                "ymin": 395,
+                "xmax": 1040,
+                "ymax": 500
+            },
+            "polygon": "601,395 601,491 654,491 662,500 750,500 759,491 996,491 1040,474 1040,395 908,395 882,412 847,412 838,403 820,412 671,412 645,395"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Texhomozin taigishecy"
+                ],
+                "scores": [
+                    0.40684946804044386
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3066162168979645,
+            "bbox": {
+                "xmin": 390,
+                "ymin": 465,
+                "xmax": 1268,
+                "ymax": 588
+            },
+            "polygon": "1268,465 1084,465 952,500 733,509 566,482 390,482 390,588 1242,570 1268,553"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3alganna 4"
+                ],
+                "scores": [
+                    0.6585981230724381
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7446077466011047,
+            "bbox": {
+                "xmin": 136,
+                "ymin": 930,
+                "xmax": 680,
+                "ymax": 1158
+            },
+            "polygon": "136,930 136,1123 241,1132 294,1158 381,1158 390,1150 654,1158 680,1132 680,965 645,939"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Pozmanynow grant"
+                ],
+                "scores": [
+                    0.4970137000944163
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8312342166900635,
+            "bbox": {
+                "xmin": 100,
+                "ymin": 1273,
+                "xmax": 996,
+                "ymax": 1518
+            },
+            "polygon": "100,1273 100,1474 223,1492 381,1483 434,1501 592,1492 680,1518 996,1501 996,1369 978,1352 864,1360 346,1316 241,1273"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Houghibahnemuil nomit-"
+                ],
+                "scores": [
+                    0.4006740755498812
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7800835967063904,
+            "bbox": {
+                "xmin": 100,
+                "ymin": 1624,
+                "xmax": 1286,
+                "ymax": 1843
+            },
+            "polygon": "100,1624 100,1817 882,1826 1057,1843 1286,1826 1286,1703 1251,1676 741,1676 460,1624 346,1641"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "flagalog suesena"
+                ],
+                "scores": [
+                    0.5639402155746568
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8166667222976685,
+            "bbox": {
+                "xmin": 109,
+                "ymin": 1984,
+                "xmax": 794,
+                "ymax": 2212
+            },
+            "polygon": "109,1984 109,2168 179,2168 417,2212 794,2177 794,2072 777,2054 417,2019 390,1992 355,1984"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Tillan 1-m.org - 0 ,8"
+                ],
+                "scores": [
+                    0.528795045886772
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8267362117767334,
+            "bbox": {
+                "xmin": 92,
+                "ymin": 2256,
+                "xmax": 978,
+                "ymax": 2510
+            },
+            "polygon": "92,2256 92,2431 302,2440 645,2510 908,2510 978,2484 978,2352 952,2335 759,2344 566,2300 399,2291 285,2256"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Tracks 2 point- 0.8. 1.2. 2,000.2ph"
+                ],
+                "scores": [
+                    0.568237167929268
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8166388869285583,
+            "bbox": {
+                "xmin": 83,
+                "ymin": 2484,
+                "xmax": 1962,
+                "ymax": 2818
+            },
+            "polygon": "83,2502 83,2660 1031,2774 1962,2818 1962,2695 1927,2669 188,2484"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "13"
+                ],
+                "scores": [
+                    0.9951248244525694
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5372745394706726,
+            "bbox": {
+                "xmin": 109,
+                "ymin": 2686,
+                "xmax": 223,
+                "ymax": 2897
+            },
+            "polygon": "109,2686 109,2897 197,2897 223,2870 223,2686"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Michael Montroy , org"
+                ],
+                "scores": [
+                    0.3762771782381293
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8383774757385254,
+            "bbox": {
+                "xmin": 92,
+                "ymin": 2906,
+                "xmax": 1022,
+                "ymax": 3169
+            },
+            "polygon": "92,2906 92,3090 408,3099 654,3143 715,3169 996,3169 1022,3151 1022,3020 978,2976 618,2967 417,2906"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Trichord 2, 0.9. 0.9. 0.9. 1 ,8"
+                ],
+                "scores": [
+                    0.5241362403554366
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8367354273796082,
+            "bbox": {
+                "xmin": 83,
+                "ymin": 3143,
+                "xmax": 1268,
+                "ymax": 3415
+            },
+            "polygon": "83,3143 83,3327 539,3336 689,3362 864,3362 1119,3415 1268,3406 1268,3248 1242,3213 1005,3222 733,3204 399,3143"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3annmark go anywhere"
+                ],
+                "scores": [
+                    0.560920072966011
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8568723201751709,
+            "bbox": {
+                "xmin": 83,
+                "ymin": 3441,
+                "xmax": 1259,
+                "ymax": 3748
+            },
+            "polygon": "83,3441 83,3643 302,3643 583,3705 724,3696 873,3748 1233,3722 1259,3705 1259,3608 1224,3573 1031,3582 750,3555 364,3494 285,3441"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "0/2.mark 2ppn."
+                ],
+                "scores": [
+                    0.5712970800213377
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8043217062950134,
+            "bbox": {
+                "xmin": 100,
+                "ymin": 3696,
+                "xmax": 768,
+                "ymax": 3906
+            },
+            "polygon": "100,3696 100,3871 294,3871 355,3889 575,3906 733,3906 768,3889 768,3775 724,3740 575,3740 425,3696"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "2.miami - 1/8.2 0.2"
+                ],
+                "scores": [
+                    0.5967833140075411
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8048913478851318,
+            "bbox": {
+                "xmin": 127,
+                "ymin": 3968,
+                "xmax": 952,
+                "ymax": 4205
+            },
+            "polygon": "127,3968 127,4144 469,4161 610,4196 715,4187 917,4205 952,4179 952,4056 926,4029 759,4021 618,3977 329,3985 276,3968"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Tippewalt populations is minor in the economic an inappropriate"
+                ],
+                "scores": [
+                    0.33649702867031656
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7126229405403137,
+            "bbox": {
+                "xmin": 109,
+                "ymin": 4345,
+                "xmax": 3604,
+                "ymax": 4635
+            },
+            "polygon": "109,4345 109,4539 3604,4635 3604,4495 3542,4460"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "12,25"
+                ],
+                "scores": [
+                    0.3741999523340158
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7420061230659485,
+            "bbox": {
+                "xmin": 2928,
+                "ymin": 4679,
+                "xmax": 3393,
+                "ymax": 4986
+            },
+            "polygon": "3393,4679 3191,4679 3138,4723 2928,4741 2928,4978 2945,4986 3165,4986 3217,4960 3358,4960 3393,4934"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "CP. 082.12.205 ( mainers 3"
+                ],
+                "scores": [
+                    0.49035935763042804
+                ]
+            },
+            "label": "28e7bc6a-9653-440c-aa72-861ef9a4c20a_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7287697792053223,
+            "bbox": {
+                "xmin": 1119,
+                "ymin": 5162,
+                "xmax": 2603,
+                "ymax": 5443
+            },
+            "polygon": "1119,5171 1119,5399 1321,5373 1944,5381 2603,5443 2603,5267 2576,5250 2164,5215 1944,5232 1786,5197 1295,5162"
+        }
+    ],
+    "height": 5619,
+    "width": 3751,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

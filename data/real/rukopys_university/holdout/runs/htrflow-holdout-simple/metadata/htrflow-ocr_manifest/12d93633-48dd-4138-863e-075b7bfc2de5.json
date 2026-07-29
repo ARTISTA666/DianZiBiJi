@@ -1,0 +1,110 @@
+{
+    "file_name": "12d93633-48dd-4138-863e-075b7bfc2de5.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/12d93633-48dd-4138-863e-075b7bfc2de5.jpg",
+    "image_name": "12d93633-48dd-4138-863e-075b7bfc2de5",
+    "label": "12d93633-48dd-4138-863e-075b7bfc2de5",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "Sucrocylature ."
+                ],
+                "scores": [
+                    0.6620487399176983
+                ]
+            },
+            "label": "12d93633-48dd-4138-863e-075b7bfc2de5_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.854891836643219,
+            "bbox": {
+                "xmin": 49,
+                "ymin": 29,
+                "xmax": 349,
+                "ymax": 131
+            },
+            "polygon": "49,29 49,98 111,105 166,131 180,131 213,116 323,127 349,124 349,65 334,43 268,51 235,40 188,43 129,29"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "acaprobe posebrae"
+                ],
+                "scores": [
+                    0.4729497420198471
+                ]
+            },
+            "label": "12d93633-48dd-4138-863e-075b7bfc2de5_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8000759482383728,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 116,
+                "xmax": 502,
+                "ymax": 204
+            },
+            "polygon": "502,149 484,131 429,116 370,116 341,138 290,138 254,124 217,124 184,135 93,124 63,127 63,182 118,179 140,190 301,179 349,197 385,193 498,204"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "binopoise"
+                ],
+                "scores": [
+                    0.4893228696225457
+                ]
+            },
+            "label": "12d93633-48dd-4138-863e-075b7bfc2de5_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8573981523513794,
+            "bbox": {
+                "xmin": 74,
+                "ymin": 179,
+                "xmax": 330,
+                "ymax": 270
+            },
+            "polygon": "330,179 264,179 232,197 195,204 162,204 118,186 96,186 74,197 74,255 111,255 169,270 202,270 217,263 319,266 330,259 327,197"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "nonequete per los"
+                ],
+                "scores": [
+                    0.47287662549342996
+                ]
+            },
+            "label": "12d93633-48dd-4138-863e-075b7bfc2de5_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8156090974807739,
+            "bbox": {
+                "xmin": 74,
+                "ymin": 255,
+                "xmax": 411,
+                "ymax": 343
+            },
+            "polygon": "411,255 352,255 341,266 319,274 74,270 74,321 118,328 148,343 202,328 254,339 283,339 301,332 403,332 411,325"
+        }
+    ],
+    "height": 2339,
+    "width": 1654,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

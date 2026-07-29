@@ -1,0 +1,61 @@
+{
+  "steps": [
+    {
+      "step": "Segmentation",
+      "settings": {
+        "model": "YOLO",
+        "model_settings": {
+          "model": "Riksarkivet/yolov9-regions-1",
+          "device": "mps"
+        },
+        "generation_settings": {
+          "batch_size": 1
+        }
+      }
+    },
+    {
+      "step": "Segmentation",
+      "settings": {
+        "model": "YOLO",
+        "model_settings": {
+          "model": "Riksarkivet/yolov9-lines-within-regions-1",
+          "device": "mps"
+        },
+        "generation_settings": {
+          "batch_size": 1
+        }
+      }
+    },
+    {
+      "step": "TextRecognition",
+      "settings": {
+        "model": "TrOCR",
+        "model_settings": {
+          "model": "microsoft/trocr-base-handwritten",
+          "device": "mps"
+        },
+        "generation_settings": {
+          "batch_size": 8,
+          "num_beams": 1
+        }
+      }
+    },
+    {
+      "step": "ReadingOrderMarginalia"
+    },
+    {
+      "step": "Export",
+      "settings": {
+        "format": "txt",
+        "dest": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/raw"
+      }
+    },
+    {
+      "step": "Export",
+      "settings": {
+        "format": "json",
+        "dest": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-nested/metadata"
+      }
+    }
+  ]
+}

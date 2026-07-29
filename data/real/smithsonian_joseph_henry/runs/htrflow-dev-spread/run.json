@@ -1,0 +1,236 @@
+{
+  "generated_at": "2026-07-13T07:18:44.200347+00:00",
+  "engine": "HTRflow",
+  "package_versions": {
+    "htrflow": "0.2.6",
+    "transformers": "4.57.6",
+    "torch": "2.13.0",
+    "ultralytics": "8.4.93"
+  },
+  "device": "mps",
+  "layout": "spread",
+  "models": {
+    "region": null,
+    "segmentation": {
+      "id": "Riksarkivet/yolov9-lines-within-regions-1",
+      "revision": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+    },
+    "recognition": {
+      "id": "microsoft/trocr-base-handwritten",
+      "revision": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+    }
+  },
+  "manifest_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/development-manifest.csv",
+  "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58",
+  "pipeline_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/pipeline.json",
+  "pipeline_sha256": "566120e16c91f59bfdb7f34c4e31428839b0e7a5650accbdce431412a3c9eb41",
+  "command": [
+    ".htrflow-venv/bin/htrflow",
+    "pipeline",
+    "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/pipeline.json",
+    "--inputs-file",
+    "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/inputs.txt",
+    "--label",
+    "htrflow-development-manifest",
+    "--logfile",
+    "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/htrflow.log",
+    "--loglevel",
+    "info",
+    "--batch-output",
+    "10"
+  ],
+  "elapsed_seconds": 255.138,
+  "sample_count": 5,
+  "samples": [
+    {
+      "sample_id": "SIA-SIA2012-6685",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6685.jpg",
+      "image_sha256": "3ece29574e66535f5ef9f226565e15e3905893dff83a3c828cf33513a989c04f",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6685.txt",
+      "reference_sha256": "a1175f3a1590d3e0c0bd5e8cc1ab7de0a6ad9e555795e229e3255c57d53cf009",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/combined/SIA-SIA2012-6685.txt",
+      "raw_ocr_sha256": "0557db191499fcdee7e406ad4226e099896283f337205c14d1ff9011cdce29a3",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6685__left.json",
+          "sha256": "05bed849ef9fef1916fdc979b0ac5fbc771979a864f552fd80d79e673990fe6d"
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6685__right.json",
+          "sha256": "724e1bf960b1300a42cd554848bf5a7d4f1213d8be8e27256d0e8a1fd6eeeb0f"
+        }
+      ],
+      "preprocessing": {
+        "method": "vertical_center_split",
+        "source_size": [
+          1800,
+          1414
+        ],
+        "split_x": 900,
+        "parts": [
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6685__left.png",
+            "sha256": "9f8ffeb255672f02d5fe98a654ef52cbe8d0f43af0725e8e0a5b04098f4f07ba"
+          },
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6685__right.png",
+            "sha256": "cca612f7f0368622ca3821defd6b84ffa6680802779ab5dd036a9cbe99265679"
+          }
+        ]
+      },
+      "raw_characters": 1158
+    },
+    {
+      "sample_id": "SIA-SIA2012-6699",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6699.jpg",
+      "image_sha256": "fe14724c810526e07bcf882c5d168b275480e0d472d79f3633cab7eef1389367",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6699.txt",
+      "reference_sha256": "8ece1ef99b0b96232f87602244a5c2920b87df8561b02bd520e5f6b61800339a",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/combined/SIA-SIA2012-6699.txt",
+      "raw_ocr_sha256": "0066baf0654b3b3d2c3cf4913bd8ffb6943a5f57d8ca1bef60b54eca973cfe7c",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6699__left.json",
+          "sha256": "9159e214227aabcf70b5554b837f61e4e25b4687ec3dc89dcc78c982b5251951"
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6699__right.json",
+          "sha256": "19804be570a2be0f3c54a38b55a7a414b2d4c87507c551d9c561f22e8515f9d5"
+        }
+      ],
+      "preprocessing": {
+        "method": "vertical_center_split",
+        "source_size": [
+          1800,
+          1414
+        ],
+        "split_x": 900,
+        "parts": [
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6699__left.png",
+            "sha256": "df51ada7d60dc0620a98355ae134fc1800ccaec74e53b70b7f0bff43e1e5d166"
+          },
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6699__right.png",
+            "sha256": "8de8d74ff3067b1ea2b22ab637e38fca716e7baf673d41d6204a7868005af465"
+          }
+        ]
+      },
+      "raw_characters": 2780
+    },
+    {
+      "sample_id": "SIA-SIA2012-6671",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6671.jpg",
+      "image_sha256": "20191742f30df98c514f3207b10252517485f442b76983c98d84c37c204b3314",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6671.txt",
+      "reference_sha256": "f9ad18f5ffc1da536814b99e2288f532eee14858a50569b93b2be9a1b6959e1f",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/combined/SIA-SIA2012-6671.txt",
+      "raw_ocr_sha256": "211217d198ffb280657f89b09170a1b4598fb87a8618ccfd50e2113728c10433",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6671__left.json",
+          "sha256": "0885c9c4c305556c1e5017b0c0944c6bf0fbe9bbde77fba4274eafa9077de78d"
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6671__right.json",
+          "sha256": "3a829be6f08864c8f790551491731b5018c8aeb9d6d92ee300586e24a1749acf"
+        }
+      ],
+      "preprocessing": {
+        "method": "vertical_center_split",
+        "source_size": [
+          1800,
+          1414
+        ],
+        "split_x": 900,
+        "parts": [
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6671__left.png",
+            "sha256": "4a18a57635c33f35764275c4ed1225a5b518bf05fbd0b1f157197a36e1099ea9"
+          },
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6671__right.png",
+            "sha256": "61bacb6c87283168b6c70d548d1e0a9cfb383df7d029d04d760b3ce3f7bdf418"
+          }
+        ]
+      },
+      "raw_characters": 2510
+    },
+    {
+      "sample_id": "SIA-SIA2012-6647",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6647.jpg",
+      "image_sha256": "ccee3625ad258d54877a3663216af3e312a91c43407e289029a8548e7afce85f",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6647.txt",
+      "reference_sha256": "3f653fa33ba4c44d424ed32c570b601e0295253329a2698970d1a4f3114680de",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/combined/SIA-SIA2012-6647.txt",
+      "raw_ocr_sha256": "6ca1ac005a3bdcd2e2e24ffd2f9d8ed3b59a0dd5b5757312fa533d42ac9a70f9",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6647__left.json",
+          "sha256": "ea28c4a4b75dfa34e83d8d9cb8a8247f47c417a3247b12a35ae423fdb8320224"
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6647__right.json",
+          "sha256": "ca4c2d219f7e4cbe5b5e20f2df0e24944caa5e72c1c0e9e4c05c9709b0985d41"
+        }
+      ],
+      "preprocessing": {
+        "method": "vertical_center_split",
+        "source_size": [
+          1800,
+          1414
+        ],
+        "split_x": 900,
+        "parts": [
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6647__left.png",
+            "sha256": "f73c81d413eb8e227cdf597eb7428c4b5d26f328f012bdb5f2f11b6280e5f905"
+          },
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6647__right.png",
+            "sha256": "169ebaa4cafc677efdd3b2a37e9168022293626fe4f09e43ff94ed468a3b36a1"
+          }
+        ]
+      },
+      "raw_characters": 3114
+    },
+    {
+      "sample_id": "SIA-SIA2012-6642",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6642.jpg",
+      "image_sha256": "a2d69e7e4cf65afe30c9784d33165e724d4232036f0d97a429731c74c3877518",
+      "reference_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/references/SIA-SIA2012-6642.txt",
+      "reference_sha256": "e1ea0d9197e67ebce5870fba2fe4f9ae03938bc2f2a0fd660b8a28f7508cf980",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/combined/SIA-SIA2012-6642.txt",
+      "raw_ocr_sha256": "aa26bd8097daabfb9680e2db3f8a0d6b897b434fc75e0679646f181a08d70147",
+      "metadata": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6642__left.json",
+          "sha256": "a90913e8b0fddcd0ae09a88b47ff3e16036ab04a80910f59b97ba4917dbdd204"
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/metadata/htrflow-development-manifest/SIA-SIA2012-6642__right.json",
+          "sha256": "23539e504c7600511888cff5c3f823071d785ba188f04860ab5894dc203bb657"
+        }
+      ],
+      "preprocessing": {
+        "method": "vertical_center_split",
+        "source_size": [
+          1800,
+          1423
+        ],
+        "split_x": 900,
+        "parts": [
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6642__left.png",
+            "sha256": "fc3531feb32979793214e7de378bceb92bbb9baaf55c0826c039c6777041da77"
+          },
+          {
+            "path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6642__right.png",
+            "sha256": "ffea87f6279a88a59c47f724d79b3a2577149f2e92b8a9a42abe91feb989db6f"
+          }
+        ]
+      },
+      "raw_characters": 3216
+    }
+  ]
+}

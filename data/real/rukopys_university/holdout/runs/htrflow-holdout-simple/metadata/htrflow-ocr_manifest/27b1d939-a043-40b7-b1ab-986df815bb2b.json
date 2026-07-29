@@ -1,0 +1,710 @@
+{
+    "file_name": "27b1d939-a043-40b7-b1ab-986df815bb2b.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/27b1d939-a043-40b7-b1ab-986df815bb2b.jpg",
+    "image_name": "27b1d939-a043-40b7-b1ab-986df815bb2b",
+    "label": "27b1d939-a043-40b7-b1ab-986df815bb2b",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "cm. 3"
+                ],
+                "scores": [
+                    0.9706013036028573
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5875158309936523,
+            "bbox": {
+                "xmin": 1222,
+                "ymin": 7,
+                "xmax": 1361,
+                "ymax": 109
+            },
+            "polygon": "1222,7 1222,109 1259,109 1262,105 1280,105 1302,98 1343,102 1350,95 1354,80 1361,73 1361,7"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "al armso malapoic recommendations ."
+                ],
+                "scores": [
+                    0.3859485676907018
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9261030554771423,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 10,
+                "xmax": 1094,
+                "ymax": 120
+            },
+            "polygon": "42,10 42,113 199,87 301,87 367,120 506,91 809,91 860,76 1094,91 1087,10"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "appurn nine resource degree races"
+                ],
+                "scores": [
+                    0.33889381752768466
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8483896851539612,
+            "bbox": {
+                "xmin": 162,
+                "ymin": 80,
+                "xmax": 1123,
+                "ymax": 182
+            },
+            "polygon": "1123,109 860,80 813,98 476,102 378,127 290,95 162,102 162,160 308,153 414,171 809,182 1003,168 1109,182 1123,175"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "I reflectlessness"
+                ],
+                "scores": [
+                    0.493430110999229
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8157153129577637,
+            "bbox": {
+                "xmin": 31,
+                "ymin": 120,
+                "xmax": 615,
+                "ymax": 263
+            },
+            "polygon": "31,124 31,241 100,233 162,263 491,259 615,237 612,175 374,175 308,153 217,164 169,149 144,120"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "I have can't yourself before pneumonia"
+                ],
+                "scores": [
+                    0.26541975673396895
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5466867685317993,
+            "bbox": {
+                "xmin": 52,
+                "ymin": 226,
+                "xmax": 1562,
+                "ymax": 376
+            },
+            "polygon": "52,244 52,376 279,343 674,372 820,336 1204,350 1562,325 1562,259 1485,244 1156,259 674,226 352,281"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gliobii nonsense rise scarce ."
+                ],
+                "scores": [
+                    0.41415723186302916
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.875687837600708,
+            "bbox": {
+                "xmin": 115,
+                "ymin": 343,
+                "xmax": 944,
+                "ymax": 500
+            },
+            "polygon": "944,350 820,343 659,380 542,358 359,361 323,347 115,369 115,493 290,471 411,500 535,449 619,434 933,438 944,431"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Croze cano bezeey"
+                ],
+                "scores": [
+                    0.44485565224862833
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6175462603569031,
+            "bbox": {
+                "xmin": 1028,
+                "ymin": 387,
+                "xmax": 1485,
+                "ymax": 577
+            },
+            "polygon": "1028,387 1028,544 1248,533 1361,577 1430,570 1485,544 1485,427 1460,409 1277,420 1218,412 1156,387"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "attany women's gaycommune . One company"
+                ],
+                "scores": [
+                    0.31086724578149383
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.5647493600845337,
+            "bbox": {
+                "xmin": 45,
+                "ymin": 405,
+                "xmax": 1496,
+                "ymax": 628
+            },
+            "polygon": "1496,453 1441,412 1255,427 1127,405 1021,427 966,467 403,508 45,493 45,599 169,621 297,577 429,573 674,628 798,566 1193,529 1397,577 1481,544"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Ottaway recovered synonymous"
+                ],
+                "scores": [
+                    0.2616272436974213
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6670475602149963,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 467,
+                "xmax": 959,
+                "ymax": 628
+            },
+            "polygon": "959,467 498,486 392,508 42,493 42,603 173,621 301,577 429,573 681,628 787,570 952,562"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "families across a 1 year amazing journey"
+                ],
+                "scores": [
+                    0.45693159655668975
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8499976396560669,
+            "bbox": {
+                "xmin": 63,
+                "ymin": 544,
+                "xmax": 1522,
+                "ymax": 738
+            },
+            "polygon": "1522,562 1354,581 1171,544 952,584 780,584 674,632 338,584 166,628 67,624 63,738 166,698 359,672 721,661 805,705 959,643 1054,643 1178,698 1328,676 1489,709 1522,683"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "me rebiguous overjoysopharma ."
+                ],
+                "scores": [
+                    0.3002652159074852
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9108583927154541,
+            "bbox": {
+                "xmin": 85,
+                "ymin": 643,
+                "xmax": 1145,
+                "ymax": 833
+            },
+            "polygon": "1145,690 1050,643 963,646 816,709 736,668 550,698 367,683 283,712 89,738 85,814 301,804 411,833 517,785 612,771 787,825 988,785 1134,778"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "3 . Cryorable panurerers"
+                ],
+                "scores": [
+                    0.3992894973506964
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9132946729660034,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 782,
+                "xmax": 904,
+                "ymax": 986
+            },
+            "polygon": "904,829 736,836 688,825 619,782 564,782 444,840 392,840 341,818 250,844 93,825 93,935 246,928 338,986 440,931 612,968 696,910 893,920 904,913"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "diplomaty unpleasant answer in a biographer sex , \""
+                ],
+                "scores": [
+                    0.5176907770037792
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8675337433815002,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 913,
+                "xmax": 1595,
+                "ymax": 1081
+            },
+            "polygon": "82,939 82,1063 158,1081 919,1037 1244,1074 1595,1023 1591,939 1397,917 977,953 820,950 703,913 601,975 425,942 352,994 232,928"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Big wings and a professional appearances . \""
+                ],
+                "scores": [
+                    0.507557162749554
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8909464478492737,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 1041,
+                "xmax": 1478,
+                "ymax": 1217
+            },
+            "polygon": "1478,1078 1339,1056 1193,1085 933,1041 732,1070 604,1059 546,1089 301,1118 67,1067 67,1198 268,1180 389,1217 465,1176 542,1191 652,1162 813,1176 1039,1154 1083,1184 1478,1169"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "women : 19million 2025th."
+                ],
+                "scores": [
+                    0.5224218308767228
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9032612442970276,
+            "bbox": {
+                "xmin": 85,
+                "ymin": 1154,
+                "xmax": 1068,
+                "ymax": 1308
+            },
+            "polygon": "1068,1154 948,1184 769,1187 652,1165 542,1198 469,1180 385,1224 290,1202 96,1213 85,1279 571,1297 820,1275 955,1308 1061,1282"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Utopa's business , Montgomery upon nonsense it was a one passier"
+                ],
+                "scores": [
+                    0.3328006885351459
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8572534918785095,
+            "bbox": {
+                "xmin": 85,
+                "ymin": 1286,
+                "xmax": 1642,
+                "ymax": 1425
+            },
+            "polygon": "85,1286 85,1396 502,1374 835,1425 1321,1385 1642,1396 1628,1297 1463,1312 1266,1290 911,1326 666,1293 392,1315"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ndomi Oglethorramme-race cameracaprettatum"
+                ],
+                "scores": [
+                    0.264406762412031
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9125163555145264,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 1374,
+                "xmax": 1639,
+                "ymax": 1509
+            },
+            "polygon": "82,1403 82,1472 279,1450 513,1509 1006,1461 1339,1509 1639,1487 1631,1403 1496,1399 1492,1381 915,1407 860,1428 484,1374 389,1407"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Afrobequares among managed , usa the officers"
+                ],
+                "scores": [
+                    0.48529208067010676
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.9161609411239624,
+            "bbox": {
+                "xmin": 107,
+                "ymin": 1454,
+                "xmax": 1635,
+                "ymax": 1608
+            },
+            "polygon": "107,1472 107,1600 239,1608 327,1575 575,1556 688,1597 791,1553 911,1578 1112,1560 1284,1597 1401,1578 1522,1600 1635,1575 1635,1502 1591,1487 1372,1520 1025,1465 930,1494 509,1513 264,1454"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "any race , occupational sleeping in religious"
+                ],
+                "scores": [
+                    0.31197731452551986
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8479897379875183,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 1556,
+                "xmax": 1635,
+                "ymax": 1677
+            },
+            "polygon": "71,1600 71,1651 173,1659 239,1640 794,1666 1094,1648 1174,1673 1383,1655 1485,1677 1635,1655 1620,1586 1277,1600 1112,1564 992,1593 791,1556 699,1600 590,1560 484,1589 330,1582 243,1615"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "SP cereasing in \" recognition"
+                ],
+                "scores": [
+                    0.30387794968468457
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.2706693410873413,
+            "bbox": {
+                "xmin": 1025,
+                "ymin": 1564,
+                "xmax": 1631,
+                "ymax": 1677
+            },
+            "polygon": "1025,1578 1025,1651 1112,1651 1182,1677 1244,1677 1313,1655 1397,1659 1463,1677 1624,1670 1631,1655 1631,1593 1620,1586 1471,1604 1405,1586 1280,1600 1112,1564 1068,1564"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "anti-# tomorrow . It was not"
+                ],
+                "scores": [
+                    0.2615730535779171
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8565856218338013,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 1655,
+                "xmax": 1631,
+                "ymax": 1757
+            },
+            "polygon": "67,1655 67,1728 480,1703 952,1732 1273,1710 1445,1757 1631,1735 1617,1677"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "gambient panici rose enambemic weapons"
+                ],
+                "scores": [
+                    0.4392715211116231
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.864721953868866,
+            "bbox": {
+                "xmin": 118,
+                "ymin": 1706,
+                "xmax": 1635,
+                "ymax": 1827
+            },
+            "polygon": "118,1728 118,1827 235,1783 444,1776 513,1816 703,1768 1635,1809 1620,1746 1460,1765 1288,1717 981,1739 458,1706"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "emagolemit delega"
+                ],
+                "scores": [
+                    0.37859122507500553
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6662742495536804,
+            "bbox": {
+                "xmin": 995,
+                "ymin": 1714,
+                "xmax": 1631,
+                "ymax": 1820
+            },
+            "polygon": "995,1732 995,1790 1441,1805 1562,1820 1631,1812 1631,1754 1613,1743 1441,1761 1357,1750 1288,1714 1200,1732"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Nomorene melanosverseous beauty"
+                ],
+                "scores": [
+                    0.37638740791226527
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8163572549819946,
+            "bbox": {
+                "xmin": 630,
+                "ymin": 1772,
+                "xmax": 1635,
+                "ymax": 1911
+            },
+            "polygon": "630,1790 630,1867 908,1860 1047,1885 1354,1882 1635,1911 1635,1820 835,1794 736,1772"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "is a good act"
+                ],
+                "scores": [
+                    0.20431163551766254
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline24",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8031960129737854,
+            "bbox": {
+                "xmin": 137,
+                "ymin": 1779,
+                "xmax": 542,
+                "ymax": 1907
+            },
+            "polygon": "542,1816 495,1816 447,1779 352,1794 195,1790 137,1816 137,1871 213,1874 334,1852 374,1863 447,1904 476,1907 542,1885"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "isn.8 acid , Philip Stomorene melommoiscensus ceramic"
+                ],
+                "scores": [
+                    0.31728816688500394
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline25",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3168470561504364,
+            "bbox": {
+                "xmin": 122,
+                "ymin": 1772,
+                "xmax": 1624,
+                "ymax": 1915
+            },
+            "polygon": "122,1827 140,1871 330,1849 451,1904 593,1860 915,1860 1624,1915 1624,1820 707,1772 564,1820 414,1783 202,1794"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "ne repubbiscays usisi suesni"
+                ],
+                "scores": [
+                    0.4849101808719338
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline26",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.899188220500946,
+            "bbox": {
+                "xmin": 89,
+                "ymin": 1852,
+                "xmax": 900,
+                "ymax": 1995
+            },
+            "polygon": "89,1871 89,1940 162,1933 232,1980 323,1969 429,1995 626,1962 725,1977 900,1969 897,1871 707,1882 590,1867 476,1911 334,1852 206,1885"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Bipno races"
+                ],
+                "scores": [
+                    0.6264883840895201
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline27",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.30736032128334045,
+            "bbox": {
+                "xmin": 74,
+                "ymin": 1936,
+                "xmax": 509,
+                "ymax": 2101
+            },
+            "polygon": "74,1940 78,2079 177,2094 308,2050 338,2057 414,2101 509,2086 506,1995 429,2002 327,1984 239,1984 177,1936"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Propaganda , propunct mix synonymous businessman"
+                ],
+                "scores": [
+                    0.32109905736343486
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline28",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7807450890541077,
+            "bbox": {
+                "xmin": 82,
+                "ymin": 1940,
+                "xmax": 1642,
+                "ymax": 2137
+            },
+            "polygon": "82,1951 82,2079 169,2094 312,2050 414,2101 517,2094 553,2116 663,2064 798,2064 878,2101 1047,2083 1156,2137 1277,2112 1642,2127 1628,2017 1500,1984 1332,2021 805,2013 648,1988 425,2006 235,1988 166,1940"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "to complereceded"
+                ],
+                "scores": [
+                    0.30878345858733286
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline29",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8677024245262146,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 2057,
+                "xmax": 476,
+                "ymax": 2185
+            },
+            "polygon": "476,2105 418,2108 374,2090 330,2057 290,2057 264,2075 188,2097 93,2090 93,2185 151,2159 184,2163 224,2185 254,2185 290,2170 455,2163 476,2152"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Geneppelmann , moreogeneous"
+                ],
+                "scores": [
+                    0.26710255329174537
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline30",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8973469138145447,
+            "bbox": {
+                "xmin": 586,
+                "ymin": 2064,
+                "xmax": 1628,
+                "ymax": 2243
+            },
+            "polygon": "586,2108 597,2181 696,2152 857,2207 937,2181 1094,2178 1233,2203 1317,2243 1412,2207 1628,2218 1628,2148 1573,2130 1244,2127 1167,2145 1047,2086 981,2079 889,2112 791,2064 659,2068"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "hop , even yet"
+                ],
+                "scores": [
+                    0.23579399612485222
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline31",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8364424109458923,
+            "bbox": {
+                "xmin": 93,
+                "ymin": 2156,
+                "xmax": 502,
+                "ymax": 2265
+            },
+            "polygon": "502,2156 440,2170 374,2170 250,2192 210,2185 169,2163 148,2163 93,2189 93,2265 115,2262 140,2243 250,2247 349,2240 378,2262 487,2247 502,2240"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "vaticanism ( hypologymeneme sex cancer"
+                ],
+                "scores": [
+                    0.29480307599428096
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline32",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7979728579521179,
+            "bbox": {
+                "xmin": 568,
+                "ymin": 2152,
+                "xmax": 1492,
+                "ymax": 2309
+            },
+            "polygon": "568,2152 568,2280 794,2269 893,2302 1123,2280 1427,2309 1492,2302 1492,2229 1478,2218 1397,2218 1324,2243 1090,2181 857,2211 718,2152 615,2189 568,2174"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "cleccee ."
+                ],
+                "scores": [
+                    0.4072197514414134
+                ]
+            },
+            "label": "27b1d939-a043-40b7-b1ab-986df815bb2b_textline33",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8110886216163635,
+            "bbox": {
+                "xmin": 133,
+                "ymin": 2240,
+                "xmax": 359,
+                "ymax": 2331
+            },
+            "polygon": "133,2243 133,2331 140,2324 188,2324 221,2317 345,2324 359,2313 359,2247 352,2240 338,2240 319,2247 264,2247 261,2251 217,2251 191,2240"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

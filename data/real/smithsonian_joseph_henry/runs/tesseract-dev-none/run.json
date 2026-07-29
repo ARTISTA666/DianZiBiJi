@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-07-13T06:40:59.740342+00:00",
+  "engine": "tesseract 5.5.0",
+  "language": "eng",
+  "page_segmentation_mode": 3,
+  "dpi": null,
+  "tesseract_configs": [],
+  "preprocessing_mode": "none",
+  "manifest_path": "/workspace/data/real/smithsonian_joseph_henry/development-manifest.csv",
+  "manifest_sha256": "664cd87507a60bdd010bc9b5f9a0a15f2b454c2644975aca283ce5d776b64c58",
+  "sample_count": 5,
+  "samples": [
+    {
+      "sample_id": "SIA-SIA2012-6685",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6685.jpg",
+      "image_sha256": "3ece29574e66535f5ef9f226565e15e3905893dff83a3c828cf33513a989c04f",
+      "processed_image_path": null,
+      "processed_image_sha256": null,
+      "preprocessing": null,
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/raw/SIA-SIA2012-6685.txt",
+      "raw_ocr_sha256": "b9609fe15e864dbba38c3ced91ccf5b0504ef8f2aca2d87e0f7f7883638e6a92",
+      "raw_characters": 93,
+      "elapsed_ms": 531.056,
+      "stderr": "Detected 125 diacritics"
+    },
+    {
+      "sample_id": "SIA-SIA2012-6699",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6699.jpg",
+      "image_sha256": "fe14724c810526e07bcf882c5d168b275480e0d472d79f3633cab7eef1389367",
+      "processed_image_path": null,
+      "processed_image_sha256": null,
+      "preprocessing": null,
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/raw/SIA-SIA2012-6699.txt",
+      "raw_ocr_sha256": "1c7f7f9878490d7e187b47d344ad733c61f28baeae84fd7e25e91d6ff42587a8",
+      "raw_characters": 411,
+      "elapsed_ms": 1094.876,
+      "stderr": "Detected 233 diacritics"
+    },
+    {
+      "sample_id": "SIA-SIA2012-6671",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6671.jpg",
+      "image_sha256": "20191742f30df98c514f3207b10252517485f442b76983c98d84c37c204b3314",
+      "processed_image_path": null,
+      "processed_image_sha256": null,
+      "preprocessing": null,
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/raw/SIA-SIA2012-6671.txt",
+      "raw_ocr_sha256": "e50e61e09b9f268b5f824caf03395689ef5765e994b04f46c446de49d9a1303b",
+      "raw_characters": 804,
+      "elapsed_ms": 1787.441,
+      "stderr": "Detected 240 diacritics"
+    },
+    {
+      "sample_id": "SIA-SIA2012-6647",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6647.jpg",
+      "image_sha256": "ccee3625ad258d54877a3663216af3e312a91c43407e289029a8548e7afce85f",
+      "processed_image_path": null,
+      "processed_image_sha256": null,
+      "preprocessing": null,
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/raw/SIA-SIA2012-6647.txt",
+      "raw_ocr_sha256": "2c40e04d0f117b1b881d8c9928c849b9a27edef66a047842b739c48fefe9669c",
+      "raw_characters": 376,
+      "elapsed_ms": 957.079,
+      "stderr": ""
+    },
+    {
+      "sample_id": "SIA-SIA2012-6642",
+      "image_path": "/workspace/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6642.jpg",
+      "image_sha256": "a2d69e7e4cf65afe30c9784d33165e724d4232036f0d97a429731c74c3877518",
+      "processed_image_path": null,
+      "processed_image_sha256": null,
+      "preprocessing": null,
+      "raw_ocr_path": "/workspace/data/real/smithsonian_joseph_henry/runs/tesseract-dev-none/raw/SIA-SIA2012-6642.txt",
+      "raw_ocr_sha256": "d4668063a77500f73afabb5ab44e915f0e072af42cb6c4fe0c13be8b152bab1d",
+      "raw_characters": 473,
+      "elapsed_ms": 1015.009,
+      "stderr": ""
+    }
+  ]
+}

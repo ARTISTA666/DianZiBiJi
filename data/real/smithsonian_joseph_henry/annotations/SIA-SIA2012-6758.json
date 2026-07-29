@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6758",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6758",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6758",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "318 May 20th 1862<BR/> For experimenting on surface action, I find a clean fich surface of mica the best, on this water will spread and adhere. If a quantity of the liquid be formed on a plate of clean fish surface of mica placed horizontally so as to heap it up around the edges, and indeed over the whole plate, and then a drop of strong alcohol be let fall on the middle of the plate, which may be round, the water will be drawn off in a circular space heaped up at the circumference of the space, with various motions, all from the same cause, namely the change of capillarity of the liquid for the solid.<BR/>[[image of a scale]] <BR/>Placed plate of glass on surface of mercury, passed galvanic current through the metal, but did not find any diminution of the cohesive force. [[short line]]<BR/> Next placed over the mercury a stratum of water acidulated with a few drops of sulphuric acid. The same experiment was repeated, but no effect on the capilarity of the water and the glass was observed. The glass in this case was elevated perhaps a length of an inch above this<BR/>[[end page]] <BR/>[[start page]]<BR/>319<BR/>surface of the surrounding liquid, and between the glass and the mercury a rapid motion of the particles was observed in vertical planes.<BR/>[[image]]  The motion was in the space filled with the undulated water between the two surfaces, that of the lower side of the glass plate and the upper side of the mercury.<BR/> The motions was in the acid over the mercury was best seen by grating with a somewhat corse file a quantity of filings of cork. These when viewed from above, reflected in the mirror surface of the mercury, appeared like a [[?]] of short columns revolving with main rapidity around two centres near the plus pole plunged in the acid the negative being in the mercury.<BR/> To show more conclusively than before that the motion is due to the surface action of the battery, a very thin fillm of mica was placed on the surface of the mercury under the stratum of acid, but no motion was observed when the current was passed through the liquid, or through the mercury. The surface after the current was passed for a time became covered with a film or oxide, which is gradually disolved.",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6758#xywh=10,10,2990,2202"
+    }
+  ]
+}

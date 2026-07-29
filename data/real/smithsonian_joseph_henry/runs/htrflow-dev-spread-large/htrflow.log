@@ -1,0 +1,31 @@
+yusongdeMacBook-Air.local - 2026-07-13 07:23:41 UTC - INFO - Include schema from 'file:///Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/xmlschema/schemas/XSD_1.1/xsd11-extra.xsd'
+yusongdeMacBook-Air.local - 2026-07-13 07:23:41 UTC - ERROR - Could not import OpenMMLab models: [].
+Traceback (most recent call last):
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/importer.py", line 26, in all_models
+    from htrflow.models.openmmlab.rtmdet import RTMDet
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/openmmlab/rtmdet.py", line 5, in <module>
+    from mmdet.apis import DetInferencer
+ModuleNotFoundError: No module named 'mmdet'
+yusongdeMacBook-Air.local - 2026-07-13 07:23:41 UTC - ERROR - Could not import Teklia models: [].
+Traceback (most recent call last):
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/importer.py", line 37, in all_models
+    from htrflow.models.teklia.pylaia import PyLaia
+  File "/Users/yusong/Downloads/new/full-system/.htrflow-venv/lib/python3.12/site-packages/htrflow/models/teklia/pylaia.py", line 14, in <module>
+    from laia.common.arguments import CommonArgs, DataArgs, DecodeArgs, TrainerArgs
+ModuleNotFoundError: No module named 'laia'
+yusongdeMacBook-Air.local - 2026-07-13 07:23:41 UTC - INFO - Importing 10 input images with batch size 10
+yusongdeMacBook-Air.local - 2026-07-13 07:23:41 UTC - INFO - Initialized collection 'None' with 10 pages
+yusongdeMacBook-Air.local - 2026-07-13 07:23:41 UTC - INFO - Running step Segmentation (step 1 / 5)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:43 UTC - INFO - Initialized YOLO model 'Riksarkivet/yolov9-lines-within-regions-1' from /Users/yusong/.cache/huggingface/hub/models--Riksarkivet--yolov9-lines-within-regions-1/snapshots/f62260d9ae6e782c43c3fd789b7d7e19d64608d9/model.pt on device mps:0
+yusongdeMacBook-Air.local - 2026-07-13 07:23:43 UTC - INFO - Model 'YOLO' on device 'mps' received 10 images in batches of 1 images per batch (10 batches)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:43 UTC - INFO - YOLO: Running inference on 1 images (batch 1 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:45 UTC - INFO - YOLO: Running inference on 1 images (batch 2 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:45 UTC - INFO - YOLO: Running inference on 1 images (batch 3 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:46 UTC - INFO - YOLO: Running inference on 1 images (batch 4 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:46 UTC - INFO - YOLO: Running inference on 1 images (batch 5 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:46 UTC - INFO - YOLO: Running inference on 1 images (batch 6 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:47 UTC - INFO - YOLO: Running inference on 1 images (batch 7 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:47 UTC - INFO - YOLO: Running inference on 1 images (batch 8 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:47 UTC - INFO - YOLO: Running inference on 1 images (batch 9 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:47 UTC - INFO - YOLO: Running inference on 1 images (batch 10 of 10)
+yusongdeMacBook-Air.local - 2026-07-13 07:23:48 UTC - INFO - Running step TextRecognition (step 2 / 5)

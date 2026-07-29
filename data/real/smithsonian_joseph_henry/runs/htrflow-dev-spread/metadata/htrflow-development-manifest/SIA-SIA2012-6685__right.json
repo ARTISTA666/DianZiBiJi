@@ -1,0 +1,290 @@
+{
+    "file_name": "SIA-SIA2012-6685__right.png",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/runs/htrflow-dev-spread/split-inputs/SIA-SIA2012-6685__right.png",
+    "image_name": "SIA-SIA2012-6685__right",
+    "label": "SIA-SIA2012-6685__right",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "quote ."
+                ],
+                "scores": [
+                    0.9051292633570296
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.3812711238861084,
+            "bbox": {
+                "xmin": 343,
+                "ymin": 855,
+                "xmax": 414,
+                "ymax": 883
+            },
+            "polygon": "343,855 343,883 356,883 359,881 370,881 372,879 394,879 396,877 409,877 414,872 414,857 412,855"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Sent Andre's Franklin Watters"
+                ],
+                "scores": [
+                    0.3950369968826339
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7116690278053284,
+            "bbox": {
+                "xmin": 115,
+                "ymin": 861,
+                "xmax": 743,
+                "ymax": 912
+            },
+            "polygon": "743,877 694,861 524,861 487,877 427,870 405,881 339,885 261,868 180,879 140,863 115,868 115,903 248,912 275,903 690,899 743,908"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Through gold leaf forward over other"
+                ],
+                "scores": [
+                    0.4830842883512849
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8011394739151001,
+            "bbox": {
+                "xmin": 62,
+                "ymin": 899,
+                "xmax": 723,
+                "ymax": 945
+            },
+            "polygon": "62,899 62,936 171,945 723,932 723,910 692,901 630,910 522,903 498,912 281,905 219,919"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "suppress 1 ) on cash ) \" or then keeps the"
+                ],
+                "scores": [
+                    0.39123868336491074
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.832504391670227,
+            "bbox": {
+                "xmin": 62,
+                "ymin": 934,
+                "xmax": 716,
+                "ymax": 985
+            },
+            "polygon": "716,936 515,934 445,945 392,936 182,950 62,941 62,967 118,985 173,969 215,972 239,985 275,972 562,965 599,976 712,961"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "choice retriculated in the Occupation . The"
+                ],
+                "scores": [
+                    0.6205093827743284
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7848464250564575,
+            "bbox": {
+                "xmin": 60,
+                "ymin": 963,
+                "xmax": 756,
+                "ymax": 1005
+            },
+            "polygon": "756,978 743,963 606,978 482,967 412,980 350,972 252,987 217,976 115,987 89,972 60,972 60,1005 745,1003"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "heart was defluquated around each of"
+                ],
+                "scores": [
+                    0.5792489158210654
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8197140693664551,
+            "bbox": {
+                "xmin": 62,
+                "ymin": 1005,
+                "xmax": 767,
+                "ymax": 1045
+            },
+            "polygon": "62,1009 62,1036 213,1033 248,1045 478,1027 767,1038 767,1005"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "police , but more around the miners than the"
+                ],
+                "scores": [
+                    0.5225142256938773
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8488613367080688,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 1031,
+                "xmax": 763,
+                "ymax": 1073
+            },
+            "polygon": "763,1042 663,1031 575,1040 416,1031 250,1049 164,1036 118,1053 67,1040 67,1073 763,1056"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "positive . Then Leaf was also more remove"
+                ],
+                "scores": [
+                    0.6475645314294483
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8545706272125244,
+            "bbox": {
+                "xmin": 67,
+                "ymin": 1062,
+                "xmax": 767,
+                "ymax": 1100
+            },
+            "polygon": "767,1062 71,1073 67,1100 763,1084"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "al the outer edges , Macre is the middle : Almost"
+                ],
+                "scores": [
+                    0.6233475556749742
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8778111934661865,
+            "bbox": {
+                "xmin": 69,
+                "ymin": 1087,
+                "xmax": 776,
+                "ymax": 1133
+            },
+            "polygon": "776,1093 575,1087 341,1102 98,1100 69,1102 69,1124 288,1133 575,1113 769,1117"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "skatele will become to show the general office"
+                ],
+                "scores": [
+                    0.6179783128834024
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8777176141738892,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 1117,
+                "xmax": 772,
+                "ymax": 1162
+            },
+            "polygon": "772,1128 736,1117 529,1117 303,1135 71,1128 71,1157 498,1151 571,1162 604,1148 772,1146"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "g the curid after the application . When the"
+                ],
+                "scores": [
+                    0.6948385002919797
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8749132752418518,
+            "bbox": {
+                "xmin": 74,
+                "ymin": 1151,
+                "xmax": 750,
+                "ymax": 1199
+            },
+            "polygon": "750,1157 637,1151 568,1166 341,1153 301,1164 74,1162 74,1199 149,1188 396,1195 743,1186"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "sheet of gold over locked . The metal was not"
+                ],
+                "scores": [
+                    0.7919700043037374
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8908358812332153,
+            "bbox": {
+                "xmin": 71,
+                "ymin": 1193,
+                "xmax": 721,
+                "ymax": 1241
+            },
+            "polygon": "721,1193 328,1195 301,1204 210,1195 182,1206 96,1197 71,1204 71,1228 135,1228 164,1241 239,1223 721,1221"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "defluigialled to obtain a letter"
+                ],
+                "scores": [
+                    0.5418761617934958
+                ]
+            },
+            "label": "SIA-SIA2012-6685__right_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8430367112159729,
+            "bbox": {
+                "xmin": 74,
+                "ymin": 1226,
+                "xmax": 537,
+                "ymax": 1279
+            },
+            "polygon": "74,1232 74,1268 135,1268 166,1279 224,1261 445,1265 537,1257 537,1237 507,1226 352,1230 325,1239 239,1226 180,1243 151,1243 133,1230"
+        }
+    ],
+    "height": 1414,
+    "width": 900,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

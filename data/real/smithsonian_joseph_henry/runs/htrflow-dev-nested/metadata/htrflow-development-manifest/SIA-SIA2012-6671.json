@@ -1,0 +1,112 @@
+{
+    "file_name": "SIA-SIA2012-6671.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6671.jpg",
+    "image_name": "SIA-SIA2012-6671",
+    "label": "SIA-SIA2012-6671",
+    "contains": [
+        {
+            "label": "SIA-SIA2012-6671_textregion0",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            "xxx"
+                        ],
+                        "scores": [
+                            0.43652088729744865
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6671_textregion0_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.25513365864753723,
+                    "bbox": {
+                        "xmin": 1091,
+                        "ymin": 850,
+                        "xmax": 1125,
+                        "ymax": 884
+                    },
+                    "polygon": "1091,850 1091,882 1095,882 1108,882 1109,883 1122,883 1125,884 1125,853 1120,850"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "el"
+                        ],
+                        "scores": [
+                            0.7780084232028487
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6671_textregion0_textline1",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.43544819951057434,
+                    "bbox": {
+                        "xmin": 1267,
+                        "ymin": 874,
+                        "xmax": 1300,
+                        "ymax": 934
+                    },
+                    "polygon": "1267,875 1267,933 1280,934 1294,934 1300,931 1300,874 1273,874 1271,878"
+                },
+                {
+                    "text_result": {
+                        "texts": [
+                            "d."
+                        ],
+                        "scores": [
+                            0.5454025066394438
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6671_textregion0_textline2",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.4477980434894562,
+                    "bbox": {
+                        "xmin": 1091,
+                        "ymin": 908,
+                        "xmax": 1117,
+                        "ymax": 945
+                    },
+                    "polygon": "1091,908 1091,945 1094,945 1095,944 1113,944 1114,943 1117,943 1117,908"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.49285539984703064,
+            "bbox": {
+                "xmin": 1091,
+                "ymin": 817,
+                "xmax": 1665,
+                "ymax": 949
+            },
+            "polygon": "1091,817 1091,949 1665,949 1665,817"
+        }
+    ],
+    "height": 1414,
+    "width": 1800,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-regions-1",
+                "model_version": "6fb01d223f39ac325280d99e4a2d1804694e5e99"
+            }
+        },
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

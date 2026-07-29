@@ -1,0 +1,170 @@
+{
+    "file_name": "393248a6-7722-4485-8595-bf609f61b125.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/393248a6-7722-4485-8595-bf609f61b125.jpg",
+    "image_name": "393248a6-7722-4485-8595-bf609f61b125",
+    "label": "393248a6-7722-4485-8595-bf609f61b125",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "post-"
+                ],
+                "scores": [
+                    0.5917368514207929
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8572190999984741,
+            "bbox": {
+                "xmin": 1,
+                "ymin": 51,
+                "xmax": 392,
+                "ymax": 226
+            },
+            "polygon": "1,73 1,215 34,197 82,197 118,211 158,211 184,226 217,226 286,193 378,190 392,179 392,127 378,105 297,105 246,91 169,91 104,69 85,51 38,51"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "upresses noctirani bumpates - 40 more 15 more"
+                ],
+                "scores": [
+                    0.380013394165521
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8567103743553162,
+            "bbox": {
+                "xmin": 12,
+                "ymin": 124,
+                "xmax": 1171,
+                "ymax": 296
+            },
+            "polygon": "12,296 440,259 608,292 758,237 1142,259 1171,248 1171,175 886,138 637,149 542,127 381,193 217,230 78,226 34,211 38,124 56,124 38,124 34,211 12,211"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "to begin just ."
+                ],
+                "scores": [
+                    0.7572720340729594
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7914968132972717,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 266,
+                "xmax": 359,
+                "ymax": 358
+            },
+            "polygon": "359,274 349,266 177,277 126,303 93,296 42,296 42,336 100,350 162,347 228,358 261,339 294,350 349,354 359,347"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "B-gio- Cesenarei a_euizani Bergarin - AU yoursuit ;"
+                ],
+                "scores": [
+                    0.3859173566815088
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7303816080093384,
+            "bbox": {
+                "xmin": 42,
+                "ymin": 288,
+                "xmax": 1492,
+                "ymax": 434
+            },
+            "polygon": "42,336 42,423 641,398 736,431 867,402 1014,434 1134,405 1379,431 1492,398 1489,303 1189,296 889,328 710,288 597,328 148,369"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "B-Bigles"
+                ],
+                "scores": [
+                    0.339048242632082
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.4364619255065918,
+            "bbox": {
+                "xmin": 9,
+                "ymin": 332,
+                "xmax": 206,
+                "ymax": 434
+            },
+            "polygon": "9,332 9,427 78,423 115,434 155,420 206,409 206,361 202,358 144,361 129,354 85,350 52,332"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "modricorni-Belmployton - B. gives just"
+                ],
+                "scores": [
+                    0.3841149711356152
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8365360498428345,
+            "bbox": {
+                "xmin": 16,
+                "ymin": 405,
+                "xmax": 937,
+                "ymax": 522
+            },
+            "polygon": "937,412 878,405 736,434 681,405 626,405 597,420 436,420 294,445 213,416 126,434 16,431 16,497 579,497 659,522 926,497"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "09. 06. 2025 Ames"
+                ],
+                "scores": [
+                    0.7469053558795409
+                ]
+            },
+            "label": "393248a6-7722-4485-8595-bf609f61b125_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7435274720191956,
+            "bbox": {
+                "xmin": 56,
+                "ymin": 2207,
+                "xmax": 688,
+                "ymax": 2335
+            },
+            "polygon": "688,2222 666,2207 601,2207 535,2233 444,2247 254,2218 56,2214 56,2335 677,2335 688,2324"
+        }
+    ],
+    "height": 2339,
+    "width": 1656,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

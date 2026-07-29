@@ -1,0 +1,510 @@
+{
+    "file_name": "SIA-SIA2012-6685.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6685.jpg",
+    "image_name": "SIA-SIA2012-6685",
+    "label": "SIA-SIA2012-6685",
+    "contains": [
+        {
+            "text_result": {
+                "texts": [
+                    "shown become starved allove in misgued ."
+                ],
+                "scores": [
+                    0.4280765054456416
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline0",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.49151846766471863,
+            "bbox": {
+                "xmin": 205,
+                "ymin": 800,
+                "xmax": 750,
+                "ymax": 833
+            },
+            "polygon": "205,800 205,833 736,833 750,825 739,802"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "States in the reserve to . These appeals"
+                ],
+                "scores": [
+                    0.5998882654223825
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline1",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6179072260856628,
+            "bbox": {
+                "xmin": 284,
+                "ymin": 842,
+                "xmax": 869,
+                "ymax": 881
+            },
+            "polygon": "284,842 284,881 565,881 590,873 624,881 759,881 869,873 869,842 781,842 750,853 705,842 613,850"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "to those in Prussian Danhill . on the"
+                ],
+                "scores": [
+                    0.4817781216175816
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline2",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6668276190757751,
+            "bbox": {
+                "xmin": 281,
+                "ymin": 881,
+                "xmax": 849,
+                "ymax": 909
+            },
+            "polygon": "281,884 281,909 849,909 849,881"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Through good health \" Sheemhower the"
+                ],
+                "scores": [
+                    0.458237878376078
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline3",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.6561709046363831,
+            "bbox": {
+                "xmin": 964,
+                "ymin": 898,
+                "xmax": 1628,
+                "ymax": 940
+            },
+            "polygon": "964,898 964,935 1063,940 1628,926 1628,904 1597,898 1074,912"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "# Nevertheless it can whatever a consequence of"
+                ],
+                "scores": [
+                    0.2845920270221762
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline4",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7542408108711243,
+            "bbox": {
+                "xmin": 281,
+                "ymin": 909,
+                "xmax": 880,
+                "ymax": 946
+            },
+            "polygon": "281,912 281,937 835,937 852,946 880,937 880,909"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "surfaces by an call ? ' say the legal deal"
+                ],
+                "scores": [
+                    0.4576667836726922
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline5",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8238088488578796,
+            "bbox": {
+                "xmin": 964,
+                "ymin": 932,
+                "xmax": 1631,
+                "ymax": 977
+            },
+            "polygon": "1631,932 1414,932 1333,943 1313,935 964,937 964,968 1015,977 1251,966 1510,971 1625,960"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" Which Subjects to the House's 1830 p.7"
+                ],
+                "scores": [
+                    0.39654325571693355
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline6",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7244025468826294,
+            "bbox": {
+                "xmin": 278,
+                "ymin": 937,
+                "xmax": 613,
+                "ymax": 977
+            },
+            "polygon": "278,937 278,974 368,968 604,977 613,971 613,940 554,937 511,946 441,937"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "choice administered in the Occupation . The"
+                ],
+                "scores": [
+                    0.596345341002049
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline7",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8257670402526855,
+            "bbox": {
+                "xmin": 964,
+                "ymin": 963,
+                "xmax": 1650,
+                "ymax": 1002
+            },
+            "polygon": "1650,963 1501,977 1251,968 1026,982 978,968 964,971 964,1002 1636,1002 1650,997"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "adult was defleaguated arm . It said"
+                ],
+                "scores": [
+                    0.38631915699276625
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline8",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7682679891586304,
+            "bbox": {
+                "xmin": 981,
+                "ymin": 999,
+                "xmax": 1650,
+                "ymax": 1039
+            },
+            "polygon": "1650,999 981,1008 981,1033 1231,1039 1313,1027 1535,1025 1650,1033"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "Most wonder a wave a bleading to the well"
+                ],
+                "scores": [
+                    0.5039407492463387
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline9",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.801170289516449,
+            "bbox": {
+                "xmin": 205,
+                "ymin": 1019,
+                "xmax": 852,
+                "ymax": 1058
+            },
+            "polygon": "205,1019 205,1053 593,1050 655,1058 677,1050 852,1050 849,1019 506,1019 466,1027"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "hall , but made around the miners than the"
+                ],
+                "scores": [
+                    0.578972608611249
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline10",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8026462197303772,
+            "bbox": {
+                "xmin": 970,
+                "ymin": 1030,
+                "xmax": 1670,
+                "ymax": 1067
+            },
+            "polygon": "970,1067 1665,1056 1670,1044 1569,1030 1310,1030 1234,1042 970,1039"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "than stand on this kilometre are ' as the brother than , as hetloven"
+                ],
+                "scores": [
+                    0.3769299714111356
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline11",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8493248820304871,
+            "bbox": {
+                "xmin": 205,
+                "ymin": 1053,
+                "xmax": 863,
+                "ymax": 1084
+            },
+            "polygon": "205,1056 205,1084 863,1081 863,1058 815,1053 663,1061 568,1053"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "positive . The leaf was also more remove"
+                ],
+                "scores": [
+                    0.7477913421627811
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline12",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8176901340484619,
+            "bbox": {
+                "xmin": 970,
+                "ymin": 1061,
+                "xmax": 1667,
+                "ymax": 1101
+            },
+            "polygon": "1667,1061 970,1072 970,1098 1175,1092 1254,1101 1288,1089 1487,1081 1665,1084"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "needle slightly nonexistent with a surrealist ."
+                ],
+                "scores": [
+                    0.569495716931144
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline13",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8116059899330139,
+            "bbox": {
+                "xmin": 208,
+                "ymin": 1084,
+                "xmax": 829,
+                "ymax": 1112
+            },
+            "polygon": "208,1084 208,1112 829,1106 829,1089 818,1084"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "al the writer actress , There is the middle : Plewolves"
+                ],
+                "scores": [
+                    0.4795405423971072
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline14",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8075323700904846,
+            "bbox": {
+                "xmin": 970,
+                "ymin": 1089,
+                "xmax": 1676,
+                "ymax": 1123
+            },
+            "polygon": "1676,1089 1288,1092 1254,1103 970,1098 970,1123 1673,1115"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "outward \" I have been the Straits placed"
+                ],
+                "scores": [
+                    0.2864632685657259
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline15",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.833146333694458,
+            "bbox": {
+                "xmin": 208,
+                "ymin": 1106,
+                "xmax": 860,
+                "ymax": 1143
+            },
+            "polygon": "860,1106 745,1117 663,1109 562,1117 208,1112 208,1137 846,1143 860,1137"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "skateh will become to show the glendale officer"
+                ],
+                "scores": [
+                    0.6027598896480317
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline16",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8369178771972656,
+            "bbox": {
+                "xmin": 973,
+                "ymin": 1123,
+                "xmax": 1676,
+                "ymax": 1157
+            },
+            "polygon": "1676,1123 973,1126 973,1157 1670,1148"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "in some Spiral , the manifestation :"
+                ],
+                "scores": [
+                    0.5006979793230598
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline17",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.799206554889679,
+            "bbox": {
+                "xmin": 205,
+                "ymin": 1140,
+                "xmax": 686,
+                "ymax": 1171
+            },
+            "polygon": "205,1143 205,1171 686,1168 686,1148 638,1140"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "g the card after the application : \" Where the"
+                ],
+                "scores": [
+                    0.6084149593162159
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline18",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8324198722839355,
+            "bbox": {
+                "xmin": 975,
+                "ymin": 1151,
+                "xmax": 1650,
+                "ymax": 1193
+            },
+            "polygon": "1650,1154 1521,1151 1465,1162 975,1160 975,1193 1642,1185"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "appearing that the place is in Spiral convoked"
+                ],
+                "scores": [
+                    0.5389402661605966
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline19",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8096545934677124,
+            "bbox": {
+                "xmin": 241,
+                "ymin": 1165,
+                "xmax": 866,
+                "ymax": 1207
+            },
+            "polygon": "866,1165 708,1165 556,1179 241,1174 241,1196 261,1205 450,1196 503,1205 624,1196 652,1207 860,1202"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "\" sheets of gold over locked . The metal was not"
+                ],
+                "scores": [
+                    0.7647175136177767
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline20",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.8231024146080017,
+            "bbox": {
+                "xmin": 975,
+                "ymin": 1193,
+                "xmax": 1625,
+                "ymax": 1236
+            },
+            "polygon": "1625,1193 978,1196 975,1227 1026,1224 1065,1236 1127,1224 1611,1224 1625,1219"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "withdrawn , a magnetising small"
+                ],
+                "scores": [
+                    0.5415569760179241
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline21",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7881454825401306,
+            "bbox": {
+                "xmin": 205,
+                "ymin": 1199,
+                "xmax": 641,
+                "ymax": 1238
+            },
+            "polygon": "205,1199 205,1233 556,1238 641,1233 641,1205 627,1199 523,1207 469,1199 430,1205 284,1202 275,1207 247,1199"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "defluigialled as oil a letter"
+                ],
+                "scores": [
+                    0.5707111724062008
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline22",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.7287958860397339,
+            "bbox": {
+                "xmin": 975,
+                "ymin": 1224,
+                "xmax": 1442,
+                "ymax": 1275
+            },
+            "polygon": "975,1230 975,1264 1004,1272 1077,1275 1105,1261 1350,1267 1442,1255 1442,1233 1417,1224 1274,1224 1226,1233 1136,1224 1080,1238 1054,1238 1029,1227"
+        },
+        {
+            "text_result": {
+                "texts": [
+                    "subarhus needle"
+                ],
+                "scores": [
+                    0.4375328839791523
+                ]
+            },
+            "label": "SIA-SIA2012-6685_textline23",
+            "segmentation_label": "textline",
+            "segmentation_confidence": 0.614165186882019,
+            "bbox": {
+                "xmin": 405,
+                "ymin": 1297,
+                "xmax": 652,
+                "ymax": 1348
+            },
+            "polygon": "652,1297 565,1297 537,1309 475,1309 458,1300 405,1309 405,1348 475,1340 644,1340 652,1331"
+        }
+    ],
+    "height": 1414,
+    "width": 1800,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "content_json": {
+      "text": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035185。\n样本信息为 GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035185: total_count=53924761, detected_gene_rows=17926；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。"
+    },
+    "experiment_date": null,
+    "experiment_type": "RNA-Seq",
+    "fixed_fields_json": {
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "count_method": "HTSeq v0.6.1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "genome_build": "GRCh37/hg19",
+      "instruments": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips"
+      ],
+      "reagents": [
+        "doxycycline (1 microgram per mL)",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "results": [
+        "GSM3035185: total_count=53924761, detected_gene_rows=17926",
+        "RNA quality: RIN > 9"
+      ],
+      "samples": [
+        "GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]"
+      ],
+      "shrna_construct": "Control",
+      "source": "NCBI GEO GSE111619",
+      "source_accession": "GSM3035185",
+      "treatment": "1 µg/mL doxycycline"
+    },
+    "status": "approved",
+    "title": "GSE111619 GSM3035185 RNA-seq record"
+  },
+  {
+    "content_json": {
+      "text": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035186。\n样本信息为 GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035186: total_count=52016366, detected_gene_rows=17953；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。"
+    },
+    "experiment_date": null,
+    "experiment_type": "RNA-Seq",
+    "fixed_fields_json": {
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "count_method": "HTSeq v0.6.1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "genome_build": "GRCh37/hg19",
+      "instruments": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips"
+      ],
+      "reagents": [
+        "doxycycline (1 microgram per mL)",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "results": [
+        "GSM3035186: total_count=52016366, detected_gene_rows=17953",
+        "RNA quality: RIN > 9"
+      ],
+      "samples": [
+        "GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]"
+      ],
+      "shrna_construct": "Control",
+      "source": "NCBI GEO GSE111619",
+      "source_accession": "GSM3035186",
+      "treatment": "1 µg/mL doxycycline"
+    },
+    "status": "approved",
+    "title": "GSE111619 GSM3035186 RNA-seq record"
+  },
+  {
+    "content_json": {
+      "text": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035187。\n样本信息为 GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035187: total_count=53416511, detected_gene_rows=18137；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。"
+    },
+    "experiment_date": null,
+    "experiment_type": "RNA-Seq",
+    "fixed_fields_json": {
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "count_method": "HTSeq v0.6.1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "genome_build": "GRCh37/hg19",
+      "instruments": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips"
+      ],
+      "reagents": [
+        "doxycycline (1 microgram per mL)",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "results": [
+        "GSM3035187: total_count=53416511, detected_gene_rows=18137",
+        "RNA quality: RIN > 9"
+      ],
+      "samples": [
+        "GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]"
+      ],
+      "shrna_construct": "p63",
+      "source": "NCBI GEO GSE111619",
+      "source_accession": "GSM3035187",
+      "treatment": "1 µg/mL doxycycline"
+    },
+    "status": "approved",
+    "title": "GSE111619 GSM3035187 RNA-seq record"
+  },
+  {
+    "content_json": {
+      "text": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035188。\n样本信息为 GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035188: total_count=51926832, detected_gene_rows=18092；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。"
+    },
+    "experiment_date": null,
+    "experiment_type": "RNA-Seq",
+    "fixed_fields_json": {
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "count_method": "HTSeq v0.6.1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "genome_build": "GRCh37/hg19",
+      "instruments": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips"
+      ],
+      "reagents": [
+        "doxycycline (1 microgram per mL)",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "results": [
+        "GSM3035188: total_count=51926832, detected_gene_rows=18092",
+        "RNA quality: RIN > 9"
+      ],
+      "samples": [
+        "GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]"
+      ],
+      "shrna_construct": "p63",
+      "source": "NCBI GEO GSE111619",
+      "source_accession": "GSM3035188",
+      "treatment": "1 µg/mL doxycycline"
+    },
+    "status": "approved",
+    "title": "GSE111619 GSM3035188 RNA-seq record"
+  }
+]

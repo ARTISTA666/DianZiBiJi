@@ -41,3 +41,7 @@ storage/
 backups/
 storage.pre-restore-*/
 frontend/.codex-home/
+
+# Local dataset caches and disposable validation databases
+data/**/.cache/
+data/**/*.sqlite3

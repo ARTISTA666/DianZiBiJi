@@ -1,0 +1,72 @@
+{
+    "file_name": "SIA-SIA2012-6642.jpg",
+    "image_path": "/Users/yusong/Downloads/new/full-system/data/real/smithsonian_joseph_henry/images/SIA-SIA2012-6642.jpg",
+    "image_name": "SIA-SIA2012-6642",
+    "label": "SIA-SIA2012-6642",
+    "contains": [
+        {
+            "label": "SIA-SIA2012-6642_textregion0",
+            "contains": [
+                {
+                    "text_result": {
+                        "texts": [
+                            "gy"
+                        ],
+                        "scores": [
+                            0.8938187696570825
+                        ]
+                    },
+                    "label": "SIA-SIA2012-6642_textregion0_textline0",
+                    "segmentation_label": "textline",
+                    "segmentation_confidence": 0.7551674246788025,
+                    "bbox": {
+                        "xmin": 1625,
+                        "ymin": 129,
+                        "xmax": 1678,
+                        "ymax": 167
+                    },
+                    "polygon": "1625,129 1625,167 1678,167 1678,129"
+                }
+            ],
+            "segmentation_label": "textregion",
+            "segmentation_confidence": 0.35017210245132446,
+            "bbox": {
+                "xmin": 1625,
+                "ymin": 129,
+                "xmax": 1681,
+                "ymax": 168
+            },
+            "polygon": "1625,129 1625,168 1681,168 1681,129"
+        }
+    ],
+    "height": 1423,
+    "width": 1800,
+    "processing_steps": [
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-regions-1",
+                "model_version": "6fb01d223f39ac325280d99e4a2d1804694e5e99"
+            }
+        },
+        {
+            "description": "Segmentation",
+            "settings": {
+                "model_class": "YOLO",
+                "model": "Riksarkivet/yolov9-lines-within-regions-1",
+                "model_version": "f62260d9ae6e782c43c3fd789b7d7e19d64608d9"
+            }
+        },
+        {
+            "description": "TextRecognition",
+            "settings": {
+                "model_class": "TrOCR",
+                "model": "microsoft/trocr-base-handwritten",
+                "model_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406",
+                "processor": "microsoft/trocr-base-handwritten",
+                "processor_version": "eaacaf452b06415df8f10bb6fad3a4c11e609406"
+            }
+        }
+    ]
+}

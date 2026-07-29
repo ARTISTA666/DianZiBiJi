@@ -1,0 +1,184 @@
+{
+  "ablation": [
+    {
+      "MRR": 0.425,
+      "Recall@1": 0.05,
+      "Recall@10": 0.77381,
+      "Recall@3": 0.41131,
+      "Recall@5": 0.607143,
+      "delta_MRR": 0.0,
+      "delta_Recall@1": 0.0,
+      "delta_Recall@10": 0.0,
+      "delta_Recall@3": 0.0,
+      "delta_Recall@5": 0.0,
+      "delta_nDCG@10": 0.0,
+      "mode": "full",
+      "nDCG@10": 0.523298
+    },
+    {
+      "MRR": 0.282131,
+      "Recall@1": 0.05,
+      "Recall@10": 0.563095,
+      "Recall@3": 0.2625,
+      "Recall@5": 0.3875,
+      "delta_MRR": -0.142869,
+      "delta_Recall@1": 0.0,
+      "delta_Recall@10": -0.210715,
+      "delta_Recall@3": -0.14881,
+      "delta_Recall@5": -0.219643,
+      "delta_nDCG@10": -0.158676,
+      "mode": "without_graph",
+      "nDCG@10": 0.364622
+    },
+    {
+      "MRR": 0.43,
+      "Recall@1": 0.05,
+      "Recall@10": 0.782738,
+      "Recall@3": 0.352976,
+      "Recall@5": 0.555952,
+      "delta_MRR": 0.005,
+      "delta_Recall@1": 0.0,
+      "delta_Recall@10": 0.008928,
+      "delta_Recall@3": -0.058334,
+      "delta_Recall@5": -0.051191,
+      "delta_nDCG@10": -0.004554,
+      "mode": "without_bm25",
+      "nDCG@10": 0.518744
+    },
+    {
+      "MRR": 0.5125,
+      "Recall@1": 0.125,
+      "Recall@10": 0.76131,
+      "Recall@3": 0.402976,
+      "Recall@5": 0.569643,
+      "delta_MRR": 0.0875,
+      "delta_Recall@1": 0.075,
+      "delta_Recall@10": -0.0125,
+      "delta_Recall@3": -0.008334,
+      "delta_Recall@5": -0.0375,
+      "delta_nDCG@10": 0.032645,
+      "mode": "without_vector",
+      "nDCG@10": 0.555943
+    },
+    {
+      "MRR": 0.425,
+      "Recall@1": 0.05,
+      "Recall@10": 0.77381,
+      "Recall@3": 0.41131,
+      "Recall@5": 0.607143,
+      "delta_MRR": 0.0,
+      "delta_Recall@1": 0.0,
+      "delta_Recall@10": 0.0,
+      "delta_Recall@3": 0.0,
+      "delta_Recall@5": 0.0,
+      "delta_nDCG@10": 0.0,
+      "mode": "without_collection_graph_expansion",
+      "nDCG@10": 0.523298
+    }
+  ],
+  "aggregate": [
+    {
+      "MRR": 0.267596,
+      "Recall@1": 0.125,
+      "Recall@10": 0.379167,
+      "Recall@3": 0.216667,
+      "Recall@5": 0.266667,
+      "mode": "bm25",
+      "nDCG@10": 0.298651
+    },
+    {
+      "MRR": 0.263036,
+      "Recall@1": 0.05,
+      "Recall@10": 0.4875,
+      "Recall@3": 0.240476,
+      "Recall@5": 0.371429,
+      "mode": "vector",
+      "nDCG@10": 0.325448
+    },
+    {
+      "MRR": 0.282131,
+      "Recall@1": 0.05,
+      "Recall@10": 0.563095,
+      "Recall@3": 0.2625,
+      "Recall@5": 0.3875,
+      "mode": "hybrid_rag",
+      "nDCG@10": 0.364622
+    },
+    {
+      "MRR": 0.425,
+      "Recall@1": 0.05,
+      "Recall@10": 0.77381,
+      "Recall@3": 0.41131,
+      "Recall@5": 0.607143,
+      "mode": "graph_enhanced_rag",
+      "nDCG@10": 0.523298
+    }
+  ],
+  "configuration": {
+    "candidate_k": 30,
+    "collection_base_graph_limit": 10,
+    "collection_query_count": 17,
+    "collection_question_ids": [
+      "Q01",
+      "Q02",
+      "Q03",
+      "Q04",
+      "Q05",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q11",
+      "Q12",
+      "Q14",
+      "Q15",
+      "Q16",
+      "Q17",
+      "Q18",
+      "Q19",
+      "Q20"
+    ],
+    "embedding_dimension": 512,
+    "embedding_model": "BAAI/bge-small-zh-v1.5",
+    "generation_model_used": false,
+    "graph_limit": 30,
+    "graph_schema_version": "kg-v3-numbered-list-expansion",
+    "metric_implementation": "ir-measures",
+    "modes": [
+      "bm25",
+      "vector",
+      "hybrid_rag",
+      "graph_enhanced_rag"
+    ],
+    "rrf_rank_constant": 60,
+    "trace_top_k": 20
+  },
+  "corpus": {
+    "chunk_count": 984,
+    "entity_count": 56,
+    "relation_count": 126,
+    "sha256": "74cf691d60f6b6ae42fa3eef33f7dbe45103298b75a3a76398495e112929daea"
+  },
+  "expected_result_sha256": "a21bdae8e86e845d3efffd6bf5ea3ab8eda6bd2dcb2fd4857159c74651e731eb",
+  "fact_count": 56,
+  "generated_at": "2026-07-13T05:10:09.501760+00:00",
+  "output_dir": "/tmp/retrieval-evaluation-final2",
+  "package_versions": {
+    "fastembed": "0.8.0",
+    "ir-measures": "0.4.3",
+    "jieba": "0.42.1",
+    "numpy": "2.5.1",
+    "pytrec-eval-terrier": "0.5.10",
+    "rank-bm25": "0.2.2",
+    "scipy": "1.18.0",
+    "sqlalchemy": "2.0.36"
+  },
+  "project": {
+    "id": 3,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目"
+  },
+  "question_count": 20,
+  "questions_file": "gse111619_questions.json",
+  "questions_sha256": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a",
+  "reproducibility_verified": true,
+  "result_sha256": "a21bdae8e86e845d3efffd6bf5ea3ab8eda6bd2dcb2fd4857159c74651e731eb"
+}

@@ -1,0 +1,127 @@
+{
+  "dataset": "RUKOPYS",
+  "dataset_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys",
+  "license": "CC BY-NC-SA 4.0",
+  "metadata_path": "data/real/rukopys_university/train/metadata.jsonl",
+  "metadata_sha256": "51130c9664007b6cded62aba89770dcb3be50151bb5b4a71724f25b74cb21bab",
+  "selection_criteria": {
+    "source": "university",
+    "annotation_source": "annotator",
+    "allowed_region_types": [
+      "annotation",
+      "handwritten",
+      "printed"
+    ],
+    "all_regions_legible": true,
+    "excluded_markers": [
+      "~~",
+      "[illegible]"
+    ],
+    "minimum_reference_characters": 350
+  },
+  "selection_method": "Sort eligible file names, then take evenly spaced positions including both ends.",
+  "candidate_count": 11,
+  "sample_count": 10,
+  "samples": [
+    {
+      "sample_id": "015032c0-8cd9-4b22-a474-3118445cf022",
+      "file_name": "images/015032c0-8cd9-4b22-a474-3118445cf022.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 32,
+      "reference_characters": 1202,
+      "reference_sha256": "0f52406b9a1cbc132f7372f185d5601b59aa5bf2a0336d3fc129992e1f2648a1",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/015032c0-8cd9-4b22-a474-3118445cf022.jpg"
+    },
+    {
+      "sample_id": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f",
+      "file_name": "images/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 28,
+      "reference_characters": 1021,
+      "reference_sha256": "b265447d981e9c88ff8ca2fe4b4dc2c982a4f017fe14b8e3171df2c8516756e9",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.jpg"
+    },
+    {
+      "sample_id": "2392f282-19c9-446b-b743-092281a783d5",
+      "file_name": "images/2392f282-19c9-446b-b743-092281a783d5.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 16,
+      "reference_characters": 460,
+      "reference_sha256": "eb28982794715f4c0290d47d8ac67a022129419b1904f86ee317e097e340f68f",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/2392f282-19c9-446b-b743-092281a783d5.jpg"
+    },
+    {
+      "sample_id": "23cbc409-0a74-4cd0-a211-1a6d655747a4",
+      "file_name": "images/23cbc409-0a74-4cd0-a211-1a6d655747a4.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 25,
+      "reference_characters": 1243,
+      "reference_sha256": "708d6407fad18f7fa950a55dbb27c0cd676330ba874acd8f388c9c7834b37094",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/23cbc409-0a74-4cd0-a211-1a6d655747a4.jpg"
+    },
+    {
+      "sample_id": "3033749a-df7e-41e3-a2d2-1a1c6880fd68",
+      "file_name": "images/3033749a-df7e-41e3-a2d2-1a1c6880fd68.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 43,
+      "reference_characters": 1032,
+      "reference_sha256": "b1efc14f66c49ab5e53e14b695f6ef7401248f5bc1923313c443a4091b5ef1f3",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/3033749a-df7e-41e3-a2d2-1a1c6880fd68.jpg"
+    },
+    {
+      "sample_id": "39d84e50-1f63-48e2-a5e8-8b2d95bbf805",
+      "file_name": "images/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.jpg",
+      "image_width": 1654,
+      "image_height": 2339,
+      "reference_region_count": 18,
+      "reference_characters": 763,
+      "reference_sha256": "7b707831d69e7934700273cade6451783e8d11f521dfef6fdfc71d6863a9114f",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.jpg"
+    },
+    {
+      "sample_id": "3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0",
+      "file_name": "images/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 47,
+      "reference_characters": 1354,
+      "reference_sha256": "637d6da78f2b641eedd8a1873c89e10e5d274c7318cb80df1ad364b7a26a758e",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.jpg"
+    },
+    {
+      "sample_id": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08",
+      "file_name": "images/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 33,
+      "reference_characters": 925,
+      "reference_sha256": "17292430f8cd3097937062587372fccede8133f75f7df2a1e44aad9ac7a98bc4",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.jpg"
+    },
+    {
+      "sample_id": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f",
+      "file_name": "images/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.jpg",
+      "image_width": 1656,
+      "image_height": 2339,
+      "reference_region_count": 30,
+      "reference_characters": 1776,
+      "reference_sha256": "adb4ed3169843738dae6d6db4b98421d1a3db5ceb199701d9756a5a3b2fcfd2f",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.jpg"
+    },
+    {
+      "sample_id": "c30c3eba-5005-4a9b-9ebc-3c18d1d601d3",
+      "file_name": "images/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.jpg",
+      "image_width": 1654,
+      "image_height": 2339,
+      "reference_region_count": 30,
+      "reference_characters": 982,
+      "reference_sha256": "9eae4ee11532b941ff8f5b5a85e9638784000183e37492f7602b6271bb4631d1",
+      "source_url": "https://huggingface.co/datasets/UkrainianCatholicUniversity/rukopys/blob/main/train/images/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.jpg"
+    }
+  ]
+}

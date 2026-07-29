@@ -1,0 +1,142 @@
+{
+  "generated_at": "2026-07-12T22:50:58.066765+00:00",
+  "engine": "PaddleOCR",
+  "package_versions": {
+    "paddlepaddle": "3.2.1",
+    "paddleocr": "3.7.0",
+    "paddlex": "3.7.2"
+  },
+  "detector": "PP-OCRv5_mobile_det",
+  "recognizer": "eslav_PP-OCRv5_mobile_rec",
+  "initialization_ms": 3434.871,
+  "model_artifacts": {
+    "PP-OCRv5_mobile_det": {
+      "path": "/Users/yusong/.paddlex/official_models/PP-OCRv5_mobile_det",
+      "file_count": 19,
+      "total_bytes": 4944932,
+      "tree_sha256": "f15eb092ef9f8bb723ba80b1eaae37951046d2858b0342ddb9debca19feffa03"
+    },
+    "eslav_PP-OCRv5_mobile_rec": {
+      "path": "/Users/yusong/.paddlex/official_models/eslav_PP-OCRv5_mobile_rec",
+      "file_count": 7,
+      "total_bytes": 8052856,
+      "tree_sha256": "7daa8fbb59d95a8bb2c0778357ae43e2e9acbf84e62e54670c6d56e7dae8369b"
+    }
+  },
+  "manifest_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/ocr_manifest.csv",
+  "manifest_sha256": "af19e9783aa9100fb09682e9e5c2bc075f34e6b3f4406f176cf0acaae205484d",
+  "sample_count": 10,
+  "total_prediction_ms": 85876.085,
+  "samples": [
+    {
+      "sample_id": "015032c0-8cd9-4b22-a474-3118445cf022",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/015032c0-8cd9-4b22-a474-3118445cf022.jpg",
+      "image_sha256": "5b86f3c4934e2c366f9664dc6e8dc5a4cb60213e43a4d5dfd5b5c433dfe22c2b",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/015032c0-8cd9-4b22-a474-3118445cf022.txt",
+      "raw_ocr_sha256": "5f115dff5a4d09ec9949a19f74d8d12e5b8a957764bc9e6a3a1446fe8b7d9dc3",
+      "raw_characters": 900,
+      "detected_line_count": 33,
+      "mean_model_score": 0.575388,
+      "elapsed_ms": 10490.52
+    },
+    {
+      "sample_id": "0287fd79-5e2b-43d2-bbc4-029ed0b9206f",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.jpg",
+      "image_sha256": "70191d13218e36005095848e40c1ddb884318c9729cc2aff7289bbdb78173fb7",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/0287fd79-5e2b-43d2-bbc4-029ed0b9206f.txt",
+      "raw_ocr_sha256": "535eefdf1ff16819b2c207d2c4505502ec8a52eebbc7943f3ec55b7cd98713f3",
+      "raw_characters": 883,
+      "detected_line_count": 71,
+      "mean_model_score": 0.504301,
+      "elapsed_ms": 13025.798
+    },
+    {
+      "sample_id": "2392f282-19c9-446b-b743-092281a783d5",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/2392f282-19c9-446b-b743-092281a783d5.jpg",
+      "image_sha256": "cc38d8652fc3be822e0785d9df7bf77dcb835bac2fcc0e93342ddac48a110282",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/2392f282-19c9-446b-b743-092281a783d5.txt",
+      "raw_ocr_sha256": "95dcd6a9bcfffa87891fdc5b00fc2581557a348e8cffb1c1d6a0d8cb6ab1a5b8",
+      "raw_characters": 189,
+      "detected_line_count": 11,
+      "mean_model_score": 0.704011,
+      "elapsed_ms": 5038.6
+    },
+    {
+      "sample_id": "23cbc409-0a74-4cd0-a211-1a6d655747a4",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/23cbc409-0a74-4cd0-a211-1a6d655747a4.jpg",
+      "image_sha256": "e0acd6d50668e138636f0677b93090f339b844c25d1598b5c1d627b210bc33a1",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/23cbc409-0a74-4cd0-a211-1a6d655747a4.txt",
+      "raw_ocr_sha256": "8cf5d8ca3ed90e26f15425a3b02d776bb40315c09fd428bbc1d2d2c1251191dc",
+      "raw_characters": 660,
+      "detected_line_count": 25,
+      "mean_model_score": 0.48091,
+      "elapsed_ms": 8049.662
+    },
+    {
+      "sample_id": "3033749a-df7e-41e3-a2d2-1a1c6880fd68",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/3033749a-df7e-41e3-a2d2-1a1c6880fd68.jpg",
+      "image_sha256": "fe5c0922b66837842bf8ed7c9b88e20576cc84f9d110c9c83ce77b9ee6fa14b7",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/3033749a-df7e-41e3-a2d2-1a1c6880fd68.txt",
+      "raw_ocr_sha256": "ea985ff18663c3a043fad2770e354f0f717b1394948f0827031e856170d34800",
+      "raw_characters": 195,
+      "detected_line_count": 18,
+      "mean_model_score": 0.693821,
+      "elapsed_ms": 5492.702
+    },
+    {
+      "sample_id": "39d84e50-1f63-48e2-a5e8-8b2d95bbf805",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.jpg",
+      "image_sha256": "911b848c61e526ce12940fea9f082f3d0fbe745f89dc472b17ae6a852645c4f2",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/39d84e50-1f63-48e2-a5e8-8b2d95bbf805.txt",
+      "raw_ocr_sha256": "c27b244d892cf22608946a435a0b7bd4c31aa680de3d8c7f60e490ac27e7af28",
+      "raw_characters": 573,
+      "detected_line_count": 18,
+      "mean_model_score": 0.573083,
+      "elapsed_ms": 6868.607
+    },
+    {
+      "sample_id": "3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.jpg",
+      "image_sha256": "ae887e7f209d99c6f16a2b1c21655f2105ec1ee963d9f6db3c47f410cd3dda0d",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/3b2a33c5-e8e3-44f3-910b-7c2ffa2409a0.txt",
+      "raw_ocr_sha256": "acd02480786077add89cef2e54ef3db102d3c23998f1df05daaa0666ebc0bf36",
+      "raw_characters": 899,
+      "detected_line_count": 62,
+      "mean_model_score": 0.499612,
+      "elapsed_ms": 12617.597
+    },
+    {
+      "sample_id": "3dfc1873-9f9f-43a4-8fad-4d01eedcbb08",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.jpg",
+      "image_sha256": "1fdca552f5f2dd033c2a27fe32963c1f6e449ffad1700f8649c84f673ce2c13f",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/3dfc1873-9f9f-43a4-8fad-4d01eedcbb08.txt",
+      "raw_ocr_sha256": "d0bec5d4143e5e91f1a0eb9284607de81cc24f4a258e56b44ec3b81ab7d9061b",
+      "raw_characters": 730,
+      "detected_line_count": 51,
+      "mean_model_score": 0.618446,
+      "elapsed_ms": 10488.679
+    },
+    {
+      "sample_id": "86b4010b-2b26-43b0-8c8f-8f1a1b67f28f",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.jpg",
+      "image_sha256": "8df85fab998294b001e29b1e0b44e45a5a9ae37d1e4fbd97983ecde899151be8",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/86b4010b-2b26-43b0-8c8f-8f1a1b67f28f.txt",
+      "raw_ocr_sha256": "85ebc7a965ae1bbc8f3d7c92ee60068ed4aac7e04893f7edd06b2a18e6f6aca8",
+      "raw_characters": 270,
+      "detected_line_count": 19,
+      "mean_model_score": 0.395289,
+      "elapsed_ms": 6327.18
+    },
+    {
+      "sample_id": "c30c3eba-5005-4a9b-9ebc-3c18d1d601d3",
+      "image_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/train/images/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.jpg",
+      "image_sha256": "e0b1fed59194bc090b4180ba6811b423ce64a27b011fa85b365b8982e55a15a1",
+      "raw_ocr_path": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/development_variants/paddleocr_v5_mobile_eslav/raw/c30c3eba-5005-4a9b-9ebc-3c18d1d601d3.txt",
+      "raw_ocr_sha256": "ab48065d8d13db50a3c36920ebb9146c9a81c5c9ce885d29919f4762510e14cc",
+      "raw_characters": 429,
+      "detected_line_count": 26,
+      "mean_model_score": 0.576141,
+      "elapsed_ms": 7476.74
+    }
+  ]
+}

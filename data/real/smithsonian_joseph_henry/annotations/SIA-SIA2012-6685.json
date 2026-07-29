@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6685",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6685",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6685",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "[[start page]]<BR/>[[top margin]]180 Jany 29 1845 [[top margin]]<BR/>[[figure at top with image of copper plate and electrical poles]] <BR/>Repeat this exp!<BR/>Arranged needles on the outside of the two poles as in the diagram, found them all magnetized [[underline]]minus[[underline]]. This is an instructive experiment from which it would appear that the lines of current are similar to those on the surface of paper on which filings have been strewed above a magnet.<BR/>[[vertical wavy lines to right and left of next sentence]]<BR/>Refer in the account of these experiments to those of Professor Darrell on the divergency of a galvanic current. <BR/>[[following citation in brackets]]<BR/>Phil Soph Trans 1837<BR/><BR/>Next joined a wire [[underline]]a[[underline]] [[underline]]b[[underline]]leading to the well to the end of the plate at [[underline]]a[[underline]], the pole being as before, needle slightly magnetized with a current outwards. When larger needle* was placed in same spiral, no magnetism. <BR/><BR/>Afterwards needle placed in spiral connected with [[d?]]. Magnetism small.<BR/><BR/>* Darning needle<BR/>[[end page]]<BR/>[[start page]]<BR/>[[top margin]]Jany 29 1845    181 [[top margin]]<BR/>[[figure:plus and negative poles, gold leaf]]<BR/>Sent charge of Franklin battery through gold leaf spread over the surface of a card of the size and shape represented in the diagram. The leaf was deflagrated around each [[strikeout]] [[?]][[strikeout]] pole, but more around the minus than the positive. The leaf was also more removed at the outer edges, than in the middle. The above sketch will serve to show the general appearance of the card after the explosion. When the sheets of gold overlaped, the metal was not deflagrated as as at [[underline]][[a]] [[underline]][[b]][[underline]] & c.<BR/>[[end page]]",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6685#xywh=10,10,2990,2347"
+    }
+  ]
+}

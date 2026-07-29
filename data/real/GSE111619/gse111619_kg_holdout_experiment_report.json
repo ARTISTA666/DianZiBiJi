@@ -1,0 +1,640 @@
+{
+  "generated_at": "2026-07-11T01:35:38.773075+00:00",
+  "artifact_scope": "formal full-system API paired experiment using the persisted project corpus",
+  "dataset": "NCBI GEO GSE111619",
+  "question_set": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+  "question_set_freeze": {
+    "frozen_at": "2026-07-11T01:28:52Z",
+    "question_file": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+    "sha256": "ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889",
+    "question_count": 12,
+    "gold_relation_or_fact_count": 32,
+    "policy": "The question text, gold facts, forbidden facts and scoring spans are frozen before the knowledge-graph schema and benchmark corpus are changed. Do not tune against holdout answers."
+  },
+  "experiment_run": {
+    "id": 4,
+    "project_id": 3,
+    "created_by": 1,
+    "name": "GSE111619 原始语料冻结盲测：普通RAG与图谱增强RAG",
+    "status": "completed",
+    "questions_json": [
+      "请只列出 p63 敲低组两个样本各自对应的 GEO 样本号和 SRA 实验号。",
+      "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+      "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+      "检测到的非零基因行数最高的样本属于哪一组？请给出样本号和行数。",
+      "总基因计数最低的样本是什么？请同时给出其 SRA 实验号和总计数。",
+      "把四个 GEO 样本号与 HTSeq 计数矩阵中的列名逐一对应。",
+      "分别报告两个 p63 敲低样本检测到的非零基因行数。",
+      "分别报告两个非靶向对照样本的总基因计数。",
+      "列出四个 GEO 样本各自对应的 BioSample 登录号。",
+      "指出比对软件及版本、参考基因组，以及基因计数软件及版本。",
+      "概括细胞来源、诱导处理剂量、培养温度、CO2 条件和处理时长。",
+      "p63 敲低组两个生物学重复的总基因计数相差多少？哪个样本较低？"
+    ],
+    "modes_json": [
+      "project_rag",
+      "kg_enhanced_rag"
+    ],
+    "config_snapshot_json": {
+      "provider": "deepseek",
+      "generation_model": "deepseek-v4-flash",
+      "embedding_model": "BAAI/bge-small-zh-v1.5",
+      "embedding_dimensions": 512,
+      "prompt_version": "rag-v3-local-hybrid-kg-citations",
+      "chunk_size": 700,
+      "chunk_overlap": 120,
+      "retrieval_top_k": 6,
+      "collection_retrieval_top_k": 12,
+      "vector_candidate_k": 30,
+      "graph_top_k": 10,
+      "graph_min_score": 1.0,
+      "indexed_chunk_count": 984,
+      "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+      "captured_at": "2026-07-11T01:34:40.857940+00:00"
+    },
+    "summary_json": {
+      "errors": [],
+      "mode_stats": [
+        {
+          "mode": "project_rag",
+          "completed": 12,
+          "failed": 0,
+          "avg_response_ms": 2042.83,
+          "avg_source_count": 11.0,
+          "avg_graph_hit_count": 0.0
+        },
+        {
+          "mode": "kg_enhanced_rag",
+          "completed": 12,
+          "failed": 0,
+          "avg_response_ms": 2777.42,
+          "avg_source_count": 11.0,
+          "avg_graph_hit_count": 25.67
+        }
+      ]
+    },
+    "total_cases": 24,
+    "completed_cases": 24,
+    "failed_cases": 0,
+    "created_at": "2026-07-11T01:34:40.853368Z",
+    "completed_at": "2026-07-11T01:35:38.803835Z"
+  },
+  "objective_evaluation": {
+    "metric": "deterministic alias-based gold-fact coverage",
+    "exact_case_metric": "all required facts present and no predefined forbidden fact present",
+    "mode_summary": [
+      {
+        "mode": "project_rag",
+        "completed": 12,
+        "failed": 0,
+        "hit_facts": 9,
+        "total_facts": 32,
+        "micro_fact_coverage": 0.2812,
+        "macro_fact_coverage": 0.2611,
+        "forbidden_fact_hits": 1,
+        "closed_set_fact_precision": 0.9,
+        "closed_set_fact_f1": 0.4286,
+        "closed_set_exact_correct_cases": 1,
+        "closed_set_exact_case_accuracy": 0.0833
+      },
+      {
+        "mode": "kg_enhanced_rag",
+        "completed": 12,
+        "failed": 0,
+        "hit_facts": 25,
+        "total_facts": 32,
+        "micro_fact_coverage": 0.7812,
+        "macro_fact_coverage": 0.7611,
+        "forbidden_fact_hits": 5,
+        "closed_set_fact_precision": 0.8333,
+        "closed_set_fact_f1": 0.8065,
+        "closed_set_exact_correct_cases": 6,
+        "closed_set_exact_case_accuracy": 0.5
+      }
+    ],
+    "case_results": [
+      {
+        "case_id": "H01",
+        "category": "identifier_relation",
+        "question": "请只列出 p63 敲低组两个样本各自对应的 GEO 样本号和 SRA 实验号。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 89,
+        "hit_facts": [
+          "GSM3035187 -> SRX3777458",
+          "GSM3035188 -> SRX3777459"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1606
+      },
+      {
+        "case_id": "H01",
+        "category": "identifier_relation",
+        "question": "请只列出 p63 敲低组两个样本各自对应的 GEO 样本号和 SRA 实验号。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 90,
+        "hit_facts": [
+          "GSM3035187 -> SRX3777458",
+          "GSM3035188 -> SRX3777459"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 1902
+      },
+      {
+        "case_id": "H02",
+        "category": "identifier_relation",
+        "question": "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 91,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> SRX3777456",
+          "GSM3035186 -> SRX3777457"
+        ],
+        "forbidden_facts_found": [
+          "SRX3777459"
+        ],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1799
+      },
+      {
+        "case_id": "H02",
+        "category": "identifier_relation",
+        "question": "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 92,
+        "hit_facts": [
+          "GSM3035185 -> SRX3777456"
+        ],
+        "missed_facts": [
+          "GSM3035186 -> SRX3777457"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.5,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 2218
+      },
+      {
+        "case_id": "H03",
+        "category": "cross_record_reasoning",
+        "question": "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 93,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> 53924761",
+          "GSM3035185 -> control"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1837
+      },
+      {
+        "case_id": "H03",
+        "category": "cross_record_reasoning",
+        "question": "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 94,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> 53924761",
+          "GSM3035185 -> control"
+        ],
+        "forbidden_facts_found": [
+          "GSM3035186",
+          "GSM3035187",
+          "GSM3035188"
+        ],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 2843
+      },
+      {
+        "case_id": "H04",
+        "category": "cross_record_reasoning",
+        "question": "检测到的非零基因行数最高的样本属于哪一组？请给出样本号和行数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 95,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035187 -> 18137",
+          "GSM3035187 -> p63_knockdown"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1779
+      },
+      {
+        "case_id": "H04",
+        "category": "cross_record_reasoning",
+        "question": "检测到的非零基因行数最高的样本属于哪一组？请给出样本号和行数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 96,
+        "hit_facts": [
+          "GSM3035187 -> 18137",
+          "GSM3035187 -> p63_knockdown"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [
+          "GSM3035186",
+          "GSM3035188"
+        ],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 2190
+      },
+      {
+        "case_id": "H05",
+        "category": "cross_record_reasoning",
+        "question": "总基因计数最低的样本是什么？请同时给出其 SRA 实验号和总计数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 97,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035188 -> SRX3777459",
+          "GSM3035188 -> 51926832"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 2107
+      },
+      {
+        "case_id": "H05",
+        "category": "cross_record_reasoning",
+        "question": "总基因计数最低的样本是什么？请同时给出其 SRA 实验号和总计数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 98,
+        "hit_facts": [
+          "GSM3035188 -> SRX3777459",
+          "GSM3035188 -> 51926832"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 2634
+      },
+      {
+        "case_id": "H06",
+        "category": "column_mapping",
+        "question": "把四个 GEO 样本号与 HTSeq 计数矩阵中的列名逐一对应。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 99,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> NonTargeting_rep1",
+          "GSM3035186 -> NonTargeting_rep2",
+          "GSM3035187 -> p63KD_rep1",
+          "GSM3035188 -> p63KD_rep2"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1690
+      },
+      {
+        "case_id": "H06",
+        "category": "column_mapping",
+        "question": "把四个 GEO 样本号与 HTSeq 计数矩阵中的列名逐一对应。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 100,
+        "hit_facts": [
+          "GSM3035185 -> NonTargeting_rep1",
+          "GSM3035186 -> NonTargeting_rep2",
+          "GSM3035187 -> p63KD_rep1",
+          "GSM3035188 -> p63KD_rep2"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 5595
+      },
+      {
+        "case_id": "H07",
+        "category": "result_relation",
+        "question": "分别报告两个 p63 敲低样本检测到的非零基因行数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 101,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035187 -> 18137",
+          "GSM3035188 -> 18092"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 2776
+      },
+      {
+        "case_id": "H07",
+        "category": "result_relation",
+        "question": "分别报告两个 p63 敲低样本检测到的非零基因行数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 102,
+        "hit_facts": [
+          "GSM3035187 -> 18137",
+          "GSM3035188 -> 18092"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 24,
+        "response_ms": 2417
+      },
+      {
+        "case_id": "H08",
+        "category": "result_relation",
+        "question": "分别报告两个非靶向对照样本的总基因计数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 103,
+        "hit_facts": [
+          "GSM3035185 -> 53924761"
+        ],
+        "missed_facts": [
+          "GSM3035186 -> 52016366"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.5,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1675
+      },
+      {
+        "case_id": "H08",
+        "category": "result_relation",
+        "question": "分别报告两个非靶向对照样本的总基因计数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 104,
+        "hit_facts": [
+          "GSM3035185 -> 53924761"
+        ],
+        "missed_facts": [
+          "GSM3035186 -> 52016366"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.5,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 3789
+      },
+      {
+        "case_id": "H09",
+        "category": "identifier_relation",
+        "question": "列出四个 GEO 样本各自对应的 BioSample 登录号。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 105,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> SAMN08667775",
+          "GSM3035186 -> SAMN08667774",
+          "GSM3035187 -> SAMN08667770",
+          "GSM3035188 -> SAMN08667769"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 1752
+      },
+      {
+        "case_id": "H09",
+        "category": "identifier_relation",
+        "question": "列出四个 GEO 样本各自对应的 BioSample 登录号。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 106,
+        "hit_facts": [
+          "GSM3035185 -> SAMN08667775",
+          "GSM3035186 -> SAMN08667774",
+          "GSM3035187 -> SAMN08667770",
+          "GSM3035188 -> SAMN08667769"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 1843
+      },
+      {
+        "case_id": "H10",
+        "category": "processing_pipeline",
+        "question": "指出比对软件及版本、参考基因组，以及基因计数软件及版本。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 107,
+        "hit_facts": [
+          "GRCh37/hg19"
+        ],
+        "missed_facts": [
+          "TopHat2 v2.0.13",
+          "HTSeq v0.6.1"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.3333,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 2530
+      },
+      {
+        "case_id": "H10",
+        "category": "processing_pipeline",
+        "question": "指出比对软件及版本、参考基因组，以及基因计数软件及版本。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 108,
+        "hit_facts": [
+          "GRCh37/hg19"
+        ],
+        "missed_facts": [
+          "TopHat2 v2.0.13",
+          "HTSeq v0.6.1"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.3333,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 10,
+        "response_ms": 2754
+      },
+      {
+        "case_id": "H11",
+        "category": "experimental_condition",
+        "question": "概括细胞来源、诱导处理剂量、培养温度、CO2 条件和处理时长。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 109,
+        "hit_facts": [
+          "H226",
+          "37°C",
+          "5% CO2",
+          "6 days"
+        ],
+        "missed_facts": [
+          "1 µg/mL doxycycline"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.8,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 2006
+      },
+      {
+        "case_id": "H11",
+        "category": "experimental_condition",
+        "question": "概括细胞来源、诱导处理剂量、培养温度、CO2 条件和处理时长。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 110,
+        "hit_facts": [
+          "H226",
+          "37°C",
+          "5% CO2",
+          "6 days"
+        ],
+        "missed_facts": [
+          "1 µg/mL doxycycline"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.8,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 10,
+        "response_ms": 2502
+      },
+      {
+        "case_id": "H12",
+        "category": "numeric_reasoning",
+        "question": "p63 敲低组两个生物学重复的总基因计数相差多少？哪个样本较低？",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 111,
+        "hit_facts": [
+          "GSM3035188"
+        ],
+        "missed_facts": [
+          "1489679"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.5,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 2957
+      },
+      {
+        "case_id": "H12",
+        "category": "numeric_reasoning",
+        "question": "p63 敲低组两个生物学重复的总基因计数相差多少？哪个样本较低？",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 112,
+        "hit_facts": [
+          "GSM3035188",
+          "1489679"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 24,
+        "response_ms": 2642
+      }
+    ],
+    "citation_marker_audit": {
+      "completed_answer_count": 24,
+      "answers_with_source_marker": 18,
+      "answers_with_any_evidence_marker": 24,
+      "kg_answers_with_graph_context": 12,
+      "kg_answers_with_graph_marker": 10,
+      "invalid_source_marker_rows": [],
+      "invalid_graph_marker_rows": [],
+      "source_marker_answer_rate": 0.75,
+      "evidence_marker_answer_rate": 1.0,
+      "kg_graph_marker_rate_when_context_available": 0.8333,
+      "all_citation_indices_in_range": true
+    },
+    "paired_comparison": {
+      "paired_case_count": 12,
+      "mean_fact_coverage_delta": 0.5,
+      "kg_improved_cases": 7,
+      "tied_cases": 5,
+      "kg_worse_cases": 0,
+      "coverage_sign_test_two_sided_p": 0.015625,
+      "kg_exact_only_cases": 5,
+      "plain_exact_only_cases": 0,
+      "mcnemar_exact_two_sided_p": 0.0625,
+      "mean_response_time_delta_ms": 734.58
+    },
+    "limitations": [
+      "Fact coverage checks whether predefined aliases appear in the answer; it does not prove factual correctness.",
+      "Association, negation, reasoning quality and citation validity still require independent human review.",
+      "Closed-set exact accuracy only checks predefined required and forbidden facts; comparison details can be penalized even when the final conclusion is correct.",
+      "The questions belong to one public GEO project and do not establish cross-project generalization."
+    ]
+  },
+  "rescored_at": "2026-07-11T01:38:07.283710+00:00",
+  "knowledge_graph_schema_version": "kg-v2-structured-fields"
+}

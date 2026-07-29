@@ -1,0 +1,304 @@
+{
+  "imported_at": "2026-07-11T00:51:10.432308+00:00",
+  "dataset": "NCBI GEO GSE111619",
+  "project": {
+    "id": 2,
+    "name": "GSE111619 真实数据验证项目",
+    "description": "NCBI GEO GSE111619 公开 RNA-seq 数据验证项目；保留原始来源文件、结构化样本笔记、知识图谱与 RAG 处理记录。",
+    "is_sensitive": false,
+    "status": "active",
+    "approval_enabled": true,
+    "owner_user_id": null
+  },
+  "notes": [
+    {
+      "id": 4,
+      "title": "GSE111619 GSM3035185 RNA-seq record",
+      "status": "approved"
+    },
+    {
+      "id": 5,
+      "title": "GSE111619 GSM3035186 RNA-seq record",
+      "status": "approved"
+    },
+    {
+      "id": 6,
+      "title": "GSE111619 GSM3035187 RNA-seq record",
+      "status": "approved"
+    },
+    {
+      "id": 7,
+      "title": "GSE111619 GSM3035188 RNA-seq record",
+      "status": "approved"
+    }
+  ],
+  "files": [
+    {
+      "id": 3,
+      "filename": "GSE111619_family.soft.gz",
+      "category": "note_attachment",
+      "sha256": "fbfb8aa0a5b0bee99c8ec44d641eec82568a4ce24706b1d16a3010c9403c6043",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 4,
+      "filename": "GSE111619_series_matrix.txt.gz",
+      "category": "note_attachment",
+      "sha256": "b8086b3dad39d1120d6e03fc62ee22007692e86c7ad688e4da300c38822b8849",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 5,
+      "filename": "GSE111619_HTSeq_counts.txt.gz",
+      "category": "note_attachment",
+      "sha256": "662eeaa22c55beb5457b447a27be6f9c5df70f831addd3b04ed6bc718de569f5",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 6,
+      "filename": "gse111619_notes.json",
+      "category": "note_attachment",
+      "sha256": "48fac5e897b655e25315a0351f910bac3afff9e381dfa91313269c4c47b13f5d",
+      "status": "uploaded",
+      "knowledge_sync_status": "not_applicable",
+      "knowledge_sync_message": null
+    },
+    {
+      "id": 7,
+      "filename": "gse111619_samples.csv",
+      "category": "knowledge_document",
+      "sha256": "7aec664d8f87f24c01979206e8561d5c008482b8239fb0d853a4cf1a83b8e55d",
+      "status": "approved",
+      "knowledge_sync_status": "synced",
+      "knowledge_sync_message": "Indexed 3 chunks with BAAI/bge-small-zh-v1.5"
+    },
+    {
+      "id": 8,
+      "filename": "gse111619_knowledge_document.txt",
+      "category": "knowledge_document",
+      "sha256": "5a9188ebde46c5707b070c48e85eb6faea543b131cc1a5b6f94179f30afa04ea",
+      "status": "approved",
+      "knowledge_sync_status": "synced",
+      "knowledge_sync_message": "Indexed 9 chunks with BAAI/bge-small-zh-v1.5"
+    }
+  ],
+  "source_extraction": [
+    {
+      "file_id": 3,
+      "filename": "GSE111619_family.soft.gz",
+      "extraction_method": "gzip_text",
+      "character_count": 20659,
+      "truncated": false,
+      "first_line": "^DATABASE = GeoMiame",
+      "extracted_text_sha256": "b84b094bcc6bbbe40b57220ba7c219284200f35834627b6f3e8723b836016469"
+    },
+    {
+      "file_id": 4,
+      "filename": "GSE111619_series_matrix.txt.gz",
+      "extraction_method": "gzip_text",
+      "character_count": 16034,
+      "truncated": false,
+      "first_line": "!Series_title\t\"Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible Control (non-targeting) and p63-targeting shRNAs\"",
+      "extracted_text_sha256": "cc51ac118c73c1d64f4268115a2688db19ee844672c0dc3a80323a1fff7aeab1"
+    },
+    {
+      "file_id": 5,
+      "filename": "GSE111619_HTSeq_counts.txt.gz",
+      "extraction_method": "gzip_text",
+      "character_count": 531542,
+      "truncated": false,
+      "first_line": "GeneID\tNonTargeting_rep1\tNonTargeting_rep2\tp63KD_rep1\tp63KD_rep2",
+      "extracted_text_sha256": "09275fe1d4576968d5f2fc9bf45b26812103dcef0c5a43108f283cb8c7519826"
+    },
+    {
+      "file_id": 6,
+      "filename": "gse111619_notes.json",
+      "extraction_method": "plain_text",
+      "character_count": 6387,
+      "truncated": false,
+      "first_line": "[",
+      "extracted_text_sha256": "48fac5e897b655e25315a0351f910bac3afff9e381dfa91313269c4c47b13f5d"
+    },
+    {
+      "file_id": 7,
+      "filename": "gse111619_samples.csv",
+      "extraction_method": "plain_text",
+      "character_count": 1381,
+      "truncated": false,
+      "first_line": "geo_accession,count_column,title,condition,replicate,cell_line,cell_type,shrna_construct,treatment,culture_condition,molecule,instrument,library_strategy,biosample,sra,total_gene_count,detected_gene_rows,zero_gene_rows",
+      "extracted_text_sha256": "85b353d7838480158bd3b2dbbbbbc486b3dd0e0f0bee82216beaa8b6aba85627"
+    },
+    {
+      "file_id": 8,
+      "filename": "gse111619_knowledge_document.txt",
+      "extraction_method": "plain_text",
+      "character_count": 3729,
+      "truncated": false,
+      "first_line": "GEO series GSE111619 structured validation document",
+      "extracted_text_sha256": "5a9188ebde46c5707b070c48e85eb6faea543b131cc1a5b6f94179f30afa04ea"
+    }
+  ],
+  "knowledge_graph": {
+    "entity_count": 21,
+    "relation_count": 44
+  },
+  "rag_status": {
+    "initialized": true,
+    "dataset": {
+      "id": 2,
+      "project_id": 2,
+      "dify_dataset_id": "local-project-2",
+      "dify_dataset_name": "ELN Project 2 - GSE111619 真实数据验证项目",
+      "provider": "local_deepseek",
+      "embedding_model": "BAAI/bge-small-zh-v1.5",
+      "generation_model": "deepseek-v4-flash",
+      "status": "active",
+      "created_by": 1,
+      "created_at": "2026-07-10T12:15:57.695313Z",
+      "updated_at": "2026-07-10T12:15:57.695313Z"
+    },
+    "pending_sync_count": 0,
+    "failed_sync_count": 0,
+    "synced_count": 2
+  },
+  "verification_query": {
+    "answer": "根据提供的项目资料，GSE111619 包含以下4个样本：\n\n- GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control] [S4]\n- GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control] [S5]\n- GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown] [S1]\n- GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown] [S2]\n\n其中，属于 p63 敲低组的样本为：\n- GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown] [S1][G2]\n- GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown] [S2][G1]\n\n这些样本均使用 1 µg/mL doxycycline 处理，在 37°C、5% CO2 条件下培养 6 天，并采用 Illumina HiSeq 2500 进行测序 [S1][S2][S4][S5]。",
+    "conversation_id": "1bc93476-a080-46ee-992d-7a4a39c1b38f",
+    "sources": [
+      {
+        "chunk_id": 11,
+        "file_id": 8,
+        "filename": "gse111619_knowledge_document.txt",
+        "dify_document_id": null,
+        "snippet": "GSE111619 GSM3035187 RNA-seq record\n数据来源：NCBI GEO GSE111619，样本登录号 GSM3035187。\n样本信息为 GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035187: total_count=53416511, detected_gene_rows=18137；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。\n结构化样本字段：GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]。\n结构化结果字段：GSM3035187: total_count=53416511, detected_gene_rows=18137; RNA qual",
+        "vector_score": 0.548626,
+        "lexical_score": 0.4,
+        "retrieval_score": 0.5189
+      },
+      {
+        "chunk_id": 13,
+        "file_id": 8,
+        "filename": "gse111619_knowledge_document.txt",
+        "dify_document_id": null,
+        "snippet": "GSE111619 GSM3035188 RNA-seq record\n数据来源：NCBI GEO GSE111619，样本登录号 GSM3035188。\n样本信息为 GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035188: total_count=51926832, detected_gene_rows=18092；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。\n结构化样本字段：GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]。\n结构化结果字段：GSM3035188: total_count=51926832, detected_gene_rows=18092; RNA qual",
+        "vector_score": 0.546827,
+        "lexical_score": 0.4,
+        "retrieval_score": 0.517462
+      },
+      {
+        "chunk_id": 6,
+        "file_id": 8,
+        "filename": "gse111619_knowledge_document.txt",
+        "dify_document_id": null,
+        "snippet": "GEO series GSE111619 structured validation document\n研究标题：Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible Control (non-targeting) and p63-targeting shRNAs\n研究设计：H226 肺鳞状细胞癌细胞中，比较 doxycycline 诱导的非靶向 shRNA 对照与 p63 靶向 shRNA；每组两个生物学重复。\n数据边界：下载并处理的是 GEO 提供的基因级 HTSeq 计数矩阵和 SOFT 元数据，不是本地实验室原始笔记，也不是原始 FASTQ 读段。\n来源：https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111619",
+        "vector_score": 0.540659,
+        "lexical_score": 0.4,
+        "retrieval_score": 0.512527
+      },
+      {
+        "chunk_id": 7,
+        "file_id": 8,
+        "filename": "gse111619_knowledge_document.txt",
+        "dify_document_id": null,
+        "snippet": "GSE111619 GSM3035185 RNA-seq record\n数据来源：NCBI GEO GSE111619，样本登录号 GSM3035185。\n样本信息为 GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035185: total_count=53924761, detected_gene_rows=17926；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。\n结构化样本字段：GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。\n结构化结果字段：GSM3035185: total_count=53924761, detected_gene_rows=17926",
+        "vector_score": 0.529073,
+        "lexical_score": 0.2,
+        "retrieval_score": 0.463258
+      },
+      {
+        "chunk_id": 9,
+        "file_id": 8,
+        "filename": "gse111619_knowledge_document.txt",
+        "dify_document_id": null,
+        "snippet": "GSE111619 GSM3035186 RNA-seq record\n数据来源：NCBI GEO GSE111619，样本登录号 GSM3035186。\n样本信息为 GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035186: total_count=52016366, detected_gene_rows=17953；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。\n结构化样本字段：GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]。\n结构化结果字段：GSM3035186: total_count=52016366, detected_gene_rows=17953",
+        "vector_score": 0.525051,
+        "lexical_score": 0.2,
+        "retrieval_score": 0.460041
+      },
+      {
+        "chunk_id": 12,
+        "file_id": 8,
+        "filename": "gse111619_knowledge_document.txt",
+        "dify_document_id": null,
+        "snippet": "ep1 | shRNA=p63 | condition=p63_knockdown]。\n结构化结果字段：GSM3035187: total_count=53416511, detected_gene_rows=18137; RNA quality: RIN > 9。\n元数据处理软件包括 bcl2fastq v1.8.4、FASTQC v0.11.2、TopHat2 v2.0.13、SAMtools v0.1.19、Picard v1.129、RSeQC v2.6 和 HTSeq v0.6.1。",
+        "vector_score": 0.498644,
+        "lexical_score": 0.2,
+        "retrieval_score": 0.438915
+      }
+    ],
+    "graph_context": [
+      {
+        "relation_id": 80,
+        "relation_type": "uses_sample",
+        "relation_label": "使用样本",
+        "source_entity_id": 56,
+        "source_label": "GSE111619 GSM3035188 RNA-seq record",
+        "source_entity_type": "note",
+        "source_entity_type_label": "实验笔记",
+        "target_entity_id": 57,
+        "target_label": "GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]",
+        "target_entity_type": "sample",
+        "target_entity_type_label": "样本",
+        "confidence": 0.7,
+        "retrieval_score": 5.5
+      },
+      {
+        "relation_id": 69,
+        "relation_type": "uses_sample",
+        "relation_label": "使用样本",
+        "source_entity_id": 53,
+        "source_label": "GSE111619 GSM3035187 RNA-seq record",
+        "source_entity_type": "note",
+        "source_entity_type_label": "实验笔记",
+        "target_entity_id": 54,
+        "target_label": "GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]",
+        "target_entity_type": "sample",
+        "target_entity_type_label": "样本",
+        "confidence": 0.7,
+        "retrieval_score": 5.5
+      },
+      {
+        "relation_id": 58,
+        "relation_type": "uses_sample",
+        "relation_label": "使用样本",
+        "source_entity_id": 50,
+        "source_label": "GSE111619 GSM3035186 RNA-seq record",
+        "source_entity_type": "note",
+        "source_entity_type_label": "实验笔记",
+        "target_entity_id": 51,
+        "target_label": "GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]",
+        "target_entity_type": "sample",
+        "target_entity_type_label": "样本",
+        "confidence": 0.7,
+        "retrieval_score": 4.5
+      },
+      {
+        "relation_id": 47,
+        "relation_type": "uses_sample",
+        "relation_label": "使用样本",
+        "source_entity_id": 39,
+        "source_label": "GSE111619 GSM3035185 RNA-seq record",
+        "source_entity_type": "note",
+        "source_entity_type_label": "实验笔记",
+        "target_entity_id": 47,
+        "target_label": "GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]",
+        "target_entity_type": "sample",
+        "target_entity_type_label": "样本",
+        "confidence": 0.7,
+        "retrieval_score": 4.5
+      }
+    ],
+    "rag_mode": "kg_enhanced_rag",
+    "query_log_id": 8,
+    "response_ms": 2944,
+    "provider": "deepseek",
+    "model_name": "deepseek-v4-flash",
+    "fallback_reason": null
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6671",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6671",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6671",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "[[start page]]<BR/>[[top margin]]152 Jany 14th 1845 Condition of a discharging wire[[/top margin]]<BR/>Repeated the experiment with the jar - <BR/>needles very slightly magnetized o- --<BR/><BR/>Opened the circut in the water at [[underline]]d[[/underline]], <BR/>charge about the same, all the needles <BR/>+++.<BR/><BR/>Repeated last experiment, all things the <BR/>same. all the needles +++<BR/><BR/>Repeated same with opening at [[underline]]d[[/underline]], closed <BR/>needles, all +++, but not quite as strongly <BR/>as in some of the other cases.<BR/><BR/>These experiments conclusively <BR/>show that the several parts even of a <BR/>short wire, are not at the moment <BR/>of the discharge in the same electrical <BR/>state relative to each other. Also that <BR/>there are oscillations from one end to<BR/>the other. <BR/><BR/>[[figure on left]] The last experiments<BR/>were varied by bringing <BR/>the ends of the middle of<BR/>the cross wire nearly into contact.<BR/>When the jar was discharged,<BR/>a spark passed between the two points at [[underline]]a[[/underline]].<BR/>[[indent]] These exp, must be made with<BR/>a larger rectangle. ----------[[/end indent]]<BR/><BR/>The ends of the wire [[underline]]a[[/underline]] b may be connected with earth, and<BR/>in this way the disturbed electry in the wire will be dischared in<BR/>one direction, and probably, the needles will be more strongly magnetized. <BR/><BR/>[[end page]]<BR/>[[start page]]<BR/>[[top margin]]Jany 15 1845 Examination of lateral spark 153[[/top margin]]<BR/>Commenced farther investigation of the lateral<BR/>spark from long wire. __ For this purpose,<BR/>suspended the wire [[underline]]a[[/underline]] from the<BR/>long wire by twisting one end around<BR/>the wire, and hanging the other<BR/>by means of a fine fibre<BR/>[[figure from left, across page width]]<BR/>of silk to the long wire,<BR/>at the distance of 1/20th of an inch. When the machine was turned, sparks half an inch long could<BR/>be drawn from the long wire, but no spark<BR/>was observed to pass between the small ball [[underline]]a[[/underline]]<BR/>and the wire.<BR/>When the wire [[underline]] b' c'[[/underline]] was arranged, as shown<BR/>in the figure, by suspension, a spark was passed<BR/>at each point [[underline]]b'[[/underline]] c', but the affect was much<BR/>increased by drawing at the same time a<BR/>spark from the wire by means of the conductor [[underline]]f[[/underline]].<BR/>[[figure across page width]]<BR/>When the discharging [[underline]]d[[/underline]] was in the position <BR/>[[underline]]d[[/underline]], no spark passed at[[underline]]a[[/underline]], though large one passed at [[underline]]b[[/underline]], but when the same ball and wire were<BR/>placed near the other end of the suspended wire<BR/>as in the position [[underline]]d'[[/underline]], sparks passed. __ This is an<BR/>illustration of the exp. given by Walker page<BR/><BR/>For a paper relative to lateral discharge, see Nicholson's Journal 4[[circled]]to[[/circled]] vol 1, account of Van<BR/>Marums machine.<BR/>[[end page]]",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6671#xywh=10,10,2990,2347"
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "generated_at": "2026-07-11T06:55:27.648431+00:00",
+  "artifact_scope": "formal full-system API paired experiment using the persisted project corpus",
+  "dataset": "NCBI GEO GSE111619",
+  "question_set": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+  "question_set_freeze": {
+    "frozen_at": "2026-07-11T01:28:52Z",
+    "question_file": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+    "sha256": "ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889",
+    "question_count": 12,
+    "gold_relation_or_fact_count": 32,
+    "policy": "The question text, gold facts, forbidden facts and scoring spans are frozen before the knowledge-graph schema and benchmark corpus are changed. Do not tune against holdout answers."
+  },
+  "knowledge_graph_schema_version": "kg-v2-structured-fields",
+  "selected_case_ids": [
+    "H02",
+    "H03",
+    "H08",
+    "H10"
+  ],
+  "evaluation_scope": "post-holdout development regression",
+  "experiment_run": {
+    "id": 5,
+    "project_id": 3,
+    "created_by": 1,
+    "name": "GSE111619图谱错误修复回归",
+    "status": "completed",
+    "questions_json": [
+      "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+      "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+      "分别报告两个非靶向对照样本的总基因计数。",
+      "指出比对软件及版本、参考基因组，以及基因计数软件及版本。"
+    ],
+    "modes_json": [
+      "project_rag",
+      "kg_enhanced_rag"
+    ],
+    "config_snapshot_json": {
+      "provider": "deepseek",
+      "generation_model": "deepseek-v4-flash",
+      "embedding_model": "BAAI/bge-small-zh-v1.5",
+      "embedding_dimensions": 512,
+      "prompt_version": "rag-v3-local-hybrid-kg-citations",
+      "chunk_size": 700,
+      "chunk_overlap": 120,
+      "retrieval_top_k": 6,
+      "collection_retrieval_top_k": 12,
+      "vector_candidate_k": 30,
+      "graph_top_k": 10,
+      "graph_min_score": 1.0,
+      "graph_schema_version": "kg-v2-structured-fields",
+      "indexed_chunk_count": 984,
+      "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+      "captured_at": "2026-07-11T06:55:08.829686+00:00"
+    },
+    "summary_json": {
+      "errors": [],
+      "mode_stats": [
+        {
+          "mode": "project_rag",
+          "completed": 4,
+          "failed": 0,
+          "avg_response_ms": 2299.25,
+          "avg_source_count": 10.5,
+          "avg_graph_hit_count": 0.0
+        },
+        {
+          "mode": "kg_enhanced_rag",
+          "completed": 4,
+          "failed": 0,
+          "avg_response_ms": 2395.25,
+          "avg_source_count": 10.5,
+          "avg_graph_hit_count": 20.5
+        }
+      ]
+    },
+    "total_cases": 8,
+    "completed_cases": 8,
+    "failed_cases": 0,
+    "created_at": "2026-07-11T06:55:08.823019Z",
+    "completed_at": "2026-07-11T06:55:27.698160Z"
+  },
+  "objective_evaluation": {
+    "metric": "deterministic alias-based gold-fact coverage",
+    "exact_case_metric": "all required facts present and no predefined forbidden fact present",
+    "mode_summary": [
+      {
+        "mode": "project_rag",
+        "completed": 4,
+        "failed": 0,
+        "hit_facts": 2,
+        "total_facts": 9,
+        "micro_fact_coverage": 0.2222,
+        "macro_fact_coverage": 0.2083,
+        "forbidden_fact_hits": 1,
+        "closed_set_fact_precision": 0.6667,
+        "closed_set_fact_f1": 0.3333,
+        "closed_set_exact_correct_cases": 0,
+        "closed_set_exact_case_accuracy": 0.0
+      },
+      {
+        "mode": "kg_enhanced_rag",
+        "completed": 4,
+        "failed": 0,
+        "hit_facts": 7,
+        "total_facts": 9,
+        "micro_fact_coverage": 0.7778,
+        "macro_fact_coverage": 0.75,
+        "forbidden_fact_hits": 1,
+        "closed_set_fact_precision": 0.875,
+        "closed_set_fact_f1": 0.8235,
+        "closed_set_exact_correct_cases": 3,
+        "closed_set_exact_case_accuracy": 0.75
+      }
+    ],
+    "case_results": [
+      {
+        "case_id": "H02",
+        "category": "identifier_relation",
+        "question": "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 113,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> SRX3777456",
+          "GSM3035186 -> SRX3777457"
+        ],
+        "forbidden_facts_found": [
+          "SRX3777459"
+        ],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 2824
+      },
+      {
+        "case_id": "H02",
+        "category": "identifier_relation",
+        "question": "非靶向 shRNA 对照组的两个 GEO 样本分别对应哪个 SRA 实验号？",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 114,
+        "hit_facts": [
+          "GSM3035185 -> SRX3777456",
+          "GSM3035186 -> SRX3777457"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 24,
+        "response_ms": 1912
+      },
+      {
+        "case_id": "H03",
+        "category": "cross_record_reasoning",
+        "question": "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 115,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> 53924761",
+          "GSM3035185 -> control"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 2151
+      },
+      {
+        "case_id": "H03",
+        "category": "cross_record_reasoning",
+        "question": "四个样本中总基因计数最高的是哪一个？同时给出它的处理组和总计数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 116,
+        "hit_facts": [],
+        "missed_facts": [
+          "GSM3035185 -> 53924761",
+          "GSM3035185 -> control"
+        ],
+        "forbidden_facts_found": [
+          "GSM3035187"
+        ],
+        "fact_coverage": 0.0,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 30,
+        "response_ms": 1965
+      },
+      {
+        "case_id": "H08",
+        "category": "result_relation",
+        "question": "分别报告两个非靶向对照样本的总基因计数。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 117,
+        "hit_facts": [
+          "GSM3035185 -> 53924761"
+        ],
+        "missed_facts": [
+          "GSM3035186 -> 52016366"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.5,
+        "closed_set_exact_correct": false,
+        "source_count": 12,
+        "graph_hit_count": 0,
+        "response_ms": 2321
+      },
+      {
+        "case_id": "H08",
+        "category": "result_relation",
+        "question": "分别报告两个非靶向对照样本的总基因计数。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 118,
+        "hit_facts": [
+          "GSM3035185 -> 53924761",
+          "GSM3035186 -> 52016366"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 12,
+        "graph_hit_count": 18,
+        "response_ms": 1903
+      },
+      {
+        "case_id": "H10",
+        "category": "processing_pipeline",
+        "question": "指出比对软件及版本、参考基因组，以及基因计数软件及版本。",
+        "mode": "project_rag",
+        "status": "completed",
+        "query_log_id": 119,
+        "hit_facts": [
+          "GRCh37/hg19"
+        ],
+        "missed_facts": [
+          "TopHat2 v2.0.13",
+          "HTSeq v0.6.1"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.3333,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 1901
+      },
+      {
+        "case_id": "H10",
+        "category": "processing_pipeline",
+        "question": "指出比对软件及版本、参考基因组，以及基因计数软件及版本。",
+        "mode": "kg_enhanced_rag",
+        "status": "completed",
+        "query_log_id": 120,
+        "hit_facts": [
+          "TopHat2 v2.0.13",
+          "GRCh37/hg19",
+          "HTSeq v0.6.1"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 10,
+        "response_ms": 3801
+      }
+    ],
+    "citation_marker_audit": {
+      "completed_answer_count": 8,
+      "answers_with_source_marker": 6,
+      "answers_with_any_evidence_marker": 8,
+      "kg_answers_with_graph_context": 4,
+      "kg_answers_with_graph_marker": 4,
+      "invalid_source_marker_rows": [],
+      "invalid_graph_marker_rows": [],
+      "source_marker_answer_rate": 0.75,
+      "evidence_marker_answer_rate": 1.0,
+      "kg_graph_marker_rate_when_context_available": 1.0,
+      "all_citation_indices_in_range": true
+    },
+    "paired_comparison": {
+      "paired_case_count": 4,
+      "mean_fact_coverage_delta": 0.5417,
+      "kg_improved_cases": 3,
+      "tied_cases": 1,
+      "kg_worse_cases": 0,
+      "coverage_sign_test_two_sided_p": 0.25,
+      "kg_exact_only_cases": 3,
+      "plain_exact_only_cases": 0,
+      "mcnemar_exact_two_sided_p": 0.25,
+      "mean_response_time_delta_ms": 96.0
+    },
+    "limitations": [
+      "Fact coverage checks whether predefined aliases appear in the answer; it does not prove factual correctness.",
+      "Association, negation, reasoning quality and citation validity still require independent human review.",
+      "Closed-set exact accuracy only checks predefined required and forbidden facts; comparison details can be penalized even when the final conclusion is correct.",
+      "The questions belong to one public GEO project and do not establish cross-project generalization."
+    ]
+  }
+}

@@ -1,0 +1,571 @@
+{
+  "artifact_scope": "offline SQLite/service preflight; not the deployed full-system run",
+  "authoritative_system_reports": [
+    "system_import_report.json",
+    "gse111619_paired_experiment.csv",
+    "gse111619_paired_experiment_report.json"
+  ],
+  "dataset": {
+    "compressed_files": [
+      {
+        "bytes": 3029,
+        "expected_sha256": "fbfb8aa0a5b0bee99c8ec44d641eec82568a4ce24706b1d16a3010c9403c6043",
+        "filename": "GSE111619_family.soft.gz",
+        "passed": true,
+        "sha256": "fbfb8aa0a5b0bee99c8ec44d641eec82568a4ce24706b1d16a3010c9403c6043"
+      },
+      {
+        "bytes": 2951,
+        "expected_sha256": "b8086b3dad39d1120d6e03fc62ee22007692e86c7ad688e4da300c38822b8849",
+        "filename": "GSE111619_series_matrix.txt.gz",
+        "passed": true,
+        "sha256": "b8086b3dad39d1120d6e03fc62ee22007692e86c7ad688e4da300c38822b8849"
+      },
+      {
+        "bytes": 218459,
+        "expected_sha256": "662eeaa22c55beb5457b447a27be6f9c5df70f831addd3b04ed6bc718de569f5",
+        "filename": "GSE111619_HTSeq_counts.txt.gz",
+        "passed": true,
+        "sha256": "662eeaa22c55beb5457b447a27be6f9c5df70f831addd3b04ed6bc718de569f5"
+      }
+    ],
+    "compressed_hash_checks_passed": 3,
+    "compressed_hash_checks_total": 3,
+    "count_columns": [
+      "NonTargeting_rep1",
+      "NonTargeting_rep2",
+      "p63KD_rep1",
+      "p63KD_rep2"
+    ],
+    "decompressed_files": {
+      "counts": {
+        "bytes": 531542,
+        "filename": "GSE111619_HTSeq_counts.txt",
+        "lines": 25370,
+        "sha256": "09275fe1d4576968d5f2fc9bf45b26812103dcef0c5a43108f283cb8c7519826"
+      },
+      "family_soft": {
+        "bytes": 20711,
+        "filename": "GSE111619_family.soft",
+        "lines": 271,
+        "sha256": "b84b094bcc6bbbe40b57220ba7c219284200f35834627b6f3e8723b836016469"
+      },
+      "series_matrix": {
+        "bytes": 16086,
+        "filename": "GSE111619_series_matrix.txt",
+        "lines": 85,
+        "sha256": "cc51ac118c73c1d64f4268115a2688db19ee844672c0dc3a80323a1fff7aeab1"
+      }
+    },
+    "gene_rows": 25369,
+    "matrix_shape": [
+      25369,
+      4
+    ],
+    "platform_id": "GPL16791",
+    "platform_title": "Illumina HiSeq 2500 (Homo sapiens)",
+    "public_status": "Public on Aug 27 2018",
+    "sample_accessions": [
+      "GSM3035185",
+      "GSM3035186",
+      "GSM3035187",
+      "GSM3035188"
+    ],
+    "sample_count": 4,
+    "sample_level_instrument": [
+      "Illumina HiSeq 2500"
+    ],
+    "series_accession": "GSE111619",
+    "series_title": "Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible Control (non-targeting) and p63-targeting shRNAs",
+    "source_internal_discrepancy": {
+      "handling": "Use sample-level HiSeq 2500 in structured notes and retain this caution in the report",
+      "platform_and_sample_metadata": "Illumina HiSeq 2500",
+      "series_overall_design": "Illumina HiSeq 2000"
+    },
+    "source_urls": {
+      "counts": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE111nnn/GSE111619/suppl/GSE111619_RNAseq_H226_shp63_analysis_HTSeq_counts.txt.gz",
+      "family_soft": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE111nnn/GSE111619/soft/GSE111619_family.soft.gz",
+      "series": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111619",
+      "series_matrix": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE111nnn/GSE111619/matrix/GSE111619_series_matrix.txt.gz"
+    }
+  },
+  "descriptive_statistics": {
+    "log1p_pearson_correlations": {
+      "NonTargeting_rep1__NonTargeting_rep2": 0.996362,
+      "NonTargeting_rep1__p63KD_rep1": 0.987102,
+      "NonTargeting_rep1__p63KD_rep2": 0.987594,
+      "NonTargeting_rep2__p63KD_rep1": 0.987502,
+      "NonTargeting_rep2__p63KD_rep2": 0.987757,
+      "p63KD_rep1__p63KD_rep2": 0.996166
+    },
+    "maximum_count": 784593,
+    "minimum_count": 0,
+    "total_counts_all_samples": 211284470,
+    "within_condition_correlations": {
+      "NonTargeting_rep1__NonTargeting_rep2": 0.996362,
+      "p63KD_rep1__p63KD_rep2": 0.996166
+    }
+  },
+  "limitations": [
+    "Public external GEO data, not local laboratory records",
+    "Processed gene-level counts, not raw FASTQ reads",
+    "Two biological replicates per condition; no inferential test is reported",
+    "Retrieval evaluation measures evidence fact recall for four fixed questions, not generated-answer quality",
+    "The completed retrieval run uses a deterministic offline test embedding, not BAAI/bge-small-zh-v1.5",
+    "No independent human blind review was performed"
+  ],
+  "reproduced_against": null,
+  "reproducibility_fingerprint": "54e4e477ddb927e252f5988ce1b4ec73ee68f05f04947b13795408074c26ccf2",
+  "retrieval_comparison": [
+    {
+      "case_id": "Q1",
+      "enhanced_matched_facts": [
+        "GSM3035185",
+        "GSM3035186",
+        "GSM3035187",
+        "GSM3035188",
+        "Control",
+        "p63"
+      ],
+      "expected_fact_count": 6,
+      "graph_relation_count": 12,
+      "kg_enhanced_matched": 6,
+      "kg_enhanced_recall": 1.0,
+      "ordinary_matched_facts": [
+        "GSM3035185",
+        "GSM3035186",
+        "GSM3035187",
+        "GSM3035188",
+        "Control",
+        "p63"
+      ],
+      "ordinary_rag_matched": 6,
+      "ordinary_rag_recall": 1.0,
+      "question": "哪些样本属于非靶向对照组，哪些样本属于 p63 敲低组？",
+      "rag_source_count": 12,
+      "recall_delta": 0.0,
+      "top_rag_scores": [
+        0.379197,
+        0.301901,
+        0.301349,
+        0.23098,
+        0.226507,
+        0.113763,
+        0.092145,
+        0.080336,
+        0.079291,
+        0.07713,
+        0.07713,
+        0.076409
+      ]
+    },
+    {
+      "case_id": "Q2",
+      "enhanced_matched_facts": [
+        "doxycycline 1 microgram per mL",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "expected_fact_count": 3,
+      "graph_relation_count": 30,
+      "kg_enhanced_matched": 3,
+      "kg_enhanced_recall": 1.0,
+      "ordinary_matched_facts": [
+        "doxycycline 1 microgram per mL",
+        "PureLink RNA Mini kit",
+        "TruSeq Stranded mRNA Library Prep Kit"
+      ],
+      "ordinary_rag_matched": 3,
+      "ordinary_rag_recall": 1.0,
+      "question": "全部样本使用了哪些试剂或处理材料？",
+      "rag_source_count": 12,
+      "recall_delta": 0.0,
+      "top_rag_scores": [
+        0.375556,
+        0.370892,
+        0.366567,
+        0.365991,
+        0.097913,
+        0.092069,
+        0.08376,
+        0.070702,
+        0.070702,
+        0.070702,
+        0.070702,
+        0.064061
+      ]
+    },
+    {
+      "case_id": "Q3",
+      "enhanced_matched_facts": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips",
+        "RIN > 9"
+      ],
+      "expected_fact_count": 3,
+      "graph_relation_count": 8,
+      "kg_enhanced_matched": 3,
+      "kg_enhanced_recall": 1.0,
+      "ordinary_matched_facts": [
+        "Illumina HiSeq 2500",
+        "Bioanalyzer RNA Pico chips",
+        "RIN > 9"
+      ],
+      "ordinary_rag_matched": 3,
+      "ordinary_rag_recall": 1.0,
+      "question": "使用了哪些仪器进行 RNA 质量评估和测序，质量要求是什么？",
+      "rag_source_count": 12,
+      "recall_delta": 0.0,
+      "top_rag_scores": [
+        0.380663,
+        0.327111,
+        0.318968,
+        0.317764,
+        0.19869,
+        0.149072,
+        0.11606,
+        0.11606,
+        0.11606,
+        0.11606,
+        0.110566,
+        0.103272
+      ]
+    },
+    {
+      "case_id": "Q4",
+      "enhanced_matched_facts": [
+        "GSM3035185: total_count=53924761, detected_gene_rows=17926",
+        "GSM3035186: total_count=52016366, detected_gene_rows=17953",
+        "GSM3035187: total_count=53416511, detected_gene_rows=18137",
+        "GSM3035188: total_count=51926832, detected_gene_rows=18092"
+      ],
+      "expected_fact_count": 4,
+      "graph_relation_count": 28,
+      "kg_enhanced_matched": 4,
+      "kg_enhanced_recall": 1.0,
+      "ordinary_matched_facts": [
+        "GSM3035185: total_count=53924761, detected_gene_rows=17926",
+        "GSM3035186: total_count=52016366, detected_gene_rows=17953",
+        "GSM3035187: total_count=53416511, detected_gene_rows=18137",
+        "GSM3035188: total_count=51926832, detected_gene_rows=18092"
+      ],
+      "ordinary_rag_matched": 4,
+      "ordinary_rag_recall": 1.0,
+      "question": "四个样本的结果中，基因计数总量和非零基因条目数分别是多少？",
+      "rag_source_count": 12,
+      "recall_delta": 0.0,
+      "top_rag_scores": [
+        0.312549,
+        0.311725,
+        0.291291,
+        0.29079,
+        0.261448,
+        0.074726,
+        0.068881,
+        0.068881,
+        0.068881,
+        0.068881,
+        0.063148,
+        0.061632
+      ]
+    },
+    {
+      "case_id": "Q5",
+      "enhanced_matched_facts": [
+        "count_matrix_gene_rows=25369"
+      ],
+      "expected_fact_count": 1,
+      "graph_relation_count": 24,
+      "kg_enhanced_matched": 1,
+      "kg_enhanced_recall": 1.0,
+      "ordinary_matched_facts": [
+        "count_matrix_gene_rows=25369"
+      ],
+      "ordinary_rag_matched": 1,
+      "ordinary_rag_recall": 1.0,
+      "question": "HTSeq 计数矩阵共有多少个基因条目？",
+      "rag_source_count": 12,
+      "recall_delta": 0.0,
+      "top_rag_scores": [
+        0.33674,
+        0.214091,
+        0.213183,
+        0.210282,
+        0.21017,
+        0.145025,
+        0.13115,
+        0.080073,
+        0.073171,
+        0.072128,
+        0.069767,
+        0.069767
+      ]
+    },
+    {
+      "case_id": "Q6",
+      "enhanced_matched_facts": [
+        "基因级 HTSeq 计数矩阵",
+        "不是原始 FASTQ",
+        "不据此进行差异表达显著性推断"
+      ],
+      "expected_fact_count": 3,
+      "graph_relation_count": 24,
+      "kg_enhanced_matched": 3,
+      "kg_enhanced_recall": 1.0,
+      "ordinary_matched_facts": [
+        "基因级 HTSeq 计数矩阵",
+        "不是原始 FASTQ",
+        "不据此进行差异表达显著性推断"
+      ],
+      "ordinary_rag_matched": 3,
+      "ordinary_rag_recall": 1.0,
+      "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+      "rag_source_count": 12,
+      "recall_delta": 0.0,
+      "top_rag_scores": [
+        0.359744,
+        0.246433,
+        0.230846,
+        0.22521,
+        0.224918,
+        0.146731,
+        0.108699,
+        0.094954,
+        0.091117,
+        0.079054,
+        0.078056,
+        0.078056
+      ]
+    }
+  ],
+  "runtime": {
+    "fastembed": "0.8.0",
+    "numpy": "2.5.1",
+    "python": "3.12.13",
+    "sqlalchemy": "2.0.36"
+  },
+  "sample_records": [
+    {
+      "biosample": "https://www.ncbi.nlm.nih.gov/biosample/SAMN08667775",
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "condition": "control",
+      "count_column": "NonTargeting_rep1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "detected_gene_rows": 17926,
+      "geo_accession": "GSM3035185",
+      "instrument": "Illumina HiSeq 2500",
+      "library_strategy": "RNA-Seq",
+      "molecule": "polyA RNA",
+      "replicate": 1,
+      "shrna_construct": "Control",
+      "sra": "SRX3777456",
+      "title": "H226 shControl, 6 days doxycycline, replicate 1",
+      "total_gene_count": 53924761,
+      "treatment": "1 µg/mL doxycycline",
+      "zero_gene_rows": 7443
+    },
+    {
+      "biosample": "https://www.ncbi.nlm.nih.gov/biosample/SAMN08667774",
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "condition": "control",
+      "count_column": "NonTargeting_rep2",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "detected_gene_rows": 17953,
+      "geo_accession": "GSM3035186",
+      "instrument": "Illumina HiSeq 2500",
+      "library_strategy": "RNA-Seq",
+      "molecule": "polyA RNA",
+      "replicate": 2,
+      "shrna_construct": "Control",
+      "sra": "SRX3777457",
+      "title": "H226 shControl, 6 days doxycycline, replicate 2",
+      "total_gene_count": 52016366,
+      "treatment": "1 µg/mL doxycycline",
+      "zero_gene_rows": 7416
+    },
+    {
+      "biosample": "https://www.ncbi.nlm.nih.gov/biosample/SAMN08667770",
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "condition": "p63_knockdown",
+      "count_column": "p63KD_rep1",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "detected_gene_rows": 18137,
+      "geo_accession": "GSM3035187",
+      "instrument": "Illumina HiSeq 2500",
+      "library_strategy": "RNA-Seq",
+      "molecule": "polyA RNA",
+      "replicate": 1,
+      "shrna_construct": "p63",
+      "sra": "SRX3777458",
+      "title": "H226 shp63, 6 days doxycycline, replicate 1",
+      "total_gene_count": 53416511,
+      "treatment": "1 µg/mL doxycycline",
+      "zero_gene_rows": 7232
+    },
+    {
+      "biosample": "https://www.ncbi.nlm.nih.gov/biosample/SAMN08667769",
+      "cell_line": "H226",
+      "cell_type": "lung squamous cell carcinoma",
+      "condition": "p63_knockdown",
+      "count_column": "p63KD_rep2",
+      "culture_condition": "37°C, 5% CO2, 6 days",
+      "detected_gene_rows": 18092,
+      "geo_accession": "GSM3035188",
+      "instrument": "Illumina HiSeq 2500",
+      "library_strategy": "RNA-Seq",
+      "molecule": "polyA RNA",
+      "replicate": 2,
+      "shrna_construct": "p63",
+      "sra": "SRX3777459",
+      "title": "H226 shp63, 6 days doxycycline, replicate 2",
+      "total_gene_count": 51926832,
+      "treatment": "1 µg/mL doxycycline",
+      "zero_gene_rows": 7277
+    }
+  ],
+  "statistical_fallacy_scan": {
+    "coverage": "11/11",
+    "items": [
+      {
+        "item": "Simpson's paradox",
+        "note": "未比较聚合趋势与分层趋势。",
+        "status": "not_applicable"
+      },
+      {
+        "item": "Ecological fallacy",
+        "note": "未从组水平数据推断个体结论。",
+        "status": "not_detected"
+      },
+      {
+        "item": "Berkson's paradox",
+        "note": "不是按共同结果筛选的临床样本；但单一公开数据集仍有外部效度限制。",
+        "status": "not_applicable"
+      },
+      {
+        "item": "Collider bias",
+        "note": "未拟合包含协变量的因果模型。",
+        "status": "not_applicable"
+      },
+      {
+        "item": "Base-rate neglect",
+        "note": "未进行诊断分类。",
+        "status": "not_applicable"
+      },
+      {
+        "item": "Regression to the mean",
+        "note": "未按极端值筛选前后测样本。",
+        "status": "not_applicable"
+      },
+      {
+        "item": "Survivorship bias",
+        "note": "GEO 元数据未提供本研究全部培养样本及排除过程。",
+        "status": "not_assessable"
+      },
+      {
+        "item": "Look-elsewhere effect",
+        "note": "未开展基因逐项显著性检验或筛选显著结果。",
+        "status": "avoided"
+      },
+      {
+        "item": "Garden of forking paths",
+        "note": "验证规则与问题清单固定在脚本中，但未进行正式预注册。",
+        "status": "limited"
+      },
+      {
+        "item": "Correlation is not causation",
+        "note": "相关系数仅作重复样本描述，不作因果解释。",
+        "status": "avoided"
+      },
+      {
+        "item": "Reverse causality",
+        "note": "未提出方向性因果结论。",
+        "status": "not_applicable"
+      }
+    ]
+  },
+  "system_validation": {
+    "database": "gse111619_validation.sqlite3",
+    "knowledge_graph": {
+      "entity_count": 39,
+      "entity_counts_by_type": {
+        "biological_source": 2,
+        "condition": 6,
+        "experiment_type": 1,
+        "identifier": 5,
+        "instrument": 2,
+        "note": 4,
+        "project": 1,
+        "reagent": 3,
+        "result": 9,
+        "sample": 4,
+        "software": 1,
+        "user": 1
+      },
+      "extraction_runs": [
+        {
+          "extracted_entities": 26,
+          "extracted_relations": 25,
+          "note_id": 1,
+          "status": "completed"
+        },
+        {
+          "extracted_entities": 26,
+          "extracted_relations": 25,
+          "note_id": 2,
+          "status": "completed"
+        },
+        {
+          "extracted_entities": 26,
+          "extracted_relations": 25,
+          "note_id": 3,
+          "status": "completed"
+        },
+        {
+          "extracted_entities": 26,
+          "extracted_relations": 25,
+          "note_id": 4,
+          "status": "completed"
+        }
+      ],
+      "rebuild_idempotent": true,
+      "relation_count": 100,
+      "relation_counts_by_type": {
+        "created_by": 4,
+        "has_biological_source": 8,
+        "has_condition": 20,
+        "has_experiment_type": 4,
+        "has_identifier": 8,
+        "has_note": 4,
+        "produces_result": 24,
+        "uses_instrument": 8,
+        "uses_reagent": 12,
+        "uses_sample": 4,
+        "uses_software": 4
+      }
+    },
+    "note_count": 4,
+    "note_version_count": 4,
+    "project_count": 1,
+    "rag": {
+      "chunk_count": 954,
+      "chunks_by_file": {
+        "GSE111619_HTSeq_counts.txt": 917,
+        "GSE111619_series_matrix.txt": 28,
+        "gse111619_knowledge_document.txt": 9
+      },
+      "embedding_backend": "deterministic_offline_hash_512",
+      "embedding_dimensions": 512,
+      "embedding_model": "not_applicable_test_double",
+      "indexed_file_count": 3,
+      "kg_enhanced_macro_recall": 1.0,
+      "ordinary_macro_recall": 1.0,
+      "production_embedding_model_validated": false,
+      "status": "completed",
+      "stored_chunk_count": 954
+    }
+  },
+  "verification_status": "ANALYZED"
+}

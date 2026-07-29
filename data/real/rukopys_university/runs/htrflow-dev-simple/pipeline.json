@@ -1,0 +1,48 @@
+{
+  "steps": [
+    {
+      "step": "Segmentation",
+      "settings": {
+        "model": "YOLO",
+        "model_settings": {
+          "model": "Riksarkivet/yolov9-lines-within-regions-1",
+          "device": "cpu"
+        },
+        "generation_settings": {
+          "batch_size": 1
+        }
+      }
+    },
+    {
+      "step": "TextRecognition",
+      "settings": {
+        "model": "TrOCR",
+        "model_settings": {
+          "model": "microsoft/trocr-base-handwritten",
+          "device": "cpu"
+        },
+        "generation_settings": {
+          "batch_size": 8,
+          "num_beams": 1
+        }
+      }
+    },
+    {
+      "step": "OrderLines"
+    },
+    {
+      "step": "Export",
+      "settings": {
+        "format": "txt",
+        "dest": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/raw"
+      }
+    },
+    {
+      "step": "Export",
+      "settings": {
+        "format": "json",
+        "dest": "/Users/yusong/Downloads/new/full-system/data/real/rukopys_university/runs/htrflow-dev-simple/metadata"
+      }
+    }
+  ]
+}

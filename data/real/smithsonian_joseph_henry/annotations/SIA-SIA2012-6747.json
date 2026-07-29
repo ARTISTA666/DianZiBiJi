@@ -1,0 +1,20 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6747",
+  "@type": "sc:AnnotationList",
+  "resources": [
+    {
+      "@id": "_r_annotation_SIA-SIA2012-6747",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "_rc_annotation_SIA-SIA2012-6747",
+        "@type": "cnt:ContentAsText",
+        "format": "text/plain",
+        "chars": "297 Aug 2nd 1858<BR/> May not the fact that water does not adhere to a polished surface of iron, such as a razor, be due to the want of minute curvature towar the metal, as in the case of [[image]] a rough surface with salient points. The attraction of the drop of water for the projecting point will be greater at a than at any other point, in account of the great curvature of that point which tends to press it closer to the metal. Or the fact may be connected with the condition that if the attraction of a plate for a liquid greater than half the attraction of the liquid for itself, the liquid will rise along the surface of the plate.<BR/>Mr Rendill [[?]] informs me that during very warm days, the telegraph ceases to act about 10 oclock, and continues in an unfavourable condition until towards evening. What is the cause of this phenomenon. Is it due to electricity evolved by the heating of the wire, or by the increase of vapour in the atmosphere, which increases the quantity of electricity. The approximate cause of the action of the telegraph is extraneous currents.<BR/>[[end page]] <BR/>[[start page]]<BR/>  <BR/>298<BR/>[[blank page]]",
+        "language": "eng"
+      },
+      "on": "https://ids.si.edu/ids/annotation/SIA-SIA2012-6747#xywh=10,10,2990,2306"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "aggregate": [
+    {
+      "MRR": 0.268475,
+      "Recall@1": 0.125,
+      "Recall@10": 0.379167,
+      "Recall@3": 0.216667,
+      "Recall@5": 0.266667,
+      "mode": "bm25",
+      "nDCG@10": 0.298651
+    },
+    {
+      "MRR": 0.264711,
+      "Recall@1": 0.05,
+      "Recall@10": 0.4875,
+      "Recall@3": 0.240476,
+      "Recall@5": 0.371429,
+      "mode": "vector",
+      "nDCG@10": 0.325448
+    },
+    {
+      "MRR": 0.225506,
+      "Recall@1": 0.05,
+      "Recall@10": 0.379167,
+      "Recall@3": 0.2125,
+      "Recall@5": 0.254167,
+      "mode": "hybrid_rag",
+      "nDCG@10": 0.252926
+    },
+    {
+      "MRR": 0.425,
+      "Recall@1": 0.05,
+      "Recall@10": 0.74881,
+      "Recall@3": 0.38631,
+      "Recall@5": 0.582143,
+      "mode": "graph_enhanced_rag",
+      "nDCG@10": 0.506612
+    }
+  ],
+  "configuration": {
+    "generation_model_used": false,
+    "graph_limit": 30,
+    "graph_schema_version": "kg-v3-numbered-list-expansion",
+    "metric_implementation": "ir-measures",
+    "modes": [
+      "bm25",
+      "vector",
+      "hybrid_rag",
+      "graph_enhanced_rag"
+    ],
+    "rrf_rank_constant": 60,
+    "trace_top_k": 20
+  },
+  "corpus": {
+    "chunk_count": 984,
+    "entity_count": 56,
+    "relation_count": 126,
+    "sha256": "ce8420b0690e8e93d73acae66e0f7bb5b46c670de05db67ccd61993236fc15e9"
+  },
+  "fact_count": 56,
+  "generated_at": "2026-07-13T05:01:25.720920+00:00",
+  "output_dir": "/tmp/retrieval-evaluation",
+  "package_versions": {
+    "fastembed": "0.8.0",
+    "ir-measures": "0.4.3",
+    "jieba": "0.42.1",
+    "numpy": "2.5.1",
+    "rank-bm25": "0.2.2",
+    "sqlalchemy": "2.0.36"
+  },
+  "project": {
+    "id": 3,
+    "name": "GSE111619 KG-RAG 原始语料盲测项目"
+  },
+  "question_count": 20,
+  "questions_file": "tmp/gse111619_questions.json",
+  "questions_sha256": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a",
+  "run_sha256": "971837721c52d53bace80f1c5a69c4a194d6672c4749d9143bbaa19ee536de0e"
+}

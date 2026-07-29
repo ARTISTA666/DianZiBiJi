@@ -1,0 +1,198 @@
+[
+  {
+    "id": "Q01",
+    "category": "sample_set",
+    "question": "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+    "facts": [
+      {"label": "GSM3035185", "aliases": ["GSM3035185"]},
+      {"label": "GSM3035186", "aliases": ["GSM3035186"]},
+      {"label": "GSM3035187", "aliases": ["GSM3035187"]},
+      {"label": "GSM3035188", "aliases": ["GSM3035188"]}
+    ]
+  },
+  {
+    "id": "Q02",
+    "category": "sample_group",
+    "question": "哪些样本属于 p63 敲低组？",
+    "facts": [
+      {"label": "GSM3035187", "aliases": ["GSM3035187"]},
+      {"label": "GSM3035188", "aliases": ["GSM3035188"]}
+    ]
+  },
+  {
+    "id": "Q03",
+    "category": "sample_group",
+    "question": "哪些样本属于非靶向 shRNA 对照组？",
+    "facts": [
+      {"label": "GSM3035185", "aliases": ["GSM3035185"]},
+      {"label": "GSM3035186", "aliases": ["GSM3035186"]}
+    ]
+  },
+  {
+    "id": "Q04",
+    "category": "sample_mapping",
+    "question": "HTSeq 计数矩阵的四个样本列名分别是什么？",
+    "facts": [
+      {"label": "NonTargeting_rep1", "aliases": ["NonTargeting_rep1"]},
+      {"label": "NonTargeting_rep2", "aliases": ["NonTargeting_rep2"]},
+      {"label": "p63KD_rep1", "aliases": ["p63KD_rep1"]},
+      {"label": "p63KD_rep2", "aliases": ["p63KD_rep2"]}
+    ]
+  },
+  {
+    "id": "Q05",
+    "category": "study_design",
+    "question": "GSE111619 的分组设计和生物学重复数量是什么？",
+    "facts": [
+      {"label": "非靶向 shRNA 对照", "aliases": ["非靶向 shRNA 对照", "non-targeting shRNA control", "对照组（Control）", "对照组 (Control)"]},
+      {"label": "p63 靶向 shRNA", "aliases": ["p63 靶向 shRNA", "p63-targeting shRNA", "p63 敲低组", "p63_knockdown"]},
+      {"label": "每组两个生物学重复", "aliases": ["每组两个生物学重复", "每组 2 个生物学重复", "每组包含两个生物学重复", "每组包含 2 个生物学重复", "two biological replicates per group"]}
+    ]
+  },
+  {
+    "id": "Q06",
+    "category": "biological_source",
+    "question": "该研究使用了什么细胞系和细胞类型？",
+    "facts": [
+      {"label": "H226", "aliases": ["H226"]},
+      {"label": "lung squamous cell carcinoma", "aliases": ["lung squamous cell carcinoma", "肺鳞状细胞癌"]}
+    ]
+  },
+  {
+    "id": "Q07",
+    "category": "culture_condition",
+    "question": "样本接受了什么处理，并在什么培养条件下培养多久？",
+    "facts": [
+      {"label": "1 µg/mL doxycycline", "aliases": ["1 µg/mL doxycycline", "1 μg/mL doxycycline", "1 microgram per mL doxycycline"]},
+      {"label": "37°C", "aliases": ["37°C", "37 °C"]},
+      {"label": "5% CO2", "aliases": ["5% CO2", "5% CO₂"]},
+      {"label": "6 days", "aliases": ["6 days", "6 天"]}
+    ]
+  },
+  {
+    "id": "Q08",
+    "category": "library_material",
+    "question": "RNA 提取和文库构建使用了哪些主要试剂盒？",
+    "facts": [
+      {"label": "PureLink RNA Mini kit", "aliases": ["PureLink RNA Mini kit"]},
+      {"label": "TruSeq Stranded mRNA Library Prep Kit", "aliases": ["TruSeq Stranded mRNA Library Prep Kit"]}
+    ]
+  },
+  {
+    "id": "Q09",
+    "category": "instrument",
+    "question": "该实验记录中使用了哪些主要仪器或检测芯片？",
+    "facts": [
+      {"label": "Illumina HiSeq 2500", "aliases": ["Illumina HiSeq 2500", "HiSeq 2500"]},
+      {"label": "Bioanalyzer RNA Pico chips", "aliases": ["Bioanalyzer RNA Pico chips", "RNA Pico chips"]}
+    ]
+  },
+  {
+    "id": "Q10",
+    "category": "library_strategy",
+    "question": "测序分子类型和文库策略分别是什么？",
+    "facts": [
+      {"label": "polyA RNA", "aliases": ["polyA RNA", "Poly(A)+ RNA", "poly(A) RNA"]},
+      {"label": "RNA-Seq", "aliases": ["RNA-Seq", "RNA seq"]}
+    ]
+  },
+  {
+    "id": "Q11",
+    "category": "processing_pipeline",
+    "question": "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+    "facts": [
+      {"label": "TopHat2", "aliases": ["TopHat2", "TopHat 2"]},
+      {"label": "GRCh37/hg19", "aliases": ["GRCh37/hg19", "GRCh37", "hg19"]},
+      {"label": "HTSeq v0.6.1", "aliases": ["HTSeq v0.6.1", "HTSeq 0.6.1"]}
+    ]
+  },
+  {
+    "id": "Q12",
+    "category": "processing_pipeline",
+    "question": "元数据记录的完整处理软件链包括哪些工具？",
+    "facts": [
+      {"label": "bcl2fastq", "aliases": ["bcl2fastq"]},
+      {"label": "FASTQC", "aliases": ["FASTQC", "FastQC"]},
+      {"label": "TopHat2", "aliases": ["TopHat2", "TopHat 2"]},
+      {"label": "SAMtools", "aliases": ["SAMtools"]},
+      {"label": "Picard", "aliases": ["Picard"]},
+      {"label": "RSeQC", "aliases": ["RSeQC"]},
+      {"label": "HTSeq", "aliases": ["HTSeq"]}
+    ]
+  },
+  {
+    "id": "Q13",
+    "category": "quality_control",
+    "question": "RNA 质量记录中的 RIN 要求是什么？",
+    "facts": [
+      {"label": "RIN > 9", "aliases": ["RIN > 9", "RIN>9", "RIN 大于 9"]}
+    ]
+  },
+  {
+    "id": "Q14",
+    "category": "numeric_result",
+    "question": "两个非靶向对照样本的总基因计数分别是多少？",
+    "facts": [
+      {"label": "53924761", "aliases": ["53924761", "53,924,761"]},
+      {"label": "52016366", "aliases": ["52016366", "52,016,366"]}
+    ]
+  },
+  {
+    "id": "Q15",
+    "category": "numeric_result",
+    "question": "两个 p63 敲低样本的总基因计数分别是多少？",
+    "facts": [
+      {"label": "53416511", "aliases": ["53416511", "53,416,511"]},
+      {"label": "51926832", "aliases": ["51926832", "51,926,832"]}
+    ]
+  },
+  {
+    "id": "Q16",
+    "category": "numeric_result",
+    "question": "四个样本各自检测到的非零基因行数是多少？",
+    "facts": [
+      {"label": "17926", "aliases": ["17926", "17,926"]},
+      {"label": "17953", "aliases": ["17953", "17,953"]},
+      {"label": "18137", "aliases": ["18137", "18,137"]},
+      {"label": "18092", "aliases": ["18092", "18,092"]}
+    ]
+  },
+  {
+    "id": "Q17",
+    "category": "numeric_result",
+    "question": "HTSeq 计数矩阵共有多少个基因条目？",
+    "facts": [
+      {"label": "25369", "aliases": ["25369", "25,369"]}
+    ]
+  },
+  {
+    "id": "Q18",
+    "category": "external_identifier",
+    "question": "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+    "facts": [
+      {"label": "SRX3777456", "aliases": ["SRX3777456"]},
+      {"label": "SRX3777457", "aliases": ["SRX3777457"]},
+      {"label": "SRX3777458", "aliases": ["SRX3777458"]},
+      {"label": "SRX3777459", "aliases": ["SRX3777459"]}
+    ]
+  },
+  {
+    "id": "Q19",
+    "category": "data_boundary",
+    "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+    "facts": [
+      {"label": "基因级 HTSeq 计数矩阵", "aliases": ["基因级 HTSeq 计数矩阵", "基因级（gene-level）的 HTSeq 计数矩阵", "基因级 (gene-level) 的 HTSeq 计数矩阵", "gene-level HTSeq count matrix"]},
+      {"label": "不是原始 FASTQ", "aliases": ["不是原始 FASTQ", "非原始 FASTQ", "not raw FASTQ"]},
+      {"label": "不进行差异表达显著性推断", "aliases": ["不进行差异表达显著性推断", "不据此进行差异表达显著性推断", "不能据此进行差异表达显著性推断", "不能进行差异表达显著性推断", "no differential expression significance inference"]}
+    ]
+  },
+  {
+    "id": "Q20",
+    "category": "numeric_reasoning",
+    "question": "哪个样本检测到的非零基因行数最高，数值是多少？",
+    "facts": [
+      {"label": "GSM3035187", "aliases": ["GSM3035187"]},
+      {"label": "18137", "aliases": ["18137", "18,137"]}
+    ]
+  }
+]
