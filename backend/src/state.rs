@@ -15,6 +15,102 @@ use crate::{
     embedding::{EmbeddingError, EmbeddingService},
 };
 
+// ---------------------------------------------------------------------------
+// Global (per-IP) rate limiter – fixed-window counter, separate buckets for
+// read (GET/HEAD/OPTIONS) and write (everything else) operations.
+// ---------------------------------------------------------------------------
+
+#[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+enum RateLimitBucket {
+    Read,
+    Write,
+}
+
+#[derive(Debug)]
+struct RateLimitEntry {
+    count: u64,
+    window_start: Instant,
+}
+
+#[derive(Debug)]
+struct GlobalRateLimiter {
+    entries: HashMap<(String, RateLimitBucket), RateLimitEntry>,
+    read_window: Duration,
+    write_window: Duration,
+    read_limit: u64,
+    write_limit: u64,
+}
+
+/// Outcome of [`AppState::check_global_rate_limit`].
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) struct RateLimitDecision {
+    pub(crate) allowed: bool,
+}
+
+impl GlobalRateLimiter {
+    fn new(
+        read_limit: u64,
+        read_window: Duration,
+        write_limit: u64,
+        write_window: Duration,
+    ) -> Self {
+        Self {
+            entries: HashMap::new(),
+            read_window,
+            write_window,
+            read_limit,
+            write_limit,
+        }
+    }
+
+    /// Returns `true` when the request is allowed and records it.
+    fn check(&mut self, ip: &str, is_read: bool) -> bool {
+        let bucket = if is_read {
+            RateLimitBucket::Read
+        } else {
+            RateLimitBucket::Write
+        };
+        let window = if is_read {
+            self.read_window
+        } else {
+            self.write_window
+        };
+        let limit = if is_read {
+            self.read_limit
+        } else {
+            self.write_limit
+        };
+        let now = Instant::now();
+        let key = (ip.to_owned(), bucket);
+        let entry = self.entries.entry(key).or_insert(RateLimitEntry {
+            count: 0,
+            window_start: now,
+        });
+        if now.saturating_duration_since(entry.window_start) >= window {
+            entry.count = 0;
+            entry.window_start = now;
+        }
+        if entry.count >= limit {
+            return false;
+        }
+        entry.count += 1;
+        // Periodic housekeeping: evict stale entries when the map grows large.
+        if self.entries.len() > 4096 {
+            let rw = self.read_window;
+            let ww = self.write_window;
+            self.entries.retain(|(_, b), e| {
+                let w = if matches!(b, RateLimitBucket::Read) {
+                    rw
+                } else {
+                    ww
+                };
+                now.saturating_duration_since(e.window_start) < w
+            });
+        }
+        true
+    }
+}
+
 #[derive(Clone)]
 pub struct AppState {
     pub pool: PgPool,
@@ -26,6 +122,7 @@ pub struct AppState {
     // source-aware protection if one budget must span every backend replica.
     login_attempt_limiter: Arc<Semaphore>,
     login_rate_limiter: Arc<Mutex<LoginRateLimiter>>,
+    global_rate_limiter: Arc<Mutex<GlobalRateLimiter>>,
     worker_id: Arc<str>,
     started_at: Instant,
     metrics: Arc<Mutex<Metrics>>,
@@ -182,6 +279,12 @@ impl AppState {
             Duration::from_millis(settings.login_failure_delay_base_ms),
             Duration::from_millis(settings.login_failure_delay_max_ms),
         )));
+        let global_rate_limiter = Arc::new(Mutex::new(GlobalRateLimiter::new(
+            settings.global_rate_limit_read_per_minute,
+            Duration::from_secs(60),
+            settings.global_rate_limit_write_per_minute,
+            Duration::from_secs(60),
+        )));
         Ok(Self {
             pool,
             settings: Arc::new(settings),
@@ -192,6 +295,7 @@ impl AppState {
             generation_limiter,
             login_attempt_limiter,
             login_rate_limiter,
+            global_rate_limiter,
             worker_id: Arc::from(uuid::Uuid::new_v4().to_string()),
             started_at: Instant::now(),
             metrics: Arc::new(Mutex::new(Metrics::default())),
@@ -218,6 +322,13 @@ impl AppState {
             .lock()
             .unwrap()
             .clear_at(username, Instant::now());
+    }
+
+    /// Check the global per-IP rate limit.  Returns `RateLimitDecision` with
+    /// `allowed = false` when the caller has exceeded its quota.
+    pub(crate) fn check_global_rate_limit(&self, ip: &str, is_read: bool) -> RateLimitDecision {
+        let allowed = self.global_rate_limiter.lock().unwrap().check(ip, is_read);
+        RateLimitDecision { allowed }
     }
 
     pub fn request_started(&self) {
@@ -380,5 +491,40 @@ mod tests {
         assert!(state.try_acquire_login_attempt().is_none());
         drop(first);
         assert!(state.try_acquire_login_attempt().is_some());
+    }
+
+    #[test]
+    fn test_global_rate_limiter_allows_up_to_limit_then_blocks() {
+        let mut limiter =
+            super::GlobalRateLimiter::new(2, Duration::from_secs(60), 1, Duration::from_secs(60));
+
+        // Read bucket: 2 allowed.
+        assert!(limiter.check("10.0.0.1", true));
+        assert!(limiter.check("10.0.0.1", true));
+        assert!(!limiter.check("10.0.0.1", true));
+
+        // Write bucket: 1 allowed.
+        assert!(limiter.check("10.0.0.1", false));
+        assert!(!limiter.check("10.0.0.1", false));
+
+        // Different IP has its own quota.
+        assert!(limiter.check("10.0.0.2", true));
+    }
+
+    #[test]
+    fn test_global_rate_limiter_resets_after_window() {
+        let mut limiter =
+            super::GlobalRateLimiter::new(1, Duration::from_secs(10), 1, Duration::from_secs(10));
+
+        assert!(limiter.check("10.0.0.1", true));
+        assert!(!limiter.check("10.0.0.1", true));
+
+        // Manually backdate the window start so the next check sees an
+        // expired window without having to actually wait.
+        let key = ("10.0.0.1".to_owned(), super::RateLimitBucket::Read);
+        limiter.entries.get_mut(&key).unwrap().window_start =
+            Instant::now() - Duration::from_secs(10);
+
+        assert!(limiter.check("10.0.0.1", true));
     }
 }

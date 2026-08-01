@@ -89,7 +89,9 @@ def test_list_notes_in_project(client):
     c.post("/projects/1/notes", json={"title": "N1", "experiment_type": "PCR"})
     r = c.get("/projects/1/notes")
     assert r.status_code == 200
-    assert len(r.json()) == 1
+    body = r.json()
+    assert body["total"] == 1
+    assert len(body["items"]) == 1
 
 
 def test_get_note_by_id(client):
@@ -114,9 +116,32 @@ def test_update_note_draft(client):
     c, _, uid = client; uid["value"] = 2
     created = c.post("/projects/1/notes", json={"title": "N1", "experiment_type": "PCR"})
     note_id = created.json()["id"]
-    r = c.patch(f"/notes/{note_id}", json={"title": "Updated Title", "change_summary": "updated draft"})
+    lock_ver = created.json()["lock_version"]
+    assert lock_ver == 0
+    r = c.patch(f"/notes/{note_id}", json={"title": "Updated Title", "change_summary": "updated draft", "lock_version": lock_ver})
     assert r.status_code == 200
-    assert r.json()["title"] == "Updated Title"
+    body = r.json()
+    assert body["title"] == "Updated Title"
+    assert body["lock_version"] == 1
+
+
+def test_update_note_optimistic_lock_conflict(client):
+    """Two concurrent editors: second update with stale lock_version gets 409."""
+    c, _, uid = client; uid["value"] = 2
+    created = c.post("/projects/1/notes", json={"title": "Concurrent", "experiment_type": "PCR"})
+    note_id = created.json()["id"]
+    # First update succeeds, bumps lock_version to 1
+    r1 = c.patch(f"/notes/{note_id}", json={"title": "Edit v1", "lock_version": 0})
+    assert r1.status_code == 200
+    assert r1.json()["lock_version"] == 1
+    # Second update with stale lock_version=0 → 409
+    r2 = c.patch(f"/notes/{note_id}", json={"title": "Edit v2 stale", "lock_version": 0})
+    assert r2.status_code == 409
+    assert "其他用户修改" in r2.json()["detail"]
+    # Third update with correct lock_version=1 succeeds
+    r3 = c.patch(f"/notes/{note_id}", json={"title": "Edit v2 correct", "lock_version": 1})
+    assert r3.status_code == 200
+    assert r3.json()["lock_version"] == 2
 
 
 def test_cannot_update_approved_note(client):
@@ -231,9 +256,9 @@ def test_note_versions_are_tracked(client):
     c.patch(f"/notes/{note_id}", json={"title": "V2", "change_summary": "second edit"})
     r = c.get(f"/notes/{note_id}/versions")
     assert r.status_code == 200
-    versions = r.json()
-    assert len(versions) == 2
-    assert versions[0]["version_number"] == 2
+    body = r.json()
+    assert body["total"] == 2
+    assert body["items"][0]["version_number"] == 2
 
 
 def test_note_approvals_are_recorded(client):
@@ -245,8 +270,9 @@ def test_note_approvals_are_recorded(client):
     c.post(f"/notes/{note_id}/approve", json={"comment": "Approved"})
     r = c.get(f"/notes/{note_id}/approvals")
     assert r.status_code == 200
-    assert len(r.json()) == 1
-    assert r.json()[0]["action"] == "approved"
+    body = r.json()
+    assert body["total"] == 1
+    assert body["items"][0]["action"] == "approved"
 
 
 def test_pending_approvals_list(client):
@@ -257,5 +283,5 @@ def test_pending_approvals_list(client):
     uid["value"] = 3
     r = c.get("/approvals/pending")
     assert r.status_code == 200
-    ids = {n["id"] for n in r.json()}
+    ids = {n["id"] for n in r.json()["items"]}
     assert note_id in ids

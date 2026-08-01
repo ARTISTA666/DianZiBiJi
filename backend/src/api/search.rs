@@ -135,7 +135,7 @@ async fn search(
     if terms.is_empty() {
         return Err(ApiError::new(
             StatusCode::UNPROCESSABLE_ENTITY,
-            "Query cannot be empty",
+            "查询内容不能为空",
         ));
     }
     let project_ids = if let Some(project_id) = payload.project_id {

@@ -1,5 +1,5 @@
 use axum::{
-    extract::{Path, State},
+    extract::{Path, Query, State},
     http::StatusCode,
     routing::{get, post},
     Json, Router,
@@ -9,12 +9,13 @@ use sqlx::{PgPool, Postgres, Transaction};
 
 use crate::{
     api::auth::CurrentUser,
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     knowledge_graph::extract_note,
     models::{
-        ApprovalRequest, NoteApprovalRead, NoteCreate, NoteRead, NoteUpdate, NoteVersionRead,
-        UserRecord,
+        page_bounds, ApprovalRequest, NoteApprovalRead, NoteCreate, NoteListQuery, NoteRead,
+        NoteUpdate, NoteVersionRead, Paginated, UserRecord,
     },
     permissions::{can_review_project, can_write_project, require_project_access},
     AppState,
@@ -101,20 +102,50 @@ async fn list_notes(
     State(state): State<AppState>,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
-) -> Result<Json<Vec<NoteRead>>, ApiError> {
+    Query(query): Query<NoteListQuery>,
+) -> Result<Json<Paginated<NoteRead>>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
-    let query = format!(
-        "SELECT {NOTE_COLUMNS} FROM experiment_notes WHERE project_id = $1 ORDER BY updated_at DESC"
+    let (skip, limit) = page_bounds(query.skip, query.limit);
+    let status = query.status.as_deref();
+    let total: i64 = sqlx::query_scalar(
+        r#"
+        SELECT count(*) FROM experiment_notes
+        WHERE project_id = $1
+          AND ($2::text IS NULL OR lower(status::text) = lower($2))
+        "#,
+    )
+    .bind(project_id)
+    .bind(status)
+    .fetch_one(&state.pool)
+    .await?;
+    let query_sql = format!(
+        r#"
+        SELECT {NOTE_COLUMNS} FROM experiment_notes
+        WHERE project_id = $1
+          AND ($2::text IS NULL OR lower(status::text) = lower($2))
+        ORDER BY updated_at DESC
+        OFFSET $3
+        LIMIT $4
+        "#
     );
-    let notes = sqlx::query_as::<_, NoteRead>(&query)
+    let items = sqlx::query_as::<_, NoteRead>(&query_sql)
         .bind(project_id)
+        .bind(status)
+        .bind(skip)
+        .bind(limit)
         .fetch_all(&state.pool)
         .await?;
-    Ok(Json(notes))
+    Ok(Json(Paginated {
+        items,
+        total,
+        skip,
+        limit,
+    }))
 }
 
 async fn create_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Json(payload): Json<NoteCreate>,
@@ -153,8 +184,8 @@ async fn create_note(
         "#,
     )
     .bind(note_id)
-    .bind(payload.fixed_fields_json)
-    .bind(payload.content_json)
+    .bind(sanitize_json(&payload.fixed_fields_json))
+    .bind(sanitize_json(&payload.content_json))
     .bind(user.id)
     .fetch_one(&mut *transaction)
     .await?;
@@ -170,6 +201,8 @@ async fn create_note(
         project_id,
         note_id,
         json!({}),
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -188,6 +221,7 @@ async fn get_note(
 
 async fn update_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
     Json(payload): Json<NoteUpdate>,
@@ -253,8 +287,8 @@ async fn update_note(
     )
     .bind(note_id)
     .bind(version_number)
-    .bind(fixed_fields)
-    .bind(content)
+    .bind(sanitize_json(&fixed_fields))
+    .bind(sanitize_json(&content))
     .bind(user.id)
     .bind(change_summary)
     .fetch_one(&mut *transaction)
@@ -284,6 +318,8 @@ async fn update_note(
         note.project_id,
         note_id,
         json!({}),
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -292,6 +328,7 @@ async fn update_note(
 
 async fn submit_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
 ) -> Result<Json<NoteRead>, ApiError> {
@@ -349,6 +386,8 @@ async fn submit_note(
                 "relations": run.extracted_relations,
                 "trigger": "submit_without_approval"
             }),
+            client.ip_opt(),
+            client.ua_opt(),
         )
         .await?;
     }
@@ -359,6 +398,8 @@ async fn submit_note(
         note.project_id,
         note_id,
         json!({"approval_enabled": project.approval_enabled}),
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -407,6 +448,7 @@ async fn get_note_version(
 
 async fn archive_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
 ) -> Result<Json<NoteRead>, ApiError> {
@@ -442,6 +484,8 @@ async fn archive_note(
         locked.project_id,
         note_id,
         json!({}),
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -450,6 +494,7 @@ async fn archive_note(
 
 async fn void_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
     Json(payload): Json<ApprovalRequest>,
@@ -504,6 +549,8 @@ async fn void_note(
         locked.project_id,
         note_id,
         json!({}),
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -545,20 +592,40 @@ async fn list_pending_approvals(
 
 async fn approve_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
     Json(payload): Json<ApprovalRequest>,
 ) -> Result<Json<NoteRead>, ApiError> {
-    review_note(&state, &user, note_id, payload, true).await
+    review_note(
+        &state,
+        &user,
+        note_id,
+        payload,
+        true,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await
 }
 
 async fn return_note(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
     Json(payload): Json<ApprovalRequest>,
 ) -> Result<Json<NoteRead>, ApiError> {
-    review_note(&state, &user, note_id, payload, false).await
+    review_note(
+        &state,
+        &user,
+        note_id,
+        payload,
+        false,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await
 }
 
 async fn review_note(
@@ -567,6 +634,8 @@ async fn review_note(
     note_id: i32,
     payload: ApprovalRequest,
     approve: bool,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<Json<NoteRead>, ApiError> {
     let note = require_note_access(&state.pool, user, note_id).await?;
     require_review(&state.pool, user, note.project_id).await?;
@@ -634,6 +703,8 @@ async fn review_note(
                 "relations": run.extracted_relations,
                 "trigger": "approve_note"
             }),
+            ip_address,
+            user_agent,
         )
         .await?;
     }
@@ -644,6 +715,8 @@ async fn review_note(
         note.project_id,
         note_id,
         json!({}),
+        ip_address,
+        user_agent,
     )
     .await?;
     transaction.commit().await?;
@@ -703,10 +776,7 @@ async fn require_write(pool: &PgPool, user: &UserRecord, project_id: i32) -> Res
     if can_write_project(pool, user, project_id).await? {
         Ok(())
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Write permission required",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要写入权限"))
     }
 }
 
@@ -714,10 +784,32 @@ async fn require_review(pool: &PgPool, user: &UserRecord, project_id: i32) -> Re
     if can_review_project(pool, user, project_id).await? {
         Ok(())
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Review permission required",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要审核权限"))
+    }
+}
+
+fn sanitize_json(value: &serde_json::Value) -> serde_json::Value {
+    match value {
+        serde_json::Value::String(s) => {
+            let sanitized = s
+                .replace('&', "&amp;")
+                .replace('<', "&lt;")
+                .replace('>', "&gt;")
+                .replace('"', "&quot;")
+                .replace('\'', "&#x27;");
+            serde_json::Value::String(sanitized)
+        }
+        serde_json::Value::Object(map) => {
+            let sanitized: serde_json::Map<String, serde_json::Value> = map
+                .iter()
+                .map(|(key, val)| (key.clone(), sanitize_json(val)))
+                .collect();
+            serde_json::Value::Object(sanitized)
+        }
+        serde_json::Value::Array(arr) => {
+            serde_json::Value::Array(arr.iter().map(sanitize_json).collect())
+        }
+        other => other.clone(),
     }
 }
 
@@ -795,6 +887,7 @@ async fn insert_approval(
     Ok(())
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn audit_note(
     transaction: &mut Transaction<'_, Postgres>,
     user: &UserRecord,
@@ -802,6 +895,8 @@ async fn audit_note(
     project_id: i32,
     note_id: i32,
     detail: serde_json::Value,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     write_audit(
         &mut **transaction,
@@ -812,6 +907,8 @@ async fn audit_note(
             target_type: Some("note"),
             target_id: Some(note_id),
             detail,
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;

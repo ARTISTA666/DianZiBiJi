@@ -110,7 +110,9 @@ def test_list_project_files(client):
     c.post("/projects/1/files?file_category=knowledge_document", files={"upload": ("f2.txt", b"bb", "text/plain")})
     r = c.get("/projects/1/files")
     assert r.status_code == 200
-    assert len(r.json()) == 2
+    body = r.json()
+    assert body["total"] == 2
+    assert len(body["items"]) == 2
 
 
 def test_get_file_by_id(client):

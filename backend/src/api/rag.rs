@@ -15,6 +15,7 @@ use sha2::{Digest, Sha256};
 
 use crate::{
     api::auth::CurrentUser,
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     db::{EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS, EXPERIMENT_LEASE_SECONDS},
     error::ApiError,
@@ -135,6 +136,7 @@ const EXPERIMENT_COLUMNS: &str = r#"
 
 async fn init_project_rag(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
 ) -> Result<Json<RagStatusRead>, ApiError> {
@@ -218,6 +220,8 @@ async fn init_project_rag(
                 "generation_model": generation_model,
                 "reset_index": reset_index
             }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -236,6 +240,7 @@ async fn get_rag_status(
 
 async fn sync_file(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
 ) -> Result<Json<RagStatusRead>, ApiError> {
@@ -256,7 +261,12 @@ async fn sync_file(
     }
     let dataset = fetch_dataset(&state, file.project_id)
         .await?
-        .ok_or_else(|| ApiError::new(StatusCode::CONFLICT, "RAG dataset is not initialized"))?;
+        .ok_or_else(|| {
+            ApiError::new(
+                StatusCode::CONFLICT,
+                "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+            )
+        })?;
     require_compatible_embedding(&state, &dataset)?;
     let mut transaction = state.pool.begin().await?;
     let locked: (String, String) = sqlx::query_as(
@@ -351,6 +361,8 @@ async fn sync_file(
             target_type: Some("file"),
             target_id: Some(file.id),
             detail: json!({"chunk_count": chunk_count, "embedding_model": dataset.embedding_model}),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -360,11 +372,21 @@ async fn sync_file(
 
 async fn query_project_rag(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Json(payload): Json<RagQueryRequest>,
 ) -> Result<Json<RagQueryResponse>, ApiError> {
-    query_project_rag_inner(state, user, project_id, payload, None).await
+    query_project_rag_inner(
+        state,
+        user,
+        project_id,
+        payload,
+        None,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await
 }
 
 async fn query_project_rag_inner(
@@ -373,6 +395,8 @@ async fn query_project_rag_inner(
     project_id: i32,
     payload: RagQueryRequest,
     experiment: Option<ExperimentLogContext>,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<Json<RagQueryResponse>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
     require_unblinded_access(&state, &user, project_id).await?;
@@ -380,18 +404,21 @@ async fn query_project_rag_inner(
     if query.is_empty() {
         return Err(ApiError::new(
             StatusCode::UNPROCESSABLE_ENTITY,
-            "Query cannot be empty",
+            "问题内容不能为空",
         ));
     }
     if !RAG_MODES.contains(&payload.mode.as_str()) {
         return Err(ApiError::new(
             StatusCode::UNPROCESSABLE_ENTITY,
-            "Unsupported RAG mode",
+            "不支持的检索模式",
         ));
     }
-    let dataset = fetch_dataset(&state, project_id)
-        .await?
-        .ok_or_else(|| ApiError::new(StatusCode::CONFLICT, "RAG dataset is not initialized"))?;
+    let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
+        ApiError::new(
+            StatusCode::CONFLICT,
+            "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+        )
+    })?;
     if mode_uses_embeddings(&payload.mode) {
         require_compatible_embedding(&state, &dataset)?;
     }
@@ -403,7 +430,7 @@ async fn query_project_rag_inner(
         if sources.is_empty() {
             return Err(ApiError::new(
                 StatusCode::CONFLICT,
-                "No indexed project documents are available for retrieval",
+                "暂无可检索的项目资料，请先在数据页完成资料入库",
             ));
         }
         sources
@@ -581,6 +608,8 @@ async fn query_project_rag_inner(
                     "model": result.model,
                     "fallback_reason": fallback_reason
                 }),
+                ip_address: ip_address.map(str::to_owned),
+                user_agent: user_agent.map(str::to_owned),
             },
         )
         .await?;
@@ -631,6 +660,7 @@ async fn list_query_logs(
 
 async fn evaluate_query_log(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(log_id): Path<i32>,
     Json(payload): Json<AIQueryEvaluationRequest>,
@@ -685,6 +715,8 @@ async fn evaluate_query_log(
                 "is_traceable": payload.is_traceable,
                 "review_protocol": "unblinded"
             }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -951,6 +983,7 @@ fn agreement(
 
 async fn run_experiment(
     State(state): State<AppState>,
+    _client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Json(payload): Json<AIExperimentRunRequest>,
@@ -1009,9 +1042,12 @@ async fn run_experiment(
             "Repetitions must be between 1 and 10",
         ));
     }
-    let dataset = fetch_dataset(&state, project_id)
-        .await?
-        .ok_or_else(|| ApiError::new(StatusCode::CONFLICT, "RAG dataset is not initialized"))?;
+    let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
+        ApiError::new(
+            StatusCode::CONFLICT,
+            "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+        )
+    })?;
     if modes.iter().any(|mode| mode_uses_embeddings(mode)) {
         require_compatible_embedding(&state, &dataset)?;
     }
@@ -1322,6 +1358,8 @@ async fn execute_experiment(
                 repetition_index,
                 execution_order: order,
             }),
+            None,
+            None,
         );
         tokio::pin!(query);
         let query_result = loop {
@@ -1411,6 +1449,8 @@ async fn execute_experiment(
                 "completed_cases": run.completed_cases,
                 "failed_cases": run.failed_cases
             }),
+            ip_address: None,
+            user_agent: None,
         },
     )
     .await?;
@@ -1684,6 +1724,7 @@ async fn list_blind_items(
 
 async fn evaluate_blind_item(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path((project_id, blind_id)): Path<(i32, String)>,
     Json(payload): Json<AIQueryEvaluationRequest>,
@@ -1748,6 +1789,8 @@ async fn evaluate_blind_item(
                 "is_traceable": payload.is_traceable,
                 "review_protocol": "method_masked"
             }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -1763,6 +1806,7 @@ async fn evaluate_blind_item(
 
 async fn export_blind_batch(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path((project_id, batch_id)): Path<(i32, String)>,
 ) -> Result<Response, ApiError> {
@@ -1832,6 +1876,8 @@ async fn export_blind_batch(
                 "reviewer_user_ids": reviewer_sets.first().cloned().unwrap_or_default(),
                 "review_protocol": "method_masked"
             }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -2175,7 +2221,7 @@ fn require_compatible_embedding(
     } else {
         Err(ApiError::new(
             StatusCode::CONFLICT,
-            "RAG embedding model changed; reinitialize the dataset and reindex approved documents",
+            "嵌入模型已变更，请重新初始化资料库并重建已审核文档的索引",
         ))
     }
 }
@@ -2244,6 +2290,8 @@ async fn mark_sync_failed(
             target_type: Some("file"),
             target_id: Some(file.id),
             detail: json!({"error": detail}),
+            ip_address: None,
+            user_agent: None,
         },
     )
     .await?;
@@ -3166,10 +3214,7 @@ mod tests {
         )
         .await;
         assert_eq!(mismatch_status, StatusCode::CONFLICT);
-        assert!(mismatch["detail"]
-            .as_str()
-            .unwrap()
-            .contains("reinitialize"));
+        assert!(mismatch["detail"].as_str().unwrap().contains("重新初始化"));
         let (reinit_status, _) = json_call(
             &app,
             "POST",

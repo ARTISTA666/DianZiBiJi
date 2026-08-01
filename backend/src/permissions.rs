@@ -17,7 +17,7 @@ pub async fn fetch_project(pool: &PgPool, project_id: i32) -> Result<ProjectRead
         .bind(project_id)
         .fetch_optional(pool)
         .await?
-        .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "Project not found"))
+        .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "项目不存在"))
 }
 
 pub async fn require_project_access(
@@ -29,10 +29,7 @@ pub async fn require_project_access(
     if can_access_project(pool, user, &project).await? {
         Ok(project)
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Project access denied",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "无项目访问权限"))
     }
 }
 
@@ -47,10 +44,7 @@ pub async fn require_project_metadata_access(
     {
         Ok(project)
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Project access denied",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "无项目访问权限"))
     }
 }
 
@@ -132,10 +126,7 @@ pub async fn require_project_manager(
     if can_manage_project(pool, user, project_id).await? {
         Ok(project)
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Project manage permission required",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要项目管理权限"))
     }
 }
 

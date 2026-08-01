@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import logging
 from dataclasses import dataclass
 from time import perf_counter
 
@@ -40,6 +41,8 @@ from app.services.local_rag import LocalRagService
 from app.services.prompts import PROMPTS
 
 router = APIRouter(tags=["rag"])
+
+logger = logging.getLogger(__name__)
 
 MAX_REPAIR_ATTEMPTS = 2  # Max citation-repair loops before giving up
 
@@ -137,7 +140,11 @@ async def _retrieve_sources(
             else await service.retrieve(db, project_id, query)
         )
     except EmbeddingServiceError as exc:
-        raise HTTPException(status_code=status.HTTP_502_BAD_GATEWAY, detail=str(exc)) from exc
+        logger.error("Embedding service failed during retrieval: %s", exc)
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="AI 服务暂时不可用，请稍后重试",
+        ) from exc
     if not retrieved:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -429,7 +436,11 @@ async def _execute_rag_query(
         )
         db.commit()
         code = status.HTTP_503_SERVICE_UNAVAILABLE if isinstance(exc, DeepSeekConfigError) else status.HTTP_502_BAD_GATEWAY
-        raise HTTPException(status_code=code, detail=str(exc)) from exc
+        logger.error("DeepSeek generation failed (%s): %s", type(exc).__name__, exc)
+        raise HTTPException(
+            status_code=code,
+            detail="AI 回答生成失败，请稍后重试",
+        ) from exc
 
     answer = result["answer"]
     usage = result.get("usage") or {}

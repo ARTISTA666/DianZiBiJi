@@ -21,6 +21,8 @@ pub struct Settings {
     pub login_failure_delay_base_ms: u64,
     pub login_failure_delay_max_ms: u64,
     pub login_max_concurrent_attempts: usize,
+    pub global_rate_limit_read_per_minute: u64,
+    pub global_rate_limit_write_per_minute: u64,
     pub cors_origins: String,
     pub app_revision: String,
     pub deepseek_api_base_url: String,
@@ -84,6 +86,16 @@ impl Settings {
             login_failure_delay_base_ms: parse(values, "LOGIN_FAILURE_DELAY_BASE_MS", 100)?,
             login_failure_delay_max_ms: parse(values, "LOGIN_FAILURE_DELAY_MAX_MS", 2_000)?,
             login_max_concurrent_attempts: parse(values, "LOGIN_MAX_CONCURRENT_ATTEMPTS", 4)?,
+            global_rate_limit_read_per_minute: parse(
+                values,
+                "GLOBAL_RATE_LIMIT_READ_PER_MINUTE",
+                600,
+            )?,
+            global_rate_limit_write_per_minute: parse(
+                values,
+                "GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE",
+                120,
+            )?,
             cors_origins: get(
                 "CORS_ORIGINS",
                 "http://localhost:3000,http://127.0.0.1:3000",
@@ -194,6 +206,18 @@ impl Settings {
             self.login_max_concurrent_attempts,
             1,
             256,
+        )?;
+        validate_range(
+            "GLOBAL_RATE_LIMIT_READ_PER_MINUTE",
+            self.global_rate_limit_read_per_minute,
+            1,
+            1_000_000,
+        )?;
+        validate_range(
+            "GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE",
+            self.global_rate_limit_write_per_minute,
+            1,
+            1_000_000,
         )?;
         // Secret hygiene is enforced for every non-development environment so
         // a deployment cannot run with default credentials just because

@@ -475,7 +475,7 @@ CREATE TABLE public.files (
     original_filename character varying(255) NOT NULL,
     storage_path character varying(500) NOT NULL,
     mime_type character varying(160),
-    file_size integer NOT NULL,
+    file_size bigint NOT NULL,
     file_hash character varying(64) NOT NULL,
     status public.filestatus NOT NULL,
     knowledge_sync_status character varying(40) NOT NULL,

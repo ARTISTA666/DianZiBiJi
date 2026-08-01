@@ -12,13 +12,17 @@ use serde_json::json;
 use sha2::{Digest, Sha256};
 use sqlx::FromRow;
 use tokio::io::AsyncWriteExt;
+use tokio_util::io::ReaderStream;
 use uuid::Uuid;
 
 use crate::{
     api::auth::CurrentUser,
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
-    models::{FileRead, FileReviewRequest, FileUpdate, FileUploadQuery, UserRecord},
+    models::{
+        FileRead, FileReviewRequest, FileUpdate, FileUploadQuery, PageQuery, Paginated, UserRecord,
+    },
     permissions::{can_review_project, can_write_project, require_project_access},
     AppState,
 };
@@ -41,7 +45,7 @@ struct StoredFileRecord {
     original_filename: String,
     storage_path: String,
     mime_type: Option<String>,
-    file_size: i32,
+    file_size: i64,
     file_hash: String,
     status: String,
     knowledge_sync_status: String,
@@ -92,6 +96,7 @@ pub fn router() -> Router<AppState> {
 
 async fn upload_project_file(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Query(query): Query<FileUploadQuery>,
@@ -104,12 +109,15 @@ async fn upload_project_file(
         &query.file_category,
         query.note_id,
         multipart,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await
 }
 
 async fn upload_project_document(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     multipart: Multipart,
@@ -121,10 +129,13 @@ async fn upload_project_document(
         "knowledge_document",
         None,
         multipart,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn upload_file(
     state: &AppState,
     user: &UserRecord,
@@ -132,6 +143,8 @@ async fn upload_file(
     file_category: &str,
     note_id: Option<i32>,
     mut multipart: Multipart,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<Json<FileRead>, ApiError> {
     require_project_access(&state.pool, user, project_id).await?;
     require_write(state, user, project_id).await?;
@@ -213,6 +226,8 @@ async fn upload_file(
             target_type: Some("file"),
             target_id: Some(file_id),
             detail: json!({}),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await
@@ -226,6 +241,22 @@ async fn upload_file(
     }
     Ok(Json(fetch_file(&state.pool, file_id).await?.into()))
 }
+
+const ALLOWED_MIME_TYPES: &[&str] = &[
+    "application/pdf",
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "image/tiff",
+    "image/bmp",
+    "text/plain",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/msword",
+    "application/vnd.ms-excel",
+];
 
 struct StoredUpload {
     original_filename: String,
@@ -251,6 +282,21 @@ async fn store_upload(
         }
         let original_filename = field.file_name().unwrap_or("file").to_owned();
         let mime_type = field.content_type().map(str::to_owned);
+        match mime_type.as_deref() {
+            Some(ct) if ALLOWED_MIME_TYPES.contains(&ct) => {}
+            Some(ct) => {
+                return Err(ApiError::new(
+                    StatusCode::UNPROCESSABLE_ENTITY,
+                    format!("不支持的文件类型: {ct}"),
+                ));
+            }
+            None => {
+                return Err(ApiError::new(
+                    StatusCode::UNPROCESSABLE_ENTITY,
+                    "文件类型不能为空",
+                ));
+            }
+        }
         let suffix = FilePath::new(&original_filename)
             .extension()
             .and_then(|extension| extension.to_str())
@@ -322,15 +368,32 @@ async fn list_project_files(
     State(state): State<AppState>,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
-) -> Result<Json<Vec<FileRead>>, ApiError> {
+    Query(page): Query<PageQuery>,
+) -> Result<Json<Paginated<FileRead>>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
-    Ok(Json(
-        list_files(&state, "project_id = $1", project_id)
-            .await?
-            .into_iter()
-            .map(Into::into)
-            .collect(),
-    ))
+    let (skip, limit) = page.bounds();
+    let total: i64 = sqlx::query_scalar("SELECT count(*) FROM files WHERE project_id = $1")
+        .bind(project_id)
+        .fetch_one(&state.pool)
+        .await?;
+    let query = format!(
+        "SELECT {FILE_COLUMNS} FROM files WHERE project_id = $1 ORDER BY created_at DESC OFFSET $2 LIMIT $3"
+    );
+    let items = sqlx::query_as::<_, StoredFileRecord>(&query)
+        .bind(project_id)
+        .bind(skip)
+        .bind(limit)
+        .fetch_all(&state.pool)
+        .await?
+        .into_iter()
+        .map(Into::into)
+        .collect();
+    Ok(Json(Paginated {
+        items,
+        total,
+        skip,
+        limit,
+    }))
 }
 
 async fn list_project_documents(
@@ -393,6 +456,7 @@ async fn get_file(
 
 async fn update_file(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
     Json(payload): Json<FileUpdate>,
@@ -414,12 +478,22 @@ async fn update_file(
             .execute(&state.pool)
             .await?;
     }
-    audit_file(&state, &user, "update_file", &record, json!({})).await?;
+    audit_file(
+        &state,
+        &user,
+        "update_file",
+        &record,
+        json!({}),
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
     Ok(Json(fetch_file(&state.pool, file_id).await?.into()))
 }
 
 async fn archive_file(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
 ) -> Result<Json<FileRead>, ApiError> {
@@ -466,6 +540,8 @@ async fn archive_file(
             target_type: Some("file"),
             target_id: Some(file_id),
             detail: json!({}),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -475,15 +551,25 @@ async fn archive_file(
 
 async fn review_file(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
     Json(payload): Json<FileReviewRequest>,
 ) -> Result<Json<FileRead>, ApiError> {
-    review_file_action(&state, &user, file_id, payload).await
+    review_file_action(
+        &state,
+        &user,
+        file_id,
+        payload,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await
 }
 
 async fn approve_document(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
 ) -> Result<Json<FileRead>, ApiError> {
@@ -495,12 +581,15 @@ async fn approve_document(
             action: "approve".to_owned(),
             comment: None,
         },
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await
 }
 
 async fn reject_document(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
 ) -> Result<Json<FileRead>, ApiError> {
@@ -512,6 +601,8 @@ async fn reject_document(
             action: "reject".to_owned(),
             comment: None,
         },
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await
 }
@@ -521,6 +612,8 @@ async fn review_file_action(
     user: &UserRecord,
     file_id: i32,
     payload: FileReviewRequest,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<Json<FileRead>, ApiError> {
     let record = require_file(state, user, file_id).await?;
     if record.file_category != "knowledge_document" {
@@ -536,10 +629,7 @@ async fn review_file_action(
         ));
     }
     if !can_review_project(&state.pool, user, record.project_id).await? {
-        return Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Review permission required",
-        ));
+        return Err(ApiError::new(StatusCode::FORBIDDEN, "需要审核权限"));
     }
     let (status, sync_status, message) = match payload.action.as_str() {
         "approve" => (
@@ -591,6 +681,8 @@ async fn review_file_action(
             target_type: Some("file"),
             target_id: Some(file_id),
             detail: json!({"review_action": payload.action, "comment": payload.comment}),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;
@@ -600,11 +692,12 @@ async fn review_file_action(
 
 async fn download_file(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(file_id): Path<i32>,
 ) -> Result<Response, ApiError> {
     let record = require_file(&state, &user, file_id).await?;
-    let bytes = tokio::fs::read(&record.storage_path)
+    let file = tokio::fs::File::open(&record.storage_path)
         .await
         .map_err(|error| {
             if error.kind() == std::io::ErrorKind::NotFound {
@@ -613,8 +706,18 @@ async fn download_file(
                 ApiError::internal(error)
             }
         })?;
-    audit_file(&state, &user, "download_file", &record, json!({})).await?;
-    let mut response = Body::from(bytes).into_response();
+    audit_file(
+        &state,
+        &user,
+        "download_file",
+        &record,
+        json!({}),
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
+    let stream = ReaderStream::with_capacity(file, 65536);
+    let mut response = Body::from_stream(stream).into_response();
     let content_type = record
         .mime_type
         .as_deref()
@@ -680,10 +783,7 @@ async fn require_write(
     if can_write_project(&state.pool, user, project_id).await? {
         Ok(())
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Write permission required",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要写入权限"))
     }
 }
 
@@ -693,6 +793,8 @@ async fn audit_file(
     action: &str,
     record: &StoredFileRecord,
     detail: serde_json::Value,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     write_audit(
         &state.pool,
@@ -703,6 +805,8 @@ async fn audit_file(
             target_type: Some("file"),
             target_id: Some(record.id),
             detail,
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   addGroupMember,
   createGroup,
@@ -39,9 +40,13 @@ export function GroupManagement({
 }: Props) {
   const [newGroupName, setNewGroupName] = useState("");
   const [newGroupDescription, setNewGroupDescription] = useState("");
-  const [newGroupLeader, setNewGroupLeader] = useState("");
-  const [memberUserId, setMemberUserId] = useState("");
+  const [newGroupLeader, setNewGroupLeader] = useState("__none__");
+  const [memberUserId, setMemberUserId] = useState("__none_user__");
   const [memberRole, setMemberRole] = useState("member");
+
+  const handleSelectGroupChange = (value: string) => {
+    onSelectGroup(value === "__none_group__" ? "" : value);
+  };
 
   const handleCreateGroup = async (event: FormEvent) => {
     event.preventDefault();
@@ -50,7 +55,7 @@ export function GroupManagement({
       const group = await createGroup(token, {
         name: newGroupName.trim(),
         description: newGroupDescription.trim() || undefined,
-        leader_user_id: newGroupLeader ? Number(newGroupLeader) : null,
+        leader_user_id: newGroupLeader && newGroupLeader !== "__none__" ? Number(newGroupLeader) : null,
       });
       createdId = group.id;
     }, `小组 ${newGroupName.trim()} 已创建`);
@@ -58,7 +63,7 @@ export function GroupManagement({
     if (createdId !== null) onSelectGroup(String(createdId));
     setNewGroupName("");
     setNewGroupDescription("");
-    setNewGroupLeader("");
+    setNewGroupLeader("__none__");
   };
 
   return (
@@ -69,7 +74,7 @@ export function GroupManagement({
           <form className="grid gap-3 md:grid-cols-3" onSubmit={handleCreateGroup}>
             <div className="space-y-1"><Label htmlFor="group-name">小组名称</Label><Input id="group-name" value={newGroupName} onChange={(event) => setNewGroupName(event.target.value)} required /></div>
             <div className="space-y-1"><Label htmlFor="group-description">说明</Label><Input id="group-description" value={newGroupDescription} onChange={(event) => setNewGroupDescription(event.target.value)} /></div>
-            <div className="space-y-1"><Label htmlFor="group-leader">负责人</Label><select id="group-leader" className="h-10 w-full rounded-md border bg-background px-3 text-sm" value={newGroupLeader} onChange={(event) => setNewGroupLeader(event.target.value)}><option value="">暂不指定</option>{users.filter((user) => user.status === "active").map((user) => <option key={user.id} value={user.id}>{user.display_name}（{user.username}）</option>)}</select></div>
+            <div className="space-y-1"><Label htmlFor="group-leader">负责人</Label><Select value={newGroupLeader} onValueChange={setNewGroupLeader}><SelectTrigger id="group-leader"><SelectValue placeholder="暂不指定" /></SelectTrigger><SelectContent><SelectItem value="__none__">暂不指定</SelectItem>{users.filter((user) => user.status === "active").map((user) => <SelectItem key={user.id} value={String(user.id)}>{user.display_name}（{user.username}）</SelectItem>)}</SelectContent></Select></div>
             <Button className="md:col-span-3" type="submit" disabled={busy}>创建小组</Button>
           </form>
         </CardContent>
@@ -78,11 +83,11 @@ export function GroupManagement({
         <CardHeader><CardTitle className="text-base">小组成员</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-3 md:grid-cols-3">
-            <div className="space-y-1"><Label htmlFor="managed-group">管理小组</Label><select id="managed-group" className="h-10 w-full rounded-md border bg-background px-3 text-sm" value={selectedGroupId} onChange={(event) => onSelectGroup(event.target.value)}><option value="">请选择</option>{groups.map((group) => <option key={group.id} value={group.id}>{group.name}</option>)}</select></div>
-            <div className="space-y-1"><Label htmlFor="group-member-user">添加成员</Label><select id="group-member-user" className="h-10 w-full rounded-md border bg-background px-3 text-sm" value={memberUserId} onChange={(event) => setMemberUserId(event.target.value)}><option value="">请选择账号</option>{users.filter((user) => user.status === "active").map((user) => <option key={user.id} value={user.id}>{user.display_name}（{user.username}）</option>)}</select></div>
-            <div className="space-y-1"><Label htmlFor="group-member-role">组内角色</Label><select id="group-member-role" className="h-10 w-full rounded-md border bg-background px-3 text-sm" value={memberRole} onChange={(event) => setMemberRole(event.target.value)}><option value="member">成员</option><option value="leader">负责人</option></select></div>
+            <div className="space-y-1"><Label htmlFor="managed-group">管理小组</Label><Select value={selectedGroupId || "__none_group__"} onValueChange={handleSelectGroupChange}><SelectTrigger id="managed-group"><SelectValue placeholder="请选择" /></SelectTrigger><SelectContent><SelectItem value="__none_group__">请选择</SelectItem>{groups.map((group) => <SelectItem key={group.id} value={String(group.id)}>{group.name}</SelectItem>)}</SelectContent></Select></div>
+            <div className="space-y-1"><Label htmlFor="group-member-user">添加成员</Label><Select value={memberUserId} onValueChange={setMemberUserId}><SelectTrigger id="group-member-user"><SelectValue placeholder="请选择账号" /></SelectTrigger><SelectContent><SelectItem value="__none_user__">请选择账号</SelectItem>{users.filter((user) => user.status === "active").map((user) => <SelectItem key={user.id} value={String(user.id)}>{user.display_name}（{user.username}）</SelectItem>)}</SelectContent></Select></div>
+            <div className="space-y-1"><Label htmlFor="group-member-role">组内角色</Label><Select value={memberRole} onValueChange={setMemberRole}><SelectTrigger id="group-member-role"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="member">成员</SelectItem><SelectItem value="leader">负责人</SelectItem></SelectContent></Select></div>
           </div>
-          <Button disabled={busy || !selectedGroupId || !memberUserId} onClick={() => runAction(() => addGroupMember(token, Number(selectedGroupId), { user_id: Number(memberUserId), group_role: memberRole }), "小组成员已保存")}>添加或更新成员</Button>
+          <Button disabled={busy || !selectedGroupId || selectedGroupId === "__none_group__" || !memberUserId || memberUserId === "__none_user__"} onClick={() => runAction(() => addGroupMember(token, Number(selectedGroupId), { user_id: Number(memberUserId), group_role: memberRole }), "小组成员已保存")}>添加或更新成员</Button>
           <div className="space-y-2">{groupMembers.map((member) => {
             const account = usersById.get(member.user_id);
             return <div key={member.id} data-testid={`group-member-${member.user_id}`} className="flex items-center justify-between rounded-md border px-3 py-2 text-sm"><span>{account?.display_name || `用户 #${member.user_id}`} · {member.group_role}</span><Button size="sm" variant="ghost" disabled={busy} onClick={() => runAction(() => removeGroupMember(token, member.group_id, member.user_id), "小组成员已移除")}>移除</Button></div>;

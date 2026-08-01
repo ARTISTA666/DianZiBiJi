@@ -17,8 +17,10 @@ import type { ProjectStoreState } from "./index";
 
 export interface NoteSlice {
   notes: Note[];
+  notesTotal: number;
   pendingNotes: Note[];
 
+  loadNotesPaginated: (token: string, projectId: number, params?: { skip?: number; limit?: number; status?: string }) => Promise<void>;
   createNote: (token: string, data: NoteCreatePayload) => Promise<Note>;
   updateNote: (token: string, noteId: number, data: NoteUpdatePayload) => Promise<Note>;
   submitNote: (token: string, noteId: number) => Promise<void>;
@@ -30,7 +32,16 @@ export interface NoteSlice {
 
 export const createNoteSlice: StateCreator<ProjectStoreState, [], [], NoteSlice> = (set, get) => ({
   notes: [],
+  notesTotal: 0,
   pendingNotes: [],
+
+  loadNotesPaginated: async (token, projectId, params) => {
+    const requestEpoch = epochs.projectData;
+    const result = await getProjectNotes(token, projectId, params);
+    if (isCurrentProjectRequest(get, projectId, requestEpoch)) {
+      set({ notes: result.items, notesTotal: result.total });
+    }
+  },
 
   createNote: async (token, data) => {
     const requestEpoch = epochs.projectData;
@@ -79,12 +90,12 @@ export const createNoteSlice: StateCreator<ProjectStoreState, [], [], NoteSlice>
     const requestEpoch = epochs.projectData;
     await approveNote(token, noteId, comment);
     if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-      const [notes, pendingNotes] = await Promise.all([
+      const [notesResult, pendingNotes] = await Promise.all([
         getProjectNotes(token, selectedProjectId),
         getPendingApprovals(token),
       ]);
       if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-        set({ notes, pendingNotes });
+        set({ notes: notesResult.items, notesTotal: notesResult.total, pendingNotes });
       }
     }
   },
@@ -94,12 +105,12 @@ export const createNoteSlice: StateCreator<ProjectStoreState, [], [], NoteSlice>
     const requestEpoch = epochs.projectData;
     await returnNote(token, noteId, comment);
     if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-      const [notes, pendingNotes] = await Promise.all([
+      const [notesResult, pendingNotes] = await Promise.all([
         getProjectNotes(token, selectedProjectId),
         getPendingApprovals(token),
       ]);
       if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-        set({ notes, pendingNotes });
+        set({ notes: notesResult.items, notesTotal: notesResult.total, pendingNotes });
       }
     }
   },

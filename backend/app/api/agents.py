@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -10,6 +12,8 @@ from app.services.agent import AgentGenerationFailure, AgentGenerationService
 from app.services.audit import write_audit
 
 router = APIRouter(tags=["agents"])
+
+logger = logging.getLogger(__name__)
 
 
 @router.post("/api/agents/generate", response_model=AgentGenerationRunRead)
@@ -31,8 +35,13 @@ async def generate_agent_output(
             date_to=payload.date_to,
         )
     except ValueError as exc:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)) from exc
+        logger.warning("Agent generation validation error: %s", exc)
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="请求参数有误，请检查输入后重试",
+        ) from exc
     except AgentGenerationFailure as exc:
+        logger.error("Agent generation failed (task_type=%s): %s", exc.run.task_type, exc)
         write_audit(
             db,
             actor=user,
@@ -43,7 +52,10 @@ async def generate_agent_output(
             detail={"task_type": exc.run.task_type, "error": str(exc)},
         )
         db.commit()
-        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
+        raise HTTPException(
+            status_code=exc.status_code,
+            detail="内容生成失败，请稍后重试",
+        ) from exc
     write_audit(
         db,
         actor=user,

@@ -13,6 +13,7 @@ use sqlx::{FromRow, PgPool};
 
 use crate::{
     api::auth::CurrentUser,
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{AgentGenerateRequest, AgentGenerationRunRead, UserRecord},
@@ -83,6 +84,7 @@ pub fn router() -> Router<AppState> {
 
 async fn generate_agent_output(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Json(payload): Json<AgentGenerateRequest>,
 ) -> Result<Json<AgentGenerationRunRead>, ApiError> {
@@ -163,7 +165,15 @@ async fn generate_agent_output(
                 },
             )
             .await?;
-            audit_generation(&state, &user, &run, "generate_agent_output_failed").await?;
+            audit_generation(
+                &state,
+                &user,
+                &run,
+                "generate_agent_output_failed",
+                client.ip_opt(),
+                client.ua_opt(),
+            )
+            .await?;
             let status = match error {
                 GenerationError::Configuration(_) => StatusCode::SERVICE_UNAVAILABLE,
                 GenerationError::Request(_) => StatusCode::BAD_GATEWAY,
@@ -258,7 +268,15 @@ async fn generate_agent_output(
         },
     )
     .await?;
-    audit_generation(&state, &user, &run, "generate_agent_output").await?;
+    audit_generation(
+        &state,
+        &user,
+        &run,
+        "generate_agent_output",
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
     Ok(Json(run))
 }
 
@@ -672,6 +690,8 @@ async fn audit_generation(
     user: &UserRecord,
     run: &AgentGenerationRunRead,
     action: &'static str,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     write_audit(
         &state.pool,
@@ -685,6 +705,8 @@ async fn audit_generation(
                 "task_type": run.task_type,
                 "source_note_count": run.source_note_ids_json.as_array().map_or(0, Vec::len)
             }),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await

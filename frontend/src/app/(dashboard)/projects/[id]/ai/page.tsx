@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
 
 const modes = [
   { value: "auto", label: "自动选择" },
@@ -29,13 +30,13 @@ export default function AIPage() {
   const members = useProjectStore((s) => s.members);
   const initRag = useProjectStore((s) => s.initRag);
   const queryRag = useProjectStore((s) => s.queryRag);
-  const loadTabProjectData = useProjectStore((s) => s.loadTabProjectData);
+  const loadAITabData = useProjectStore((s) => s.loadAITabData);
   const [question, setQuestion] = useState("");
   const [mode, setMode] = useState("auto");
   const [busy, setBusy] = useState(false);
   const [initBusy, setInitBusy] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const feedback = useActionFeedback();
   const membership = members.find((member) => member.user_id === user?.id);
   const canManage = user?.role === "super_admin"
     || selectedProject?.owner_user_id === user?.id
@@ -44,34 +45,43 @@ export default function AIPage() {
   const ragReady = ragStatus?.initialized === true;
 
   useEffect(() => {
-    if (token) loadTabProjectData(token, projectId);
-  }, [token, projectId, loadTabProjectData]);
+    if (token) loadAITabData(token, projectId);
+  }, [token, projectId, loadAITabData]);
 
   const handleInit = async () => {
     if (!token || !canManage || initBusy) return;
     setInitBusy(true);
     setError("");
-    setMessage("");
     try {
       await initRag(token, projectId);
-      setMessage("项目资料库已初始化");
+      feedback.success("项目资料库已初始化");
     }
-    catch (e) { setError(getErrorMessage(e, "资料库初始化失败")); }
+    catch (e) {
+      const msg = getErrorMessage(e, "资料库初始化失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setInitBusy(false); }
   };
 
   const handleAsk = async () => {
     if (!token || !question.trim() || busy || !ragReady) return;
     setBusy(true); setError("");
-    try { await queryRag(token, projectId, question.trim(), mode); setQuestion(""); }
-    catch (e) { setError(getErrorMessage(e, "查询失败")); }
+    try {
+      await queryRag(token, projectId, question.trim(), mode);
+      setQuestion("");
+    }
+    catch (e) {
+      const msg = getErrorMessage(e, "查询失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setBusy(false); }
   };
 
   return (
     <div className="space-y-4">
       {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p>}
-      {message && <p className="rounded-md bg-green-50 px-4 py-2 text-sm text-green-700">{message}</p>}
 
       <Card>
         <CardContent className="flex items-center justify-between py-4">

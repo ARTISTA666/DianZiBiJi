@@ -1,9 +1,21 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { useAuthStore, useProjectStore } from "@/stores";
+import { ProjectDetailSkeleton } from "@/components/skeletons";
 
 const regularTabs = [
   { value: "notes", label: "笔记" },
@@ -39,9 +51,24 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
   const project = selectedProject?.id === projectId ? selectedProject : null;
   const membership = members.find((member) => member.user_id === user?.id);
   const evaluationOnly = membership?.can_evaluate === true && membership.can_read === false;
-  const tabs = evaluationOnly ? evaluatorTabs : regularTabs;
+  const isSuperAdmin = user?.role === "super_admin";
+  const isOwner = project?.owner_user_id != null && project.owner_user_id === user?.id;
+  const canManage = isSuperAdmin || isOwner || membership?.can_manage === true || membership?.project_role === "owner";
+  const canReview = canManage || membership?.can_review === true;
+  const visibleRegularTabs = useMemo(
+    () => regularTabs.filter((t) => {
+      if (t.value === "settings") return canManage;
+      if (t.value === "approvals") return canReview;
+      return true;
+    }),
+    [canManage, canReview],
+  );
+  const tabs = evaluationOnly ? evaluatorTabs : visibleRegularTabs;
   const blindReviewPath = `/projects/${projectId}/blind-review`;
   const isBlindReviewPath = pathname === blindReviewPath;
+
+  const [isPending, startTransition] = useTransition();
+  const [contentVisible, setContentVisible] = useState(true);
 
   const activeTab = useMemo<TabValue>(() => {
     const segments = pathname.split("/");
@@ -50,6 +77,11 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
     const found = [...regularTabs, ...evaluatorTabs].find((t) => t.value === last);
     return found ? found.value : "notes";
   }, [pathname, projectId]);
+
+  const activeTabLabel = useMemo(() => {
+    const allTabs = [...regularTabs, ...evaluatorTabs] as readonly { value: string; label: string }[];
+    return allTabs.find((t) => t.value === activeTab)?.label ?? "笔记";
+  }, [activeTab]);
 
   useEffect(() => {
     if (token && projects.length === 0) loadProjects(token);
@@ -91,7 +123,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
   }
 
   if (!project || busy) {
-    return <div className="flex items-center justify-center py-16"><p className="text-sm text-muted-foreground">加载中...</p></div>;
+    return <ProjectDetailSkeleton />;
   }
 
   if (
@@ -103,8 +135,51 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 
   return (
     <div className="space-y-6">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/projects">项目列表</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/projects/${projectId}`}>{project.name}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{activeTabLabel}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{project.name}</h1>
+        <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-1 text-2xl font-bold tracking-tight hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md px-1 -mx-1">
+                {project.name}
+                <ChevronDown className="h-5 w-5 text-muted-foreground" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56">
+              {projects
+                .filter((p) => p.id !== projectId)
+                .slice(0, 10)
+                .map((p) => (
+                  <DropdownMenuItem key={p.id} onClick={() => router.push(`/projects/${p.id}`)}>
+                    {p.name}
+                  </DropdownMenuItem>
+                ))}
+              {projects.length > 1 && <DropdownMenuSeparator />}
+              <DropdownMenuItem onClick={() => router.push("/projects")}>
+                查看所有项目...
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         {project.description && <p className="mt-1 text-sm text-muted-foreground">{project.description}</p>}
       </div>
 
@@ -115,15 +190,19 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
       )}
 
       <Tabs value={activeTab} onValueChange={(v) => {
-        const target = v === "notes" ? `/projects/${projectId}` : `/projects/${projectId}/${v}`;
-        router.push(target);
+        setContentVisible(false);
+        startTransition(() => {
+          const target = v === "notes" ? `/projects/${projectId}` : `/projects/${projectId}/${v}`;
+          router.push(target);
+        });
+        setTimeout(() => setContentVisible(true), 50);
       }}>
         <TabsList className="w-full justify-start overflow-x-auto">
           {tabs.map((t) => (<TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>))}
         </TabsList>
       </Tabs>
 
-      <div className="mt-4">{children}</div>
+      <div className={`mt-4 transition-opacity duration-200 ${isPending || !contentVisible ? "opacity-0" : "opacity-100"}`}>{children}</div>
     </div>
   );
 }

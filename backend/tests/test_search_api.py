@@ -149,7 +149,6 @@ def test_search_empty_query_returns_422(env):
 
     response = client.post("/api/search", json={"query": ""})
     assert response.status_code == 422
-    assert "empty" in response.json()["detail"].lower()
 
 
 def test_search_whitespace_only_query_returns_422(env):

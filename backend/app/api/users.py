@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
 from app.api.auth import set_auth_cookie
@@ -7,15 +7,24 @@ from app.core.database import get_db
 from app.core.security import create_access_token, hash_password, verify_password
 from app.models.user import User, UserRole, UserStatus
 from app.schemas.auth import TokenResponse
+from app.schemas.common import PaginatedResponse
 from app.schemas.user import UserCreate, UserPasswordChange, UserRead, UserUpdate
 from app.services.audit import write_audit
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("", response_model=list[UserRead])
-def list_users(_: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[User]:
-    return db.query(User).order_by(User.id).all()
+@router.get("", response_model=PaginatedResponse[UserRead])
+def list_users(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    _: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
+    base = db.query(User)
+    total = base.count()
+    items = base.order_by(User.id).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
 @router.post("", response_model=UserRead)

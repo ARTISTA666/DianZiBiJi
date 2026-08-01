@@ -9,6 +9,7 @@ use sqlx::{PgPool, Postgres, Transaction};
 
 use crate::{
     api::auth::{require_admin, CurrentUser},
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{
@@ -126,6 +127,7 @@ async fn list_projects(
 
 async fn create_project(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Json(payload): Json<ProjectCreate>,
 ) -> Result<Json<ProjectRead>, ApiError> {
@@ -142,10 +144,7 @@ async fn create_project(
             .fetch_one(&state.pool)
             .await?;
     if duplicate {
-        return Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "Project name already exists",
-        ));
+        return Err(ApiError::new(StatusCode::CONFLICT, "项目名称已存在"));
     }
     let mut transaction = state.pool.begin().await?;
     let project_id: i32 = sqlx::query_scalar(
@@ -175,6 +174,8 @@ async fn create_project(
         project_id,
         "project",
         project_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -193,6 +194,7 @@ async fn get_project(
 
 async fn update_project(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Json(payload): Json<ProjectUpdate>,
@@ -265,6 +267,8 @@ async fn update_project(
         project_id,
         "project",
         project_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -273,6 +277,7 @@ async fn update_project(
 
 async fn add_project_member(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Json(payload): Json<ProjectMemberCreate>,
@@ -343,6 +348,8 @@ async fn add_project_member(
         project_id,
         "user",
         payload.user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -380,6 +387,7 @@ async fn list_project_members(
 
 async fn update_project_member(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path((project_id, user_id)): Path<(i32, i32)>,
     Json(payload): Json<ProjectMemberUpdate>,
@@ -450,6 +458,8 @@ async fn update_project_member(
         project_id,
         "user",
         user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -458,6 +468,7 @@ async fn update_project_member(
 
 async fn remove_project_member(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path((project_id, user_id)): Path<(i32, i32)>,
 ) -> Result<Json<Value>, ApiError> {
@@ -488,6 +499,8 @@ async fn remove_project_member(
         project_id,
         "user",
         user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -496,6 +509,7 @@ async fn remove_project_member(
 
 async fn add_project_reviewer(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
     Json(payload): Json<ProjectReviewerCreate>,
@@ -563,6 +577,8 @@ async fn add_project_reviewer(
         project_id,
         "user",
         payload.user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -578,6 +594,7 @@ async fn add_project_reviewer(
 
 async fn remove_project_reviewer(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path((project_id, user_id)): Path<(i32, i32)>,
 ) -> Result<Json<Value>, ApiError> {
@@ -610,6 +627,8 @@ async fn remove_project_reviewer(
         project_id,
         "user",
         user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -722,10 +741,7 @@ async fn require_project_manager_in_transaction(
     if allowed {
         Ok(current_user)
     } else {
-        Err(ApiError::new(
-            StatusCode::FORBIDDEN,
-            "Project manage permission required",
-        ))
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要项目管理权限"))
     }
 }
 
@@ -809,7 +825,7 @@ async fn protect_manager_transition(
     {
         Err(ApiError::new(
             StatusCode::CONFLICT,
-            "Project must keep at least one manager",
+            "项目至少需保留一名管理员",
         ))
     } else {
         Ok(())
@@ -953,6 +969,7 @@ async fn require_user(pool: &PgPool, user_id: i32) -> Result<(), ApiError> {
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 async fn audit_project(
     transaction: &mut Transaction<'_, Postgres>,
     actor_id: i32,
@@ -960,6 +977,8 @@ async fn audit_project(
     project_id: i32,
     target_type: &str,
     target_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     write_audit(
         &mut **transaction,
@@ -970,6 +989,8 @@ async fn audit_project(
             target_type: Some(target_type),
             target_id: Some(target_id),
             detail: json!({}),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;
@@ -1741,6 +1762,8 @@ mod tests {
                     project_a as i32,
                     "project",
                     project_a as i32,
+                    None,
+                    None,
                 ),
                 super::audit_project(
                     &mut transaction_b,
@@ -1749,6 +1772,8 @@ mod tests {
                     project_b as i32,
                     "project",
                     project_b as i32,
+                    None,
+                    None,
                 )
             )
         })
@@ -2407,6 +2432,6 @@ mod tests {
         )
         .await;
         assert_eq!(last_manager, StatusCode::CONFLICT);
-        assert_eq!(body["detail"], "Project must keep at least one manager");
+        assert_eq!(body["detail"], "项目至少需保留一名管理员");
     }
 }

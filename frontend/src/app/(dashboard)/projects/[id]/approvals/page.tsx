@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { CheckCircle, XCircle, FileText } from "lucide-react";
+import { CheckCircle, XCircle, FileText, FileCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { statusText } from "@/components/constants";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { ApprovalsListSkeleton } from "@/components/skeletons";
 
 export default function ApprovalsPage() {
   const { id } = useParams();
@@ -21,6 +23,7 @@ export default function ApprovalsPage() {
   const [comment, setComment] = useState<Record<number, string>>({});
   const [error, setError] = useState("");
   const b = useProjectStore((s) => s.busy);
+  const feedback = useActionFeedback();
 
   const handleError = (msg: string) => {
     if (msg.includes("登录")) {
@@ -37,17 +40,28 @@ export default function ApprovalsPage() {
       await fn(token, noteId, comment[noteId] || "");
       setComment((c) => { const n = { ...c }; delete n[noteId]; return n; });
       loadBaseProjectData(token, projectId);
+      feedback.success(action === "approve" ? "已通过" : "已退回");
     } catch (e) {
-      handleError(getErrorMessage(e, "操作失败"));
+      const msg = getErrorMessage(e, "操作失败");
+      handleError(msg);
+      feedback.error(msg);
     }
   };
 
-  if (b) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
+  if (b) return <ApprovalsListSkeleton />;
 
   const projectPending = pendingNotes.filter((n) => n.project_id === projectId);
 
   if (projectPending.length === 0) {
-    return <Card className="border-dashed"><CardContent className="py-12 text-center"><p className="text-sm text-muted-foreground">暂无待审批笔记</p></CardContent></Card>;
+    return (
+      <Card className="border-dashed">
+        <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+          <FileCheck className="h-12 w-12 text-muted-foreground/50 mb-4" />
+          <p className="text-lg font-medium text-muted-foreground">所有笔记已审批完毕</p>
+          <p className="text-sm text-muted-foreground/70 mt-1">新笔记提交审批后将在此显示</p>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (

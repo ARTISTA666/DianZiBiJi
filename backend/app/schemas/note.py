@@ -4,8 +4,8 @@ from pydantic import BaseModel, Field
 
 
 class NoteCreate(BaseModel):
-    title: str
-    experiment_type: str
+    title: str = Field(min_length=1, max_length=200)
+    experiment_type: str = Field(min_length=1, max_length=100)
     experiment_date: date | None = None
     template_id: int | None = None
     fixed_fields_json: dict = Field(default_factory=dict)
@@ -13,12 +13,13 @@ class NoteCreate(BaseModel):
 
 
 class NoteUpdate(BaseModel):
-    title: str | None = None
-    experiment_type: str | None = None
+    title: str | None = Field(default=None, min_length=1, max_length=200)
+    experiment_type: str | None = Field(default=None, min_length=1, max_length=100)
     experiment_date: date | None = None
     fixed_fields_json: dict | None = None
     content_json: dict | None = None
-    change_summary: str | None = None
+    change_summary: str | None = Field(default=None, max_length=500)
+    lock_version: int | None = None
 
 
 class NoteRead(BaseModel):
@@ -31,6 +32,7 @@ class NoteRead(BaseModel):
     owner_user_id: int
     status: str
     current_version_id: int | None
+    lock_version: int
     created_at: datetime
     updated_at: datetime
 

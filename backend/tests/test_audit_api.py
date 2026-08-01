@@ -65,7 +65,8 @@ def test_list_audit_logs_as_admin(client):
     r = c.get("/audit-logs")
     assert r.status_code == 200
     body = r.json()
-    assert len(body) == 4
+    assert body["total"] == 4
+    assert len(body["items"]) == 4
 
 
 # ── 2. Filter by actor / project / action ──────────────────
@@ -76,14 +77,14 @@ def test_filter_by_actor_and_action(client):
     r = c.get("/audit-logs?actor_user_id=2&action=login")
     assert r.status_code == 200
     body = r.json()
-    assert len(body) == 1
-    assert body[0]["id"] == 3
+    assert body["total"] == 1
+    assert body["items"][0]["id"] == 3
 
     r2 = c.get("/audit-logs?project_id=1")
     assert r2.status_code == 200
     body2 = r2.json()
-    assert len(body2) == 2
-    assert all(log["project_id"] == 1 for log in body2)
+    assert body2["total"] == 2
+    assert all(log["project_id"] == 1 for log in body2["items"])
 
 
 # ── 3. Permission: admin ok, non-admin 403 ─────────────────

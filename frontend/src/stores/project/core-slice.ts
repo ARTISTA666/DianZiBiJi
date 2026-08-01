@@ -109,6 +109,7 @@ export const createCoreSlice: StateCreator<ProjectStoreState, [], [], CoreSlice>
       selectedProject: null,
       members: [],
       notes: [],
+      notesTotal: 0,
       pendingNotes: [],
       files: [],
       ragStatus: null,
@@ -123,6 +124,12 @@ export const createCoreSlice: StateCreator<ProjectStoreState, [], [], CoreSlice>
       projectDataErrors: [],
       projectLoadError: null,
       busy: false,
+      aiTabLastFetchedAt: 0,
+      kgTabLastFetchedAt: 0,
+      reportsTabLastFetchedAt: 0,
+      dataTabLastFetchedAt: 0,
+      blindReviewTabLastFetchedAt: 0,
+      settingsTabLastFetchedAt: 0,
     });
   },
 

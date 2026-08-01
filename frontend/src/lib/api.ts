@@ -1,4 +1,8 @@
+import { toast } from "sonner";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
+
+let isRedirecting = false;
 
 export class ApiRequestError extends Error {
   constructor(
@@ -448,15 +452,35 @@ export type AuditLog = {
 // token no longer needs to live in JS-accessible storage.
 async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): Promise<T> {
   const isFormData = init?.body instanceof FormData;
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    ...init,
-    credentials: "include",
-    headers: {
-      ...(isFormData ? {} : { "Content-Type": "application/json" }),
-      ...(init?.headers || {}),
-    },
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      ...init,
+      credentials: "include",
+      headers: {
+        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        ...(init?.headers || {}),
+      },
+    });
+  } catch (error) {
+    if (!navigator.onLine) {
+      toast.error("网络已断开，请检查网络连接");
+    } else if (error instanceof TypeError && error.message.includes("Failed to fetch")) {
+      toast.error("网络连接失败，请检查网络后重试");
+    }
+    throw error;
+  }
   if (!response.ok) {
+    if (response.status === 401 && !isRedirecting) {
+      isRedirecting = true;
+      try {
+        const { useAuthStore } = await import("@/stores/auth-store");
+        useAuthStore.getState().logout();
+      } catch {
+        // Auth store may already be cleared; proceed with redirect.
+      }
+      window.location.href = "/login";
+    }
     const text = await response.text();
     let message = text || `请求失败: ${response.status}`;
     try {
@@ -539,7 +563,7 @@ export function updateProject(token: string, projectId: number, payload: Partial
 }
 
 export function getUsers(token: string) {
-  return apiFetch<User[]>("/users", token);
+  return apiFetch<PaginatedResponse<User>>("/users", token);
 }
 
 export function createUser(token: string, payload: { username: string; password: string; display_name: string; email?: string; role: string }) {
@@ -614,11 +638,21 @@ export function getAuditLogs(
   Object.entries(filters).forEach(([key, value]) => {
     if (value) params.set(key, value);
   });
-  return apiFetch<AuditLog[]>(`/audit-logs${params.toString() ? `?${params.toString()}` : ""}`, token);
+  return apiFetch<PaginatedResponse<AuditLog>>(`/audit-logs${params.toString() ? `?${params.toString()}` : ""}`, token);
 }
 
-export function getProjectNotes(token: string, projectId: number) {
-  return apiFetch<Note[]>(`/projects/${projectId}/notes`, token);
+export type PaginatedResponse<T> = {
+  items: T[];
+  total: number;
+};
+
+export function getProjectNotes(token: string, projectId: number, params: { skip?: number; limit?: number; status?: string } = {}) {
+  const searchParams = new URLSearchParams();
+  if (params.skip !== undefined) searchParams.set("skip", String(params.skip));
+  if (params.limit !== undefined) searchParams.set("limit", String(params.limit));
+  if (params.status) searchParams.set("status", params.status);
+  const qs = searchParams.toString();
+  return apiFetch<PaginatedResponse<Note>>(`/projects/${projectId}/notes${qs ? `?${qs}` : ""}`, token);
 }
 
 export function createNote(
@@ -684,7 +718,7 @@ export function getPendingApprovals(token: string) {
 }
 
 export function getProjectFiles(token: string, projectId: number) {
-  return apiFetch<StoredFile[]>(`/projects/${projectId}/files`, token);
+  return apiFetch<PaginatedResponse<StoredFile>>(`/projects/${projectId}/files`, token);
 }
 
 export function uploadFile(token: string, projectId: number, file: File, noteId?: number | null, category = "note_attachment") {

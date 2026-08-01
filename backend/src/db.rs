@@ -148,6 +148,25 @@ pub async fn initialize_database(pool: &PgPool, settings: &Settings) -> Result<(
     )
     .execute(&mut *transaction)
     .await?;
+    // Mirrors legacy Alembic migration 0010: file_size must be bigint so
+    // uploads above 2 GiB and the i64 model decode both stay valid.
+    sqlx::query(
+        r#"
+        DO $$
+        BEGIN
+            IF EXISTS (
+                SELECT 1 FROM information_schema.columns
+                WHERE table_schema = 'public' AND table_name = 'files'
+                  AND column_name = 'file_size' AND data_type = 'integer'
+            ) THEN
+                ALTER TABLE public.files ALTER COLUMN file_size TYPE bigint;
+            END IF;
+        END
+        $$
+        "#,
+    )
+    .execute(&mut *transaction)
+    .await?;
     let duplicate_active_project: Option<i32> = sqlx::query_scalar(
         r#"
         SELECT project_id FROM public.ai_experiment_runs
@@ -688,7 +707,7 @@ async fn ensure_demo_data(
         if existing.is_some() {
             continue;
         }
-        let file_size = i32::try_from(tokio::fs::metadata(&path).await?.len())
+        let file_size = i64::try_from(tokio::fs::metadata(&path).await?.len())
             .map_err(|error| DatabaseError::Domain(error.to_string()))?;
         let storage_path = path.to_string_lossy().into_owned();
         sqlx::query(

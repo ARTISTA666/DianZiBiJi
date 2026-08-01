@@ -12,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { ProjectCardSkeleton } from "@/components/skeletons";
 
 const PAGE_SIZE = 20;
 const statusMap: Record<string, string> = { active: "进行中", archived: "已归档", pending: "待启动" };
@@ -39,15 +41,28 @@ export default function ProjectsPage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const feedback = useActionFeedback();
 
   useEffect(() => {
     if (token) {
       setLoading(true);
       loadProjects(token, 0, PAGE_SIZE)
-        .catch((e) => setError(getErrorMessage(e, "加载项目失败")))
+        .catch((e) => {
+          setError(getErrorMessage(e, "加载项目失败"));
+          feedback.error(getErrorMessage(e, "加载项目失败"));
+        })
         .finally(() => setLoading(false));
     }
-  }, [token, loadProjects]);
+  }, [token, loadProjects, feedback]);
+
+  const handleNameBlur = () => {
+    if (!name.trim()) {
+      setNameError("项目名称不能为空");
+    } else {
+      setNameError("");
+    }
+  };
 
   const handleCreate = async () => {
     if (!token || !name.trim()) return;
@@ -58,8 +73,11 @@ export default function ProjectsPage() {
       setName("");
       setDescription("");
       router.push(`/projects/${project.id}`);
+      feedback.success("项目创建成功");
     } catch (e) {
-      setError(getErrorMessage(e, "创建失败"));
+      const msg = getErrorMessage(e, "创建失败");
+      setError(msg);
+      feedback.error(msg);
     } finally {
       setBusy(false);
     }
@@ -87,7 +105,8 @@ export default function ProjectsPage() {
             <div className="space-y-4 pt-2">
               <div className="space-y-2">
                 <Label htmlFor="pname">项目名称</Label>
-                <Input id="pname" value={name} onChange={(e) => setName(e.target.value)} placeholder="例如：PCR 实验优化" />
+                <Input id="pname" value={name} onChange={(e) => setName(e.target.value)} onBlur={handleNameBlur} placeholder="例如：PCR 实验优化" className={nameError ? "border-destructive" : ""} />
+                {nameError && <p className="text-sm text-destructive">{nameError}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="pdesc">项目描述</Label>
@@ -102,8 +121,10 @@ export default function ProjectsPage() {
       </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-16">
-          <p className="text-sm text-muted-foreground">加载中...</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <ProjectCardSkeleton key={i} />
+          ))}
         </div>
       ) : projects.length === 0 ? (
         <Card className="border-dashed">

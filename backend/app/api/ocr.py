@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import logging
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -14,6 +15,8 @@ from app.services.audit import write_audit
 from app.services.ocr import OcrService, UnsupportedFileTypeError
 
 router = APIRouter(tags=["ocr"])
+
+logger = logging.getLogger(__name__)
 
 
 def _ocr_result_read(result: FileOcrResult) -> OcrJobResult:
@@ -49,11 +52,17 @@ def extract_ocr(
     try:
         result = OcrService().extract(db, payload.file_id)
     except FileNotFoundError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+        logger.warning("OCR source file not found (file_id=%s): %s", payload.file_id, exc)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="源文件不存在，请确认后重试") from exc
     except LookupError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+        logger.warning("OCR resource not found (file_id=%s): %s", payload.file_id, exc)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="相关资源未找到") from exc
     except UnsupportedFileTypeError as exc:
-        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc)) from exc
+        logger.warning("Unsupported file type for OCR (file_id=%s): %s", payload.file_id, exc)
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="不支持的文件格式，请上传 PDF、图片或文本文件",
+        ) from exc
 
     ocr_result = FileOcrResult(
         file_id=record.id,

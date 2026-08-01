@@ -8,6 +8,7 @@ use serde_json::json;
 
 use crate::{
     api::auth::CurrentUser,
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     knowledge_graph::{extract_note, note_graph, project_graph},
@@ -32,6 +33,7 @@ pub fn router() -> Router<AppState> {
 
 async fn extract_note_knowledge(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
     payload: Option<Json<KnowledgeExtractionRequest>>,
@@ -57,6 +59,8 @@ async fn extract_note_knowledge(
             target_type: Some("note"),
             target_id: Some(note_id),
             detail: json!({}),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -66,6 +70,7 @@ async fn extract_note_knowledge(
 
 async fn rebuild_project_knowledge(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
 ) -> Result<Json<Vec<KnowledgeExtractionRunRead>>, ApiError> {
@@ -94,6 +99,8 @@ async fn rebuild_project_knowledge(
             target_type: Some("project"),
             target_id: Some(project_id),
             detail: json!({}),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;

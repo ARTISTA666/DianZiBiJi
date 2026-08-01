@@ -2451,6 +2451,62 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** PaginatedResponse[UserRead] */
+        PaginatedResponse_UserRead_: {
+            /** Items */
+            items: components["schemas"]["UserRead"][];
+            /** Total */
+            total: number;
+            /**
+             * Skip
+             * @default 0
+             */
+            skip: number;
+            /**
+             * Limit
+             * @default 50
+             */
+            limit: number;
+        };
+        /** PaginatedResponse[NoteRead] */
+        PaginatedResponse_NoteRead_: {
+            /** Items */
+            items: components["schemas"]["NoteRead"][];
+            /** Total */
+            total: number;
+            /**
+             * Skip
+             * @default 0
+             */
+            skip: number;
+            /**
+             * Limit
+             * @default 50
+             */
+            limit: number;
+        };
+        /** PaginatedResponse[FileRead] */
+        PaginatedResponse_FileRead_: {
+            /** Items */
+            items: components["schemas"]["FileRead"][];
+            /** Total */
+            total: number;
+            /**
+             * Skip
+             * @default 0
+             */
+            skip: number;
+            /**
+             * Limit
+             * @default 50
+             */
+            limit: number;
+        };
+        /**
+         * NoteStatus
+         * @enum {string}
+         */
+        NoteStatus: "draft" | "submitted" | "approved" | "returned" | "archived" | "voided";
     };
     responses: never;
     parameters: never;
@@ -2603,10 +2659,15 @@ export interface operations {
     };
     list_users_users_get: {
         parameters: {
-            query?: never;
+            query?: {
+                skip?: number;
+                limit?: number;
+            };
             header?: never;
             path?: never;
-            cookie?: never;
+            cookie?: {
+                eln_access_token?: string | null;
+            };
         };
         requestBody?: never;
         responses: {
@@ -2616,7 +2677,16 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["UserRead"][];
+                    "application/json": components["schemas"]["PaginatedResponse_UserRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -3363,12 +3433,18 @@ export interface operations {
     };
     list_notes_projects__project_id__notes_get: {
         parameters: {
-            query?: never;
+            query?: {
+                skip?: number;
+                limit?: number;
+                status?: components["schemas"]["NoteStatus"] | null;
+            };
             header?: never;
             path: {
                 project_id: number;
             };
-            cookie?: never;
+            cookie?: {
+                eln_access_token?: string | null;
+            };
         };
         requestBody?: never;
         responses: {
@@ -3378,7 +3454,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["NoteRead"][];
+                    "application/json": components["schemas"]["PaginatedResponse_NoteRead_"];
                 };
             };
             /** @description Validation Error */
@@ -3776,12 +3852,17 @@ export interface operations {
     };
     list_project_files_projects__project_id__files_get: {
         parameters: {
-            query?: never;
+            query?: {
+                skip?: number;
+                limit?: number;
+            };
             header?: never;
             path: {
                 project_id: number;
             };
-            cookie?: never;
+            cookie?: {
+                eln_access_token?: string | null;
+            };
         };
         requestBody?: never;
         responses: {
@@ -3791,7 +3872,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["FileRead"][];
+                    "application/json": components["schemas"]["PaginatedResponse_FileRead_"];
                 };
             };
             /** @description Validation Error */
@@ -5067,10 +5148,14 @@ export interface operations {
                 action?: string | null;
                 date_from?: string | null;
                 date_to?: string | null;
+                skip?: number;
+                limit?: number;
             };
             header?: never;
             path?: never;
-            cookie?: never;
+            cookie?: {
+                eln_access_token?: string | null;
+            };
         };
         requestBody?: never;
         responses: {
@@ -5082,7 +5167,7 @@ export interface operations {
                 content: {
                     "application/json": {
                         [key: string]: unknown;
-                    }[];
+                    };
                 };
             };
             /** @description Validation Error */

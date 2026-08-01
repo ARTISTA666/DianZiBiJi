@@ -10,6 +10,7 @@ use sqlx::{FromRow, Postgres, Transaction};
 
 use crate::{
     api::auth::CurrentUser,
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{OcrCorrectionRequest, OcrJobRequest, OcrJobResult, UserRecord},
@@ -113,6 +114,7 @@ pub fn router() -> Router<AppState> {
 
 async fn extract_ocr(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Json(payload): Json<OcrJobRequest>,
 ) -> Result<Json<OcrJobResult>, ApiError> {
@@ -172,6 +174,8 @@ async fn extract_ocr(
                 "ocr_result_id": result_id,
                 "review_status": "pending_review"
             }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;
@@ -198,6 +202,7 @@ async fn get_latest_result(
 
 async fn confirm_result(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Path(result_id): Path<i32>,
     Json(payload): Json<OcrCorrectionRequest>,
@@ -293,6 +298,8 @@ async fn confirm_result(
                 "raw_character_count": locked_context.raw_text.chars().count(),
                 "corrected_character_count": corrected_count
             }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
         },
     )
     .await?;

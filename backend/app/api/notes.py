@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -6,6 +6,7 @@ from app.api.deps import can_review_project, can_write_project, get_current_user
 from app.core.database import get_db
 from app.models.note import ExperimentNote, NoteApproval, NoteStatus, NoteVersion
 from app.models.user import User
+from app.schemas.common import PaginatedResponse
 from app.schemas.note import ApprovalRequest, NoteApprovalRead, NoteCreate, NoteRead, NoteUpdate, NoteVersionRead
 from app.services.audit import write_audit
 from app.services.knowledge_graph import KnowledgeGraphService
@@ -14,10 +15,22 @@ from app.services.search import remove_note
 router = APIRouter(tags=["notes"])
 
 
-@router.get("/projects/{project_id}/notes", response_model=list[NoteRead])
-def list_notes(project_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[ExperimentNote]:
+@router.get("/projects/{project_id}/notes", response_model=PaginatedResponse[NoteRead])
+def list_notes(
+    project_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    status: NoteStatus | None = None,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     require_project_access(project_id, db, user)
-    return db.query(ExperimentNote).filter(ExperimentNote.project_id == project_id).order_by(ExperimentNote.updated_at.desc()).all()
+    base = db.query(ExperimentNote).filter(ExperimentNote.project_id == project_id)
+    if status is not None:
+        base = base.filter(ExperimentNote.status == status)
+    total = base.count()
+    items = base.order_by(ExperimentNote.updated_at.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
 @router.post("/projects/{project_id}/notes", response_model=NoteRead)
@@ -75,6 +88,28 @@ def update_note(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     if note.status not in {NoteStatus.DRAFT, NoteStatus.RETURNED}:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Only draft or returned notes can be edited")
+
+    # 乐观锁并发控制
+    expected_version = payload.lock_version if payload.lock_version is not None else note.lock_version
+    updated_rows = (
+        db.query(ExperimentNote)
+        .filter(
+            ExperimentNote.id == note_id,
+            ExperimentNote.lock_version == expected_version,
+        )
+        .update({"lock_version": ExperimentNote.lock_version + 1})
+    )
+    if updated_rows == 0:
+        existing = db.get(ExperimentNote, note_id)
+        if existing is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="笔记已被其他用户修改，请刷新后重试",
+        )
+    # 重新加载以获取更新后的 lock_version
+    db.flush()
+    note = db.get(ExperimentNote, note_id)
 
     latest_version_number = (
         db.query(func.max(NoteVersion.version_number)).filter(NoteVersion.note_id == note.id).scalar()
@@ -148,10 +183,19 @@ def submit_note(note_id: int, user: User = Depends(get_current_user), db: Sessio
     return note
 
 
-@router.get("/notes/{note_id}/versions", response_model=list[NoteVersionRead])
-def list_note_versions(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[NoteVersion]:
+@router.get("/notes/{note_id}/versions", response_model=PaginatedResponse[NoteVersionRead])
+def list_note_versions(
+    note_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     require_note_access(note_id, db, user)
-    return db.query(NoteVersion).filter(NoteVersion.note_id == note_id).order_by(NoteVersion.version_number.desc()).all()
+    base = db.query(NoteVersion).filter(NoteVersion.note_id == note_id)
+    total = base.count()
+    items = base.order_by(NoteVersion.version_number.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
 @router.get("/notes/{note_id}/versions/{version_id}", response_model=NoteVersionRead)
@@ -214,20 +258,23 @@ def void_note(
     return note
 
 
-@router.get("/approvals/pending", response_model=list[NoteRead])
-def list_pending_approvals(user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[ExperimentNote]:
+@router.get("/approvals/pending", response_model=PaginatedResponse[NoteRead])
+def list_pending_approvals(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     project_ids = reviewable_project_ids(db, user)
     if not project_ids:
-        return []
-    return (
-        db.query(ExperimentNote)
-        .filter(
-            ExperimentNote.status == NoteStatus.SUBMITTED,
-            ExperimentNote.project_id.in_(project_ids),
-        )
-        .order_by(ExperimentNote.updated_at.desc())
-        .all()
+        return {"items": [], "total": 0, "skip": skip, "limit": limit}
+    base = db.query(ExperimentNote).filter(
+        ExperimentNote.status == NoteStatus.SUBMITTED,
+        ExperimentNote.project_id.in_(project_ids),
     )
+    total = base.count()
+    items = base.order_by(ExperimentNote.updated_at.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
 @router.post("/notes/{note_id}/approve", response_model=NoteRead)
@@ -297,7 +344,16 @@ def return_note(
     return note
 
 
-@router.get("/notes/{note_id}/approvals", response_model=list[NoteApprovalRead])
-def list_note_approvals(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[NoteApproval]:
+@router.get("/notes/{note_id}/approvals", response_model=PaginatedResponse[NoteApprovalRead])
+def list_note_approvals(
+    note_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     require_note_access(note_id, db, user)
-    return db.query(NoteApproval).filter(NoteApproval.note_id == note_id).order_by(NoteApproval.created_at.desc()).all()
+    base = db.query(NoteApproval).filter(NoteApproval.note_id == note_id)
+    total = base.count()
+    items = base.order_by(NoteApproval.created_at.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}

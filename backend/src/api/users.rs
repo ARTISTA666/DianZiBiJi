@@ -1,5 +1,5 @@
 use axum::{
-    extract::{Path, State},
+    extract::{Path, Query, State},
     http::{header::SET_COOKIE, StatusCode},
     response::IntoResponse,
     routing::{get, post},
@@ -10,11 +10,12 @@ use sqlx::{PgPool, Postgres, Transaction};
 
 use crate::{
     api::auth::{auth_cookie, require_admin, CurrentUser},
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{
         validate_email, validate_password, validate_role, validate_user_status, validate_username,
-        TokenResponse, UserCreate, UserPasswordChange, UserRead, UserUpdate,
+        PageQuery, Paginated, TokenResponse, UserCreate, UserPasswordChange, UserRead, UserUpdate,
     },
     security::{create_access_token, hash_password, verify_password},
     AppState,
@@ -37,18 +38,30 @@ const ADMIN_INVARIANT_LOCK_ID: i64 = 0x454C_4E5F_4144_4D49;
 async fn list_users(
     State(state): State<AppState>,
     CurrentUser(admin): CurrentUser,
-) -> Result<Json<Vec<UserRead>>, ApiError> {
+    Query(page): Query<PageQuery>,
+) -> Result<Json<Paginated<UserRead>>, ApiError> {
     require_admin(&admin)?;
-    let query = format!("SELECT {USER_READ_COLUMNS} FROM users ORDER BY id");
-    Ok(Json(
-        sqlx::query_as::<_, UserRead>(&query)
-            .fetch_all(&state.pool)
-            .await?,
-    ))
+    let (skip, limit) = page.bounds();
+    let total: i64 = sqlx::query_scalar("SELECT count(*) FROM users")
+        .fetch_one(&state.pool)
+        .await?;
+    let query = format!("SELECT {USER_READ_COLUMNS} FROM users ORDER BY id OFFSET $1 LIMIT $2");
+    let items = sqlx::query_as::<_, UserRead>(&query)
+        .bind(skip)
+        .bind(limit)
+        .fetch_all(&state.pool)
+        .await?;
+    Ok(Json(Paginated {
+        items,
+        total,
+        skip,
+        limit,
+    }))
 }
 
 async fn create_user(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Json(payload): Json<UserCreate>,
 ) -> Result<Json<UserRead>, ApiError> {
@@ -65,10 +78,7 @@ async fn create_user(
             .fetch_one(&state.pool)
             .await?;
     if duplicate {
-        return Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "Username already exists",
-        ));
+        return Err(ApiError::new(StatusCode::CONFLICT, "用户名已存在"));
     }
     let password = payload.password;
     let password_hash = tokio::task::spawn_blocking(move || hash_password(&password))
@@ -92,7 +102,15 @@ async fn create_user(
     .bind(&payload.role)
     .fetch_one(&mut *transaction)
     .await?;
-    audit_user(&mut transaction, admin.id, "create_user", id).await?;
+    audit_user(
+        &mut transaction,
+        admin.id,
+        "create_user",
+        id,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
     transaction.commit().await?;
     Ok(Json(fetch_user(&state.pool, id).await?))
 }
@@ -108,6 +126,7 @@ async fn get_user(
 
 async fn update_user(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Path(user_id): Path<i32>,
     Json(payload): Json<UserUpdate>,
@@ -232,7 +251,15 @@ async fn update_user(
         .execute(&mut *transaction)
         .await?;
     }
-    audit_user(&mut transaction, admin.id, "update_user", user_id).await?;
+    audit_user(
+        &mut transaction,
+        admin.id,
+        "update_user",
+        user_id,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
     transaction.commit().await?;
     Ok(Json(fetch_user(&state.pool, user_id).await?))
 }
@@ -287,6 +314,7 @@ async fn protect_reviewer_role_transition(
 
 async fn change_own_password(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
     Json(payload): Json<UserPasswordChange>,
 ) -> Result<impl IntoResponse, ApiError> {
@@ -320,7 +348,15 @@ async fn change_own_password(
     .bind(password_hash)
     .fetch_one(&mut *transaction)
     .await?;
-    audit_user(&mut transaction, user.id, "change_password", user.id).await?;
+    audit_user(
+        &mut transaction,
+        user.id,
+        "change_password",
+        user.id,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
     transaction.commit().await?;
     let access_token = create_access_token(
         &user.id.to_string(),
@@ -346,6 +382,7 @@ async fn change_own_password(
 
 async fn disable_user(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Path(user_id): Path<i32>,
 ) -> Result<Json<UserRead>, ApiError> {
@@ -371,7 +408,15 @@ async fn disable_user(
     .bind(user_id)
     .execute(&mut *transaction)
     .await?;
-    audit_user(&mut transaction, admin.id, "update_user", user_id).await?;
+    audit_user(
+        &mut transaction,
+        admin.id,
+        "update_user",
+        user_id,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await?;
     transaction.commit().await?;
     Ok(Json(fetch_user(&state.pool, user_id).await?))
 }
@@ -433,6 +478,8 @@ async fn audit_user(
     actor_id: i32,
     action: &str,
     target_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     write_audit(
         &mut **transaction,
@@ -443,6 +490,8 @@ async fn audit_user(
             target_type: Some("user"),
             target_id: Some(target_id),
             detail: json!({}),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;

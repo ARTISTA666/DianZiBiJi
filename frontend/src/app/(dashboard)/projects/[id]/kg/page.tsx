@@ -10,26 +10,33 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function KGPage() {
   const { id } = useParams();
   const projectId = Number(id);
   const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const kgGraph = useProjectStore((s) => s.kgGraph);
   const notes = useProjectStore((s) => s.notes);
+  const members = useProjectStore((s) => s.members);
   const extractNoteKg = useProjectStore((s) => s.extractNoteKg);
   const rebuildKg = useProjectStore((s) => s.rebuildKg);
-  const loadTabProjectData = useProjectStore((s) => s.loadTabProjectData);
+  const loadKGTabData = useProjectStore((s) => s.loadKGTabData);
   const busy = useProjectStore((s) => s.busy);
   const [error, setError] = useState("");
   const [entityFilter, setEntityFilter] = useState("");
   const [relationFilter, setRelationFilter] = useState("");
   const [rebuilding, setRebuilding] = useState(false);
   const [extractingNoteId, setExtractingNoteId] = useState<number | null>(null);
+  const feedback = useActionFeedback();
+  const membership = members.find((member) => member.user_id === user?.id);
+  const canWrite = user?.role === "super_admin" || membership?.can_write === true;
 
   useEffect(() => {
-    if (token) loadTabProjectData(token, projectId);
-  }, [token, projectId, loadTabProjectData]);
+    if (token) loadKGTabData(token, projectId);
+  }, [token, projectId, loadKGTabData]);
 
   const entityTypes = useMemo(() =>
     Array.from(new Set((kgGraph?.entities || []).map((e) => e.entity_type))).sort(),
@@ -56,20 +63,39 @@ export default function KGPage() {
   const handleExtract = async (noteId: number) => {
     if (!token) return;
     setExtractingNoteId(noteId); setError("");
-    try { await extractNoteKg(token, noteId); loadTabProjectData(token, projectId); }
-    catch (e) { setError(getErrorMessage(e, "提取失败")); }
+    try { await extractNoteKg(token, noteId); useProjectStore.getState().invalidateCache(); loadKGTabData(token, projectId); feedback.success("实体已提取"); }
+    catch (e) {
+      const msg = getErrorMessage(e, "提取失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setExtractingNoteId(null); }
   };
 
   const handleRebuild = async () => {
     if (!token) return;
     setRebuilding(true); setError("");
-    try { await rebuildKg(token, projectId); }
-    catch (e) { setError(getErrorMessage(e, "重建失败")); }
+    try { await rebuildKg(token, projectId); feedback.success("图谱已重建"); }
+    catch (e) {
+      const msg = getErrorMessage(e, "重建失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setRebuilding(false); }
   };
 
-  if (busy) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
+  if (busy) return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <Skeleton className="h-4 w-32" />
+        <Skeleton className="h-9 w-28" />
+      </div>
+      <div className="flex gap-2"><Skeleton className="h-9 w-36" /><Skeleton className="h-9 w-36" /></div>
+      <div className="space-y-2">
+        {[1, 2, 3].map((i) => <Skeleton key={i} className="h-20 w-full" />)}
+      </div>
+    </div>
+  );
 
   const entities = filteredEntities;
   const relations = (kgGraph?.relations || []).filter((r) => {
@@ -83,9 +109,9 @@ export default function KGPage() {
 
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">{kgGraph?.entities.length || 0} 实体 · {kgGraph?.relations.length || 0} 关系</p>
-        <Button size="sm" variant="outline" onClick={handleRebuild} disabled={rebuilding}>
+        {canWrite && <Button size="sm" variant="outline" onClick={handleRebuild} disabled={rebuilding}>
           <RotateCw className={`mr-2 h-4 w-4 ${rebuilding ? "animate-spin" : ""}`} />重建图谱
-        </Button>
+        </Button>}
       </div>
 
       {/* 过滤器 */}
@@ -147,7 +173,7 @@ export default function KGPage() {
       </Card>
 
       {/* 从笔记提取 */}
-      {notes.some((note) => note.status === "approved") && (
+      {canWrite && notes.some((note) => note.status === "approved") && (
         <Card>
           <CardHeader><CardTitle className="text-base">从笔记提取实体</CardTitle></CardHeader>
           <CardContent className="space-y-2">

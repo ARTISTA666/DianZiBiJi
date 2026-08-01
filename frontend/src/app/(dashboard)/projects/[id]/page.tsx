@@ -1,54 +1,62 @@
 "use client";
 
-import { useRef, useState, FormEvent, KeyboardEvent } from "react";
+import { useRef, useState, useMemo, useCallback, FormEvent, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { Plus, FileText, CheckCircle, XCircle, Archive, Trash2, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getNoteVersions, getNoteApprovals, type NoteVersion, type NoteApproval } from "@/lib/api";
 import { getErrorMessage } from "@/lib/utils";
-import { statusText } from "@/components/constants";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { NotesListSkeleton } from "@/components/skeletons";
+import { toast } from "sonner";
+import { NoteFilters } from "./note-filters";
+import { NoteFormDialog, type NoteFormData } from "./note-form-dialog";
+import { NoteDetailDialog, type NoteItem } from "./note-detail-dialog";
+import { NoteListSection } from "./note-list-section";
 
-const experimentTypes = ["PCR", "qPCR", "WB", "ELISA", "测序", "细胞培养", "动物实验", "其他"];
+const emptyForm: NoteFormData = { title: "", experiment_type: "PCR", experiment_date: "", content_text: "" };
 
-const emptyForm = { title: "", experiment_type: "PCR", experiment_date: "", content_text: "" };
-
-const handleCardKeyDown = (e: KeyboardEvent, callback: () => void) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    callback();
-  }
-};
+const NOTES_PER_PAGE = 10;
 
 export default function ProjectNotesPage() {
   const { id } = useParams();
   const projectId = Number(id);
   const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const notes = useProjectStore((s) => s.notes);
+  const members = useProjectStore((s) => s.members);
+  const selectedProject = useProjectStore((s) => s.selectedProject);
+  const notesTotal = useProjectStore((s) => s.notesTotal);
   const busy = useProjectStore((s) => s.busy);
   const updateNote = useProjectStore((s) => s.updateNote);
   const createNote = useProjectStore((s) => s.createNote);
-  const loadBaseProjectData = useProjectStore((s) => s.loadBaseProjectData);
+  const loadNotesPaginated = useProjectStore((s) => s.loadNotesPaginated);
   const submitNote = useProjectStore((s) => s.submitNote);
   const approveNote = useProjectStore((s) => s.approveNote);
   const returnNote = useProjectStore((s) => s.returnNote);
   const archiveNote = useProjectStore((s) => s.archiveNote);
   const voidNote = useProjectStore((s) => s.voidNote);
 
+  const membership = members.find((m) => m.user_id === user?.id);
+  const canReview = user?.role === "super_admin"
+    || (selectedProject?.owner_user_id != null && selectedProject.owner_user_id === user?.id)
+    || membership?.can_manage === true
+    || membership?.can_review === true
+    || membership?.project_role === "owner";
+  const canWrite = user?.role === "super_admin" || membership?.can_write === true;
+
+  // Filter / search / sort state
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState("updated_desc");
+  const [currentPage, setCurrentPage] = useState(0);
+
   // Note form
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<number | null>(null);
-  const [form, setForm] = useState(emptyForm);
+  const [form, setForm] = useState<NoteFormData>(emptyForm);
 
   // Detail / versions / approvals
-  const [detailNote, setDetailNote] = useState<ReturnType<typeof useProjectStore.getState>["notes"][0] | null>(null);
+  const [detailNote, setDetailNote] = useState<NoteItem | null>(null);
   const [versions, setVersions] = useState<NoteVersion[]>([]);
   const [approvals, setApprovals] = useState<NoteApproval[]>([]);
   const [comment, setComment] = useState("");
@@ -57,11 +65,57 @@ export default function ProjectNotesPage() {
   // Error
   const [error, setError] = useState("");
 
+  // Saving state
+  const [saving, setSaving] = useState(false);
+
+  // Confirm dialog
+  const { confirm, ConfirmDialog } = useConfirmDialog();
+
+  // Load notes with current filters
+  const fetchNotes = useCallback(() => {
+    if (!token) return;
+    const skip = currentPage * NOTES_PER_PAGE;
+    const params: { skip: number; limit: number; status?: string } = { skip, limit: NOTES_PER_PAGE };
+    if (statusFilter !== "all") params.status = statusFilter;
+    loadNotesPaginated(token, projectId, params);
+  }, [token, projectId, currentPage, statusFilter, loadNotesPaginated]);
+
+  // Re-fetch when page or status filter changes
+  useEffect(() => {
+    fetchNotes();
+  }, [fetchNotes]);
+
+  // Client-side: filter by search, then sort
+  const displayedNotes = useMemo(() => {
+    let result = [...notes];
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      result = result.filter((n) => n.title.toLowerCase().includes(q));
+    }
+    switch (sortBy) {
+      case "updated_desc":
+        result.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+        break;
+      case "updated_asc":
+        result.sort((a, b) => new Date(a.updated_at).getTime() - new Date(b.updated_at).getTime());
+        break;
+      case "created_desc":
+        result.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        break;
+    }
+    return result;
+  }, [notes, searchQuery, sortBy]);
+
+  const handleStatusChange = (value: string) => {
+    setStatusFilter(value);
+    setCurrentPage(0);
+  };
+
   const resetForm = () => { setForm(emptyForm); setEditingNote(null); setError(""); };
 
   const openNew = () => { resetForm(); setDialogOpen(true); };
 
-  const openEdit = async (note: ReturnType<typeof useProjectStore.getState>["notes"][0]) => {
+  const openEdit = async (note: NoteItem) => {
     if (!token) return;
     setError("");
     try {
@@ -90,6 +144,7 @@ export default function ProjectNotesPage() {
     e.preventDefault();
     if (!token) return;
     setError("");
+    setSaving(true);
     try {
       const payload = {
         title: form.title,
@@ -108,14 +163,16 @@ export default function ProjectNotesPage() {
       }
       setDialogOpen(false);
       resetForm();
-      // Refresh project data
-      loadBaseProjectData(token, projectId);
+      fetchNotes();
+      toast.success("笔记已保存");
     } catch (e) {
       setError(getErrorMessage(e, "保存失败"));
+    } finally {
+      setSaving(false);
     }
   };
 
-  const handleAction = async (action: string, noteId: number) => {
+  const doAction = async (action: string, noteId: number) => {
     if (!token) return;
     try {
       if (action === "submit") await submitNote(token, noteId);
@@ -125,13 +182,25 @@ export default function ProjectNotesPage() {
       else if (action === "void") await voidNote(token, noteId, comment);
       setComment("");
       setDetailNote(null);
-      loadBaseProjectData(token, projectId);
+      fetchNotes();
     } catch (e) {
       setError(getErrorMessage(e, "操作失败"));
     }
   };
 
-  const showDetail = async (note: ReturnType<typeof useProjectStore.getState>["notes"][0]) => {
+  const handleAction = (action: string, noteId: number) => {
+    if (action === "archive") {
+      confirm("归档笔记", "确定要归档此笔记吗？归档后笔记将变为只读状态。", () => doAction(action, noteId));
+    } else if (action === "void") {
+      confirm("作废笔记", "确定要作废此笔记吗？此操作不可恢复。", () => doAction(action, noteId));
+    } else if (action === "return") {
+      confirm("退回笔记", "确定要退回此笔记进行修改吗？", () => doAction(action, noteId));
+    } else {
+      doAction(action, noteId);
+    }
+  };
+
+  const showDetail = async (note: NoteItem) => {
     const requestEpoch = ++detailRequestEpoch.current;
     setDetailNote(note);
     setComment("");
@@ -155,165 +224,70 @@ export default function ProjectNotesPage() {
     }
   };
 
-  if (busy) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
+  if (busy) return <NotesListSkeleton />;
 
   return (
     <div className="space-y-4">
       {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p>}
 
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">{notes.length} 条笔记</p>
-        <Button size="sm" onClick={openNew}><Plus className="mr-2 h-4 w-4" />新建笔记</Button>
-      </div>
+      {/* 操作栏：状态筛选 + 搜索 + 排序 */}
+      <NoteFilters
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        statusFilter={statusFilter}
+        onStatusChange={handleStatusChange}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
+        onNewNote={openNew}
+        canWrite={canWrite}
+      />
 
-      {notes.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="py-12 text-center">
-            <FileText className="mx-auto h-10 w-10 text-muted-foreground/50" />
-            <p className="mt-3 text-sm text-muted-foreground">暂无笔记</p>
-            <Button variant="outline" size="sm" className="mt-3" onClick={openNew}>新建笔记</Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <div className="space-y-3">
-          {notes.map((note) => (
-            <Card key={note.id} role="button" tabIndex={0} className="cursor-pointer transition-shadow hover:shadow-sm" onClick={() => showDetail(note)} onKeyDown={(e) => handleCardKeyDown(e, () => showDetail(note))}>
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="min-w-0 flex-1">
-                    <CardTitle className="text-base">{note.title}</CardTitle>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {note.experiment_type} · {note.experiment_date || "—"}
-                    </p>
-                  </div>
-                  <Badge variant={note.status === "approved" ? "default" : note.status === "submitted" ? "secondary" : "outline"}>
-                    {statusText[note.status] || note.status}
-                  </Badge>
-                </div>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      )}
+      {/* 笔记列表 + 分页 */}
+      <NoteListSection
+        notes={displayedNotes}
+        total={notesTotal}
+        page={currentPage}
+        onPageChange={setCurrentPage}
+        onSelectNote={showDetail}
+        searchQuery={searchQuery}
+        serverNotesCount={notes.length}
+      />
 
       {/* 新建/编辑 Dialog */}
-      <Dialog open={dialogOpen} onOpenChange={(o) => { if (!o) resetForm(); setDialogOpen(o); }}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader><DialogTitle>{editingNote ? "编辑笔记" : "新建笔记"}</DialogTitle></DialogHeader>
-          <form onSubmit={handleSave} className="space-y-4 pt-2">
-            <div className="space-y-2">
-              <Label htmlFor="ntitle">标题</Label>
-              <Input id="ntitle" required value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>实验类型</Label>
-                <Select value={form.experiment_type} onValueChange={(v) => setForm((f) => ({ ...f, experiment_type: v }))}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{experimentTypes.map((t) => (<SelectItem key={t} value={t}>{t}</SelectItem>))}</SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="ndate">实验日期</Label>
-                <Input id="ndate" type="date" value={form.experiment_date} onChange={(e) => setForm((f) => ({ ...f, experiment_date: e.target.value }))} />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="ncontent">内容</Label>
-              <Textarea id="ncontent" rows={8} value={form.content_text} onChange={(e) => setForm((f) => ({ ...f, content_text: e.target.value }))} placeholder="实验笔记内容..." />
-            </div>
-            {error && <p className="text-sm text-destructive">{error}</p>}
-            <div className="flex justify-end gap-2">
-              <Button type="button" variant="outline" onClick={() => { resetForm(); setDialogOpen(false); }}>取消</Button>
-              <Button type="submit" disabled={!form.title.trim()}>保存</Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <NoteFormDialog
+        open={dialogOpen}
+        onOpenChange={(o) => { if (!o) resetForm(); setDialogOpen(o); }}
+        editingNote={editingNote}
+        form={form}
+        onFormChange={setForm}
+        onSave={handleSave}
+        busy={saving}
+        error={error}
+      />
 
       {/* 详情 Dialog */}
-      <Dialog open={!!detailNote} onOpenChange={(o) => {
-        if (!o) {
-          detailRequestEpoch.current += 1;
-          setDetailNote(null);
-          setVersions([]);
-          setApprovals([]);
-        }
-      }}>
-        {detailNote && (
-          <DialogContent className="max-w-xl max-h-[80vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>{detailNote.title}</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div className="flex gap-2 text-sm text-muted-foreground">
-                <Badge variant="outline">{detailNote.experiment_type}</Badge>
-                <span>{detailNote.experiment_date}</span>
-                <Badge>{statusText[detailNote.status] || detailNote.status}</Badge>
-              </div>
+      <NoteDetailDialog
+        open={!!detailNote}
+        onOpenChange={(o) => {
+          if (!o) {
+            detailRequestEpoch.current += 1;
+            setDetailNote(null);
+            setVersions([]);
+            setApprovals([]);
+          }
+        }}
+        note={detailNote}
+        comment={comment}
+        onCommentChange={setComment}
+        onAction={handleAction}
+        onEdit={openEdit}
+        versions={versions}
+        approvals={approvals}
+        canReview={canReview}
+        canWrite={canWrite}
+      />
 
-              {versions.length > 0 && (
-                <div className="rounded-md border p-3">
-                  <p className="text-sm font-medium mb-1">最新版本（v{versions[0].version_number}）</p>
-                  <p className="text-sm whitespace-pre-wrap">
-                    {(versions[0].content_json?.text as string) || JSON.stringify(versions[0].content_json, null, 2)}
-                  </p>
-                </div>
-              )}
-
-              {/* 审批记录 */}
-              {approvals.length > 0 && (
-                <div className="space-y-2">
-                  <p className="text-sm font-medium">审批记录</p>
-                  {approvals.map((a) => (
-                    <div key={a.id} className="rounded-md border p-2 text-sm">
-                      <span className={a.action === "approved" ? "text-green-600" : "text-red-600"}>
-                        {a.action === "approved" ? "✓ 通过" : "✗ 退回"}
-                      </span>
-                      {a.comment && <p className="text-muted-foreground mt-1">{a.comment}</p>}
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* 审批操作 */}
-              <Textarea placeholder="审核意见（可选）" value={comment} onChange={(e) => setComment(e.target.value)} rows={2} />
-              <div className="flex flex-wrap gap-2">
-                {(detailNote.status === "draft" || detailNote.status === "returned") && (
-                  <Button size="sm" onClick={() => handleAction("submit", detailNote.id)}>
-                    <Send className="mr-1 h-4 w-4" />提交审核
-                  </Button>
-                )}
-                {detailNote.status === "submitted" && (
-                  <>
-                    <Button size="sm" variant="default" className="bg-green-600 hover:bg-green-700" onClick={() => handleAction("approve", detailNote.id)}>
-                      <CheckCircle className="mr-1 h-4 w-4" />通过
-                    </Button>
-                    <Button size="sm" variant="destructive" onClick={() => handleAction("return", detailNote.id)}>
-                      <XCircle className="mr-1 h-4 w-4" />退回
-                    </Button>
-                  </>
-                )}
-                {(detailNote.status === "draft" || detailNote.status === "returned") && (
-                  <>
-                    <Button size="sm" variant="outline" onClick={() => openEdit(detailNote)}>
-                      <FileText className="mr-1 h-4 w-4" />编辑
-                    </Button>
-                    <Button size="sm" variant="outline" onClick={() => handleAction("archive", detailNote.id)}>
-                      <Archive className="mr-1 h-4 w-4" />归档
-                    </Button>
-                  </>
-                )}
-                {detailNote.status !== "voided" && detailNote.status !== "archived" && (
-                  <Button size="sm" variant="ghost" className="text-destructive" onClick={() => handleAction("void", detailNote.id)}>
-                    <Trash2 className="mr-1 h-4 w-4" />作废
-                  </Button>
-                )}
-              </div>
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
+      {ConfirmDialog}
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import hashlib
+import logging
 import uuid
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 
@@ -13,10 +14,13 @@ from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, Store
 from app.models.note import ExperimentNote
 from app.models.rag import RagDocumentChunk, RagFileSync
 from app.models.user import User
+from app.schemas.common import PaginatedResponse
 from app.schemas.file import FileRead, FileReviewRequest, FileUpdate
 from app.services.audit import write_audit
 
 router = APIRouter(tags=["files"])
+
+logger = logging.getLogger(__name__)
 
 STORAGE_ROOT = get_settings().storage_root
 
@@ -35,9 +39,10 @@ def _store_upload(upload: UploadFile, project_id: int) -> tuple[str, int, str]:
             while chunk := upload.file.read(1024 * 1024):
                 size += len(chunk)
                 if size > max_bytes:
+                    logger.warning("File upload exceeded limit: %d bytes (max %d)", size, max_bytes)
                     raise HTTPException(
                         status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
-                        detail=f"File exceeds upload limit of {max_bytes} bytes",
+                        detail="文件大小超出限制（最大 50MB），请压缩后重试或联系管理员调整限额",
                     )
                 digest.update(chunk)
                 buffer.write(chunk)
@@ -106,10 +111,19 @@ def upload_project_file(
     return record
 
 
-@router.get("/projects/{project_id}/files", response_model=list[FileRead])
-def list_project_files(project_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[StoredFile]:
+@router.get("/projects/{project_id}/files", response_model=PaginatedResponse[FileRead])
+def list_project_files(
+    project_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     require_project_access(project_id, db, user)
-    return db.query(StoredFile).filter(StoredFile.project_id == project_id).order_by(StoredFile.created_at.desc()).all()
+    base = db.query(StoredFile).filter(StoredFile.project_id == project_id)
+    total = base.count()
+    items = base.order_by(StoredFile.created_at.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
 @router.post("/projects/{project_id}/documents", response_model=FileRead)
@@ -129,24 +143,40 @@ def upload_project_document(
     )
 
 
-@router.get("/projects/{project_id}/documents", response_model=list[FileRead])
-def list_project_documents(project_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[StoredFile]:
+@router.get("/projects/{project_id}/documents", response_model=PaginatedResponse[FileRead])
+def list_project_documents(
+    project_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     require_project_access(project_id, db, user)
-    return (
-        db.query(StoredFile)
-        .filter(StoredFile.project_id == project_id, StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT)
-        .order_by(StoredFile.created_at.desc())
-        .all()
+    base = db.query(StoredFile).filter(
+        StoredFile.project_id == project_id,
+        StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT,
     )
+    total = base.count()
+    items = base.order_by(StoredFile.created_at.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
-@router.get("/notes/{note_id}/files", response_model=list[FileRead])
-def list_note_files(note_id: int, user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> list[StoredFile]:
+@router.get("/notes/{note_id}/files", response_model=PaginatedResponse[FileRead])
+def list_note_files(
+    note_id: int,
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=200),
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> dict:
     note = db.get(ExperimentNote, note_id)
     if note is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
     require_project_access(note.project_id, db, user)
-    return db.query(StoredFile).filter(StoredFile.note_id == note_id).order_by(StoredFile.created_at.desc()).all()
+    base = db.query(StoredFile).filter(StoredFile.note_id == note_id)
+    total = base.count()
+    items = base.order_by(StoredFile.created_at.desc()).offset(skip).limit(limit).all()
+    return {"items": items, "total": total, "skip": skip, "limit": limit}
 
 
 @router.get("/files/{file_id}", response_model=FileRead)

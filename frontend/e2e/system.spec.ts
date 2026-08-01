@@ -48,7 +48,13 @@ async function login(page: Page, username: string, password: string) {
 
 async function selectProject(page: Page) {
   await page.getByText(PROJECT_NAME, { exact: true }).click();
-  await expect(page.getByRole("heading", { name: PROJECT_NAME })).toBeVisible();
+  await expect(page.getByRole("button", { name: PROJECT_NAME, exact: true })).toBeVisible();
+}
+
+
+async function selectRadixOption(page: Page, label: string, option: string) {
+  await page.getByLabel(label).click();
+  await page.getByRole("option", { name: option, exact: true }).click();
 }
 
 
@@ -129,7 +135,7 @@ test("登录并完成笔记审批", async ({ page }) => {
   await card.getByPlaceholder("审核意见").fill("E2E 审批通过");
   await card.getByRole("button", { name: "通过" }).click();
 
-  await expect(page.getByText("暂无待审批笔记")).toBeVisible();
+  await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
 });
 
 
@@ -185,14 +191,13 @@ test("独立评价人只能在盲评页面提交评价", async ({ page }) => {
   await expect(page.getByText("正式评审前必须先冻结题集、语料和评分规则。")).toBeVisible();
   await expect(page.getByRole("tab", { name: "笔记", exact: true })).toHaveCount(0);
 
-  await page.getByLabel("盲评批次").selectOption({ index: 0 });
   const item = page.locator('[data-testid^="blind-review-"]').first();
   await expect(item).toBeVisible();
   const testId = await item.getAttribute("data-testid");
   const blindId = testId!.replace("blind-review-", "");
-  await item.getByLabel(`${blindId} 评分`).selectOption("5");
-  await item.getByLabel(`${blindId} 准确性`).selectOption("true");
-  await item.getByLabel(`${blindId} 可追溯性`).selectOption("true");
+  await selectRadixOption(page, `${blindId} 评分`, "5");
+  await selectRadixOption(page, `${blindId} 准确性`, "准确");
+  await selectRadixOption(page, `${blindId} 可追溯性`, "可追溯");
   await item.getByLabel(`${blindId} 评价备注`).fill("E2E 盲评流程通过");
   page.once("dialog", (dialog) => dialog.accept());
   await item.getByRole("button", { name: "提交并继续" }).click();
@@ -210,7 +215,6 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await page.getByLabel("显示名").fill(MANAGED_DISPLAY_NAME);
   await page.getByLabel("邮箱").fill(`${MANAGED_USER}@example.test`);
   await page.getByLabel("初始密码").fill("ManagedUser123!");
-  await page.getByLabel("系统角色", { exact: true }).selectOption("member");
   await page.getByRole("button", { name: "创建账号" }).click();
   await expect(page.getByText(`账号 ${MANAGED_USER} 已创建`)).toBeVisible();
   const managedRow = page.locator('[data-testid^="admin-user-"]').filter({ hasText: MANAGED_USER });
@@ -221,11 +225,11 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await page.getByRole("tab", { name: "小组" }).click();
   await page.getByLabel("小组名称").fill(MANAGED_GROUP);
   await page.getByLabel("说明").fill("隔离端到端管理测试");
-  await page.getByLabel("负责人").selectOption({ label: `${MANAGED_DISPLAY_NAME}（${MANAGED_USER}）` });
+  await selectRadixOption(page, "负责人", `${MANAGED_DISPLAY_NAME}（${MANAGED_USER}）`);
   await page.getByRole("button", { name: "创建小组" }).click();
   await expect(page.getByText(`小组 ${MANAGED_GROUP} 已创建`)).toBeVisible();
 
-  await page.getByLabel("添加成员").selectOption({ label: `${MANAGED_DISPLAY_NAME}（${MANAGED_USER}）` });
+  await selectRadixOption(page, "添加成员", `${MANAGED_DISPLAY_NAME}（${MANAGED_USER}）`);
   await page.getByRole("button", { name: "添加或更新成员" }).click();
   await expect(page.getByText("小组成员已保存")).toBeVisible();
   await expect(page.getByText(`${MANAGED_DISPLAY_NAME} · member`)).toBeVisible();
@@ -248,6 +252,7 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await expect(page.getByLabel(`用户 ${managedUserId} 读权限`)).toBeDisabled();
   await expect(page.getByLabel(`用户 ${managedUserId} 评权限`)).toBeDisabled();
   await page.getByRole("button", { name: `移除独立盲评人 ${managedUserId}` }).click();
+  await page.getByRole("button", { name: "确认" }).click();
   await expect(reviewerRow).toHaveCount(0);
 
   await page.getByRole("button", { name: "账户菜单" }).click();

@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { BookOpen, LogOut, KeyRound } from "lucide-react";
+import { BookOpen, LogOut, KeyRound, Moon, Sun } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +30,15 @@ export function TopNav() {
     project_owner: "项目负责人", reviewer: "审核人", member: "成员",
   };
 
+  const [dark, setDark] = useState(() => typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
+
+  const toggleDark = () => {
+    const next = !dark;
+    setDark(next);
+    document.documentElement.classList.toggle('dark', next);
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+  };
+
   const [pwOpen, setPwOpen] = useState(false);
   const [currentPw, setCurrentPw] = useState("");
   const [newPw, setNewPw] = useState("");
@@ -40,7 +49,6 @@ export function TopNav() {
     try {
       await logout();
       router.replace("/login");
-      router.refresh();
     } catch (error) {
       toast.error("退出失败，会话仍保持有效，请重试", {
         description: getErrorMessage(error),
@@ -94,6 +102,10 @@ export function TopNav() {
                 <p className="text-xs text-muted-foreground">{roleText[user.role] || user.role}</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={toggleDark}>
+                {dark ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+                {dark ? "切换亮色模式" : "切换暗色模式"}
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setPwOpen(true)}>
                 <KeyRound className="mr-2 h-4 w-4" />
                 修改密码

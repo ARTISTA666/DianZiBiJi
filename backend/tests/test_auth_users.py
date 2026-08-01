@@ -117,7 +117,9 @@ def test_list_users_as_admin(client):
     token["value"] = "1"
     r = c.get("/users")
     assert r.status_code == 200
-    assert len(r.json()) == 3
+    body = r.json()
+    assert body["total"] == 3
+    assert len(body["items"]) == 3
 
 
 def test_list_users_as_member(client):

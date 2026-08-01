@@ -13,6 +13,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { SettingsSkeleton } from "@/components/skeletons";
 
 const rt: Record<string, string> = { owner: "拥有者", reviewer: "审核人", member: "成员", viewer: "观察者" };
 const roleOpts = ["member", "reviewer", "owner", "viewer"];
@@ -28,6 +31,7 @@ export default function SettingsPage() {
   const { id } = useParams();
   const projectId = Number(id);
   const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const selectedProject = useProjectStore((s) => s.selectedProject);
   const members = useProjectStore((s) => s.members);
   const updateProject = useProjectStore((s) => s.updateProject);
@@ -39,6 +43,8 @@ export default function SettingsPage() {
   const [error, setError] = useState("");
   const [addOpen, setAddOpen] = useState(false);
   const [memberBusyId, setMemberBusyId] = useState<number | null>(null);
+  const feedback = useActionFeedback();
+  const { confirm, ConfirmDialog } = useConfirmDialog();
 
   // Add member
   const [userId, setUserId] = useState("");
@@ -84,7 +90,12 @@ export default function SettingsPage() {
       }
       setAddOpen(false);
       resetAdd();
-    } catch (e) { setError(getErrorMessage(e, "添加失败")); }
+      feedback.success("成员已添加");
+    } catch (e) {
+      const msg = getErrorMessage(e, "添加失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setAddBusy(false); }
   };
 
@@ -93,8 +104,19 @@ export default function SettingsPage() {
     setMemberBusyId(memberId); setError("");
     try {
       await removeMember(token, projectId, memberId);
-    } catch (e) { setError(getErrorMessage(e, "移除失败")); }
+      feedback.success("成员已移除");
+    } catch (e) {
+      const msg = getErrorMessage(e, "移除失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setMemberBusyId(null); }
+  };
+
+  const handleRemoveMemberConfirm = (memberId: number, userId: number) => {
+    confirm("确认移除", `确定要移除用户 #${userId} 吗？该用户将失去项目访问权限。`, () => {
+      handleRemoveMember(memberId);
+    });
   };
 
   const handleUpdateRole = async (memberId: number, newRole: string) => {
@@ -102,7 +124,12 @@ export default function SettingsPage() {
     setMemberBusyId(memberId); setError("");
     try {
       await updateMember(token, projectId, memberId, { project_role: newRole });
-    } catch (e) { setError(getErrorMessage(e, "更新失败")); }
+      feedback.success("角色已更新");
+    } catch (e) {
+      const msg = getErrorMessage(e, "更新失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setMemberBusyId(null); }
   };
 
@@ -115,7 +142,11 @@ export default function SettingsPage() {
     setMemberBusyId(memberId); setError("");
     try {
       await updateMember(token, projectId, memberId, { [permission]: enabled });
-    } catch (e) { setError(getErrorMessage(e, "权限更新失败")); }
+    } catch (e) {
+      const msg = getErrorMessage(e, "权限更新失败");
+      setError(msg);
+      feedback.error(msg);
+    }
     finally { setMemberBusyId(null); }
   };
 
@@ -123,10 +154,24 @@ export default function SettingsPage() {
     if (!token || !editName.trim()) return;
     try {
       await updateProject(token, projectId, { name: editName.trim(), description: editDesc.trim() || null });
-    } catch (e) { setError(getErrorMessage(e, "更新失败")); }
+      feedback.success("项目设置已保存");
+    } catch (e) {
+      const msg = getErrorMessage(e, "更新失败");
+      setError(msg);
+      feedback.error(msg);
+    }
   };
 
-  if (busy) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
+  if (busy) return <SettingsSkeleton />;
+
+  const membership = members.find((m) => m.user_id === user?.id);
+  const canManageProject = user?.role === "super_admin"
+    || (project?.owner_user_id != null && project.owner_user_id === user?.id)
+    || membership?.can_manage === true
+    || membership?.project_role === "owner";
+  if (!canManageProject) {
+    return <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">只有项目管理员可以访问项目设置。</p>;
+  }
 
   return (
     <div className="space-y-6">
@@ -249,7 +294,7 @@ export default function SettingsPage() {
                       variant="ghost"
                       className="text-destructive h-8 w-8 p-0"
                       disabled={memberBusyId === m.id}
-                      onClick={() => handleRemoveMember(m.id)}
+                      onClick={() => handleRemoveMemberConfirm(m.id, m.user_id)}
                     >
                       <UserMinus className="h-4 w-4" />
                     </Button>
@@ -260,6 +305,7 @@ export default function SettingsPage() {
           )}
         </CardContent>
       </Card>
+      {ConfirmDialog}
 
       {/* 系统测试入口 — 隐藏在日常界面之外 */}
       <div className="border-t pt-4 text-center">

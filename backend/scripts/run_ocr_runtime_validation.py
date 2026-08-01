@@ -125,7 +125,7 @@ def run_validation(
         after_sync_response = client.post(f"/files/{file_id}/rag/sync")
         after_sync = require_ok(after_sync_response, "index confirmed image")
         files = require_ok(client.get(f"/projects/{project_id}/files"), "load validation file")
-        stored_file = next(item for item in files if int(item["id"]) == file_id)
+        stored_file = next(item for item in files["items"] if int(item["id"]) == file_id)
         audit_logs = require_ok(
             client.get("/audit-logs", params={"project_id": project_id}),
             "load validation audit logs",
@@ -159,7 +159,7 @@ def run_validation(
         "index_rag_document",
     }
     action_counts = {
-        action: sum(item["action"] == action for item in audit_logs)
+        action: sum(item["action"] == action for item in audit_logs["items"])
         for action in sorted(relevant_actions)
     }
     missing_actions = [action for action, count in action_counts.items() if count == 0]

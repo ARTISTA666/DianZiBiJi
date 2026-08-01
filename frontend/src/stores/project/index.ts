@@ -34,8 +34,21 @@ import { epochs, resetSessionEpoch } from "./request-epoch";
 
 export * from "./types";
 
+/** Cache TTL in milliseconds – skip refetch within this window. */
+const CACHE_TTL_MS = 30_000;
+
+// Per-tab cache timestamp fields.
+interface TabCacheState {
+  aiTabLastFetchedAt: number;
+  kgTabLastFetchedAt: number;
+  reportsTabLastFetchedAt: number;
+  dataTabLastFetchedAt: number;
+  blindReviewTabLastFetchedAt: number;
+  settingsTabLastFetchedAt: number;
+}
+
 // Cross-slice actions that touch state owned by several slices at once.
-interface CrossSliceActions {
+interface CrossSliceActions extends TabCacheState {
   projectDataErrors: string[];
   /** Load base data shared across all tabs (members, notes, files, pending approvals). */
   loadBaseProjectData: (token: string, projectId: number) => Promise<void>;
@@ -44,6 +57,16 @@ interface CrossSliceActions {
   /** Load all project data (base + tab). Used for full refresh. */
   loadProjectData: (token: string, projectId: number) => Promise<void>;
   resetProjectState: () => void;
+
+  // Per-tab loaders with 30-s cache
+  loadAITabData: (token: string, projectId: number) => Promise<void>;
+  loadKGTabData: (token: string, projectId: number) => Promise<void>;
+  loadReportsTabData: (token: string, projectId: number) => Promise<void>;
+  loadDataTabData: (token: string, projectId: number) => Promise<void>;
+  loadBlindReviewTabData: (token: string, projectId: number) => Promise<void>;
+  loadSettingsTabData: (token: string, projectId: number) => Promise<void>;
+  /** Invalidate all tab caches so the next load always hits the network. */
+  invalidateCache: () => void;
 }
 
 export type ProjectStoreState = CoreSlice & NoteSlice & FileSlice & AiSlice & CrossSliceActions;
@@ -54,6 +77,14 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
   ...createFileSlice(set, get, store),
   ...createAiSlice(set, get, store),
   projectDataErrors: [],
+
+  // Cache timestamps – initial value 0 means "never fetched".
+  aiTabLastFetchedAt: 0,
+  kgTabLastFetchedAt: 0,
+  reportsTabLastFetchedAt: 0,
+  dataTabLastFetchedAt: 0,
+  blindReviewTabLastFetchedAt: 0,
+  settingsTabLastFetchedAt: 0,
 
   resetProjectState: () => {
     resetSessionEpoch();
@@ -67,6 +98,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       selectedProject: null,
       members: [],
       notes: [],
+      notesTotal: 0,
       pendingNotes: [],
       files: [],
       ragStatus: null,
@@ -81,6 +113,12 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       projectDataErrors: [],
       projectLoadError: null,
       busy: false,
+      aiTabLastFetchedAt: 0,
+      kgTabLastFetchedAt: 0,
+      reportsTabLastFetchedAt: 0,
+      dataTabLastFetchedAt: 0,
+      blindReviewTabLastFetchedAt: 0,
+      settingsTabLastFetchedAt: 0,
     });
   },
 
@@ -107,10 +145,14 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
         result.status === "rejected" ? [labels[index]] : [],
       );
 
+      const notesResult = unwrap(results[1], { items: [] as Note[], total: 0 });
+      const filesResult = unwrap(results[2], { items: [] as StoredFile[], total: 0 });
+
       set({
         members: unwrap(results[0], [] as ProjectMember[]),
-        notes: unwrap(results[1], [] as Note[]),
-        files: unwrap(results[2], [] as StoredFile[]),
+        notes: notesResult.items,
+        notesTotal: notesResult.total,
+        files: filesResult.items,
         pendingNotes: unwrap(results[3], [] as Note[]),
         projectDataErrors,
       });
@@ -122,6 +164,86 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
         set({ busy: false });
       }
     }
+  },
+
+  // ── Per-tab loaders with cache ────────────────────────────────────────
+
+  loadAITabData: async (token, projectId) => {
+    if (get().selectedProjectId !== projectId) return;
+    if (Date.now() - get().aiTabLastFetchedAt < CACHE_TTL_MS) return;
+    const [ragStatus, queryLogs, queryAnalytics, experimentRuns] = (await Promise.allSettled([
+      getProjectRagStatus(token, projectId),
+      getProjectQueryLogs(token, projectId),
+      getProjectQueryAnalytics(token, projectId),
+      getRagExperiments(token, projectId),
+    ])).map((r) => r.status === "fulfilled" ? r.value : null) as [
+      RagStatus | null, AIQueryLog[] | null, AIQueryAnalytics | null, AIExperimentRun[] | null,
+    ];
+    if (get().selectedProjectId !== projectId) return;
+    set({
+      ragStatus: ragStatus ?? null,
+      ragAnswer: null,
+      queryLogs: queryLogs ?? [],
+      queryAnalytics: queryAnalytics ?? null,
+      experimentRuns: experimentRuns ?? [],
+      aiTabLastFetchedAt: Date.now(),
+    });
+  },
+
+  loadKGTabData: async (token, projectId) => {
+    if (get().selectedProjectId !== projectId) return;
+    if (Date.now() - get().kgTabLastFetchedAt < CACHE_TTL_MS) return;
+    const kgGraph = await getProjectKnowledgeGraph(token, projectId).catch(() => null);
+    if (get().selectedProjectId !== projectId) return;
+    set({ kgGraph: kgGraph ?? null, kgTabLastFetchedAt: Date.now() });
+  },
+
+  loadReportsTabData: async (token, projectId) => {
+    if (get().selectedProjectId !== projectId) return;
+    if (Date.now() - get().reportsTabLastFetchedAt < CACHE_TTL_MS) return;
+    const agentRuns = await getAgentRuns(token, projectId).catch(() => []);
+    if (get().selectedProjectId !== projectId) return;
+    set({ agentRuns: agentRuns ?? [], reportsTabLastFetchedAt: Date.now() });
+  },
+
+  loadDataTabData: async (token, projectId) => {
+    if (get().selectedProjectId !== projectId) return;
+    if (Date.now() - get().dataTabLastFetchedAt < CACHE_TTL_MS) return;
+    const filesResult = await getProjectFiles(token, projectId).catch(() => ({ items: [] as StoredFile[], total: 0 }));
+    if (get().selectedProjectId !== projectId) return;
+    set({ files: filesResult.items, dataTabLastFetchedAt: Date.now() });
+  },
+
+  loadBlindReviewTabData: async (token, projectId) => {
+    if (get().selectedProjectId !== projectId) return;
+    if (Date.now() - get().blindReviewTabLastFetchedAt < CACHE_TTL_MS) return;
+    const blindReviewBatches = await getBlindReviewBatches(token, projectId).catch(() => []);
+    if (get().selectedProjectId !== projectId) return;
+    set({ blindReviewBatches: blindReviewBatches ?? [], blindReviewTabLastFetchedAt: Date.now() });
+  },
+
+  loadSettingsTabData: async (token, projectId) => {
+    if (get().selectedProjectId !== projectId) return;
+    if (Date.now() - get().settingsTabLastFetchedAt < CACHE_TTL_MS) return;
+    const templates = await getTemplates(token).catch(() => []);
+    const maturityStatus = await getMaturityStatus(token).catch(() => null);
+    if (get().selectedProjectId !== projectId) return;
+    set({
+      templates: templates ?? [],
+      maturityStatus: maturityStatus ?? null,
+      settingsTabLastFetchedAt: Date.now(),
+    });
+  },
+
+  invalidateCache: () => {
+    set({
+      aiTabLastFetchedAt: 0,
+      kgTabLastFetchedAt: 0,
+      reportsTabLastFetchedAt: 0,
+      dataTabLastFetchedAt: 0,
+      blindReviewTabLastFetchedAt: 0,
+      settingsTabLastFetchedAt: 0,
+    });
   },
 
   loadTabProjectData: async (token, projectId) => {
@@ -141,6 +263,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
 
     const unwrap = <T>(r: PromiseSettledResult<T>, fallback: T): T =>
       r.status === "fulfilled" ? r.value : fallback;
+    const now = Date.now();
 
     set({
       templates: unwrap(results[0], [] as Template[]),
@@ -153,6 +276,11 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       agentRuns: unwrap(results[6], [] as AgentGenerationRun[]),
       blindReviewBatches: unwrap(results[7], [] as BlindReviewBatch[]),
       maturityStatus: unwrap(results[8], null as MaturityStatus | null),
+      aiTabLastFetchedAt: now,
+      kgTabLastFetchedAt: now,
+      reportsTabLastFetchedAt: now,
+      blindReviewTabLastFetchedAt: now,
+      settingsTabLastFetchedAt: now,
     });
   },
 

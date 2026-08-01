@@ -19,6 +19,10 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("[ErrorBoundary] Uncaught error:", error, errorInfo);
+  }
+
   handleReset = () => {
     this.setState({ hasError: false, error: undefined });
   };

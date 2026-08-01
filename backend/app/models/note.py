@@ -31,6 +31,7 @@ class ExperimentNote(Base):
     owner_user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     status: Mapped[NoteStatus] = mapped_column(Enum(NoteStatus), default=NoteStatus.DRAFT, index=True)
     current_version_id: Mapped[int | None] = mapped_column(ForeignKey("note_versions.id", ondelete="SET NULL"), nullable=True)
+    lock_version: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 

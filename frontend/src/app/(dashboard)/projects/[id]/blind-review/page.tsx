@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore } from "@/stores";
 import {
   evaluateBlindReviewItem,
@@ -152,20 +153,23 @@ export default function BlindReviewPage() {
         <CardContent className="grid gap-3 py-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
           <div className="space-y-2">
             <Label htmlFor="blind-review-batch">盲评批次</Label>
-            <select
-              id="blind-review-batch"
-              className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
-              value={batchId}
-              onChange={(event) => setBatchId(event.target.value)}
+            <Select
+              value={batchId || "__none_batch__"}
+              onValueChange={(v) => setBatchId(v === "__none_batch__" ? "" : v)}
               disabled={batches.length === 0}
             >
-              {batches.length === 0 && <option value="">暂无可评批次</option>}
-              {batches.map((batch) => (
-                <option key={batch.batch_id} value={batch.batch_id}>
-                  {batch.batch_id}（{batch.completed_items}/{batch.total_items}）
-                </option>
-              ))}
-            </select>
+              <SelectTrigger id="blind-review-batch">
+                <SelectValue placeholder="暂无可评批次" />
+              </SelectTrigger>
+              <SelectContent>
+                {batches.length === 0 && <SelectItem value="__none_batch__">暂无可评批次</SelectItem>}
+                {batches.map((batch) => (
+                  <SelectItem key={batch.batch_id} value={batch.batch_id}>
+                    {batch.batch_id}（{batch.completed_items}/{batch.total_items}）
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <Badge variant="outline" className="h-8 px-3">
             {items.filter((item) => item.evaluation).length}/{items.length} 已完成
@@ -218,25 +222,47 @@ export default function BlindReviewPage() {
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor={`${item.blind_id}-score`}>{item.blind_id} 评分</Label>
-                    <select id={`${item.blind_id}-score`} className="h-10 w-full rounded-md border bg-background px-3 text-sm"
-                      value={draft.score} disabled={completed} onChange={(event) => updateDraft(item.blind_id, { score: event.target.value })}>
-                      <option value="">请选择</option>
-                      {[1, 2, 3, 4, 5].map((score) => <option key={score} value={score}>{score}</option>)}
-                    </select>
+                    <Select
+                      value={draft.score || "__none_score__"}
+                      disabled={completed}
+                      onValueChange={(v) => updateDraft(item.blind_id, { score: v === "__none_score__" ? "" : v })}
+                    >
+                      <SelectTrigger id={`${item.blind_id}-score`}><SelectValue placeholder="请选择" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="__none_score__">请选择</SelectItem>
+                        {[1, 2, 3, 4, 5].map((score) => <SelectItem key={score} value={String(score)}>{score}</SelectItem>)}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor={`${item.blind_id}-accurate`}>{item.blind_id} 准确性</Label>
-                    <select id={`${item.blind_id}-accurate`} className="h-10 w-full rounded-md border bg-background px-3 text-sm"
-                      value={draft.accurate} disabled={completed} onChange={(event) => updateDraft(item.blind_id, { accurate: event.target.value })}>
-                      <option value="">请选择</option><option value="true">准确</option><option value="false">不准确</option>
-                    </select>
+                    <Select
+                      value={draft.accurate || "__none_accurate__"}
+                      disabled={completed}
+                      onValueChange={(v) => updateDraft(item.blind_id, { accurate: v === "__none_accurate__" ? "" : v })}
+                    >
+                      <SelectTrigger id={`${item.blind_id}-accurate`}><SelectValue placeholder="请选择" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="__none_accurate__">请选择</SelectItem>
+                        <SelectItem value="true">准确</SelectItem>
+                        <SelectItem value="false">不准确</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor={`${item.blind_id}-traceable`}>{item.blind_id} 可追溯性</Label>
-                    <select id={`${item.blind_id}-traceable`} className="h-10 w-full rounded-md border bg-background px-3 text-sm"
-                      value={draft.traceable} disabled={completed} onChange={(event) => updateDraft(item.blind_id, { traceable: event.target.value })}>
-                      <option value="">请选择</option><option value="true">可追溯</option><option value="false">不可追溯</option>
-                    </select>
+                    <Select
+                      value={draft.traceable || "__none_traceable__"}
+                      disabled={completed}
+                      onValueChange={(v) => updateDraft(item.blind_id, { traceable: v === "__none_traceable__" ? "" : v })}
+                    >
+                      <SelectTrigger id={`${item.blind_id}-traceable`}><SelectValue placeholder="请选择" /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="__none_traceable__">请选择</SelectItem>
+                        <SelectItem value="true">可追溯</SelectItem>
+                        <SelectItem value="false">不可追溯</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="space-y-2">

@@ -95,7 +95,7 @@ def test_list_audit_logs_as_admin(client):
     c, _, uid = client; uid["value"] = 1
     r = c.get("/audit-logs")
     assert r.status_code == 200
-    assert len(r.json()) >= 1
+    assert r.json()["total"] >= 1
 
 
 def test_list_audit_logs_as_member_forbidden(client):
@@ -108,4 +108,4 @@ def test_filter_audit_logs_by_action(client):
     c, _, uid = client; uid["value"] = 1
     r = c.get("/audit-logs?action=login")
     assert r.status_code == 200
-    assert all(log["action"] == "login" for log in r.json())
+    assert all(log["action"] == "login" for log in r.json()["items"])

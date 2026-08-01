@@ -8,6 +8,7 @@ use axum::{
 use serde_json::json;
 
 use crate::{
+    api::ClientInfo,
     config::Settings,
     error::ApiError,
     models::{CurrentUserResponse, LoginRequest, TokenResponse, UserRecord},
@@ -16,8 +17,8 @@ use crate::{
 };
 
 pub const AUTH_COOKIE_NAME: &str = "eln_access_token";
-const INVALID_CREDENTIALS_MESSAGE: &str = "Invalid username or password";
-const LOGIN_RATE_LIMIT_MESSAGE: &str = "Too many login attempts. Try again later";
+const INVALID_CREDENTIALS_MESSAGE: &str = "账号或密码错误";
+const LOGIN_RATE_LIMIT_MESSAGE: &str = "登录尝试次数过多，请稍后再试";
 // A valid cost-12 bcrypt hash keeps unknown and disabled-user failures on the
 // same password-verification path as active users without exposing a real hash.
 const DUMMY_PASSWORD_HASH: &str = "$2b$12$tGevqvIrxJXMwGuFVrrSuu.jAgV9Txm1CdklGWuvfnqJgc7D6KFq2";
@@ -99,6 +100,7 @@ pub fn router() -> Router<AppState> {
 
 async fn login(
     State(state): State<AppState>,
+    client: ClientInfo,
     Json(payload): Json<LoginRequest>,
 ) -> Result<impl IntoResponse, ApiError> {
     let _login_attempt = state
@@ -146,10 +148,12 @@ async fn login(
             actor_user_id, project_id, action, target_type, target_id,
             detail_json, ip_address, user_agent
         )
-        VALUES ($1, NULL, 'login', 'user', $1, '{}'::json, NULL, NULL)
+        VALUES ($1, NULL, 'login', 'user', $1, '{}'::json, $2, $3)
         "#,
     )
     .bind(user.id)
+    .bind(client.ip_opt())
+    .bind(client.ua_opt())
     .execute(&state.pool)
     .await?;
     let access_token = create_access_token(
@@ -184,6 +188,7 @@ async fn me(CurrentUser(user): CurrentUser) -> Json<CurrentUserResponse> {
 
 async fn logout(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(user): CurrentUser,
 ) -> Result<impl IntoResponse, ApiError> {
     let mut transaction = state.pool.begin().await?;
@@ -197,10 +202,12 @@ async fn logout(
             actor_user_id, project_id, action, target_type, target_id,
             detail_json, ip_address, user_agent
         )
-        VALUES ($1, NULL, 'logout', 'user', $1, '{}'::json, NULL, NULL)
+        VALUES ($1, NULL, 'logout', 'user', $1, '{}'::json, $2, $3)
         "#,
     )
     .bind(user.id)
+    .bind(client.ip_opt())
+    .bind(client.ua_opt())
     .execute(&mut *transaction)
     .await?;
     transaction.commit().await?;

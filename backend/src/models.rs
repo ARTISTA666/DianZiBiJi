@@ -138,6 +138,37 @@ pub struct ProjectListResponse {
     pub limit: i64,
 }
 
+#[derive(Debug, Serialize)]
+pub struct Paginated<T> {
+    pub items: Vec<T>,
+    pub total: i64,
+    pub skip: i64,
+    pub limit: i64,
+}
+
+#[derive(Debug, Default, Deserialize)]
+pub struct PageQuery {
+    pub skip: Option<i64>,
+    pub limit: Option<i64>,
+}
+
+impl PageQuery {
+    pub fn bounds(&self) -> (i64, i64) {
+        page_bounds(self.skip, self.limit)
+    }
+}
+
+pub fn page_bounds(skip: Option<i64>, limit: Option<i64>) -> (i64, i64) {
+    (skip.unwrap_or(0).max(0), limit.unwrap_or(50).clamp(1, 200))
+}
+
+#[derive(Debug, Default, Deserialize)]
+pub struct NoteListQuery {
+    pub skip: Option<i64>,
+    pub limit: Option<i64>,
+    pub status: Option<String>,
+}
+
 #[derive(Debug, Deserialize)]
 pub struct ProjectListQuery {
     #[serde(default)]
@@ -288,6 +319,8 @@ pub struct AuditQuery {
     pub action: Option<String>,
     pub date_from: Option<DateTime<Utc>>,
     pub date_to: Option<DateTime<Utc>>,
+    pub skip: Option<i64>,
+    pub limit: Option<i64>,
 }
 
 #[derive(Clone, Debug, Serialize, sqlx::FromRow)]
@@ -485,7 +518,7 @@ pub struct FileRead {
     pub file_category: String,
     pub original_filename: String,
     pub mime_type: Option<String>,
-    pub file_size: i32,
+    pub file_size: i64,
     pub file_hash: String,
     pub status: String,
     pub knowledge_sync_status: String,
@@ -737,11 +770,19 @@ pub fn validate_username(value: &str) -> Result<(), &'static str> {
 }
 
 pub fn validate_password(value: &str) -> Result<(), &'static str> {
-    if (8..=128).contains(&value.chars().count()) {
-        Ok(())
-    } else {
-        Err("Password must contain between 8 and 128 characters")
+    if !(8..=128).contains(&value.chars().count()) {
+        return Err("Password must contain between 8 and 128 characters");
     }
+    if !value.chars().any(|c| c.is_uppercase()) {
+        return Err("密码必须至少包含一个大写字母");
+    }
+    if !value.chars().any(|c| c.is_lowercase()) {
+        return Err("密码必须至少包含一个小写字母");
+    }
+    if !value.chars().any(|c| c.is_ascii_digit()) {
+        return Err("密码必须至少包含一个数字");
+    }
+    Ok(())
 }
 
 pub fn validate_email(value: &str) -> Result<(), &'static str> {
@@ -766,8 +807,12 @@ mod tests {
         assert!(validate_username("alice.smith-1").is_ok());
         assert!(validate_username("ab").is_err());
         assert!(validate_username("alice smith").is_err());
-        assert!(validate_password("12345678").is_ok());
+        assert!(validate_password("Password1").is_ok());
+        assert!(validate_password("12345678").is_err());
         assert!(validate_password("short").is_err());
+        assert!(validate_password("alllowercase1").is_err());
+        assert!(validate_password("ALLUPPERCASE1").is_err());
+        assert!(validate_password("NoDigitsHere").is_err());
         assert!(validate_email("alice@example.com").is_ok());
         assert!(validate_email("not-an-email").is_err());
     }

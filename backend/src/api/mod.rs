@@ -18,20 +18,79 @@ pub use rag::schedule_queued_experiments;
 use std::{sync::OnceLock, time::Instant};
 
 use axum::{
-    extract::{DefaultBodyLimit, Request, State},
-    http::{header, HeaderMap, HeaderValue, Method, StatusCode},
+    extract::{DefaultBodyLimit, FromRequestParts, Query, Request, State},
+    http::{header, request::Parts, HeaderMap, HeaderValue, Method, StatusCode},
     middleware::{self, Next},
     response::{Html, IntoResponse, Response},
     routing::get,
     Json, Router,
 };
 use regex::Regex;
+use serde::Deserialize;
 use serde_json::{json, Value};
 use tower_http::cors::{AllowHeaders, AllowMethods, CorsLayer};
 use uuid::Uuid;
 
-use crate::{error::ApiError, AppState};
+use crate::{error::ApiError, state::RateLimitDecision, AppState};
 
+/// Client connection metadata extracted from request headers and stored
+/// in request extensions by the `observe_request` middleware.
+#[derive(Clone, Debug)]
+pub struct ClientInfo {
+    pub ip_address: String,
+    pub user_agent: Option<String>,
+}
+
+impl ClientInfo {
+    pub fn ip_opt(&self) -> Option<&str> {
+        if self.ip_address == "unknown" {
+            None
+        } else {
+            Some(&self.ip_address)
+        }
+    }
+
+    pub fn ua_opt(&self) -> Option<&str> {
+        self.user_agent.as_deref()
+    }
+}
+
+impl FromRequestParts<AppState> for ClientInfo {
+    type Rejection = std::convert::Infallible;
+
+    async fn from_request_parts(
+        parts: &mut Parts,
+        _state: &AppState,
+    ) -> Result<Self, Self::Rejection> {
+        Ok(parts
+            .extensions
+            .get::<ClientInfo>()
+            .cloned()
+            .unwrap_or_else(|| ClientInfo {
+                ip_address: "unknown".to_owned(),
+                user_agent: None,
+            }))
+    }
+}
+
+/// Build the root router.
+///
+/// # API versioning strategy
+///
+/// All business routes are currently registered at their canonical paths
+/// (e.g. `/api/projects`, `/auth/login`) **without** an `/api/v1` prefix.
+/// This is intentional: the frontend client calls these paths directly,
+/// and introducing a version segment would cause a breaking change (404s
+/// across the entire UI).
+///
+/// When a future v2 API is planned the recommended migration path is:
+///   1. Duplicate or nest the current router under `.nest("/api/v1", business_router)`.
+///   2. Keep the un-versioned routes as a compatibility shim until the
+///      frontend has been migrated.
+///   3. Use the `api_version_header` middleware (below) to negotiate the
+///      version via the `X-API-Version` request header, allowing gradual
+///      per-route opt-in without path changes.
+///   4. Remove the shim once all clients target `/api/v1`.
 pub fn build_app(state: AppState) -> Router {
     let body_limit = DefaultBodyLimit::max(state.settings.upload_max_bytes + 1024 * 1024);
     let origins: Vec<HeaderValue> = state
@@ -46,13 +105,10 @@ pub fn build_app(state: AppState) -> Router {
         .allow_methods(AllowMethods::mirror_request())
         .allow_headers(AllowHeaders::mirror_request());
 
-    Router::new()
-        .route("/health", get(health))
-        .route("/metrics", get(metrics))
-        .route("/ready", get(ready))
-        .route("/openapi.json", get(openapi))
-        .route("/docs", get(swagger_docs))
-        .route("/redoc", get(redoc_docs))
+    // ── Business routes ──────────────────────────────────────────────
+    // TODO(api-versioning): when introducing /api/v1, wrap these merges
+    // in a sub-Router and .nest("/api/v1", business_router) it.
+    let business_router = Router::new()
         .merge(auth::router())
         .merge(agents::router())
         .merge(files::router())
@@ -66,10 +122,26 @@ pub fn build_app(state: AppState) -> Router {
         .merge(audit::router())
         .merge(notes::router())
         .merge(ocr::router())
-        .merge(search::router())
+        .merge(search::router());
+
+    Router::new()
+        // ── Operational probes (must stay at root) ───────────────────
+        .route("/health", get(health))
+        .route("/metrics", get(metrics))
+        .route("/ready", get(ready))
+        .route("/openapi.json", get(openapi))
+        .route("/docs", get(swagger_docs))
+        .route("/redoc", get(redoc_docs))
+        // Business routes live at their current paths (no /api/v1 prefix)
+        // to stay compatible with the existing frontend.
+        .merge(business_router)
         .fallback(not_found)
         .layer(body_limit)
         .layer(cors)
+        .layer(middleware::from_fn_with_state(
+            state.clone(),
+            rate_limit_middleware,
+        ))
         .layer(middleware::from_fn_with_state(
             state.clone(),
             observe_request,
@@ -172,7 +244,16 @@ fn metrics_prometheus(snapshot: &Value) -> String {
     lines.join("\n") + "\n"
 }
 
-async fn ready(State(state): State<AppState>) -> Result<Json<Value>, ApiError> {
+#[derive(Deserialize, Default)]
+struct ReadyQuery {
+    deep: Option<String>,
+}
+
+async fn ready(
+    State(state): State<AppState>,
+    Query(query): Query<ReadyQuery>,
+) -> Result<Json<Value>, ApiError> {
+    // Basic checks – database connectivity and storage availability.
     sqlx::query("SELECT 1")
         .execute(&state.pool)
         .await
@@ -186,16 +267,134 @@ async fn ready(State(state): State<AppState>) -> Result<Json<Value>, ApiError> {
             "Storage unavailable",
         ));
     }
+
+    let is_deep = query
+        .deep
+        .as_deref()
+        .map(|v| v == "true" || v == "1")
+        .unwrap_or(false);
+
+    if !is_deep {
+        return Ok(Json(json!({
+            "status": "ready",
+            "checks": {
+                "database": "ok",
+                "storage": "ok",
+            },
+            "revision": state.settings.app_revision,
+        })));
+    }
+
+    // ── Deep checks ──────────────────────────────────────────────
+    // Storage writability: attempt to create (and remove) a temp file.
+    let storage_status = match tokio::fs::write("/storage/.healthcheck_probe", b"").await {
+        Ok(_) => {
+            let _ = tokio::fs::remove_file("/storage/.healthcheck_probe").await;
+            "ok"
+        }
+        Err(_) => "readonly",
+    };
+
+    // LLM API: check configuration and attempt a lightweight connectivity probe.
+    let llm_status = if state.settings.deepseek_api_key.trim().is_empty() {
+        "unconfigured"
+    } else {
+        let base_url = state.settings.deepseek_api_base_url.trim_end_matches('/');
+        let probe_url = format!("{base_url}/v1/models");
+        match state
+            .client
+            .get(&probe_url)
+            .bearer_auth(&state.settings.deepseek_api_key)
+            .timeout(std::time::Duration::from_secs(5))
+            .send()
+            .await
+        {
+            Ok(resp) if resp.status().is_success() || resp.status().is_redirection() => "ok",
+            Ok(resp)
+                if resp.status() == StatusCode::UNAUTHORIZED
+                    || resp.status() == StatusCode::FORBIDDEN =>
+            {
+                // API responded – key may be invalid but endpoint is reachable.
+                "ok"
+            }
+            Ok(_) => "unreachable",
+            Err(_) => "unreachable",
+        }
+    };
+
+    let degraded = storage_status != "ok" || llm_status == "unreachable";
+
     Ok(Json(json!({
-        "status": "ready",
-        "database": "ok",
-        "storage": "ok",
+        "status": if degraded { "degraded" } else { "ready" },
+        "checks": {
+            "database": "ok",
+            "storage": storage_status,
+            "llm_api": llm_status,
+        },
         "revision": state.settings.app_revision,
     })))
 }
 
 async fn not_found() -> ApiError {
     ApiError::new(StatusCode::NOT_FOUND, "Not Found")
+}
+
+/// Paths that bypass the global rate limiter because they are either
+/// operational probes or have their own dedicated throttling.
+const RATE_LIMIT_EXEMPT_PATHS: &[&str] = &[
+    "/health",
+    "/metrics",
+    "/ready",
+    "/openapi.json",
+    "/docs",
+    "/redoc",
+    "/auth/login",
+];
+
+/// Extract the client IP address from the request, preferring proxy headers.
+fn client_ip(request: &Request) -> String {
+    request
+        .headers()
+        .get("x-forwarded-for")
+        .and_then(|v| v.to_str().ok())
+        .and_then(|v| v.split(',').next())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+        .or_else(|| {
+            request
+                .headers()
+                .get("x-real-ip")
+                .and_then(|v| v.to_str().ok())
+                .filter(|s| !s.is_empty())
+        })
+        .unwrap_or("unknown")
+        .to_owned()
+}
+
+async fn rate_limit_middleware(
+    State(state): State<AppState>,
+    request: Request,
+    next: Next,
+) -> Response {
+    let path = request.uri().path();
+    if RATE_LIMIT_EXEMPT_PATHS.contains(&path) {
+        return next.run(request).await;
+    }
+    let ip = client_ip(&request);
+    let is_read = matches!(
+        *request.method(),
+        Method::GET | Method::HEAD | Method::OPTIONS
+    );
+    let RateLimitDecision { allowed } = state.check_global_rate_limit(&ip, is_read);
+    if !allowed {
+        tracing::warn!(ip, path, "global rate limit exceeded");
+        return (
+            StatusCode::TOO_MANY_REQUESTS,
+            Json(json!({"detail": "请求过于频繁，请稍后再试"})),
+        )
+            .into_response();
+    }
+    next.run(request).await
 }
 
 async fn observe_request(
@@ -218,6 +417,17 @@ async fn observe_request(
     request
         .headers_mut()
         .insert("x-request-id", HeaderValue::from_str(&request_id).unwrap());
+    // Extract client IP and User-Agent and store in request extensions.
+    let ip = client_ip(&request);
+    let user_agent = request
+        .headers()
+        .get(header::USER_AGENT)
+        .and_then(|value| value.to_str().ok())
+        .map(|s| s.to_owned());
+    request.extensions_mut().insert(ClientInfo {
+        ip_address: ip,
+        user_agent,
+    });
     let method: Method = request.method().clone();
     let path = request.uri().path().to_owned();
     let started = Instant::now();
@@ -395,7 +605,9 @@ mod tests {
             ("post", "/auth/login"),
         ];
         let contract: Value = serde_json::from_str(include_str!("../../openapi.json")).unwrap();
-        let app = build_app(test_state());
+        // Raise the global rate limits well above the operation count so the
+        // anonymous sweep asserts 401 instead of tripping 429 from one IP.
+        let app = build_app(rate_limited_test_state(10_000, 10_000));
         for (path, operations) in contract["paths"].as_object().unwrap() {
             let concrete_path = path
                 .split('/')
@@ -432,5 +644,119 @@ mod tests {
                 );
             }
         }
+    }
+
+    fn rate_limited_test_state(read_limit: u64, write_limit: u64) -> AppState {
+        let settings = Settings::from_map(&HashMap::from([
+            (
+                "GLOBAL_RATE_LIMIT_READ_PER_MINUTE".to_owned(),
+                read_limit.to_string(),
+            ),
+            (
+                "GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE".to_owned(),
+                write_limit.to_string(),
+            ),
+        ]))
+        .unwrap();
+        let pool = PgPoolOptions::new()
+            .connect_lazy("postgresql://unused:unused@127.0.0.1/unused")
+            .unwrap();
+        AppState::new(pool, settings).unwrap()
+    }
+
+    #[tokio::test]
+    async fn test_rate_limit_exempts_health_endpoint() {
+        // Even with the minimum read limit (1/min) the health endpoint must
+        // still respond 200 because it is on the exemption list.
+        let app = build_app(rate_limited_test_state(1, 1));
+        // Exhaust the single allowed read request first.
+        let _ = app
+            .clone()
+            .oneshot(Request::get("/api/projects").body(Body::empty()).unwrap())
+            .await
+            .unwrap();
+        // Health must remain reachable even after the read quota is gone.
+        let response = app
+            .oneshot(Request::get("/health").body(Body::empty()).unwrap())
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn test_rate_limit_returns_429_when_write_quota_exhausted() {
+        let app = build_app(rate_limited_test_state(1000, 1));
+        // First write should succeed (quota = 1).
+        let first = app
+            .clone()
+            .oneshot(
+                Request::post("/api/projects")
+                    .header("content-type", "application/json")
+                    .body(Body::from("{}"))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_ne!(first.status(), StatusCode::TOO_MANY_REQUESTS);
+
+        // Second write from the same IP must be rejected with 429.
+        let second = app
+            .oneshot(
+                Request::post("/api/projects")
+                    .header("content-type", "application/json")
+                    .body(Body::from("{}"))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(second.status(), StatusCode::TOO_MANY_REQUESTS);
+        let body: Value =
+            serde_json::from_slice(&to_bytes(second.into_body(), 1024).await.unwrap()).unwrap();
+        assert_eq!(body["detail"], "请求过于频繁，请稍后再试");
+    }
+
+    #[tokio::test]
+    async fn test_rate_limit_respects_x_forwarded_for() {
+        let app = build_app(rate_limited_test_state(1000, 1));
+        // First request from IP-A succeeds.
+        let r1 = app
+            .clone()
+            .oneshot(
+                Request::post("/api/projects")
+                    .header("x-forwarded-for", "10.0.0.1")
+                    .header("content-type", "application/json")
+                    .body(Body::from("{}"))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_ne!(r1.status(), StatusCode::TOO_MANY_REQUESTS);
+
+        // Second request from IP-A is blocked.
+        let r2 = app
+            .clone()
+            .oneshot(
+                Request::post("/api/projects")
+                    .header("x-forwarded-for", "10.0.0.1")
+                    .header("content-type", "application/json")
+                    .body(Body::from("{}"))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_eq!(r2.status(), StatusCode::TOO_MANY_REQUESTS);
+
+        // Request from IP-B still succeeds (separate quota).
+        let r3 = app
+            .oneshot(
+                Request::post("/api/projects")
+                    .header("x-forwarded-for", "10.0.0.2")
+                    .header("content-type", "application/json")
+                    .body(Body::from("{}"))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        assert_ne!(r3.status(), StatusCode::TOO_MANY_REQUESTS);
     }
 }

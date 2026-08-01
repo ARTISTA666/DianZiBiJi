@@ -38,8 +38,8 @@ export const createFileSlice: StateCreator<ProjectStoreState, [], [], FileSlice>
     const requestEpoch = epochs.projectData;
     await updateFile(token, fileId, { original_filename: filename });
     if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-      const files = await getProjectFiles(token, selectedProjectId);
-      if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) set({ files });
+      const result = await getProjectFiles(token, selectedProjectId);
+      if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) set({ files: result.items });
     }
   },
 
@@ -48,8 +48,8 @@ export const createFileSlice: StateCreator<ProjectStoreState, [], [], FileSlice>
     const requestEpoch = epochs.projectData;
     await reviewFile(token, fileId, action, comment);
     if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-      const files = await getProjectFiles(token, selectedProjectId);
-      if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) set({ files });
+      const result = await getProjectFiles(token, selectedProjectId);
+      if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) set({ files: result.items });
     }
   },
 
@@ -67,8 +67,8 @@ export const createFileSlice: StateCreator<ProjectStoreState, [], [], FileSlice>
     const requestEpoch = epochs.projectData;
     const ragStatus = await syncFileToRag(token, fileId);
     if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-      const files = await getProjectFiles(token, selectedProjectId);
-      if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) set({ files, ragStatus });
+      const result = await getProjectFiles(token, selectedProjectId);
+      if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) set({ files: result.items, ragStatus });
     }
   },
 });

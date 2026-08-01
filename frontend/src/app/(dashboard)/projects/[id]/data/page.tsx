@@ -1,19 +1,59 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { Upload, CheckCircle, XCircle, Eye, Database, Archive, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dropzone } from "@/components/dropzone";
 import { useAuthStore, useProjectStore } from "@/stores";
 import type { OcrJobResult, StoredFile } from "@/lib/api";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage, formatFileSize } from "@/lib/utils";
 import { knowledgeSyncText } from "@/components/constants";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
+import { FilesListSkeleton } from "@/components/skeletons";
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
+
+function uploadFileWithProgress(
+  file: File,
+  projectId: number,
+  category: string,
+  onProgress: (pct: number) => void,
+): Promise<StoredFile> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        onProgress(Math.round((e.loaded / e.total) * 100));
+      }
+    };
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          resolve(JSON.parse(xhr.responseText) as StoredFile);
+        } catch {
+          reject(new Error("Invalid response"));
+        }
+      } else {
+        reject(new Error(`上传失败: ${xhr.status}`));
+      }
+    };
+    xhr.onerror = () => reject(new Error("上传失败"));
+
+    const formData = new FormData();
+    formData.append("upload", file);
+    const params = new URLSearchParams({ file_category: category });
+    xhr.open("POST", `${API_BASE_URL}/projects/${projectId}/files?${params.toString()}`);
+    xhr.withCredentials = true;
+    xhr.send(formData);
+  });
+}
 
 const categories = ["note_attachment", "knowledge_document"];
 const categoryText: Record<string, string> = {
@@ -28,21 +68,32 @@ export default function DataPage() {
   const { id } = useParams();
   const projectId = Number(id);
   const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const files = useProjectStore((s) => s.files);
-  const uploadFile = useProjectStore((s) => s.uploadFile);
+  const members = useProjectStore((s) => s.members);
+  const selectedProject = useProjectStore((s) => s.selectedProject);
   const reviewFile = useProjectStore((s) => s.reviewFile);
   const busy = useProjectStore((s) => s.busy);
-  const loadTabProjectData = useProjectStore((s) => s.loadTabProjectData);
-  const fileInput = useRef<HTMLInputElement>(null);
+  const loadDataTabData = useProjectStore((s) => s.loadDataTabData);
   const ocrRequestEpoch = useRef(0);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
   const [category, setCategory] = useState("note_attachment");
   const [uploading, setUploading] = useState(false);
+  const feedback = useActionFeedback();
+  const { confirm, ConfirmDialog } = useConfirmDialog();
+  const membership = members.find((member) => member.user_id === user?.id);
+  const canWrite = user?.role === "super_admin" || membership?.can_write === true;
+  const canReview = user?.role === "super_admin"
+    || membership?.can_review === true
+    || membership?.can_manage === true;
+  const canManage = user?.role === "super_admin"
+    || selectedProject?.owner_user_id === user?.id
+    || membership?.can_manage === true
+    || membership?.project_role === "owner";
 
   useEffect(() => {
-    if (token) loadTabProjectData(token, projectId);
-  }, [token, projectId, loadTabProjectData]);
+    if (token) loadDataTabData(token, projectId);
+  }, [token, projectId, loadDataTabData]);
 
   // OCR dialog
   const [ocrFile, setOcrFile] = useState<(typeof files)[0] | null>(null);
@@ -50,48 +101,89 @@ export default function DataPage() {
   const [ocrDraft, setOcrDraft] = useState("");
   const [ocrBusy, setOcrBusy] = useState(false);
 
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+
+  const handleFilesSelected = useCallback((files: File[]) => {
+    setSelectedFiles((prev) => [...prev, ...files]);
+  }, []);
+
   const handleUpload = async () => {
-    const file = fileInput.current?.files?.[0];
-    if (!token || !file) return;
+    if (!token || selectedFiles.length === 0) return;
     setUploading(true);
     setError("");
-    setMessage("");
+    setUploadProgress(0);
     try {
-      await uploadFile(token, projectId, file, category);
-      setMessage(`文件 ${file.name} 上传成功`);
-      if (fileInput.current) fileInput.current.value = "";
+      const names: string[] = [];
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        await uploadFileWithProgress(file, projectId, category, (pct) => {
+          // Overall progress across all files
+          const overall = Math.round(((i + pct / 100) / selectedFiles.length) * 100);
+          setUploadProgress(overall);
+        });
+        names.push(file.name);
+      }
+      setUploadProgress(100);
+      feedback.success(`文件 ${names.join("、")} 上传成功`);
+      setSelectedFiles([]);
+      // Refresh file list
+      useProjectStore.getState().invalidateCache();
+      await loadDataTabData(token, projectId);
     } catch (e) {
-      setError(getErrorMessage(e, "上传失败"));
+      const msg = getErrorMessage(e, "上传失败");
+      setError(msg);
+      feedback.error(msg);
     } finally {
       setUploading(false);
+      setUploadProgress(null);
     }
   };
 
   const handleReview = async (fileId: number, action: "approve" | "reject") => {
     if (!token) return;
     setError("");
-    setMessage("");
     try {
       await reviewFile(token, fileId, action, "");
-      setMessage(action === "approve" ? "资料审核已通过" : "资料审核已拒绝");
-    } catch (e) { setError(getErrorMessage(e, "审核失败")); }
+      feedback.success(action === "approve" ? "资料审核已通过" : "资料审核已拒绝");
+    } catch (e) {
+      const msg = getErrorMessage(e, "审核失败");
+      setError(msg);
+      feedback.error(msg);
+    }
   };
 
   const handleSyncRag = async (fileId: number) => {
     if (!token) return;
     setError("");
-    setMessage("");
     try {
       await useProjectStore.getState().syncFileToRag(token, fileId);
-      setMessage("资料已同步到 AI 知识库");
+      feedback.success("资料已同步到 AI 知识库");
     }
-    catch (e) { setError(getErrorMessage(e, "同步失败")); }
+    catch (e) {
+      const msg = getErrorMessage(e, "同步失败");
+      setError(msg);
+      feedback.error(msg);
+    }
   };
 
   const handleArchive = async (fileId: number) => {
     if (!token) return;
-    try { await useProjectStore.getState().archiveFile(token, fileId); }
-    catch (e) { setError(getErrorMessage(e, "归档失败")); }
+    try {
+      await useProjectStore.getState().archiveFile(token, fileId);
+      feedback.success("文件已归档");
+    }
+    catch (e) {
+      const msg = getErrorMessage(e, "归档失败");
+      setError(msg);
+      feedback.error(msg);
+    }
+  };
+
+  const handleArchiveConfirm = (fileId: number, fileName: string) => {
+    confirm("确认归档", `确定要归档文件「${fileName}」吗？归档后仍可恢复。`, () => {
+      handleArchive(fileId);
+    });
   };
 
   const openOcr = async (f: (typeof files)[0]) => {
@@ -130,19 +222,18 @@ export default function DataPage() {
     const requestEpoch = ++ocrRequestEpoch.current;
     setOcrBusy(true);
     setError("");
-    setMessage("");
     try {
       const { confirmOcrResult } = await import("@/lib/api");
       await confirmOcrResult(token, ocrResult.ocr_result_id, ocrDraft);
       if (requestEpoch !== ocrRequestEpoch.current) return;
       setOcrFile(null);
-      setMessage("文本校对已确认，图片资料现可进入 RAG 入库流程");
+      feedback.success("文本校对已确认，图片资料现可进入 RAG 入库流程");
       const refreshed = await (await import("@/lib/api")).getProjectFiles(token, projectId);
       if (
         requestEpoch === ocrRequestEpoch.current
         && useProjectStore.getState().selectedProjectId === projectId
       ) {
-        useProjectStore.setState({ files: refreshed });
+        useProjectStore.setState({ files: refreshed.items });
       }
     } catch (e) {
       if (requestEpoch === ocrRequestEpoch.current) {
@@ -153,31 +244,61 @@ export default function DataPage() {
     }
   };
 
-  if (busy) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
+  if (busy) return <FilesListSkeleton />;
 
   return (
     <div className="space-y-4">
       {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p>}
-      {message && <p className="rounded-md bg-green-50 px-4 py-2 text-sm text-green-700">{message}</p>}
 
       {/* Upload */}
-      <Card>
-        <CardContent className="flex items-center gap-3 py-4">
+      {canWrite && <Card>
+        <CardContent className="flex items-start gap-3 py-4">
           <Select value={category} onValueChange={setCategory}>
-            <SelectTrigger aria-label="文件类别" className="w-36"><SelectValue /></SelectTrigger>
+            <SelectTrigger aria-label="文件类别" className="w-36 mt-2"><SelectValue /></SelectTrigger>
             <SelectContent>
               {categories.map((c) => (<SelectItem key={c} value={c}>{categoryText[c] || c}</SelectItem>))}
             </SelectContent>
           </Select>
-          <Input ref={fileInput} aria-label="选择上传文件" type="file" className="flex-1" />
-          <Button onClick={handleUpload} disabled={uploading}>
+          <div className="flex-1 space-y-2">
+            <Dropzone
+              onFilesSelected={handleFilesSelected}
+              multiple
+              maxSize={50 * 1024 * 1024}
+            />
+            {selectedFiles.length > 0 && (
+              <div className="text-xs text-muted-foreground">
+                已选择 {selectedFiles.length} 个文件：{selectedFiles.map((f) => f.name).join("、")}
+              </div>
+            )}
+            {uploadProgress !== null && (
+              <div>
+                <div className="w-full bg-secondary rounded-full h-2">
+                  <div
+                    className="bg-primary h-2 rounded-full transition-all"
+                    style={{ width: `${uploadProgress}%` }}
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">{uploadProgress}%</p>
+              </div>
+            )}
+          </div>
+          <Button onClick={handleUpload} disabled={uploading || selectedFiles.length === 0} className="mt-2">
             <Upload className="mr-2 h-4 w-4" />{uploading ? "上传中..." : "上传"}
           </Button>
         </CardContent>
-      </Card>
+      </Card>}
 
       {files.length === 0 ? (
-        <Card className="border-dashed"><CardContent className="py-12 text-center"><p className="text-sm text-muted-foreground">暂无文件</p></CardContent></Card>
+        <Card className="border-dashed">
+          <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+            <Upload className="h-12 w-12 text-muted-foreground/50 mb-4" />
+            <p className="text-lg font-medium text-muted-foreground">还没有资料文件</p>
+            <p className="text-sm text-muted-foreground/70 mt-1">上传实验相关的文档、图片等资料</p>
+            {canWrite && <Button className="mt-4" onClick={() => document.querySelector<HTMLInputElement>('input[type="file"]')?.click()}>
+              <Upload className="mr-2 h-4 w-4" />上传文件
+            </Button>}
+          </CardContent>
+        </Card>
       ) : (
         <div className="space-y-2">
           {files.map((f) => (
@@ -185,7 +306,7 @@ export default function DataPage() {
               <CardContent className="flex items-center justify-between py-3">
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">{f.original_filename}</p>
-                  <p className="text-xs text-muted-foreground">{categoryText[f.file_category] || f.file_category} · {(f.file_size / 1024).toFixed(0)} KB</p>
+                  <p className="text-xs text-muted-foreground">{categoryText[f.file_category] || f.file_category} · {formatFileSize(f.file_size)}</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <Badge variant="secondary">{knowledgeSyncText[f.knowledge_sync_status] || f.knowledge_sync_status}</Badge>
@@ -194,7 +315,7 @@ export default function DataPage() {
                       <Eye className="mr-1 h-3 w-3" />OCR
                     </Button>
                   )}
-                  {f.status === "uploaded" && f.file_category === "knowledge_document" && (
+                  {canReview && f.status === "uploaded" && f.file_category === "knowledge_document" && (
                     <>
                       <Button aria-label={`通过 ${f.original_filename}`} size="sm" className="bg-green-600 h-8 w-8 p-0" onClick={() => handleReview(f.id, "approve")}>
                         <CheckCircle className="h-4 w-4" />
@@ -204,14 +325,14 @@ export default function DataPage() {
                       </Button>
                     </>
                   )}
-                  {f.status === "approved" && f.knowledge_sync_status === "pending_sync" && (
+                  {canManage && f.status === "approved" && f.knowledge_sync_status === "pending_sync" && (
                     <Button size="sm" variant="outline" onClick={() => handleSyncRag(f.id)}>
                       <Database className="mr-1 h-3 w-3" />本地向量入库
                     </Button>
                   )}
-                  <Button aria-label={`归档 ${f.original_filename}`} size="sm" variant="ghost" onClick={() => handleArchive(f.id)}>
+                  {canWrite && <Button aria-label={`归档 ${f.original_filename}`} size="sm" variant="ghost" onClick={() => handleArchiveConfirm(f.id, f.original_filename)}>
                     <Archive className="h-4 w-4" />
-                  </Button>
+                  </Button>}
                 </div>
               </CardContent>
             </Card>
@@ -250,15 +371,17 @@ export default function DataPage() {
                       rows={6}
                       value={ocrDraft}
                       onChange={(e) => setOcrDraft(e.target.value)}
-                      readOnly={ocrResult?.review_status === "confirmed"}
+                      readOnly={ocrResult?.review_status === "confirmed" || !canReview}
                     />
                   </div>
                   {ocrResult?.review_status === "confirmed" ? (
                     <p className="rounded-md bg-green-50 px-3 py-2 text-center text-sm text-green-700">该结果已确认签名</p>
-                  ) : (
+                  ) : canReview ? (
                     <Button className="w-full" onClick={confirmOcr} disabled={!ocrResult || !ocrDraft.trim()}>
                       <Send className="mr-2 h-4 w-4" />确认校对并签名
                     </Button>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">仅具审核权限的成员可以确认校对文本。</p>
                   )}
                 </>
               )}
@@ -266,6 +389,7 @@ export default function DataPage() {
           </DialogContent>
         )}
       </Dialog>
+      {ConfirmDialog}
     </div>
   );
 }

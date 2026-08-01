@@ -9,6 +9,7 @@ use sqlx::{PgPool, Postgres, Transaction};
 
 use crate::{
     api::auth::{require_admin, CurrentUser},
+    api::ClientInfo,
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{GroupCreate, GroupMemberCreate, GroupMemberRead, GroupRead, GroupUpdate},
@@ -45,6 +46,7 @@ async fn list_groups(
 
 async fn create_group(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Json(payload): Json<GroupCreate>,
 ) -> Result<Json<GroupRead>, ApiError> {
@@ -60,10 +62,7 @@ async fn create_group(
         .fetch_one(&state.pool)
         .await?;
     if duplicate {
-        return Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "Group name already exists",
-        ));
+        return Err(ApiError::new(StatusCode::CONFLICT, "小组名称已存在"));
     }
     let mut transaction = state.pool.begin().await?;
     let group_id: i32 = sqlx::query_scalar(
@@ -84,6 +83,8 @@ async fn create_group(
         "create_group",
         "group",
         group_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -101,6 +102,7 @@ async fn get_group(
 
 async fn update_group(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Path(group_id): Path<i32>,
     Json(payload): Json<GroupUpdate>,
@@ -138,6 +140,8 @@ async fn update_group(
         "update_group",
         "group",
         group_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -166,6 +170,7 @@ async fn list_group_members(
 
 async fn add_group_member(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Path(group_id): Path<i32>,
     Json(payload): Json<GroupMemberCreate>,
@@ -206,6 +211,8 @@ async fn add_group_member(
         "update_group_member",
         "user",
         payload.user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -221,6 +228,7 @@ async fn add_group_member(
 
 async fn remove_group_member(
     State(state): State<AppState>,
+    client: ClientInfo,
     CurrentUser(admin): CurrentUser,
     Path((group_id, user_id)): Path<(i32, i32)>,
 ) -> Result<Json<serde_json::Value>, ApiError> {
@@ -244,6 +252,8 @@ async fn remove_group_member(
         "update_group_member",
         "user",
         user_id,
+        client.ip_opt(),
+        client.ua_opt(),
     )
     .await?;
     transaction.commit().await?;
@@ -278,6 +288,8 @@ async fn audit_group(
     action: &str,
     target_type: &str,
     target_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     write_audit(
         &mut **transaction,
@@ -288,6 +300,8 @@ async fn audit_group(
             target_type: Some(target_type),
             target_id: Some(target_id),
             detail: json!({}),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;
@@ -450,7 +464,7 @@ mod tests {
         )
         .await;
         assert_eq!(audit_status, StatusCode::OK);
-        assert!(logs
+        assert!(logs["items"]
             .as_array()
             .unwrap()
             .iter()

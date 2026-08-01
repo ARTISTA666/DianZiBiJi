@@ -8,6 +8,8 @@ pub struct AuditEvent<'a> {
     pub target_type: Option<&'a str>,
     pub target_id: Option<i32>,
     pub detail: Value,
+    pub ip_address: Option<String>,
+    pub user_agent: Option<String>,
 }
 
 pub async fn write_audit<'e, E>(executor: E, event: AuditEvent<'_>) -> Result<(), sqlx::Error>
@@ -20,7 +22,7 @@ where
             actor_user_id, project_id, action, target_type, target_id,
             detail_json, ip_address, user_agent
         )
-        VALUES ($1, $2, $3, $4, $5, $6, NULL, NULL)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         "#,
     )
     .bind(event.actor_user_id)
@@ -29,6 +31,8 @@ where
     .bind(event.target_type)
     .bind(event.target_id)
     .bind(event.detail)
+    .bind(event.ip_address)
+    .bind(event.user_agent)
     .execute(executor)
     .await?;
     Ok(())
