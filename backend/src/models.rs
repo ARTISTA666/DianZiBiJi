@@ -625,6 +625,7 @@ pub struct RagGraphContextRead {
     pub target_entity_type_label: String,
     pub confidence: f64,
     pub retrieval_score: f64,
+    pub relation_roles: Vec<String>,
 }
 
 #[derive(Clone, Debug, Serialize)]

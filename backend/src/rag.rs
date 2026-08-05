@@ -520,6 +520,15 @@ pub async fn relevant_graph_context(
                 target_entity_type: row.target_entity_type,
                 confidence: row.confidence,
                 retrieval_score: round6(score),
+                relation_roles: row
+                    .properties
+                    .get("roles")
+                    .and_then(Value::as_array)
+                    .into_iter()
+                    .flatten()
+                    .filter_map(Value::as_str)
+                    .map(str::to_owned)
+                    .collect(),
             },
         ));
     }
@@ -705,15 +714,54 @@ fn numeric_summary_lines(context: &[RagGraphContextRead], query: &str) -> Vec<St
 }
 
 fn graph_context_line(index: usize, item: &RagGraphContextRead) -> String {
+    let role_text = if item.relation_roles.is_empty() {
+        String::new()
+    } else {
+        format!(
+            "；用途：{}",
+            item.relation_roles
+                .iter()
+                .map(|role| role_label(role))
+                .collect::<Vec<_>>()
+                .join("、")
+        )
+    };
     format!(
-        "[G{}] {}（{}） {} {}（{}）\n",
+        "[G{}] {}（{}） {} {}（{}） (置信度 {:.2}{role_text})\n",
         index + 1,
         item.source_label,
         item.source_entity_type_label,
         item.relation_label,
         item.target_label,
-        item.target_entity_type_label
+        item.target_entity_type_label,
+        item.confidence
     )
+}
+
+fn role_label(value: &str) -> &str {
+    match value {
+        "cell_line" => "细胞系",
+        "cell_type" => "细胞类型",
+        "group" => "处理组",
+        "perturbation" => "干预方式",
+        "treatment" => "处理条件",
+        "culture" => "培养条件",
+        "replicate" => "生物学重复",
+        "alignment_software" => "比对软件",
+        "count_software" => "计数软件",
+        "processing_software" => "处理软件",
+        "geo_accession" => "GEO样本号",
+        "sra_accession" => "SRA实验号",
+        "biosample_accession" => "BioSample号",
+        "count_column" => "计数矩阵列名",
+        "reference_genome" => "参考基因组",
+        "total_count" => "总基因计数",
+        "detected_gene_rows" => "非零基因行数",
+        "count_matrix_gene_rows" => "计数矩阵基因条目数",
+        "data_boundary" => "数据边界",
+        "quality_result" => "质量指标",
+        _ => value,
+    }
 }
 
 fn graph_context_truncation_suffix() -> String {
@@ -1434,6 +1482,7 @@ mod tests {
                 target_entity_type_label: "试剂".to_owned(),
                 confidence: 0.8,
                 retrieval_score: 1.0,
+                relation_roles: vec![],
             })
             .collect::<Vec<_>>();
 
@@ -1464,6 +1513,7 @@ mod tests {
                 target_entity_type_label: "实验结果".to_owned(),
                 confidence: 1.0,
                 retrieval_score: 1.0,
+                relation_roles: vec!["alignment_software".to_owned()],
             },
             RagGraphContextRead {
                 relation_id: 2,
@@ -1479,6 +1529,7 @@ mod tests {
                 target_entity_type_label: "实验结果".to_owned(),
                 confidence: 1.0,
                 retrieval_score: 1.0,
+                relation_roles: vec![],
             },
         ];
 
@@ -1487,6 +1538,7 @@ mod tests {
         assert!(formatted.contains("结构化数值汇总（系统直接计算）："));
         assert!(formatted.contains("最高为 GSM2"));
         assert!(formatted.contains("total_count=12"));
+        assert!(formatted.contains("比对软件"));
     }
 
     #[test]

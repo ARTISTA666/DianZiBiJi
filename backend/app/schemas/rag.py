@@ -61,6 +61,7 @@ class RagGraphContextRead(BaseModel):
     target_entity_type_label: str
     confidence: float
     retrieval_score: float = 0
+    relation_roles: list[str] = Field(default_factory=list)
 
 
 class RagCitationAuditRead(BaseModel):
