@@ -166,6 +166,7 @@ class LocalRagService:
             .filter(StoredFile.id.in_([chunk.file_id for chunk in chunks]))
             .all()
         }
+        query_tokens = set(self._bm25_tokens(query))
         results = [
             RetrievedChunk(
                 chunk_id=chunk.id,
@@ -177,6 +178,7 @@ class LocalRagService:
                 retrieval_score=score,
             )
             for chunk, score in zip(chunks, scores, strict=True)
+            if score > 0 or query_tokens.intersection(self._bm25_tokens(chunk.content))
         ]
         results.sort(key=lambda item: (item.retrieval_score, -item.chunk_id), reverse=True)
         return results[: self._retrieval_limit(query)]

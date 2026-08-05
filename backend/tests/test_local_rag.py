@@ -132,9 +132,11 @@ def test_retrieval_excludes_stale_chunks_from_archived_files(db_engine) -> None:
         service = LocalRagService(embedding_client=FakeEmbeddingClient())
         vector_results = asyncio.run(service.retrieve(db, 1, "PCR"))
         bm25_results = asyncio.run(service.retrieve_bm25(db, 1, "PCR"))
+        empty_bm25_results = asyncio.run(service.retrieve_bm25(db, 1, "unmatched"))
 
         assert {result.file_id for result in vector_results} == {1}
         assert {result.file_id for result in bm25_results} == {1}
+        assert empty_bm25_results == []
 
 
 def test_hybrid_retrieval_unions_vector_and_bm25_candidates(db_engine) -> None:
