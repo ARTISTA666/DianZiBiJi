@@ -50,6 +50,7 @@ from app.services.kg_extraction import (  # noqa: F401
 # Re-export retrieval functions
 # ---------------------------------------------------------------------------
 from app.services.kg_retrieval import (  # noqa: F401
+    MAX_GRAPH_CONTEXT_CHARS,
     find_relevant_context as _find_relevant_context,
     format_context_for_prompt as _format_context_for_prompt,
     get_note_graph as _get_note_graph,
@@ -91,7 +92,7 @@ class KnowledgeGraphService:
         self,
         context_items: list[dict],
         query: str = "",
-        max_chars: int = 4000,
+        max_chars: int = MAX_GRAPH_CONTEXT_CHARS,
     ) -> str:
         return _format_context_for_prompt(context_items, query, max_chars)
 

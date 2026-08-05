@@ -32,6 +32,8 @@ from app.services.kg_constants import (
     source_natural_key,
 )
 
+MAX_GRAPH_CONTEXT_CHARS = 6_000
+
 
 # ---------------------------------------------------------------------------
 # Scoring weights
@@ -167,7 +169,7 @@ def get_note_graph(
 def format_context_for_prompt(
     context_items: list[dict],
     query: str = "",
-    max_chars: int = 4000,
+    max_chars: int = MAX_GRAPH_CONTEXT_CHARS,
 ) -> str:
     """Render scored context items into a text block for LLM prompts."""
     if not context_items:

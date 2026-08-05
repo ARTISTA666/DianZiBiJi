@@ -290,6 +290,24 @@ class TestFormatContextForPrompt:
         result = format_context_for_prompt(items, max_chars=200)
         assert len(result) <= 200
 
+    def test_default_budget_matches_rust_graph_context_budget(self):
+        result = format_context_for_prompt(
+            [
+                {
+                    "source_entity_type_label": "实验笔记",
+                    "source_label": f"Note {i}",
+                    "relation_label": "使用试剂",
+                    "target_entity_type_label": "试剂",
+                    "target_label": "Reagent" * 100,
+                    "confidence": 0.9,
+                    "relation_roles": [],
+                }
+                for i in range(50)
+            ]
+        )
+
+        assert 4_000 < len(result) <= 6_000
+
     def test_max_chars_truncation_keeps_whole_context_lines(self):
         result = format_context_for_prompt(
             [
