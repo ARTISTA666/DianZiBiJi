@@ -4,6 +4,8 @@ from pydantic import BaseModel, Field
 
 from app.models.ai import RagMode
 
+MAX_RAG_QUERY_CHARS = 4_000
+
 
 class RagDatasetRead(BaseModel):
     id: int
@@ -30,7 +32,7 @@ class RagStatusRead(BaseModel):
 
 
 class RagQueryRequest(BaseModel):
-    query: str = Field(min_length=1, max_length=2000)
+    query: str = Field(min_length=1, max_length=MAX_RAG_QUERY_CHARS)
     mode: RagMode = RagMode.AUTO
 
 

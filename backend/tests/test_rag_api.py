@@ -21,6 +21,8 @@ from app.models.note import ExperimentNote, NoteStatus
 from app.models.project import Project, ProjectMember, ProjectRole
 from app.models.rag import ProjectRagDataset, RagFileSync
 from app.models.user import User, UserRole
+from app.schemas.ai import AIExperimentRunRequest
+from app.schemas.rag import RagQueryRequest
 from app.services.deepseek import DeepSeekRequestError
 from app.services.embedding import EmbeddingServiceError
 from app.services.local_rag import RetrievedChunk
@@ -76,6 +78,15 @@ class FakeDeepSeekClient:
             "model": "deepseek-test",
             "usage": {"prompt_tokens": 10, "completion_tokens": 5},
         }
+
+
+def test_ai_question_limits_match_rust_contract():
+    assert len(RagQueryRequest(query="x" * 4_000).query) == 4_000
+    assert len(AIExperimentRunRequest(name="run", questions=["x" * 4_000]).questions[0]) == 4_000
+    with pytest.raises(ValueError):
+        RagQueryRequest(query="x" * 4_001)
+    with pytest.raises(ValueError):
+        AIExperimentRunRequest(name="run", questions=["x" * 4_001])
 
 
 @pytest.fixture()

@@ -1,6 +1,9 @@
 from datetime import date, datetime
+from typing import Annotated
 
 from pydantic import BaseModel, Field
+
+from app.schemas.rag import MAX_RAG_QUERY_CHARS
 
 
 class AIQueryEvaluationRequest(BaseModel):
@@ -154,7 +157,7 @@ class AgentGenerationRunRead(BaseModel):
 
 class AIExperimentRunRequest(BaseModel):
     name: str = Field(min_length=1, max_length=255)
-    questions: list[str] = Field(min_length=1, max_length=50)
+    questions: list[Annotated[str, Field(max_length=MAX_RAG_QUERY_CHARS)]] = Field(min_length=1, max_length=50)
     modes: list[str] = Field(
         default_factory=lambda: ["project_rag", "kg_enhanced_rag"],
         min_length=1,
