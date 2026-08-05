@@ -187,6 +187,10 @@ def _retrieve_graph_context(
     else:
         rag_mode = mode
     graph_context_text = graph_service.format_context_for_prompt(graph_context, query=query)
+    visible_graph_count = sum(
+        line.startswith("- [G") for line in graph_context_text.splitlines()
+    )
+    graph_context = graph_context[:visible_graph_count]
     return graph_context, fallback_reason, rag_mode, graph_context_text
 
 

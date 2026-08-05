@@ -290,6 +290,24 @@ class TestFormatContextForPrompt:
         result = format_context_for_prompt(items, max_chars=200)
         assert len(result) <= 200
 
+    def test_max_chars_truncation_keeps_whole_context_lines(self):
+        result = format_context_for_prompt(
+            [
+                {
+                    "source_entity_type_label": "实验笔记",
+                    "source_label": "Note",
+                    "relation_label": "使用试剂",
+                    "target_entity_type_label": "试剂",
+                    "target_label": "Reagent" * 80,
+                    "confidence": 0.9,
+                    "relation_roles": [],
+                }
+            ],
+            max_chars=200,
+        )
+
+        assert result == "实验知识图谱上下文："
+
     def test_multiple_items_numbered(self):
         items = [
             {

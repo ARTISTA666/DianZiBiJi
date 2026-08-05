@@ -220,6 +220,26 @@ def test_graph_retrieval_thread_uses_independent_session(db_engine, monkeypatch)
     assert seen[0][0].bind is db_engine
 
 
+def test_graph_context_list_matches_rendered_prompt(monkeypatch) -> None:
+    class FakeGraphService:
+        def find_relevant_context(self, _db, _project_id, _query):
+            return [{"relation_id": index} for index in range(1, 4)]
+
+        def format_context_for_prompt(self, _context, query=""):
+            return "实验知识图谱上下文：\n- [G1] first\n- [G2] second"
+
+    monkeypatch.setattr(rag.query, "KnowledgeGraphService", FakeGraphService)
+
+    context, fallback, mode, prompt = rag.query._retrieve_graph_context(
+        object(), 1, "query", "kg_enhanced_rag"
+    )
+
+    assert len(context) == 2
+    assert fallback is None
+    assert mode == "kg_enhanced_rag"
+    assert "[G2]" in prompt
+
+
 def test_unauthenticated_status_returns_401(test_app):
     _, SessionLocal, _ = test_app
     app = FastAPI()

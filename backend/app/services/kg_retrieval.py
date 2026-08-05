@@ -185,7 +185,15 @@ def format_context_for_prompt(
             f"(置信度 {item['confidence']:.2f}{role_text})"
         )
     text = "\n".join(lines)
-    return text[:max_chars]
+    if len(text) <= max_chars:
+        return text
+    visible_lines = [lines[0]]
+    for line in lines[1:]:
+        candidate = "\n".join((*visible_lines, line))
+        if len(candidate) > max_chars:
+            break
+        visible_lines.append(line)
+    return "\n".join(visible_lines)[:max_chars]
 
 
 # ---------------------------------------------------------------------------
