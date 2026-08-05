@@ -630,20 +630,26 @@ fn review_answer(body: &str, note_ids: &[i32], file_ids: &[i32], relation_ids: &
     let notes: HashSet<i32> = note_ids.iter().copied().collect();
     let files: HashSet<i32> = file_ids.iter().copied().collect();
     let relations: HashSet<i32> = relation_ids.iter().copied().collect();
-    let citations: Vec<(String, i32)> = regex
+    let citations: Vec<(String, Option<i32>, String)> = regex
         .captures_iter(body)
-        .filter_map(|capture| Some((capture[1].to_owned(), capture[2].parse().ok()?)))
+        .map(|capture| {
+            let kind = capture[1].to_owned();
+            let raw_id = capture[2].to_owned();
+            let id = raw_id.parse::<i32>().ok();
+            let marker = format!("[{kind}{raw_id}]");
+            (kind, id, marker)
+        })
         .collect();
     let invalid: Vec<String> = citations
         .iter()
-        .filter_map(|(kind, id)| {
-            let valid = match kind.as_str() {
-                "N" => notes.contains(id),
-                "F" => files.contains(id),
-                "R" => relations.contains(id),
+        .filter_map(|(kind, id, marker)| {
+            let valid = match (kind.as_str(), id) {
+                ("N", Some(id)) => notes.contains(id),
+                ("F", Some(id)) => files.contains(id),
+                ("R", Some(id)) => relations.contains(id),
                 _ => false,
             };
-            (!valid).then(|| format!("[{kind}{id}]"))
+            (!valid).then(|| marker.clone())
         })
         .collect();
     let evidence_available = !(notes.is_empty() && files.is_empty() && relations.is_empty());
@@ -816,6 +822,17 @@ mod tests {
                 "invalid_citations": ["[N999]"],
                 "message": "发现 1 个无效引用：[N999]。"
             })
+        );
+    }
+
+    #[test]
+    fn test_agent_reviewer_rejects_overflowing_citation_numbers() {
+        let review = review_answer("有效 [N1]，非法 [N999999999999999999999]", &[1], &[], &[]);
+
+        assert_eq!(review["passed"], false);
+        assert_eq!(
+            review["invalid_citations"],
+            json!(["[N999999999999999999999]"])
         );
     }
 

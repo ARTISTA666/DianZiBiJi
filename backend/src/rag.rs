@@ -754,19 +754,25 @@ pub fn audit_citations(
     graph_count: usize,
 ) -> RagCitationAuditRead {
     let regex = Regex::new(r"(?i)\[([SG])(\d+)\]").unwrap();
-    let citations: Vec<(String, usize)> = regex
+    let citations: Vec<(String, Option<usize>, String)> = regex
         .captures_iter(answer)
-        .filter_map(|capture| Some((capture[1].to_uppercase(), capture[2].parse::<usize>().ok()?)))
+        .map(|capture| {
+            let kind = capture[1].to_uppercase();
+            let raw_index = capture[2].to_owned();
+            let index = raw_index.parse::<usize>().ok();
+            let marker = format!("[{kind}{raw_index}]");
+            (kind, index, marker)
+        })
         .collect();
     let invalid_citations: Vec<String> = citations
         .iter()
-        .filter_map(|(kind, index)| {
+        .filter_map(|(kind, index, marker)| {
             let limit = if kind == "S" {
                 source_count
             } else {
                 graph_count
             };
-            (*index < 1 || *index > limit).then(|| format!("[{kind}{index}]"))
+            (!index.is_some_and(|index| (1..=limit).contains(&index))).then(|| marker.clone())
         })
         .collect();
     let has_evidence = source_count > 0 || graph_count > 0;
@@ -1088,6 +1094,14 @@ mod tests {
         let audit = audit_citations("Result [S1], bad [G2]", 1, 1);
         assert!(!audit.passed);
         assert_eq!(audit.invalid_citations, ["[G2]"]);
+    }
+
+    #[test]
+    fn test_citation_audit_rejects_overflowing_source_numbers() {
+        let audit = audit_citations("Valid [S1], malformed [S999999999999999999999]", 1, 0);
+
+        assert!(!audit.passed);
+        assert_eq!(audit.invalid_citations, ["[S999999999999999999999]"]);
     }
 
     #[test]
