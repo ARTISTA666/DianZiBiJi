@@ -674,11 +674,21 @@ pub async fn generate(
                         "DeepSeek returned an empty completion".to_owned(),
                     ));
                 }
+                let provider_usage = body.get("usage").cloned().unwrap_or_else(|| json!({}));
+                let usage = if let Some(mut fields) = provider_usage.as_object().cloned() {
+                    fields.insert("generation_attempts".to_owned(), json!(attempt + 1));
+                    Value::Object(fields)
+                } else {
+                    json!({
+                        "provider_usage": provider_usage,
+                        "generation_attempts": attempt + 1
+                    })
+                };
                 return Ok(GenerationResult {
                     answer,
                     request_id: request_id.or_else(|| body["id"].as_str().map(str::to_owned)),
                     model: body["model"].as_str().unwrap_or(model).to_owned(),
-                    usage: body.get("usage").cloned().unwrap_or_else(|| json!({})),
+                    usage,
                 });
             }
             Ok(response) => {
@@ -1475,6 +1485,9 @@ mod tests {
         .unwrap();
 
         assert_eq!(second.answer, "ok");
-        assert_eq!(first.await.unwrap().unwrap().answer, "ok");
+        assert_eq!(second.usage["generation_attempts"], 1);
+        let first = first.await.unwrap().unwrap();
+        assert_eq!(first.answer, "ok");
+        assert_eq!(first.usage["generation_attempts"], 2);
     }
 }
