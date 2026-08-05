@@ -626,7 +626,7 @@ fn short_value(value: &Value) -> String {
 }
 
 fn review_answer(body: &str, note_ids: &[i32], file_ids: &[i32], relation_ids: &[i32]) -> Value {
-    let regex = Regex::new(r"\[([NFR])(\d+)\]").unwrap();
+    let regex = Regex::new(r"\[([NFR])([^\]]*)\]").unwrap();
     let notes: HashSet<i32> = note_ids.iter().copied().collect();
     let files: HashSet<i32> = file_ids.iter().copied().collect();
     let relations: HashSet<i32> = relation_ids.iter().copied().collect();
@@ -837,6 +837,15 @@ mod tests {
             review["invalid_citations"],
             json!(["[N999999999999999999999]"])
         );
+    }
+
+    #[test]
+    fn test_agent_reviewer_rejects_malformed_markers() {
+        let review = review_answer("有效 [N1]，非法 [N系统] [N1-N2]", &[1], &[], &[]);
+
+        assert_eq!(review["passed"], false);
+        assert_eq!(review["citation_count"], 3);
+        assert_eq!(review["invalid_citations"], json!(["[N系统]", "[N1-N2]"]));
     }
 
     #[test]

@@ -777,7 +777,7 @@ pub fn audit_citations(
     source_count: usize,
     graph_count: usize,
 ) -> RagCitationAuditRead {
-    let regex = Regex::new(r"(?i)\[([SG])(\d+)\]").unwrap();
+    let regex = Regex::new(r"(?i)\[([SG])([^\]]*)\]").unwrap();
     let citations: Vec<(String, Option<usize>, String)> = regex
         .captures_iter(answer)
         .map(|capture| {
@@ -1127,6 +1127,15 @@ mod tests {
 
         assert!(!audit.passed);
         assert_eq!(audit.invalid_citations, ["[S999999999999999999999]"]);
+    }
+
+    #[test]
+    fn test_citation_audit_rejects_malformed_markers() {
+        let audit = audit_citations("Valid [S1], malformed [S系统] and [S1-S2]", 1, 0);
+
+        assert!(!audit.passed);
+        assert_eq!(audit.citation_count, 3);
+        assert_eq!(audit.invalid_citations, ["[S系统]", "[S1-S2]"]);
     }
 
     #[test]

@@ -30,8 +30,8 @@ def audit_citations(
         to the set of valid integer indices for that prefix.
     pattern:
         Optional regex pattern override.  Must contain two capture groups:
-        ``(marker)(index)``.  Defaults to ``"[{prefixes}]\\d+"`` built from
-        the keys of *allowed*.
+        ``(marker)(index)``.  The default also captures malformed marker
+        bodies so they cannot bypass citation validation.
     flags:
         Regex flags forwarded to :func:`re.findall` (e.g. ``re.IGNORECASE``).
 
@@ -55,17 +55,21 @@ def audit_citations(
             "message": "该回答没有可引用的项目证据。",
         }
     if pattern is None:
-        pattern = rf"\[([{prefixes}])(\d+)\]"
+        pattern = rf"\[([{prefixes}])([^\]]*)\]"
 
-    citations = [
-        (kind.upper() if flags & re.IGNORECASE else kind, int(idx))
-        for kind, idx in re.findall(pattern, answer, flags)
-    ]
+    citations = []
+    for kind, raw_index in re.findall(pattern, answer, flags):
+        normalized_kind = kind.upper() if flags & re.IGNORECASE else kind
+        try:
+            index = int(raw_index) if raw_index.isdigit() else None
+        except ValueError:
+            index = None
+        citations.append((normalized_kind, index, f"[{normalized_kind}{raw_index}]"))
 
     invalid = [
-        f"[{kind}{item_id}]"
-        for kind, item_id in citations
-        if item_id not in allowed.get(kind, set())
+        marker
+        for kind, item_id, marker in citations
+        if item_id is None or item_id not in allowed.get(kind, set())
     ]
 
     has_evidence = any(bool(v) for v in allowed.values())
