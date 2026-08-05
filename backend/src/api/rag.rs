@@ -1852,7 +1852,7 @@ async fn list_blind_batches(
             0
         } else {
             sqlx::query_scalar::<_, i64>(
-                "SELECT count(*) FROM ai_query_evaluations WHERE query_log_id = ANY($1) AND evaluator_user_id = $2",
+                "SELECT count(*) FROM ai_query_evaluations WHERE query_log_id = ANY($1) AND evaluator_user_id = $2 AND review_protocol = 'method_masked'",
             )
             .bind(&log_ids)
             .bind(user.id)

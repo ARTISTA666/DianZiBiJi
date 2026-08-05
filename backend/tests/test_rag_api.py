@@ -885,6 +885,52 @@ def test_evaluator_only_account_uses_method_masked_review_api(test_app):
     assert client.get("/projects/1/rag/blind-review/batches").status_code == 200
 
 
+def test_blind_review_progress_ignores_unblinded_ratings(test_app):
+    client, SessionLocal, active_user_id = test_app
+    with SessionLocal() as db:
+        db.add_all(
+            [
+                AIExperimentRun(
+                    id=499,
+                    project_id=1,
+                    created_by=1,
+                    name="Protocol-aware progress",
+                    status="completed",
+                    questions_json=["Q1"],
+                    modes_json=["project_rag"],
+                    total_cases=1,
+                    completed_cases=1,
+                ),
+                AIQueryLog(
+                    id=4991,
+                    project_id=1,
+                    user_id=1,
+                    question="Q1",
+                    answer="A1 [S1]",
+                    rag_mode="project_rag",
+                    experiment_run_id=499,
+                    experiment_case_index=1,
+                    experiment_execution_order=1,
+                ),
+                AIQueryEvaluation(
+                    query_log_id=4991,
+                    evaluator_user_id=4,
+                    score=5,
+                    is_accurate=True,
+                    is_traceable=True,
+                    review_protocol="unblinded",
+                ),
+            ]
+        )
+        db.commit()
+
+    active_user_id["value"] = 4
+    response = client.get("/projects/1/rag/blind-review/batches")
+    assert response.status_code == 200
+    batch = next(item for item in response.json() if item["total_items"] == 1)
+    assert batch["completed_items"] == 0
+
+
 def test_blind_review_export_rejects_inconsistent_reviewer_sets(test_app):
     client, SessionLocal, active_user_id = test_app
     with SessionLocal() as db:

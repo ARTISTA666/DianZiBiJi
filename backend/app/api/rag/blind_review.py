@@ -202,6 +202,7 @@ def list_blind_review_batches(
                 .filter(
                     AIQueryEvaluation.query_log_id.in_(log_ids or [0]),
                     AIQueryEvaluation.evaluator_user_id == user.id,
+                    AIQueryEvaluation.review_protocol == ReviewProtocol.METHOD_MASKED.value,
                 )
                 .count()
             )
