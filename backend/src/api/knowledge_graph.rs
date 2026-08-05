@@ -129,8 +129,14 @@ async fn get_note_knowledge_graph(
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
 ) -> Result<Json<KnowledgeGraphRead>, ApiError> {
-    let (project_id, _) = fetch_note_context(&state, note_id).await?;
+    let (project_id, status) = fetch_note_context(&state, note_id).await?;
     require_project_access(&state.pool, &user, project_id).await?;
+    if status != "approved" {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "Only approved notes have a knowledge graph",
+        ));
+    }
     let mut transaction = state.pool.begin().await?;
     let (entities, relations) = note_graph(&mut transaction, project_id, note_id).await?;
     transaction.commit().await?;
@@ -284,6 +290,15 @@ mod tests {
         )
         .await;
         let note_id = note["id"].as_i64().unwrap();
+        let (draft_graph_status, _) = call(
+            &app,
+            "GET",
+            &format!("/notes/{note_id}/kg/graph"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(draft_graph_status, StatusCode::CONFLICT);
         call(
             &app,
             "POST",
