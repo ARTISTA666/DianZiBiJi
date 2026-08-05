@@ -596,10 +596,21 @@ fn cap_context(context: String) -> String {
     let suffix = format!(
         "\n\n[项目上下文已截断至 {MAX_AGENT_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]"
     );
-    let prefix_len = MAX_AGENT_CONTEXT_CHARS.saturating_sub(suffix.chars().count());
-    let mut capped: String = context.chars().take(prefix_len).collect();
-    capped.push_str(&suffix);
-    capped
+    let suffix_len = suffix.chars().count();
+    let mut visible_lines = Vec::new();
+    let mut visible_length = 0;
+    for line in context.lines() {
+        let extra = line.chars().count() + usize::from(!visible_lines.is_empty());
+        if visible_length + extra + suffix_len > MAX_AGENT_CONTEXT_CHARS {
+            break;
+        }
+        visible_lines.push(line);
+        visible_length += extra;
+    }
+    if visible_lines.is_empty() {
+        return suffix;
+    }
+    format!("{}{}", visible_lines.join("\n"), suffix)
 }
 
 fn append_json_fields(lines: &mut Vec<String>, value: &Value, limit: usize) {
@@ -868,8 +879,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        review_answer, select_relations, source_context, visible_citation_ids, SourceNote,
-        SourceRelation, MAX_AGENT_CONTEXT_CHARS,
+        cap_context, review_answer, select_relations, source_context, visible_citation_ids,
+        SourceNote, SourceRelation, MAX_AGENT_CONTEXT_CHARS,
     };
     use crate::{
         build_app,
@@ -1101,6 +1112,21 @@ mod tests {
             assert!(context.find("知识图谱依据").unwrap() < detail_pos);
         }
         assert!(context.contains("项目上下文已截断"));
+    }
+
+    #[test]
+    fn test_agent_context_cap_keeps_whole_visible_lines() {
+        let context = format!(
+            "- [N1] visible\n{}\n- [N2] hidden",
+            "x".repeat(MAX_AGENT_CONTEXT_CHARS)
+        );
+        let capped = cap_context(context);
+        let suffix = format!(
+            "\n\n[项目上下文已截断至 {MAX_AGENT_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]"
+        );
+
+        assert_eq!(capped, format!("- [N1] visible{suffix}"));
+        assert!(!capped.contains("[N2]"));
     }
 
     async fn mock_deepseek() -> String {
