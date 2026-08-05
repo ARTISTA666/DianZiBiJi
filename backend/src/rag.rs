@@ -380,10 +380,16 @@ pub async fn retrieve(
     };
     Ok(scored
         .into_iter()
-        .filter(|(score, _)| *score > 0.0 || query_tokens.is_empty())
+        .filter(|(score, _)| {
+            include_retrieval_candidate(*score, bm25_only, query_tokens.is_empty())
+        })
         .map(|(_, source)| source)
         .take(limit)
         .collect())
+}
+
+fn include_retrieval_candidate(score: f64, bm25_only: bool, query_tokens_empty: bool) -> bool {
+    score > 0.0 || (!bm25_only && query_tokens_empty)
 }
 
 async fn fetch_vector_candidates(
@@ -1056,11 +1062,11 @@ mod tests {
 
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        format_graph_context, format_sources, generate, graph_context_budget, is_collection_query,
-        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
-        should_retry_generation_status, tokens, truncate_error_detail,
-        validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
-        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        format_graph_context, format_sources, generate, graph_context_budget,
+        include_retrieval_candidate, is_collection_query, meets_graph_threshold,
+        rag_insert_batch_ranges, relation_hints, retrieve, should_retry_generation_status, tokens,
+        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow,
+        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1273,6 +1279,13 @@ mod tests {
         ] {
             assert!(!should_retry_generation_status(status));
         }
+    }
+
+    #[test]
+    fn test_empty_bm25_queries_do_not_return_zero_score_documents() {
+        assert!(!include_retrieval_candidate(0.0, true, true));
+        assert!(include_retrieval_candidate(0.7, true, true));
+        assert!(include_retrieval_candidate(0.0, false, true));
     }
 
     #[test]
