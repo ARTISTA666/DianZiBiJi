@@ -337,6 +337,20 @@ def test_auto_graph_budget_falls_back_when_no_relation_is_rendered(monkeypatch) 
     assert prompt == ""
 
 
+def test_pure_llm_does_not_require_rag_dataset(test_app):
+    client, _session_local, active_user_id = test_app
+    active_user_id["value"] = 1
+
+    response = client.post(
+        "/projects/1/rag/query",
+        json={"query": "general question", "mode": "pure_llm"},
+    )
+
+    assert response.status_code == 200
+    assert response.json()["sources"] == []
+    assert response.json()["graph_context"] == []
+
+
 def test_structured_query_reports_graph_budget_fallback(test_app, monkeypatch) -> None:
     client, SessionLocal, active_user_id = test_app
     active_user_id["value"] = 1

@@ -397,9 +397,9 @@ async def _execute_rag_query(
 ) -> RagQueryResponse:
     settings = get_settings()
     dataset = _get_project_dataset(db, project_id)
-    if dataset is None:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
     if mode in EMBEDDING_RAG_MODES:
+        if dataset is None:
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
         _require_compatible_embedding(dataset)
 
     started = perf_counter()
