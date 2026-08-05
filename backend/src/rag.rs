@@ -65,7 +65,7 @@ const VECTOR_CANDIDATE_SQL: &str = r#"
       AND f.status = 'APPROVED'::filestatus
       AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
       AND f.knowledge_sync_status = 'synced'
-    ORDER BY c.embedding <=> $2::vector
+    ORDER BY c.embedding <=> $2::vector, c.id
     LIMIT $3
 "#;
 
@@ -369,6 +369,20 @@ pub async fn retrieve(
             .0
             .partial_cmp(&left.0)
             .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| {
+                right
+                    .1
+                    .vector_score
+                    .unwrap_or_default()
+                    .partial_cmp(&left.1.vector_score.unwrap_or_default())
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
+            .then_with(|| {
+                left.1
+                    .chunk_id
+                    .unwrap_or_default()
+                    .cmp(&right.1.chunk_id.unwrap_or_default())
+            })
     });
     let limit = if is_collection_query(query) {
         settings

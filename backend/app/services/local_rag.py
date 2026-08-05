@@ -39,6 +39,11 @@ class RetrievedChunk:
         }
 
 
+def _retrieval_order_key(item: RetrievedChunk) -> tuple[float, float, int]:
+    """Keep equal-score evidence ordering stable across database backends."""
+    return (-item.retrieval_score, -item.vector_score, item.chunk_id)
+
+
 def validate_embedding_count(chunks: list[str], vectors: list[list[float]]) -> None:
     if len(vectors) != len(chunks):
         raise ValueError(
@@ -94,7 +99,10 @@ class LocalRagService:
         if db.bind is not None and db.bind.dialect.name == "postgresql":
             vector_candidates = (
                 active_query
-                .order_by(RagDocumentChunk.embedding.cosine_distance(query_vector))
+                .order_by(
+                    RagDocumentChunk.embedding.cosine_distance(query_vector),
+                    RagDocumentChunk.id,
+                )
                 .limit(candidate_k)
                 .all()
             )
@@ -142,7 +150,7 @@ class LocalRagService:
                     retrieval_score=retrieval_score,
                 )
             )
-        results.sort(key=lambda item: (item.retrieval_score, item.vector_score), reverse=True)
+        results.sort(key=_retrieval_order_key)
         return results[: self._retrieval_limit(query)]
 
     async def retrieve_bm25(self, db: Session, project_id: int, query: str) -> list[RetrievedChunk]:

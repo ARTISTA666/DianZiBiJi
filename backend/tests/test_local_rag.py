@@ -12,7 +12,12 @@ from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, Store
 from app.models.project import Project
 from app.models.rag import RagDocumentChunk
 from app.models.user import User, UserRole
-from app.services.local_rag import LocalRagService, RetrievedChunk, validate_embedding_count
+from app.services.local_rag import (
+    LocalRagService,
+    RetrievedChunk,
+    _retrieval_order_key,
+    validate_embedding_count,
+)
 
 
 class FakeEmbeddingClient:
@@ -33,6 +38,15 @@ def test_collection_questions_expand_retrieval_without_exceeding_candidates() ->
 
     service.settings.rag_collection_retrieval_top_k = 50
     assert service._retrieval_limit("列出全部样本") == 30
+
+
+def test_retrieval_order_is_deterministic_for_equal_scores() -> None:
+    sources = [
+        RetrievedChunk(index, 1, f"source-{index}", "", 0.8, 0.5, 0.7)
+        for index in (9, 3, 7)
+    ]
+
+    assert [source.chunk_id for source in sorted(sources, key=_retrieval_order_key)] == [3, 7, 9]
 
 
 def test_source_prompt_keeps_twelve_standard_chunks() -> None:
