@@ -1255,7 +1255,7 @@ mod tests {
                 "RustCandidates123!".to_owned(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
-            ("RAG_VECTOR_CANDIDATE_K".to_owned(), "1".to_owned()),
+            ("RAG_VECTOR_CANDIDATE_K".to_owned(), "2".to_owned()),
             ("RAG_RETRIEVAL_TOP_K".to_owned(), "2".to_owned()),
             ("RAG_COLLECTION_RETRIEVAL_TOP_K".to_owned(), "2".to_owned()),
         ]))
@@ -1283,7 +1283,7 @@ mod tests {
         .unwrap();
 
         let mut file_ids = Vec::new();
-        for index in 1..=3 {
+        for index in 1..=4 {
             let file_id: i32 = sqlx::query_scalar(
                 r#"
                 INSERT INTO files (
@@ -1308,24 +1308,36 @@ mod tests {
         }
 
         let query_embedding = hash_embedding("raremarker", 512);
-        let mut orthogonal_embedding = vec![0.0_f32; 512];
         let orthogonal_index = query_embedding
             .iter()
             .position(|value| value.abs() < f32::EPSILON)
             .unwrap();
+        let query_index = query_embedding
+            .iter()
+            .position(|value| value.abs() >= f32::EPSILON)
+            .unwrap();
+        let mut near_embedding = vec![0.0_f32; 512];
+        near_embedding[query_index] = 0.99;
+        near_embedding[orthogonal_index] = 0.1;
+        let mut medium_embedding = vec![0.0_f32; 512];
+        medium_embedding[query_index] = 0.95;
+        medium_embedding[orthogonal_index] = 0.31;
+        let mut orthogonal_embedding = vec![0.0_f32; 512];
         orthogonal_embedding[orthogonal_index] = 1.0;
         let contents = [
             "unrelated vector-nearest content",
+            "another vector-nearest document",
             "raremarker exact lexical evidence",
             "another unrelated document",
         ];
         let embeddings = [
             vector_literal(&query_embedding),
+            vector_literal(&near_embedding),
             vector_literal(&orthogonal_embedding),
-            vector_literal(&orthogonal_embedding),
+            vector_literal(&medium_embedding),
         ];
         let mut chunk_ids = Vec::new();
-        for index in 0..3 {
+        for index in 0..4 {
             let chunk_id: i32 = sqlx::query_scalar(
                 r#"
                 INSERT INTO rag_document_chunks (
@@ -1348,11 +1360,14 @@ mod tests {
         }
 
         let vector_candidates =
-            fetch_vector_candidates(&pool, project_id, &vector_literal(&query_embedding), 1)
+            fetch_vector_candidates(&pool, project_id, &vector_literal(&query_embedding), 2)
                 .await
                 .unwrap();
-        assert_eq!(vector_candidates.len(), 1);
+        assert_eq!(vector_candidates.len(), 2);
         assert_eq!(vector_candidates[0].id, chunk_ids[0]);
+        assert!(!vector_candidates
+            .iter()
+            .any(|candidate| candidate.id == chunk_ids[2]));
 
         let mut explain = pool.begin().await.unwrap();
         sqlx::raw_sql(
