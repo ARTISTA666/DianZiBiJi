@@ -113,8 +113,11 @@ def parse_completion_response(response: httpx.Response, fallback_model: str) -> 
     choices = data.get("choices")
     if not isinstance(choices, list) or not choices:
         raise DeepSeekRequestError("DeepSeek did not return a completion")
-    message = choices[0].get("message") if isinstance(choices[0], dict) else {}
-    answer = str(message.get("content") or "").strip()
+    message = choices[0].get("message") if isinstance(choices[0], dict) else None
+    if not isinstance(message, dict):
+        raise DeepSeekRequestError("DeepSeek did not return a completion")
+    content = message.get("content")
+    answer = content.strip() if isinstance(content, str) else ""
     if not answer:
         raise DeepSeekRequestError("DeepSeek returned an empty completion")
     provider_usage = data.get("usage")

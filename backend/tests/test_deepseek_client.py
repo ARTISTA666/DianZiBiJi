@@ -7,7 +7,12 @@ import httpx
 import pytest
 
 import app.services.deepseek as deepseek_module
-from app.services.deepseek import DeepSeekClient, DeepSeekRequestError, should_retry_status
+from app.services.deepseek import (
+    DeepSeekClient,
+    DeepSeekRequestError,
+    parse_completion_response,
+    should_retry_status,
+)
 
 
 class FailingAsyncClient:
@@ -125,6 +130,18 @@ def test_successful_response_must_contain_valid_json(monkeypatch) -> None:
 
     with pytest.raises(DeepSeekRequestError, match="invalid JSON"):
         asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
+
+
+def test_completion_parser_rejects_non_object_message() -> None:
+    request = httpx.Request("POST", "https://api.deepseek.com/chat/completions")
+    response = httpx.Response(
+        200,
+        request=request,
+        json={"choices": [{"message": "malformed"}]},
+    )
+
+    with pytest.raises(DeepSeekRequestError, match="did not return a completion"):
+        parse_completion_response(response, "test-model")
 
 
 def test_retries_malformed_success_response(monkeypatch) -> None:
