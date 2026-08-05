@@ -1161,18 +1161,100 @@ fn relation_hints(query: &str) -> HashSet<&'static str> {
     let mut hints = HashSet::new();
     let query_tokens = tokens(query);
     for (relation, words) in [
-        ("has_note", &["笔记", "记录", "note"] as &[&str]),
-        ("uses_reagent", &["试剂", "材料", "reagent", "use"]),
-        ("uses_instrument", &["仪器", "设备", "instrument"]),
-        ("uses_sample", &["样本", "样品", "sample"]),
-        ("produces_result", &["结果", "结论", "result", "count"]),
-        ("has_attachment", &["附件", "文件", "file"]),
-        ("created_by", &["谁", "创建", "creator"]),
-        ("has_experiment_type", &["实验类型", "type"]),
-        ("has_biological_source", &["细胞", "来源", "cell"]),
-        ("has_condition", &["条件", "处理", "对照", "condition"]),
-        ("uses_software", &["软件", "比对", "software"]),
-        ("has_identifier", &["登录号", "标识", "accession"]),
+        (
+            "has_note",
+            &["笔记", "记录", "已审核", "note", "notes"] as &[&str],
+        ),
+        (
+            "uses_reagent",
+            &["试剂", "材料", "药品", "reagent", "reagents"],
+        ),
+        (
+            "uses_instrument",
+            &["仪器", "设备", "instrument", "instruments"],
+        ),
+        ("uses_sample", &["样本", "样品", "sample", "samples"]),
+        (
+            "produces_result",
+            &[
+                "结果",
+                "观察",
+                "结论",
+                "计数",
+                "行数",
+                "条目",
+                "最高",
+                "最低",
+                "相差",
+                "层级",
+                "不能",
+                "不得",
+                "差异表达",
+                "result",
+                "results",
+                "total",
+                "detected",
+                "fastq",
+                "significance",
+            ],
+        ),
+        (
+            "has_attachment",
+            &["附件", "资料", "文件", "attachment", "file"],
+        ),
+        (
+            "created_by",
+            &["谁", "人员", "创建", "负责人", "user", "creator"],
+        ),
+        ("has_experiment_type", &["类型", "实验类型", "type"]),
+        (
+            "has_biological_source",
+            &["细胞", "细胞系", "细胞类型", "来源", "cell", "source"],
+        ),
+        (
+            "has_condition",
+            &[
+                "分组",
+                "组别",
+                "条件",
+                "处理",
+                "培养",
+                "重复",
+                "对照",
+                "敲低",
+                "condition",
+                "treatment",
+                "replicate",
+                "control",
+                "knockdown",
+            ],
+        ),
+        (
+            "uses_software",
+            &[
+                "软件",
+                "比对",
+                "计数软件",
+                "处理流程",
+                "software",
+                "aligner",
+            ],
+        ),
+        (
+            "has_identifier",
+            &[
+                "标识符",
+                "登录号",
+                "样本号",
+                "列名",
+                "参考基因组",
+                "geo",
+                "sra",
+                "biosample",
+                "accession",
+                "genome",
+            ],
+        ),
     ] {
         if words.iter().any(|word| {
             tokens(word).iter().any(|hint_token| {
@@ -1559,6 +1641,10 @@ mod tests {
     fn test_relation_hints_do_not_match_substrings() {
         assert!(!relation_hints("user").contains("uses_reagent"));
         assert!(relation_hints("Which reagents were used?").contains("uses_reagent"));
+        assert!(relation_hints("列出所有资料").contains("has_attachment"));
+        assert!(relation_hints("总计数和检测行数").contains("produces_result"));
+        assert!(relation_hints("负责人是谁").contains("created_by"));
+        assert!(relation_hints("count software").contains("uses_software"));
     }
 
     #[test]
