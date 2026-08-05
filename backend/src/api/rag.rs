@@ -1742,7 +1742,7 @@ async fn experiment_csv_response(
     .bind(run.id)
     .fetch_all(&state.pool)
     .await?;
-    let mut csv = String::from("\u{feff}experiment_run_id,question_index,question,mode,repetition_index,execution_order,status,query_log_id,answer,source_count,graph_hit_count,response_ms,provider,model,error\r\n");
+    let mut csv = String::from("\u{feff}experiment_run_id,question_index,question,mode,repetition_index,execution_order,status,query_log_id,answer,source_count,graph_hit_count,response_ms,provider,model,prompt_version,fallback_reason,sources_json,graph_context_json,usage_json,error\r\n");
     for log in &logs {
         csv.push_str(
             &[
@@ -1767,6 +1767,11 @@ async fn experiment_csv_response(
                 log.response_ms.to_string(),
                 csv_escape(&log.provider),
                 csv_escape(log.model_name.as_deref().unwrap_or_default()),
+                csv_escape(&log.prompt_version),
+                csv_escape(log.fallback_reason.as_deref().unwrap_or_default()),
+                csv_escape(&log.sources_json.to_string()),
+                csv_escape(&log.graph_context_json.to_string()),
+                csv_escape(&log.usage_json.to_string()),
                 csv_escape(log.error_message.as_deref().unwrap_or_default()),
             ]
             .join(","),
@@ -1829,6 +1834,11 @@ fn append_missing_experiment_errors(
                 "0".to_owned(),
                 csv_escape("system"),
                 String::new(),
+                String::new(),
+                String::new(),
+                csv_escape("[]"),
+                csv_escape("[]"),
+                csv_escape("{}"),
                 csv_escape(error["error"].as_str().unwrap_or_default()),
             ]
             .join(","),
@@ -3010,7 +3020,7 @@ mod tests {
 
         assert_eq!(
             csv,
-            "9,2,'=SUM(A1),project_rag,1,2,failed,,,0,0,0,system,,timeout\r\n"
+            "9,2,'=SUM(A1),project_rag,1,2,failed,,,0,0,0,system,,,,[],[],{},timeout\r\n"
         );
     }
 
