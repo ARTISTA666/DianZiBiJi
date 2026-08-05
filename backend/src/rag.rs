@@ -855,14 +855,22 @@ fn relation_hints(query: &str) -> HashSet<&'static str> {
         ("has_identifier", &["登录号", "标识", "accession"]),
     ] {
         if words.iter().any(|word| {
-            tokens(word)
-                .iter()
-                .any(|token| query_tokens.contains(token))
+            tokens(word).iter().any(|hint_token| {
+                query_tokens
+                    .iter()
+                    .any(|query_token| hint_tokens_match(query_token, hint_token))
+            })
         }) {
             hints.insert(relation);
         }
     }
     hints
+}
+
+fn hint_tokens_match(left: &str, right: &str) -> bool {
+    left == right
+        || (left.len() > 3 && left.strip_suffix('s') == Some(right))
+        || (right.len() > 3 && right.strip_suffix('s') == Some(left))
 }
 
 fn relation_label(value: &str) -> &str {
@@ -1004,7 +1012,7 @@ mod tests {
     #[test]
     fn test_relation_hints_do_not_match_substrings() {
         assert!(!relation_hints("user").contains("uses_reagent"));
-        assert!(relation_hints("Which reagent was used?").contains("uses_reagent"));
+        assert!(relation_hints("Which reagents were used?").contains("uses_reagent"));
     }
 
     #[test]
