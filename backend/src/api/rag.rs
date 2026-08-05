@@ -1588,7 +1588,7 @@ async fn experiment_csv_response(
     .fetch_all(&state.pool)
     .await?;
     let mut csv = String::from("\u{feff}experiment_run_id,question_index,question,mode,repetition_index,execution_order,status,query_log_id,answer,source_count,graph_hit_count,response_ms,provider,model,error\r\n");
-    for log in logs {
+    for log in &logs {
         csv.push_str(
             &[
                 run.id.to_string(),
@@ -1618,6 +1618,11 @@ async fn experiment_csv_response(
         );
         csv.push_str("\r\n");
     }
+    let logged_orders: std::collections::HashSet<i32> = logs
+        .iter()
+        .filter_map(|log| log.experiment_execution_order)
+        .collect();
+    append_missing_experiment_errors(&mut csv, run.id, &run.summary_json, &logged_orders);
     let mut response = Body::from(csv).into_response();
     response.headers_mut().insert(
         header::CONTENT_TYPE,
@@ -1629,6 +1634,52 @@ async fn experiment_csv_response(
             .insert(header::CONTENT_DISPOSITION, value);
     }
     Ok(response)
+}
+
+fn append_missing_experiment_errors(
+    csv: &mut String,
+    run_id: i32,
+    summary: &Value,
+    logged_orders: &std::collections::HashSet<i32>,
+) {
+    let Some(errors) = summary.get("errors").and_then(Value::as_array) else {
+        return;
+    };
+    for error in errors {
+        let Some(order) = error["execution_order"]
+            .as_i64()
+            .and_then(|value| i32::try_from(value).ok())
+        else {
+            continue;
+        };
+        if logged_orders.contains(&order) {
+            continue;
+        }
+        csv.push_str(
+            &[
+                run_id.to_string(),
+                error["question_index"]
+                    .as_i64()
+                    .unwrap_or_default()
+                    .to_string(),
+                csv_escape(error["question"].as_str().unwrap_or_default()),
+                csv_escape(error["mode"].as_str().unwrap_or_default()),
+                error["repetition_index"].as_i64().unwrap_or(1).to_string(),
+                order.to_string(),
+                "failed".to_owned(),
+                String::new(),
+                String::new(),
+                "0".to_owned(),
+                "0".to_owned(),
+                "0".to_owned(),
+                csv_escape("system"),
+                String::new(),
+                csv_escape(error["error"].as_str().unwrap_or_default()),
+            ]
+            .join(","),
+        );
+        csv.push_str("\r\n");
+    }
 }
 
 fn csv_escape(value: &str) -> String {
@@ -2564,10 +2615,10 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        build_prompts, claim_experiment, csv_escape, insert_query_log, mode_requires_dataset,
-        neutralize_answer, renew_experiment_lease, retrieval_config, schedule_queued_experiments,
-        transition_interrupted_to_queued, validate_query, ExperimentLogContext,
-        MAX_RAG_QUERY_CHARS,
+        append_missing_experiment_errors, build_prompts, claim_experiment, csv_escape,
+        insert_query_log, mode_requires_dataset, neutralize_answer, renew_experiment_lease,
+        retrieval_config, schedule_queued_experiments, transition_interrupted_to_queued,
+        validate_query, ExperimentLogContext, MAX_RAG_QUERY_CHARS,
     };
 
     use crate::{
@@ -2634,6 +2685,33 @@ mod tests {
         assert_eq!(config["collection_query"], true);
         assert_eq!(config["retrieval_applied"], true);
         assert_eq!(config["hybrid_vector_weight"], 0.7);
+    }
+
+    #[test]
+    fn test_experiment_export_includes_unlogged_failures() {
+        let mut csv = String::new();
+        append_missing_experiment_errors(
+            &mut csv,
+            9,
+            &json!({
+                "errors": [
+                    {
+                        "question_index": 2,
+                        "question": "=SUM(A1)",
+                        "mode": "project_rag",
+                        "repetition_index": 1,
+                        "execution_order": 2,
+                        "error": "timeout"
+                    }
+                ]
+            }),
+            &std::collections::HashSet::from([1]),
+        );
+
+        assert_eq!(
+            csv,
+            "9,2,'=SUM(A1),project_rag,1,2,failed,,,0,0,0,system,,timeout\r\n"
+        );
     }
 
     #[test]
