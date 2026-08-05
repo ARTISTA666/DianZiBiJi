@@ -2219,7 +2219,9 @@ fn neutralize_method_labels(value: &str) -> String {
 }
 
 fn neutralize_blind_text(value: &str, filenames: &[&str]) -> String {
-    let mut neutral = neutralize_method_labels(value);
+    let citation = Regex::new(r"(?i)\[[SG]\d+\]").unwrap();
+    let mut neutral = citation.replace_all(value, "[证据]").into_owned();
+    neutral = neutralize_method_labels(&neutral);
     let mut filenames = filenames.to_vec();
     filenames.sort_by_key(|filename| std::cmp::Reverse(filename.chars().count()));
     filenames.dedup();
@@ -2734,8 +2736,8 @@ mod tests {
 
     use super::{
         append_missing_experiment_errors, build_prompts, claim_experiment, csv_escape,
-        insert_query_log, mode_requires_dataset, neutralize_answer, query_log_limit,
-        renew_experiment_lease, retrieval_config, schedule_queued_experiments,
+        insert_query_log, mode_requires_dataset, neutralize_answer, neutralize_blind_text,
+        query_log_limit, renew_experiment_lease, retrieval_config, schedule_queued_experiments,
         transition_interrupted_to_queued, validate_query, validate_query_log_for_evaluation,
         ExperimentLogContext, MAX_RAG_QUERY_CHARS,
     };
@@ -2769,6 +2771,13 @@ mod tests {
             assert!(!normalized.contains(method), "method leaked: {method}");
         }
         assert!(masked.contains("[E1]"));
+    }
+
+    #[test]
+    fn test_blind_output_masks_internal_source_markers() {
+        let masked = neutralize_blind_text("原文引用 [S1] 和 [G2]", &[]);
+
+        assert_eq!(masked, "原文引用 [证据] 和 [证据]");
     }
 
     #[test]
