@@ -408,14 +408,16 @@ async fn query_project_rag_inner(
             "不支持的检索模式",
         ));
     }
-    let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
-        ApiError::new(
-            StatusCode::CONFLICT,
-            "RAG 资料库尚未初始化，请先在数据页完成资料入库",
-        )
-    })?;
-    if mode_uses_embeddings(&payload.mode) {
-        require_compatible_embedding(&state, &dataset)?;
+    if mode_requires_dataset(&payload.mode) {
+        let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
+            ApiError::new(
+                StatusCode::CONFLICT,
+                "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+            )
+        })?;
+        if mode_uses_embeddings(&payload.mode) {
+            require_compatible_embedding(&state, &dataset)?;
+        }
     }
     let started = Instant::now();
     let sources = if matches!(payload.mode.as_str(), "pure_llm" | "structured_query") {
@@ -2211,6 +2213,10 @@ fn mode_uses_embeddings(mode: &str) -> bool {
     matches!(mode, "auto" | "project_rag" | "kg_enhanced_rag")
 }
 
+fn mode_requires_dataset(mode: &str) -> bool {
+    !matches!(mode, "pure_llm" | "structured_query")
+}
+
 fn validate_query(query: &str) -> Result<&str, ApiError> {
     let query = query.trim();
     if query.is_empty() {
@@ -2518,8 +2524,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        build_prompts, claim_experiment, csv_escape, insert_query_log, neutralize_answer,
-        renew_experiment_lease, retrieval_config, schedule_queued_experiments,
+        build_prompts, claim_experiment, csv_escape, insert_query_log, mode_requires_dataset,
+        neutralize_answer, renew_experiment_lease, retrieval_config, schedule_queued_experiments,
         transition_interrupted_to_queued, validate_query, ExperimentLogContext,
         MAX_RAG_QUERY_CHARS,
     };
@@ -2594,6 +2600,14 @@ mod tests {
             .unwrap_err()
             .detail
             .contains("不能超过"));
+    }
+
+    #[test]
+    fn test_non_document_modes_do_not_require_rag_dataset() {
+        assert!(!mode_requires_dataset("pure_llm"));
+        assert!(!mode_requires_dataset("structured_query"));
+        assert!(mode_requires_dataset("project_rag"));
+        assert!(mode_requires_dataset("bm25_rag"));
     }
 
     #[test]
