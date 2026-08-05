@@ -37,6 +37,7 @@ struct SourceNote {
     experiment_type: String,
     experiment_date: Option<NaiveDate>,
     fixed_fields_json: Value,
+    content_json: Value,
 }
 
 #[derive(Debug, FromRow)]
@@ -341,7 +342,8 @@ async fn load_notes(
     Ok(sqlx::query_as(
         r#"
         SELECT n.id, n.title, n.experiment_type, n.experiment_date,
-               COALESCE(v.fixed_fields_json, '{}'::json) AS fixed_fields_json
+               COALESCE(v.fixed_fields_json, '{}'::json) AS fixed_fields_json,
+               COALESCE(v.content_json, '{}'::json) AS content_json
         FROM experiment_notes n
         LEFT JOIN note_versions v ON v.id = n.current_version_id
         WHERE n.project_id = $1 AND n.status = 'APPROVED'::notestatus
@@ -467,26 +469,25 @@ fn source_context(
             note.experiment_type,
             display_date(note.experiment_date, "未填日期")
         ));
-        if let Some(fields) = note.fixed_fields_json.as_object() {
-            for (key, value) in fields.iter().take(4) {
-                lines.push(format!("  - {key}：{}", short_value(value)));
-            }
-        }
+        append_json_fields(&mut lines, &note.fixed_fields_json, 4);
+        append_json_fields(&mut lines, &note.content_json, 4);
     }
     lines.push(String::new());
     lines.push("### 主要结论".to_owned());
     let mut result_count = 0;
     for note in notes {
-        if let Some(fields) = note.fixed_fields_json.as_object() {
-            for (key, value) in fields {
-                if key.to_ascii_lowercase().contains("result") || key.contains("结果") {
-                    lines.push(format!(
-                        "- [N{}] {}：{}",
-                        note.id,
-                        note.title,
-                        short_value(value)
-                    ));
-                    result_count += 1;
+        for fields in [&note.fixed_fields_json, &note.content_json] {
+            if let Some(fields) = fields.as_object() {
+                for (key, value) in fields {
+                    if key.to_ascii_lowercase().contains("result") || key.contains("结果") {
+                        lines.push(format!(
+                            "- [N{}] {}：{}",
+                            note.id,
+                            note.title,
+                            short_value(value)
+                        ));
+                        result_count += 1;
+                    }
                 }
             }
         }
@@ -509,6 +510,17 @@ fn source_context(
         );
     }
     lines.join("\n")
+}
+
+fn append_json_fields(lines: &mut Vec<String>, value: &Value, limit: usize) {
+    if let Some(fields) = value.as_object() {
+        lines.extend(
+            fields
+                .iter()
+                .take(limit)
+                .map(|(key, value)| format!("  - {key}：{}", short_value(value))),
+        );
+    }
 }
 
 fn append_relations(lines: &mut Vec<String>, relations: &[SourceRelation]) {
@@ -728,7 +740,7 @@ mod tests {
     use tower::ServiceExt;
     use uuid::Uuid;
 
-    use super::review_answer;
+    use super::{review_answer, source_context, SourceNote};
     use crate::{
         build_app,
         config::Settings,
@@ -753,6 +765,29 @@ mod tests {
     fn test_agent_reviewer_requires_citation_when_evidence_exists() {
         assert_eq!(review_answer("无引用结论", &[1], &[], &[])["passed"], false);
         assert_eq!(review_answer("无证据结论", &[], &[], &[])["passed"], true);
+    }
+
+    #[test]
+    fn test_agent_context_includes_approved_note_content() {
+        let context = source_context(
+            "实验总结",
+            "experiment_summary",
+            7,
+            &[SourceNote {
+                id: 1,
+                title: "细胞实验".to_owned(),
+                experiment_type: "细胞培养".to_owned(),
+                experiment_date: None,
+                fixed_fields_json: json!({"result": "存活"}),
+                content_json: json!({"text": "处理后 24 小时仍保持贴壁"}),
+            }],
+            &[],
+            &[],
+            None,
+            None,
+        );
+
+        assert!(context.contains("处理后 24 小时仍保持贴壁"));
     }
 
     async fn mock_deepseek() -> String {
