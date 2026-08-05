@@ -656,40 +656,13 @@ pub async fn generate(
             .await;
         let should_retry = match response {
             Ok(response) if response.status().is_success() => {
-                let request_id = response
-                    .headers()
-                    .get("x-request-id")
-                    .and_then(|value| value.to_str().ok())
-                    .map(str::to_owned);
-                let body: Value = response.json().await.map_err(|error| {
-                    GenerationError::Request(format!("DeepSeek returned invalid JSON: {error}"))
-                })?;
-                let answer = body["choices"][0]["message"]["content"]
-                    .as_str()
-                    .unwrap_or_default()
-                    .trim()
-                    .to_owned();
-                if answer.is_empty() {
-                    return Err(GenerationError::Request(
-                        "DeepSeek returned an empty completion".to_owned(),
-                    ));
+                match parse_generation_response(response, model, attempt).await {
+                    Ok(result) => return Ok(result),
+                    Err(error) => {
+                        last_error = error;
+                        true
+                    }
                 }
-                let provider_usage = body.get("usage").cloned().unwrap_or_else(|| json!({}));
-                let usage = if let Some(mut fields) = provider_usage.as_object().cloned() {
-                    fields.insert("generation_attempts".to_owned(), json!(attempt + 1));
-                    Value::Object(fields)
-                } else {
-                    json!({
-                        "provider_usage": provider_usage,
-                        "generation_attempts": attempt + 1
-                    })
-                };
-                return Ok(GenerationResult {
-                    answer,
-                    request_id: request_id.or_else(|| body["id"].as_str().map(str::to_owned)),
-                    model: body["model"].as_str().unwrap_or(model).to_owned(),
-                    usage,
-                });
             }
             Ok(response) => {
                 let status = response.status();
@@ -714,6 +687,46 @@ pub async fn generate(
         }
     }
     Err(GenerationError::Request(last_error))
+}
+
+async fn parse_generation_response(
+    response: reqwest::Response,
+    fallback_model: &str,
+    attempt: usize,
+) -> Result<GenerationResult, String> {
+    let request_id = response
+        .headers()
+        .get("x-request-id")
+        .and_then(|value| value.to_str().ok())
+        .map(str::to_owned);
+    let body: Value = response
+        .json()
+        .await
+        .map_err(|error| format!("DeepSeek returned invalid JSON: {error}"))?;
+    let answer = body["choices"][0]["message"]["content"]
+        .as_str()
+        .unwrap_or_default()
+        .trim()
+        .to_owned();
+    if answer.is_empty() {
+        return Err("DeepSeek returned an empty completion".to_owned());
+    }
+    let provider_usage = body.get("usage").cloned().unwrap_or_else(|| json!({}));
+    let usage = if let Some(mut fields) = provider_usage.as_object().cloned() {
+        fields.insert("generation_attempts".to_owned(), json!(attempt + 1));
+        Value::Object(fields)
+    } else {
+        json!({
+            "provider_usage": provider_usage,
+            "generation_attempts": attempt + 1
+        })
+    };
+    Ok(GenerationResult {
+        answer,
+        request_id: request_id.or_else(|| body["id"].as_str().map(str::to_owned)),
+        model: body["model"].as_str().unwrap_or(fallback_model).to_owned(),
+        usage,
+    })
 }
 
 fn truncate_error_detail(detail: &str, max_bytes: usize) -> &str {
@@ -1489,5 +1502,55 @@ mod tests {
         let first = first.await.unwrap().unwrap();
         assert_eq!(first.answer, "ok");
         assert_eq!(first.usage["generation_attempts"], 2);
+    }
+
+    #[tokio::test]
+    async fn test_generation_retries_invalid_success_response() {
+        async fn completion(State(requests): State<Arc<AtomicUsize>>) -> axum::response::Response {
+            if requests.fetch_add(1, Ordering::SeqCst) == 0 {
+                return (StatusCode::OK, "not-json").into_response();
+            }
+            Json(json!({
+                "id": "invalid-json-probe",
+                "model": "deepseek-test",
+                "choices": [{"message": {"content": "ok"}}],
+                "usage": {"total_tokens": 1}
+            }))
+            .into_response()
+        }
+
+        let requests = Arc::new(AtomicUsize::new(0));
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server_requests = requests.clone();
+        tokio::spawn(async move {
+            axum::serve(
+                listener,
+                Router::new()
+                    .route("/chat/completions", post(completion))
+                    .with_state(server_requests),
+            )
+            .await
+            .unwrap();
+        });
+        let settings = Settings::from_map(&HashMap::from([
+            (
+                "DEEPSEEK_API_BASE_URL".to_owned(),
+                format!("http://{address}"),
+            ),
+            ("DEEPSEEK_API_KEY".to_owned(), "test-key".to_owned()),
+            ("DEEPSEEK_MODEL".to_owned(), "deepseek-test".to_owned()),
+            ("DEEPSEEK_MAX_CONCURRENCY".to_owned(), "1".to_owned()),
+        ]))
+        .unwrap();
+        let pool = PgPoolOptions::new()
+            .connect_lazy("postgresql://unused:unused@127.0.0.1/unused")
+            .unwrap();
+        let state = AppState::new(pool, settings).unwrap();
+
+        let result = generate(&state, "system", "user", 0.0).await.unwrap();
+
+        assert_eq!(result.answer, "ok");
+        assert_eq!(result.usage["generation_attempts"], 2);
     }
 }
