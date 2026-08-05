@@ -1791,6 +1791,14 @@ def test_query_failure_is_logged(test_app):
         log = db.query(AIQueryLog).order_by(AIQueryLog.id.desc()).first()
         assert log.question == "protocol"
         assert log.error_message == "chat failed"
+        assert log.retrieval_config_json["citation_audit"] == {
+            "passed": False,
+            "citation_count": 0,
+            "invalid_citations": [],
+            "has_evidence": True,
+            "message": "回答没有引用任何已检索证据，需要人工复核。",
+            "repair_attempted": False,
+        }
 
 
 def test_retrieval_failure_is_logged(test_app, monkeypatch: pytest.MonkeyPatch):

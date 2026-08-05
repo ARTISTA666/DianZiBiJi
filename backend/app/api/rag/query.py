@@ -510,6 +510,7 @@ async def _execute_rag_query(
                 model_name=settings.normalized_deepseek_model,
                 prompt_version=prompt_version,
                 fallback_reason=fallback_reason,
+                citation_audit=_audit_answer_citations("", len(sources), len(graph_context)),
                 error_message=str(exc),
                 experiment_run_id=experiment_run_id,
                 experiment_case_index=experiment_case_index,
