@@ -664,11 +664,27 @@ fn display_date(value: Option<NaiveDate>, fallback: &str) -> String {
 }
 
 fn short_value(value: &Value) -> String {
-    let text = match value {
+    inline_text(display_value(value).trim())
+        .chars()
+        .take(180)
+        .collect()
+}
+
+fn display_value(value: &Value) -> String {
+    match value {
         Value::String(text) => text.clone(),
+        Value::Array(items) => items
+            .iter()
+            .map(display_value)
+            .collect::<Vec<_>>()
+            .join("、"),
+        Value::Object(fields) => fields
+            .iter()
+            .map(|(key, value)| format!("{key}: {}", display_value(value)))
+            .collect::<Vec<_>>()
+            .join("；"),
         _ => value.to_string(),
-    };
-    inline_text(text.trim()).chars().take(180).collect()
+    }
 }
 
 fn inline_text(value: &str) -> String {
@@ -883,8 +899,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        cap_context, review_answer, select_relations, source_context, visible_citation_ids,
-        SourceNote, SourceRelation, MAX_AGENT_CONTEXT_CHARS,
+        cap_context, review_answer, select_relations, short_value, source_context,
+        visible_citation_ids, SourceNote, SourceRelation, MAX_AGENT_CONTEXT_CHARS,
     };
     use crate::{
         build_app,
@@ -1043,6 +1059,15 @@ mod tests {
         );
 
         assert!(context.contains("处理后 24 小时仍保持贴壁"));
+    }
+
+    #[test]
+    fn test_agent_short_value_renders_structured_fields_readably() {
+        assert_eq!(
+            short_value(&json!(["PBS", "Taq polymerase"])),
+            "PBS、Taq polymerase"
+        );
+        assert!(short_value(&json!({"metric": "RIN", "value": 8.5})).contains("metric: RIN"));
     }
 
     #[test]
