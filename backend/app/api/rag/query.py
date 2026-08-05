@@ -190,6 +190,14 @@ def _retrieve_graph_context(
     return graph_context, fallback_reason, rag_mode, graph_context_text
 
 
+def _retrieve_graph_context_with_bind(bind, project_id: int, query: str, mode: str):
+    graph_db = Session(bind=bind)
+    try:
+        return _retrieve_graph_context(graph_db, project_id, query, mode)
+    finally:
+        graph_db.close()
+
+
 def _build_prompts(
     rag_mode: str,
     source_context: str,
@@ -369,9 +377,16 @@ async def _execute_rag_query(
     # 1. Retrieval phase – run RAG source retrieval (async) and KG context
     #    retrieval (sync → offloaded to a worker thread) in parallel so that
     #    total latency ≈ max(T_rag, T_kg) instead of T_rag + T_kg.
+    graph_bind = db.get_bind()
     retrieved_result, graph_result = await asyncio.gather(
         _retrieve_sources(db, project_id, query, mode),
-        asyncio.to_thread(_retrieve_graph_context, db, project_id, query, mode),
+        asyncio.to_thread(
+            _retrieve_graph_context_with_bind,
+            graph_bind,
+            project_id,
+            query,
+            mode,
+        ),
     )
     retrieved = retrieved_result
     graph_context, fallback_reason, rag_mode, graph_context_text = graph_result

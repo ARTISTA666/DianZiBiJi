@@ -199,6 +199,26 @@ def test_app(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, db_engine):
     return TestClient(app), SessionLocal, active_user_id
 
 
+def test_graph_retrieval_thread_uses_independent_session(db_engine, monkeypatch) -> None:
+    seen = []
+
+    def fake_retrieve(graph_db, project_id, query, mode):
+        seen.append((graph_db, project_id, query, mode))
+        return [], None, "project_rag", ""
+
+    monkeypatch.setattr(rag.query, "_retrieve_graph_context", fake_retrieve)
+
+    result = rag.query._retrieve_graph_context_with_bind(
+        db_engine,
+        1,
+        "question",
+        "project_rag",
+    )
+
+    assert result == ([], None, "project_rag", "")
+    assert seen[0][0].bind is db_engine
+
+
 def test_unauthenticated_status_returns_401(test_app):
     _, SessionLocal, _ = test_app
     app = FastAPI()
