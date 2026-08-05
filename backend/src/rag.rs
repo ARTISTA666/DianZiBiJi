@@ -483,15 +483,7 @@ pub async fn relevant_graph_context(
                 continue;
             }
         }
-        let haystack = format!(
-            "{} {} {} {} {}",
-            row.source_label,
-            row.target_label,
-            row.source_entity_type,
-            row.target_entity_type,
-            row.relation_type
-        )
-        .to_lowercase();
+        let haystack = graph_relation_haystack(&row);
         let overlap = exact_token_overlap(&query_tokens, &haystack) as f64;
         let role_bonus = row
             .properties
@@ -1044,6 +1036,19 @@ fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) -> usize {
     query_tokens.intersection(&text_tokens).count()
 }
 
+fn graph_relation_haystack(row: &GraphRow) -> String {
+    format!(
+        "{} {} {} {} {} {}",
+        row.source_label,
+        row.target_label,
+        row.source_entity_type,
+        row.target_entity_type,
+        row.relation_type,
+        relation_label(&row.relation_type),
+    )
+    .to_lowercase()
+}
+
 fn token_regex() -> &'static Regex {
     static TOKEN_REGEX: OnceLock<Regex> = OnceLock::new();
     TOKEN_REGEX.get_or_init(|| Regex::new(r"(?i)[a-z0-9_µ><=./-]+|[\p{Han}]+").unwrap())
@@ -1511,11 +1516,11 @@ mod tests {
         audit_citations, audit_citations_after_repair, bm25_scores, chunk_text,
         exact_token_overlap, fetch_vector_candidates, focused_graph_entity_ids,
         format_graph_context, format_sources, generate, generate_with_max_tokens,
-        graph_context_budget, include_retrieval_candidate, is_collection_query,
-        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
-        role_query_matches, should_retry_generation_status, tokens, truncate_error_detail,
-        validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow, ACTIVE_CHUNKS_SQL,
-        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        graph_context_budget, graph_relation_haystack, include_retrieval_candidate,
+        is_collection_query, meets_graph_threshold, rag_insert_batch_ranges, relation_hints,
+        retrieve, role_query_matches, should_retry_generation_status, tokens,
+        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow,
+        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1635,6 +1640,24 @@ mod tests {
     fn test_graph_matching_uses_exact_tokens() {
         assert_eq!(exact_token_overlap(&tokens("cell"), "cellular culture"), 0);
         assert_eq!(exact_token_overlap(&tokens("cell"), "cell culture"), 1);
+    }
+
+    #[test]
+    fn test_graph_matching_includes_human_relation_labels() {
+        let row = GraphRow {
+            relation_id: 1,
+            relation_type: "uses_reagent".to_owned(),
+            source_entity_id: 10,
+            source_label: "PCR experiment".to_owned(),
+            source_entity_type: "note".to_owned(),
+            target_entity_id: 11,
+            target_label: "Taq".to_owned(),
+            target_entity_type: "reagent".to_owned(),
+            confidence: 0.9,
+            properties: json!({}),
+        };
+
+        assert!(exact_token_overlap(&tokens("使用试剂"), &graph_relation_haystack(&row)) > 0);
     }
 
     #[test]
