@@ -15,7 +15,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_current_user, require_project_access
+from app.api.deps import get_current_user, require_external_ai, require_project_access
 from app.api.rag import query as rag_query
 from app.api.rag.common import (
     EMBEDDING_RAG_MODES,
@@ -32,6 +32,7 @@ from app.api.rag.common import (
 from app.core.config import get_settings
 from app.core.database import SessionLocal, get_db
 from app.models.ai import AIExperimentRun, AIQueryEvaluation, AIQueryLog
+from app.models.project import Project
 from app.models.rag import RagDocumentChunk
 from app.models.user import User
 from app.schemas.ai import AIExperimentRunRead, AIExperimentRunRequest, AIQueryEvaluationRead
@@ -57,6 +58,10 @@ def _ensure_no_active_experiment(db: Session) -> None:
 
 
 async def _execute_experiment_run(db: Session, run: AIExperimentRun) -> None:
+    project = db.get(Project, run.project_id)
+    if project is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+    require_external_ai(project)
     summary = dict(run.summary_json or {})
     execution_plan = list(summary.get("execution_plan") or [])
     errors = list(summary.get("errors") or [])
@@ -232,7 +237,8 @@ async def run_rag_experiment(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> AIExperimentRunRead:
-    require_project_access(project_id, db, user)
+    project = require_project_access(project_id, db, user)
+    require_external_ai(project)
     _require_rag_manager(db, user, project_id)
     questions = [question.strip() for question in payload.questions if question.strip()]
     modes = list(dict.fromkeys(payload.modes))
@@ -347,7 +353,8 @@ def resume_rag_experiment(
     run = db.get(AIExperimentRun, run_id)
     if run is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Experiment run not found")
-    require_project_access(run.project_id, db, user)
+    project = require_project_access(run.project_id, db, user)
+    require_external_ai(project)
     _require_rag_manager(db, user, run.project_id)
     if run.status != "interrupted":
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Only interrupted experiments can resume")

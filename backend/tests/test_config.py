@@ -16,6 +16,11 @@ def test_ocr_defaults_cover_project_languages() -> None:
     assert Settings().ocr_languages == "chi_sim+eng"
 
 
+def test_sensitive_external_ai_is_disabled_by_default_and_configurable() -> None:
+    assert Settings().allow_sensitive_external_ai is False
+    assert Settings(allow_sensitive_external_ai=True).allow_sensitive_external_ai is True
+
+
 def test_rag_retrieval_limits_are_safe() -> None:
     settings = Settings(rag_retrieval_top_k=31, rag_vector_candidate_k=30)
 

@@ -12,6 +12,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
 
 from app.api import rag
+import app.api.deps as deps
 from app.api.deps import get_current_user
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
@@ -355,6 +356,40 @@ def test_pure_llm_does_not_require_rag_dataset(test_app):
         json={"query": "general question", "mode": "bm25_rag"},
     )
     assert bm25_response.status_code == 409
+
+
+def test_sensitive_project_blocks_rag_query_by_default(test_app, monkeypatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    monkeypatch.setattr(deps, "get_settings", lambda: SimpleNamespace(allow_sensitive_external_ai=False))
+    with SessionLocal() as db:
+        db.get(Project, 1).is_sensitive = True
+        db.commit()
+
+    response = client.post(
+        "/projects/1/rag/query",
+        json={"query": "general question", "mode": "pure_llm"},
+    )
+
+    assert response.status_code == 403
+    assert response.json()["detail"] == "敏感项目未获准向外部 AI 服务发送数据"
+
+
+def test_sensitive_project_blocks_rag_experiment_by_default(test_app, monkeypatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    monkeypatch.setattr(deps, "get_settings", lambda: SimpleNamespace(allow_sensitive_external_ai=False))
+    with SessionLocal() as db:
+        db.get(Project, 1).is_sensitive = True
+        db.commit()
+
+    response = client.post(
+        "/projects/1/rag/experiments",
+        json={"name": "sensitive baseline", "questions": ["general question"], "modes": ["pure_llm"]},
+    )
+
+    assert response.status_code == 403
+    assert response.json()["detail"] == "敏感项目未获准向外部 AI 服务发送数据"
 
 
 def test_structured_query_reports_graph_budget_fallback(test_app, monkeypatch) -> None:

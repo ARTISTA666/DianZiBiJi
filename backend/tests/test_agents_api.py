@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
 
 from app.api import agents
+import app.api.deps as deps
 from app.api.deps import get_current_user
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
@@ -284,6 +285,23 @@ def test_agent_generation_uses_approved_notes_and_records_run(test_app):
     history_response = client.get("/projects/1/agents/runs")
     assert history_response.status_code == 200
     assert history_response.json()[0]["id"] == body["id"]
+
+
+def test_sensitive_project_blocks_agent_generation_by_default(test_app, monkeypatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    monkeypatch.setattr(deps, "get_settings", lambda: SimpleNamespace(allow_sensitive_external_ai=False))
+    with SessionLocal() as db:
+        db.get(Project, 1).is_sensitive = True
+        db.commit()
+
+    response = client.post(
+        "/api/agents/generate",
+        json={"project_id": 1, "task_type": "experiment_summary"},
+    )
+
+    assert response.status_code == 403
+    assert response.json()["detail"] == "敏感项目未获准向外部 AI 服务发送数据"
 
 
 def test_agent_generation_records_empty_range(test_app):

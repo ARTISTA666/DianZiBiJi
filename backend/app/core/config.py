@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 480
     cors_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
     app_revision: str = "unversioned"
+    allow_sensitive_external_ai: bool = False
     deepseek_api_base_url: str = "https://api.deepseek.com"
     deepseek_api_key: str = ""
     deepseek_model: str = "deepseek-v4-flash"

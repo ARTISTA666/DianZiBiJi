@@ -3,7 +3,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.api.deps import can_write_project, get_current_user, require_project_access
+from app.api.deps import can_write_project, get_current_user, require_external_ai, require_project_access
 from app.core.database import get_db
 from app.models.ai import AgentGenerationRun
 from app.models.user import User
@@ -22,7 +22,8 @@ async def generate_agent_output(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> AgentGenerationRunRead:
-    require_project_access(payload.project_id, db, user)
+    project = require_project_access(payload.project_id, db, user)
+    require_external_ai(project)
     if not can_write_project(db, user, payload.project_id):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Write permission required")
     try:

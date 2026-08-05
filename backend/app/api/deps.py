@@ -3,6 +3,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
+from app.core.config import get_settings
 from app.core.database import get_db
 from app.core.security import decode_access_token_claims
 from app.models.note import ExperimentNote
@@ -65,6 +66,14 @@ def require_project_access(project_id: int, db: Session, user: User) -> Project:
     if not can_access_project(db, user, project):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Project access denied")
     return project
+
+
+def require_external_ai(project: Project) -> None:
+    if project.is_sensitive and not get_settings().allow_sensitive_external_ai:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="敏感项目未获准向外部 AI 服务发送数据",
+        )
 
 
 def require_note_access(note_id: int, db: Session, user: User) -> ExperimentNote:

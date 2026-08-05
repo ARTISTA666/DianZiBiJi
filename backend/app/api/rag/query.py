@@ -11,7 +11,7 @@ from time import perf_counter
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_current_user, require_project_access
+from app.api.deps import get_current_user, require_external_ai, require_project_access
 from app.api.rag.common import (
     BM25_PROMPT_VERSION,
     EMBEDDING_RAG_MODES,
@@ -33,6 +33,7 @@ from app.api.rag.common import (
 from app.core.config import get_settings
 from app.core.database import get_db
 from app.models.ai import AIQueryLog, RagMode
+from app.models.project import Project
 from app.models.user import User
 from app.schemas.rag import RagQueryRequest, RagQueryResponse, RagSourceRead
 from app.services.audit import write_audit
@@ -92,7 +93,8 @@ async def query_project_rag(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> RagQueryResponse:
-    require_project_access(project_id, db, user)
+    project = require_project_access(project_id, db, user)
+    require_external_ai(project)
     _require_unblinded_rag_access(db, user, project_id)
     query = payload.query.strip()
     if not query:
@@ -396,6 +398,10 @@ async def _execute_rag_query(
     experiment_execution_order: int | None = None,
 ) -> RagQueryResponse:
     settings = get_settings()
+    project = db.get(Project, project_id)
+    if project is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+    require_external_ai(project)
     dataset = _get_project_dataset(db, project_id)
     if mode not in {RagMode.PURE_LLM.value, RagMode.STRUCTURED_QUERY.value} and dataset is None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
