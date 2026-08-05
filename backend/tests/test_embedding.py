@@ -32,6 +32,27 @@ def test_embed_documents_empty列表返回空结果(client: EmbeddingClient) -> 
     assert result == []
 
 
+def test_rust_hash_model_works_without_fastembed(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(
+        "app.services.embedding.get_settings",
+        lambda: MagicMock(
+            embedding_model="rust-hash-512-v1",
+            embedding_dimension=8,
+            embedding_cache_path="/tmp/unused-cache",
+        ),
+    )
+    monkeypatch.setattr(
+        "app.services.embedding._model",
+        lambda *_: pytest.fail("hash backend must not load FastEmbed"),
+    )
+
+    vectors = asyncio.run(EmbeddingClient().embed_documents(["PCR Taq", "PCR Taq"]))
+
+    assert vectors[0] == vectors[1]
+    assert len(vectors[0]) == 8
+    assert sum(value * value for value in vectors[0]) == pytest.approx(1.0)
+
+
 def test_embed_query_empty_string_still_calls_model(
     client: EmbeddingClient, monkeypatch: pytest.MonkeyPatch
 ) -> None:
