@@ -538,6 +538,18 @@ pub fn format_sources(sources: &[RagSourceRead]) -> String {
             source.chunk_id.unwrap_or_default(),
             source.retrieval_score.unwrap_or_default()
         );
+        let header = if header.chars().count() > per_source_budget {
+            let mut capped: String = header
+                .chars()
+                .take(per_source_budget.saturating_sub(1))
+                .collect();
+            if per_source_budget > 0 {
+                capped.push('…');
+            }
+            capped
+        } else {
+            header
+        };
         let snippet = source.snippet.as_deref().unwrap_or_default();
         let snippet_limit = per_source_budget.saturating_sub(header.chars().count());
         let snippet_chars = snippet.chars().count();
@@ -1134,6 +1146,22 @@ mod tests {
                 "missing source marker: {marker}"
             );
         }
+    }
+
+    #[test]
+    fn test_source_context_caps_oversized_source_headers() {
+        let formatted = format_sources(&[RagSourceRead {
+            chunk_id: Some(1),
+            file_id: Some(1),
+            filename: Some("x".repeat(20_000)),
+            dify_document_id: None,
+            snippet: Some("evidence".to_owned()),
+            vector_score: Some(0.9),
+            lexical_score: Some(0.8),
+            retrieval_score: Some(0.85),
+        }]);
+
+        assert!(formatted.chars().count() <= 9_000);
     }
 
     #[test]
