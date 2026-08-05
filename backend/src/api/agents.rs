@@ -18,7 +18,7 @@ use crate::{
     error::ApiError,
     models::{AgentGenerateRequest, AgentGenerationRunRead, UserRecord},
     permissions::{can_write_project, require_project_access},
-    rag::{generate, GenerationError},
+    rag::{generate_with_max_tokens, GenerationError},
     AppState,
 };
 
@@ -30,6 +30,7 @@ const AGENT_COLUMNS: &str = r#"
 "#;
 const PROMPT_VERSION: &str = "agent-v6-citation-repair-boundary";
 const MAX_AGENT_CONTEXT_CHARS: usize = 18_000;
+const AGENT_GENERATION_MAX_TOKENS: u32 = 2_200;
 
 #[derive(Debug, FromRow)]
 struct SourceNote {
@@ -139,7 +140,15 @@ async fn generate_agent_output(
     let user_prompt =
         format!("任务类型：{task_label}\n请将以下可追溯项目数据整理为正式草稿：\n\n{context}");
 
-    let first = match generate(&state, system_prompt, &user_prompt, 0.1).await {
+    let first = match generate_with_max_tokens(
+        &state,
+        system_prompt,
+        &user_prompt,
+        0.1,
+        AGENT_GENERATION_MAX_TOKENS,
+    )
+    .await
+    {
         Ok(result) => result,
         Err(error) => {
             steps[1] = json!({
@@ -217,7 +226,15 @@ async fn generate_agent_output(
             "原始任务：{task_label}\n可用项目资料：\n{context}\n\n待修订草稿：\n{body}\n\n检查结果：{}\n请只输出修订后的完整草稿。只能使用上下文中真实存在的 [N数字]、[F数字]、[R数字] 编号；证据不足的结论应删除或明确写为无法确认。",
             review["message"].as_str().unwrap_or_default()
         );
-        match generate(&state, system_prompt, &repair_prompt, 0.0).await {
+        match generate_with_max_tokens(
+            &state,
+            system_prompt,
+            &repair_prompt,
+            0.0,
+            AGENT_GENERATION_MAX_TOKENS,
+        )
+        .await
+        {
             Ok(result) => {
                 body = result.answer;
                 model_name = Some(result.model);

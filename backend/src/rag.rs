@@ -643,6 +643,16 @@ pub async fn generate(
     user_prompt: &str,
     temperature: f64,
 ) -> Result<GenerationResult, GenerationError> {
+    generate_with_max_tokens(state, system_prompt, user_prompt, temperature, 1800).await
+}
+
+pub async fn generate_with_max_tokens(
+    state: &AppState,
+    system_prompt: &str,
+    user_prompt: &str,
+    temperature: f64,
+    max_tokens: u32,
+) -> Result<GenerationResult, GenerationError> {
     let api_key = state.settings.deepseek_api_key.trim();
     if api_key.is_empty() {
         return Err(GenerationError::Configuration(
@@ -666,7 +676,7 @@ pub async fn generate(
             {"role": "user", "content": user_prompt}
         ],
         "temperature": temperature,
-        "max_tokens": 1800,
+        "max_tokens": max_tokens,
         "stream": false,
         "thinking": {"type": "disabled"}
     });
@@ -1080,11 +1090,12 @@ mod tests {
 
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        format_graph_context, format_sources, generate, graph_context_budget,
-        include_retrieval_candidate, is_collection_query, meets_graph_threshold,
-        rag_insert_batch_ranges, relation_hints, retrieve, should_retry_generation_status, tokens,
-        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow,
-        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        format_graph_context, format_sources, generate, generate_with_max_tokens,
+        graph_context_budget, include_retrieval_candidate, is_collection_query,
+        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
+        should_retry_generation_status, tokens, truncate_error_detail,
+        validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1098,6 +1109,7 @@ mod tests {
     struct ConcurrencyProbe {
         active: Arc<AtomicUsize>,
         maximum: Arc<AtomicUsize>,
+        max_tokens: Arc<AtomicUsize>,
     }
 
     #[derive(Clone)]
@@ -1493,7 +1505,14 @@ mod tests {
 
     #[tokio::test]
     async fn test_generation_honors_provider_concurrency_limit() {
-        async fn completion(State(probe): State<ConcurrencyProbe>) -> Json<Value> {
+        async fn completion(
+            State(probe): State<ConcurrencyProbe>,
+            Json(payload): Json<Value>,
+        ) -> Json<Value> {
+            probe.max_tokens.store(
+                payload["max_tokens"].as_u64().unwrap_or_default() as usize,
+                Ordering::SeqCst,
+            );
             let active = probe.active.fetch_add(1, Ordering::SeqCst) + 1;
             probe.maximum.fetch_max(active, Ordering::SeqCst);
             tokio::time::sleep(Duration::from_millis(40)).await;
@@ -1544,6 +1563,12 @@ mod tests {
         }
 
         assert!(probe.maximum.load(Ordering::SeqCst) <= 2);
+        assert_eq!(probe.max_tokens.load(Ordering::SeqCst), 1800);
+
+        generate_with_max_tokens(&state, "system", "user", 0.0, 2200)
+            .await
+            .unwrap();
+        assert_eq!(probe.max_tokens.load(Ordering::SeqCst), 2200);
     }
 
     #[tokio::test]
