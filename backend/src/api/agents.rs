@@ -387,6 +387,14 @@ async fn load_relations(pool: &PgPool, project_id: i32) -> Result<Vec<SourceRela
         JOIN kg_entities s ON s.id = r.source_entity_id
         JOIN kg_entities t ON t.id = r.target_entity_id
         WHERE r.project_id = $1
+          AND (
+              r.source_type NOT IN ('note', 'note_extraction')
+              OR r.source_type IS NULL
+              OR r.source_id IN (
+                  SELECT id FROM experiment_notes
+                  WHERE project_id = $1 AND status = 'APPROVED'::notestatus
+              )
+          )
         ORDER BY r.id LIMIT 200
         "#,
     )
