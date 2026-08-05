@@ -253,7 +253,9 @@ class DeepSeekClient:
                         )
                     else:
                         try:
-                            return parse_completion_response(response, self.model)
+                            result = parse_completion_response(response, self.model)
+                            result["usage"]["generation_attempts"] = attempt + 1
+                            return result
                         except DeepSeekRequestError as exc:
                             last_error = exc
             if attempt < 2:

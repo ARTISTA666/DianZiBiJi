@@ -110,6 +110,7 @@ def test_retries_rate_limit_and_server_error_using_retry_after(monkeypatch) -> N
     result = asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
 
     assert result["answer"] == "ok"
+    assert result["usage"]["generation_attempts"] == 3
     assert sleeps == [3, 2]
 
 
@@ -173,6 +174,7 @@ def test_retries_malformed_success_response(monkeypatch) -> None:
     result = asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
 
     assert result["answer"] == "ok"
+    assert result["usage"]["generation_attempts"] == 2
 
 
 def test_non_object_usage_does_not_break_successful_completion(monkeypatch) -> None:
@@ -197,7 +199,7 @@ def test_non_object_usage_does_not_break_successful_completion(monkeypatch) -> N
     result = asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
 
     assert result["answer"] == "ok"
-    assert result["usage"] == {"provider_usage": "raw-usage"}
+    assert result["usage"] == {"provider_usage": "raw-usage", "generation_attempts": 1}
 
 
 def test_generate_accumulates_usage_and_counts_failures(monkeypatch) -> None:
