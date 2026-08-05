@@ -825,6 +825,9 @@ fn term(
         {
             roles.insert("data_boundary".to_owned());
         }
+        if normalized.contains("rin") || normalized.contains("quality") {
+            roles.insert("quality_result".to_owned());
+        }
     }
     ExtractedTerm {
         entity_type,
@@ -983,7 +986,8 @@ fn normalize_entity_label(label: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use super::{normalize_entity_label, split_string};
+    use super::{extract_terms, normalize_entity_label, split_string};
+    use serde_json::json;
 
     #[test]
     fn test_graph_term_normalization_and_splitting() {
@@ -996,5 +1000,17 @@ mod tests {
             split_string("初始结果；第二结果", true),
             ["初始结果", "第二结果"]
         );
+    }
+
+    #[test]
+    fn test_result_quality_roles_match_python_extraction() {
+        let terms = extract_terms(&json!({}), &json!({"results": "RIN=8.5; quality=good"}));
+        let roles = terms
+            .iter()
+            .filter(|term| term.entity_type == "result")
+            .flat_map(|term| term.roles.iter())
+            .collect::<std::collections::HashSet<_>>();
+
+        assert!(roles.iter().any(|role| role.as_str() == "quality_result"));
     }
 }
