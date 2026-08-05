@@ -1925,6 +1925,21 @@ def test_rag_experiment_runs_four_modes_and_exports_csv(test_app):
     assert b"kg_enhanced_rag" in export.content
 
 
+def test_pure_llm_experiment_does_not_require_rag_dataset(test_app):
+    client, _session_local, active_user_id = test_app
+    active_user_id["value"] = 1
+
+    response = client.post(
+        "/projects/1/rag/experiments",
+        json={"name": "pure llm baseline", "questions": ["general question"], "modes": ["pure_llm"]},
+    )
+
+    assert response.status_code == 202
+    body = client.get(f"/rag/experiments/{response.json()['id']}").json()
+    assert body["status"] == "completed"
+    assert body["completed_cases"] == 1
+
+
 def test_experiment_repeats_randomizes_and_exports_execution_metadata(test_app):
     client, SessionLocal, active_user_id = test_app
     active_user_id["value"] = 1
