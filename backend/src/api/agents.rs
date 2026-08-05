@@ -29,6 +29,7 @@ const AGENT_COLUMNS: &str = r#"
     message, created_at
 "#;
 const PROMPT_VERSION: &str = "agent-v6-citation-repair-boundary";
+const MAX_AGENT_CONTEXT_CHARS: usize = 18_000;
 
 #[derive(Debug, FromRow)]
 struct SourceNote {
@@ -443,10 +444,11 @@ fn source_context(
         format!("- 图谱依据关系：{} 条", relations.len()),
         String::new(),
     ];
+    append_source_index(&mut lines, notes, files, relations);
     if task_type == "graph_overview" {
         lines.push("实验过程关联概览".to_owned());
         append_relations(&mut lines, relations);
-        return lines.join("\n");
+        return cap_context(lines.join("\n"));
     }
     if notes.is_empty() {
         lines.push("当前范围内暂无已审核实验笔记，无法形成正式实验总结。".to_owned());
@@ -458,7 +460,7 @@ fn source_context(
                     .map(|file| format!("- [F{}] {}", file.id, file.original_filename)),
             );
         }
-        return lines.join("\n");
+        return cap_context(lines.join("\n"));
     }
     lines.push("### 实验记录概览".to_owned());
     for note in notes {
@@ -509,7 +511,54 @@ fn source_context(
                 .map(|file| format!("- [F{}] {}", file.id, file.original_filename)),
         );
     }
-    lines.join("\n")
+    cap_context(lines.join("\n"))
+}
+
+fn append_source_index(
+    lines: &mut Vec<String>,
+    notes: &[SourceNote],
+    files: &[SourceFile],
+    relations: &[SourceRelation],
+) {
+    lines.push("### 可用来源编号".to_owned());
+    lines.push(format!(
+        "- 实验笔记：{}",
+        notes
+            .iter()
+            .map(|note| format!("[N{}]", note.id))
+            .collect::<Vec<_>>()
+            .join("、")
+    ));
+    lines.push(format!(
+        "- 资料：{}",
+        files
+            .iter()
+            .map(|file| format!("[F{}]", file.id))
+            .collect::<Vec<_>>()
+            .join("、")
+    ));
+    lines.push(format!(
+        "- 图谱关系：{}",
+        relations
+            .iter()
+            .map(|relation| format!("[R{}]", relation.id))
+            .collect::<Vec<_>>()
+            .join("、")
+    ));
+    lines.push(String::new());
+}
+
+fn cap_context(context: String) -> String {
+    if context.chars().count() <= MAX_AGENT_CONTEXT_CHARS {
+        return context;
+    }
+    let suffix = format!(
+        "\n\n[项目上下文已截断至 {MAX_AGENT_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]"
+    );
+    let prefix_len = MAX_AGENT_CONTEXT_CHARS.saturating_sub(suffix.chars().count());
+    let mut capped: String = context.chars().take(prefix_len).collect();
+    capped.push_str(&suffix);
+    capped
 }
 
 fn append_json_fields(lines: &mut Vec<String>, value: &Value, limit: usize) {
@@ -740,7 +789,7 @@ mod tests {
     use tower::ServiceExt;
     use uuid::Uuid;
 
-    use super::{review_answer, source_context, SourceNote};
+    use super::{review_answer, source_context, SourceNote, MAX_AGENT_CONTEXT_CHARS};
     use crate::{
         build_app,
         config::Settings,
@@ -788,6 +837,34 @@ mod tests {
         );
 
         assert!(context.contains("处理后 24 小时仍保持贴壁"));
+    }
+
+    #[test]
+    fn test_agent_context_caps_large_projects_but_keeps_source_index() {
+        let notes = (1..=100)
+            .map(|id| SourceNote {
+                id,
+                title: format!("实验 {id}"),
+                experiment_type: "细胞培养".to_owned(),
+                experiment_date: None,
+                fixed_fields_json: json!({"result": "x".repeat(180)}),
+                content_json: json!({"text": "y".repeat(180)}),
+            })
+            .collect::<Vec<_>>();
+        let context = source_context(
+            "实验总结",
+            "experiment_summary",
+            7,
+            &notes,
+            &[],
+            &[],
+            None,
+            None,
+        );
+
+        assert!(context.chars().count() <= MAX_AGENT_CONTEXT_CHARS);
+        assert!(context.contains("[N100]"));
+        assert!(context.contains("项目上下文已截断"));
     }
 
     async fn mock_deepseek() -> String {
