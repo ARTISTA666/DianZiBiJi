@@ -990,7 +990,8 @@ async fn run_experiment(
     Path(project_id): Path<i32>,
     Json(payload): Json<AIExperimentRunRequest>,
 ) -> Result<(StatusCode, Json<AIExperimentRunRead>), ApiError> {
-    require_project_access(&state.pool, &user, project_id).await?;
+    let project = require_project_access(&state.pool, &user, project_id).await?;
+    require_external_ai(&project, state.settings.allow_sensitive_external_ai)?;
     require_manager(&state, &user, project_id).await?;
     let name = payload.name.trim();
     if name.is_empty() || name.chars().count() > 255 {
