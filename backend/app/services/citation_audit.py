@@ -61,7 +61,7 @@ def audit_citations(
     for kind, raw_index in re.findall(pattern, answer, flags):
         normalized_kind = kind.upper() if flags & re.IGNORECASE else kind
         try:
-            index = int(raw_index) if raw_index.isdigit() else None
+            index = int(raw_index) if raw_index.isascii() and raw_index.isdigit() else None
         except ValueError:
             index = None
         citations.append((normalized_kind, index, f"[{normalized_kind}{raw_index}]"))

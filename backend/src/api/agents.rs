@@ -635,7 +635,11 @@ fn review_answer(body: &str, note_ids: &[i32], file_ids: &[i32], relation_ids: &
         .map(|capture| {
             let kind = capture[1].to_owned();
             let raw_id = capture[2].to_owned();
-            let id = raw_id.parse::<i32>().ok();
+            let id = raw_id
+                .chars()
+                .all(|character| character.is_ascii_digit())
+                .then(|| raw_id.parse::<i32>().ok())
+                .flatten();
             let marker = format!("[{kind}{raw_id}]");
             (kind, id, marker)
         })
@@ -841,11 +845,14 @@ mod tests {
 
     #[test]
     fn test_agent_reviewer_rejects_malformed_markers() {
-        let review = review_answer("有效 [N1]，非法 [N系统] [N1-N2]", &[1], &[], &[]);
+        let review = review_answer("有效 [N1]，非法 [N系统] [N1-N2] [N+1]", &[1], &[], &[]);
 
         assert_eq!(review["passed"], false);
-        assert_eq!(review["citation_count"], 3);
-        assert_eq!(review["invalid_citations"], json!(["[N系统]", "[N1-N2]"]));
+        assert_eq!(review["citation_count"], 4);
+        assert_eq!(
+            review["invalid_citations"],
+            json!(["[N系统]", "[N1-N2]", "[N+1]"])
+        );
     }
 
     #[test]

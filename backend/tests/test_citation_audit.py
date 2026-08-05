@@ -39,10 +39,10 @@ class TestNFRCitations:
         assert result["invalid_citations"] == ["[N99]"]
 
     def test_malformed_marker_fails_even_with_valid_citation(self):
-        result = audit_citations("有效[N1]，伪引用[N系统]和[N1-N2]。", self.ALLOWED)
+        result = audit_citations("有效[N1]，伪引用[N系统]、[N1-N2]和[N+1]。", self.ALLOWED)
         assert result["passed"] is False
-        assert result["citation_count"] == 3
-        assert result["invalid_citations"] == ["[N系统]", "[N1-N2]"]
+        assert result["citation_count"] == 4
+        assert result["invalid_citations"] == ["[N系统]", "[N1-N2]", "[N+1]"]
 
     def test_empty_answer_with_evidence(self):
         result = audit_citations("没有任何引用。", self.ALLOWED)

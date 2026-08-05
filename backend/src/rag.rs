@@ -783,7 +783,11 @@ pub fn audit_citations(
         .map(|capture| {
             let kind = capture[1].to_uppercase();
             let raw_index = capture[2].to_owned();
-            let index = raw_index.parse::<usize>().ok();
+            let index = raw_index
+                .chars()
+                .all(|character| character.is_ascii_digit())
+                .then(|| raw_index.parse::<usize>().ok())
+                .flatten();
             let marker = format!("[{kind}{raw_index}]");
             (kind, index, marker)
         })
@@ -1131,11 +1135,11 @@ mod tests {
 
     #[test]
     fn test_citation_audit_rejects_malformed_markers() {
-        let audit = audit_citations("Valid [S1], malformed [S系统] and [S1-S2]", 1, 0);
+        let audit = audit_citations("Valid [S1], malformed [S系统], [S1-S2] and [S+1]", 1, 0);
 
         assert!(!audit.passed);
-        assert_eq!(audit.citation_count, 3);
-        assert_eq!(audit.invalid_citations, ["[S系统]", "[S1-S2]"]);
+        assert_eq!(audit.citation_count, 4);
+        assert_eq!(audit.invalid_citations, ["[S系统]", "[S1-S2]", "[S+1]"]);
     }
 
     #[test]
