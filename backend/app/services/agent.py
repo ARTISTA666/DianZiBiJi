@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from time import perf_counter
@@ -32,6 +33,39 @@ MAX_NOTE_FIELDS_DISPLAY = 4        # Max note fields included in context
 MAX_VALUE_DISPLAY_LENGTH = 180     # Truncation length for field values
 AGENT_GENERATION_MAX_TOKENS = 2200 # Max tokens for agent LLM calls
 WEEKLY_REPORT_DEFAULT_DAYS = 7     # Default look-back window for weekly reports
+MAX_AGENT_CONTEXT_CHARS = 18_000   # Keep provider input bounded and reproducible
+_CONTEXT_TRUNCATION_SUFFIX = (
+    f"\n\n[项目上下文已截断至 {MAX_AGENT_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]"
+)
+_CITATION_LINE = re.compile(r"^\s*-\s+\[([NFR])(\d+)\]")
+
+
+def _cap_context(context: str) -> str:
+    if len(context) <= MAX_AGENT_CONTEXT_CHARS:
+        return context
+    visible_lines: list[str] = []
+    visible_length = 0
+    for line in context.splitlines():
+        extra = len(line) + (1 if visible_lines else 0)
+        if visible_length + extra + len(_CONTEXT_TRUNCATION_SUFFIX) > MAX_AGENT_CONTEXT_CHARS:
+            break
+        visible_lines.append(line)
+        visible_length += extra
+    prefix = "\n".join(visible_lines)
+    return prefix + _CONTEXT_TRUNCATION_SUFFIX if prefix else _CONTEXT_TRUNCATION_SUFFIX
+
+
+def _visible_citation_ids(context: str) -> dict[str, set[int]]:
+    visible = {"N": set(), "F": set(), "R": set()}
+    for line in context.splitlines():
+        match = _CITATION_LINE.match(line)
+        if match:
+            visible[match.group(1)].add(int(match.group(2)))
+    return visible
+
+
+def _inline_text(value: object) -> str:
+    return str(value).replace("\r", " ").replace("\n", " ")
 
 
 @dataclass(frozen=True)
@@ -70,7 +104,21 @@ class AgentGenerationService:
         entities, relations = self._load_graph(db, project_id)
         relation_ids = self._select_relation_ids(entities, relations, notes, task_type)
         title = self._title(task_type, project_id, date_from, date_to)
-        source_context = self._body(task_type, project_id, notes, files, entities, relations, relation_ids, date_from, date_to)
+        source_context = _cap_context(
+            self._body(
+                task_type,
+                project_id,
+                notes,
+                files,
+                entities,
+                relations,
+                relation_ids,
+                date_from,
+                date_to,
+            )
+        )
+        visible_citations = _visible_citation_ids(source_context)
+        evidence_available = bool(notes or files or relation_ids)
         steps = [
             {
                 "key": "evidence",
@@ -132,9 +180,10 @@ class AgentGenerationService:
         steps[1].update(status="completed", message=f"DeepSeek 已生成草稿，模型为 {result.get('model') or '未返回'}。")
         review = self._review_answer(
             body,
-            note_ids={nw.note.id for nw in notes},
-            file_ids={file.id for file in files},
-            relation_ids=set(relation_ids),
+            note_ids=visible_citations["N"],
+            file_ids=visible_citations["F"],
+            relation_ids=visible_citations["R"],
+            evidence_available=evidence_available,
         )
         steps.append(
             {
@@ -179,9 +228,10 @@ class AgentGenerationService:
                 repair_step.update(status="completed", message="已完成一次有上限的引用修订。")
                 review = self._review_answer(
                     body,
-                    note_ids={nw.note.id for nw in notes},
-                    file_ids={file.id for file in files},
-                    relation_ids=set(relation_ids),
+                    note_ids=visible_citations["N"],
+                    file_ids=visible_citations["F"],
+                    relation_ids=visible_citations["R"],
+                    evidence_available=evidence_available,
                 )
                 steps.append(
                     {
@@ -228,11 +278,19 @@ class AgentGenerationService:
         note_ids: set[int],
         file_ids: set[int],
         relation_ids: set[int],
+        evidence_available: bool | None = None,
     ) -> dict:
-        return audit_citations(
+        review = audit_citations(
             body,
             allowed={"N": note_ids, "F": file_ids, "R": relation_ids},
         )
+        if evidence_available and not (note_ids or file_ids or relation_ids) and not review["invalid_citations"]:
+            review.update(
+                passed=False,
+                has_evidence=True,
+                message="回答没有引用可见证据，需要人工复核。",
+            )
+        return review
 
     def _resolve_dates(self, task_type: str, date_from: date | None, date_to: date | None) -> tuple[date | None, date | None]:
         if date_to is None and task_type == AgentTaskType.WEEKLY_REPORT.value:
@@ -341,18 +399,19 @@ class AgentGenerationService:
             if files:
                 lines.append("")
                 lines.append("可用资料来源：")
-                lines.extend([f"- [F{file.id}] {file.original_filename}" for file in files])
+                lines.extend([f"- [F{file.id}] {_inline_text(file.original_filename)}" for file in files])
             return "\n".join(lines)
         lines.append("### 实验记录概览")
         for nw in notes:
             version = self._version_snapshot(nw)
             lines.append(
-                f"- [N{nw.note.id}] {nw.note.title}（{nw.note.experiment_type}，{nw.note.experiment_date or '未填日期'}）"
+                f"- [N{nw.note.id}] {_inline_text(nw.note.title)}"
+                f"（{_inline_text(nw.note.experiment_type)}，{nw.note.experiment_date or '未填日期'}）"
             )
             for key, value in list(version.items())[:MAX_NOTE_FIELDS_DISPLAY]:
                 text = self._short_value(value)
                 if text:
-                    lines.append(f"  - {key}：{text}")
+                    lines.append(f"  - {_inline_text(key)}：{text}")
         lines.append("")
         lines.append("### 主要结论")
         result_lines = self._result_lines(notes)
@@ -362,7 +421,10 @@ class AgentGenerationService:
         lines.extend(self._relation_lines(entity_by_id, selected_relations[:MAX_RELATIONS_DISPLAY]) or ["- 当前范围内未检索到直接关联的图谱关系。"])
         lines.append("")
         lines.append("### 资料来源")
-        lines.extend([f"- [F{file.id}] {file.original_filename}" for file in files] or ["- 当前项目暂无已审核资料库文件。"])
+        lines.extend(
+            [f"- [F{file.id}] {_inline_text(file.original_filename)}" for file in files]
+            or ["- 当前项目暂无已审核资料库文件。"]
+        )
         lines.append("")
         lines.append("### 后续建议")
         lines.append("- 对关键实验结果继续补充附件资料和结果字段，便于图谱抽取与 RAG 问答引用。")
@@ -382,7 +444,7 @@ class AgentGenerationService:
                 if "result" in str(key).lower() or "结果" in str(key):
                     text = self._short_value(value)
                     if text:
-                        lines.append(f"- [N{nw.note.id}] {nw.note.title}：{text}")
+                        lines.append(f"- [N{nw.note.id}] {_inline_text(nw.note.title)}：{text}")
         return lines
 
     def _graph_overview_lines(self, entity_by_id: dict[int, KnowledgeEntity], relations: list[KnowledgeRelation]) -> list[str]:
@@ -402,9 +464,11 @@ class AgentGenerationService:
                 continue
             lines.append(
                 f"- [R{relation.id}] "
-                f"[{ENTITY_LABELS.get(source.entity_type, source.entity_type)}] {source.label} "
-                f"--{RELATION_LABELS.get(relation.relation_type, relation.relation_type)}--> "
-                f"[{ENTITY_LABELS.get(target.entity_type, target.entity_type)}] {target.label}"
+                f"[{_inline_text(ENTITY_LABELS.get(source.entity_type, source.entity_type))}] "
+                f"{_inline_text(source.label)} "
+                f"--{_inline_text(RELATION_LABELS.get(relation.relation_type, relation.relation_type))}--> "
+                f"[{_inline_text(ENTITY_LABELS.get(target.entity_type, target.entity_type))}] "
+                f"{_inline_text(target.label)}"
             )
         return lines
 
@@ -415,7 +479,7 @@ class AgentGenerationService:
             text = "；".join(f"{key}: {val}" for key, val in value.items())
         else:
             text = str(value)
-        return text.strip()[:MAX_VALUE_DISPLAY_LENGTH]
+        return _inline_text(text).strip()[:MAX_VALUE_DISPLAY_LENGTH]
 
 
 def attach_current_versions(db: Session, notes: list[ExperimentNote]) -> list[_NoteWithContext]:

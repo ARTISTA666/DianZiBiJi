@@ -31,6 +31,30 @@ def test_agent_relation_citations_match_visible_relation_budget():
     assert relation_ids == list(range(1, agent_service.MAX_OVERVIEW_RELATIONS + 1))
 
 
+def test_agent_context_cap_keeps_whole_visible_citation_lines():
+    context = "- [N1] visible\n" + ("x" * 20_000) + "\n- [N2] hidden"
+
+    capped = agent_service._cap_context(context)
+
+    assert len(capped) <= agent_service.MAX_AGENT_CONTEXT_CHARS
+    assert "- [N1] visible" in capped
+    assert "- [N2] hidden" not in capped
+    assert agent_service._visible_citation_ids(capped) == {"N": {1}, "F": set(), "R": set()}
+
+
+def test_agent_reviewer_requires_visible_citation_when_evidence_is_hidden():
+    review = agent_service.AgentGenerationService()._review_answer(
+        "没有引用的草稿。",
+        note_ids=set(),
+        file_ids=set(),
+        relation_ids=set(),
+        evidence_available=True,
+    )
+
+    assert review["passed"] is False
+    assert review["has_evidence"] is True
+
+
 class FakeDeepSeekClient:
     last_user_prompt = ""
 
@@ -302,3 +326,40 @@ def test_agent_repairs_invalid_citations_once(test_app, monkeypatch: pytest.Monk
     assert body["input_params_json"]["review_result"]["passed"] is True
     assert body["status"] == "completed"
     assert [step["key"] for step in body["input_params_json"]["collaboration_steps"]][-2:] == ["repair", "recheck"]
+
+
+def test_agent_reviewer_rejects_citations_hidden_by_context_cap(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    with SessionLocal() as db:
+        db.add(
+            ExperimentNote(
+                id=3,
+                project_id=1,
+                title="Second approved note",
+                experiment_type="PCR",
+                experiment_date=date(2026, 6, 6),
+                owner_user_id=1,
+                status=NoteStatus.APPROVED,
+            )
+        )
+        db.commit()
+
+    def oversized_body(self, *_args, **_kwargs):
+        return "- [N1] visible\n" + ("x" * 20_000) + "\n- [N3] hidden"
+
+    class HiddenCitationClient:
+        async def generate(self, **_kwargs):
+            return {"answer": "结论引用隐藏来源 [N3]。", "model": "deepseek-test", "usage": {}}
+
+    monkeypatch.setattr(agent_service.AgentGenerationService, "_body", oversized_body)
+    monkeypatch.setattr(agent_service, "DeepSeekClient", HiddenCitationClient)
+    response = client.post(
+        "/api/agents/generate",
+        json={"project_id": 1, "task_type": "experiment_summary"},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "needs_review"
+    assert body["input_params_json"]["review_result"]["invalid_citations"] == ["[N3]"]
