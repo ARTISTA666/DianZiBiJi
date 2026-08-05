@@ -118,8 +118,44 @@ def test_successful_response_must_contain_valid_json(monkeypatch) -> None:
     monkeypatch.setattr(deepseek_module, "get_settings", settings)
     monkeypatch.setattr(deepseek_module.httpx, "AsyncClient", InvalidJsonAsyncClient)
 
+    async def no_sleep(_seconds: float) -> None:
+        return None
+
+    monkeypatch.setattr(deepseek_module.asyncio, "sleep", no_sleep)
+
     with pytest.raises(DeepSeekRequestError, match="invalid JSON"):
         asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
+
+
+def test_retries_malformed_success_response(monkeypatch) -> None:
+    request = httpx.Request("POST", "https://api.deepseek.com/chat/completions")
+    responses = [
+        httpx.Response(200, content=b"not-json", request=request),
+        httpx.Response(
+            200,
+            request=request,
+            json={
+                "id": "request-after-retry",
+                "model": "test-model",
+                "choices": [{"message": {"content": "ok"}}],
+            },
+        ),
+    ]
+
+    class SequenceAsyncClient(FailingAsyncClient):
+        async def post(self, *_args, **_kwargs):
+            return responses.pop(0)
+
+    async def no_sleep(_seconds: float) -> None:
+        return None
+
+    monkeypatch.setattr(deepseek_module, "get_settings", settings)
+    monkeypatch.setattr(deepseek_module.httpx, "AsyncClient", SequenceAsyncClient)
+    monkeypatch.setattr(deepseek_module.asyncio, "sleep", no_sleep)
+
+    result = asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
+
+    assert result["answer"] == "ok"
 
 
 def test_generate_accumulates_usage_and_counts_failures(monkeypatch) -> None:

@@ -103,6 +103,28 @@ def should_retry_status(status_code: int) -> bool:
     return status_code in {408, 425, 429} or 500 <= status_code <= 599
 
 
+def parse_completion_response(response: httpx.Response, fallback_model: str) -> dict[str, Any]:
+    try:
+        data = response.json()
+    except ValueError as exc:
+        raise DeepSeekRequestError("DeepSeek returned invalid JSON") from exc
+    if not isinstance(data, dict):
+        raise DeepSeekRequestError("DeepSeek returned invalid JSON")
+    choices = data.get("choices")
+    if not isinstance(choices, list) or not choices:
+        raise DeepSeekRequestError("DeepSeek did not return a completion")
+    message = choices[0].get("message") if isinstance(choices[0], dict) else {}
+    answer = str(message.get("content") or "").strip()
+    if not answer:
+        raise DeepSeekRequestError("DeepSeek returned an empty completion")
+    return {
+        "answer": answer,
+        "request_id": response.headers.get("x-request-id") or data.get("id"),
+        "model": data.get("model") or fallback_model,
+        "usage": data.get("usage") or {},
+    }
+
+
 class DeepSeekConfigError(RuntimeError):
     pass
 
@@ -198,16 +220,33 @@ class DeepSeekClient:
         last_error: Exception | None = None
         client = await _get_http_client()
         for attempt in range(3):
+            response = None
             try:
                 response = await client.post(
                     f"{self.base_url}/chat/completions",
                     headers=headers,
                     json=payload,
                 )
-                if not should_retry_status(response.status_code):
-                    break
             except httpx.HTTPError as exc:
                 last_error = exc
+            else:
+                if should_retry_status(response.status_code):
+                    last_error = DeepSeekRequestError(
+                        f"DeepSeek request failed: {response.status_code}"
+                    )
+                elif not response.is_success:
+                    try:
+                        detail = str(response.json())
+                    except ValueError:
+                        detail = response.text
+                    raise DeepSeekRequestError(
+                        f"DeepSeek request failed: {response.status_code} {detail[:1000]}"
+                    )
+                else:
+                    try:
+                        return parse_completion_response(response, self.model)
+                    except DeepSeekRequestError as exc:
+                        last_error = exc
             if attempt < 2:
                 retry_after = response.headers.get("retry-after") if response is not None else None
                 try:
@@ -215,35 +254,17 @@ class DeepSeekClient:
                 except ValueError:
                     delay = 2**attempt
                 await asyncio.sleep(delay)
-        if response is None:
-            error_detail = (
-                f"{type(last_error).__name__}: {str(last_error).strip() or repr(last_error)}"
-                if last_error is not None
-                else "unknown transport error"
-            )
-            raise DeepSeekRequestError(
-                f"DeepSeek request failed after 3 attempts: {error_detail}"
-            ) from last_error
-        if not response.is_success:
+        if response is not None and not response.is_success:
             try:
                 detail = str(response.json())
             except ValueError:
                 detail = response.text
             raise DeepSeekRequestError(f"DeepSeek request failed: {response.status_code} {detail[:1000]}")
-        try:
-            data = response.json()
-        except ValueError as exc:
-            raise DeepSeekRequestError("DeepSeek returned invalid JSON") from exc
-        choices = data.get("choices") or []
-        if not choices:
-            raise DeepSeekRequestError("DeepSeek did not return a completion")
-        message = choices[0].get("message") or {}
-        answer = str(message.get("content") or "").strip()
-        if not answer:
-            raise DeepSeekRequestError("DeepSeek returned an empty completion")
-        return {
-            "answer": answer,
-            "request_id": response.headers.get("x-request-id") or data.get("id"),
-            "model": data.get("model") or self.model,
-            "usage": data.get("usage") or {},
-        }
+        error_detail = (
+            f"{type(last_error).__name__}: {str(last_error).strip() or repr(last_error)}"
+            if last_error is not None
+            else "unknown transport error"
+        )
+        raise DeepSeekRequestError(
+            f"DeepSeek request failed after 3 attempts: {error_detail}"
+        ) from last_error
