@@ -154,6 +154,7 @@ def _audit_answer_citations(answer: str, source_count: int, graph_count: int) ->
         result["message"] = f"引用校验通过，共核对 {citation_count} 个证据编号。"
     else:
         result["message"] = "该回答没有可引用的项目证据。"
+    result["repair_attempted"] = False
     return result
 
 

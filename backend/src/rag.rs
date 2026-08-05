@@ -846,6 +846,7 @@ pub fn audit_citations(
         invalid_citations,
         has_evidence,
         message,
+        repair_attempted: false,
     }
 }
 

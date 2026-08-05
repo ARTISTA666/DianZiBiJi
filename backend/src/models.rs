@@ -634,6 +634,7 @@ pub struct RagCitationAuditRead {
     pub invalid_citations: Vec<String>,
     pub has_evidence: bool,
     pub message: String,
+    pub repair_attempted: bool,
 }
 
 #[derive(Debug, Serialize)]

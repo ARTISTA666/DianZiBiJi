@@ -622,6 +622,7 @@ async fn query_project_rag_inner(
         if citation_audit.passed && !missing_source && !missing_graph {
             break;
         }
+        citation_audit.repair_attempted = true;
         let repair_prompt = format!(
             "{user_prompt}\n\n待修订回答：\n{}\n\n引用检查结果：{}\n请只输出修订后的完整回答，并仅使用上文真实存在的 [S数字] 和 [G数字]。",
             result.answer, citation_audit.message

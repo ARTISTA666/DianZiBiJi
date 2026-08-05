@@ -69,6 +69,7 @@ class RagCitationAuditRead(BaseModel):
     invalid_citations: list[str] = Field(default_factory=list)
     has_evidence: bool
     message: str
+    repair_attempted: bool = False
 
 
 class RagQueryResponse(BaseModel):

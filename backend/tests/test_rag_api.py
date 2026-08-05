@@ -530,6 +530,7 @@ def test_query_returns_answer_and_sources(test_app):
         "invalid_citations": [],
         "has_evidence": True,
         "message": "引用校验通过，共核对 1 个证据编号。",
+        "repair_attempted": True,
     }
     with active_session() as db:
         log = db.get(AIQueryLog, body["query_log_id"])
