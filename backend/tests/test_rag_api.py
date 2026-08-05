@@ -14,6 +14,7 @@ from sqlalchemy.orm import sessionmaker
 from app.api import rag
 import app.api.deps as deps
 from app.api.deps import get_current_user
+from app.api.rag.common import _merge_usage
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
 from app.models.ai import AIExperimentRun, AIQueryEvaluation, AIQueryLog
@@ -89,6 +90,15 @@ def test_ai_question_limits_match_rust_contract():
         RagQueryRequest(query="x" * 4_001)
     with pytest.raises(ValueError):
         AIExperimentRunRequest(name="run", questions=["x" * 4_001])
+
+
+def test_rag_usage_merge_does_not_treat_booleans_as_token_counts():
+    merged = _merge_usage(
+        {"total_tokens": True, "provider_usage": "first"},
+        {"total_tokens": 3, "provider_usage": "second"},
+    )
+
+    assert merged == {"total_tokens": 3, "provider_usage": "first"}
 
 
 def test_rag_init_rebuilds_index_when_embedding_model_changes(test_app, monkeypatch):

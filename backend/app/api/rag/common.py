@@ -169,8 +169,13 @@ def _merge_usage(*items: dict | None) -> dict:
     merged: dict = {}
     for item in items:
         for key, value in (item or {}).items():
-            if isinstance(value, (int, float)) and isinstance(merged.get(key, 0), (int, float)):
-                merged[key] = merged.get(key, 0) + value
+            previous = merged.get(key, 0)
+            if isinstance(value, (int, float)) and not isinstance(value, bool):
+                merged[key] = (
+                    previous + value
+                    if isinstance(previous, (int, float)) and not isinstance(previous, bool)
+                    else value
+                )
             elif key not in merged:
                 merged[key] = value
     return merged
