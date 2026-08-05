@@ -18,7 +18,7 @@ use crate::{
     error::ApiError,
     models::{AgentGenerateRequest, AgentGenerationRunRead, UserRecord},
     permissions::{can_write_project, require_project_access},
-    rag::{generate_with_max_tokens, GenerationError},
+    rag::{entity_type_label, generate_with_max_tokens, relation_label, GenerationError},
     AppState,
 };
 
@@ -633,10 +633,10 @@ fn append_relations(lines: &mut Vec<String>, relations: &[SourceRelation]) {
         format!(
             "- [R{}] [{}] {} --{}--> [{}] {}",
             relation.id,
-            inline_text(&relation.source_entity_type),
+            entity_type_label(&relation.source_entity_type),
             inline_text(&relation.source_label),
-            inline_text(&relation.relation_type),
-            inline_text(&relation.target_entity_type),
+            relation_label(&relation.relation_type),
+            entity_type_label(&relation.target_entity_type),
             inline_text(&relation.target_label)
         )
     }));
@@ -1157,6 +1157,33 @@ mod tests {
         assert_eq!(note_ids, vec![1, 1]);
         assert!(!context.contains("\n- [N999]"));
         assert!(!context.contains("\n- [N998]"));
+    }
+
+    #[test]
+    fn test_agent_context_uses_human_graph_labels() {
+        let context = source_context(
+            "实验总结",
+            "graph_overview",
+            7,
+            &[],
+            &[],
+            &[SourceRelation {
+                id: 1,
+                relation_type: "uses_reagent".to_owned(),
+                source_label: "PCR".to_owned(),
+                source_entity_type: "note".to_owned(),
+                source_source_type: None,
+                source_source_id: None,
+                target_label: "Taq".to_owned(),
+                target_entity_type: "reagent".to_owned(),
+                target_source_type: None,
+                target_source_id: None,
+            }],
+            None,
+            None,
+        );
+
+        assert!(context.contains("[实验笔记] PCR --使用试剂--> [试剂] Taq"));
     }
 
     async fn mock_deepseek() -> String {

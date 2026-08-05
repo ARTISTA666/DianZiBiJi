@@ -1435,7 +1435,7 @@ fn hint_tokens_match(left: &str, right: &str) -> bool {
         || (right.len() > 3 && right.strip_suffix('s') == Some(left))
 }
 
-fn relation_label(value: &str) -> &str {
+pub(crate) fn relation_label(value: &str) -> &str {
     match value {
         "has_note" => "包含笔记",
         "created_by" => "创建者",
@@ -1453,7 +1453,7 @@ fn relation_label(value: &str) -> &str {
     }
 }
 
-fn entity_type_label(value: &str) -> &str {
+pub(crate) fn entity_type_label(value: &str) -> &str {
     match value {
         "project" => "项目",
         "note" => "实验笔记",
