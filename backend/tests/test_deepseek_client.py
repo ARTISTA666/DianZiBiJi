@@ -204,3 +204,26 @@ def test_generate_limits_provider_concurrency(monkeypatch) -> None:
     asyncio.run(run_many())
 
     assert active["max"] <= 2
+
+
+def test_http_client_closes_stale_loop_client(monkeypatch) -> None:
+    clients = []
+
+    class TrackingAsyncClient:
+        def __init__(self, **_kwargs) -> None:
+            self.closed = False
+            clients.append(self)
+
+        async def aclose(self) -> None:
+            self.closed = True
+
+    monkeypatch.setattr(deepseek_module.httpx, "AsyncClient", TrackingAsyncClient)
+
+    async def get_client():
+        return await deepseek_module._get_http_client()
+
+    asyncio.run(get_client())
+    asyncio.run(get_client())
+    asyncio.run(deepseek_module.aclose())
+
+    assert clients[0].closed is True

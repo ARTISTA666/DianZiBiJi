@@ -58,7 +58,7 @@ def _record_usage(usage: dict[str, Any] | None, *, failed: bool) -> None:
                 continue
 
 
-def _get_http_client() -> httpx.AsyncClient:
+async def _get_http_client() -> httpx.AsyncClient:
     """Return a process-wide ``httpx.AsyncClient``, creating it lazily.
 
     The client is bound to the running event loop; if the loop changes
@@ -71,7 +71,7 @@ def _get_http_client() -> httpx.AsyncClient:
         if _http_client is not None:
             deepseek_logger.warning("Event loop changed; recreating httpx.AsyncClient.")
             try:
-                _http_client.aclose()
+                await _http_client.aclose()
             except Exception:  # noqa: BLE001
                 pass
         else:
@@ -196,7 +196,7 @@ class DeepSeekClient:
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         response: httpx.Response | None = None
         last_error: Exception | None = None
-        client = _get_http_client()
+        client = await _get_http_client()
         for attempt in range(3):
             try:
                 response = await client.post(
