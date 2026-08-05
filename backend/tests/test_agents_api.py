@@ -45,6 +45,21 @@ def test_agent_relation_citations_match_visible_relation_budget():
     assert normal_relation_ids[-1] == 24
 
 
+def test_agent_usage_merge_accumulates_numbers_and_replaces_metadata():
+    usage = {"provider_usage": "raw", "generation_attempts": 1}
+
+    agent_service._merge_generation_usage(
+        usage,
+        {"provider_usage": {"prompt_tokens": 2}, "generation_attempts": 2, "total_tokens": 3},
+    )
+
+    assert usage == {
+        "provider_usage": {"prompt_tokens": 2},
+        "generation_attempts": 3,
+        "total_tokens": 3,
+    }
+
+
 def test_agent_context_cap_keeps_whole_visible_citation_lines():
     context = "- [N1] visible\n" + ("x" * 20_000) + "\n- [N2] hidden"
 

@@ -68,6 +68,18 @@ def _inline_text(value: object) -> str:
     return str(value).replace("\r", " ").replace("\n", " ")
 
 
+def _merge_generation_usage(target: dict, update: dict | None) -> None:
+    """Accumulate numeric usage fields and keep the latest metadata fields."""
+    for key, value in (update or {}).items():
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            previous = target.get(key)
+            if not isinstance(previous, (int, float)) or isinstance(previous, bool):
+                previous = 0
+            target[key] = previous + value
+        else:
+            target[key] = value
+
+
 @dataclass(frozen=True)
 class _NoteWithContext:
     """ORM 对象与其关联版本的不可变组合，避免在 ORM 实例上挂载瞬态属性。"""
@@ -226,9 +238,7 @@ class AgentGenerationService:
             else:
                 body = repair_result["answer"]
                 model_name = repair_result.get("model") or model_name
-                for key, value in (repair_result.get("usage") or {}).items():
-                    if isinstance(value, (int, float)) and isinstance(usage.get(key, 0), (int, float)):
-                        usage[key] = usage.get(key, 0) + value
+                _merge_generation_usage(usage, repair_result.get("usage"))
                 repair_step.update(status="completed", message="已完成一次有上限的引用修订。")
                 review = self._review_answer(
                     body,
