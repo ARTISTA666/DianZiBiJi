@@ -997,6 +997,16 @@ pub fn audit_citations(
     }
 }
 
+pub fn audit_citations_after_repair(
+    answer: &str,
+    source_count: usize,
+    graph_count: usize,
+) -> RagCitationAuditRead {
+    let mut audit = audit_citations(answer, source_count, graph_count);
+    audit.repair_attempted = true;
+    audit
+}
+
 fn chunk_text(text: &str, chunk_size: usize, overlap: usize) -> Vec<String> {
     let normalized = text.replace("\r\n", "\n").replace('\r', "\n");
     let chars: Vec<char> = normalized.trim().chars().collect();
@@ -1416,13 +1426,14 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        focused_graph_entity_ids, format_graph_context, format_sources, generate,
-        generate_with_max_tokens, graph_context_budget, include_retrieval_candidate,
-        is_collection_query, meets_graph_threshold, rag_insert_batch_ranges, relation_hints,
-        retrieve, role_query_matches, should_retry_generation_status, tokens,
-        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow,
-        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        audit_citations, audit_citations_after_repair, bm25_scores, chunk_text,
+        exact_token_overlap, fetch_vector_candidates, focused_graph_entity_ids,
+        format_graph_context, format_sources, generate, generate_with_max_tokens,
+        graph_context_budget, include_retrieval_candidate, is_collection_query,
+        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
+        role_query_matches, should_retry_generation_status, tokens, truncate_error_detail,
+        validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1479,6 +1490,14 @@ mod tests {
         assert!(!audit.passed);
         assert_eq!(audit.citation_count, 4);
         assert_eq!(audit.invalid_citations, ["[S系统]", "[S1-S2]", "[S+1]"]);
+    }
+
+    #[test]
+    fn test_repaired_citation_audit_preserves_attempt_flag() {
+        let audit = audit_citations_after_repair("Valid [S1]", 1, 0);
+
+        assert!(audit.passed);
+        assert!(audit.repair_attempted);
     }
 
     #[test]

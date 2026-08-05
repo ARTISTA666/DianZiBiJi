@@ -29,9 +29,9 @@ use crate::{
         require_project_access, require_project_metadata_access,
     },
     rag::{
-        audit_citations, fetch_rag_file, format_graph_context, format_sources, generate,
-        graph_context_budget, index_file, merge_usage, relevant_graph_context, retrieve,
-        GenerationError,
+        audit_citations, audit_citations_after_repair, fetch_rag_file, format_graph_context,
+        format_sources, generate, graph_context_budget, index_file, merge_usage,
+        relevant_graph_context, retrieve, GenerationError,
     },
     AppState,
 };
@@ -632,7 +632,8 @@ async fn query_project_rag_inner(
         };
         usage_values.push(repaired.usage.clone());
         result = repaired;
-        citation_audit = audit_citations(&result.answer, sources.len(), graph_context.len());
+        citation_audit =
+            audit_citations_after_repair(&result.answer, sources.len(), graph_context.len());
     }
     let response_ms = elapsed_ms(started);
     let usage = merge_usage(&usage_values);
