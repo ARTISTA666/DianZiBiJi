@@ -22,6 +22,8 @@ class EmbeddingClient:
 
     async def embed_query(self, text: str) -> list[float]:
         vectors = await self._embed([text])
+        if not vectors:
+            raise EmbeddingServiceError("Embedding backend returned no query vector")
         return vectors[0]
 
     async def _embed(self, texts: list[str]) -> list[list[float]]:

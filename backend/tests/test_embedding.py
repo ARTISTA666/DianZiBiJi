@@ -47,6 +47,15 @@ def test_embed_query_empty_string_still_calls_model(
     assert len(vec) == 4
 
 
+def test_embed_query_rejects_empty_backend_result(
+    client: EmbeddingClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr("app.services.embedding._encode", lambda *_: [])
+
+    with pytest.raises(EmbeddingServiceError, match="no query vector"):
+        asyncio.run(client.embed_query("hello"))
+
+
 # ------------------------------------------------------------------
 # 2. Dimension mismatch raises EmbeddingServiceError
 # ------------------------------------------------------------------
