@@ -284,6 +284,54 @@ def test_generate_limits_provider_concurrency(monkeypatch) -> None:
     assert active["max"] <= 2
 
 
+def test_retry_backoff_releases_provider_concurrency_slot(monkeypatch) -> None:
+    request = httpx.Request("POST", "https://api.deepseek.com/chat/completions")
+    first_failure = asyncio.Event()
+    second_started = asyncio.Event()
+    attempts = 0
+
+    class RetryAsyncClient(FailingAsyncClient):
+        async def post(self, *_args, **_kwargs):
+            nonlocal attempts
+            attempts += 1
+            if attempts == 1:
+                first_failure.set()
+                return httpx.Response(503, request=request)
+            second_started.set()
+            return httpx.Response(
+                200,
+                request=request,
+                json={
+                    "id": "request-retry-slot",
+                    "model": "test-model",
+                    "choices": [{"message": {"content": "ok"}}],
+                },
+            )
+
+    def limited_settings():
+        base = settings()
+        base.deepseek_max_concurrency = 1
+        return base
+
+    async def gated_sleep(_seconds: float) -> None:
+        await second_started.wait()
+
+    monkeypatch.setattr(deepseek_module, "get_settings", limited_settings)
+    monkeypatch.setattr(deepseek_module.httpx, "AsyncClient", RetryAsyncClient)
+    monkeypatch.setattr(deepseek_module.asyncio, "sleep", gated_sleep)
+
+    async def run_many() -> None:
+        client = DeepSeekClient()
+        first = asyncio.create_task(client.generate(system_prompt="system", user_prompt="first"))
+        await first_failure.wait()
+        second = asyncio.create_task(client.generate(system_prompt="system", user_prompt="second"))
+        await asyncio.wait_for(asyncio.gather(first, second), timeout=0.5)
+
+    asyncio.run(run_many())
+
+    assert second_started.is_set()
+
+
 def test_http_client_closes_stale_loop_client(monkeypatch) -> None:
     clients = []
 

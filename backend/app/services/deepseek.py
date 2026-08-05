@@ -164,29 +164,28 @@ class DeepSeekClient:
         max_tokens: int = 1800,
     ) -> dict[str, Any]:
         started = perf_counter()
-        async with _get_semaphore():
-            try:
-                result = await self._request(
-                    system_prompt=system_prompt,
-                    user_prompt=user_prompt,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
+        try:
+            result = await self._request(
+                system_prompt=system_prompt,
+                user_prompt=user_prompt,
+                temperature=temperature,
+                max_tokens=max_tokens,
+            )
+        except Exception as exc:
+            _record_usage(None, failed=True)
+            llm_logger.warning(
+                json.dumps(
+                    {
+                        "event": "llm_failure",
+                        "model": self.model,
+                        "duration_ms": round((perf_counter() - started) * 1000),
+                        "error_type": type(exc).__name__,
+                        "error": str(exc)[:500],
+                    },
+                    separators=(",", ":"),
                 )
-            except Exception as exc:
-                _record_usage(None, failed=True)
-                llm_logger.warning(
-                    json.dumps(
-                        {
-                            "event": "llm_failure",
-                            "model": self.model,
-                            "duration_ms": round((perf_counter() - started) * 1000),
-                            "error_type": type(exc).__name__,
-                            "error": str(exc)[:500],
-                        },
-                        separators=(",", ":"),
-                    )
-                )
-                raise
+            )
+            raise
         usage = result.get("usage") or {}
         _record_usage(usage, failed=False)
         llm_logger.info(
@@ -230,32 +229,33 @@ class DeepSeekClient:
         client = await _get_http_client()
         for attempt in range(3):
             response = None
-            try:
-                response = await client.post(
-                    f"{self.base_url}/chat/completions",
-                    headers=headers,
-                    json=payload,
-                )
-            except httpx.HTTPError as exc:
-                last_error = exc
-            else:
-                if should_retry_status(response.status_code):
-                    last_error = DeepSeekRequestError(
-                        f"DeepSeek request failed: {response.status_code}"
+            async with _get_semaphore():
+                try:
+                    response = await client.post(
+                        f"{self.base_url}/chat/completions",
+                        headers=headers,
+                        json=payload,
                     )
-                elif not response.is_success:
-                    try:
-                        detail = str(response.json())
-                    except ValueError:
-                        detail = response.text
-                    raise DeepSeekRequestError(
-                        f"DeepSeek request failed: {response.status_code} {detail[:1000]}"
-                    )
+                except httpx.HTTPError as exc:
+                    last_error = exc
                 else:
-                    try:
-                        return parse_completion_response(response, self.model)
-                    except DeepSeekRequestError as exc:
-                        last_error = exc
+                    if should_retry_status(response.status_code):
+                        last_error = DeepSeekRequestError(
+                            f"DeepSeek request failed: {response.status_code}"
+                        )
+                    elif not response.is_success:
+                        try:
+                            detail = str(response.json())
+                        except ValueError:
+                            detail = response.text
+                        raise DeepSeekRequestError(
+                            f"DeepSeek request failed: {response.status_code} {detail[:1000]}"
+                        )
+                    else:
+                        try:
+                            return parse_completion_response(response, self.model)
+                        except DeepSeekRequestError as exc:
+                            last_error = exc
             if attempt < 2:
                 retry_after = response.headers.get("retry-after") if response is not None else None
                 try:
