@@ -1372,42 +1372,83 @@ fn is_generic_graph_token(token: &str) -> bool {
         token,
         "笔记"
             | "记录"
+            | "已审核"
             | "note"
+            | "notes"
             | "试剂"
             | "材料"
+            | "药品"
             | "reagent"
+            | "reagents"
             | "use"
             | "仪器"
             | "设备"
             | "instrument"
+            | "instruments"
             | "样本"
             | "样品"
             | "sample"
+            | "samples"
             | "结果"
+            | "观察"
             | "结论"
             | "result"
             | "count"
+            | "计数"
+            | "行数"
+            | "条目"
+            | "total"
+            | "detected"
+            | "fastq"
+            | "significance"
             | "附件"
+            | "资料"
             | "文件"
             | "file"
             | "谁"
+            | "人员"
             | "创建"
             | "creator"
+            | "user"
+            | "负责人"
+            | "类型"
             | "实验类型"
             | "type"
             | "细胞"
+            | "细胞系"
+            | "细胞类型"
             | "来源"
             | "cell"
             | "条件"
+            | "分组"
+            | "组别"
             | "处理"
+            | "培养"
+            | "重复"
             | "对照"
+            | "敲低"
             | "condition"
+            | "treatment"
+            | "replicate"
+            | "control"
+            | "knockdown"
             | "软件"
             | "比对"
+            | "计数软件"
+            | "处理流程"
             | "software"
+            | "aligner"
             | "登录号"
+            | "标识符"
             | "标识"
+            | "样本号"
+            | "列名"
+            | "参考基因组"
             | "accession"
+            | "geo"
+            | "sra"
+            | "biosample"
+            | "genome"
             | "哪些"
             | "有哪些"
             | "全部"
@@ -1710,6 +1751,20 @@ mod tests {
         assert!(focused.contains(&10));
         assert!(!focused.contains(&20));
         assert!(focused_graph_entity_ids(&rows, "列出所有试剂").is_none());
+
+        let material_rows = vec![GraphRow {
+            relation_id: 3,
+            relation_type: "has_attachment".to_owned(),
+            source_entity_id: 30,
+            source_label: "资料库".to_owned(),
+            source_entity_type: "project".to_owned(),
+            target_entity_id: 31,
+            target_label: "protocol.pdf".to_owned(),
+            target_entity_type: "file".to_owned(),
+            confidence: 0.9,
+            properties: json!({}),
+        }];
+        assert!(focused_graph_entity_ids(&material_rows, "列出所有资料").is_none());
     }
 
     #[test]
