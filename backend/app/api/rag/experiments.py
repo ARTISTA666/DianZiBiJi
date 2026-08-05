@@ -244,9 +244,9 @@ async def run_rag_experiment(
             detail=f"Experiment modes must be one of: {', '.join(EXPERIMENT_MODES)}",
         )
     dataset = _get_project_dataset(db, project_id)
+    if any(mode not in {"pure_llm", "structured_query"} for mode in modes) and dataset is None:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
     if any(mode in EMBEDDING_RAG_MODES for mode in modes):
-        if dataset is None:
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
         _require_compatible_embedding(dataset)
     _ensure_no_active_experiment(db)
 

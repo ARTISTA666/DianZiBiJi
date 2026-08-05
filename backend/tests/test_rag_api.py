@@ -350,6 +350,12 @@ def test_pure_llm_does_not_require_rag_dataset(test_app):
     assert response.json()["sources"] == []
     assert response.json()["graph_context"] == []
 
+    bm25_response = client.post(
+        "/projects/1/rag/query",
+        json={"query": "general question", "mode": "bm25_rag"},
+    )
+    assert bm25_response.status_code == 409
+
 
 def test_structured_query_reports_graph_budget_fallback(test_app, monkeypatch) -> None:
     client, SessionLocal, active_user_id = test_app
