@@ -488,8 +488,14 @@ fn source_context(
         String::new(),
     ];
     if task_type == "graph_overview" {
-        lines.push("实验过程关联概览".to_owned());
+        lines.push("### 实验过程关联概览".to_owned());
         append_relations(&mut lines, relations);
+        lines.push(String::new());
+        lines.push("### 说明".to_owned());
+        lines.push(
+            "- 该概览基于系统已抽取的实验知识图谱生成，可用于论文中说明实验实体关系组织能力。"
+                .to_owned(),
+        );
         return cap_context(lines.join("\n"));
     }
     append_source_index(&mut lines, notes, files, relations);
@@ -530,6 +536,7 @@ fn source_context(
     if result_count == 0 {
         lines.push("- 已完成实验记录整理，后续可结合评价数据补充效果分析。".to_owned());
     }
+    lines.push(String::new());
     lines.push("### 实验记录概览".to_owned());
     for note in notes {
         lines.push(format!(
@@ -542,6 +549,7 @@ fn source_context(
         append_json_fields(&mut lines, &note.fixed_fields_json, 4);
         append_json_fields(&mut lines, &note.content_json, 4);
     }
+    lines.push(String::new());
     lines.push("### 资料来源".to_owned());
     if files.is_empty() {
         lines.push("- 当前项目暂无已审核资料库文件。".to_owned());
@@ -552,6 +560,12 @@ fn source_context(
                 .map(|file| format!("- [F{}] {}", file.id, inline_text(&file.original_filename))),
         );
     }
+    lines.push(String::new());
+    lines.push("### 后续建议".to_owned());
+    lines.push(
+        "- 对关键实验结果继续补充附件资料和结果字段，便于图谱抽取与 RAG 问答引用。".to_owned(),
+    );
+    lines.push("- 对生成内容进行人工确认后，可作为论文实验管理流程截图和案例材料。".to_owned());
     cap_context(lines.join("\n"))
 }
 
