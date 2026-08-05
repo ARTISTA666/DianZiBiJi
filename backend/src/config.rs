@@ -159,6 +159,12 @@ impl Settings {
 
     fn validate_runtime(&self) -> Result<(), ConfigError> {
         self.validate_embedding()?;
+        if !self.rag_graph_min_score.is_finite() || self.rag_graph_min_score < 0.0 {
+            return Err(ConfigError::InvalidValue {
+                name: "RAG_GRAPH_MIN_SCORE",
+                value: self.rag_graph_min_score.to_string(),
+            });
+        }
         if !(1..=128).contains(&self.deepseek_max_concurrency) {
             return Err(ConfigError::InvalidValue {
                 name: "DEEPSEEK_MAX_CONCURRENCY",
@@ -446,5 +452,17 @@ mod tests {
         ]))
         .unwrap_err();
         assert!(error.to_string().contains("LOGIN_FAILURE_DELAY_BASE_MS"));
+    }
+
+    #[test]
+    fn graph_min_score_must_be_finite_and_nonnegative() {
+        for value in ["-0.1", "NaN", "inf"] {
+            let error = Settings::from_map(&HashMap::from([(
+                "RAG_GRAPH_MIN_SCORE".to_owned(),
+                value.to_owned(),
+            )]))
+            .unwrap_err();
+            assert!(error.to_string().contains("RAG_GRAPH_MIN_SCORE"));
+        }
     }
 }
