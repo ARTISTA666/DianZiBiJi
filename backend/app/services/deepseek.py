@@ -117,11 +117,17 @@ def parse_completion_response(response: httpx.Response, fallback_model: str) -> 
     answer = str(message.get("content") or "").strip()
     if not answer:
         raise DeepSeekRequestError("DeepSeek returned an empty completion")
+    provider_usage = data.get("usage")
+    usage = (
+        provider_usage
+        if isinstance(provider_usage, dict)
+        else {} if provider_usage is None else {"provider_usage": provider_usage}
+    )
     return {
         "answer": answer,
         "request_id": response.headers.get("x-request-id") or data.get("id"),
         "model": data.get("model") or fallback_model,
-        "usage": data.get("usage") or {},
+        "usage": usage,
     }
 
 

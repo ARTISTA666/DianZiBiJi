@@ -158,6 +158,31 @@ def test_retries_malformed_success_response(monkeypatch) -> None:
     assert result["answer"] == "ok"
 
 
+def test_non_object_usage_does_not_break_successful_completion(monkeypatch) -> None:
+    request = httpx.Request("POST", "https://api.deepseek.com/chat/completions")
+
+    class RawUsageAsyncClient(FailingAsyncClient):
+        async def post(self, *_args, **_kwargs):
+            return httpx.Response(
+                200,
+                request=request,
+                json={
+                    "id": "request-raw-usage",
+                    "model": "test-model",
+                    "choices": [{"message": {"content": "ok"}}],
+                    "usage": "raw-usage",
+                },
+            )
+
+    monkeypatch.setattr(deepseek_module, "get_settings", settings)
+    monkeypatch.setattr(deepseek_module.httpx, "AsyncClient", RawUsageAsyncClient)
+
+    result = asyncio.run(DeepSeekClient().generate(system_prompt="system", user_prompt="user"))
+
+    assert result["answer"] == "ok"
+    assert result["usage"] == {"provider_usage": "raw-usage"}
+
+
 def test_generate_accumulates_usage_and_counts_failures(monkeypatch) -> None:
     request = httpx.Request("POST", "https://api.deepseek.com/chat/completions")
 
