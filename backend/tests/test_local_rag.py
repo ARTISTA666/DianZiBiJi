@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 from types import SimpleNamespace
 
+import pytest
 from sqlalchemy.orm import sessionmaker
 
 from app.core.database import Base
@@ -11,7 +12,7 @@ from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, Store
 from app.models.project import Project
 from app.models.rag import RagDocumentChunk
 from app.models.user import User, UserRole
-from app.services.local_rag import LocalRagService, RetrievedChunk
+from app.services.local_rag import LocalRagService, RetrievedChunk, validate_embedding_count
 
 
 class FakeEmbeddingClient:
@@ -67,6 +68,11 @@ def test_bm25_scores_rank_matching_document_first() -> None:
 
     assert scores.index(max(scores)) == 0
     assert LocalRagService._bm25_scores("PCR", ["...", "---"]) == [0.0, 0.0]
+
+
+def test_indexing_rejects_embedding_count_mismatch() -> None:
+    with pytest.raises(ValueError, match="Embedding backend returned 0 vectors for 1 chunks"):
+        validate_embedding_count(["chunk"], [])
 
 
 def test_retrieval_excludes_stale_chunks_from_archived_files(db_engine) -> None:

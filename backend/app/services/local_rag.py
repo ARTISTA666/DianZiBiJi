@@ -39,6 +39,13 @@ class RetrievedChunk:
         }
 
 
+def validate_embedding_count(chunks: list[str], vectors: list[list[float]]) -> None:
+    if len(vectors) != len(chunks):
+        raise ValueError(
+            f"Embedding backend returned {len(vectors)} vectors for {len(chunks)} chunks"
+        )
+
+
 class LocalRagService:
     def __init__(self, embedding_client: EmbeddingClient | None = None) -> None:
         self.settings = get_settings()
@@ -50,6 +57,7 @@ class LocalRagService:
         if not chunks:
             raise ValueError("No extractable text was found in the document")
         vectors = await self.embedding_client.embed_documents(chunks)
+        validate_embedding_count(chunks, vectors)
         db.query(RagDocumentChunk).filter(RagDocumentChunk.file_id == record.id).delete()
         for index, (content, embedding) in enumerate(zip(chunks, vectors, strict=True)):
             db.add(
