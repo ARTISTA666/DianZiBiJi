@@ -546,15 +546,83 @@ pub async fn relevant_graph_context(
             })
             .then_with(|| right.1.relation_id.cmp(&left.1.relation_id))
     });
-    Ok(scored
+    Ok(balance_graph_context(scored, limit, query)
         .into_iter()
         .map(|(_, context)| context)
-        .take(limit)
         .collect())
 }
 
 fn meets_graph_threshold(score: f64, min_score: f64) -> bool {
     score > 0.0 && score >= min_score
+}
+
+fn balance_graph_context(
+    scored: Vec<(f64, RagGraphContextRead)>,
+    limit: usize,
+    query: &str,
+) -> Vec<(f64, RagGraphContextRead)> {
+    if limit == 0 {
+        return Vec::new();
+    }
+    let normalized_query = query.to_lowercase();
+    let mut selected = Vec::with_capacity(limit);
+    let mut selected_ids = HashSet::new();
+    let mut seen_groups = HashSet::new();
+    for (score, context) in &scored {
+        let matching_role = context
+            .relation_roles
+            .iter()
+            .find(|role| role_query_matches(role, &normalized_query))
+            .map(String::as_str)
+            .unwrap_or_default();
+        let wants_distinct_targets =
+            matches!(matching_role, "processing_software" | "data_boundary")
+                && [
+                    "完整",
+                    "全部",
+                    "所有",
+                    "软件链",
+                    "流程",
+                    "层级",
+                    "不能",
+                    "不得",
+                    "不是",
+                    "pipeline",
+                    "fastq",
+                ]
+                .iter()
+                .any(|keyword| normalized_query.contains(keyword));
+        let group = (
+            if wants_distinct_targets {
+                0
+            } else {
+                context.source_entity_id
+            },
+            context.relation_type.clone(),
+            matching_role.to_owned(),
+            if wants_distinct_targets {
+                context.target_entity_id
+            } else {
+                0
+            },
+        );
+        if context.source_entity_type == "note" && seen_groups.insert(group) {
+            selected_ids.insert(context.relation_id);
+            selected.push((*score, context.clone()));
+            if selected.len() == limit {
+                return selected;
+            }
+        }
+    }
+    for (score, context) in scored {
+        if selected_ids.insert(context.relation_id) {
+            selected.push((score, context));
+            if selected.len() == limit {
+                break;
+            }
+        }
+    }
+    selected
 }
 
 pub fn format_sources(sources: &[RagSourceRead]) -> String {
@@ -1554,8 +1622,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, audit_citations_after_repair, bm25_scores, chunk_text,
-        exact_token_overlap, fetch_vector_candidates, focused_graph_entity_ids,
+        audit_citations, audit_citations_after_repair, balance_graph_context, bm25_scores,
+        chunk_text, exact_token_overlap, fetch_vector_candidates, focused_graph_entity_ids,
         format_graph_context, format_sources, generate, generate_with_max_tokens,
         graph_context_budget, graph_relation_haystack, include_retrieval_candidate,
         is_collection_query, meets_graph_threshold, rag_insert_batch_ranges, relation_hints,
@@ -1765,6 +1833,44 @@ mod tests {
             properties: json!({}),
         }];
         assert!(focused_graph_entity_ids(&material_rows, "列出所有资料").is_none());
+    }
+
+    #[test]
+    fn test_graph_context_balances_note_sources() {
+        let context = |relation_id: i32,
+                       source_entity_id: i32,
+                       target_entity_id: i32,
+                       retrieval_score: f64| RagGraphContextRead {
+            relation_id,
+            relation_type: "uses_reagent".to_owned(),
+            relation_label: "使用试剂".to_owned(),
+            source_entity_id,
+            source_label: format!("note-{source_entity_id}"),
+            source_entity_type: "note".to_owned(),
+            source_entity_type_label: "实验笔记".to_owned(),
+            target_entity_id,
+            target_label: format!("reagent-{target_entity_id}"),
+            target_entity_type: "reagent".to_owned(),
+            target_entity_type_label: "试剂".to_owned(),
+            confidence: 0.9,
+            retrieval_score,
+            relation_roles: vec![],
+        };
+        let selected = balance_graph_context(
+            vec![
+                (3.0, context(1, 10, 11, 3.0)),
+                (2.0, context(2, 10, 12, 2.0)),
+                (1.0, context(3, 20, 21, 1.0)),
+            ],
+            2,
+            "列出所有试剂",
+        );
+
+        let relation_ids = selected
+            .into_iter()
+            .map(|(_, context)| context.relation_id)
+            .collect::<Vec<_>>();
+        assert_eq!(relation_ids, [1, 3]);
     }
 
     #[test]
