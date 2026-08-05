@@ -546,7 +546,7 @@ async fn query_project_rag_inner(
             None,
             "system",
             None,
-            "structured-query-v2",
+            "structured-query-v3",
             json!({}),
             fallback_reason.as_deref(),
             None,

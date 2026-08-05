@@ -64,6 +64,9 @@ _PROMPT_TO_RUST: dict[str, list[Path]] = {
     "agent_writer": [_AGENTS_RS],
 }
 
+# Persisted failure-event versions are telemetry identifiers, not prompts.
+_NON_PROMPT_RUST_VERSIONS = {"rag-retrieval-failure-v1"}
+
 
 # ---------------------------------------------------------------------------
 # Tests
@@ -99,7 +102,7 @@ def test_no_orphan_rust_versions() -> None:
         source = _read_rust(rust_path)
         all_rust_versions |= _extract_rust_versions(source)
 
-    orphans = all_rust_versions - python_versions
+    orphans = all_rust_versions - python_versions - _NON_PROMPT_RUST_VERSIONS
     assert not orphans, (
         f"Rust source contains prompt versions not in Python registry: "
         f"{sorted(orphans)}. Python versions: {sorted(python_versions)}"
