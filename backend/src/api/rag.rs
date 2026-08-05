@@ -445,6 +445,7 @@ async fn query_project_rag_inner(
             } else {
                 state.settings.rag_graph_top_k
             },
+            state.settings.rag_graph_min_score,
         )
         .await?
     } else {

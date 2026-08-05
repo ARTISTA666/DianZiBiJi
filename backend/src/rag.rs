@@ -378,6 +378,7 @@ pub async fn relevant_graph_context(
     project_id: i32,
     query: &str,
     limit: usize,
+    min_score: f64,
 ) -> Result<Vec<RagGraphContextRead>, ApiError> {
     let rows = sqlx::query_as::<_, GraphRow>(
         r#"
@@ -443,7 +444,7 @@ pub async fn relevant_graph_context(
             } else {
                 0.0
             };
-        if score <= 0.0 {
+        if !meets_graph_threshold(score, min_score) {
             continue;
         }
         scored.push((
@@ -476,6 +477,10 @@ pub async fn relevant_graph_context(
         .map(|(_, context)| context)
         .take(limit)
         .collect())
+}
+
+fn meets_graph_threshold(score: f64, min_score: f64) -> bool {
+    score > 0.0 && score >= min_score
 }
 
 pub fn format_sources(sources: &[RagSourceRead]) -> String {
@@ -945,9 +950,9 @@ mod tests {
 
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        format_graph_context, format_sources, generate, is_collection_query, relation_hints,
-        retrieve, tokens, truncate_error_detail, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
-        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        format_graph_context, format_sources, generate, is_collection_query, meets_graph_threshold,
+        relation_hints, retrieve, tokens, truncate_error_detail, vector_literal, ChunkRow,
+        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1013,6 +1018,14 @@ mod tests {
     fn test_relation_hints_do_not_match_substrings() {
         assert!(!relation_hints("user").contains("uses_reagent"));
         assert!(relation_hints("Which reagents were used?").contains("uses_reagent"));
+    }
+
+    #[test]
+    fn test_graph_threshold_rejects_below_threshold_and_zero_scores() {
+        assert!(meets_graph_threshold(1.0, 1.0));
+        assert!(meets_graph_threshold(1.0, 0.0));
+        assert!(!meets_graph_threshold(0.9, 1.0));
+        assert!(!meets_graph_threshold(0.0, 0.0));
     }
 
     #[test]
