@@ -246,6 +246,25 @@ def test_generate_accumulates_usage_and_counts_failures(monkeypatch) -> None:
     assert after_failure["total_tokens"] == after_success["total_tokens"]
 
 
+def test_usage_accounting_ignores_boolean_token_counts() -> None:
+    before = deepseek_module.usage_snapshot()
+
+    deepseek_module._record_usage(
+        {
+            "prompt_tokens": True,
+            "completion_tokens": False,
+            "total_tokens": True,
+        },
+        failed=False,
+    )
+
+    after = deepseek_module.usage_snapshot()
+    assert after["requests"] == before["requests"] + 1
+    assert after["prompt_tokens"] == before["prompt_tokens"]
+    assert after["completion_tokens"] == before["completion_tokens"]
+    assert after["total_tokens"] == before["total_tokens"]
+
+
 def test_generate_limits_provider_concurrency(monkeypatch) -> None:
     request = httpx.Request("POST", "https://api.deepseek.com/chat/completions")
     active = {"current": 0, "max": 0}

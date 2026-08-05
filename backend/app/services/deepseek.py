@@ -52,8 +52,11 @@ def _record_usage(usage: dict[str, Any] | None, *, failed: bool) -> None:
         if failed:
             _usage_totals["failures"] += 1
         for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
+            raw_value = (usage or {}).get(key)
+            if isinstance(raw_value, bool):
+                continue
             try:
-                _usage_totals[key] += int((usage or {}).get(key) or 0)
+                _usage_totals[key] += int(raw_value or 0)
             except (TypeError, ValueError):
                 continue
 
