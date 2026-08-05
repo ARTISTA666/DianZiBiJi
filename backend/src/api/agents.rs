@@ -462,18 +462,8 @@ fn source_context(
         }
         return cap_context(lines.join("\n"));
     }
-    lines.push("### 实验记录概览".to_owned());
-    for note in notes {
-        lines.push(format!(
-            "- [N{}] {}（{}，{}）",
-            note.id,
-            note.title,
-            note.experiment_type,
-            display_date(note.experiment_date, "未填日期")
-        ));
-        append_json_fields(&mut lines, &note.fixed_fields_json, 4);
-        append_json_fields(&mut lines, &note.content_json, 4);
-    }
+    lines.push("### 知识图谱依据".to_owned());
+    append_relations(&mut lines, relations);
     lines.push(String::new());
     lines.push("### 主要结论".to_owned());
     let mut result_count = 0;
@@ -497,10 +487,18 @@ fn source_context(
     if result_count == 0 {
         lines.push("- 已完成实验记录整理，后续可结合评价数据补充效果分析。".to_owned());
     }
-    lines.push(String::new());
-    lines.push("### 知识图谱依据".to_owned());
-    append_relations(&mut lines, relations);
-    lines.push(String::new());
+    lines.push("### 实验记录概览".to_owned());
+    for note in notes {
+        lines.push(format!(
+            "- [N{}] {}（{}，{}）",
+            note.id,
+            note.title,
+            note.experiment_type,
+            display_date(note.experiment_date, "未填日期")
+        ));
+        append_json_fields(&mut lines, &note.fixed_fields_json, 4);
+        append_json_fields(&mut lines, &note.content_json, 4);
+    }
     lines.push("### 资料来源".to_owned());
     if files.is_empty() {
         lines.push("- 当前项目暂无已审核资料库文件。".to_owned());
@@ -789,7 +787,9 @@ mod tests {
     use tower::ServiceExt;
     use uuid::Uuid;
 
-    use super::{review_answer, source_context, SourceNote, MAX_AGENT_CONTEXT_CHARS};
+    use super::{
+        review_answer, source_context, SourceNote, SourceRelation, MAX_AGENT_CONTEXT_CHARS,
+    };
     use crate::{
         build_app,
         config::Settings,
@@ -851,19 +851,36 @@ mod tests {
                 content_json: json!({"text": "y".repeat(180)}),
             })
             .collect::<Vec<_>>();
+        let relations = vec![SourceRelation {
+            id: 1,
+            relation_type: "uses_reagent".to_owned(),
+            source_label: "实验笔记".to_owned(),
+            source_entity_type: "note".to_owned(),
+            source_source_type: None,
+            source_source_id: None,
+            target_label: "试剂".to_owned(),
+            target_entity_type: "reagent".to_owned(),
+            target_source_type: None,
+            target_source_id: None,
+        }];
         let context = source_context(
             "实验总结",
             "experiment_summary",
             7,
             &notes,
             &[],
-            &[],
+            &relations,
             None,
             None,
         );
 
         assert!(context.chars().count() <= MAX_AGENT_CONTEXT_CHARS);
         assert!(context.contains("[N100]"));
+        assert!(context.contains("[R1]"));
+        assert!(context.contains("知识图谱依据"));
+        if let Some(detail_pos) = context.find("实验记录概览") {
+            assert!(context.find("知识图谱依据").unwrap() < detail_pos);
+        }
         assert!(context.contains("项目上下文已截断"));
     }
 
