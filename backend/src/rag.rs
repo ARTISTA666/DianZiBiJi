@@ -1,5 +1,6 @@
 use std::{
     collections::{HashMap, HashSet},
+    sync::OnceLock,
     time::Duration,
 };
 
@@ -218,19 +219,7 @@ pub async fn retrieve(
         return Ok(Vec::new());
     }
     let query_tokens = tokens(query);
-    let lexical_scores = rows
-        .iter()
-        .map(|row| {
-            let document_tokens = tokens(&row.content);
-            let matched = query_tokens.intersection(&document_tokens).count();
-            let lexical_score = if query_tokens.is_empty() {
-                0.0
-            } else {
-                matched as f64 / query_tokens.len() as f64
-            };
-            (row.id, lexical_score)
-        })
-        .collect::<HashMap<_, _>>();
+    let lexical_scores = bm25_scores(&rows, query);
 
     let (candidate_ids, vector_scores) = if bm25_only {
         (
@@ -700,22 +689,74 @@ fn chunk_text(text: &str, chunk_size: usize, overlap: usize) -> Vec<String> {
 }
 
 fn tokens(text: &str) -> HashSet<String> {
-    let mut output = HashSet::new();
-    let regex = Regex::new(r"(?i)[a-z0-9_µ><=./-]+|[\p{Han}]+").unwrap();
-    for matched in regex.find_iter(text) {
+    token_frequencies(text).into_keys().collect()
+}
+
+fn token_regex() -> &'static Regex {
+    static TOKEN_REGEX: OnceLock<Regex> = OnceLock::new();
+    TOKEN_REGEX.get_or_init(|| Regex::new(r"(?i)[a-z0-9_µ><=./-]+|[\p{Han}]+").unwrap())
+}
+
+fn token_frequencies(text: &str) -> HashMap<String, usize> {
+    let mut frequencies = HashMap::new();
+    for matched in token_regex().find_iter(text) {
         let token = matched.as_str().to_lowercase();
-        output.insert(token.clone());
+        *frequencies.entry(token.clone()).or_insert(0) += 1;
         if token
             .chars()
             .all(|character| ('\u{4e00}'..='\u{9fff}').contains(&character))
         {
             let chars: Vec<char> = token.chars().collect();
             for window in chars.windows(2) {
-                output.insert(window.iter().collect());
+                *frequencies.entry(window.iter().collect()).or_insert(0) += 1;
             }
         }
     }
-    output
+    frequencies
+}
+
+fn bm25_scores(rows: &[ChunkRow], query: &str) -> HashMap<i32, f64> {
+    if rows.is_empty() {
+        return HashMap::new();
+    }
+    let query_terms = token_frequencies(query);
+    if query_terms.is_empty() {
+        return rows.iter().map(|row| (row.id, 0.0)).collect();
+    }
+    let documents: Vec<HashMap<String, usize>> = rows
+        .iter()
+        .map(|row| token_frequencies(&row.content))
+        .collect();
+    let mut document_frequency = HashMap::<String, usize>::new();
+    for document in &documents {
+        for term in document.keys() {
+            *document_frequency.entry(term.clone()).or_insert(0) += 1;
+        }
+    }
+    let average_document_length = documents
+        .iter()
+        .map(|document| document.values().sum::<usize>() as f64)
+        .sum::<f64>()
+        / documents.len() as f64;
+    let document_count = rows.len() as f64;
+    let scores = rows.iter().zip(documents).map(|(row, document)| {
+        let document_length = document.values().sum::<usize>() as f64;
+        let raw_score = query_terms.keys().fold(0.0, |score, term| {
+            let Some(&term_frequency) = document.get(term) else {
+                return score;
+            };
+            let document_frequency = document_frequency.get(term).copied().unwrap_or_default();
+            let idf = ((document_count - document_frequency as f64 + 0.5)
+                / (document_frequency as f64 + 0.5)
+                + 1.0)
+                .ln();
+            let normalized_length = document_length / average_document_length.max(1.0);
+            let denominator = term_frequency as f64 + 1.2 * (1.0 - 0.75 + 0.75 * normalized_length);
+            score + idf * (term_frequency as f64 * 2.2) / denominator
+        });
+        (row.id, raw_score / (raw_score + 1.0))
+    });
+    scores.collect()
 }
 
 fn vector_literal(vector: &[f32]) -> String {
@@ -827,8 +868,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, chunk_text, fetch_vector_candidates, generate, retrieve,
-        truncate_error_detail, vector_literal, ACTIVE_CHUNKS_SQL, VECTOR_CANDIDATE_SQL,
+        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, generate, retrieve,
+        truncate_error_detail, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -851,6 +892,29 @@ mod tests {
         let audit = audit_citations("Result [S1], bad [G2]", 1, 1);
         assert!(!audit.passed);
         assert_eq!(audit.invalid_citations, ["[G2]"]);
+    }
+
+    #[test]
+    fn test_bm25_prioritizes_rare_terms_over_common_term_frequency() {
+        let rows = vec![
+            ChunkRow {
+                id: 1,
+                file_id: 1,
+                filename: "common.txt".to_owned(),
+                content: "common ".repeat(12),
+            },
+            ChunkRow {
+                id: 2,
+                file_id: 2,
+                filename: "rare.txt".to_owned(),
+                content: "common raremarker".to_owned(),
+            },
+        ];
+
+        let scores = bm25_scores(&rows, "common raremarker");
+
+        assert!(scores[&2] > scores[&1]);
+        assert!(scores[&2] <= 1.0);
     }
 
     #[test]
