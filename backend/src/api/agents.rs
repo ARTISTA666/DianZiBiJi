@@ -401,7 +401,7 @@ fn select_relations(
     relations: Vec<SourceRelation>,
 ) -> Vec<SourceRelation> {
     if task_type == "graph_overview" {
-        return relations.into_iter().take(40).collect();
+        return relations.into_iter().take(24).collect();
     }
     let note_ids: HashSet<i32> = notes.iter().map(|note| note.id).collect();
     relations
@@ -416,7 +416,7 @@ fn select_relations(
                         .target_source_id
                         .is_some_and(|id| note_ids.contains(&id)))
         })
-        .take(40)
+        .take(24)
         .collect()
 }
 
@@ -788,7 +788,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        review_answer, source_context, SourceNote, SourceRelation, MAX_AGENT_CONTEXT_CHARS,
+        review_answer, select_relations, source_context, SourceNote, SourceRelation,
+        MAX_AGENT_CONTEXT_CHARS,
     };
     use crate::{
         build_app,
@@ -814,6 +815,43 @@ mod tests {
     fn test_agent_reviewer_requires_citation_when_evidence_exists() {
         assert_eq!(review_answer("无引用结论", &[1], &[], &[])["passed"], false);
         assert_eq!(review_answer("无证据结论", &[], &[], &[])["passed"], true);
+    }
+
+    #[test]
+    fn test_agent_relation_selection_matches_rendered_relation_limit() {
+        let note = SourceNote {
+            id: 1,
+            title: "实验".to_owned(),
+            experiment_type: "类型".to_owned(),
+            experiment_date: None,
+            fixed_fields_json: json!({}),
+            content_json: json!({}),
+        };
+        let relations = || {
+            (1..=40)
+                .map(|id| SourceRelation {
+                    id,
+                    relation_type: "uses_reagent".to_owned(),
+                    source_label: "实验".to_owned(),
+                    source_entity_type: "note".to_owned(),
+                    source_source_type: Some("note".to_owned()),
+                    source_source_id: Some(1),
+                    target_label: format!("试剂 {id}"),
+                    target_entity_type: "reagent".to_owned(),
+                    target_source_type: None,
+                    target_source_id: None,
+                })
+                .collect::<Vec<_>>()
+        };
+
+        assert_eq!(
+            select_relations("graph_overview", &[], relations()).len(),
+            24
+        );
+        assert_eq!(
+            select_relations("experiment_summary", &[note], relations()).len(),
+            24
+        );
     }
 
     #[test]
