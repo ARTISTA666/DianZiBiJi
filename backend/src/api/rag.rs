@@ -423,12 +423,44 @@ async fn query_project_rag_inner(
     let sources = if matches!(payload.mode.as_str(), "pure_llm" | "structured_query") {
         Vec::new()
     } else {
-        let sources = retrieve(&state, project_id, query, payload.mode == "bm25_rag").await?;
+        let sources = match retrieve(&state, project_id, query, payload.mode == "bm25_rag").await {
+            Ok(sources) => sources,
+            Err(error) => {
+                log_query_failure(
+                    &state,
+                    project_id,
+                    user.id,
+                    query,
+                    &payload.mode,
+                    &[],
+                    &[],
+                    elapsed_ms(started),
+                    &error.detail,
+                    experiment,
+                )
+                .await;
+                return Err(error);
+            }
+        };
         if sources.is_empty() {
-            return Err(ApiError::new(
+            let error = ApiError::new(
                 StatusCode::CONFLICT,
                 "暂无可检索的项目资料，请先在数据页完成资料入库",
-            ));
+            );
+            log_query_failure(
+                &state,
+                project_id,
+                user.id,
+                query,
+                &payload.mode,
+                &[],
+                &[],
+                elapsed_ms(started),
+                &error.detail,
+                experiment,
+            )
+            .await;
+            return Err(error);
         }
         sources
     };
@@ -436,7 +468,7 @@ async fn query_project_rag_inner(
         payload.mode.as_str(),
         "auto" | "structured_query" | "kg_enhanced_rag"
     ) {
-        relevant_graph_context(
+        match relevant_graph_context(
             &state.pool,
             project_id,
             query,
@@ -447,7 +479,26 @@ async fn query_project_rag_inner(
             },
             state.settings.rag_graph_min_score,
         )
-        .await?
+        .await
+        {
+            Ok(graph_context) => graph_context,
+            Err(error) => {
+                log_query_failure(
+                    &state,
+                    project_id,
+                    user.id,
+                    query,
+                    &payload.mode,
+                    &sources,
+                    &[],
+                    elapsed_ms(started),
+                    &error.detail,
+                    experiment,
+                )
+                .await;
+                return Err(error);
+            }
+        }
     } else {
         Vec::new()
     };
@@ -629,6 +680,46 @@ async fn query_project_rag_inner(
         fallback_reason,
         citation_audit: Some(citation_audit),
     }))
+}
+
+#[allow(clippy::too_many_arguments)]
+async fn log_query_failure(
+    state: &AppState,
+    project_id: i32,
+    user_id: i32,
+    question: &str,
+    rag_mode: &str,
+    sources: &[crate::models::RagSourceRead],
+    graph_context: &[crate::models::RagGraphContextRead],
+    response_ms: i32,
+    error_message: &str,
+    experiment: Option<ExperimentLogContext>,
+) {
+    let audit = audit_citations("", sources.len(), graph_context.len());
+    if let Err(error) = insert_query_log(
+        state,
+        project_id,
+        user_id,
+        question,
+        None,
+        rag_mode,
+        sources,
+        graph_context,
+        response_ms,
+        None,
+        "system",
+        None,
+        "rag-retrieval-failure-v1",
+        json!({}),
+        None,
+        Some(error_message),
+        &audit,
+        experiment,
+    )
+    .await
+    {
+        tracing::warn!(%error.detail, "failed to record RAG query failure");
+    }
 }
 
 async fn list_query_logs(
