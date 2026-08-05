@@ -2008,7 +2008,7 @@ def test_experiment_repeats_randomizes_and_exports_execution_metadata(test_app):
     assert protocol["repetitions"] == 3
     assert protocol["random_seed"] == 20260712
     assert protocol["randomize_order"] is True
-    assert len(protocol["execution_plan_hash"]) == 64
+    assert protocol["execution_plan_hash"] == "f597cca1abba67df57fa3f228f87507ac176be0f5fa6fc6f5adf29af4a99ac6f"
 
     execution_plan = body["summary_json"]["execution_plan"]
     assert {case["execution_order"] for case in execution_plan} == set(range(1, 13))
@@ -2021,6 +2021,23 @@ def test_experiment_repeats_randomizes_and_exports_execution_metadata(test_app):
         for repetition_index in (1, 2, 3)
         for mode in ("project_rag", "kg_enhanced_rag")
     }
+    assert [
+        (case["question_index"], case["repetition_index"], case["mode"])
+        for case in sorted(execution_plan, key=lambda item: item["execution_order"])
+    ] == [
+        (2, 3, "kg_enhanced_rag"),
+        (1, 3, "project_rag"),
+        (1, 1, "kg_enhanced_rag"),
+        (2, 1, "project_rag"),
+        (1, 2, "kg_enhanced_rag"),
+        (2, 3, "project_rag"),
+        (1, 2, "project_rag"),
+        (2, 2, "project_rag"),
+        (1, 3, "kg_enhanced_rag"),
+        (2, 2, "kg_enhanced_rag"),
+        (2, 1, "kg_enhanced_rag"),
+        (1, 1, "project_rag"),
+    ]
 
     with SessionLocal() as db:
         logs = db.query(AIQueryLog).filter(AIQueryLog.experiment_run_id == body["id"]).all()

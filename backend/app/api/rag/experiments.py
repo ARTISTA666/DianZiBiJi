@@ -271,7 +271,15 @@ async def run_rag_experiment(
         for mode in modes
     ]
     if payload.randomize_order:
-        random.Random(random_seed).shuffle(execution_plan)
+        execution_plan.sort(
+            key=lambda item: hashlib.sha256(
+                (
+                    f"{random_seed}:{item['question_index']}:{item['repetition_index']}"
+                    f":{json.dumps(item['mode'], ensure_ascii=False)}"
+                    f":{json.dumps(item['question'], ensure_ascii=False)}"
+                ).encode("utf-8")
+            ).digest()
+        )
     for execution_order, case in enumerate(execution_plan, start=1):
         case["execution_order"] = execution_order
 
@@ -281,7 +289,7 @@ async def run_rag_experiment(
         "randomize_order": payload.randomize_order,
         "random_seed": random_seed,
         "execution_plan_hash": hashlib.sha256(
-            json.dumps(execution_plan, ensure_ascii=False, sort_keys=True).encode("utf-8")
+            json.dumps(execution_plan, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
         ).hexdigest(),
     }
 
