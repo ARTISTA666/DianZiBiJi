@@ -422,10 +422,7 @@ pub async fn relevant_graph_context(
             row.relation_type
         )
         .to_lowercase();
-        let overlap = query_tokens
-            .iter()
-            .filter(|token| haystack.contains(token.as_str()))
-            .count() as f64;
+        let overlap = exact_token_overlap(&query_tokens, &haystack) as f64;
         let role_bonus = row
             .properties
             .get("roles")
@@ -433,7 +430,11 @@ pub async fn relevant_graph_context(
             .into_iter()
             .flatten()
             .filter_map(Value::as_str)
-            .filter(|role| normalized_query.contains(*role))
+            .filter(|role| {
+                tokens(role)
+                    .iter()
+                    .any(|role_token| query_tokens.contains(role_token))
+            })
             .count() as f64;
         let score = overlap
             + role_bonus * 2.0
@@ -725,6 +726,11 @@ fn tokens(text: &str) -> HashSet<String> {
     token_frequencies(text).into_keys().collect()
 }
 
+fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) -> usize {
+    let text_tokens = tokens(text);
+    query_tokens.intersection(&text_tokens).count()
+}
+
 fn token_regex() -> &'static Regex {
     static TOKEN_REGEX: OnceLock<Regex> = OnceLock::new();
     TOKEN_REGEX.get_or_init(|| Regex::new(r"(?i)[a-z0-9_µ><=./-]+|[\p{Han}]+").unwrap())
@@ -925,9 +931,10 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, format_graph_context,
-        format_sources, generate, is_collection_query, retrieve, truncate_error_detail,
-        vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
+        format_graph_context, format_sources, generate, is_collection_query, retrieve, tokens,
+        truncate_error_detail, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -981,6 +988,12 @@ mod tests {
         assert!(is_collection_query("汇总所有样本清单"));
         assert!(is_collection_query("Please list all samples"));
         assert!(!is_collection_query("small molecule protocol"));
+    }
+
+    #[test]
+    fn test_graph_matching_uses_exact_tokens() {
+        assert_eq!(exact_token_overlap(&tokens("cell"), "cellular culture"), 0);
+        assert_eq!(exact_token_overlap(&tokens("cell"), "cell culture"), 1);
     }
 
     #[test]
