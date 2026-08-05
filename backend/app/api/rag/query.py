@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user, require_project_access
 from app.api.rag.common import (
     BM25_PROMPT_VERSION,
+    EMBEDDING_RAG_MODES,
     EXPERIMENT_MODES,
     GENERATION_MAX_TOKENS,
     GENERATION_TEMPERATURE,
@@ -26,6 +27,7 @@ from app.api.rag.common import (
     _has_graph_marker,
     _has_source_marker,
     _merge_usage,
+    _require_compatible_embedding,
     _require_unblinded_rag_access,
 )
 from app.core.config import get_settings
@@ -394,8 +396,11 @@ async def _execute_rag_query(
     experiment_execution_order: int | None = None,
 ) -> RagQueryResponse:
     settings = get_settings()
-    if _get_project_dataset(db, project_id) is None:
+    dataset = _get_project_dataset(db, project_id)
+    if dataset is None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
+    if mode in EMBEDDING_RAG_MODES:
+        _require_compatible_embedding(dataset)
 
     started = perf_counter()
 

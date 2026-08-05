@@ -8,11 +8,16 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user, require_project_access
-from app.api.rag.common import _build_status, _get_project_dataset, _require_rag_manager
+from app.api.rag.common import (
+    _build_status,
+    _get_project_dataset,
+    _require_compatible_embedding,
+    _require_rag_manager,
+)
 from app.core.config import get_settings
 from app.core.database import get_db
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
-from app.models.rag import ProjectRagDataset, RagFileSync, RagSyncStatus
+from app.models.rag import ProjectRagDataset, RagDocumentChunk, RagFileSync, RagSyncStatus
 from app.models.user import User
 from app.schemas.rag import RagStatusRead
 from app.services.audit import write_audit
@@ -32,6 +37,7 @@ async def init_project_rag(
     project = require_project_access(project_id, db, user)
     _require_rag_manager(db, user, project_id)
     existing = _get_project_dataset(db, project_id)
+    reset_index = existing is not None and existing.embedding_model != settings.embedding_model
     if existing is None:
         db.add(
             ProjectRagDataset(
@@ -48,6 +54,34 @@ async def init_project_rag(
         existing.provider = "local_deepseek"
         existing.embedding_model = settings.embedding_model
         existing.generation_model = settings.normalized_deepseek_model
+    if reset_index:
+        message = "Embedding model changed; document must be reindexed"
+        db.query(RagDocumentChunk).filter(RagDocumentChunk.project_id == project_id).delete(
+            synchronize_session=False
+        )
+        db.query(RagFileSync).filter(RagFileSync.project_id == project_id).update(
+            {
+                "dify_document_id": None,
+                "sync_status": RagSyncStatus.PENDING.value,
+                "sync_message": message,
+                "chunk_count": 0,
+                "content_hash": None,
+                "synced_at": None,
+            },
+            synchronize_session=False,
+        )
+        db.query(StoredFile).filter(
+            StoredFile.project_id == project_id,
+            StoredFile.file_category == FileCategory.KNOWLEDGE_DOCUMENT,
+            StoredFile.status == FileStatus.APPROVED,
+        ).update(
+            {
+                "knowledge_sync_status": KnowledgeSyncStatus.PENDING_SYNC.value,
+                "knowledge_synced_at": None,
+                "knowledge_sync_message": message,
+            },
+            synchronize_session=False,
+        )
     write_audit(
         db,
         actor=user,
@@ -58,6 +92,7 @@ async def init_project_rag(
         detail={
             "embedding_model": settings.embedding_model,
             "generation_model": settings.normalized_deepseek_model,
+            "reset_index": reset_index,
         },
     )
     db.commit()
@@ -92,6 +127,7 @@ async def sync_file_to_rag(
     dataset = _get_project_dataset(db, record.project_id)
     if dataset is None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
+    _require_compatible_embedding(dataset)
 
     sync = db.query(RagFileSync).filter(RagFileSync.file_id == record.id).first()
     if sync is None:

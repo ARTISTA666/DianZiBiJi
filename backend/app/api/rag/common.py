@@ -13,6 +13,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.deps import can_evaluate_project, can_manage_project
+from app.core.config import get_settings
 from app.models.ai import RagMode
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.rag import ProjectRagDataset
@@ -29,6 +30,9 @@ STRUCTURED_QUERY_VERSION = PROMPTS["structured_query"].version
 GENERATION_TEMPERATURE = 0.1
 GENERATION_MAX_TOKENS = 1800
 EXPERIMENT_MODES = tuple(mode.value for mode in RagMode if mode is not RagMode.AUTO)
+EMBEDDING_RAG_MODES = frozenset(
+    {RagMode.AUTO.value, RagMode.PROJECT_RAG.value, RagMode.KG_ENHANCED_RAG.value}
+)
 FINAL_MATURITY_GATE_REPORT = Path(__file__).resolve().parents[4] / "docs" / "experiments" / "final-maturity-gate-latest.json"
 REQUIRED_FINAL_MATURITY_CHECKS = {
     "internal release-candidate gate passed",
@@ -174,6 +178,14 @@ def _merge_usage(*items: dict | None) -> dict:
 
 def _get_project_dataset(db: Session, project_id: int) -> ProjectRagDataset | None:
     return db.query(ProjectRagDataset).filter(ProjectRagDataset.project_id == project_id).first()
+
+
+def _require_compatible_embedding(dataset: ProjectRagDataset) -> None:
+    if dataset.embedding_model != get_settings().embedding_model:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="嵌入模型已变更，请重新初始化资料库并重建已审核文档的索引",
+        )
 
 
 def _build_status(project_id: int, db: Session) -> RagStatusRead:

@@ -18,12 +18,14 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user, require_project_access
 from app.api.rag import query as rag_query
 from app.api.rag.common import (
+    EMBEDDING_RAG_MODES,
     EXPERIMENT_MODES,
     GENERATION_MAX_TOKENS,
     GENERATION_TEMPERATURE,
     PROMPT_VERSION,
     _avg,
     _get_project_dataset,
+    _require_compatible_embedding,
     _require_rag_manager,
     _require_unblinded_rag_access,
 )
@@ -241,8 +243,11 @@ async def run_rag_experiment(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=f"Experiment modes must be one of: {', '.join(EXPERIMENT_MODES)}",
         )
-    if _get_project_dataset(db, project_id) is None:
+    dataset = _get_project_dataset(db, project_id)
+    if dataset is None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="RAG dataset is not initialized")
+    if any(mode in EMBEDDING_RAG_MODES for mode in modes):
+        _require_compatible_embedding(dataset)
     _ensure_no_active_experiment(db)
 
     random_seed = payload.random_seed

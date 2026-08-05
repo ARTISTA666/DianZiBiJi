@@ -3,6 +3,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from fastapi import FastAPI, HTTPException
@@ -19,7 +20,7 @@ from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, Store
 from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation
 from app.models.note import ExperimentNote, NoteStatus
 from app.models.project import Project, ProjectMember, ProjectRole
-from app.models.rag import ProjectRagDataset, RagFileSync
+from app.models.rag import ProjectRagDataset, RagDocumentChunk, RagFileSync, RagSyncStatus
 from app.models.user import User, UserRole
 from app.schemas.ai import AIExperimentRunRequest
 from app.schemas.rag import RagQueryRequest
@@ -87,6 +88,71 @@ def test_ai_question_limits_match_rust_contract():
         RagQueryRequest(query="x" * 4_001)
     with pytest.raises(ValueError):
         AIExperimentRunRequest(name="run", questions=["x" * 4_001])
+
+
+def test_rag_init_rebuilds_index_when_embedding_model_changes(test_app, monkeypatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    assert client.post("/projects/1/rag/init").status_code == 200
+    with SessionLocal() as db:
+        dataset = db.query(ProjectRagDataset).filter(ProjectRagDataset.project_id == 1).one()
+        dataset.embedding_model = "old-model"
+        db.add(
+            RagDocumentChunk(
+                project_id=1,
+                file_id=1,
+                chunk_index=0,
+                content="stale vector",
+                content_hash="stale-hash",
+                character_count=12,
+                embedding=[0.0, 1.0],
+            )
+        )
+        db.add(
+            RagFileSync(
+                file_id=1,
+                project_id=1,
+                dify_dataset_id=dataset.dify_dataset_id,
+                dify_document_id="local-file-1",
+                chunk_count=1,
+                content_hash="stale-hash",
+                sync_status=RagSyncStatus.SYNCED.value,
+            )
+        )
+        db.get(StoredFile, 1).knowledge_sync_status = KnowledgeSyncStatus.SYNCED.value
+        db.commit()
+
+    monkeypatch.setattr(
+        rag.datasets,
+        "get_settings",
+        lambda: SimpleNamespace(embedding_model="new-model", normalized_deepseek_model="deepseek-test"),
+    )
+    response = client.post("/projects/1/rag/init")
+
+    assert response.status_code == 200
+    with SessionLocal() as db:
+        assert db.query(RagDocumentChunk).filter(RagDocumentChunk.project_id == 1).count() == 0
+        sync = db.query(RagFileSync).filter(RagFileSync.file_id == 1).one()
+        assert sync.sync_status == RagSyncStatus.PENDING.value
+        assert sync.dify_document_id is None
+        assert db.get(StoredFile, 1).knowledge_sync_status == KnowledgeSyncStatus.PENDING_SYNC.value
+
+
+def test_rag_query_rejects_embedding_model_mismatch(test_app, monkeypatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    assert client.post("/projects/1/rag/init").status_code == 200
+    with SessionLocal() as db:
+        db.query(ProjectRagDataset).filter(ProjectRagDataset.project_id == 1).update(
+            {"embedding_model": "old-model"}
+        )
+        db.commit()
+    monkeypatch.setattr(rag.common, "get_settings", lambda: SimpleNamespace(embedding_model="new-model"))
+
+    response = client.post("/projects/1/rag/query", json={"query": "protocol", "mode": "project_rag"})
+
+    assert response.status_code == 409
+    assert response.json()["detail"] == "嵌入模型已变更，请重新初始化资料库并重建已审核文档的索引"
 
 
 @pytest.fixture()
