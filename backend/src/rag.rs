@@ -174,17 +174,16 @@ pub async fn index_file(
         .embed(&chunks)
         .await
         .map_err(|error| error.to_string())?;
-    if embeddings.len() != chunks.len()
-        || embeddings
-            .iter()
-            .any(|embedding| embedding.len() != settings.embedding_dimension)
-    {
+    if embeddings.len() != chunks.len() {
         return Err(format!(
             "Embedding backend returned {} vectors for {} chunks; expected {} dimensions",
             embeddings.len(),
             chunks.len(),
             settings.embedding_dimension
         ));
+    }
+    for embedding in &embeddings {
+        validate_embedding_dimensions(embedding, settings.embedding_dimension)?;
     }
     sqlx::query("DELETE FROM rag_document_chunks WHERE file_id = $1")
         .bind(file.id)
@@ -234,6 +233,17 @@ fn rag_insert_batch_ranges(chunk_count: usize) -> Vec<std::ops::Range<usize>> {
     ranges
 }
 
+fn validate_embedding_dimensions(embedding: &[f32], expected: usize) -> Result<(), String> {
+    if embedding.len() == expected {
+        Ok(())
+    } else {
+        Err(format!(
+            "Embedding vector has {} dimensions; expected {expected}",
+            embedding.len()
+        ))
+    }
+}
+
 pub async fn retrieve(
     state: &AppState,
     project_id: i32,
@@ -266,6 +276,8 @@ pub async fn retrieve(
             .into_iter()
             .next()
             .ok_or_else(|| ApiError::internal("Embedding returned no query vector"))?;
+        validate_embedding_dimensions(&query_embedding, settings.embedding_dimension)
+            .map_err(ApiError::internal)?;
         let query_vector = vector_literal(&query_embedding);
         let vector_candidates = fetch_vector_candidates(
             pool,
@@ -981,7 +993,8 @@ mod tests {
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
         format_graph_context, format_sources, generate, is_collection_query, meets_graph_threshold,
         rag_insert_batch_ranges, relation_hints, retrieve, tokens, truncate_error_detail,
-        vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1012,6 +1025,15 @@ mod tests {
         let ranges = rag_insert_batch_ranges(129);
 
         assert_eq!(ranges, vec![0..64, 64..128, 128..129]);
+    }
+
+    #[test]
+    fn test_validate_embedding_dimensions_rejects_mismatched_query_vector() {
+        assert!(validate_embedding_dimensions(&[0.0; 512], 512).is_ok());
+        assert_eq!(
+            validate_embedding_dimensions(&[0.0; 128], 512).unwrap_err(),
+            "Embedding vector has 128 dimensions; expected 512"
+        );
     }
 
     #[test]
