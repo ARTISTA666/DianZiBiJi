@@ -7,7 +7,7 @@ use std::{
 use regex::Regex;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
-use sqlx::{FromRow, PgPool, Postgres, Transaction};
+use sqlx::{FromRow, PgPool, Postgres, QueryBuilder, Transaction};
 
 use crate::{
     error::ApiError,
@@ -17,6 +17,7 @@ use crate::{
 };
 
 const MAX_GRAPH_CONTEXT_CHARS: usize = 6_000;
+const RAG_INSERT_BATCH_SIZE: usize = 64;
 
 #[derive(Clone, Debug, FromRow)]
 pub struct RagFileRecord {
@@ -190,31 +191,47 @@ pub async fn index_file(
         .execute(&mut **transaction)
         .await
         .map_err(|error| error.to_string())?;
-    for (index, (content, embedding)) in chunks.iter().zip(embeddings).enumerate() {
-        let embedding = vector_literal(&embedding);
-        let content_hash = format!("{:x}", Sha256::digest(content.as_bytes()));
-        sqlx::query(
-            r#"
-            INSERT INTO rag_document_chunks (
-                project_id, file_id, chunk_index, content, content_hash,
-                character_count, embedding, metadata_json, created_at
-            )
-            VALUES ($1, $2, $3, $4, $5, $6, $7::vector, $8, now())
-            "#,
-        )
-        .bind(file.project_id)
-        .bind(file.id)
-        .bind(index as i32)
-        .bind(content)
-        .bind(content_hash)
-        .bind(content.chars().count() as i32)
-        .bind(embedding)
-        .bind(json!({"filename": file.original_filename}))
-        .execute(&mut **transaction)
-        .await
-        .map_err(|error| error.to_string())?;
+    let metadata = json!({"filename": file.original_filename});
+    for range in rag_insert_batch_ranges(chunks.len()) {
+        let mut query = QueryBuilder::<Postgres>::new(
+            "INSERT INTO rag_document_chunks (\
+                project_id, file_id, chunk_index, content, content_hash,\
+                character_count, embedding, metadata_json, created_at\
+            ) ",
+        );
+        query.push_values(range, |mut row, index| {
+            let content = &chunks[index];
+            let embedding = vector_literal(&embeddings[index]);
+            let content_hash = format!("{:x}", Sha256::digest(content.as_bytes()));
+            row.push_bind(file.project_id)
+                .push_bind(file.id)
+                .push_bind(index as i32)
+                .push_bind(content)
+                .push_bind(content_hash)
+                .push_bind(content.chars().count() as i32)
+                .push_bind(embedding)
+                .push("::vector")
+                .push_bind(metadata.clone())
+                .push("now()");
+        });
+        query
+            .build()
+            .execute(&mut **transaction)
+            .await
+            .map_err(|error| error.to_string())?;
     }
     Ok(chunks.len() as i32)
+}
+
+fn rag_insert_batch_ranges(chunk_count: usize) -> Vec<std::ops::Range<usize>> {
+    let mut ranges = Vec::new();
+    let mut start = 0;
+    while start < chunk_count {
+        let end = start.saturating_add(RAG_INSERT_BATCH_SIZE).min(chunk_count);
+        ranges.push(start..end);
+        start = end;
+    }
+    ranges
 }
 
 pub async fn retrieve(
@@ -963,8 +980,8 @@ mod tests {
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
         format_graph_context, format_sources, generate, is_collection_query, meets_graph_threshold,
-        relation_hints, retrieve, tokens, truncate_error_detail, vector_literal, ChunkRow,
-        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        rag_insert_batch_ranges, relation_hints, retrieve, tokens, truncate_error_detail,
+        vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -988,6 +1005,13 @@ mod tests {
         let audit = audit_citations("Result [S1], bad [G2]", 1, 1);
         assert!(!audit.passed);
         assert_eq!(audit.invalid_citations, ["[G2]"]);
+    }
+
+    #[test]
+    fn test_rag_insert_batch_ranges_cover_chunks_without_oversized_batches() {
+        let ranges = rag_insert_batch_ranges(129);
+
+        assert_eq!(ranges, vec![0..64, 64..128, 128..129]);
     }
 
     #[test]
