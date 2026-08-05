@@ -121,7 +121,11 @@ async fn generate_agent_output(
         date_to,
     );
     let (visible_note_ids, visible_file_ids, visible_relation_ids) = visible_citation_ids(&context);
-    let evidence_available = !notes.is_empty() || !files.is_empty() || !relations.is_empty();
+    let evidence_available = if payload.task_type == "graph_overview" {
+        !relations.is_empty()
+    } else {
+        !notes.is_empty() || !files.is_empty() || !relations.is_empty()
+    };
     let mut steps = vec![
         json!({
             "key": "evidence",
@@ -483,12 +487,12 @@ fn source_context(
         format!("- 图谱依据关系：{} 条", relations.len()),
         String::new(),
     ];
-    append_source_index(&mut lines, notes, files, relations);
     if task_type == "graph_overview" {
         lines.push("实验过程关联概览".to_owned());
         append_relations(&mut lines, relations);
         return cap_context(lines.join("\n"));
     }
+    append_source_index(&mut lines, notes, files, relations);
     if notes.is_empty() {
         lines.push("当前范围内暂无已审核实验笔记，无法形成正式实验总结。".to_owned());
         if !files.is_empty() {
@@ -1024,6 +1028,34 @@ mod tests {
         );
 
         assert!(context.contains("处理后 24 小时仍保持贴壁"));
+    }
+
+    #[test]
+    fn test_agent_graph_overview_context_uses_only_graph_relations() {
+        let context = source_context(
+            "实验过程图谱概览",
+            "graph_overview",
+            7,
+            &[SourceNote {
+                id: 1,
+                title: "细胞实验".to_owned(),
+                experiment_type: "细胞培养".to_owned(),
+                experiment_date: None,
+                fixed_fields_json: json!({}),
+                content_json: json!({}),
+            }],
+            &[super::SourceFile {
+                id: 2,
+                original_filename: "paper.pdf".to_owned(),
+            }],
+            &[],
+            None,
+            None,
+        );
+
+        assert!(!context.contains("[N1]"));
+        assert!(!context.contains("[F2]"));
+        assert!(context.contains("当前范围内未检索到直接关联的图谱关系"));
     }
 
     #[test]

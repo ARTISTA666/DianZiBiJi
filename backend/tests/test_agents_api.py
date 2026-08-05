@@ -68,6 +68,25 @@ def test_agent_reviewer_requires_visible_citation_when_evidence_is_hidden():
     assert review["has_evidence"] is True
 
 
+def test_graph_overview_context_uses_only_graph_relations_as_evidence():
+    service = agent_service.AgentGenerationService()
+    context = service._body(
+        AgentTaskType.GRAPH_OVERVIEW.value,
+        1,
+        [SimpleNamespace(note=SimpleNamespace(id=1))],
+        [SimpleNamespace(id=2, original_filename="paper.pdf")],
+        [],
+        [],
+        [],
+        None,
+        None,
+    )
+
+    assert "[N1]" not in context
+    assert "[F2]" not in context
+    assert "当前项目暂无知识图谱关系" in context
+
+
 def test_agent_context_includes_current_version_content_fields():
     note = SimpleNamespace(
         id=10,

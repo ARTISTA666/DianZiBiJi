@@ -118,7 +118,11 @@ class AgentGenerationService:
             )
         )
         visible_citations = _visible_citation_ids(source_context)
-        evidence_available = bool(notes or files or relation_ids)
+        evidence_available = (
+            bool(relation_ids)
+            if task_type == AgentTaskType.GRAPH_OVERVIEW.value
+            else bool(notes or files or relation_ids)
+        )
         steps = [
             {
                 "key": "evidence",
