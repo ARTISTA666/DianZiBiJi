@@ -28,7 +28,7 @@ BM25_PROMPT_VERSION = PROMPTS["bm25_rag"].version
 STRUCTURED_QUERY_VERSION = PROMPTS["structured_query"].version
 GENERATION_TEMPERATURE = 0.1
 GENERATION_MAX_TOKENS = 1800
-EXPERIMENT_MODES = tuple(mode.value for mode in RagMode)
+EXPERIMENT_MODES = tuple(mode.value for mode in RagMode if mode is not RagMode.AUTO)
 FINAL_MATURITY_GATE_REPORT = Path(__file__).resolve().parents[4] / "docs" / "experiments" / "final-maturity-gate-latest.json"
 REQUIRED_FINAL_MATURITY_CHECKS = {
     "internal release-candidate gate passed",

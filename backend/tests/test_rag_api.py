@@ -1666,6 +1666,21 @@ def test_experiment_retrieval_failure_is_logged_and_exported(test_app, monkeypat
     assert "AI 服务暂时不可用，请稍后重试" in export.text
 
 
+def test_experiment_rejects_auto_mode(test_app):
+    client, _, active_user_id = test_app
+    active_user_id["value"] = 1
+    client.post("/projects/1/rag/init")
+
+    response = client.post(
+        "/projects/1/rag/experiments",
+        json={"name": "auto baseline", "questions": ["protocol"], "modes": ["auto"]},
+    )
+
+    assert response.status_code == 422
+    assert "Experiment modes must be one of" in response.json()["detail"]
+    assert "auto" not in response.json()["detail"]
+
+
 def test_rag_experiment_runs_four_modes_and_exports_csv(test_app):
     client, SessionLocal, active_user_id = test_app
     active_user_id["value"] = 1
