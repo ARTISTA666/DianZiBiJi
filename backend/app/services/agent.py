@@ -26,7 +26,6 @@ AGENT_PROMPT_VERSION = PROMPTS["agent_writer"].version
 
 # ── Tuning constants ──────────────────────────────────────────────────────
 MAX_SOURCE_FILES = 12              # Max source files loaded for agent context
-MAX_RELATIONS_FOR_CONTEXT = 40     # Max graph relations selected for prompt
 MAX_RELATIONS_DISPLAY = 12         # Max relations shown in body sections
 MAX_OVERVIEW_RELATIONS = 24        # Max relations shown in graph overview
 MAX_NOTE_FIELDS_DISPLAY = 4        # Max note fields included in context
@@ -285,8 +284,13 @@ class AgentGenerationService:
         notes: list[_NoteWithContext],
         task_type: str,
     ) -> list[int]:
+        visible_limit = (
+            MAX_OVERVIEW_RELATIONS
+            if task_type == AgentTaskType.GRAPH_OVERVIEW.value
+            else MAX_RELATIONS_DISPLAY
+        )
         if task_type == AgentTaskType.GRAPH_OVERVIEW.value:
-            return [relation.id for relation in relations[:MAX_RELATIONS_FOR_CONTEXT]]
+            return [relation.id for relation in relations[:visible_limit]]
         note_ids = {nw.note.id for nw in notes}
         note_entity_ids = {
             entity.id
@@ -298,7 +302,7 @@ class AgentGenerationService:
             for relation in relations
             if relation.source_entity_id in note_entity_ids or relation.target_entity_id in note_entity_ids
         ]
-        return selected[:MAX_RELATIONS_FOR_CONTEXT]
+        return selected[:visible_limit]
 
     def _title(self, task_type: str, project_id: int, date_from: date | None, date_to: date | None) -> str:
         label = TASK_LABELS[task_type]

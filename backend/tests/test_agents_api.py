@@ -1,5 +1,6 @@
 from datetime import date
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from fastapi import FastAPI
@@ -10,7 +11,7 @@ from app.api import agents
 from app.api.deps import get_current_user
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
-from app.models.ai import AgentGenerationRun
+from app.models.ai import AgentGenerationRun, AgentTaskType
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.knowledge_graph import KnowledgeEntity, KnowledgeRelation
 from app.models.note import ExperimentNote, NoteStatus, NoteVersion
@@ -18,6 +19,16 @@ from app.models.project import Project, ProjectMember, ProjectRole
 from app.models.user import User, UserRole
 from app.services import agent as agent_service
 from app.services.deepseek import DeepSeekRequestError
+
+
+def test_agent_relation_citations_match_visible_relation_budget():
+    relations = [SimpleNamespace(id=index) for index in range(1, 41)]
+
+    relation_ids = agent_service.AgentGenerationService()._select_relation_ids(
+        [], relations, [], AgentTaskType.GRAPH_OVERVIEW.value
+    )
+
+    assert relation_ids == list(range(1, agent_service.MAX_OVERVIEW_RELATIONS + 1))
 
 
 class FakeDeepSeekClient:
