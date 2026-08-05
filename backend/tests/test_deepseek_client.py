@@ -7,7 +7,7 @@ import httpx
 import pytest
 
 import app.services.deepseek as deepseek_module
-from app.services.deepseek import DeepSeekClient, DeepSeekRequestError
+from app.services.deepseek import DeepSeekClient, DeepSeekRequestError, should_retry_status
 
 
 class FailingAsyncClient:
@@ -30,6 +30,14 @@ def settings():
         deepseek_api_key="test-key",
         normalized_deepseek_model="test-model",
     )
+
+
+@pytest.mark.parametrize(
+    ("status_code", "expected"),
+    [(408, True), (425, True), (429, True), (500, True), (599, True), (400, False)],
+)
+def test_retry_policy_covers_transient_http_statuses(status_code: int, expected: bool) -> None:
+    assert should_retry_status(status_code) is expected
 
 
 def test_transport_error_keeps_exception_type_when_message_is_empty(monkeypatch) -> None:

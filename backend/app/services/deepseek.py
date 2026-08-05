@@ -99,6 +99,10 @@ def usage_snapshot() -> dict[str, int]:
         return dict(_usage_totals)
 
 
+def should_retry_status(status_code: int) -> bool:
+    return status_code in {408, 425, 429} or 500 <= status_code <= 599
+
+
 class DeepSeekConfigError(RuntimeError):
     pass
 
@@ -200,7 +204,7 @@ class DeepSeekClient:
                     headers=headers,
                     json=payload,
                 )
-                if response.status_code != 429 and response.status_code < 500:
+                if not should_retry_status(response.status_code):
                     break
             except httpx.HTTPError as exc:
                 last_error = exc
