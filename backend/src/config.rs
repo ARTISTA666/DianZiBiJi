@@ -165,6 +165,24 @@ impl Settings {
                 value: self.rag_graph_min_score.to_string(),
             });
         }
+        validate_range("RAG_CHUNK_SIZE", self.rag_chunk_size, 200, usize::MAX)?;
+        if self.rag_chunk_overlap > self.rag_chunk_size / 2 {
+            return Err(ConfigError::InvalidValue {
+                name: "RAG_CHUNK_OVERLAP",
+                value: self.rag_chunk_overlap.to_string(),
+            });
+        }
+        for (name, value) in [
+            ("RAG_RETRIEVAL_TOP_K", self.rag_retrieval_top_k),
+            (
+                "RAG_COLLECTION_RETRIEVAL_TOP_K",
+                self.rag_collection_retrieval_top_k,
+            ),
+            ("RAG_VECTOR_CANDIDATE_K", self.rag_vector_candidate_k),
+            ("RAG_GRAPH_TOP_K", self.rag_graph_top_k),
+        ] {
+            validate_range(name, value, 1, usize::MAX)?;
+        }
         if !(1..=128).contains(&self.deepseek_max_concurrency) {
             return Err(ConfigError::InvalidValue {
                 name: "DEEPSEEK_MAX_CONCURRENCY",
@@ -463,6 +481,29 @@ mod tests {
             )]))
             .unwrap_err();
             assert!(error.to_string().contains("RAG_GRAPH_MIN_SCORE"));
+        }
+    }
+
+    #[test]
+    fn rag_retrieval_limits_must_be_safe() {
+        for name in [
+            "RAG_RETRIEVAL_TOP_K",
+            "RAG_COLLECTION_RETRIEVAL_TOP_K",
+            "RAG_VECTOR_CANDIDATE_K",
+            "RAG_GRAPH_TOP_K",
+        ] {
+            let error = Settings::from_map(&HashMap::from([(name.to_owned(), "0".to_owned())]))
+                .unwrap_err();
+            assert!(error.to_string().contains(name));
+        }
+
+        for (name, value) in [("RAG_CHUNK_SIZE", "199"), ("RAG_CHUNK_OVERLAP", "351")] {
+            let error = Settings::from_map(&HashMap::from([
+                ("RAG_CHUNK_SIZE".to_owned(), "700".to_owned()),
+                (name.to_owned(), value.to_owned()),
+            ]))
+            .unwrap_err();
+            assert!(error.to_string().contains(name));
         }
     }
 }
