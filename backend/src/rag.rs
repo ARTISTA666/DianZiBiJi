@@ -612,9 +612,6 @@ pub async fn generate(
             "DEEPSEEK_MODEL is not configured".to_owned(),
         ));
     }
-    let _generation_permit = state.generation_limiter.acquire().await.map_err(|_| {
-        GenerationError::Configuration("Generation concurrency limiter is unavailable".to_owned())
-    })?;
     let url = format!(
         "{}/chat/completions",
         state.settings.deepseek_api_base_url.trim_end_matches('/')
@@ -632,6 +629,11 @@ pub async fn generate(
     });
     let mut last_error = String::new();
     for attempt in 0..3 {
+        let generation_permit = state.generation_limiter.acquire().await.map_err(|_| {
+            GenerationError::Configuration(
+                "Generation concurrency limiter is unavailable".to_owned(),
+            )
+        })?;
         let response = state
             .client
             .post(&url)
@@ -640,7 +642,7 @@ pub async fn generate(
             .json(&payload)
             .send()
             .await;
-        match response {
+        let should_retry = match response {
             Ok(response) if response.status().is_success() => {
                 let request_id = response
                     .headers()
@@ -674,11 +676,16 @@ pub async fn generate(
                     "DeepSeek request failed: {status} {}",
                     truncate_error_detail(&detail, 1000)
                 );
-                if status.as_u16() < 500 && status.as_u16() != 429 {
-                    break;
-                }
+                !(status.as_u16() < 500 && status.as_u16() != 429)
             }
-            Err(error) => last_error = format!("DeepSeek request failed: {error}"),
+            Err(error) => {
+                last_error = format!("DeepSeek request failed: {error}");
+                true
+            }
+        };
+        drop(generation_permit);
+        if !should_retry {
+            break;
         }
         if attempt < 2 {
             tokio::time::sleep(Duration::from_secs(1 << attempt)).await;
@@ -984,7 +991,9 @@ mod tests {
         time::Duration,
     };
 
-    use axum::{extract::State, routing::post, Json, Router};
+    use axum::{
+        extract::State, http::StatusCode, response::IntoResponse, routing::post, Json, Router,
+    };
     use serde_json::{json, Value};
     use sqlx::postgres::PgPoolOptions;
     use uuid::Uuid;
@@ -1008,6 +1017,21 @@ mod tests {
     struct ConcurrencyProbe {
         active: Arc<AtomicUsize>,
         maximum: Arc<AtomicUsize>,
+    }
+
+    #[derive(Clone)]
+    struct RetryPermitProbe {
+        requests: Arc<AtomicUsize>,
+        first_failure: Arc<tokio::sync::Notify>,
+    }
+
+    impl Default for RetryPermitProbe {
+        fn default() -> Self {
+            Self {
+                requests: Arc::new(AtomicUsize::new(0)),
+                first_failure: Arc::new(tokio::sync::Notify::new()),
+            }
+        }
     }
 
     #[test]
@@ -1362,5 +1386,67 @@ mod tests {
         }
 
         assert!(probe.maximum.load(Ordering::SeqCst) <= 2);
+    }
+
+    #[tokio::test]
+    async fn test_generation_releases_provider_permit_during_retry_backoff() {
+        async fn completion(State(probe): State<RetryPermitProbe>) -> axum::response::Response {
+            if probe.requests.fetch_add(1, Ordering::SeqCst) == 0 {
+                probe.first_failure.notify_one();
+                return (StatusCode::INTERNAL_SERVER_ERROR, "retry").into_response();
+            }
+            Json(json!({
+                "id": "retry-probe",
+                "model": "deepseek-test",
+                "choices": [{"message": {"content": "ok"}}],
+                "usage": {"total_tokens": 1}
+            }))
+            .into_response()
+        }
+
+        let probe = RetryPermitProbe::default();
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let server_probe = probe.clone();
+        tokio::spawn(async move {
+            axum::serve(
+                listener,
+                Router::new()
+                    .route("/chat/completions", post(completion))
+                    .with_state(server_probe),
+            )
+            .await
+            .unwrap();
+        });
+        let settings = Settings::from_map(&HashMap::from([
+            (
+                "DEEPSEEK_API_BASE_URL".to_owned(),
+                format!("http://{address}"),
+            ),
+            ("DEEPSEEK_API_KEY".to_owned(), "test-key".to_owned()),
+            ("DEEPSEEK_MODEL".to_owned(), "deepseek-test".to_owned()),
+            ("DEEPSEEK_MAX_CONCURRENCY".to_owned(), "1".to_owned()),
+        ]))
+        .unwrap();
+        let pool = PgPoolOptions::new()
+            .connect_lazy("postgresql://unused:unused@127.0.0.1/unused")
+            .unwrap();
+        let state = AppState::new(pool, settings).unwrap();
+        let first_state = state.clone();
+        let first =
+            tokio::spawn(async move { generate(&first_state, "system", "user", 0.0).await });
+        probe.first_failure.notified().await;
+
+        let second_state = state.clone();
+        let second = tokio::time::timeout(
+            Duration::from_millis(500),
+            generate(&second_state, "system", "user", 0.0),
+        )
+        .await
+        .expect("retry backoff must not hold provider permit")
+        .unwrap();
+
+        assert_eq!(second.answer, "ok");
+        assert_eq!(first.await.unwrap().unwrap().answer, "ok");
     }
 }
