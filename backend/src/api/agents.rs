@@ -119,6 +119,8 @@ async fn generate_agent_output(
         date_from,
         date_to,
     );
+    let (visible_note_ids, visible_file_ids, visible_relation_ids) = visible_citation_ids(&context);
+    let evidence_available = !notes.is_empty() || !files.is_empty() || !relations.is_empty();
     let mut steps = vec![
         json!({
             "key": "evidence",
@@ -193,7 +195,13 @@ async fn generate_agent_output(
     let mut body = first.answer;
     let mut model_name = Some(first.model);
     let mut usage = first.usage;
-    let mut review = review_answer(&body, &note_ids, &file_ids, &relation_ids);
+    let mut review = review_answer(
+        &body,
+        &visible_note_ids,
+        &visible_file_ids,
+        &visible_relation_ids,
+        evidence_available,
+    );
     steps.push(review_step("reviewer", "结果检查智能体", &review));
     let mut repair_attempted = false;
     if review["passed"] != Value::Bool(true) {
@@ -220,7 +228,13 @@ async fn generate_agent_output(
                     "status": "completed",
                     "message": "已完成一次有上限的引用修订。"
                 });
-                review = review_answer(&body, &note_ids, &file_ids, &relation_ids);
+                review = review_answer(
+                    &body,
+                    &visible_note_ids,
+                    &visible_file_ids,
+                    &visible_relation_ids,
+                    evidence_available,
+                );
                 steps.push(review_step("recheck", "结果复核智能体", &review));
             }
             Err(error) => {
@@ -625,7 +639,32 @@ fn short_value(value: &Value) -> String {
     text.trim().chars().take(180).collect()
 }
 
-fn review_answer(body: &str, note_ids: &[i32], file_ids: &[i32], relation_ids: &[i32]) -> Value {
+fn visible_citation_ids(context: &str) -> (Vec<i32>, Vec<i32>, Vec<i32>) {
+    let regex = Regex::new(r"(?m)^\s*-\s+\[([NFR])(\d+)\]").unwrap();
+    let mut note_ids = Vec::new();
+    let mut file_ids = Vec::new();
+    let mut relation_ids = Vec::new();
+    for capture in regex.captures_iter(context) {
+        let Some(id) = capture[2].parse::<i32>().ok() else {
+            continue;
+        };
+        match &capture[1] {
+            "N" => note_ids.push(id),
+            "F" => file_ids.push(id),
+            "R" => relation_ids.push(id),
+            _ => unreachable!(),
+        }
+    }
+    (note_ids, file_ids, relation_ids)
+}
+
+fn review_answer(
+    body: &str,
+    note_ids: &[i32],
+    file_ids: &[i32],
+    relation_ids: &[i32],
+    evidence_available: bool,
+) -> Value {
     let regex = Regex::new(r"\[([NFR])([^\]]*)\]").unwrap();
     let notes: HashSet<i32> = note_ids.iter().copied().collect();
     let files: HashSet<i32> = file_ids.iter().copied().collect();
@@ -656,7 +695,6 @@ fn review_answer(body: &str, note_ids: &[i32], file_ids: &[i32], relation_ids: &
             (!valid).then(|| marker.clone())
         })
         .collect();
-    let evidence_available = !(notes.is_empty() && files.is_empty() && relations.is_empty());
     let passed = invalid.is_empty() && (!citations.is_empty() || !evidence_available);
     let message = if !invalid.is_empty() {
         format!(
@@ -809,8 +847,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        review_answer, select_relations, source_context, SourceNote, SourceRelation,
-        MAX_AGENT_CONTEXT_CHARS,
+        review_answer, select_relations, source_context, visible_citation_ids, SourceNote,
+        SourceRelation, MAX_AGENT_CONTEXT_CHARS,
     };
     use crate::{
         build_app,
@@ -822,7 +860,7 @@ mod tests {
     #[test]
     fn test_agent_reviewer_rejects_unknown_citations() {
         assert_eq!(
-            review_answer("错误 [N999]，有效 [N1] [F1] [R1]", &[1], &[1], &[1]),
+            review_answer("错误 [N999]，有效 [N1] [F1] [R1]", &[1], &[1], &[1], true),
             json!({
                 "passed": false,
                 "citation_count": 4,
@@ -834,7 +872,13 @@ mod tests {
 
     #[test]
     fn test_agent_reviewer_rejects_overflowing_citation_numbers() {
-        let review = review_answer("有效 [N1]，非法 [N999999999999999999999]", &[1], &[], &[]);
+        let review = review_answer(
+            "有效 [N1]，非法 [N999999999999999999999]",
+            &[1],
+            &[],
+            &[],
+            true,
+        );
 
         assert_eq!(review["passed"], false);
         assert_eq!(
@@ -845,7 +889,13 @@ mod tests {
 
     #[test]
     fn test_agent_reviewer_rejects_malformed_markers() {
-        let review = review_answer("有效 [N1]，非法 [N系统] [N1-N2] [N+1]", &[1], &[], &[]);
+        let review = review_answer(
+            "有效 [N1]，非法 [N系统] [N1-N2] [N+1]",
+            &[1],
+            &[],
+            &[],
+            true,
+        );
 
         assert_eq!(review["passed"], false);
         assert_eq!(review["citation_count"], 4);
@@ -857,8 +907,27 @@ mod tests {
 
     #[test]
     fn test_agent_reviewer_requires_citation_when_evidence_exists() {
-        assert_eq!(review_answer("无引用结论", &[1], &[], &[])["passed"], false);
-        assert_eq!(review_answer("无证据结论", &[], &[], &[])["passed"], true);
+        assert_eq!(
+            review_answer("无引用结论", &[1], &[], &[], true)["passed"],
+            false
+        );
+        assert_eq!(
+            review_answer("无证据结论", &[], &[], &[], false)["passed"],
+            true
+        );
+    }
+
+    #[test]
+    fn test_agent_reviewer_uses_only_visible_context_citations() {
+        let (notes, files, relations) =
+            visible_citation_ids("- [N1] visible\n- [F2] visible\n- [R3] visible");
+
+        assert_eq!(notes, [1]);
+        assert_eq!(files, [2]);
+        assert_eq!(relations, [3]);
+        let review = review_answer("hidden [N99]", &notes, &files, &relations, true);
+        assert_eq!(review["passed"], false);
+        assert_eq!(review["invalid_citations"], json!(["[N99]"]));
     }
 
     #[test]
