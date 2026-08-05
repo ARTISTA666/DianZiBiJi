@@ -586,12 +586,16 @@ pub fn format_sources(sources: &[RagSourceRead]) -> String {
     output
 }
 
-pub fn format_graph_context(context: &[RagGraphContextRead]) -> String {
+pub fn format_graph_context(context: &[RagGraphContextRead], query: &str) -> String {
     if context.is_empty() {
         return String::new();
     }
-    let visible = graph_context_budget(context);
+    let visible = graph_context_budget(context, query);
     let mut output = String::from("实验知识图谱上下文：\n");
+    for line in numeric_summary_lines(context, query) {
+        output.push_str(&line);
+        output.push('\n');
+    }
     for (index, item) in context.iter().take(visible).enumerate() {
         output.push_str(&graph_context_line(index, item));
     }
@@ -601,10 +605,14 @@ pub fn format_graph_context(context: &[RagGraphContextRead]) -> String {
     output
 }
 
-pub fn graph_context_budget(context: &[RagGraphContextRead]) -> usize {
+pub fn graph_context_budget(context: &[RagGraphContextRead], query: &str) -> usize {
     let available =
         MAX_GRAPH_CONTEXT_CHARS.saturating_sub(graph_context_truncation_suffix().chars().count());
     let mut used = "实验知识图谱上下文：\n".chars().count();
+    used += numeric_summary_lines(context, query)
+        .iter()
+        .map(|line| line.chars().count() + 1)
+        .sum::<usize>();
     let mut visible = 0;
     for (index, item) in context.iter().enumerate() {
         let line_length = graph_context_line(index, item).chars().count();
@@ -615,6 +623,85 @@ pub fn graph_context_budget(context: &[RagGraphContextRead]) -> usize {
         visible += 1;
     }
     visible
+}
+
+fn numeric_summary_lines(context: &[RagGraphContextRead], query: &str) -> Vec<String> {
+    let normalized_query = query.to_lowercase();
+    if !["计数", "行数", "total", "detected"]
+        .iter()
+        .any(|keyword| normalized_query.contains(keyword))
+    {
+        return Vec::new();
+    }
+    static SUMMARY_PATTERN: OnceLock<Regex> = OnceLock::new();
+    let pattern = SUMMARY_PATTERN.get_or_init(|| {
+        Regex::new(r"(?i)(GSM\d+).*?total_count=(\d+).*?detected_gene_rows=(\d+)").unwrap()
+    });
+    let mut records = context
+        .iter()
+        .filter_map(|item| {
+            let captures = pattern.captures(&item.target_label)?;
+            Some((
+                captures.get(1)?.as_str().to_owned(),
+                captures.get(2)?.as_str().parse::<i64>().ok()?,
+                captures.get(3)?.as_str().parse::<i64>().ok()?,
+            ))
+        })
+        .collect::<Vec<_>>();
+    if records.is_empty() {
+        return Vec::new();
+    }
+    records.sort_by(|left, right| left.0.cmp(&right.0));
+    let use_detected = ["非零", "行数", "detected"]
+        .iter()
+        .any(|keyword| normalized_query.contains(keyword));
+    let metric = if use_detected {
+        "detected_gene_rows"
+    } else {
+        "total_count"
+    };
+    let value = |record: &(String, i64, i64)| if use_detected { record.2 } else { record.1 };
+    let mut lines = vec!["结构化数值汇总（系统直接计算）：".to_owned()];
+    lines.extend(
+        records
+            .iter()
+            .map(|record| format!("- {}: {metric}={}", record.0, value(record))),
+    );
+    if ["最高", "最大", "highest", "maximum"]
+        .iter()
+        .any(|keyword| normalized_query.contains(keyword))
+    {
+        if let Some(record) = records.iter().max_by_key(|record| value(record)) {
+            lines.push(format!(
+                "- 比较结果：最高为 {}，{metric}={}。",
+                record.0,
+                value(record)
+            ));
+        }
+    }
+    if ["最低", "最小", "lowest", "minimum"]
+        .iter()
+        .any(|keyword| normalized_query.contains(keyword))
+    {
+        if let Some(record) = records.iter().min_by_key(|record| value(record)) {
+            lines.push(format!(
+                "- 比较结果：最低为 {}，{metric}={}。",
+                record.0,
+                value(record)
+            ));
+        }
+    }
+    if ["相差", "差值", "difference"]
+        .iter()
+        .any(|keyword| normalized_query.contains(keyword))
+        && records.len() == 2
+    {
+        lines.push(format!(
+            "- 差值：{}。",
+            (value(&records[0]) - value(&records[1])).abs()
+        ));
+    }
+    lines
 }
 
 fn graph_context_line(index: usize, item: &RagGraphContextRead) -> String {
@@ -1350,14 +1437,56 @@ mod tests {
             })
             .collect::<Vec<_>>();
 
-        let formatted = format_graph_context(&context);
+        let formatted = format_graph_context(&context, "");
 
         assert!(formatted.chars().count() <= MAX_GRAPH_CONTEXT_CHARS);
-        assert_eq!(graph_context_budget(&context), 2);
+        assert_eq!(graph_context_budget(&context, ""), 2);
         assert!(formatted.contains("[G1]"));
         assert!(formatted.contains("[G2]"));
         assert!(!formatted.contains("[G30]"));
         assert!(formatted.contains("图谱上下文已截断"));
+    }
+
+    #[test]
+    fn test_graph_context_adds_system_numeric_summary() {
+        let context = vec![
+            RagGraphContextRead {
+                relation_id: 1,
+                relation_type: "produces_result".to_owned(),
+                relation_label: "产生结果".to_owned(),
+                source_entity_id: 1,
+                source_label: "n1".to_owned(),
+                source_entity_type: "note".to_owned(),
+                source_entity_type_label: "实验笔记".to_owned(),
+                target_entity_id: 2,
+                target_label: "GSM1: total_count=10, detected_gene_rows=7".to_owned(),
+                target_entity_type: "result".to_owned(),
+                target_entity_type_label: "实验结果".to_owned(),
+                confidence: 1.0,
+                retrieval_score: 1.0,
+            },
+            RagGraphContextRead {
+                relation_id: 2,
+                relation_type: "produces_result".to_owned(),
+                relation_label: "产生结果".to_owned(),
+                source_entity_id: 3,
+                source_label: "n2".to_owned(),
+                source_entity_type: "note".to_owned(),
+                source_entity_type_label: "实验笔记".to_owned(),
+                target_entity_id: 4,
+                target_label: "GSM2: total_count=12, detected_gene_rows=6".to_owned(),
+                target_entity_type: "result".to_owned(),
+                target_entity_type_label: "实验结果".to_owned(),
+                confidence: 1.0,
+                retrieval_score: 1.0,
+            },
+        ];
+
+        let formatted = format_graph_context(&context, "总基因计数最高的是哪个样本？");
+
+        assert!(formatted.contains("结构化数值汇总（系统直接计算）："));
+        assert!(formatted.contains("最高为 GSM2"));
+        assert!(formatted.contains("total_count=12"));
     }
 
     #[test]

@@ -490,7 +490,7 @@ async fn query_project_rag_inner(
         .await
         {
             Ok(graph_context) => {
-                let visible = graph_context_budget(&graph_context);
+                let visible = graph_context_budget(&graph_context, query);
                 graph_context_budget_exhausted = !graph_context.is_empty() && visible == 0;
                 graph_context.into_iter().take(visible).collect()
             }
@@ -577,7 +577,7 @@ async fn query_project_rag_inner(
     }
 
     let source_context = format_sources(&sources);
-    let graph_context_text = format_graph_context(&graph_context);
+    let graph_context_text = format_graph_context(&graph_context, query);
     let (system_prompt, user_prompt, prompt_version) =
         build_prompts(&payload.mode, query, &source_context, &graph_context_text);
     let mut result = match generate(&state, &system_prompt, &user_prompt, 0.1).await {
