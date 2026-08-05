@@ -20,10 +20,8 @@ from pathlib import Path
 from typing import Any
 
 import ir_measures
-import jieba
 import numpy as np
 from ir_measures import R, RR, nDCG
-from rank_bm25 import BM25Okapi
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,14 +74,6 @@ def sha256_json(value: object) -> str:
 def normalize_match_text(value: str) -> str:
     normalized = unicodedata.normalize("NFKC", value or "").lower().replace("μ", "µ")
     return re.sub(r"[^a-z0-9\u4e00-\u9fffµ><=]+", "", normalized)
-
-
-def tokenize(value: str) -> list[str]:
-    normalized = unicodedata.normalize("NFKC", value or "").lower().replace("μ", "µ")
-    tokens: list[str] = []
-    for segment in jieba.cut_for_search(normalized):
-        tokens.extend(re.findall(r"[a-z0-9µ><=_./-]+|[\u4e00-\u9fff]+", segment))
-    return [token for token in tokens if token.strip()]
 
 
 def load_questions(path: Path) -> list[dict[str, Any]]:
@@ -242,10 +232,8 @@ def package_versions() -> dict[str, str]:
     names = (
         "fastembed",
         "ir-measures",
-        "jieba",
         "numpy",
         "pytrec-eval-terrier",
-        "rank-bm25",
         "scipy",
         "sqlalchemy",
     )
@@ -347,7 +335,7 @@ def build_report(
             "",
             "## 计算口径",
             "",
-            "- BM25 使用 `rank-bm25` 的 BM25Okapi；中文使用 jieba 搜索模式分词。",
+            "- BM25 使用系统运行时同款 Rust/Python 兼容实现（k1=1.2、b=0.75）。",
             "- 向量检索使用系统现有 FastEmbed 模型和数据库中的文档向量。",
             "- 混合 RAG 使用 RRF 合并 BM25 与向量排名，RRF 常数为 60。",
             "- 图谱增强 RAG 再用 RRF 合并混合检索排名与图谱关系排名。",
@@ -373,21 +361,21 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     from app.models.project import Project
     from app.models.rag import RagDocumentChunk
     from app.services.embedding import EmbeddingClient
+    from app.services.local_rag import LocalRagService
     from app.services.knowledge_graph import (
-        COLLECTION_QUERY_KEYWORDS,
         GRAPH_SCHEMA_VERSION,
         KnowledgeGraphService,
+        is_collection_query,
     )
 
     questions_path = args.questions.resolve()
     output_dir = args.output_dir.resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     questions = load_questions(questions_path)
-    jieba.setLogLevel(20)
     collection_question_ids = [
         record["id"]
         for record in questions
-        if any(keyword in record["question"].lower() for keyword in COLLECTION_QUERY_KEYWORDS)
+        if is_collection_query(record["question"])
     ]
     collection_question_id_set = set(collection_question_ids)
 
@@ -467,8 +455,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         if embedding_matrix.ndim != 2 or embedding_matrix.shape[0] != len(chunks):
             raise ValueError("Stored embeddings are missing or inconsistent")
 
-        tokenized_corpus = [tokenize(text) for text in chunk_texts]
-        bm25 = BM25Okapi(tokenized_corpus)
         embedding_client = EmbeddingClient()
         query_vectors = asyncio.run(
             embedding_client.embed_documents([record["question"] for record in questions])
@@ -485,7 +471,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         score_rows: list[dict[str, Any]] = []
 
         for question, query_vector in zip(questions, query_vectors, strict=True):
-            bm25_scores = bm25.get_scores(tokenize(question["question"]))
+            bm25_scores = LocalRagService._bm25_scores(question["question"], chunk_texts)
             vector_scores = cosine_scores(np.asarray(query_vector, dtype=np.float64), embedding_matrix)
             bm25_ranking = ranked_ids(chunk_ids, bm25_scores)[: args.candidate_k]
             vector_ranking = ranked_ids(chunk_ids, vector_scores)[: args.candidate_k]
