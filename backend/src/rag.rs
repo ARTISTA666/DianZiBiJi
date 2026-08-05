@@ -173,6 +173,18 @@ pub async fn index_file(
         .embed(&chunks)
         .await
         .map_err(|error| error.to_string())?;
+    if embeddings.len() != chunks.len()
+        || embeddings
+            .iter()
+            .any(|embedding| embedding.len() != settings.embedding_dimension)
+    {
+        return Err(format!(
+            "Embedding backend returned {} vectors for {} chunks; expected {} dimensions",
+            embeddings.len(),
+            chunks.len(),
+            settings.embedding_dimension
+        ));
+    }
     sqlx::query("DELETE FROM rag_document_chunks WHERE file_id = $1")
         .bind(file.id)
         .execute(&mut **transaction)
