@@ -14,6 +14,7 @@ from sqlalchemy.orm import sessionmaker
 from app.api import rag
 import app.api.deps as deps
 from app.api.deps import get_current_user
+from app.api.rag.blind_review import _neutralize_answer, _neutralize_blind_text
 from app.api.rag.common import _audit_answer_citations, _merge_usage
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
@@ -88,6 +89,18 @@ def test_citation_audit_requires_each_evidence_class():
 
     assert audit["passed"] is False
     assert "至少一个有效 [S数字]" in audit["message"]
+
+
+def test_blind_review_masks_methods_filenames_and_citations():
+    answer = _neutralize_answer(
+        "report[1].pdf 使用 BM25_RAG 得出结论 [S1][G1]。",
+        1,
+    )
+    masked = _neutralize_blind_text(answer or "", ["report[1].pdf"])
+
+    assert "report[1].pdf" not in masked
+    assert "BM25" not in masked
+    assert masked.endswith("[E1][E2]。")
 
 
 def test_ai_question_limits_match_rust_contract():

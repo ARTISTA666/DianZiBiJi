@@ -61,8 +61,20 @@ def _neutralize_answer(answer: str | None, source_count: int) -> str | None:
         return f"[E{evidence_index}]"
 
     neutral = re.sub(r"\[([SG])(\d+)\]", replace_marker, answer, flags=re.IGNORECASE)
+    return _neutralize_method_labels(neutral)
+
+
+def _neutralize_method_labels(value: str) -> str:
     replacements = (
-        (r"\bKG[- ]?RAG\b", "系统"),
+        (r"BM25\s*检索", "系统"),
+        (r"纯\s*(?:LLM|大模型)", "系统"),
+        (r"项目(?:级)?\s*RAG", "系统"),
+        (r"结构化查询", "系统"),
+        (r"\bBM25(?:[_ -]?RAG)?\b", "系统"),
+        (r"\bpure[_ -]?llm\b", "系统"),
+        (r"\bproject[_ -]?rag\b", "系统"),
+        (r"\bstructured[_ -]?query\b", "系统"),
+        (r"\bkg[_ -]?(?:enhanced[_ -]?)?rag\b", "系统"),
         (r"\bRAG\b", "系统"),
         (r"知识图谱增强", "系统"),
         (r"知识图谱", "证据"),
@@ -71,22 +83,34 @@ def _neutralize_answer(answer: str | None, source_count: int) -> str | None:
         (r"向量检索", "检索"),
     )
     for pattern, replacement in replacements:
-        neutral = re.sub(pattern, replacement, neutral, flags=re.IGNORECASE)
+        value = re.sub(pattern, replacement, value, flags=re.IGNORECASE)
+    return value
+
+
+def _neutralize_blind_text(value: str, filenames: list[str]) -> str:
+    neutral = re.sub(r"\[([SG])\d+\]", "[证据]", value, flags=re.IGNORECASE)
+    neutral = _neutralize_method_labels(neutral)
+    for filename in sorted({item.strip() for item in filenames if item.strip()}, key=len, reverse=True):
+        neutral = re.sub(re.escape(filename), "项目资料", neutral, flags=re.IGNORECASE)
     return neutral
 
 
 def _blind_evidence(log: AIQueryLog) -> list[BlindReviewEvidenceRead]:
     evidence: list[BlindReviewEvidenceRead] = []
-    for source in log.sources_json or []:
+    sources = log.sources_json or []
+    filenames = [str(source.get("filename") or "").strip() for source in sources]
+    for source in sources:
         filename = str(source.get("filename") or "项目资料").strip()
         snippet = str(source.get("snippet") or "").strip()
-        content = f"{filename}：{snippet}" if snippet else filename
+        content = f"{filename}：{snippet}" if snippet else "项目证据"
+        content = _neutralize_blind_text(content, filenames)
         evidence.append(BlindReviewEvidenceRead(evidence_id=f"E{len(evidence) + 1}", content=content))
     for relation in log.graph_context_json or []:
         source_label = str(relation.get("source_label") or "").strip()
         relation_label = str(relation.get("relation_label") or relation.get("relation_type") or "相关").strip()
         target_label = str(relation.get("target_label") or "").strip()
         content = " ".join(part for part in (source_label, relation_label, target_label) if part)
+        content = _neutralize_blind_text(content, filenames)
         evidence.append(BlindReviewEvidenceRead(evidence_id=f"E{len(evidence) + 1}", content=content))
     return evidence
 
@@ -105,10 +129,12 @@ def _blind_evaluation(log: AIQueryLog, user: User, db: Session) -> AIQueryEvalua
 def _blind_review_item(log: AIQueryLog, user: User, db: Session) -> BlindReviewItemRead:
     evaluation = _blind_evaluation(log, user, db)
     sources = log.sources_json or []
+    filenames = [str(source.get("filename") or "").strip() for source in sources]
+    answer = _neutralize_answer(log.answer, len(sources))
     return BlindReviewItemRead(
         blind_id=_blind_id(log.project_id, log.id),
-        question=log.question,
-        answer=_neutralize_answer(log.answer, len(sources)),
+        question=_neutralize_blind_text(log.question, filenames),
+        answer=_neutralize_blind_text(answer, filenames) if answer is not None else None,
         evidence=_blind_evidence(log),
         evaluation=(
             BlindReviewEvaluationRead(
