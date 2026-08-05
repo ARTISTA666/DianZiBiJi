@@ -839,6 +839,7 @@ pub fn is_collection_query(query: &str) -> bool {
 
 fn relation_hints(query: &str) -> HashSet<&'static str> {
     let mut hints = HashSet::new();
+    let query_tokens = tokens(query);
     for (relation, words) in [
         ("has_note", &["笔记", "记录", "note"] as &[&str]),
         ("uses_reagent", &["试剂", "材料", "reagent", "use"]),
@@ -853,7 +854,11 @@ fn relation_hints(query: &str) -> HashSet<&'static str> {
         ("uses_software", &["软件", "比对", "software"]),
         ("has_identifier", &["登录号", "标识", "accession"]),
     ] {
-        if words.iter().any(|word| query.contains(word)) {
+        if words.iter().any(|word| {
+            tokens(word)
+                .iter()
+                .any(|token| query_tokens.contains(token))
+        }) {
             hints.insert(relation);
         }
     }
@@ -932,8 +937,8 @@ mod tests {
 
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        format_graph_context, format_sources, generate, is_collection_query, retrieve, tokens,
-        truncate_error_detail, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
+        format_graph_context, format_sources, generate, is_collection_query, relation_hints,
+        retrieve, tokens, truncate_error_detail, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
         MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
@@ -994,6 +999,12 @@ mod tests {
     fn test_graph_matching_uses_exact_tokens() {
         assert_eq!(exact_token_overlap(&tokens("cell"), "cellular culture"), 0);
         assert_eq!(exact_token_overlap(&tokens("cell"), "cell culture"), 1);
+    }
+
+    #[test]
+    fn test_relation_hints_do_not_match_substrings() {
+        assert!(!relation_hints("user").contains("uses_reagent"));
+        assert!(relation_hints("Which reagent was used?").contains("uses_reagent"));
     }
 
     #[test]
