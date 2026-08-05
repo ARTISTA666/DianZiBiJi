@@ -1491,6 +1491,8 @@ async fn execute_experiment(
         .and_then(Value::as_array)
         .cloned()
         .unwrap_or_default();
+    let mut attempted = attempted;
+    include_summary_error_orders(&mut attempted, &run.summary_json);
     for case in plan.iter().filter(|case| {
         case["execution_order"]
             .as_i64()
@@ -1612,6 +1614,17 @@ async fn execute_experiment(
     )
     .await?;
     Ok(())
+}
+
+fn include_summary_error_orders(attempted: &mut std::collections::HashSet<i32>, summary: &Value) {
+    let Some(errors) = summary.get("errors").and_then(Value::as_array) else {
+        return;
+    };
+    attempted.extend(errors.iter().filter_map(|error| {
+        error["execution_order"]
+            .as_i64()
+            .and_then(|order| i32::try_from(order).ok())
+    }));
 }
 
 async fn fetch_experiment(state: &AppState, run_id: i32) -> Result<AIExperimentRunRead, ApiError> {
@@ -2837,11 +2850,11 @@ mod tests {
     use super::{
         append_missing_experiment_errors, build_citation_repair_prompt, build_prompts,
         claim_experiment, csv_escape, enforce_required_citations, graph_fallback_reason,
-        insert_query_log, mode_requires_dataset, neutralize_answer, neutralize_blind_text,
-        query_log_limit, renew_experiment_lease, retrieval_config, schedule_queued_experiments,
-        should_repair_citations, transition_interrupted_to_queued, validate_query,
-        validate_query_log_for_evaluation, ExperimentLogContext, MAX_RAG_QUERY_CHARS,
-        STRUCTURED_GRAPH_BUDGET_FALLBACK,
+        include_summary_error_orders, insert_query_log, mode_requires_dataset, neutralize_answer,
+        neutralize_blind_text, query_log_limit, renew_experiment_lease, retrieval_config,
+        schedule_queued_experiments, should_repair_citations, transition_interrupted_to_queued,
+        validate_query, validate_query_log_for_evaluation, ExperimentLogContext,
+        MAX_RAG_QUERY_CHARS, STRUCTURED_GRAPH_BUDGET_FALLBACK,
     };
 
     use crate::{
@@ -2999,6 +3012,22 @@ mod tests {
             csv,
             "9,2,'=SUM(A1),project_rag,1,2,failed,,,0,0,0,system,,timeout\r\n"
         );
+    }
+
+    #[test]
+    fn test_experiment_resume_skips_summary_errors() {
+        let mut attempted = std::collections::HashSet::from([1]);
+        include_summary_error_orders(
+            &mut attempted,
+            &json!({
+                "errors": [
+                    {"execution_order": 2},
+                    {"execution_order": "invalid"}
+                ]
+            }),
+        );
+
+        assert_eq!(attempted, std::collections::HashSet::from([1, 2]));
     }
 
     #[test]
