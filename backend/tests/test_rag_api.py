@@ -1591,6 +1591,81 @@ def test_query_failure_is_logged(test_app):
         assert log.error_message == "chat failed"
 
 
+def test_retrieval_failure_is_logged(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    client.post("/projects/1/rag/init")
+    client.post("/files/1/rag/sync")
+
+    async def fail_retrieve(_self, _db, _project_id: int, _query: str):
+        raise EmbeddingServiceError("embedding failed")
+
+    monkeypatch.setattr(FakeLocalRagService, "retrieve", fail_retrieve)
+    response = client.post("/projects/1/rag/query", json={"query": "protocol"})
+
+    assert response.status_code == 502
+    with SessionLocal() as db:
+        log = db.query(AIQueryLog).order_by(AIQueryLog.id.desc()).first()
+        assert log.question == "protocol"
+        assert log.rag_mode == "auto"
+        assert log.answer is None
+        assert log.error_message == "AI 服务暂时不可用，请稍后重试"
+        assert log.prompt_version == "rag-retrieval-failure-v1"
+        assert log.provider == "system"
+
+
+def test_graph_retrieval_failure_is_logged(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    client.post("/projects/1/rag/init")
+    client.post("/files/1/rag/sync")
+
+    def fail_graph(_self, _db, _project_id: int, _query: str):
+        raise RuntimeError("graph failed")
+
+    monkeypatch.setattr(rag.query.KnowledgeGraphService, "find_relevant_context", fail_graph)
+    with pytest.raises(RuntimeError, match="graph failed"):
+        client.post("/projects/1/rag/query", json={"query": "protocol"})
+
+    with SessionLocal() as db:
+        log = db.query(AIQueryLog).order_by(AIQueryLog.id.desc()).first()
+        assert log.question == "protocol"
+        assert log.source_count == 1
+        assert log.graph_hit_count == 0
+        assert log.error_message == "Unexpected RuntimeError: graph failed"
+        assert log.prompt_version == "rag-retrieval-failure-v1"
+
+
+def test_experiment_retrieval_failure_is_logged_and_exported(test_app, monkeypatch: pytest.MonkeyPatch):
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    client.post("/projects/1/rag/init")
+
+    async def fail_retrieve(_self, _db, _project_id: int, _query: str):
+        raise EmbeddingServiceError("embedding failed")
+
+    monkeypatch.setattr(FakeLocalRagService, "retrieve", fail_retrieve)
+    response = client.post(
+        "/projects/1/rag/experiments",
+        json={"name": "retrieval failure evidence", "questions": ["protocol"], "modes": ["project_rag"]},
+    )
+
+    assert response.status_code == 202
+    run_id = response.json()["id"]
+    run = client.get(f"/rag/experiments/{run_id}").json()
+    assert run["status"] == "completed_with_errors"
+    assert run["failed_cases"] == 1
+    with SessionLocal() as db:
+        log = db.query(AIQueryLog).filter(AIQueryLog.experiment_run_id == run_id).one()
+        assert log.error_message == "AI 服务暂时不可用，请稍后重试"
+        assert log.experiment_execution_order == 1
+
+    export = client.get(f"/rag/experiments/{run_id}/export.csv")
+    assert export.status_code == 200
+    assert ",failed," in export.text
+    assert "AI 服务暂时不可用，请稍后重试" in export.text
+
+
 def test_rag_experiment_runs_four_modes_and_exports_csv(test_app):
     client, SessionLocal, active_user_id = test_app
     active_user_id["value"] = 1

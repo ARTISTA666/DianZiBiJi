@@ -45,6 +45,7 @@ router = APIRouter(tags=["rag"])
 logger = logging.getLogger(__name__)
 
 MAX_REPAIR_ATTEMPTS = 2  # Max citation-repair loops before giving up
+RETRIEVAL_FAILURE_PROMPT_VERSION = "rag-retrieval-failure-v1"
 
 
 @dataclass
@@ -391,7 +392,39 @@ async def _execute_rag_query(
             query,
             mode,
         ),
+        return_exceptions=True,
     )
+    source_error = isinstance(retrieved_result, BaseException)
+    graph_error = isinstance(graph_result, BaseException)
+    if source_error or graph_error:
+        error = retrieved_result if source_error else graph_result
+        if not isinstance(error, Exception):
+            raise error
+        failed_sources = (
+            []
+            if source_error
+            else [RagSourceRead(**item.as_source()) for item in retrieved_result]
+        )
+        error_message = (
+            str(error.detail)
+            if isinstance(error, HTTPException)
+            else f"Unexpected {type(error).__name__}: {error}"
+        )
+        _record_query_failure(
+            db,
+            project_id=project_id,
+            user_id=user_id,
+            question=query,
+            rag_mode=mode,
+            sources=failed_sources,
+            error_message=error_message,
+            response_ms=_elapsed_ms(started),
+            experiment_run_id=experiment_run_id,
+            experiment_case_index=experiment_case_index,
+            experiment_repetition_index=experiment_repetition_index,
+            experiment_execution_order=experiment_execution_order,
+        )
+        raise error
     retrieved = retrieved_result
     graph_context, fallback_reason, rag_mode, graph_context_text = graph_result
 
@@ -568,3 +601,47 @@ def _record_query_log(
     db.add(log)
     db.flush()
     return log
+
+
+def _record_query_failure(
+    db: Session,
+    *,
+    project_id: int,
+    user_id: int,
+    question: str,
+    rag_mode: str,
+    sources: list[RagSourceRead],
+    error_message: str,
+    response_ms: int,
+    experiment_run_id: int | None = None,
+    experiment_case_index: int | None = None,
+    experiment_repetition_index: int | None = None,
+    experiment_execution_order: int | None = None,
+) -> None:
+    """Persist retrieval failures without hiding the original query error."""
+    try:
+        db.rollback()
+        _record_query_log(
+            db,
+            QueryLogEntry(
+                project_id=project_id,
+                user_id=user_id,
+                question=question,
+                rag_mode=rag_mode,
+                graph_context=[],
+                sources=sources,
+                response_ms=response_ms,
+                provider="system",
+                prompt_version=RETRIEVAL_FAILURE_PROMPT_VERSION,
+                error_message=error_message,
+                citation_audit=_audit_answer_citations("", len(sources), 0),
+                experiment_run_id=experiment_run_id,
+                experiment_case_index=experiment_case_index,
+                experiment_repetition_index=experiment_repetition_index,
+                experiment_execution_order=experiment_execution_order,
+            ),
+        )
+        db.commit()
+    except Exception:
+        db.rollback()
+        logger.warning("Failed to record RAG retrieval failure", exc_info=True)
