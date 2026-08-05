@@ -492,14 +492,10 @@ pub async fn relevant_graph_context(
             .into_iter()
             .flatten()
             .filter_map(Value::as_str)
-            .filter(|role| {
-                tokens(role)
-                    .iter()
-                    .any(|role_token| query_tokens.contains(role_token))
-            })
+            .filter(|role| role_query_matches(role, &normalized_query))
             .count() as f64;
         let score = overlap
-            + role_bonus * 2.0
+            + role_bonus * 4.0
             + if hints.contains(row.relation_type.as_str()) {
                 3.0
             } else {
@@ -1030,6 +1026,48 @@ fn relation_hints(query: &str) -> HashSet<&'static str> {
     hints
 }
 
+fn role_query_matches(role: &str, normalized_query: &str) -> bool {
+    let keywords: &[&str] = match role {
+        "cell_line" => &["细胞系", "cell line"],
+        "cell_type" => &["细胞类型", "cell type"],
+        "group" => &["组", "分组", "组别", "对照", "敲低", "group", "condition"],
+        "perturbation" => &["shrna", "靶向", "敲低", "construct"],
+        "treatment" => &["处理", "剂量", "treatment", "dose"],
+        "culture" => &["培养", "温度", "co2", "时长", "culture"],
+        "replicate" => &["重复", "replicate"],
+        "alignment_software" => &["比对软件", "比对", "aligner", "alignment"],
+        "count_software" => &["计数软件", "基因计数", "count software"],
+        "processing_software" => &["处理软件", "软件链", "流程", "pipeline"],
+        "geo_accession" => &["geo", "gsm", "样本号"],
+        "sra_accession" => &["sra", "srx", "实验号"],
+        "biosample_accession" => &["biosample", "samn"],
+        "count_column" => &["列名", "矩阵列", "column"],
+        "reference_genome" => &["参考基因组", "基因组", "genome", "hg19", "grch"],
+        "total_count" => &["总基因计数", "总计数", "total count", "total_count"],
+        "detected_gene_rows" => &["非零基因", "检测到", "行数", "detected_gene_rows"],
+        "count_matrix_gene_rows" => &[
+            "基因条目",
+            "计数矩阵",
+            "count_matrix_gene_rows",
+            "gene rows",
+        ],
+        "data_boundary" => &[
+            "层级",
+            "不能",
+            "不得",
+            "不是",
+            "fastq",
+            "差异表达",
+            "significance",
+        ],
+        "quality_result" => &["质量", "rin", "quality"],
+        _ => &[],
+    };
+    keywords
+        .iter()
+        .any(|keyword| normalized_query.contains(keyword))
+}
+
 fn hint_tokens_match(left: &str, right: &str) -> bool {
     left == right
         || (left.len() > 3 && left.strip_suffix('s') == Some(right))
@@ -1113,7 +1151,7 @@ mod tests {
         format_graph_context, format_sources, generate, generate_with_max_tokens,
         graph_context_budget, include_retrieval_candidate, is_collection_query,
         meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
-        should_retry_generation_status, tokens, truncate_error_detail,
+        role_query_matches, should_retry_generation_status, tokens, truncate_error_detail,
         validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
         MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
@@ -1233,6 +1271,13 @@ mod tests {
     fn test_relation_hints_do_not_match_substrings() {
         assert!(!relation_hints("user").contains("uses_reagent"));
         assert!(relation_hints("Which reagents were used?").contains("uses_reagent"));
+    }
+
+    #[test]
+    fn test_graph_role_aliases_match_human_queries() {
+        assert!(role_query_matches("alignment_software", "比对软件"));
+        assert!(role_query_matches("count_software", "count software"));
+        assert!(!role_query_matches("alignment_software", "实验结果"));
     }
 
     #[test]
