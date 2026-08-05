@@ -22,6 +22,7 @@ from app.core.config import get_settings
 
 from app.services.kg_constants import (
     COLLECTION_QUERY_KEYWORDS,
+    clean_label,
     ENTITY_LABELS,
     FOCUS_SYNONYMS,
     QUERY_RELATION_HINTS,
@@ -182,9 +183,9 @@ def format_context_for_prompt(
         role_text = f"；用途：{'、'.join(ROLE_LABELS.get(role, role) for role in roles)}" if roles else ""
         lines.append(
             f"- [G{index}] "
-            f"[{item['source_entity_type_label']}] {item['source_label']} "
-            f"--{item['relation_label']}--> "
-            f"[{item['target_entity_type_label']}] {item['target_label']} "
+            f"[{clean_label(item['source_entity_type_label'])}] {clean_label(item['source_label'])} "
+            f"--{clean_label(item['relation_label'])}--> "
+            f"[{clean_label(item['target_entity_type_label'])}] {clean_label(item['target_label'])} "
             f"(置信度 {item['confidence']:.2f}{role_text})"
         )
     text = "\n".join(lines)
