@@ -48,6 +48,7 @@ const RAG_MODES: &[&str] = &[
     "structured_query",
     "kg_enhanced_rag",
 ];
+const MAX_RAG_QUERY_CHARS: usize = 4_000;
 
 #[derive(Clone, Copy)]
 struct ExperimentLogContext {
@@ -400,13 +401,7 @@ async fn query_project_rag_inner(
 ) -> Result<Json<RagQueryResponse>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
     require_unblinded_access(&state, &user, project_id).await?;
-    let query = payload.query.trim();
-    if query.is_empty() {
-        return Err(ApiError::new(
-            StatusCode::UNPROCESSABLE_ENTITY,
-            "问题内容不能为空",
-        ));
-    }
+    let query = validate_query(&payload.query)?;
     if !RAG_MODES.contains(&payload.mode.as_str()) {
         return Err(ApiError::new(
             StatusCode::UNPROCESSABLE_ENTITY,
@@ -2216,6 +2211,23 @@ fn mode_uses_embeddings(mode: &str) -> bool {
     matches!(mode, "auto" | "project_rag" | "kg_enhanced_rag")
 }
 
+fn validate_query(query: &str) -> Result<&str, ApiError> {
+    let query = query.trim();
+    if query.is_empty() {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "问题内容不能为空",
+        ));
+    }
+    if query.chars().count() > MAX_RAG_QUERY_CHARS {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            format!("问题内容不能超过 {MAX_RAG_QUERY_CHARS} 个字符"),
+        ));
+    }
+    Ok(query)
+}
+
 fn require_compatible_embedding(
     state: &AppState,
     dataset: &RagDatasetRead,
@@ -2508,7 +2520,8 @@ mod tests {
     use super::{
         build_prompts, claim_experiment, csv_escape, insert_query_log, neutralize_answer,
         renew_experiment_lease, retrieval_config, schedule_queued_experiments,
-        transition_interrupted_to_queued, ExperimentLogContext,
+        transition_interrupted_to_queued, validate_query, ExperimentLogContext,
+        MAX_RAG_QUERY_CHARS,
     };
 
     use crate::{
@@ -2571,6 +2584,16 @@ mod tests {
         assert_eq!(config["vector_candidate_k"], 42);
         assert_eq!(config["graph_top_k"], 8);
         assert_eq!(config["hybrid_vector_weight"], 0.7);
+    }
+
+    #[test]
+    fn test_rag_query_validation_trims_and_rejects_empty_or_oversized_input() {
+        assert_eq!(validate_query("  pH result  ").unwrap(), "pH result");
+        assert_eq!(validate_query(" ").unwrap_err().detail, "问题内容不能为空");
+        assert!(validate_query(&"x".repeat(MAX_RAG_QUERY_CHARS + 1))
+            .unwrap_err()
+            .detail
+            .contains("不能超过"));
     }
 
     #[test]
