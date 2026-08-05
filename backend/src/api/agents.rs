@@ -703,8 +703,11 @@ fn merge_usage(target: &mut Value, update: Value) {
         return;
     };
     for (key, value) in update {
-        let sum =
-            target.get(key).and_then(Value::as_f64).unwrap_or(0.0) + value.as_f64().unwrap_or(0.0);
+        let Some(value_number) = value.as_f64() else {
+            target.insert(key.clone(), value.clone());
+            continue;
+        };
+        let sum = target.get(key).and_then(Value::as_f64).unwrap_or(0.0) + value_number;
         if value.is_i64() || value.is_u64() {
             target.insert(key.clone(), json!(sum as i64));
         } else {
@@ -840,6 +843,25 @@ mod tests {
     fn test_agent_reviewer_requires_citation_when_evidence_exists() {
         assert_eq!(review_answer("无引用结论", &[1], &[], &[])["passed"], false);
         assert_eq!(review_answer("无证据结论", &[], &[], &[])["passed"], true);
+    }
+
+    #[test]
+    fn test_merge_usage_preserves_non_numeric_fields() {
+        let mut usage = json!({
+            "provider_usage": "raw-usage",
+            "generation_attempts": 1
+        });
+
+        super::merge_usage(
+            &mut usage,
+            json!({
+                "provider_usage": {"prompt_tokens": 2},
+                "generation_attempts": 2
+            }),
+        );
+
+        assert_eq!(usage["provider_usage"], json!({"prompt_tokens": 2}));
+        assert_eq!(usage["generation_attempts"], 3);
     }
 
     #[test]
