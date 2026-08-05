@@ -46,6 +46,10 @@ logger = logging.getLogger(__name__)
 
 MAX_REPAIR_ATTEMPTS = 2  # Max citation-repair loops before giving up
 RETRIEVAL_FAILURE_PROMPT_VERSION = "rag-retrieval-failure-v1"
+GRAPH_CONTEXT_BUDGET_FALLBACK = "Graph context exceeded prompt budget"
+STRUCTURED_GRAPH_BUDGET_FALLBACK = (
+    f"{GRAPH_CONTEXT_BUDGET_FALLBACK}; no safe structured context was available"
+)
 
 
 @dataclass
@@ -172,6 +176,7 @@ def _retrieve_graph_context(
         if mode in {"auto", RagMode.STRUCTURED_QUERY.value, RagMode.KG_ENHANCED_RAG.value}
         else []
     )
+    had_graph_context = bool(graph_context)
     fallback_reason: str | None = None
     if mode == RagMode.KG_ENHANCED_RAG.value and not graph_context:
         fallback_reason = (
@@ -182,16 +187,27 @@ def _retrieve_graph_context(
         fallback_reason = "No structured graph relation matched the question"
     elif mode == "auto" and not graph_context:
         fallback_reason = "No graph relation reached the relevance threshold; used project RAG"
-    # Resolve "auto" to a concrete experiment mode; explicit modes pass through.
-    if mode == "auto":
-        rag_mode = RagMode.KG_ENHANCED_RAG.value if graph_context else RagMode.PROJECT_RAG.value
-    else:
-        rag_mode = mode
     graph_context_text = graph_service.format_context_for_prompt(graph_context, query=query)
     visible_graph_count = sum(
         line.startswith("- [G") for line in graph_context_text.splitlines()
     )
     graph_context = graph_context[:visible_graph_count]
+    if had_graph_context and not graph_context:
+        graph_context_text = ""
+        if mode == "auto":
+            fallback_reason = f"{GRAPH_CONTEXT_BUDGET_FALLBACK}; used project RAG"
+        elif mode == RagMode.KG_ENHANCED_RAG.value:
+            fallback_reason = (
+                f"{GRAPH_CONTEXT_BUDGET_FALLBACK}; "
+                "explicit KG mode continued with project documents only"
+            )
+        elif mode == RagMode.STRUCTURED_QUERY.value:
+            fallback_reason = STRUCTURED_GRAPH_BUDGET_FALLBACK
+    # Resolve "auto" after prompt budgeting so logs match visible evidence.
+    if mode == "auto":
+        rag_mode = RagMode.KG_ENHANCED_RAG.value if graph_context else RagMode.PROJECT_RAG.value
+    else:
+        rag_mode = mode
     return graph_context, fallback_reason, rag_mode, graph_context_text
 
 
@@ -319,7 +335,11 @@ def _build_structured_query_empty_response(
     experiment_execution_order: int | None = None,
 ) -> RagQueryResponse:
     """Build the early-return response for structured-query mode with no graph hits."""
-    answer = "结构化查询未找到与该问题匹配的项目图谱关系。"
+    answer = (
+        "结构化查询相关图谱关系超过当前上下文预算，未能安全纳入本次回答。"
+        if fallback_reason == STRUCTURED_GRAPH_BUDGET_FALLBACK
+        else "结构化查询未找到与该问题匹配的项目图谱关系。"
+    )
     citation_audit = _audit_answer_citations(answer, len(sources), len(graph_context))
     response_ms = _elapsed_ms(started)
     query_log = _record_query_log(

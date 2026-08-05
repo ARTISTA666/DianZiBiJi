@@ -240,6 +240,56 @@ def test_graph_context_list_matches_rendered_prompt(monkeypatch) -> None:
     assert "[G2]" in prompt
 
 
+def test_auto_graph_budget_falls_back_when_no_relation_is_rendered(monkeypatch) -> None:
+    class FakeGraphService:
+        def find_relevant_context(self, _db, _project_id, _query):
+            return [{"relation_id": 1}]
+
+        def format_context_for_prompt(self, _context, query=""):
+            return "实验知识图谱上下文："
+
+    monkeypatch.setattr(rag.query, "KnowledgeGraphService", FakeGraphService)
+
+    context, fallback, mode, prompt = rag.query._retrieve_graph_context(
+        object(), 1, "query", "auto"
+    )
+
+    assert context == []
+    assert fallback == "Graph context exceeded prompt budget; used project RAG"
+    assert mode == "project_rag"
+    assert prompt == ""
+
+
+def test_structured_query_reports_graph_budget_fallback(test_app, monkeypatch) -> None:
+    client, SessionLocal, active_user_id = test_app
+    active_user_id["value"] = 1
+    client.post("/projects/1/rag/init")
+
+    class FakeGraphService:
+        def find_relevant_context(self, _db, _project_id, _query):
+            return [{"relation_id": 1}]
+
+        def format_context_for_prompt(self, _context, query=""):
+            return "实验知识图谱上下文："
+
+    monkeypatch.setattr(rag.query, "KnowledgeGraphService", FakeGraphService)
+    response = client.post(
+        "/projects/1/rag/query",
+        json={"query": "structured question", "mode": "structured_query"},
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert "超过当前上下文预算" in body["answer"]
+    assert body["fallback_reason"] == (
+        "Graph context exceeded prompt budget; no safe structured context was available"
+    )
+    with SessionLocal() as db:
+        log = db.get(AIQueryLog, body["query_log_id"])
+        assert log.error_message is None
+        assert log.graph_hit_count == 0
+
+
 def test_unauthenticated_status_returns_401(test_app):
     _, SessionLocal, _ = test_app
     app = FastAPI()
