@@ -16,6 +16,8 @@ use crate::{
     AppState,
 };
 
+const MAX_GRAPH_CONTEXT_CHARS: usize = 6_000;
+
 #[derive(Clone, Debug, FromRow)]
 pub struct RagFileRecord {
     pub id: i32,
@@ -513,7 +515,15 @@ pub fn format_graph_context(context: &[RagGraphContextRead]) -> String {
     if context.is_empty() {
         return String::new();
     }
-    let mut output = String::from("实验知识图谱上下文：");
+    let mut output = String::from("实验知识图谱上下文：\n可用图谱证据编号：");
+    output.push_str(
+        &context
+            .iter()
+            .enumerate()
+            .map(|(index, _)| format!("[G{}]", index + 1))
+            .collect::<Vec<_>>()
+            .join("、"),
+    );
     for (index, item) in context.iter().enumerate() {
         output.push_str(&format!(
             "\n[G{}] {}（{}） {} {}（{}）",
@@ -525,7 +535,16 @@ pub fn format_graph_context(context: &[RagGraphContextRead]) -> String {
             item.target_entity_type_label
         ));
     }
-    output
+    let suffix = format!(
+        "\n\n[图谱上下文已截断至 {MAX_GRAPH_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]"
+    );
+    if output.chars().count() <= MAX_GRAPH_CONTEXT_CHARS {
+        return output;
+    }
+    let prefix_len = MAX_GRAPH_CONTEXT_CHARS.saturating_sub(suffix.chars().count());
+    let mut capped: String = output.chars().take(prefix_len).collect();
+    capped.push_str(&suffix);
+    capped
 }
 
 pub async fn generate(
@@ -906,15 +925,15 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, format_sources,
-        generate, is_collection_query, retrieve, truncate_error_detail, vector_literal, ChunkRow,
-        ACTIVE_CHUNKS_SQL, VECTOR_CANDIDATE_SQL,
+        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, format_graph_context,
+        format_sources, generate, is_collection_query, retrieve, truncate_error_detail,
+        vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
         db::{connect_database, initialize_database},
         embedding::hash_embedding,
-        models::RagSourceRead,
+        models::{RagGraphContextRead, RagSourceRead},
         AppState,
     };
 
@@ -988,6 +1007,35 @@ mod tests {
                 "missing source marker: {marker}"
             );
         }
+    }
+
+    #[test]
+    fn test_graph_context_caps_long_labels_but_keeps_all_markers() {
+        let context = (1..=30)
+            .map(|index| RagGraphContextRead {
+                relation_id: index,
+                relation_type: "uses_reagent".to_owned(),
+                relation_label: "使用试剂".to_owned(),
+                source_entity_id: index,
+                source_label: "source ".to_owned() + &"x".repeat(1_000),
+                source_entity_type: "note".to_owned(),
+                source_entity_type_label: "实验笔记".to_owned(),
+                target_entity_id: index + 100,
+                target_label: "target ".to_owned() + &"y".repeat(1_000),
+                target_entity_type: "reagent".to_owned(),
+                target_entity_type_label: "试剂".to_owned(),
+                confidence: 0.8,
+                retrieval_score: 1.0,
+            })
+            .collect::<Vec<_>>();
+
+        let formatted = format_graph_context(&context);
+
+        assert!(formatted.chars().count() <= MAX_GRAPH_CONTEXT_CHARS);
+        for index in 1..=30 {
+            assert!(formatted.contains(&format!("[G{index}]")));
+        }
+        assert!(formatted.contains("图谱上下文已截断"));
     }
 
     #[test]
