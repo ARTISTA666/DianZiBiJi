@@ -476,18 +476,37 @@ pub async fn relevant_graph_context(
 }
 
 pub fn format_sources(sources: &[RagSourceRead]) -> String {
-    let mut output = String::from("项目资料检索结果：");
+    const MAX_CONTEXT_CHARS: usize = 9_000;
+    let prefix = "项目资料检索结果：";
+    let per_source_budget =
+        MAX_CONTEXT_CHARS.saturating_sub(prefix.chars().count()) / sources.len().max(1);
+    let mut output = prefix.to_owned();
     for (index, source) in sources.iter().enumerate() {
-        output.push_str(&format!(
-            "\n\n[S{}] 文件={}; 块={}; 相关度={:.3}\n{}",
+        let header = format!(
+            "\n\n[S{}] 文件={}; 块={}; 相关度={:.3}\n",
             index + 1,
             source.filename.as_deref().unwrap_or("未知"),
             source.chunk_id.unwrap_or_default(),
-            source.retrieval_score.unwrap_or_default(),
-            source.snippet.as_deref().unwrap_or_default()
-        ));
+            source.retrieval_score.unwrap_or_default()
+        );
+        let snippet = source.snippet.as_deref().unwrap_or_default();
+        let snippet_limit = per_source_budget.saturating_sub(header.chars().count());
+        let snippet_chars = snippet.chars().count();
+        let truncated_limit = snippet_limit.saturating_sub(1);
+        let content_limit = if snippet_chars > snippet_limit {
+            truncated_limit
+        } else {
+            snippet_limit
+        };
+        output.push_str(&header);
+        output.extend(snippet.chars().take(content_limit));
+        if snippet_chars > content_limit
+            && header.chars().count() + content_limit < per_source_budget
+        {
+            output.push('…');
+        }
     }
-    output.chars().take(9000).collect()
+    output
 }
 
 pub fn format_graph_context(context: &[RagGraphContextRead]) -> String {
@@ -887,14 +906,15 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, generate,
-        is_collection_query, retrieve, truncate_error_detail, vector_literal, ChunkRow,
+        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, format_sources,
+        generate, is_collection_query, retrieve, truncate_error_detail, vector_literal, ChunkRow,
         ACTIVE_CHUNKS_SQL, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
         db::{connect_database, initialize_database},
         embedding::hash_embedding,
+        models::RagSourceRead,
         AppState,
     };
 
@@ -942,6 +962,32 @@ mod tests {
         assert!(is_collection_query("汇总所有样本清单"));
         assert!(is_collection_query("Please list all samples"));
         assert!(!is_collection_query("small molecule protocol"));
+    }
+
+    #[test]
+    fn test_source_context_keeps_all_source_markers_with_long_snippets() {
+        let sources = (1..=3)
+            .map(|index| RagSourceRead {
+                chunk_id: Some(index),
+                file_id: Some(index),
+                filename: Some(format!("source-{index}.txt")),
+                dify_document_id: None,
+                snippet: Some("evidence ".repeat(2_000)),
+                vector_score: Some(0.9),
+                lexical_score: Some(0.8),
+                retrieval_score: Some(0.85),
+            })
+            .collect::<Vec<_>>();
+
+        let formatted = format_sources(&sources);
+
+        assert!(formatted.chars().count() <= 9_000);
+        for marker in ["[S1]", "[S2]", "[S3]"] {
+            assert!(
+                formatted.contains(marker),
+                "missing source marker: {marker}"
+            );
+        }
     }
 
     #[test]
