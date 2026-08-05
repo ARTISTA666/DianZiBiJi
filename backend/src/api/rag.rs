@@ -1043,14 +1043,16 @@ async fn run_experiment(
             "Repetitions must be between 1 and 10",
         ));
     }
-    let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
-        ApiError::new(
-            StatusCode::CONFLICT,
-            "RAG 资料库尚未初始化，请先在数据页完成资料入库",
-        )
-    })?;
-    if modes.iter().any(|mode| mode_uses_embeddings(mode)) {
-        require_compatible_embedding(&state, &dataset)?;
+    if modes.iter().any(|mode| mode_requires_dataset(mode)) {
+        let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
+            ApiError::new(
+                StatusCode::CONFLICT,
+                "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+            )
+        })?;
+        if modes.iter().any(|mode| mode_uses_embeddings(mode)) {
+            require_compatible_embedding(&state, &dataset)?;
+        }
     }
     let seed = payload.random_seed.unwrap_or_else(|| {
         let digest = Sha256::digest(uuid::Uuid::new_v4().as_bytes());
