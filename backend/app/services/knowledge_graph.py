@@ -30,6 +30,7 @@ from app.services.kg_constants import (  # noqa: F401,F403
     flatten_text,
     normalize_entity_label,
     normalize_text,
+    is_collection_query,
     source_natural_key,
     split_terms,
 )

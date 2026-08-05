@@ -13,7 +13,7 @@ from app.core.config import get_settings
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
 from app.models.rag import RagDocumentChunk
 from app.services.embedding import EmbeddingClient
-from app.services.knowledge_graph import COLLECTION_QUERY_KEYWORDS
+from app.services.knowledge_graph import is_collection_query
 from app.services.ocr import OcrService
 
 
@@ -193,8 +193,7 @@ class LocalRagService:
 
     def _retrieval_limit(self, query: str) -> int:
         default = self.settings.rag_retrieval_top_k
-        normalized = query.lower()
-        if any(keyword in normalized for keyword in COLLECTION_QUERY_KEYWORDS):
+        if is_collection_query(query):
             return min(
                 self.settings.rag_vector_candidate_k,
                 max(default, self.settings.rag_collection_retrieval_top_k),

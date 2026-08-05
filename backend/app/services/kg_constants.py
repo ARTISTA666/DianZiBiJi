@@ -290,9 +290,11 @@ QUERY_RELATION_HINTS = {
 
 COLLECTION_QUERY_KEYWORDS = (
     "哪些",
+    "有哪些",
     "全部",
     "所有",
     "列出",
+    "列举",
     "多少",
     "分别",
     "归纳",
@@ -306,10 +308,14 @@ COLLECTION_QUERY_KEYWORDS = (
     "最高",
     "最低",
     "相差",
+    "一览",
     "list",
     "all",
+    "enumerate",
     "count",
 )
+
+_COLLECTION_QUERY_ENGLISH_KEYWORDS = frozenset({"all", "list", "enumerate", "count"})
 
 
 # ---------------------------------------------------------------------------
@@ -325,6 +331,14 @@ def clean_label(label: str) -> str:
 def normalize_text(label: str) -> str:
     """Lower-case + whitespace-normalised form for comparisons."""
     return clean_label(label).lower()
+
+
+def is_collection_query(query: str) -> bool:
+    """Detect list-style questions without matching English substrings."""
+    normalized = normalize_text(query)
+    if any(keyword in normalized for keyword in COLLECTION_QUERY_KEYWORDS if not keyword.isascii()):
+        return True
+    return bool(set(re.findall(r"[a-z0-9_]+", normalized)) & _COLLECTION_QUERY_ENGLISH_KEYWORDS)
 
 
 def normalize_entity_label(label: str) -> str:

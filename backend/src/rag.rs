@@ -972,12 +972,19 @@ pub fn is_collection_query(query: &str) -> bool {
         "归纳",
         "清单",
         "一览",
+        "各自",
+        "数量",
+        "四个",
+        "两个",
+        "最高",
+        "最低",
+        "相差",
     ]
     .iter()
     .any(|keyword| normalized.contains(keyword))
         || tokens(query)
             .iter()
-            .any(|token| matches!(token.as_str(), "all" | "list" | "enumerate"))
+            .any(|token| matches!(token.as_str(), "all" | "list" | "enumerate" | "count"))
 }
 
 fn relation_hints(query: &str) -> HashSet<&'static str> {
@@ -1197,6 +1204,9 @@ mod tests {
     fn test_collection_query_detection_handles_chinese_and_english_without_substring_false_hits() {
         assert!(is_collection_query("汇总所有样本清单"));
         assert!(is_collection_query("Please list all samples"));
+        assert!(is_collection_query("Please enumerate all samples"));
+        assert!(is_collection_query("有哪些样本？"));
+        assert!(is_collection_query("count samples"));
         assert!(!is_collection_query("small molecule protocol"));
     }
 

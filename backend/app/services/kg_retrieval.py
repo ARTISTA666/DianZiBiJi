@@ -28,6 +28,7 @@ from app.services.kg_constants import (
     RELATION_LABELS,
     ROLE_LABELS,
     ROLE_QUERY_HINTS,
+    is_collection_query,
     normalize_text,
     source_natural_key,
 )
@@ -245,8 +246,7 @@ def _balanced_relations(
 
 
 def _context_limit(query: str, default_limit: int) -> int:
-    normalized_query = normalize_text(query)
-    if any(keyword in normalized_query for keyword in COLLECTION_QUERY_KEYWORDS):
+    if is_collection_query(query):
         return max(default_limit, 30)
     return default_limit
 

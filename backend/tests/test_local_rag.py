@@ -18,6 +18,7 @@ from app.services.local_rag import (
     _retrieval_order_key,
     validate_embedding_count,
 )
+from app.services.knowledge_graph import is_collection_query
 
 
 class FakeEmbeddingClient:
@@ -35,9 +36,16 @@ def test_collection_questions_expand_retrieval_without_exceeding_candidates() ->
 
     assert service._retrieval_limit("这个样本的处理条件是什么？") == 6
     assert service._retrieval_limit("四个样本分别对应哪些 SRA 登录号？") == 12
+    assert service._retrieval_limit("Please enumerate all samples") == 12
+    assert service._retrieval_limit("small molecule protocol") == 6
 
     service.settings.rag_collection_retrieval_top_k = 50
     assert service._retrieval_limit("列出全部样本") == 30
+
+
+def test_collection_query_uses_exact_english_tokens() -> None:
+    assert is_collection_query("count samples") is True
+    assert is_collection_query("small molecule protocol") is False
 
 
 def test_retrieval_order_is_deterministic_for_equal_scores() -> None:
