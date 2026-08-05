@@ -619,7 +619,7 @@ async fn query_project_rag_inner(
     for _ in 0..2 {
         let missing_source = !sources.is_empty() && !has_marker(&result.answer, 'S');
         let missing_graph = !graph_context.is_empty() && !has_marker(&result.answer, 'G');
-        if citation_audit.passed && !missing_source && !missing_graph {
+        if !should_repair_citations(&citation_audit, missing_source, missing_graph) {
             break;
         }
         citation_audit.repair_attempted = true;
@@ -2747,6 +2747,14 @@ fn has_marker(answer: &str, kind: char) -> bool {
         .is_match(answer)
 }
 
+fn should_repair_citations(
+    audit: &crate::models::RagCitationAuditRead,
+    missing_source: bool,
+    missing_graph: bool,
+) -> bool {
+    audit.has_evidence && (!audit.passed || missing_source || missing_graph)
+}
+
 fn graph_fallback_reason(
     mode: &str,
     graph_context_empty: bool,
@@ -2797,8 +2805,9 @@ mod tests {
         claim_experiment, csv_escape, graph_fallback_reason, insert_query_log,
         mode_requires_dataset, neutralize_answer, neutralize_blind_text, query_log_limit,
         renew_experiment_lease, retrieval_config, schedule_queued_experiments,
-        transition_interrupted_to_queued, validate_query, validate_query_log_for_evaluation,
-        ExperimentLogContext, MAX_RAG_QUERY_CHARS, STRUCTURED_GRAPH_BUDGET_FALLBACK,
+        should_repair_citations, transition_interrupted_to_queued, validate_query,
+        validate_query_log_for_evaluation, ExperimentLogContext, MAX_RAG_QUERY_CHARS,
+        STRUCTURED_GRAPH_BUDGET_FALLBACK,
     };
 
     use crate::{
@@ -2862,6 +2871,15 @@ mod tests {
         assert!(prompt.contains("缺失的强制引用：至少一个有效 [S数字]、至少一个有效 [G数字]"));
         assert!(prompt.contains("不得使用 [G系统]、[G1-G2]"));
         assert!(prompt.contains("不得新增上文没有的事实"));
+    }
+
+    #[test]
+    fn test_citation_repair_skips_when_no_evidence_exists() {
+        let no_evidence = crate::rag::audit_citations("误写 [S1]", 0, 0);
+        assert!(!should_repair_citations(&no_evidence, true, false));
+
+        let evidence = crate::rag::audit_citations("没有引用", 1, 0);
+        assert!(should_repair_citations(&evidence, true, false));
     }
 
     #[test]
