@@ -3,10 +3,9 @@ from __future__ import annotations
 import hashlib
 import math
 import re
+from collections import Counter
 from dataclasses import dataclass
 
-import jieba
-from rank_bm25 import BM25Okapi
 from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
@@ -125,7 +124,6 @@ class LocalRagService:
             reverse=True,
         )[:candidate_k]
         candidates = list({chunk.id: chunk for chunk in [*vector_candidates, *lexical_candidates]}.values())
-        max_bm25 = max((score for score in raw_bm25_scores if score > 0), default=0.0)
         query_tokens = self._bm25_tokens(query)
 
         files = {
@@ -137,7 +135,7 @@ class LocalRagService:
         results: list[RetrievedChunk] = []
         for chunk in candidates:
             vector_score = max(0.0, self._cosine(query_vector, chunk.embedding or []))
-            lexical_score = max(0.0, bm25_by_id[chunk.id]) / max_bm25 if max_bm25 else 0.0
+            lexical_score = max(0.0, bm25_by_id[chunk.id])
             retrieval_score = 0.7 * vector_score + 0.3 * lexical_score
             if retrieval_score <= 0 and query_tokens:
                 continue
@@ -273,21 +271,41 @@ class LocalRagService:
     @staticmethod
     def _bm25_tokens(text: str) -> list[str]:
         normalized = (text or "").lower()
-        return [
-            token
-            for segment in jieba.cut_for_search(normalized)
-            for token in re.findall(r"[a-z0-9µ><=_./-]+|[\u4e00-\u9fff]+", segment)
-            if token.strip()
-        ]
+        tokens: list[str] = []
+        for token in re.findall(r"[a-z0-9_µ><=./-]+|[\u4e00-\u9fff]+", normalized):
+            tokens.append(token)
+            if all("\u4e00" <= character <= "\u9fff" for character in token):
+                tokens.extend(token[index : index + 2] for index in range(max(0, len(token) - 1)))
+        return tokens
 
     @classmethod
     def _bm25_scores(cls, query: str, documents: list[str]) -> list[float]:
-        tokenized_documents = [cls._bm25_tokens(document) for document in documents]
-        query_tokens = cls._bm25_tokens(query)
-        if not query_tokens or not any(tokenized_documents):
+        query_terms = Counter(cls._bm25_tokens(query))
+        tokenized_documents = [Counter(cls._bm25_tokens(document)) for document in documents]
+        if not query_terms or not any(tokenized_documents):
             return [0.0] * len(documents)
-        model = BM25Okapi(tokenized_documents, k1=1.2, b=0.75)
-        return [float(score) for score in model.get_scores(query_tokens)]
+        average_document_length = sum(sum(document.values()) for document in tokenized_documents) / len(documents)
+        document_frequency: Counter[str] = Counter()
+        for document in tokenized_documents:
+            document_frequency.update(document.keys())
+        document_count = float(len(documents))
+        scores: list[float] = []
+        for document in tokenized_documents:
+            document_length = sum(document.values())
+            normalized_length = document_length / max(average_document_length, 1.0)
+            raw_score = 0.0
+            for term in query_terms:
+                term_frequency = document.get(term, 0)
+                if not term_frequency:
+                    continue
+                frequency = document_frequency[term]
+                inverse_frequency = math.log(
+                    (document_count - frequency + 0.5) / (frequency + 0.5) + 1.0
+                )
+                denominator = term_frequency + 1.2 * (0.25 + 0.75 * normalized_length)
+                raw_score += inverse_frequency * (term_frequency * 2.2) / denominator
+            scores.append(raw_score / (raw_score + 1.0))
+        return scores
 
     @staticmethod
     def _cosine(left: list[float], right: list[float]) -> float:

@@ -6,7 +6,6 @@ from types import SimpleNamespace
 import pytest
 from sqlalchemy.orm import sessionmaker
 
-from app.services import local_rag
 from app.core.database import Base
 from app.models import *  # noqa: F403
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
@@ -49,21 +48,13 @@ def test_collection_query_uses_exact_english_tokens() -> None:
     assert is_collection_query("small molecule protocol") is False
 
 
-def test_bm25_uses_rust_compatible_parameters(monkeypatch: pytest.MonkeyPatch) -> None:
-    captured: dict[str, float] = {}
+def test_bm25_scores_are_normalized_for_rag_mixing() -> None:
+    scores = LocalRagService._bm25_scores(
+        "PCR", ["PCR active evidence", "unrelated content"]
+    )
 
-    class SpyBM25:
-        def __init__(self, _documents, **kwargs):
-            captured.update(kwargs)
-
-        def get_scores(self, _query_tokens):
-            return [0.0]
-
-    monkeypatch.setattr(local_rag, "BM25Okapi", SpyBM25)
-
-    LocalRagService._bm25_scores("PCR", ["PCR"])
-
-    assert captured == {"k1": 1.2, "b": 0.75}
+    assert scores[0] == pytest.approx(0.39051307436853616)
+    assert scores[1] == 0
 
 
 def test_retrieval_order_is_deterministic_for_equal_scores() -> None:
@@ -260,4 +251,4 @@ def test_hybrid_retrieval_unions_vector_and_bm25_candidates(db_engine) -> None:
         assert {result.file_id for result in results} == {1, 2}
         assert all(result.retrieval_score > 0 for result in results)
         lexical_result = next(result for result in results if result.file_id == 2)
-        assert lexical_result.lexical_score == 1.0
+        assert 0 < lexical_result.lexical_score < 1
