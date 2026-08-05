@@ -759,11 +759,13 @@ async fn evaluate_query_log(
     Json(payload): Json<AIQueryEvaluationRequest>,
 ) -> Result<Json<AIQueryEvaluationRead>, ApiError> {
     validate_evaluation(&payload)?;
-    let project_id: i32 = sqlx::query_scalar("SELECT project_id FROM ai_query_logs WHERE id = $1")
-        .bind(log_id)
-        .fetch_optional(&state.pool)
-        .await?
-        .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "Query log not found"))?;
+    let (project_id, error_message): (i32, Option<String>) =
+        sqlx::query_as("SELECT project_id, error_message FROM ai_query_logs WHERE id = $1")
+            .bind(log_id)
+            .fetch_optional(&state.pool)
+            .await?
+            .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "Query log not found"))?;
+    validate_query_log_for_evaluation(error_message.as_deref())?;
     require_project_access(&state.pool, &user, project_id).await?;
     require_evaluator(&state, &user, project_id).await?;
     require_unblinded_access(&state, &user, project_id).await?;
@@ -995,6 +997,17 @@ fn validate_evaluation(payload: &AIQueryEvaluationRequest) -> Result<(), ApiErro
         ));
     }
     Ok(())
+}
+
+fn validate_query_log_for_evaluation(error_message: Option<&str>) -> Result<(), ApiError> {
+    if error_message.is_some() {
+        Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "Failed query cannot be evaluated",
+        ))
+    } else {
+        Ok(())
+    }
 }
 
 async fn require_evaluator(
@@ -2719,8 +2732,8 @@ mod tests {
         append_missing_experiment_errors, build_prompts, claim_experiment, csv_escape,
         insert_query_log, mode_requires_dataset, neutralize_answer, query_log_limit,
         renew_experiment_lease, retrieval_config, schedule_queued_experiments,
-        transition_interrupted_to_queued, validate_query, ExperimentLogContext,
-        MAX_RAG_QUERY_CHARS,
+        transition_interrupted_to_queued, validate_query, validate_query_log_for_evaluation,
+        ExperimentLogContext, MAX_RAG_QUERY_CHARS,
     };
 
     use crate::{
@@ -2793,6 +2806,14 @@ mod tests {
     fn test_query_log_limit_keeps_listing_bounded_but_analytics_complete() {
         assert_eq!(query_log_limit(false), Some(200));
         assert_eq!(query_log_limit(true), None);
+    }
+
+    #[test]
+    fn test_failed_query_log_cannot_be_evaluated() {
+        assert!(validate_query_log_for_evaluation(None).is_ok());
+        let error = validate_query_log_for_evaluation(Some("provider unavailable")).unwrap_err();
+        assert_eq!(error.status, StatusCode::CONFLICT);
+        assert_eq!(error.detail, "Failed query cannot be evaluated");
     }
 
     #[test]
