@@ -55,6 +55,26 @@ def test_source_prompt_keeps_twelve_standard_chunks() -> None:
     assert "chunk-12" in prompt
 
 
+def test_source_prompt_keeps_all_markers_when_first_chunk_is_huge() -> None:
+    sources = [
+        RetrievedChunk(
+            chunk_id=index,
+            file_id=1,
+            filename=f"source-{index}.txt",
+            snippet="x" * 2_000,
+            vector_score=0.8,
+            lexical_score=0.5,
+            retrieval_score=0.7,
+        )
+        for index in range(1, 4)
+    ]
+
+    prompt = LocalRagService.format_sources(sources, max_chars=900)
+
+    assert len(prompt) <= 900
+    assert all(f"[S{index}]" in prompt for index in range(1, 4))
+
+
 def test_bm25_scores_rank_matching_document_first() -> None:
     scores = LocalRagService._bm25_scores(
         "PCR 退火温度",

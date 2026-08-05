@@ -229,13 +229,28 @@ class LocalRagService:
 
     @staticmethod
     def format_sources(sources: list[RetrievedChunk], max_chars: int = 9000) -> str:
-        lines = ["项目资料检索结果："]
+        if max_chars <= 0:
+            return ""
+        prefix = "项目资料检索结果："
+        per_source_budget = max(max_chars - len(prefix), 0) // max(1, len(sources))
+        output = prefix
         for index, source in enumerate(sources, start=1):
-            lines.append(
-                f"[S{index}] 文件={source.filename}; 块={source.chunk_id}; "
-                f"相关度={source.retrieval_score:.3f}\n{source.snippet}"
+            header = (
+                f"\n\n[S{index}] 文件={source.filename}; 块={source.chunk_id}; "
+                f"相关度={source.retrieval_score:.3f}\n"
             )
-        return "\n\n".join(lines)[:max_chars]
+            if len(header) > per_source_budget:
+                header = header[: max(per_source_budget - 1, 0)] + ("…" if per_source_budget else "")
+            snippet_limit = max(per_source_budget - len(header), 0)
+            content_limit = (
+                max(snippet_limit - 1, 0)
+                if len(source.snippet) > snippet_limit
+                else snippet_limit
+            )
+            output += header + source.snippet[:content_limit]
+            if len(source.snippet) > content_limit and len(header) + content_limit < per_source_budget:
+                output += "…"
+        return output[:max_chars]
 
     @staticmethod
     def _tokens(text: str) -> set[str]:
