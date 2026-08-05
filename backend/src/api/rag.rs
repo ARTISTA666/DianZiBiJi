@@ -2469,7 +2469,12 @@ async fn insert_query_log(
     .bind(provider)
     .bind(model_name)
     .bind(prompt_version)
-    .bind(retrieval_config(&state.settings, citation_audit))
+    .bind(retrieval_config(
+        &state.settings,
+        rag_mode,
+        question,
+        citation_audit,
+    ))
     .bind(usage)
     .bind(fallback_reason)
     .bind(error_message)
@@ -2485,8 +2490,13 @@ async fn insert_query_log(
 
 fn retrieval_config(
     settings: &crate::config::Settings,
+    mode: &str,
+    question: &str,
     citation_audit: &crate::models::RagCitationAuditRead,
 ) -> Value {
+    let collection_query = crate::rag::is_collection_query(question);
+    let retrieval_applied = !matches!(mode, "pure_llm" | "structured_query");
+    let graph_retrieval_applied = matches!(mode, "auto" | "structured_query" | "kg_enhanced_rag");
     json!({
         "embedding_backend": settings.embedding_backend,
         "embedding_model": settings.embedding_model,
@@ -2495,8 +2505,24 @@ fn retrieval_config(
         "chunk_overlap": settings.rag_chunk_overlap,
         "retrieval_top_k": settings.rag_retrieval_top_k,
         "collection_retrieval_top_k": settings.rag_collection_retrieval_top_k,
+        "effective_retrieval_top_k": if collection_query {
+            settings
+                .rag_collection_retrieval_top_k
+                .max(settings.rag_retrieval_top_k)
+                .min(settings.rag_vector_candidate_k)
+        } else {
+            settings.rag_retrieval_top_k
+        },
         "vector_candidate_k": settings.rag_vector_candidate_k,
         "graph_top_k": settings.rag_graph_top_k,
+        "effective_graph_top_k": if collection_query {
+            settings.rag_graph_top_k.max(30)
+        } else {
+            settings.rag_graph_top_k
+        },
+        "collection_query": collection_query,
+        "retrieval_applied": retrieval_applied,
+        "graph_retrieval_applied": graph_retrieval_applied,
         "graph_min_score": settings.rag_graph_min_score,
         "lexical_algorithm": "bm25",
         "bm25_k1": 1.2,
@@ -2598,11 +2624,15 @@ mod tests {
         ]))
         .unwrap();
         let audit = crate::rag::audit_citations("[S1]", 1, 0);
-        let config = retrieval_config(&settings, &audit);
+        let config = retrieval_config(&settings, "project_rag", "列出所有样本", &audit);
 
         assert_eq!(config["lexical_algorithm"], "bm25");
         assert_eq!(config["vector_candidate_k"], 42);
         assert_eq!(config["graph_top_k"], 8);
+        assert_eq!(config["effective_retrieval_top_k"], 12);
+        assert_eq!(config["effective_graph_top_k"], 30);
+        assert_eq!(config["collection_query"], true);
+        assert_eq!(config["retrieval_applied"], true);
         assert_eq!(config["hybrid_vector_weight"], 0.7);
     }
 
