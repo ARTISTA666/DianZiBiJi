@@ -682,6 +682,7 @@ pub async fn generate_with_max_tokens(
     });
     let mut last_error = String::new();
     for attempt in 0..3 {
+        let mut retry_after_secs = None;
         let generation_permit = state.generation_limiter.acquire().await.map_err(|_| {
             GenerationError::Configuration(
                 "Generation concurrency limiter is unavailable".to_owned(),
@@ -697,6 +698,11 @@ pub async fn generate_with_max_tokens(
             .await;
         let should_retry = match response {
             Ok(response) if response.status().is_success() => {
+                retry_after_secs = response
+                    .headers()
+                    .get("retry-after")
+                    .and_then(|value| value.to_str().ok())
+                    .and_then(|value| value.parse::<u64>().ok());
                 match parse_generation_response(response, model, attempt).await {
                     Ok(result) => return Ok(result),
                     Err(error) => {
@@ -706,6 +712,11 @@ pub async fn generate_with_max_tokens(
                 }
             }
             Ok(response) => {
+                retry_after_secs = response
+                    .headers()
+                    .get("retry-after")
+                    .and_then(|value| value.to_str().ok())
+                    .and_then(|value| value.parse::<u64>().ok());
                 let status = response.status();
                 let detail = response.text().await.unwrap_or_default();
                 last_error = format!(
@@ -724,7 +735,8 @@ pub async fn generate_with_max_tokens(
             break;
         }
         if attempt < 2 {
-            tokio::time::sleep(Duration::from_secs(1 << attempt)).await;
+            let delay = retry_after_secs.unwrap_or(1 << attempt).min(30);
+            tokio::time::sleep(Duration::from_secs(delay)).await;
         }
     }
     Err(GenerationError::Request(last_error))
@@ -1586,7 +1598,12 @@ mod tests {
         async fn completion(State(probe): State<RetryPermitProbe>) -> axum::response::Response {
             if probe.requests.fetch_add(1, Ordering::SeqCst) == 0 {
                 probe.first_failure.notify_one();
-                return (StatusCode::INTERNAL_SERVER_ERROR, "retry").into_response();
+                return (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    [("retry-after", "0")],
+                    "retry",
+                )
+                    .into_response();
             }
             Json(json!({
                 "id": "retry-probe",
@@ -1641,7 +1658,11 @@ mod tests {
 
         assert_eq!(second.answer, "ok");
         assert_eq!(second.usage["generation_attempts"], 1);
-        let first = first.await.unwrap().unwrap();
+        let first = tokio::time::timeout(Duration::from_millis(500), first)
+            .await
+            .expect("Retry-After header should override exponential backoff")
+            .unwrap()
+            .unwrap();
         assert_eq!(first.answer, "ok");
         assert_eq!(first.usage["generation_attempts"], 2);
     }
