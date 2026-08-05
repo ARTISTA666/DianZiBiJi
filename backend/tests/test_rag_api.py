@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker
 from app.api import rag
 import app.api.deps as deps
 from app.api.deps import get_current_user
-from app.api.rag.common import _merge_usage
+from app.api.rag.common import _audit_answer_citations, _merge_usage
 from app.core.database import Base, get_db
 from app.models import *  # noqa: F403
 from app.models.ai import AIExperimentRun, AIQueryEvaluation, AIQueryLog
@@ -81,6 +81,13 @@ class FakeDeepSeekClient:
             "model": "deepseek-test",
             "usage": {"prompt_tokens": 10, "completion_tokens": 5},
         }
+
+
+def test_citation_audit_requires_each_evidence_class():
+    audit = _audit_answer_citations("图谱支持该结论 [G1]", 1, 1)
+
+    assert audit["passed"] is False
+    assert "至少一个有效 [S数字]" in audit["message"]
 
 
 def test_ai_question_limits_match_rust_contract():

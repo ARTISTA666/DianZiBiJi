@@ -154,6 +154,16 @@ def _audit_answer_citations(answer: str, source_count: int, graph_count: int) ->
         result["message"] = f"引用校验通过，共核对 {citation_count} 个证据编号。"
     else:
         result["message"] = "该回答没有可引用的项目证据。"
+    missing = []
+    if source_count and not _has_source_marker(answer):
+        missing.append("至少一个有效 [S数字]")
+    if graph_count and not _has_graph_marker(answer):
+        missing.append("至少一个有效 [G数字]")
+    if missing:
+        was_passed = result["passed"]
+        result["passed"] = False
+        if was_passed:
+            result["message"] = f"{result['message']} 缺少强制引用：{'、'.join(missing)}。"
     result["repair_attempted"] = False
     return result
 

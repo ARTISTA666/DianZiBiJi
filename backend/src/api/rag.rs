@@ -616,6 +616,12 @@ async fn query_project_rag_inner(
     };
     let mut usage_values = vec![result.usage.clone()];
     let mut citation_audit = audit_citations(&result.answer, sources.len(), graph_context.len());
+    enforce_required_citations(
+        &mut citation_audit,
+        &result.answer,
+        sources.len(),
+        graph_context.len(),
+    );
     for _ in 0..2 {
         let missing_source = !sources.is_empty() && !has_marker(&result.answer, 'S');
         let missing_graph = !graph_context.is_empty() && !has_marker(&result.answer, 'G');
@@ -637,6 +643,12 @@ async fn query_project_rag_inner(
         result = repaired;
         citation_audit =
             audit_citations_after_repair(&result.answer, sources.len(), graph_context.len());
+        enforce_required_citations(
+            &mut citation_audit,
+            &result.answer,
+            sources.len(),
+            graph_context.len(),
+        );
     }
     let response_ms = elapsed_ms(started);
     let usage = merge_usage(&usage_values);
@@ -2747,6 +2759,28 @@ fn has_marker(answer: &str, kind: char) -> bool {
         .is_match(answer)
 }
 
+fn enforce_required_citations(
+    audit: &mut crate::models::RagCitationAuditRead,
+    answer: &str,
+    source_count: usize,
+    graph_count: usize,
+) {
+    let mut missing = Vec::new();
+    if source_count > 0 && !has_marker(answer, 'S') {
+        missing.push("至少一个有效 [S数字]");
+    }
+    if graph_count > 0 && !has_marker(answer, 'G') {
+        missing.push("至少一个有效 [G数字]");
+    }
+    if !missing.is_empty() {
+        let was_passed = audit.passed;
+        audit.passed = false;
+        if was_passed {
+            audit.message = format!("{} 缺少强制引用：{}。", audit.message, missing.join("、"));
+        }
+    }
+}
+
 fn should_repair_citations(
     audit: &crate::models::RagCitationAuditRead,
     missing_source: bool,
@@ -2802,9 +2836,9 @@ mod tests {
 
     use super::{
         append_missing_experiment_errors, build_citation_repair_prompt, build_prompts,
-        claim_experiment, csv_escape, graph_fallback_reason, insert_query_log,
-        mode_requires_dataset, neutralize_answer, neutralize_blind_text, query_log_limit,
-        renew_experiment_lease, retrieval_config, schedule_queued_experiments,
+        claim_experiment, csv_escape, enforce_required_citations, graph_fallback_reason,
+        insert_query_log, mode_requires_dataset, neutralize_answer, neutralize_blind_text,
+        query_log_limit, renew_experiment_lease, retrieval_config, schedule_queued_experiments,
         should_repair_citations, transition_interrupted_to_queued, validate_query,
         validate_query_log_for_evaluation, ExperimentLogContext, MAX_RAG_QUERY_CHARS,
         STRUCTURED_GRAPH_BUDGET_FALLBACK,
@@ -2880,6 +2914,17 @@ mod tests {
 
         let evidence = crate::rag::audit_citations("没有引用", 1, 0);
         assert!(should_repair_citations(&evidence, true, false));
+    }
+
+    #[test]
+    fn test_citation_audit_requires_each_evidence_class() {
+        let answer = "图谱支持该结论 [G1]";
+        let mut audit = crate::rag::audit_citations(answer, 1, 1);
+
+        enforce_required_citations(&mut audit, answer, 1, 1);
+
+        assert!(!audit.passed);
+        assert!(audit.message.contains("至少一个有效 [S数字]"));
     }
 
     #[test]
