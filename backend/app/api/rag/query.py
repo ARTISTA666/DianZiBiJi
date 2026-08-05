@@ -39,7 +39,7 @@ from app.schemas.rag import RagQueryRequest, RagQueryResponse, RagSourceRead
 from app.services.audit import write_audit
 from app.services.deepseek import DeepSeekClient, DeepSeekConfigError, DeepSeekRequestError
 from app.services.embedding import EmbeddingServiceError
-from app.services.knowledge_graph import GRAPH_SCHEMA_VERSION, KnowledgeGraphService
+from app.services.knowledge_graph import GRAPH_SCHEMA_VERSION, KnowledgeGraphService, is_collection_query
 from app.services.local_rag import LocalRagService
 from app.services.prompts import PROMPTS
 
@@ -588,15 +588,33 @@ def _record_query_log(
 ) -> AIQueryLog:
     settings = get_settings()
     source_payload = [source.model_dump() for source in entry.sources]
+    collection_query = is_collection_query(entry.question)
     retrieval_config = {
+        "embedding_backend": "hash" if settings.embedding_model == "rust-hash-512-v1" else "fastembed",
         "embedding_model": settings.embedding_model,
+        "embedding_dimension": settings.embedding_dimension,
         "chunk_size": settings.rag_chunk_size,
         "chunk_overlap": settings.rag_chunk_overlap,
         "retrieval_top_k": settings.rag_retrieval_top_k,
         "collection_retrieval_top_k": settings.rag_collection_retrieval_top_k,
+        "effective_retrieval_top_k": min(
+            settings.rag_vector_candidate_k,
+            max(settings.rag_retrieval_top_k, settings.rag_collection_retrieval_top_k)
+            if collection_query
+            else settings.rag_retrieval_top_k,
+        ),
         "vector_candidate_k": settings.rag_vector_candidate_k,
         "graph_top_k": settings.rag_graph_top_k,
+        "effective_graph_top_k": max(settings.rag_graph_top_k, 30) if collection_query else settings.rag_graph_top_k,
+        "collection_query": collection_query,
+        "retrieval_applied": entry.rag_mode not in {RagMode.PURE_LLM.value, RagMode.STRUCTURED_QUERY.value},
+        "graph_retrieval_applied": entry.rag_mode in {"auto", RagMode.STRUCTURED_QUERY.value, RagMode.KG_ENHANCED_RAG.value},
         "graph_min_score": settings.rag_graph_min_score,
+        "lexical_algorithm": "bm25",
+        "bm25_k1": 1.2,
+        "bm25_b": 0.75,
+        "hybrid_vector_weight": 0.7,
+        "hybrid_lexical_weight": 0.3,
         "graph_schema_version": GRAPH_SCHEMA_VERSION,
         "generation_temperature": GENERATION_TEMPERATURE,
         "generation_max_tokens": GENERATION_MAX_TOKENS,

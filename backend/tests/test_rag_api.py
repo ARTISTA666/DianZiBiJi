@@ -528,6 +528,13 @@ def test_query_returns_answer_and_sources(test_app):
         assert log.answer == "answer for protocol [S1]"
         assert log.rag_mode == "project_rag"
         assert log.source_count == 1
+        assert log.retrieval_config_json["embedding_backend"] == "hash"
+        assert log.retrieval_config_json["effective_retrieval_top_k"] == 6
+        assert log.retrieval_config_json["collection_query"] is False
+        assert log.retrieval_config_json["retrieval_applied"] is True
+        assert log.retrieval_config_json["graph_retrieval_applied"] is False
+        assert log.retrieval_config_json["bm25_k1"] == 1.2
+        assert log.retrieval_config_json["bm25_b"] == 0.75
         assert log.retrieval_config_json["citation_audit"]["passed"] is True
         assert log.retrieval_config_json["citation_audit"]["repair_attempted"] is True
         assert log.usage_json == {"prompt_tokens": 13, "completion_tokens": 7}
