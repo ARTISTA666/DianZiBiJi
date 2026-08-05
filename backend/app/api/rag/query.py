@@ -342,7 +342,7 @@ def _build_structured_query_empty_response(
         if fallback_reason == STRUCTURED_GRAPH_BUDGET_FALLBACK
         else "结构化查询未找到与该问题匹配的项目图谱关系。"
     )
-    citation_audit = _audit_answer_citations(answer, len(sources), len(graph_context))
+    citation_audit = _audit_answer_citations(answer, 0, 0)
     response_ms = _elapsed_ms(started)
     query_log = _record_query_log(
         db,

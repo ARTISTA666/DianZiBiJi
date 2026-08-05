@@ -361,6 +361,8 @@ def test_structured_query_reports_graph_budget_fallback(test_app, monkeypatch) -
     assert body["fallback_reason"] == (
         "Graph context exceeded prompt budget; no safe structured context was available"
     )
+    assert body["citation_audit"]["passed"] is True
+    assert body["citation_audit"]["has_evidence"] is False
     with SessionLocal() as db:
         log = db.get(AIQueryLog, body["query_log_id"])
         assert log.error_message is None
