@@ -6,6 +6,7 @@ from types import SimpleNamespace
 import pytest
 from sqlalchemy.orm import sessionmaker
 
+from app.services import local_rag
 from app.core.database import Base
 from app.models import *  # noqa: F403
 from app.models.file import FileCategory, FileStatus, KnowledgeSyncStatus, StoredFile
@@ -46,6 +47,23 @@ def test_collection_questions_expand_retrieval_without_exceeding_candidates() ->
 def test_collection_query_uses_exact_english_tokens() -> None:
     assert is_collection_query("count samples") is True
     assert is_collection_query("small molecule protocol") is False
+
+
+def test_bm25_uses_rust_compatible_parameters(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured: dict[str, float] = {}
+
+    class SpyBM25:
+        def __init__(self, _documents, **kwargs):
+            captured.update(kwargs)
+
+        def get_scores(self, _query_tokens):
+            return [0.0]
+
+    monkeypatch.setattr(local_rag, "BM25Okapi", SpyBM25)
+
+    LocalRagService._bm25_scores("PCR", ["PCR"])
+
+    assert captured == {"k1": 1.2, "b": 0.75}
 
 
 def test_retrieval_order_is_deterministic_for_equal_scores() -> None:

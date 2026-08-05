@@ -286,7 +286,7 @@ class LocalRagService:
         query_tokens = cls._bm25_tokens(query)
         if not query_tokens or not any(tokenized_documents):
             return [0.0] * len(documents)
-        model = BM25Okapi(tokenized_documents)
+        model = BM25Okapi(tokenized_documents, k1=1.2, b=0.75)
         return [float(score) for score in model.get_scores(query_tokens)]
 
     @staticmethod
