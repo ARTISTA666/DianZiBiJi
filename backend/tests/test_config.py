@@ -16,6 +16,13 @@ def test_ocr_defaults_cover_project_languages() -> None:
     assert Settings().ocr_languages == "chi_sim+eng"
 
 
+def test_rag_retrieval_limits_are_safe() -> None:
+    settings = Settings(rag_retrieval_top_k=31, rag_vector_candidate_k=30)
+
+    with pytest.raises(RuntimeError, match="RAG_RETRIEVAL_TOP_K"):
+        settings.validate_runtime()
+
+
 def test_production_rejects_default_secrets_and_demo_data() -> None:
     settings = Settings(app_env="production", seed_demo_data=True)
 

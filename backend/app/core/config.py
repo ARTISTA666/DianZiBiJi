@@ -65,12 +65,24 @@ class Settings(BaseSettings):
         )
 
     def validate_runtime(self) -> None:
+        problems: list[str] = []
+        for name, value in (
+            ("RAG_RETRIEVAL_TOP_K", self.rag_retrieval_top_k),
+            ("RAG_COLLECTION_RETRIEVAL_TOP_K", self.rag_collection_retrieval_top_k),
+            ("RAG_VECTOR_CANDIDATE_K", self.rag_vector_candidate_k),
+            ("RAG_GRAPH_TOP_K", self.rag_graph_top_k),
+        ):
+            if value < 1:
+                problems.append(f"{name} must be at least 1")
+        if self.rag_retrieval_top_k > self.rag_vector_candidate_k:
+            problems.append("RAG_RETRIEVAL_TOP_K cannot exceed RAG_VECTOR_CANDIDATE_K")
         # Secret hygiene is enforced for every non-development environment so a
         # deployment cannot run with default credentials just because APP_ENV
         # was left unset or misspelled short of "production".
         if self.app_env == "development":
+            if problems:
+                raise RuntimeError("Invalid AI configuration: " + "; ".join(problems))
             return
-        problems: list[str] = []
         if self.secret_key == "change-me-in-production" or len(self.secret_key) < 32:
             problems.append("SECRET_KEY must be changed and contain at least 32 characters")
         if self.bootstrap_admin_password == "admin123" or len(self.bootstrap_admin_password) < 12:
