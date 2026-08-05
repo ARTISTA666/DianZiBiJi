@@ -470,10 +470,18 @@ pub async fn relevant_graph_context(
     let normalized_query = query.to_lowercase();
     let query_tokens = tokens(query);
     let hints = relation_hints(&normalized_query);
+    let focus_ids = focused_graph_entity_ids(&rows, query);
     let mut scored = Vec::new();
     for row in rows {
         if !hints.is_empty() && !hints.contains(row.relation_type.as_str()) {
             continue;
+        }
+        if let Some(focus_ids) = &focus_ids {
+            if !focus_ids.contains(&row.source_entity_id)
+                && !focus_ids.contains(&row.target_entity_id)
+            {
+                continue;
+            }
         }
         let haystack = format!(
             "{} {} {} {} {}",
@@ -537,6 +545,14 @@ pub async fn relevant_graph_context(
             .0
             .partial_cmp(&left.0)
             .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| {
+                right
+                    .1
+                    .confidence
+                    .partial_cmp(&left.1.confidence)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
+            .then_with(|| right.1.relation_id.cmp(&left.1.relation_id))
     });
     Ok(scored
         .into_iter()
@@ -1203,6 +1219,124 @@ fn role_query_matches(role: &str, normalized_query: &str) -> bool {
         .any(|keyword| normalized_query.contains(keyword))
 }
 
+fn focused_graph_entity_ids(rows: &[GraphRow], query: &str) -> Option<HashSet<i32>> {
+    let normalized_query = query.to_lowercase();
+    let focus_tokens = token_regex()
+        .find_iter(query)
+        .map(|matched| matched.as_str().to_lowercase())
+        .filter(|token| token.chars().count() >= 2 && !is_generic_graph_token(token))
+        .collect::<HashSet<_>>();
+    let mut matched = HashSet::new();
+    for row in rows {
+        for (entity_id, label) in [
+            (row.source_entity_id, row.source_label.as_str()),
+            (row.target_entity_id, row.target_label.as_str()),
+        ] {
+            let normalized_label = label.to_lowercase();
+            let token_match = focus_tokens.iter().any(|token| {
+                normalized_label == *token
+                    || normalized_label.contains(token)
+                    || token.contains(&normalized_label)
+            });
+            let synonym_match = [
+                (
+                    "control",
+                    &["对照", "非靶向", "shcontrol", "nontargeting"] as &[&str],
+                ),
+                ("p63_knockdown", &["p63敲低", "p63靶向", "shp63", "p63kd"]),
+            ]
+            .iter()
+            .any(|(canonical, aliases)| {
+                normalized_label.contains(canonical)
+                    && aliases.iter().any(|alias| normalized_query.contains(alias))
+            });
+            if token_match || synonym_match {
+                matched.insert(entity_id);
+            }
+        }
+    }
+    if matched.is_empty() {
+        return None;
+    }
+    let mut focused = matched.clone();
+    for row in rows {
+        if matched.contains(&row.source_entity_id) && row.target_entity_type == "note" {
+            focused.insert(row.target_entity_id);
+        }
+        if matched.contains(&row.target_entity_id) && row.source_entity_type == "note" {
+            focused.insert(row.source_entity_id);
+        }
+    }
+    Some(focused)
+}
+
+fn is_generic_graph_token(token: &str) -> bool {
+    matches!(
+        token,
+        "笔记"
+            | "记录"
+            | "note"
+            | "试剂"
+            | "材料"
+            | "reagent"
+            | "use"
+            | "仪器"
+            | "设备"
+            | "instrument"
+            | "样本"
+            | "样品"
+            | "sample"
+            | "结果"
+            | "结论"
+            | "result"
+            | "count"
+            | "附件"
+            | "文件"
+            | "file"
+            | "谁"
+            | "创建"
+            | "creator"
+            | "实验类型"
+            | "type"
+            | "细胞"
+            | "来源"
+            | "cell"
+            | "条件"
+            | "处理"
+            | "对照"
+            | "condition"
+            | "软件"
+            | "比对"
+            | "software"
+            | "登录号"
+            | "标识"
+            | "accession"
+            | "哪些"
+            | "有哪些"
+            | "全部"
+            | "所有"
+            | "列出"
+            | "列举"
+            | "多少"
+            | "分别"
+            | "完整"
+            | "汇总"
+            | "归纳"
+            | "清单"
+            | "一览"
+            | "各自"
+            | "数量"
+            | "四个"
+            | "两个"
+            | "最高"
+            | "最低"
+            | "相差"
+            | "all"
+            | "list"
+            | "enumerate"
+    )
+}
+
 fn hint_tokens_match(left: &str, right: &str) -> bool {
     left == right
         || (left.len() > 3 && left.strip_suffix('s') == Some(right))
@@ -1283,12 +1417,12 @@ mod tests {
 
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        format_graph_context, format_sources, generate, generate_with_max_tokens,
-        graph_context_budget, include_retrieval_candidate, is_collection_query,
-        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
-        role_query_matches, should_retry_generation_status, tokens, truncate_error_detail,
-        validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
-        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        focused_graph_entity_ids, format_graph_context, format_sources, generate,
+        generate_with_max_tokens, graph_context_budget, include_retrieval_candidate,
+        is_collection_query, meets_graph_threshold, rag_insert_batch_ranges, relation_hints,
+        retrieve, role_query_matches, should_retry_generation_status, tokens,
+        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow,
+        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1413,6 +1547,41 @@ mod tests {
         assert!(role_query_matches("alignment_software", "比对软件"));
         assert!(role_query_matches("count_software", "count software"));
         assert!(!role_query_matches("alignment_software", "实验结果"));
+    }
+
+    #[test]
+    fn test_graph_focus_keeps_requested_note_and_disables_for_collection_queries() {
+        let rows = vec![
+            GraphRow {
+                relation_id: 1,
+                relation_type: "uses_reagent".to_owned(),
+                source_entity_id: 10,
+                source_label: "PCR condition experiment".to_owned(),
+                source_entity_type: "note".to_owned(),
+                target_entity_id: 11,
+                target_label: "Taq DNA Polymerase".to_owned(),
+                target_entity_type: "reagent".to_owned(),
+                confidence: 0.9,
+                properties: json!({}),
+            },
+            GraphRow {
+                relation_id: 2,
+                relation_type: "uses_reagent".to_owned(),
+                source_entity_id: 20,
+                source_label: "Western blot experiment".to_owned(),
+                source_entity_type: "note".to_owned(),
+                target_entity_id: 21,
+                target_label: "RIPA buffer".to_owned(),
+                target_entity_type: "reagent".to_owned(),
+                confidence: 0.9,
+                properties: json!({}),
+            },
+        ];
+
+        let focused = focused_graph_entity_ids(&rows, "PCR 实验用了哪些试剂？").unwrap();
+        assert!(focused.contains(&10));
+        assert!(!focused.contains(&20));
+        assert!(focused_graph_entity_ids(&rows, "列出所有试剂").is_none());
     }
 
     #[test]
