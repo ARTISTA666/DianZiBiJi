@@ -5,8 +5,9 @@ import re
 from pathlib import Path
 
 import pytest
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.testclient import TestClient
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
 
 from app.api import rag
@@ -929,6 +930,31 @@ def test_blind_review_progress_ignores_unblinded_ratings(test_app):
     assert response.status_code == 200
     batch = next(item for item in response.json() if item["total_items"] == 1)
     assert batch["completed_items"] == 0
+
+
+def test_evaluation_commit_maps_unique_race_to_conflict():
+    class RacingSession:
+        def __init__(self, detail):
+            self.detail = detail
+            self.rolled_back = False
+
+        def commit(self):
+            raise IntegrityError("INSERT", {}, RuntimeError(self.detail))
+
+        def rollback(self):
+            self.rolled_back = True
+
+    for detail in (
+        "uq_ai_query_evaluation_log_evaluator",
+        "UNIQUE constraint failed: ai_query_evaluations.query_log_id, ai_query_evaluations.evaluator_user_id",
+    ):
+        db = RacingSession(detail)
+        with pytest.raises(HTTPException) as error:
+            rag.common._commit_evaluation(db)
+
+        assert error.value.status_code == 409
+        assert error.value.detail == "This review has already been submitted"
+        assert db.rolled_back
 
 
 def test_blind_review_export_rejects_inconsistent_reviewer_sets(test_app):

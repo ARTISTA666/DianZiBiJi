@@ -18,6 +18,7 @@ from app.api.rag.common import (
     _require_independent_evaluator,
     _require_rag_manager,
     _sha256_file,
+    _commit_evaluation,
     _validate_evaluation_comment,
 )
 from app.api.rag.experiments import _experiment_export_response
@@ -300,7 +301,7 @@ def evaluate_blind_review_item(
             "review_protocol": ReviewProtocol.METHOD_MASKED.value,
         },
     )
-    db.commit()
+    _commit_evaluation(db)
     db.refresh(evaluation)
     return BlindReviewEvaluationRead(
         score=evaluation.score,

@@ -9,6 +9,7 @@ from app.api.deps import get_current_user, require_project_access
 from app.api.rag.common import (
     _require_rag_evaluator,
     _require_unblinded_rag_access,
+    _commit_evaluation,
     _validate_evaluation_comment,
 )
 from app.core.database import get_db
@@ -70,6 +71,6 @@ def upsert_query_evaluation(
             "review_protocol": ReviewProtocol.UNBLINDED.value,
         },
     )
-    db.commit()
+    _commit_evaluation(db)
     db.refresh(evaluation)
     return evaluation

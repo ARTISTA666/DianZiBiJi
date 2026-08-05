@@ -9,6 +9,7 @@ from pathlib import Path
 from time import perf_counter
 
 from fastapi import HTTPException, status
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.deps import can_evaluate_project, can_manage_project
@@ -106,6 +107,29 @@ def _validate_evaluation_comment(payload: AIQueryEvaluationRequest) -> None:
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="A comment is required for inaccurate or untraceable answers",
         )
+
+
+def _commit_evaluation(db: Session) -> None:
+    try:
+        db.commit()
+    except IntegrityError as error:
+        db.rollback()
+        constraint_name = getattr(getattr(error.orig, "diag", None), "constraint_name", None)
+        message = str(error)
+        is_duplicate_evaluation = (
+            constraint_name == "uq_ai_query_evaluation_log_evaluator"
+            or "uq_ai_query_evaluation_log_evaluator" in message
+            or (
+                "ai_query_evaluations.query_log_id" in message
+                and "ai_query_evaluations.evaluator_user_id" in message
+            )
+        )
+        if is_duplicate_evaluation:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="This review has already been submitted",
+            ) from error
+        raise
 
 
 def _audit_answer_citations(answer: str, source_count: int, graph_count: int) -> dict:
