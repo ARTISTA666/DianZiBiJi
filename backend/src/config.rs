@@ -183,6 +183,12 @@ impl Settings {
         ] {
             validate_range(name, value, 1, usize::MAX)?;
         }
+        if self.rag_retrieval_top_k > self.rag_vector_candidate_k {
+            return Err(ConfigError::InvalidValue {
+                name: "RAG_RETRIEVAL_TOP_K",
+                value: self.rag_retrieval_top_k.to_string(),
+            });
+        }
         if !(1..=128).contains(&self.deepseek_max_concurrency) {
             return Err(ConfigError::InvalidValue {
                 name: "DEEPSEEK_MAX_CONCURRENCY",
@@ -446,6 +452,18 @@ mod tests {
         let error = Settings::from_map(&values).unwrap_err();
 
         assert!(error.to_string().contains("DEEPSEEK_MAX_CONCURRENCY"));
+    }
+
+    #[test]
+    fn rag_retrieval_top_k_cannot_exceed_vector_candidates() {
+        let values = HashMap::from([
+            ("RAG_RETRIEVAL_TOP_K".to_owned(), "31".to_owned()),
+            ("RAG_VECTOR_CANDIDATE_K".to_owned(), "30".to_owned()),
+        ]);
+
+        let error = Settings::from_map(&values).unwrap_err();
+
+        assert!(error.to_string().contains("RAG_RETRIEVAL_TOP_K"));
     }
 
     #[test]
