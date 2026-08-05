@@ -233,12 +233,13 @@ def test_hybrid_retrieval_unions_vector_and_bm25_candidates(db_engine) -> None:
 
         service = LocalRagService(embedding_client=FakeEmbeddingClient())
         service.settings = SimpleNamespace(
-            rag_vector_candidate_k=1,
-            rag_retrieval_top_k=2,
-            rag_collection_retrieval_top_k=2,
+            rag_vector_candidate_k=3,
+            rag_retrieval_top_k=3,
+            rag_collection_retrieval_top_k=3,
         )
         results = asyncio.run(service.retrieve(db, 1, "raremarker"))
 
         assert {result.file_id for result in results} == {1, 2}
+        assert all(result.retrieval_score > 0 for result in results)
         lexical_result = next(result for result in results if result.file_id == 2)
         assert lexical_result.lexical_score == 1.0

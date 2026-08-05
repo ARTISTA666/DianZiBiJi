@@ -126,6 +126,7 @@ class LocalRagService:
         )[:candidate_k]
         candidates = list({chunk.id: chunk for chunk in [*vector_candidates, *lexical_candidates]}.values())
         max_bm25 = max((score for score in raw_bm25_scores if score > 0), default=0.0)
+        query_tokens = self._bm25_tokens(query)
 
         files = {
             record.id: record
@@ -138,6 +139,8 @@ class LocalRagService:
             vector_score = max(0.0, self._cosine(query_vector, chunk.embedding or []))
             lexical_score = max(0.0, bm25_by_id[chunk.id]) / max_bm25 if max_bm25 else 0.0
             retrieval_score = 0.7 * vector_score + 0.3 * lexical_score
+            if retrieval_score <= 0 and query_tokens:
+                continue
             file_record = files.get(chunk.file_id)
             results.append(
                 RetrievedChunk(
