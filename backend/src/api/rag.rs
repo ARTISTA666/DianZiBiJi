@@ -729,7 +729,7 @@ async fn list_query_logs(
 ) -> Result<Json<Value>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
     require_unblinded_access(&state, &user, project_id).await?;
-    let logs = fetch_query_logs(&state, project_id).await?;
+    let logs = fetch_query_logs(&state, project_id, query_log_limit(false)).await?;
     let log_ids: Vec<i32> = logs.iter().map(|log| log.id).collect();
     let evaluations = fetch_evaluations(&state, &log_ids).await?;
     let items: Vec<Value> = logs
@@ -824,7 +824,7 @@ async fn query_analytics(
 ) -> Result<Json<Value>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
     require_unblinded_access(&state, &user, project_id).await?;
-    let logs = fetch_query_logs(&state, project_id).await?;
+    let logs = fetch_query_logs(&state, project_id, query_log_limit(true)).await?;
     let log_ids: Vec<i32> = logs.iter().map(|log| log.id).collect();
     let evaluations = fetch_evaluations(&state, &log_ids).await?;
     let evaluated_log_ids: std::collections::HashSet<i32> = evaluations
@@ -890,7 +890,11 @@ async fn query_analytics(
     })))
 }
 
-async fn fetch_query_logs(state: &AppState, project_id: i32) -> Result<Vec<QueryLogRow>, ApiError> {
+async fn fetch_query_logs(
+    state: &AppState,
+    project_id: i32,
+    limit: Option<i64>,
+) -> Result<Vec<QueryLogRow>, ApiError> {
     Ok(sqlx::query_as::<_, QueryLogRow>(
         r#"
         SELECT id, project_id, user_id, question, answer, rag_mode,
@@ -901,12 +905,18 @@ async fn fetch_query_logs(state: &AppState, project_id: i32) -> Result<Vec<Query
                experiment_case_index, experiment_repetition_index,
                experiment_execution_order, created_at
         FROM ai_query_logs WHERE project_id = $1
-        ORDER BY created_at DESC, id DESC LIMIT 200
+        ORDER BY created_at DESC, id DESC
+        LIMIT COALESCE($2::bigint, 9223372036854775807)
         "#,
     )
     .bind(project_id)
+    .bind(limit)
     .fetch_all(&state.pool)
     .await?)
+}
+
+fn query_log_limit(for_analytics: bool) -> Option<i64> {
+    (!for_analytics).then_some(200)
 }
 
 async fn fetch_evaluations(
@@ -2707,9 +2717,10 @@ mod tests {
 
     use super::{
         append_missing_experiment_errors, build_prompts, claim_experiment, csv_escape,
-        insert_query_log, mode_requires_dataset, neutralize_answer, renew_experiment_lease,
-        retrieval_config, schedule_queued_experiments, transition_interrupted_to_queued,
-        validate_query, ExperimentLogContext, MAX_RAG_QUERY_CHARS,
+        insert_query_log, mode_requires_dataset, neutralize_answer, query_log_limit,
+        renew_experiment_lease, retrieval_config, schedule_queued_experiments,
+        transition_interrupted_to_queued, validate_query, ExperimentLogContext,
+        MAX_RAG_QUERY_CHARS,
     };
 
     use crate::{
@@ -2776,6 +2787,12 @@ mod tests {
         assert_eq!(config["collection_query"], true);
         assert_eq!(config["retrieval_applied"], true);
         assert_eq!(config["hybrid_vector_weight"], 0.7);
+    }
+
+    #[test]
+    fn test_query_log_limit_keeps_listing_bounded_but_analytics_complete() {
+        assert_eq!(query_log_limit(false), Some(200));
+        assert_eq!(query_log_limit(true), None);
     }
 
     #[test]
