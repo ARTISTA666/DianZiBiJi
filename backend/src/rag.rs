@@ -682,7 +682,7 @@ pub async fn generate(
                     "DeepSeek request failed: {status} {}",
                     truncate_error_detail(&detail, 1000)
                 );
-                !(status.as_u16() < 500 && status.as_u16() != 429)
+                should_retry_generation_status(status)
             }
             Err(error) => {
                 last_error = format!("DeepSeek request failed: {error}");
@@ -746,6 +746,10 @@ fn truncate_error_detail(detail: &str, max_bytes: usize) -> &str {
         end -= 1;
     }
     &detail[..end]
+}
+
+fn should_retry_generation_status(status: reqwest::StatusCode) -> bool {
+    matches!(status.as_u16(), 408 | 425 | 429 | 500..=599)
 }
 
 pub fn audit_citations(
@@ -1053,9 +1057,10 @@ mod tests {
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
         format_graph_context, format_sources, generate, graph_context_budget, is_collection_query,
-        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve, tokens,
-        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow,
-        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
+        should_retry_generation_status, tokens, truncate_error_detail,
+        validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1247,6 +1252,27 @@ mod tests {
         let detail = format!("{}中", "a".repeat(999));
 
         assert_eq!(truncate_error_detail(&detail, 1000), "a".repeat(999));
+    }
+
+    #[test]
+    fn test_generation_retry_policy_covers_transient_http_statuses() {
+        for status in [
+            reqwest::StatusCode::REQUEST_TIMEOUT,
+            reqwest::StatusCode::TOO_EARLY,
+            reqwest::StatusCode::TOO_MANY_REQUESTS,
+            reqwest::StatusCode::INTERNAL_SERVER_ERROR,
+            reqwest::StatusCode::BAD_GATEWAY,
+        ] {
+            assert!(should_retry_generation_status(status));
+        }
+        for status in [
+            reqwest::StatusCode::BAD_REQUEST,
+            reqwest::StatusCode::UNAUTHORIZED,
+            reqwest::StatusCode::FORBIDDEN,
+            reqwest::StatusCode::NOT_FOUND,
+        ] {
+            assert!(!should_retry_generation_status(status));
+        }
     }
 
     #[test]
