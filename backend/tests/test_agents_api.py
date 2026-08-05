@@ -23,12 +23,25 @@ from app.services.deepseek import DeepSeekRequestError
 
 def test_agent_relation_citations_match_visible_relation_budget():
     relations = [SimpleNamespace(id=index) for index in range(1, 41)]
+    normal_relations = [
+        SimpleNamespace(id=index, source_entity_id=1, target_entity_id=2)
+        for index in range(1, 41)
+    ]
 
-    relation_ids = agent_service.AgentGenerationService()._select_relation_ids(
+    service = agent_service.AgentGenerationService()
+    overview_relation_ids = service._select_relation_ids(
         [], relations, [], AgentTaskType.GRAPH_OVERVIEW.value
     )
+    normal_relation_ids = service._select_relation_ids(
+        [SimpleNamespace(id=1, source_type="note", source_id=1)],
+        normal_relations,
+        [SimpleNamespace(note=SimpleNamespace(id=1))],
+        AgentTaskType.EXPERIMENT_SUMMARY.value,
+    )
 
-    assert relation_ids == list(range(1, agent_service.MAX_OVERVIEW_RELATIONS + 1))
+    assert overview_relation_ids == list(range(1, agent_service.MAX_OVERVIEW_RELATIONS + 1))
+    assert len(normal_relation_ids) == 24
+    assert normal_relation_ids[-1] == 24
 
 
 def test_agent_context_cap_keeps_whole_visible_citation_lines():

@@ -27,7 +27,7 @@ AGENT_PROMPT_VERSION = PROMPTS["agent_writer"].version
 
 # ── Tuning constants ──────────────────────────────────────────────────────
 MAX_SOURCE_FILES = 12              # Max source files loaded for agent context
-MAX_RELATIONS_DISPLAY = 12         # Max relations shown in body sections
+MAX_RELATIONS_DISPLAY = 24         # Max relations shown in body sections
 MAX_OVERVIEW_RELATIONS = 24        # Max relations shown in graph overview
 MAX_NOTE_FIELDS_DISPLAY = 4        # Max note fields included in context
 MAX_VALUE_DISPLAY_LENGTH = 180     # Truncation length for field values
