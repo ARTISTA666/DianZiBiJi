@@ -1173,7 +1173,8 @@ async fn resume_experiment(
     Path(run_id): Path<i32>,
 ) -> Result<(StatusCode, Json<AIExperimentRunRead>), ApiError> {
     let run = fetch_experiment(&state, run_id).await?;
-    require_project_access(&state.pool, &user, run.project_id).await?;
+    let project = require_project_access(&state.pool, &user, run.project_id).await?;
+    require_external_ai(&project, state.settings.allow_sensitive_external_ai)?;
     require_manager(&state, &user, run.project_id).await?;
     if run.status != "interrupted" {
         return Err(ApiError::new(
