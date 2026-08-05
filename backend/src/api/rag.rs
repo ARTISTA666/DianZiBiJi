@@ -1012,6 +1012,15 @@ async fn run_experiment(
             "At least one and at most 50 questions are required",
         ));
     }
+    if questions
+        .iter()
+        .any(|question| question.chars().count() > MAX_RAG_QUERY_CHARS)
+    {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            format!("Each question cannot exceed {MAX_RAG_QUERY_CHARS} characters"),
+        ));
+    }
     let allowed_modes = [
         "pure_llm",
         "bm25_rag",
