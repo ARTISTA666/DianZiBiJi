@@ -403,15 +403,15 @@ class AgentGenerationService:
             return "\n".join(lines)
         lines.append("### 实验记录概览")
         for nw in notes:
-            version = self._version_snapshot(nw)
             lines.append(
                 f"- [N{nw.note.id}] {_inline_text(nw.note.title)}"
                 f"（{_inline_text(nw.note.experiment_type)}，{nw.note.experiment_date or '未填日期'}）"
             )
-            for key, value in list(version.items())[:MAX_NOTE_FIELDS_DISPLAY]:
-                text = self._short_value(value)
-                if text:
-                    lines.append(f"  - {_inline_text(key)}：{text}")
+            for version in self._version_snapshots(nw):
+                for key, value in list(version.items())[:MAX_NOTE_FIELDS_DISPLAY]:
+                    text = self._short_value(value)
+                    if text:
+                        lines.append(f"  - {_inline_text(key)}：{text}")
         lines.append("")
         lines.append("### 主要结论")
         result_lines = self._result_lines(notes)
@@ -431,20 +431,20 @@ class AgentGenerationService:
         lines.append("- 对生成内容进行人工确认后，可作为论文实验管理流程截图和案例材料。")
         return "\n".join(lines)
 
-    def _version_snapshot(self, nw: _NoteWithContext) -> dict:
+    def _version_snapshots(self, nw: _NoteWithContext) -> tuple[dict, ...]:
         if nw.version is None:
-            return {}
-        return nw.version.fixed_fields_json or {}
+            return ()
+        return (nw.version.fixed_fields_json or {}, nw.version.content_json or {})
 
     def _result_lines(self, notes: list[_NoteWithContext]) -> list[str]:
         lines: list[str] = []
         for nw in notes:
-            version = self._version_snapshot(nw)
-            for key, value in version.items():
-                if "result" in str(key).lower() or "结果" in str(key):
-                    text = self._short_value(value)
-                    if text:
-                        lines.append(f"- [N{nw.note.id}] {_inline_text(nw.note.title)}：{text}")
+            for version in self._version_snapshots(nw):
+                for key, value in version.items():
+                    if "result" in str(key).lower() or "结果" in str(key):
+                        text = self._short_value(value)
+                        if text:
+                            lines.append(f"- [N{nw.note.id}] {_inline_text(nw.note.title)}：{text}")
         return lines
 
     def _graph_overview_lines(self, entity_by_id: dict[int, KnowledgeEntity], relations: list[KnowledgeRelation]) -> list[str]:

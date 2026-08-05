@@ -68,6 +68,33 @@ def test_agent_reviewer_requires_visible_citation_when_evidence_is_hidden():
     assert review["has_evidence"] is True
 
 
+def test_agent_context_includes_current_version_content_fields():
+    note = SimpleNamespace(
+        id=10,
+        title="Content-only note",
+        experiment_type="assay",
+        experiment_date=date(2026, 6, 7),
+    )
+    version = SimpleNamespace(
+        fixed_fields_json={},
+        content_json={"result": "content-only result"},
+    )
+
+    context = agent_service.AgentGenerationService()._body(
+        AgentTaskType.EXPERIMENT_SUMMARY.value,
+        1,
+        [SimpleNamespace(note=note, version=version)],
+        [],
+        [],
+        [],
+        [],
+        None,
+        None,
+    )
+
+    assert "content-only result" in context
+
+
 class FakeDeepSeekClient:
     last_user_prompt = ""
 
