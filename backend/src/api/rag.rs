@@ -443,7 +443,11 @@ async fn query_project_rag_inner(
             &state.pool,
             project_id,
             query,
-            state.settings.rag_graph_top_k,
+            if crate::rag::is_collection_query(query) {
+                state.settings.rag_graph_top_k.max(30)
+            } else {
+                state.settings.rag_graph_top_k
+            },
         )
         .await?
     } else {

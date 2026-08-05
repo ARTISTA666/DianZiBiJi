@@ -327,12 +327,7 @@ pub async fn retrieve(
             .partial_cmp(&left.0)
             .unwrap_or(std::cmp::Ordering::Equal)
     });
-    let collection = [
-        "哪些", "全部", "所有", "列出", "多少", "分别", "完整", "all", "list",
-    ]
-    .iter()
-    .any(|keyword| query.to_lowercase().contains(keyword));
-    let limit = if collection {
+    let limit = if is_collection_query(query) {
         settings
             .rag_collection_retrieval_top_k
             .max(settings.rag_retrieval_top_k)
@@ -774,6 +769,30 @@ fn round6(value: f64) -> f64 {
     (value * 1_000_000.0).round() / 1_000_000.0
 }
 
+pub fn is_collection_query(query: &str) -> bool {
+    let normalized = query.to_lowercase();
+    [
+        "哪些",
+        "有哪些",
+        "全部",
+        "所有",
+        "列出",
+        "列举",
+        "多少",
+        "分别",
+        "完整",
+        "汇总",
+        "归纳",
+        "清单",
+        "一览",
+    ]
+    .iter()
+    .any(|keyword| normalized.contains(keyword))
+        || tokens(query)
+            .iter()
+            .any(|token| matches!(token.as_str(), "all" | "list" | "enumerate"))
+}
+
 fn relation_hints(query: &str) -> HashSet<&'static str> {
     let mut hints = HashSet::new();
     for (relation, words) in [
@@ -868,8 +887,9 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, generate, retrieve,
-        truncate_error_detail, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL, VECTOR_CANDIDATE_SQL,
+        audit_citations, bm25_scores, chunk_text, fetch_vector_candidates, generate,
+        is_collection_query, retrieve, truncate_error_detail, vector_literal, ChunkRow,
+        ACTIVE_CHUNKS_SQL, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -915,6 +935,13 @@ mod tests {
 
         assert!(scores[&2] > scores[&1]);
         assert!(scores[&2] <= 1.0);
+    }
+
+    #[test]
+    fn test_collection_query_detection_handles_chinese_and_english_without_substring_false_hits() {
+        assert!(is_collection_query("汇总所有样本清单"));
+        assert!(is_collection_query("Please list all samples"));
+        assert!(!is_collection_query("small molecule protocol"));
     }
 
     #[test]
