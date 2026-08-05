@@ -80,6 +80,7 @@ const VECTOR_SCORES_SQL: &str = r#"
 struct GraphRow {
     relation_id: i32,
     relation_type: String,
+    source_type: Option<String>,
     source_entity_id: i32,
     source_label: String,
     source_entity_type: String,
@@ -443,7 +444,7 @@ pub async fn relevant_graph_context(
 ) -> Result<Vec<RagGraphContextRead>, ApiError> {
     let rows = sqlx::query_as::<_, GraphRow>(
         r#"
-        SELECT r.id AS relation_id, r.relation_type,
+        SELECT r.id AS relation_id, r.relation_type, r.source_type,
                s.id AS source_entity_id, s.label AS source_label,
                s.entity_type AS source_entity_type,
                t.id AS target_entity_id, t.label AS target_label,
@@ -483,24 +484,7 @@ pub async fn relevant_graph_context(
                 continue;
             }
         }
-        let haystack = graph_relation_haystack(&row);
-        let overlap = exact_token_overlap(&query_tokens, &haystack) as f64;
-        let role_bonus = row
-            .properties
-            .get("roles")
-            .and_then(Value::as_array)
-            .into_iter()
-            .flatten()
-            .filter_map(Value::as_str)
-            .filter(|role| role_query_matches(role, &normalized_query))
-            .count() as f64;
-        let score = overlap
-            + role_bonus * 4.0
-            + if hints.contains(row.relation_type.as_str()) {
-                3.0
-            } else {
-                0.0
-            };
+        let score = graph_relation_score(&row, &query_tokens, &normalized_query, &hints);
         if !meets_graph_threshold(score, min_score) {
             continue;
         }
@@ -1108,6 +1092,51 @@ fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) -> usize {
     query_tokens.intersection(&text_tokens).count()
 }
 
+fn graph_relation_score(
+    row: &GraphRow,
+    query_tokens: &HashSet<String>,
+    normalized_query: &str,
+    hints: &HashSet<&'static str>,
+) -> f64 {
+    let mut score = if hints.contains(row.relation_type.as_str()) {
+        3.0
+    } else {
+        0.0
+    };
+    let haystacks = [
+        inline_text(&row.source_label).to_lowercase(),
+        inline_text(&row.target_label).to_lowercase(),
+        row.source_entity_type.to_lowercase(),
+        row.target_entity_type.to_lowercase(),
+        row.relation_type.to_lowercase(),
+        relation_label(&row.relation_type).to_lowercase(),
+    ];
+    for token in query_tokens {
+        for haystack in &haystacks {
+            if token == haystack {
+                score += 3.0;
+            } else if haystack.contains(token) || token.contains(haystack) {
+                score += 1.0;
+            }
+        }
+    }
+    if row.source_entity_type == "note" {
+        score += 0.2;
+    }
+    if row.source_type.as_deref() == Some("note_extraction") {
+        score += 0.3;
+    }
+    if let Some(roles) = row.properties.get("roles").and_then(Value::as_array) {
+        score += roles
+            .iter()
+            .filter_map(Value::as_str)
+            .filter(|role| role_query_matches(role, normalized_query))
+            .count() as f64
+            * 4.0;
+    }
+    score
+}
+
 fn graph_relation_haystack(row: &GraphRow) -> String {
     format!(
         "{} {} {} {} {} {}",
@@ -1629,11 +1658,12 @@ mod tests {
         audit_citations, audit_citations_after_repair, balance_graph_context, bm25_scores,
         chunk_text, exact_token_overlap, fetch_vector_candidates, focused_graph_entity_ids,
         format_graph_context, format_sources, generate, generate_with_max_tokens,
-        graph_context_budget, graph_relation_haystack, include_retrieval_candidate,
-        is_collection_query, meets_graph_threshold, rag_insert_batch_ranges, relation_hints,
-        retrieve, role_query_matches, should_retry_generation_status, tokens,
-        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow,
-        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        graph_context_budget, graph_relation_haystack, graph_relation_score,
+        include_retrieval_candidate, is_collection_query, meets_graph_threshold,
+        rag_insert_batch_ranges, relation_hints, retrieve, role_query_matches,
+        should_retry_generation_status, tokens, truncate_error_detail,
+        validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1756,10 +1786,32 @@ mod tests {
     }
 
     #[test]
+    fn test_graph_relation_score_keeps_python_ranking_components() {
+        let row = GraphRow {
+            relation_id: 1,
+            relation_type: "uses_reagent".to_owned(),
+            source_type: Some("note_extraction".to_owned()),
+            source_entity_id: 10,
+            source_label: "PCR experiment".to_owned(),
+            source_entity_type: "note".to_owned(),
+            target_entity_id: 11,
+            target_label: "PBS buffer solution".to_owned(),
+            target_entity_type: "reagent".to_owned(),
+            confidence: 0.9,
+            properties: json!({"roles": ["group"]}),
+        };
+        let query = "PBS reagent";
+        let score = graph_relation_score(&row, &tokens(query), query, &relation_hints(query));
+
+        assert!(score >= 4.5);
+    }
+
+    #[test]
     fn test_graph_matching_includes_human_relation_labels() {
         let row = GraphRow {
             relation_id: 1,
             relation_type: "uses_reagent".to_owned(),
+            source_type: Some("note_extraction".to_owned()),
             source_entity_id: 10,
             source_label: "PCR experiment".to_owned(),
             source_entity_type: "note".to_owned(),
@@ -1796,6 +1848,7 @@ mod tests {
             GraphRow {
                 relation_id: 1,
                 relation_type: "uses_reagent".to_owned(),
+                source_type: Some("note_extraction".to_owned()),
                 source_entity_id: 10,
                 source_label: "PCR condition experiment".to_owned(),
                 source_entity_type: "note".to_owned(),
@@ -1808,6 +1861,7 @@ mod tests {
             GraphRow {
                 relation_id: 2,
                 relation_type: "uses_reagent".to_owned(),
+                source_type: Some("note_extraction".to_owned()),
                 source_entity_id: 20,
                 source_label: "Western blot experiment".to_owned(),
                 source_entity_type: "note".to_owned(),
@@ -1827,6 +1881,7 @@ mod tests {
         let material_rows = vec![GraphRow {
             relation_id: 3,
             relation_type: "has_attachment".to_owned(),
+            source_type: Some("project".to_owned()),
             source_entity_id: 30,
             source_label: "资料库".to_owned(),
             source_entity_type: "project".to_owned(),
