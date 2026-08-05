@@ -30,7 +30,8 @@ use crate::{
     },
     rag::{
         audit_citations, fetch_rag_file, format_graph_context, format_sources, generate,
-        index_file, merge_usage, relevant_graph_context, retrieve, GenerationError,
+        graph_context_budget, index_file, merge_usage, relevant_graph_context, retrieve,
+        GenerationError,
     },
     AppState,
 };
@@ -481,7 +482,10 @@ async fn query_project_rag_inner(
         )
         .await
         {
-            Ok(graph_context) => graph_context,
+            Ok(graph_context) => {
+                let visible = graph_context_budget(&graph_context);
+                graph_context.into_iter().take(visible).collect()
+            }
             Err(error) => {
                 log_query_failure(
                     &state,

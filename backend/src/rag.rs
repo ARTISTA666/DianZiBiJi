@@ -574,36 +574,47 @@ pub fn format_graph_context(context: &[RagGraphContextRead]) -> String {
     if context.is_empty() {
         return String::new();
     }
-    let mut output = String::from("实验知识图谱上下文：\n可用图谱证据编号：");
-    output.push_str(
-        &context
-            .iter()
-            .enumerate()
-            .map(|(index, _)| format!("[G{}]", index + 1))
-            .collect::<Vec<_>>()
-            .join("、"),
-    );
+    let visible = graph_context_budget(context);
+    let mut output = String::from("实验知识图谱上下文：\n");
+    for (index, item) in context.iter().take(visible).enumerate() {
+        output.push_str(&graph_context_line(index, item));
+    }
+    if visible < context.len() {
+        output.push_str(&graph_context_truncation_suffix());
+    }
+    output
+}
+
+pub fn graph_context_budget(context: &[RagGraphContextRead]) -> usize {
+    let available =
+        MAX_GRAPH_CONTEXT_CHARS.saturating_sub(graph_context_truncation_suffix().chars().count());
+    let mut used = "实验知识图谱上下文：\n".chars().count();
+    let mut visible = 0;
     for (index, item) in context.iter().enumerate() {
-        output.push_str(&format!(
-            "\n[G{}] {}（{}） {} {}（{}）",
-            index + 1,
-            item.source_label,
-            item.source_entity_type_label,
-            item.relation_label,
-            item.target_label,
-            item.target_entity_type_label
-        ));
+        let line_length = graph_context_line(index, item).chars().count();
+        if used + line_length > available {
+            break;
+        }
+        used += line_length;
+        visible += 1;
     }
-    let suffix = format!(
-        "\n\n[图谱上下文已截断至 {MAX_GRAPH_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]"
-    );
-    if output.chars().count() <= MAX_GRAPH_CONTEXT_CHARS {
-        return output;
-    }
-    let prefix_len = MAX_GRAPH_CONTEXT_CHARS.saturating_sub(suffix.chars().count());
-    let mut capped: String = output.chars().take(prefix_len).collect();
-    capped.push_str(&suffix);
-    capped
+    visible
+}
+
+fn graph_context_line(index: usize, item: &RagGraphContextRead) -> String {
+    format!(
+        "[G{}] {}（{}） {} {}（{}）\n",
+        index + 1,
+        item.source_label,
+        item.source_entity_type_label,
+        item.relation_label,
+        item.target_label,
+        item.target_entity_type_label
+    )
+}
+
+fn graph_context_truncation_suffix() -> String {
+    format!("\n[图谱上下文已截断至 {MAX_GRAPH_CONTEXT_CHARS} 个字符；未展示的细节不得据此推断。]")
 }
 
 pub async fn generate(
@@ -1035,10 +1046,10 @@ mod tests {
 
     use super::{
         audit_citations, bm25_scores, chunk_text, exact_token_overlap, fetch_vector_candidates,
-        format_graph_context, format_sources, generate, is_collection_query, meets_graph_threshold,
-        rag_insert_batch_ranges, relation_hints, retrieve, tokens, truncate_error_detail,
-        validate_embedding_dimensions, vector_literal, ChunkRow, ACTIVE_CHUNKS_SQL,
-        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        format_graph_context, format_sources, generate, graph_context_budget, is_collection_query,
+        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve, tokens,
+        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow,
+        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1188,7 +1199,7 @@ mod tests {
     }
 
     #[test]
-    fn test_graph_context_caps_long_labels_but_keeps_all_markers() {
+    fn test_graph_context_budget_drops_unrendered_markers() {
         let context = (1..=30)
             .map(|index| RagGraphContextRead {
                 relation_id: index,
@@ -1210,9 +1221,10 @@ mod tests {
         let formatted = format_graph_context(&context);
 
         assert!(formatted.chars().count() <= MAX_GRAPH_CONTEXT_CHARS);
-        for index in 1..=30 {
-            assert!(formatted.contains(&format!("[G{index}]")));
-        }
+        assert_eq!(graph_context_budget(&context), 2);
+        assert!(formatted.contains("[G1]"));
+        assert!(formatted.contains("[G2]"));
+        assert!(!formatted.contains("[G30]"));
         assert!(formatted.contains("图谱上下文已截断"));
     }
 
