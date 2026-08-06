@@ -58,13 +58,14 @@ NEXT_PUBLIC_API_BASE_URL=/api
 DEEPSEEK_API_BASE_URL=https://api.deepseek.com
 DEEPSEEK_API_KEY=your-official-api-key
 DEEPSEEK_MODEL=deepseek-v4-flash
+ALLOW_SENSITIVE_EXTERNAL_AI=false
 EMBEDDING_BACKEND=hash
 EMBEDDING_MODEL=rust-hash-512-v1
 EMBEDDING_DIMENSION=512
 APP_REVISION=0123456789abcdef0123456789abcdef01234567
 ```
 
-DeepSeek 密钥只注入后端容器，不会传给前端。
+DeepSeek 密钥只注入后端容器，不会传给前端。敏感项目默认禁止把笔记、资料和图谱内容发送给外部 AI；只有完成数据治理和供应商审查后，才可通过 `ALLOW_SENSITIVE_EXTERNAL_AI=true` 显式开启。
 
 生产模式会在启动时强制校验上述安全项；仍使用默认签名密钥、默认数据库/管理员密码、空 AI 密钥、未设置发布版本或启用演示数据时，后端拒绝启动。退出、管理员重置密码和用户自助改密都会使旧访问令牌失效。
 
@@ -187,10 +188,11 @@ macOS 或 Linux 本地开发环境：
 ```bash
 docker compose build backend
 
+./scripts/run-rust-db-tests.sh
+
 cd backend
 cargo +1.88.0 fmt --all --check
 cargo +1.88.0 clippy --all-targets -- -D warnings
-cargo +1.88.0 test --all-targets --locked
 
 cd ../frontend
 npm run lint
@@ -198,10 +200,15 @@ node node_modules/next/dist/bin/next build --webpack
 
 cd ..
 # 可选：验证仓库中不参与服务运行的离线证据脚本
+backend/.venv/bin/python -m pytest backend/tests -q
 backend/.venv/bin/python -m pytest -q scripts/test_*.py
 docker compose config --quiet
 npm --prefix frontend audit --omit=dev --audit-level=low
 ```
+
+`scripts/run-rust-db-tests.sh` 会用 `docker-compose.test-db.yml` 启动一次性的
+PostgreSQL 16 + pgvector 测试库，设置 `TEST_DATABASE_URL`，串行运行 Rust
+集成测试，并在结束后删除测试容器和临时卷。生产数据库不会被使用或修改。
 
 使用本机 `.env` 中的真实 DeepSeek 密钥执行不落盘提示词/回答的最小回归：
 

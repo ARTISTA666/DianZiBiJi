@@ -3,13 +3,15 @@
 ```mermaid
 flowchart LR
   U["用户浏览器"] --> F["Next.js 前端"]
-  F --> A["FastAPI 后端"]
+  F --> A["Rust + Axum 生产后端"]
   A --> P["PostgreSQL + pgvector"]
-  A --> O["OpenCV + Tesseract OCR"]
-  A --> E["FastEmbed 向量模型"]
+  A --> O["Poppler + Tesseract OCR"]
+  A --> E["本地 rust-hash-512-v1（512维）"]
   A --> D["DeepSeek 兼容接口"]
   A --> S["项目文件存储"]
 ```
+
+> `backend/app` 中的 FastAPI 代码属于历史兼容实现，不是生产运行时。
 
 ```mermaid
 flowchart TD

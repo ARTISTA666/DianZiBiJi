@@ -53,6 +53,14 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
   const evaluationOnly = membership?.can_evaluate === true && membership.can_read === false;
   const isSuperAdmin = user?.role === "super_admin";
   const isOwner = project?.owner_user_id != null && project.owner_user_id === user?.id;
+  const isPiWithGeneralAccess = user?.role === "pi" && project?.is_sensitive === false;
+  const hasWorkspaceAccess = isSuperAdmin
+    || isOwner
+    || isPiWithGeneralAccess
+    || membership?.can_read === true
+    // 评价-only 盲评成员无读权限（can_read=false），仅允许进入盲评页，
+    // 下方 evaluationOnly 重定向逻辑会将其限定在盲评页内。
+    || evaluationOnly;
   const canManage = isSuperAdmin || isOwner || membership?.can_manage === true || membership?.project_role === "owner";
   const canReview = canManage || membership?.can_review === true;
   const visibleRegularTabs = useMemo(
@@ -124,6 +132,19 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
 
   if (!project || busy) {
     return <ProjectDetailSkeleton />;
+  }
+
+  // The project endpoint proves that the ID exists, but the member payload is
+  // what tells the UI which workspace features this account may see. Fail
+  // closed while that authorization basis is absent; API guards remain the
+  // final enforcement layer for every operation.
+  if (!hasWorkspaceAccess) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 py-16" role="alert">
+        <p className="text-sm text-destructive">无法确认当前账号的项目权限，已停止加载项目内容。</p>
+        <button className="text-sm text-primary underline" onClick={() => router.push("/projects")}>返回项目列表</button>
+      </div>
+    );
   }
 
   if (

@@ -11,6 +11,7 @@ import {
   removeProjectMember,
   addProjectReviewer,
   removeProjectReviewer,
+  ApiRequestError,
   type Project,
   type ProjectMember,
   type Template,
@@ -134,24 +135,33 @@ export const createCoreSlice: StateCreator<ProjectStoreState, [], [], CoreSlice>
   },
 
   loadProject: async (token, projectId) => {
+    const sessionEpoch = epochs.session;
     const requestEpoch = ++epochs.projectDetail;
     set({ projectLoadError: null });
     try {
       const project = await getProject(token, projectId);
       if (
-        requestEpoch === epochs.projectDetail
+        isCurrentSessionRequest(sessionEpoch)
+        && requestEpoch === epochs.projectDetail
         && get().selectedProjectId === projectId
       ) {
         set({ selectedProject: project });
       }
     } catch (error) {
       if (
-        requestEpoch === epochs.projectDetail
+        isCurrentSessionRequest(sessionEpoch)
+        && requestEpoch === epochs.projectDetail
         && get().selectedProjectId === projectId
       ) {
+        const message = getErrorMessage(error, "项目加载失败");
+        const status = error instanceof ApiRequestError ? error.status : null;
         set({
           selectedProject: null,
-          projectLoadError: getErrorMessage(error, "项目加载失败"),
+          projectLoadError: status === 403 || message.includes("403") || message.includes("Forbidden")
+            ? "你没有权限访问此项目。"
+            : status === 401 || message.includes("401") || message.includes("Unauthorized")
+              ? "登录状态已失效，请重新登录。"
+              : message,
         });
       }
     }

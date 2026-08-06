@@ -15,6 +15,19 @@ import { getErrorMessage } from "@/lib/utils";
 // many `if (!token)` guards across pages. It is never sent to the API.
 const SESSION_ACTIVE = "cookie-session";
 
+// Every authentication operation gets a generation. A login, logout, or
+// session refresh that starts later invalidates earlier in-flight requests so
+// a slow response from the previous account cannot restore stale identity or
+// project state.
+let authOperationEpoch = 0;
+
+const beginAuthOperation = () => {
+  authOperationEpoch += 1;
+  return authOperationEpoch;
+};
+
+const isCurrentAuthOperation = (epoch: number) => epoch === authOperationEpoch;
+
 interface AuthState {
   token: string | null;
   user: CurrentUser | null;
@@ -37,14 +50,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   busy: false,
 
   login: async (username, password) => {
+    const operationEpoch = beginAuthOperation();
     useProjectStore.getState().resetProjectState();
     set({ token: null, user: null, hydrated: true, busy: true, error: null });
     try {
       await apiLogin(username, password);
+      if (!isCurrentAuthOperation(operationEpoch)) return;
       set({ token: SESSION_ACTIVE, error: null });
       const user = await getMe(SESSION_ACTIVE);
+      if (!isCurrentAuthOperation(operationEpoch)) return;
       set({ user, hydrated: true, busy: false });
     } catch (e) {
+      if (!isCurrentAuthOperation(operationEpoch)) return;
       const msg = getErrorMessage(e, "登录失败");
       set({ token: null, user: null, hydrated: true, error: msg, busy: false });
       throw e;
@@ -52,6 +69,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
+    const operationEpoch = beginAuthOperation();
     const { token } = get();
     if (!token) {
       useProjectStore.getState().resetProjectState();
@@ -62,25 +80,30 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       await apiLogout(token);
     } catch (error) {
+      if (!isCurrentAuthOperation(operationEpoch)) return;
       if (!(error instanceof ApiRequestError && error.status === 401)) {
         const message = getErrorMessage(error, "退出登录失败");
         set({ hydrated: true, error: message, busy: false });
         throw error;
       }
     }
+    if (!isCurrentAuthOperation(operationEpoch)) return;
     useProjectStore.getState().resetProjectState();
     set({ token: null, user: null, hydrated: true, error: null, busy: false });
   },
 
   refreshUser: async () => {
+    const operationEpoch = beginAuthOperation();
     // Probe the cookie session; succeeds after a reload without any JS token.
     try {
       const user = await getMe(SESSION_ACTIVE);
+      if (!isCurrentAuthOperation(operationEpoch)) return;
       if (get().user?.id !== user.id) {
         useProjectStore.getState().resetProjectState();
       }
       set({ token: SESSION_ACTIVE, user, hydrated: true });
     } catch {
+      if (!isCurrentAuthOperation(operationEpoch)) return;
       useProjectStore.getState().resetProjectState();
       set({ token: null, user: null, hydrated: true });
     }

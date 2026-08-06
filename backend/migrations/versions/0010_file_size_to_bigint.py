@@ -15,14 +15,46 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('files', 'file_size',
-                    existing_type=sa.Integer(),
-                    type_=sa.BigInteger(),
-                    existing_nullable=False)
+    bind = op.get_bind()
+    columns = {column["name"] for column in sa.inspect(bind).get_columns("files")}
+    if "file_size" not in columns:
+        return
+    if bind.dialect.name == "sqlite":
+        with op.batch_alter_table("files") as batch_op:
+            batch_op.alter_column(
+                "file_size",
+                existing_type=sa.Integer(),
+                type_=sa.BigInteger(),
+                existing_nullable=False,
+            )
+    else:
+        op.alter_column(
+            "files",
+            "file_size",
+            existing_type=sa.Integer(),
+            type_=sa.BigInteger(),
+            existing_nullable=False,
+        )
 
 
 def downgrade():
-    op.alter_column('files', 'file_size',
-                    existing_type=sa.BigInteger(),
-                    type_=sa.Integer(),
-                    existing_nullable=False)
+    bind = op.get_bind()
+    columns = {column["name"] for column in sa.inspect(bind).get_columns("files")}
+    if "file_size" not in columns:
+        return
+    if bind.dialect.name == "sqlite":
+        with op.batch_alter_table("files") as batch_op:
+            batch_op.alter_column(
+                "file_size",
+                existing_type=sa.BigInteger(),
+                type_=sa.Integer(),
+                existing_nullable=False,
+            )
+    else:
+        op.alter_column(
+            "files",
+            "file_size",
+            existing_type=sa.BigInteger(),
+            type_=sa.Integer(),
+            existing_nullable=False,
+        )

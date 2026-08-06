@@ -43,6 +43,15 @@ else:
 _PYTHON_TEST_DB = "eln_test_py"
 
 
+def sqlalchemy_postgres_url(url: str) -> str:
+    """Use the psycopg v3 driver declared by requirements-base.txt."""
+    if url.startswith("postgresql://"):
+        return "postgresql+psycopg://" + url.removeprefix("postgresql://")
+    if url.startswith("postgres://"):
+        return "postgresql+psycopg://" + url.removeprefix("postgres://")
+    return url
+
+
 @pytest.fixture()
 def db_engine():
     """Yield a SQLAlchemy engine for the test session.
@@ -56,7 +65,7 @@ def db_engine():
     """
     if _USE_POSTGRES:
         # -- Connect to the default database to create / drop the test DB ----
-        default_url = TEST_DATABASE_URL.rsplit("/", 1)[0] + "/postgres"
+        default_url = sqlalchemy_postgres_url(TEST_DATABASE_URL.rsplit("/", 1)[0] + "/postgres")
         admin_engine = create_engine(default_url, isolation_level="AUTOCOMMIT")
         with admin_engine.connect() as conn:
             # Terminate existing sessions so DROP DATABASE succeeds.
@@ -70,7 +79,9 @@ def db_engine():
         admin_engine.dispose()
 
         # -- Connect to the freshly created test database --------------------
-        test_url = TEST_DATABASE_URL.rsplit("/", 1)[0] + f"/{_PYTHON_TEST_DB}"
+        test_url = sqlalchemy_postgres_url(
+            TEST_DATABASE_URL.rsplit("/", 1)[0] + f"/{_PYTHON_TEST_DB}"
+        )
         engine = create_engine(
             test_url,
             pool_pre_ping=True,

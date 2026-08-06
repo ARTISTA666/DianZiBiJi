@@ -15,7 +15,7 @@ use crate::{
     error::ApiError,
     models::{OcrCorrectionRequest, OcrJobRequest, OcrJobResult, UserRecord},
     ocr::{extract_text, OcrError, OcrSource},
-    permissions::{can_review_project, require_project_access},
+    permissions::{can_review_project, can_write_project, require_project_access},
     AppState,
 };
 
@@ -120,6 +120,8 @@ async fn extract_ocr(
 ) -> Result<Json<OcrJobResult>, ApiError> {
     let source = fetch_source(&state, payload.file_id).await?;
     require_project_access(&state.pool, &user, source.project_id).await?;
+    let can_write = can_write_project(&state.pool, &user, source.project_id).await?;
+    require_ocr_write_permission(can_write)?;
     let extracted = extract_text(
         &state.settings,
         &OcrSource {
@@ -405,6 +407,17 @@ async fn require_review(
     }
 }
 
+fn require_ocr_write_permission(can_write: bool) -> Result<(), ApiError> {
+    if can_write {
+        Ok(())
+    } else {
+        Err(ApiError::new(
+            StatusCode::FORBIDDEN,
+            "OCR 提取需要项目写入权限",
+        ))
+    }
+}
+
 fn map_ocr_error(error: OcrError) -> ApiError {
     match error {
         OcrError::NotFound(detail) => ApiError::new(StatusCode::NOT_FOUND, detail),
@@ -433,6 +446,17 @@ mod tests {
         db::{connect_database, initialize_database},
         AppState,
     };
+
+    #[test]
+    fn test_ocr_extraction_requires_write_permission() {
+        assert!(super::require_ocr_write_permission(true).is_ok());
+        assert_eq!(
+            super::require_ocr_write_permission(false)
+                .unwrap_err()
+                .status,
+            StatusCode::FORBIDDEN
+        );
+    }
 
     async fn call(
         app: &Router,

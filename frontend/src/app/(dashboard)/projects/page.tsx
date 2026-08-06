@@ -28,6 +28,7 @@ const handleCardKeyDown = (e: KeyboardEvent, callback: () => void) => {
 export default function ProjectsPage() {
   const router = useRouter();
   const token = useAuthStore((s) => s.token);
+  const user = useAuthStore((s) => s.user);
   const projects = useProjectStore((s) => s.projects);
   const projectTotal = useProjectStore((s) => s.projectTotal);
   const projectSkip = useProjectStore((s) => s.projectSkip);
@@ -43,6 +44,7 @@ export default function ProjectsPage() {
   const [error, setError] = useState("");
   const [nameError, setNameError] = useState("");
   const feedback = useActionFeedback();
+  const canCreateProject = user?.role === "super_admin";
 
   useEffect(() => {
     if (token) {
@@ -65,7 +67,7 @@ export default function ProjectsPage() {
   };
 
   const handleCreate = async () => {
-    if (!token || !name.trim()) return;
+    if (!canCreateProject || !token || !name.trim()) return;
     setBusy(true);
     try {
       const project = await createProject(token, { name: name.trim(), description: description.trim() || null });
@@ -96,28 +98,30 @@ export default function ProjectsPage() {
           <h1 className="text-2xl font-bold tracking-tight">项目</h1>
           <p className="text-sm text-muted-foreground mt-1">管理你的实验项目和科研课题</p>
         </div>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button size="sm"><Plus className="mr-2 h-4 w-4" />新建项目</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>新建项目</DialogTitle></DialogHeader>
-            <div className="space-y-4 pt-2">
-              <div className="space-y-2">
-                <Label htmlFor="pname">项目名称</Label>
-                <Input id="pname" value={name} onChange={(e) => setName(e.target.value)} onBlur={handleNameBlur} placeholder="例如：PCR 实验优化" className={nameError ? "border-destructive" : ""} />
-                {nameError && <p className="text-sm text-destructive">{nameError}</p>}
+        {canCreateProject && (
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button size="sm"><Plus className="mr-2 h-4 w-4" />新建项目</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader><DialogTitle>新建项目</DialogTitle></DialogHeader>
+              <div className="space-y-4 pt-2">
+                <div className="space-y-2">
+                  <Label htmlFor="pname">项目名称</Label>
+                  <Input id="pname" value={name} onChange={(e) => setName(e.target.value)} onBlur={handleNameBlur} placeholder="例如：PCR 实验优化" className={nameError ? "border-destructive" : ""} />
+                  {nameError && <p className="text-sm text-destructive">{nameError}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pdesc">项目描述</Label>
+                  <Textarea id="pdesc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="可选" rows={3} />
+                </div>
+                <Button onClick={handleCreate} disabled={busy || !name.trim()} className="w-full">
+                  {busy ? "创建中..." : "创建"}
+                </Button>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="pdesc">项目描述</Label>
-                <Textarea id="pdesc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="可选" rows={3} />
-              </div>
-              <Button onClick={handleCreate} disabled={busy || !name.trim()} className="w-full">
-                {busy ? "创建中..." : "创建"}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
       {loading ? (
@@ -131,7 +135,9 @@ export default function ProjectsPage() {
           <CardContent className="flex flex-col items-center justify-center py-16 text-center">
             <FolderOpen className="h-12 w-12 text-muted-foreground/50" />
             <h3 className="mt-4 text-lg font-medium">暂无项目</h3>
-            <p className="mt-1 text-sm text-muted-foreground">点击「新建项目」创建你的第一个实验项目</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {canCreateProject ? "点击「新建项目」创建你的第一个实验项目" : "当前账号暂无可访问的项目，请联系系统管理员"}
+            </p>
           </CardContent>
         </Card>
       ) : (

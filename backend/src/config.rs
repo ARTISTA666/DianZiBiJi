@@ -25,6 +25,7 @@ pub struct Settings {
     pub global_rate_limit_write_per_minute: u64,
     pub cors_origins: String,
     pub app_revision: String,
+    pub allow_sensitive_external_ai: bool,
     pub deepseek_api_base_url: String,
     pub deepseek_api_key: String,
     pub deepseek_model: String,
@@ -101,6 +102,7 @@ impl Settings {
                 "http://localhost:3000,http://127.0.0.1:3000",
             ),
             app_revision: get("APP_REVISION", "unversioned"),
+            allow_sensitive_external_ai: parse_bool(values, "ALLOW_SENSITIVE_EXTERNAL_AI", false)?,
             deepseek_api_base_url: get("DEEPSEEK_API_BASE_URL", "https://api.deepseek.com"),
             deepseek_api_key: get("DEEPSEEK_API_KEY", ""),
             deepseek_model: get("DEEPSEEK_MODEL", "deepseek-v4-flash"),
@@ -163,6 +165,9 @@ impl Settings {
             return Err(ConfigError::InvalidValue {
                 name: "RAG_GRAPH_MIN_SCORE",
                 value: self.rag_graph_min_score.to_string(),
+            });
+        }
+            return Err(ConfigError::InvalidValue {
             });
         }
         validate_range("RAG_CHUNK_SIZE", self.rag_chunk_size, 200, usize::MAX)?;
@@ -423,6 +428,19 @@ mod tests {
     }
 
     #[test]
+    fn test_sensitive_external_ai_is_disabled_by_default_and_explicitly_configurable() {
+        let defaults = Settings::from_map(&HashMap::new()).unwrap();
+        assert!(!defaults.allow_sensitive_external_ai);
+
+        let enabled = Settings::from_map(&HashMap::from([(
+            "ALLOW_SENSITIVE_EXTERNAL_AI".to_owned(),
+            "true".to_owned(),
+        )]))
+        .unwrap();
+        assert!(enabled.allow_sensitive_external_ai);
+    }
+
+    #[test]
     fn test_settings_rejects_unsafe_production_defaults() {
         let values = HashMap::from([("APP_ENV".to_owned(), "production".to_owned())]);
 
@@ -499,6 +517,24 @@ mod tests {
             )]))
             .unwrap_err();
             assert!(error.to_string().contains("RAG_GRAPH_MIN_SCORE"));
+        }
+    }
+
+    #[test]
+        let settings = Settings::from_map(&HashMap::new()).unwrap();
+
+        let overridden = Settings::from_map(&HashMap::from([(
+            "0.4".to_owned(),
+        )]))
+        .unwrap();
+    }
+
+    #[test]
+        for value in ["-0.1", "NaN", "inf", "not-a-number"] {
+            let error = Settings::from_map(&HashMap::from([(
+                value.to_owned(),
+            )]))
+            .unwrap_err();
         }
     }
 

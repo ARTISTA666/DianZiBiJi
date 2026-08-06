@@ -19,6 +19,10 @@ import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { FilesListSkeleton } from "@/components/skeletons";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
+const SUPPORTED_UPLOAD_ACCEPT = [
+  ".pdf", ".jpg", ".jpeg", ".png", ".gif", ".webp", ".tif", ".tiff", ".bmp", ".txt",
+  ".doc", ".docx", ".xls", ".xlsx", ".pptx",
+].join(",");
 
 function uploadFileWithProgress(
   file: File,
@@ -41,7 +45,14 @@ function uploadFileWithProgress(
           reject(new Error("Invalid response"));
         }
       } else {
-        reject(new Error(`上传失败: ${xhr.status}`));
+        let detail = "";
+        try {
+          const payload = JSON.parse(xhr.responseText) as { detail?: unknown };
+          if (typeof payload.detail === "string") detail = payload.detail;
+        } catch {
+          // Keep the status fallback when the server returns a non-JSON error.
+        }
+        reject(new Error(detail || `上传失败: ${xhr.status}`));
       }
     };
     xhr.onerror = () => reject(new Error("上传失败"));
@@ -187,7 +198,7 @@ export default function DataPage() {
   };
 
   const openOcr = async (f: (typeof files)[0]) => {
-    if (!token) return;
+    if (!canWrite || !token) return;
     const requestEpoch = ++ocrRequestEpoch.current;
     setOcrFile(f);
     setOcrDraft("");
@@ -262,6 +273,7 @@ export default function DataPage() {
           <div className="flex-1 space-y-2">
             <Dropzone
               onFilesSelected={handleFilesSelected}
+              accept={SUPPORTED_UPLOAD_ACCEPT}
               multiple
               maxSize={50 * 1024 * 1024}
             />
@@ -310,7 +322,7 @@ export default function DataPage() {
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <Badge variant="secondary">{knowledgeSyncText[f.knowledge_sync_status] || f.knowledge_sync_status}</Badge>
-                  {isImageFile(f) && (
+                  {canWrite && isImageFile(f) && (
                     <Button aria-label={`提取文本 ${f.original_filename}`} variant="outline" size="sm" onClick={() => openOcr(f)}>
                       <Eye className="mr-1 h-3 w-3" />OCR
                     </Button>

@@ -23,20 +23,6 @@ jobs:
     defaults:
       run:
         working-directory: backend
-    services:
-      postgres:
-        image: pgvector/pgvector:pg16
-        env:
-          POSTGRES_USER: eln
-          POSTGRES_PASSWORD: eln_test
-          POSTGRES_DB: eln_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U eln"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -47,8 +33,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
-        env:
-          TEST_DATABASE_URL: postgresql://eln:eln_test@localhost:5432/eln_test
         run: python -m pytest tests -q
       - name: Run repository script tests
         working-directory: .

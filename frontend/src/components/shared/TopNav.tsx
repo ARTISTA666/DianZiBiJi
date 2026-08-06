@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { BookOpen, LogOut, KeyRound, Moon, Sun } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -19,7 +18,6 @@ import { useAuthStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 
 export function TopNav() {
-  const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const logout = useAuthStore((s) => s.logout);
   const authBusy = useAuthStore((s) => s.busy);
@@ -48,7 +46,10 @@ export function TopNav() {
   const handleLogout = async () => {
     try {
       await logout();
-      router.replace("/login");
+      // Use a full navigation after clearing the in-memory session. This
+      // avoids leaving a protected App Router segment mounted in a stale
+      // "loading" state when the auth guard is already transitioning.
+      window.location.replace("/login");
     } catch (error) {
       toast.error("退出失败，会话仍保持有效，请重试", {
         description: getErrorMessage(error),

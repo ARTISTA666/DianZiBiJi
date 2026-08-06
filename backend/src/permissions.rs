@@ -73,6 +73,27 @@ pub async fn can_access_project(
     .await?)
 }
 
+pub fn project_allows_external_ai(
+    project: &ProjectRead,
+    allow_sensitive_external_ai: bool,
+) -> bool {
+    !project.is_sensitive || allow_sensitive_external_ai
+}
+
+pub fn require_external_ai(
+    project: &ProjectRead,
+    allow_sensitive_external_ai: bool,
+) -> Result<(), ApiError> {
+    if project_allows_external_ai(project, allow_sensitive_external_ai) {
+        Ok(())
+    } else {
+        Err(ApiError::new(
+            StatusCode::FORBIDDEN,
+            "敏感项目未获准向外部 AI 服务发送数据",
+        ))
+    }
+}
+
 pub async fn can_write_project(
     pool: &PgPool,
     user: &UserRecord,
@@ -234,4 +255,29 @@ async fn membership_flag(
         .bind(user_id)
         .fetch_one(pool)
         .await?)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{project_allows_external_ai, ProjectRead};
+
+    fn project(is_sensitive: bool) -> ProjectRead {
+        ProjectRead {
+            id: 1,
+            name: "Test project".to_owned(),
+            description: None,
+            is_sensitive,
+            status: "active".to_owned(),
+            approval_enabled: true,
+            owner_user_id: Some(1),
+        }
+    }
+
+    #[test]
+    fn test_sensitive_project_requires_explicit_external_ai_opt_in() {
+        assert!(project_allows_external_ai(&project(false), false));
+        assert!(project_allows_external_ai(&project(false), true));
+        assert!(!project_allows_external_ai(&project(true), false));
+        assert!(project_allows_external_ai(&project(true), true));
+    }
 }

@@ -11,19 +11,19 @@
 
 ## 各运行时本地测试命令
 
-Rust 后端（集成测试需要 PostgreSQL，`TEST_DATABASE_URL` 指向 pgvector/pg16；测试共享 schema，保持串行）：
+Rust 后端（集成测试使用隔离的 pgvector/pg16 测试库）：
 
 ```bash
+./scripts/run-rust-db-tests.sh
 cd backend
 cargo fmt --all --check
 cargo clippy --locked --all-targets --all-features -- -D warnings
-cargo test --locked --all-targets --all-features -- --test-threads=1
 ```
 
-Python（legacy 后端测试 + 仓库脚本测试）：
+Python（legacy 后端测试 + 仓库脚本测试；默认使用 SQLite，避免把历史 FastAPI 夹具误当成生产 PostgreSQL 验证）：
 
 ```bash
-cd backend && python -m pytest tests -q        # 需要 TEST_DATABASE_URL
+cd backend && python -m pytest tests -q
 python -m pytest -q scripts/test_*.py          # 在仓库根目录执行
 ```
 

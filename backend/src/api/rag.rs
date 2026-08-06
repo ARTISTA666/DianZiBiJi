@@ -26,7 +26,7 @@ use crate::{
     },
     permissions::{
         can_access_project, can_evaluate_project, can_manage_project, fetch_project,
-        require_project_access, require_project_metadata_access,
+        require_external_ai, require_project_access, require_project_metadata_access,
     },
     rag::{
         audit_citations, audit_citations_after_repair, fetch_rag_file, format_graph_context,
@@ -406,7 +406,8 @@ async fn query_project_rag_inner(
     ip_address: Option<&str>,
     user_agent: Option<&str>,
 ) -> Result<Json<RagQueryResponse>, ApiError> {
-    require_project_access(&state.pool, &user, project_id).await?;
+    let project = require_project_access(&state.pool, &user, project_id).await?;
+    require_external_ai(&project, state.settings.allow_sensitive_external_ai)?;
     require_unblinded_access(&state, &user, project_id).await?;
     let query = validate_query(&payload.query)?;
     if !RAG_MODES.contains(&payload.mode.as_str()) {
@@ -3330,6 +3331,88 @@ mod tests {
             serde_json::from_slice(&bytes).unwrap()
         };
         (status, body)
+    }
+
+    #[tokio::test]
+    async fn test_sensitive_project_blocks_external_rag_and_agent_calls_by_default() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let admin_username = format!("sensitive_ai_admin_{suffix}");
+        let storage = tempfile::tempdir().unwrap();
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "rust-sensitive-ai-secret".to_owned(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustSensitiveAi123!".to_owned(),
+            ),
+            (
+                "STORAGE_ROOT".to_owned(),
+                storage.path().to_string_lossy().into_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool, settings).unwrap());
+        let (_, login) = json_call(
+            &app,
+            "POST",
+            "/auth/login",
+            None,
+            Some(json!({
+                "username": admin_username,
+                "password": "RustSensitiveAi123!"
+            })),
+        )
+        .await;
+        let admin = login["access_token"].as_str().unwrap();
+        let (_, project) = json_call(
+            &app,
+            "POST",
+            "/projects",
+            Some(admin),
+            Some(json!({
+                "name": format!("Sensitive AI Project {suffix}"),
+                "is_sensitive": true
+            })),
+        )
+        .await;
+        let project_id = project["id"].as_i64().unwrap();
+
+        let (rag_status, rag_body) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/query"),
+            Some(admin),
+            Some(json!({"query": "private result", "mode": "pure_llm"})),
+        )
+        .await;
+        assert_eq!(rag_status, StatusCode::FORBIDDEN);
+        assert_eq!(rag_body["detail"], "敏感项目未获准向外部 AI 服务发送数据");
+
+        let (agent_status, agent_body) = json_call(
+            &app,
+            "POST",
+            "/api/agents/generate",
+            Some(admin),
+            Some(json!({
+                "project_id": project_id,
+                "task_type": "experiment_summary"
+            })),
+        )
+        .await;
+        assert_eq!(agent_status, StatusCode::FORBIDDEN);
+        assert_eq!(agent_body["detail"], "敏感项目未获准向外部 AI 服务发送数据");
     }
 
     #[tokio::test]

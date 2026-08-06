@@ -1,0 +1,14 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: eln_test
+      POSTGRES_PASSWORD: eln_test_password
+    ports:
+      - "127.0.0.1:${TEST_DB_PORT:-55432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eln_test -d postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 30

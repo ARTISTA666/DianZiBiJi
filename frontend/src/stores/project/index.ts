@@ -30,7 +30,7 @@ import { createCoreSlice, type CoreSlice } from "./core-slice";
 import { createNoteSlice, type NoteSlice } from "./note-slice";
 import { createFileSlice, type FileSlice } from "./file-slice";
 import { createAiSlice, type AiSlice } from "./ai-slice";
-import { epochs, resetSessionEpoch } from "./request-epoch";
+import { epochs, isCurrentSessionRequest, resetSessionEpoch } from "./request-epoch";
 
 export * from "./types";
 
@@ -124,6 +124,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
 
   loadBaseProjectData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     const requestEpoch = ++epochs.projectData;
     set({ busy: true, projectDataErrors: [] });
     try {
@@ -134,6 +135,8 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
         getPendingApprovals(token),
       ]);
       if (
+        !isCurrentSessionRequest(sessionEpoch)
+        ||
         requestEpoch !== epochs.projectData
         || get().selectedProjectId !== projectId
       ) return;
@@ -158,6 +161,8 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       });
     } finally {
       if (
+        isCurrentSessionRequest(sessionEpoch)
+        &&
         requestEpoch === epochs.projectData
         && get().selectedProjectId === projectId
       ) {
@@ -170,6 +175,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
 
   loadAITabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     if (Date.now() - get().aiTabLastFetchedAt < CACHE_TTL_MS) return;
     const [ragStatus, queryLogs, queryAnalytics, experimentRuns] = (await Promise.allSettled([
       getProjectRagStatus(token, projectId),
@@ -179,7 +185,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
     ])).map((r) => r.status === "fulfilled" ? r.value : null) as [
       RagStatus | null, AIQueryLog[] | null, AIQueryAnalytics | null, AIExperimentRun[] | null,
     ];
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
     set({
       ragStatus: ragStatus ?? null,
       ragAnswer: null,
@@ -192,42 +198,47 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
 
   loadKGTabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     if (Date.now() - get().kgTabLastFetchedAt < CACHE_TTL_MS) return;
     const kgGraph = await getProjectKnowledgeGraph(token, projectId).catch(() => null);
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
     set({ kgGraph: kgGraph ?? null, kgTabLastFetchedAt: Date.now() });
   },
 
   loadReportsTabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     if (Date.now() - get().reportsTabLastFetchedAt < CACHE_TTL_MS) return;
     const agentRuns = await getAgentRuns(token, projectId).catch(() => []);
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
     set({ agentRuns: agentRuns ?? [], reportsTabLastFetchedAt: Date.now() });
   },
 
   loadDataTabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     if (Date.now() - get().dataTabLastFetchedAt < CACHE_TTL_MS) return;
     const filesResult = await getProjectFiles(token, projectId).catch(() => ({ items: [] as StoredFile[], total: 0 }));
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
     set({ files: filesResult.items, dataTabLastFetchedAt: Date.now() });
   },
 
   loadBlindReviewTabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     if (Date.now() - get().blindReviewTabLastFetchedAt < CACHE_TTL_MS) return;
     const blindReviewBatches = await getBlindReviewBatches(token, projectId).catch(() => []);
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
     set({ blindReviewBatches: blindReviewBatches ?? [], blindReviewTabLastFetchedAt: Date.now() });
   },
 
   loadSettingsTabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     if (Date.now() - get().settingsTabLastFetchedAt < CACHE_TTL_MS) return;
     const templates = await getTemplates(token).catch(() => []);
     const maturityStatus = await getMaturityStatus(token).catch(() => null);
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
     set({
       templates: templates ?? [],
       maturityStatus: maturityStatus ?? null,
@@ -248,6 +259,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
 
   loadTabProjectData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
     const results = await Promise.allSettled([
       getTemplates(token),
       getProjectRagStatus(token, projectId),
@@ -259,7 +271,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       getBlindReviewBatches(token, projectId),
       getMaturityStatus(token),
     ]);
-    if (get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
 
     const unwrap = <T>(r: PromiseSettledResult<T>, fallback: T): T =>
       r.status === "fulfilled" ? r.value : fallback;
@@ -285,8 +297,9 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
   },
 
   loadProjectData: async (token, projectId) => {
+    const sessionEpoch = epochs.session;
     await get().loadBaseProjectData(token, projectId);
-    if (get().selectedProjectId === projectId) {
+    if (isCurrentSessionRequest(sessionEpoch) && get().selectedProjectId === projectId) {
       await get().loadTabProjectData(token, projectId);
     }
   },

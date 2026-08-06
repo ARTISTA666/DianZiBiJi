@@ -9,12 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
-
-const tasks = [
-  { value: "experiment_summary", label: "实验总结" },
-  { value: "weekly_report", label: "周报" },
-  { value: "stage_report", label: "项目阶段报告" },
-];
+import { agentTaskOptions } from "@/components/constants";
 
 const agentStatusText: Record<string, string> = {
   running: "运行中", completed: "已完成",
@@ -68,7 +63,7 @@ export default function ReportsPage() {
           {canWrite ? <div className="flex gap-2">
             <Select value={taskType} onValueChange={setTaskType}>
               <SelectTrigger className="w-44"><SelectValue /></SelectTrigger>
-              <SelectContent>{tasks.map((t) => (<SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>))}</SelectContent>
+              <SelectContent>{agentTaskOptions.map((t) => (<SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>))}</SelectContent>
             </Select>
             <Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-36" />
             <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-36" />
@@ -84,7 +79,7 @@ export default function ReportsPage() {
           <CardContent className="flex flex-col items-center justify-center py-12 text-center">
             <FileText className="h-12 w-12 text-muted-foreground/50 mb-4" />
             <p className="text-lg font-medium text-muted-foreground">还没有生成过报告</p>
-            <p className="text-sm text-muted-foreground/70 mt-1">使用上方工具生成实验总结、周报或阶段报告</p>
+            <p className="text-sm text-muted-foreground/70 mt-1">使用上方工具生成实验总结、周报、阶段报告或实验过程图谱概览</p>
             {canWrite && <Button className="mt-4" variant="outline" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <Play className="mr-2 h-4 w-4" />去 AI 问答生成
             </Button>}

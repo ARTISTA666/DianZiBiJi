@@ -17,7 +17,7 @@ use crate::{
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{AgentGenerateRequest, AgentGenerationRunRead, UserRecord},
-    permissions::{can_write_project, require_project_access},
+    permissions::{can_write_project, require_external_ai, require_project_access},
     rag::{entity_type_label, generate_with_max_tokens, relation_label, GenerationError},
     AppState,
 };
@@ -91,7 +91,8 @@ async fn generate_agent_output(
     CurrentUser(user): CurrentUser,
     Json(payload): Json<AgentGenerateRequest>,
 ) -> Result<Json<AgentGenerationRunRead>, ApiError> {
-    require_project_access(&state.pool, &user, payload.project_id).await?;
+    let project = require_project_access(&state.pool, &user, payload.project_id).await?;
+    require_external_ai(&project, state.settings.allow_sensitive_external_ai)?;
     require_write(&state.pool, &user, payload.project_id).await?;
     let task_label = task_label(&payload.task_type).ok_or_else(|| {
         ApiError::new(
@@ -702,7 +703,7 @@ fn display_value(value: &Value) -> String {
 }
 
 fn inline_text(value: &str) -> String {
-    value.replace('\r', " ").replace('\n', " ")
+    value.replace(['\r', '\n'], " ")
 }
 
 fn visible_citation_ids(context: &str) -> (Vec<i32>, Vec<i32>, Vec<i32>) {
