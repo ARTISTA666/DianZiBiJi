@@ -1429,6 +1429,8 @@ export interface components {
             prompt_version: string;
             /** Retrieval Config Json */
             retrieval_config_json?: {
+                retrieval_min_score?: number;
+            } & {
                 [key: string]: unknown;
             };
             /** Usage Json */
@@ -1893,6 +1895,8 @@ export interface components {
             content_json?: {
                 [key: string]: unknown;
             };
+            /** Content Text */
+            content_text?: string;
         };
         /** NoteRead */
         NoteRead: {
@@ -1941,6 +1945,8 @@ export interface components {
             content_json?: {
                 [key: string]: unknown;
             } | null;
+            /** Content Text */
+            content_text?: string;
             /** Change Summary */
             change_summary?: string | null;
         };

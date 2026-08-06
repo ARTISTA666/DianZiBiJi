@@ -153,6 +153,9 @@ async fn create_note(
     require_project_access(&state.pool, &user, project_id).await?;
     require_write(&state.pool, &user, project_id).await?;
     validate_note_create(&payload)?;
+    validate_content_text_length(payload.content_text.as_deref(), &state.settings)?;
+    let content_json =
+        effective_content_json(&payload.content_json, payload.content_text.as_deref());
 
     let mut transaction = state.pool.begin().await?;
     let note_id: i32 = sqlx::query_scalar(
@@ -184,8 +187,8 @@ async fn create_note(
         "#,
     )
     .bind(note_id)
-    .bind(sanitize_json(&payload.fixed_fields_json))
-    .bind(sanitize_json(&payload.content_json))
+    .bind(preserve_json(&payload.fixed_fields_json))
+    .bind(preserve_json(&content_json))
     .bind(user.id)
     .fetch_one(&mut *transaction)
     .await?;
@@ -235,6 +238,7 @@ async fn update_note(
         ));
     }
     validate_note_update(&payload)?;
+    validate_content_text_length(payload.content_text.as_deref(), &state.settings)?;
 
     let mut transaction = state.pool.begin().await?;
     let locked = fetch_note_for_update(&mut transaction, note_id).await?;
@@ -268,10 +272,21 @@ async fn update_note(
         .fixed_fields_json
         .or_else(|| current.as_ref().map(|item| item.fixed_fields_json.clone()))
         .unwrap_or_else(|| json!({}));
-    let content = payload
-        .content_json
-        .or_else(|| current.as_ref().map(|item| item.content_json.clone()))
-        .unwrap_or_else(|| json!({}));
+    let (content_base, allow_override) = match payload.content_json {
+        Some(requested) => (requested, false),
+        None => (
+            current
+                .as_ref()
+                .map(|item| item.content_json.clone())
+                .unwrap_or_else(|| json!({})),
+            true,
+        ),
+    };
+    let content = merge_content_text(
+        &content_base,
+        payload.content_text.as_deref(),
+        allow_override,
+    );
     let change_summary = payload
         .change_summary
         .unwrap_or_else(|| "Updated draft".to_owned());
@@ -287,8 +302,8 @@ async fn update_note(
     )
     .bind(note_id)
     .bind(version_number)
-    .bind(sanitize_json(&fixed_fields))
-    .bind(sanitize_json(&content))
+    .bind(preserve_json(&fixed_fields))
+    .bind(preserve_json(&content))
     .bind(user.id)
     .bind(change_summary)
     .fetch_one(&mut *transaction)
@@ -788,29 +803,66 @@ async fn require_review(pool: &PgPool, user: &UserRecord, project_id: i32) -> Re
     }
 }
 
-fn sanitize_json(value: &serde_json::Value) -> serde_json::Value {
-    match value {
-        serde_json::Value::String(s) => {
-            let sanitized = s
-                .replace('&', "&amp;")
-                .replace('<', "&lt;")
-                .replace('>', "&gt;")
-                .replace('"', "&quot;")
-                .replace('\'', "&#x27;");
-            serde_json::Value::String(sanitized)
+/// Keep note JSON semantically identical in storage and across versions.
+///
+/// HTML escaping belongs at an HTML rendering boundary, not in the database:
+/// escaping here changes scientific values and repeated edits would encode
+/// already-escaped entities again.
+fn preserve_json(value: &serde_json::Value) -> serde_json::Value {
+    value.clone()
+}
+
+/// 将自由文本 `content_text` 归一进 `content_json`（不覆盖已有 "text" 键）。
+///
+/// 优先级规则：
+/// - 同一请求内 `content_json` 已有 "text" 键时保留原值，忽略 `content_text`，
+///   保证现有按 `content_json.text` 约定调用的前端行为零变化；
+/// - 否则，当 `content_text` 非空（去空白后）时写入 `content_json["text"]`，
+///   使自由文本笔记也能落库并被知识图谱提取链路读取。
+fn effective_content_json(
+    content_json: &serde_json::Value,
+    content_text: Option<&str>,
+) -> serde_json::Value {
+    merge_content_text(content_json, content_text, false)
+}
+
+/// 归一实现：`allow_override` 为 true 时允许 `content_text` 替换已有 "text" 键。
+///
+/// 更新路径中，请求未携带 `content_json`（回退到现有版本）且显式携带
+/// `content_text` 时使用，视其为新的正文意图；带 `content_json` 的请求仍
+/// 遵循“同请求内 text 键优先”。
+fn merge_content_text(
+    content_json: &serde_json::Value,
+    content_text: Option<&str>,
+    allow_override: bool,
+) -> serde_json::Value {
+    let mut content = content_json.clone();
+    if let Some(object) = content.as_object_mut() {
+        if allow_override || !object.contains_key("text") {
+            if let Some(text) = content_text.filter(|text| !text.trim().is_empty()) {
+                object.insert(
+                    "text".to_owned(),
+                    serde_json::Value::String(text.to_owned()),
+                );
+            }
         }
-        serde_json::Value::Object(map) => {
-            let sanitized: serde_json::Map<String, serde_json::Value> = map
-                .iter()
-                .map(|(key, val)| (key.clone(), sanitize_json(val)))
-                .collect();
-            serde_json::Value::Object(sanitized)
-        }
-        serde_json::Value::Array(arr) => {
-            serde_json::Value::Array(arr.iter().map(sanitize_json).collect())
-        }
-        other => other.clone(),
     }
+    content
+}
+
+fn validate_content_text_length(
+    content_text: Option<&str>,
+    settings: &crate::config::Settings,
+) -> Result<(), ApiError> {
+    if let Some(text) = content_text {
+        if text.chars().count() > settings.document_text_max_chars {
+            return Err(ApiError::new(
+                StatusCode::UNPROCESSABLE_ENTITY,
+                "笔记正文文本过长",
+            ));
+        }
+    }
+    Ok(())
 }
 
 fn validate_note_create(payload: &NoteCreate) -> Result<(), ApiError> {
@@ -1028,6 +1080,63 @@ mod tests {
         .await;
         assert_eq!(status, StatusCode::OK);
         body["access_token"].as_str().unwrap().to_owned()
+    }
+
+    #[test]
+    fn test_note_json_storage_preserves_user_values_across_repeated_updates() {
+        let raw = json!({
+            "text": "A&B <x> \"quoted\" 'apostrophe'",
+            "nested": {"formula": "a < b && c > d"},
+            "items": ["C&D", "<sample>"]
+        });
+
+        let first_stored = super::preserve_json(&raw);
+        let second_stored = super::preserve_json(&first_stored);
+
+        assert_eq!(first_stored, raw);
+        assert_eq!(second_stored, raw);
+    }
+
+    #[test]
+    fn test_effective_content_json_writes_content_text_when_text_missing() {
+        let merged = super::effective_content_json(&json!({}), Some("使用试剂：PBS"));
+        assert_eq!(merged, json!({"text": "使用试剂：PBS"}));
+
+        let merged =
+            super::effective_content_json(&json!({"html": "<p>old</p>"}), Some("free text"));
+        assert_eq!(merged, json!({"html": "<p>old</p>", "text": "free text"}));
+    }
+
+    #[test]
+    fn test_effective_content_json_never_overrides_existing_text_key() {
+        let original = json!({"text": "Original result"});
+        let merged = super::effective_content_json(&original, Some("Replacement text"));
+        assert_eq!(merged, original);
+
+        let merged = super::effective_content_json(&json!({"text": Value::Null}), Some("new"));
+        assert_eq!(merged, json!({"text": Value::Null}));
+
+        let unchanged = super::effective_content_json(&json!({"html": "<p>x</p>"}), None);
+        assert_eq!(unchanged, json!({"html": "<p>x</p>"}));
+
+        let whitespace_only = super::effective_content_json(&json!({}), Some("   "));
+        assert_eq!(whitespace_only, json!({}));
+    }
+
+    #[test]
+    fn test_merge_content_text_override_mode_replaces_previous_version_text() {
+        let merged = super::merge_content_text(
+            &json!({"text": "Old version text", "html": "<p>keep</p>"}),
+            Some("New free text"),
+            true,
+        );
+        assert_eq!(
+            merged,
+            json!({"text": "New free text", "html": "<p>keep</p>"})
+        );
+
+        let blank_kept = super::merge_content_text(&json!({"text": "Old"}), Some("   "), true);
+        assert_eq!(blank_kept, json!({"text": "Old"}));
     }
 
     #[tokio::test]

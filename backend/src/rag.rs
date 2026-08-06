@@ -210,7 +210,9 @@ pub async fn index_file(
                 .push_bind(content_hash)
                 .push_bind(content.chars().count() as i32)
                 .push_bind(embedding)
-                .push("::vector")
+                // 必须用 push_unseparated：push_values 闭包内是逗号分隔的 Separated，
+                // 若用 push 会在占位符与类型转换之间插入逗号，生成非法 SQL。
+                .push_unseparated("::vector")
                 .push_bind(metadata.clone())
                 .push("now()");
         });
@@ -397,6 +399,7 @@ pub async fn retrieve(
         .into_iter()
         .filter(|(score, _)| {
             include_retrieval_candidate(*score, bm25_only, query_tokens.is_empty())
+                && *score >= settings.rag_min_retrieval_score
         })
         .map(|(_, source)| source)
         .take(limit)
@@ -1087,6 +1090,7 @@ fn tokens(text: &str) -> HashSet<String> {
     token_frequencies(text).into_keys().collect()
 }
 
+#[cfg(test)]
 fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) -> usize {
     let text_tokens = tokens(text);
     query_tokens.intersection(&text_tokens).count()
@@ -1137,6 +1141,7 @@ fn graph_relation_score(
     score
 }
 
+#[cfg(test)]
 fn graph_relation_haystack(row: &GraphRow) -> String {
     format!(
         "{} {} {} {} {} {}",
@@ -2212,11 +2217,18 @@ mod tests {
             .iter()
             .position(|value| value.abs() >= f32::EPSILON)
             .unwrap();
+        // 与查询向量首个非零分量的哈希符号对齐，保证 near/medium 向量的余弦
+        // 确定性为正，不受 hash_embedding 符号位随机性影响。
+        let sign = if query_embedding[query_index] >= 0.0 {
+            1.0
+        } else {
+            -1.0
+        };
         let mut near_embedding = vec![0.0_f32; 512];
-        near_embedding[query_index] = 0.99;
+        near_embedding[query_index] = 0.99 * sign;
         near_embedding[orthogonal_index] = 0.1;
         let mut medium_embedding = vec![0.0_f32; 512];
-        medium_embedding[query_index] = 0.95;
+        medium_embedding[query_index] = 0.95 * sign;
         medium_embedding[orthogonal_index] = 0.31;
         let mut orthogonal_embedding = vec![0.0_f32; 512];
         orthogonal_embedding[orthogonal_index] = 1.0;
@@ -2265,6 +2277,9 @@ mod tests {
             .iter()
             .any(|candidate| candidate.id == chunk_ids[2]));
 
+        // 验证距离排序算子能命中 HNSW 索引。注意：VECTOR_CANDIDATE_SQL 的
+        // ORDER BY 带有 c.id 并列排序键，HNSW 的 pathkey 无法覆盖双键排序，
+        // 规划器此时必然退化为显式 Sort，因此不能用完整候选 SQL 断言计划。
         let mut explain = pool.begin().await.unwrap();
         sqlx::raw_sql(
             "SET LOCAL enable_seqscan = off; SET LOCAL enable_bitmapscan = off; SET LOCAL enable_sort = off",
@@ -2272,14 +2287,15 @@ mod tests {
         .execute(&mut *explain)
         .await
         .unwrap();
-        let plan: Value =
-            sqlx::query_scalar(&format!("EXPLAIN (FORMAT JSON) {VECTOR_CANDIDATE_SQL}"))
-                .bind(project_id)
-                .bind(vector_literal(&query_embedding))
-                .bind(1_i64)
-                .fetch_one(&mut *explain)
-                .await
-                .unwrap();
+        let plan: Value = sqlx::query_scalar(
+            "EXPLAIN (FORMAT JSON) SELECT c.id FROM rag_document_chunks c \
+             ORDER BY c.embedding <=> $1::vector LIMIT $2",
+        )
+        .bind(vector_literal(&query_embedding))
+        .bind(2_i64)
+        .fetch_one(&mut *explain)
+        .await
+        .unwrap();
         explain.rollback().await.unwrap();
         assert!(plan.to_string().contains("ix_rag_chunks_embedding_hnsw"));
 
@@ -2293,6 +2309,149 @@ mod tests {
         assert!(results
             .iter()
             .any(|source| source.file_id == Some(file_ids[1])));
+    }
+
+    #[tokio::test]
+    async fn test_retrieval_min_score_filters_low_relevance_candidates() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let username = format!("rag_minscore_{suffix}");
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url.clone()),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustMinScore123!".to_owned(),
+            ),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let state = AppState::new(pool.clone(), settings).unwrap();
+        let user_id: i32 = sqlx::query_scalar("SELECT id FROM users WHERE username = $1")
+            .bind(&username)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        let project_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO projects (
+                name, description, is_sensitive, status, approval_enabled, owner_user_id
+            ) VALUES ($1, NULL, false, 'ACTIVE'::projectstatus, false, $2)
+            RETURNING id
+            "#,
+        )
+        .bind(format!("RAG min score project {suffix}"))
+        .bind(user_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let file_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO files (
+                project_id, uploaded_by, file_category, original_filename,
+                storage_path, file_size, file_hash, status, knowledge_sync_status
+            ) VALUES (
+                $1, $2, 'KNOWLEDGE_DOCUMENT'::filecategory, $3, $4, 1, $5,
+                'APPROVED'::filestatus, 'synced'
+            )
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(user_id)
+        .bind(format!("minscore-{suffix}.txt"))
+        .bind(format!("/tmp/minscore-{suffix}.txt"))
+        .bind(format!("minscore-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let content = "PCR protocol uses Taq polymerase at 58 C.";
+        sqlx::query(
+            r#"
+            INSERT INTO rag_document_chunks (
+                project_id, file_id, chunk_index, content, content_hash,
+                character_count, embedding, metadata_json
+            ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json)
+            "#,
+        )
+        .bind(project_id)
+        .bind(file_id)
+        .bind(content)
+        .bind(format!("minscore-chunk-{suffix}"))
+        .bind(content.chars().count() as i32)
+        .bind(vector_literal(&hash_embedding(content, 512)))
+        .execute(&pool)
+        .await
+        .unwrap();
+
+        // 默认阈值 0.15：哈希碰撞产生的低相关度候选必须被过滤。
+        let filtered = retrieve(&state, project_id, "golf sierra mountain", false)
+            .await
+            .unwrap();
+        assert!(filtered.is_empty());
+        // 相关查询高于默认阈值，不受影响。
+        let relevant = retrieve(&state, project_id, "What does the PCR protocol use?", false)
+            .await
+            .unwrap();
+        assert_eq!(relevant.len(), 1);
+
+        // 阈值设为 0 时恢复旧行为：所有正分候选都会返回。
+        let legacy_settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url.clone()),
+            ("RAG_MIN_RETRIEVAL_SCORE".to_owned(), "0".to_owned()),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+        ]))
+        .unwrap();
+        let legacy_state = AppState::new(pool.clone(), legacy_settings).unwrap();
+        let legacy = retrieve(&legacy_state, project_id, "golf sierra mountain", false)
+            .await
+            .unwrap();
+        assert_eq!(legacy.len(), 1);
+        let legacy_score = legacy[0].retrieval_score.unwrap();
+        assert!(legacy_score > 0.0 && legacy_score < 0.15);
+
+        // 边界值：恰好等于阈值的 bm25_only 候选应通过，略高于阈值则被过滤。
+        let lexical_score = bm25_scores(
+            &[ChunkRow {
+                id: 1,
+                file_id,
+                filename: format!("minscore-{suffix}.txt"),
+                content: content.to_owned(),
+            }],
+            "polymerase taq",
+        )[&1];
+        let boundary_settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url.clone()),
+            (
+                "RAG_MIN_RETRIEVAL_SCORE".to_owned(),
+                lexical_score.to_string(),
+            ),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+        ]))
+        .unwrap();
+        let boundary_state = AppState::new(pool.clone(), boundary_settings).unwrap();
+        let at_threshold = retrieve(&boundary_state, project_id, "polymerase taq", true)
+            .await
+            .unwrap();
+        assert_eq!(at_threshold.len(), 1);
+        let above_settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "RAG_MIN_RETRIEVAL_SCORE".to_owned(),
+                (lexical_score + 0.0001).to_string(),
+            ),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+        ]))
+        .unwrap();
+        let above_state = AppState::new(pool.clone(), above_settings).unwrap();
+        let above_threshold = retrieve(&above_state, project_id, "polymerase taq", true)
+            .await
+            .unwrap();
+        assert!(above_threshold.is_empty());
     }
 
     #[tokio::test]

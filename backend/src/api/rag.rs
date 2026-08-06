@@ -397,6 +397,30 @@ async fn query_project_rag(
     .await
 }
 
+/// 判断项目是否存在可检索的活跃知识块（与 crate::rag::ACTIVE_CHUNKS_SQL 的过滤条件一致）。
+async fn project_has_active_rag_chunks(
+    pool: &sqlx::PgPool,
+    project_id: i32,
+) -> Result<bool, ApiError> {
+    let exists: bool = sqlx::query_scalar(
+        r#"
+        SELECT EXISTS (
+            SELECT 1
+            FROM rag_document_chunks c
+            JOIN files f ON f.id = c.file_id
+            WHERE c.project_id = $1
+              AND f.status = 'APPROVED'::filestatus
+              AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
+              AND f.knowledge_sync_status = 'synced'
+        )
+        "#,
+    )
+    .bind(project_id)
+    .fetch_one(pool)
+    .await?;
+    Ok(exists)
+}
+
 async fn query_project_rag_inner(
     state: AppState,
     user: UserRecord,
@@ -450,7 +474,7 @@ async fn query_project_rag_inner(
                 return Err(error);
             }
         };
-        if sources.is_empty() {
+        if sources.is_empty() && !project_has_active_rag_chunks(&state.pool, project_id).await? {
             let error = ApiError::new(
                 StatusCode::CONFLICT,
                 "暂无可检索的项目资料，请先在数据页完成资料入库",
@@ -470,6 +494,8 @@ async fn query_project_rag_inner(
             .await;
             return Err(error);
         }
+        // 存在活跃知识块但全部未达相关度阈值时不报错：继续以空 sources 走生成流程，
+        // 由模型如实说明无相关资料，而不是返回低相关度噪声结果。
         sources
     };
     let mut graph_context_budget_exhausted = false;
@@ -2768,6 +2794,7 @@ fn retrieval_config(
         "retrieval_applied": retrieval_applied,
         "graph_retrieval_applied": graph_retrieval_applied,
         "graph_min_score": settings.rag_graph_min_score,
+        "retrieval_min_score": settings.rag_min_retrieval_score,
         "lexical_algorithm": "bm25",
         "bm25_k1": 1.2,
         "bm25_b": 0.75,
@@ -2977,6 +3004,7 @@ mod tests {
         assert_eq!(config["lexical_algorithm"], "bm25");
         assert_eq!(config["vector_candidate_k"], 42);
         assert_eq!(config["graph_top_k"], 8);
+        assert_eq!(config["retrieval_min_score"], 0.15);
         assert_eq!(config["effective_retrieval_top_k"], 12);
         assert_eq!(config["effective_graph_top_k"], 30);
         assert_eq!(config["collection_query"], true);
@@ -3439,6 +3467,8 @@ mod tests {
             ("DEEPSEEK_API_KEY".to_owned(), "test-key".to_owned()),
             ("DEEPSEEK_MODEL".to_owned(), "deepseek-test".to_owned()),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            // 保持既有断言不受新增相关度阈值影响；阈值过滤行为由专用测试覆盖。
+            ("RAG_MIN_RETRIEVAL_SCORE".to_owned(), "0".to_owned()),
             (
                 "STORAGE_ROOT".to_owned(),
                 storage.path().to_string_lossy().into_owned(),
@@ -3918,5 +3948,200 @@ mod tests {
                 .await
                 .unwrap();
         assert_eq!(resurrected_chunks, 0);
+    }
+
+    #[tokio::test]
+    async fn test_rag_query_unrelated_question_continues_with_empty_sources() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let admin_username = format!("rag_threshold_admin_{suffix}");
+        let deepseek_url = mock_deepseek().await;
+        let storage = tempfile::tempdir().unwrap();
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "rust-rag-threshold-secret".to_owned(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustThreshold123!".to_owned(),
+            ),
+            ("DEEPSEEK_API_BASE_URL".to_owned(), deepseek_url),
+            ("DEEPSEEK_API_KEY".to_owned(), "test-key".to_owned()),
+            ("DEEPSEEK_MODEL".to_owned(), "deepseek-test".to_owned()),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            (
+                "STORAGE_ROOT".to_owned(),
+                storage.path().to_string_lossy().into_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool, settings).unwrap());
+        let (_, login) = json_call(
+            &app,
+            "POST",
+            "/auth/login",
+            None,
+            Some(json!({"username": admin_username, "password": "RustThreshold123!"})),
+        )
+        .await;
+        let admin = login["access_token"].as_str().unwrap();
+        let (_, project) = json_call(
+            &app,
+            "POST",
+            "/projects",
+            Some(admin),
+            Some(json!({"name": format!("RAG Threshold Project {suffix}")})),
+        )
+        .await;
+        let project_id = project["id"].as_i64().unwrap();
+        let boundary = "eln-rag-threshold-boundary";
+        let multipart = format!(
+            "--{boundary}\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"protocol.txt\"\r\nContent-Type: text/plain\r\n\r\nPCR protocol uses Taq polymerase at 58 C.\r\n--{boundary}--\r\n"
+        );
+        let (_, uploaded) = request(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/files?file_category=knowledge_document"),
+            Some(admin),
+            Some(&format!("multipart/form-data; boundary={boundary}")),
+            multipart.into_bytes(),
+        )
+        .await;
+        let uploaded: Value = serde_json::from_slice(&uploaded).unwrap();
+        let file_id = uploaded["id"].as_i64().unwrap();
+        json_call(
+            &app,
+            "POST",
+            &format!("/files/{file_id}/review"),
+            Some(admin),
+            Some(json!({"action": "approve"})),
+        )
+        .await;
+        let (init_status, _) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/init"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(init_status, StatusCode::OK);
+        let (sync_status, sync_body) = json_call(
+            &app,
+            "POST",
+            &format!("/files/{file_id}/rag/sync"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(sync_status, StatusCode::OK, "sync failed: {sync_body}");
+        assert_eq!(sync_body["synced_count"], 1);
+
+        // 无关问题：候选全部低于默认相关度阈值时，sources 为空但继续生成，返回 200。
+        let (query_status, response) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/query"),
+            Some(admin),
+            Some(json!({"query": "golf sierra mountain", "mode": "project_rag"})),
+        )
+        .await;
+        assert_eq!(query_status, StatusCode::OK);
+        assert_eq!(response["sources"].as_array().unwrap().len(), 0);
+        assert!(!response["answer"].as_str().unwrap_or_default().is_empty());
+        assert!(response["query_log_id"].is_number());
+        let (logs_status, logs) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/query-logs"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(logs_status, StatusCode::OK);
+        assert_eq!(logs[0]["source_count"], 0);
+        assert_eq!(
+            logs[0]["retrieval_config_json"]["retrieval_min_score"],
+            json!(0.15)
+        );
+
+        // 相关问题高于阈值，检索结果不受影响。
+        let (related_status, related) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/query"),
+            Some(admin),
+            Some(json!({"query": "What does the PCR protocol use?", "mode": "project_rag"})),
+        )
+        .await;
+        assert_eq!(related_status, StatusCode::OK);
+        assert_eq!(related["sources"].as_array().unwrap().len(), 1);
+
+        // 已初始化但没有任何活跃知识块的项目：维持 409。
+        let (_, empty_project) = json_call(
+            &app,
+            "POST",
+            "/projects",
+            Some(admin),
+            Some(json!({"name": format!("Empty RAG Project {suffix}")})),
+        )
+        .await;
+        let empty_project_id = empty_project["id"].as_i64().unwrap();
+        let (empty_init_status, _) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{empty_project_id}/rag/init"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(empty_init_status, StatusCode::OK);
+        let (conflict_status, conflict) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{empty_project_id}/rag/query"),
+            Some(admin),
+            Some(json!({"query": "golf sierra mountain", "mode": "project_rag"})),
+        )
+        .await;
+        assert_eq!(conflict_status, StatusCode::CONFLICT);
+        assert_eq!(
+            conflict["detail"],
+            "暂无可检索的项目资料，请先在数据页完成资料入库"
+        );
+
+        // 未入库（未初始化）项目：仍为 409。
+        let (_, fresh_project) = json_call(
+            &app,
+            "POST",
+            "/projects",
+            Some(admin),
+            Some(json!({"name": format!("Fresh RAG Project {suffix}")})),
+        )
+        .await;
+        let fresh_project_id = fresh_project["id"].as_i64().unwrap();
+        let (fresh_status, fresh_body) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{fresh_project_id}/rag/query"),
+            Some(admin),
+            Some(json!({"query": "golf sierra mountain", "mode": "project_rag"})),
+        )
+        .await;
+        assert_eq!(fresh_status, StatusCode::CONFLICT);
+        assert!(fresh_body["detail"]
+            .as_str()
+            .unwrap()
+            .contains("尚未初始化"));
     }
 }

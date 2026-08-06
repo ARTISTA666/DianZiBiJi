@@ -1013,4 +1013,30 @@ mod tests {
 
         assert!(roles.iter().any(|role| role.as_str() == "quality_result"));
     }
+
+    /// 锁定“前缀包含关键词可匹配”行为：“使用试剂：/实验结果：”中的
+    /// “试剂：/结果：”子串应能命中正则，保证 content_text 归一后的
+    /// content_json["text"] 自由文本可被提取。
+    #[test]
+    fn test_extract_terms_from_free_text_content_text_prefixes() {
+        let content = json!({
+            "text": "使用试剂：CCK-8 试剂盒、DMEM 培养基\n使用仪器：BioTek Synergy H1\n实验结果：细胞活力 95%"
+        });
+        let terms = extract_terms(&json!({}), &content);
+        let has_term = |entity_type: &str, relation_type: &str, label: &str| {
+            terms.iter().any(|term| {
+                term.entity_type == entity_type
+                    && term.relation_type == relation_type
+                    && term.label == label
+            })
+        };
+        assert!(has_term("reagent", "uses_reagent", "CCK-8 试剂盒"));
+        assert!(has_term("reagent", "uses_reagent", "DMEM 培养基"));
+        assert!(has_term(
+            "instrument",
+            "uses_instrument",
+            "BioTek Synergy H1"
+        ));
+        assert!(has_term("result", "produces_result", "细胞活力 95%"));
+    }
 }

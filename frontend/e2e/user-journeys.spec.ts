@@ -99,9 +99,8 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
 
   await addProjectMember(page, authorId);
   await addProjectMember(page, reviewerId, async (dialog) => {
-    const permissions = dialog.locator("fieldset").getByRole("checkbox");
-    await permissions.nth(1).uncheck();
-    await permissions.nth(2).check();
+    // 保留默认写权限：OCR 提取文本需要写权限，确认校对需要审权限
+    await dialog.locator("fieldset").getByRole("checkbox").nth(2).check();
   });
   await logout(page);
 

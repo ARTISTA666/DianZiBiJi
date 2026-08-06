@@ -40,6 +40,7 @@ pub struct Settings {
     pub rag_vector_candidate_k: usize,
     pub rag_graph_top_k: usize,
     pub rag_graph_min_score: f64,
+    pub rag_min_retrieval_score: f64,
     pub document_text_max_chars: usize,
     pub upload_max_bytes: usize,
     pub storage_root: String,
@@ -117,6 +118,7 @@ impl Settings {
             rag_vector_candidate_k: parse(values, "RAG_VECTOR_CANDIDATE_K", 30)?,
             rag_graph_top_k: parse(values, "RAG_GRAPH_TOP_K", 10)?,
             rag_graph_min_score: parse(values, "RAG_GRAPH_MIN_SCORE", 1.0)?,
+            rag_min_retrieval_score: parse(values, "RAG_MIN_RETRIEVAL_SCORE", 0.15)?,
             document_text_max_chars: parse(values, "DOCUMENT_TEXT_MAX_CHARS", 2_000_000)?,
             upload_max_bytes: parse(values, "UPLOAD_MAX_BYTES", 50 * 1024 * 1024)?,
             storage_root: get("STORAGE_ROOT", "/storage"),
@@ -167,7 +169,10 @@ impl Settings {
                 value: self.rag_graph_min_score.to_string(),
             });
         }
+        if !self.rag_min_retrieval_score.is_finite() || self.rag_min_retrieval_score < 0.0 {
             return Err(ConfigError::InvalidValue {
+                name: "RAG_MIN_RETRIEVAL_SCORE",
+                value: self.rag_min_retrieval_score.to_string(),
             });
         }
         validate_range("RAG_CHUNK_SIZE", self.rag_chunk_size, 200, usize::MAX)?;
@@ -521,20 +526,27 @@ mod tests {
     }
 
     #[test]
+    fn rag_min_retrieval_score_defaults_to_relevance_floor() {
         let settings = Settings::from_map(&HashMap::new()).unwrap();
+        assert_eq!(settings.rag_min_retrieval_score, 0.15);
 
         let overridden = Settings::from_map(&HashMap::from([(
+            "RAG_MIN_RETRIEVAL_SCORE".to_owned(),
             "0.4".to_owned(),
         )]))
         .unwrap();
+        assert_eq!(overridden.rag_min_retrieval_score, 0.4);
     }
 
     #[test]
+    fn rag_min_retrieval_score_must_be_finite_and_nonnegative() {
         for value in ["-0.1", "NaN", "inf", "not-a-number"] {
             let error = Settings::from_map(&HashMap::from([(
+                "RAG_MIN_RETRIEVAL_SCORE".to_owned(),
                 value.to_owned(),
             )]))
             .unwrap_err();
+            assert!(error.to_string().contains("RAG_MIN_RETRIEVAL_SCORE"));
         }
     }
 

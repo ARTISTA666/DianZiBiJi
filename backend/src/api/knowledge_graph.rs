@@ -378,4 +378,195 @@ mod tests {
             first_relations
         );
     }
+
+    /// 只带 content_text（不带 content_json 的 text）创建笔记，
+    /// submit 触发提取后图谱应含从自由文本提取的实体。
+    #[tokio::test]
+    async fn test_content_text_only_note_extracts_knowledge_graph_entities() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let admin_username = format!("kg_text_admin_{suffix}");
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "rust-kg-content-text-secret".to_owned(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool, settings).unwrap());
+        let (_, login) = call(
+            &app,
+            "POST",
+            "/auth/login",
+            None,
+            Some(json!({"username": admin_username, "password": "RustAdmin123!"})),
+        )
+        .await;
+        let admin = login["access_token"].as_str().unwrap();
+        let (_, project) = call(
+            &app,
+            "POST",
+            "/projects",
+            Some(admin),
+            Some(json!({
+                "name": format!("KG Content Text Project {suffix}"),
+                "approval_enabled": false
+            })),
+        )
+        .await;
+        let project_id = project["id"].as_i64().unwrap();
+        let (note_status, note) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(admin),
+            Some(json!({
+                "title": "Free text viability assay",
+                "experiment_type": "Cell assay",
+                "fixed_fields_json": {},
+                "content_text": "使用试剂：CCK-8 试剂盒、DMEM 培养基\n使用仪器：BioTek Synergy H1\n实验结果：细胞活力 95%"
+            })),
+        )
+        .await;
+        assert_eq!(note_status, StatusCode::OK);
+        let note_id = note["id"].as_i64().unwrap();
+        let (versions_status, versions) = call(
+            &app,
+            "GET",
+            &format!("/notes/{note_id}/versions"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(versions_status, StatusCode::OK);
+        assert_eq!(
+            versions[0]["content_json"]["text"],
+            "使用试剂：CCK-8 试剂盒、DMEM 培养基\n使用仪器：BioTek Synergy H1\n实验结果：细胞活力 95%"
+        );
+        let (submit_status, submitted) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/submit"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(submit_status, StatusCode::OK);
+        assert_eq!(submitted["status"], "approved");
+
+        let (graph_status, graph) = call(
+            &app,
+            "GET",
+            &format!("/notes/{note_id}/kg/graph"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(graph_status, StatusCode::OK);
+        let labels: Vec<&str> = graph["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|entity| entity["label"].as_str())
+            .collect();
+        for expected in [
+            "CCK-8 试剂盒",
+            "DMEM 培养基",
+            "BioTek Synergy H1",
+            "细胞活力 95%",
+        ] {
+            assert!(
+                labels.contains(&expected),
+                "missing graph label: {expected}"
+            );
+        }
+        let relation_types: Vec<&str> = graph["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter_map(|relation| relation["relation_type"].as_str())
+            .collect();
+        for expected in ["uses_reagent", "uses_instrument", "produces_result"] {
+            assert!(
+                relation_types.contains(&expected),
+                "missing relation type: {expected}"
+            );
+        }
+
+        // 更新路径：草稿笔记只带 content_text 的 PATCH 同样归一进 content_json。
+        let (draft_status, draft) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(admin),
+            Some(json!({
+                "title": "Free text draft",
+                "experiment_type": "Cell assay",
+                "fixed_fields_json": {},
+                "content_text": "样本: Cell sample B"
+            })),
+        )
+        .await;
+        assert_eq!(draft_status, StatusCode::OK);
+        let draft_id = draft["id"].as_i64().unwrap();
+        let (update_status, _) = call(
+            &app,
+            "PATCH",
+            &format!("/notes/{draft_id}"),
+            Some(admin),
+            Some(json!({
+                "content_text": "样本: Cell sample C\n结果: 状态良好",
+                "change_summary": "replace free text"
+            })),
+        )
+        .await;
+        assert_eq!(update_status, StatusCode::OK);
+        let (_, versions) = call(
+            &app,
+            "GET",
+            &format!("/notes/{draft_id}/versions"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(
+            versions[0]["content_json"]["text"],
+            "样本: Cell sample C\n结果: 状态良好"
+        );
+        // 已有 "text" 键时 content_text 不覆盖（前端行为零变化）。
+        let (no_override_status, _) = call(
+            &app,
+            "PATCH",
+            &format!("/notes/{draft_id}"),
+            Some(admin),
+            Some(json!({
+                "content_json": {"text": "Explicit text wins"},
+                "content_text": "Ignored text"
+            })),
+        )
+        .await;
+        assert_eq!(no_override_status, StatusCode::OK);
+        let (_, versions) = call(
+            &app,
+            "GET",
+            &format!("/notes/{draft_id}/versions"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(versions[0]["content_json"]["text"], "Explicit text wins");
+    }
 }

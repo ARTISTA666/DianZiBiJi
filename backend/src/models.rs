@@ -345,6 +345,9 @@ pub struct NoteCreate {
     pub fixed_fields_json: Value,
     #[serde(default = "empty_json_object")]
     pub content_json: Value,
+    /// 自由文本正文。content_json 尚无 "text" 键时会归一写入 content_json["text"]。
+    #[serde(default)]
+    pub content_text: Option<String>,
 }
 
 fn empty_json_object() -> Value {
@@ -358,6 +361,9 @@ pub struct NoteUpdate {
     pub experiment_date: Option<NaiveDate>,
     pub fixed_fields_json: Option<Value>,
     pub content_json: Option<Value>,
+    /// 自由文本正文。content_json 尚无 "text" 键时会归一写入 content_json["text"]。
+    #[serde(default)]
+    pub content_text: Option<String>,
     pub change_summary: Option<String>,
 }
 
