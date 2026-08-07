@@ -4,14 +4,14 @@ import { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { RotateCw, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuthStore, useProjectStore } from "@/stores";
-import { getErrorMessage } from "@/lib/utils";
+import { cn, getErrorMessage } from "@/lib/utils";
 import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
 
 export default function KGPage() {
   const { id } = useParams();
@@ -28,6 +28,8 @@ export default function KGPage() {
   const [error, setError] = useState("");
   const [entityFilter, setEntityFilter] = useState("");
   const [relationFilter, setRelationFilter] = useState("");
+  const [entityKeyword, setEntityKeyword] = useState("");
+  const [selectedEntityId, setSelectedEntityId] = useState<number | null>(null);
   const [rebuilding, setRebuilding] = useState(false);
   const [extractingNoteId, setExtractingNoteId] = useState<number | null>(null);
   const feedback = useActionFeedback();
@@ -42,12 +44,17 @@ export default function KGPage() {
     Array.from(new Set((kgGraph?.entities || []).map((e) => e.entity_type))).sort(),
   [kgGraph]);
 
+  const entityLabels = useMemo(() =>
+    new Map((kgGraph?.entities || []).map((e) => [e.id, e.label] as const)),
+  [kgGraph]);
+
   const relationTypes = useMemo(() =>
     Array.from(new Set((kgGraph?.relations || []).map((r) => r.relation_type))).sort(),
   [kgGraph]);
 
   const filteredEntities = useMemo(() => {
-    if (!entityFilter && !relationFilter) return kgGraph?.entities || [];
+    const keyword = entityKeyword.trim().toLowerCase();
+    if (!entityFilter && !relationFilter && !keyword) return kgGraph?.entities || [];
     const relatedIds = new Set<number>();
     (kgGraph?.relations || []).forEach((r) => {
       if (relationFilter && r.relation_type !== relationFilter) return;
@@ -57,8 +64,9 @@ export default function KGPage() {
     return (kgGraph?.entities || []).filter((e) =>
       (!entityFilter || e.entity_type === entityFilter)
       && (!relationFilter || relatedIds.has(e.id))
+      && (!keyword || e.label.toLowerCase().includes(keyword))
     );
-  }, [kgGraph, entityFilter, relationFilter]);
+  }, [kgGraph, entityFilter, relationFilter, entityKeyword]);
 
   const handleExtract = async (noteId: number) => {
     if (!token) return;
@@ -130,6 +138,8 @@ export default function KGPage() {
             {relationTypes.map((t) => (<SelectItem key={t} value={t}>{kgRelationTypeText[t] || t}</SelectItem>))}
           </SelectContent>
         </Select>
+        <Input value={entityKeyword} onChange={(e) => setEntityKeyword(e.target.value)}
+          placeholder="按实体关键词过滤..." className="flex-1" />
       </div>
 
       {/* 实体列表 */}
@@ -140,11 +150,22 @@ export default function KGPage() {
             <p className="text-sm text-muted-foreground">暂无实体</p>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {entities.map((e) => (
-                <Badge key={e.id} variant="outline" className="text-xs py-1">
-                  {kgEntityTypeText[e.entity_type] || e.entity_type}: {e.label}
-                </Badge>
-              ))}
+              {entities.map((e) => {
+                const selected = selectedEntityId === e.id;
+                return (
+                  <button key={e.id} type="button"
+                    onClick={() => setSelectedEntityId(selected ? null : e.id)}
+                    title={selected ? "取消高亮其关联关系" : "点击高亮其关联关系"}
+                    className={cn(
+                      "rounded-full border px-2.5 py-1 text-xs transition-colors",
+                      selected
+                        ? "border-transparent bg-primary text-primary-foreground"
+                        : "hover:bg-muted"
+                    )}>
+                    {kgEntityTypeText[e.entity_type] || e.entity_type}: {e.label}
+                  </button>
+                );
+              })}
             </div>
           )}
         </CardContent>
@@ -158,15 +179,22 @@ export default function KGPage() {
             <p className="text-sm text-muted-foreground">暂无关系</p>
           ) : (
             <div className="space-y-1 max-h-60 overflow-y-auto">
-              {relations.map((r, i) => (
-                <p key={r.id || i} className="text-sm">
-                  <span className="text-muted-foreground">#{r.source_entity_id}</span>
-                  {" → "}
-                  <span className="font-medium">{kgRelationTypeText[r.relation_type] || r.relation_type}</span>
-                  {" → "}
-                  <span className="text-muted-foreground">#{r.target_entity_id}</span>
-                </p>
-              ))}
+              {relations.map((r, i) => {
+                const highlighted = selectedEntityId !== null
+                  && (r.source_entity_id === selectedEntityId || r.target_entity_id === selectedEntityId);
+                return (
+                  <p key={r.id || i} className={cn("rounded px-1 py-0.5 text-sm", highlighted && "bg-primary/10")}>
+                    <span className="font-medium">{entityLabels.get(r.source_entity_id) || `实体 #${r.source_entity_id}`}</span>
+                    <span className="text-muted-foreground">{` (#${r.source_entity_id})`}</span>
+                    {" → "}
+                    <span className="font-medium text-primary">{kgRelationTypeText[r.relation_type] || r.relation_type}</span>
+                    {" → "}
+                    <span className="font-medium">{entityLabels.get(r.target_entity_id) || `实体 #${r.target_entity_id}`}</span>
+                    <span className="text-muted-foreground">{` (#${r.target_entity_id})`}</span>
+                    <span className="ml-2 text-xs text-muted-foreground">置信度 {r.confidence.toFixed(2)}</span>
+                  </p>
+                );
+              })}
             </div>
           )}
         </CardContent>

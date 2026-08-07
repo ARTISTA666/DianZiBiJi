@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, useTransition } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import {
@@ -46,6 +47,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
   const loadBaseProjectData = useProjectStore((s) => s.loadBaseProjectData);
   const selectProject = useProjectStore((s) => s.selectProject);
   const projects = useProjectStore((s) => s.projects);
+  const pendingNotes = useProjectStore((s) => s.pendingNotes);
 
   const projectId = Number(params.id);
   const project = selectedProject?.id === projectId ? selectedProject : null;
@@ -72,6 +74,8 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
     [canManage, canReview],
   );
   const tabs = evaluationOnly ? evaluatorTabs : visibleRegularTabs;
+  // 待审批角标：pendingNotes 由 loadBaseProjectData 统一加载，此处只统计当前项目。
+  const pendingApprovalCount = pendingNotes.filter((n) => n.project_id === projectId).length;
   const blindReviewPath = `/projects/${projectId}/blind-review`;
   const isBlindReviewPath = pathname === blindReviewPath;
 
@@ -219,7 +223,21 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
         setTimeout(() => setContentVisible(true), 50);
       }}>
         <TabsList className="w-full justify-start overflow-x-auto">
-          {tabs.map((t) => (<TabsTrigger key={t.value} value={t.value}>{t.label}</TabsTrigger>))}
+          {tabs.map((t) => (
+            <TabsTrigger key={t.value} value={t.value}>
+              {t.label}
+              {t.value === "approvals" && pendingApprovalCount > 0 && (
+                // aria-hidden 保证角标不进入 tab 的 accessible name（E2E 按精确名称匹配）。
+                <Badge
+                  aria-hidden="true"
+                  variant="destructive"
+                  className="ml-1.5 h-4 min-w-4 justify-center rounded-full px-1 text-[10px] leading-none"
+                >
+                  {pendingApprovalCount}
+                </Badge>
+              )}
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
 

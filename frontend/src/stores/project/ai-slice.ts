@@ -34,9 +34,18 @@ import type {
 import { epochs, isCurrentProjectRequest } from "./request-epoch";
 import type { ProjectStoreState } from "./index";
 
+export type RagConversationEntry = {
+  question: string;
+  result: RagQueryResponse;
+};
+
 export interface AiSlice {
   ragStatus: RagStatus | null;
   ragAnswer: RagQueryResponse | null;
+  ragConversation: RagConversationEntry[];
+  /** 会话所属项目 ID，用于同项目往返导航时保留对话历史。 */
+  ragConversationProjectId: number | null;
+  clearRagConversation: () => void;
   kgGraph: KnowledgeGraph | null;
   queryLogs: AIQueryLog[];
   queryAnalytics: AIQueryAnalytics | null;
@@ -61,6 +70,9 @@ export interface AiSlice {
 export const createAiSlice: StateCreator<ProjectStoreState, [], [], AiSlice> = (set, get) => ({
   ragStatus: null,
   ragAnswer: null,
+  ragConversation: [],
+  ragConversationProjectId: null,
+  clearRagConversation: () => set({ ragConversation: [], ragAnswer: null, ragConversationProjectId: null }),
   kgGraph: null,
   queryLogs: [],
   queryAnalytics: null,
@@ -79,12 +91,21 @@ export const createAiSlice: StateCreator<ProjectStoreState, [], [], AiSlice> = (
   queryRag: async (token, projectId, question, mode) => {
     const requestEpoch = epochs.projectData;
     const queryEpoch = ++epochs.ragQuery;
-    const answer = await queryProjectRag(token, projectId, question, mode);
+    // 轻量多轮对话：把最近 3 轮对话传给后端拼入提示词（首轮为空数组时后端行为不变）。
+    const history = get().ragConversation.slice(-3).map((entry) => ({
+      question: entry.question,
+      answer: entry.result.answer,
+    }));
+    const answer = await queryProjectRag(token, projectId, question, mode, history);
     if (
       queryEpoch === epochs.ragQuery
       && isCurrentProjectRequest(get, projectId, requestEpoch)
     ) {
-      set({ ragAnswer: answer });
+      set({
+        ragConversation: [...get().ragConversation, { question, result: answer }],
+        ragConversationProjectId: projectId,
+        ragAnswer: answer,
+      });
     }
     return answer;
   },

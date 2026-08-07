@@ -598,6 +598,16 @@ pub struct RagQueryRequest {
     pub query: String,
     #[serde(default = "default_rag_mode")]
     pub mode: String,
+    /// 可选的多轮对话历史（由客户端传入最近若干轮），用于拼入提示词。
+    #[serde(default)]
+    pub history: Option<Vec<RagHistoryEntry>>,
+}
+
+/// 一轮历史对话：用户问题与系统回答。
+#[derive(Clone, Debug, Deserialize)]
+pub struct RagHistoryEntry {
+    pub question: String,
+    pub answer: String,
 }
 
 fn default_rag_mode() -> String {

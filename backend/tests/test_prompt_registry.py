@@ -54,13 +54,18 @@ def _extract_rust_versions(source: str) -> set[str]:
 # ---------------------------------------------------------------------------
 # Mapping: Python prompt key → expected Rust file(s)
 # ---------------------------------------------------------------------------
-# project_rag / bm25_rag / pure_llm / structured_query live in rag.rs
+# project_rag / bm25_rag / pure_llm / structured_query live in rag.rs;
+# the *_history variants are the multi-turn versions of the same prompts.
 # agent_writer lives in agents.rs
 _PROMPT_TO_RUST: dict[str, list[Path]] = {
     "project_rag": [_RAG_RS],
+    "project_rag_history": [_RAG_RS],
     "bm25_rag": [_RAG_RS],
+    "bm25_rag_history": [_RAG_RS],
     "pure_llm": [_RAG_RS],
+    "pure_llm_history": [_RAG_RS],
     "structured_query": [_RAG_RS],
+    "structured_query_history": [_RAG_RS],
     "agent_writer": [_AGENTS_RS],
 }
 

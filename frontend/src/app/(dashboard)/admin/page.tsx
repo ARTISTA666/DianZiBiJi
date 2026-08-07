@@ -6,10 +6,12 @@ import {
   getAuditLogs,
   getGroupMembers,
   getGroups,
+  getProjectsPaginated,
   getUsers,
   type AuditLog as AuditLogType,
   type Group,
   type GroupMember,
+  type Project,
   type User,
 } from "@/lib/api";
 import { useAuthStore } from "@/stores";
@@ -26,6 +28,8 @@ export default function AdminPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [auditLogs, setAuditLogs] = useState<AuditLogType[]>([]);
+  const [auditTotal, setAuditTotal] = useState(0);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [groupMembers, setGroupMembers] = useState<GroupMember[]>([]);
   const [selectedGroupId, setSelectedGroupId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -40,14 +44,30 @@ export default function AdminPage() {
 
   const refresh = useCallback(async () => {
     if (!token || currentUser?.role !== "super_admin") return;
-    const [nextUsers, nextGroups, nextLogs] = await Promise.all([
+    // 审计筛选用项目下拉；后端单页上限 100，逐页拉取全量避免一次拉取过大。
+    const fetchAllProjects = async () => {
+      const all: Project[] = [];
+      let skip = 0;
+      const limit = 100;
+      for (;;) {
+        const page = await getProjectsPaginated(token, skip, limit);
+        all.push(...page.items);
+        skip += limit;
+        if (page.items.length < limit || skip >= page.total) break;
+      }
+      return all;
+    };
+    const [nextUsers, nextGroups, nextLogs, nextProjects] = await Promise.all([
       getUsers(token),
       getGroups(token),
       getAuditLogs(token),
+      fetchAllProjects(),
     ]);
     setUsers(nextUsers.items);
     setGroups(nextGroups);
     setAuditLogs(nextLogs.items);
+    setAuditTotal(nextLogs.total);
+    setProjects(nextProjects);
     setSelectedGroupId((current) => current || (nextGroups[0] ? String(nextGroups[0].id) : ""));
   }, [token, currentUser?.role]);
 
@@ -160,9 +180,14 @@ export default function AdminPage() {
             <AuditLog
               token={token}
               auditLogs={auditLogs}
+              auditTotal={auditTotal}
               usersById={usersById}
+              projects={projects}
               busy={busy}
-              onLogsUpdate={setAuditLogs}
+              onLogsUpdate={(logs, total) => {
+                setAuditLogs(logs);
+                setAuditTotal(total);
+              }}
               onError={setError}
             />
           )}

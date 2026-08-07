@@ -16,6 +16,7 @@ import type {
   AIQueryEvaluation,
   AIQueryLog,
   AIQueryModeStats,
+  AuditLog,
   BlindReviewBatch,
   BlindReviewEvaluation,
   BlindReviewEvidence,
@@ -114,4 +115,6 @@ export type ApiContractChecks = [
   Expect<IsAssignable<Response<"BlindReviewItemRead">, BlindReviewItem>>,
   // search
   Expect<IsAssignable<Response<"SearchResult">, SearchResult>>,
+  // audit
+  Expect<IsAssignable<Response<"AuditLogRead">, AuditLog>>,
 ];

@@ -42,7 +42,8 @@ async function login(page: Page, username: string, password: string) {
   const loginButton = page.getByRole("button", { name: "登录" });
   await expect(loginButton).toBeEnabled();
   await loginButton.click();
-  await expect(page.getByRole("link", { name: "项目" })).toBeVisible();
+  // 项目首页待审批横幅会渲染含项目名的链接，必须精确匹配导航链接本身。
+  await expect(page.getByRole("link", { name: "项目", exact: true })).toBeVisible();
 }
 
 
@@ -133,7 +134,7 @@ test("登录并完成笔记审批", async ({ page }) => {
 
   const card = page.getByTestId(`approval-note-${noteId}`);
   await card.getByPlaceholder("审核意见").fill("E2E 审批通过");
-  await card.getByRole("button", { name: "通过" }).click();
+  await card.getByRole("button", { name: "通过", exact: true }).click();
 
   await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
 });
@@ -208,7 +209,7 @@ test("独立评价人只能在盲评页面提交评价", async ({ page }) => {
 
 test("系统管理员完成账号、小组和审计闭环", async ({ page }) => {
   await login(page, "admin", "admin123");
-  await page.getByRole("link", { name: "管理" }).click();
+  await page.getByRole("link", { name: "管理", exact: true }).click();
   await expect(page.getByRole("heading", { name: "系统管理" })).toBeVisible();
 
   await page.getByRole("textbox", { name: "账号" }).fill(MANAGED_USER);
@@ -222,7 +223,7 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   const managedUserId = Number((await managedRow.getAttribute("data-testid"))?.replace("admin-user-", ""));
   expect(managedUserId).toBeGreaterThan(0);
 
-  await page.getByRole("tab", { name: "小组" }).click();
+  await page.getByRole("tab", { name: "小组", exact: true }).click();
   await page.getByLabel("小组名称").fill(MANAGED_GROUP);
   await page.getByLabel("说明").fill("隔离端到端管理测试");
   await selectRadixOption(page, "负责人", `${MANAGED_DISPLAY_NAME}（${MANAGED_USER}）`);
@@ -234,7 +235,7 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await expect(page.getByText("小组成员已保存")).toBeVisible();
   await expect(page.getByText(`${MANAGED_DISPLAY_NAME} · member`)).toBeVisible();
 
-  await page.getByRole("tab", { name: "审计" }).click();
+  await page.getByRole("tab", { name: "审计", exact: true }).click();
   await page.getByLabel("审计动作").fill("create_user");
   await page.getByRole("button", { name: "查询审计日志" }).click();
   await expect(page.getByText("create_user", { exact: true }).first()).toBeVisible();
@@ -252,7 +253,7 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await expect(page.getByLabel(`用户 ${managedUserId} 读权限`)).toBeDisabled();
   await expect(page.getByLabel(`用户 ${managedUserId} 评权限`)).toBeDisabled();
   await page.getByRole("button", { name: `移除独立盲评人 ${managedUserId}` }).click();
-  await page.getByRole("button", { name: "确认" }).click();
+  await page.getByRole("button", { name: "确认", exact: true }).click();
   await expect(reviewerRow).toHaveCount(0);
 
   await page.getByRole("button", { name: "账户菜单" }).click();

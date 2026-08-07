@@ -1,14 +1,16 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+import { withPermissionHint } from "./permission-hints";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export function getErrorMessage(e: unknown, fallback = "操作失败"): string {
-  if (e instanceof Error) return e.message;
-  if (typeof e === "string") return e;
-  return fallback;
+  const base = e instanceof Error ? e.message : typeof e === "string" ? e : fallback;
+  // 全局接入权限/状态指引，保证各调用点无需重复处理。
+  return withPermissionHint(e, base);
 }
 
 export function formatFileSize(bytes: number): string {

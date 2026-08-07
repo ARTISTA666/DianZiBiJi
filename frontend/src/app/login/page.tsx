@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
+import { SESSION_EXPIRED_FLAG } from "@/lib/permission-hints";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,15 +19,29 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [sessionExpired, setSessionExpired] = useState(false);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     if (hydrated && token) router.replace("/projects");
   }, [hydrated, token, router]);
 
+  // 会话过期被踢回登录页时展示一次性提示，读后即清除。
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem(SESSION_EXPIRED_FLAG)) {
+        sessionStorage.removeItem(SESSION_EXPIRED_FLAG);
+        setSessionExpired(true);
+      }
+    } catch {
+      // sessionStorage 不可用时忽略过期提示。
+    }
+  }, []);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
+    setSessionExpired(false);
     setBusy(true);
     try {
       await login(username, password);
@@ -51,6 +66,11 @@ export default function LoginPage() {
           <CardDescription>知识图谱 · RAG · 科研过程管理</CardDescription>
         </CardHeader>
         <CardContent>
+          {sessionExpired && (
+            <p className="mb-4 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-800" role="status">
+              会话已过期，请重新登录
+            </p>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="username">账号</Label>

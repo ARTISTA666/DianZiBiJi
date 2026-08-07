@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
+import { getProjectAuditLogs, type AuditLog } from "@/lib/api";
+import { AuditTable } from "@/components/shared/audit-table";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { SettingsSkeleton } from "@/components/skeletons";
@@ -61,6 +63,36 @@ export default function SettingsPage() {
   const project = selectedProject?.id === projectId ? selectedProject : null;
   const [editName, setEditName] = useState(project?.name || "");
   const [editDesc, setEditDesc] = useState(project?.description || "");
+
+  const membership = members.find((m) => m.user_id === user?.id);
+  const canManageProject = user?.role === "super_admin"
+    || (project?.owner_user_id != null && project.owner_user_id === user?.id)
+    || membership?.can_manage === true
+    || membership?.project_role === "owner";
+
+  // 项目操作记录（仅管理者拉取，避免非管理者触发 403）
+  const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
+  const [auditLoading, setAuditLoading] = useState(false);
+  const [auditError, setAuditError] = useState("");
+
+  const loadAuditLogs = async () => {
+    if (!token) return;
+    setAuditLoading(true);
+    setAuditError("");
+    try {
+      const result = await getProjectAuditLogs(token, projectId, { limit: 50 });
+      setAuditLogs(result.items);
+    } catch (e) {
+      setAuditError(getErrorMessage(e, "操作记录加载失败"));
+    } finally {
+      setAuditLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (canManageProject) loadAuditLogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, projectId, canManageProject]);
 
   useEffect(() => {
     if (project) {
@@ -164,11 +196,6 @@ export default function SettingsPage() {
 
   if (busy) return <SettingsSkeleton />;
 
-  const membership = members.find((m) => m.user_id === user?.id);
-  const canManageProject = user?.role === "super_admin"
-    || (project?.owner_user_id != null && project.owner_user_id === user?.id)
-    || membership?.can_manage === true
-    || membership?.project_role === "owner";
   if (!canManageProject) {
     return <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">只有项目管理员可以访问项目设置。</p>;
   }
@@ -306,6 +333,26 @@ export default function SettingsPage() {
         </CardContent>
       </Card>
       {ConfirmDialog}
+
+      {/* 项目操作记录 */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base">项目操作记录</CardTitle>
+            <Button size="sm" variant="outline" onClick={loadAuditLogs} disabled={auditLoading}>
+              {auditLoading ? "刷新中..." : "刷新"}
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {auditError && <p className="mb-2 text-sm text-destructive" role="alert">{auditError}</p>}
+          {auditLogs.length === 0 ? (
+            <p className="text-sm text-muted-foreground">{auditLoading ? "加载中..." : "暂无操作记录"}</p>
+          ) : (
+            <AuditTable logs={auditLogs} />
+          )}
+        </CardContent>
+      </Card>
 
       {/* 系统测试入口 — 隐藏在日常界面之外 */}
       <div className="border-t pt-4 text-center">

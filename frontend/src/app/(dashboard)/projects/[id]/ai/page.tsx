@@ -1,15 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import { Database, Send, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { CitationRichText, RagAnswerBlock, ragModeText } from "@/lib/citations";
 
 const modes = [
   { value: "auto", label: "自动选择" },
@@ -24,8 +26,11 @@ export default function AIPage() {
   const projectId = Number(id);
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
-  const ragAnswer = useProjectStore((s) => s.ragAnswer);
+  const ragConversation = useProjectStore((s) => s.ragConversation);
+  const ragConversationProjectId = useProjectStore((s) => s.ragConversationProjectId);
+  const clearRagConversation = useProjectStore((s) => s.clearRagConversation);
   const ragStatus = useProjectStore((s) => s.ragStatus);
+  const queryLogs = useProjectStore((s) => s.queryLogs);
   const selectedProject = useProjectStore((s) => s.selectedProject);
   const members = useProjectStore((s) => s.members);
   const initRag = useProjectStore((s) => s.initRag);
@@ -37,6 +42,7 @@ export default function AIPage() {
   const [initBusy, setInitBusy] = useState(false);
   const [error, setError] = useState("");
   const feedback = useActionFeedback();
+  const bottomRef = useRef<HTMLDivElement>(null);
   const membership = members.find((member) => member.user_id === user?.id);
   const canManage = user?.role === "super_admin"
     || selectedProject?.owner_user_id === user?.id
@@ -47,6 +53,19 @@ export default function AIPage() {
   useEffect(() => {
     if (token) loadAITabData(token, projectId);
   }, [token, projectId, loadAITabData]);
+
+  useEffect(() => {
+    // 仅当会话属于其他项目时清空；同项目内往返导航（如点引用跳数据页）保留多轮对话。
+    if (ragConversationProjectId !== null && ragConversationProjectId !== projectId) {
+      clearRagConversation();
+    }
+  }, [projectId, ragConversationProjectId, clearRagConversation]);
+
+  useEffect(() => {
+    if (ragConversation.length > 0 || busy) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [ragConversation.length, busy]);
 
   const handleInit = async () => {
     if (!token || !canManage || initBusy) return;
@@ -111,7 +130,32 @@ export default function AIPage() {
           <CardTitle className="flex items-center gap-2 text-base"><Sparkles className="h-5 w-5 text-primary" />AI 智能问答</CardTitle>
           <CardDescription>基于项目资料库和知识图谱回答实验相关问题</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
+          {ragConversation.length > 0 && (
+            <div className="space-y-3">
+              {ragConversation.map((entry, index) => (
+                <div key={index} className="space-y-2">
+                  <div className="flex justify-end">
+                    <p className="max-w-[80%] rounded-md bg-primary/10 px-3 py-2 text-sm whitespace-pre-wrap">
+                      {entry.question}
+                    </p>
+                  </div>
+                  <Card className="bg-muted/50"><CardContent className="py-4">
+                    <RagAnswerBlock result={entry.result} projectId={projectId} />
+                  </CardContent></Card>
+                </div>
+              ))}
+              {busy && (
+                <Card className="bg-muted/50"><CardContent className="space-y-2 py-4">
+                  <Skeleton className="h-4 w-3/4" />
+                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-4 w-1/2" />
+                </CardContent></Card>
+              )}
+              <div ref={bottomRef} />
+            </div>
+          )}
+
           <div className="flex gap-2">
             <Select value={mode} onValueChange={setMode}>
               <SelectTrigger className="w-36"><SelectValue /></SelectTrigger>
@@ -126,23 +170,43 @@ export default function AIPage() {
               <Send className="mr-2 h-4 w-4" />{busy ? "查询中..." : "提问"}
             </Button>
           </div>
-          {ragAnswer && (
-            <div className="mt-4">
-              <Card className="bg-muted/50"><CardContent className="py-4">
-                <p className="text-sm whitespace-pre-wrap">{ragAnswer.answer}</p>
-                {ragAnswer.sources && ragAnswer.sources.length > 0 && (
-                  <div className="mt-3 pt-3 border-t">
-                    <p className="text-xs text-muted-foreground mb-1">来源：</p>
-                    {ragAnswer.sources.map((src, i) => (
-                      <p key={i} className="text-xs text-muted-foreground">· {src.filename || src.snippet?.slice(0, 80)}</p>
-                    ))}
-                  </div>
-                )}
-              </CardContent></Card>
-            </div>
-          )}
         </CardContent>
       </Card>
+
+      {queryLogs.length > 0 && (
+        <details className="rounded-md border">
+          <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium">
+            历史问答（{queryLogs.length} 条）
+          </summary>
+          <div className="space-y-2 border-t px-4 py-3">
+            {queryLogs.map((log) => (
+              <div key={log.id} className="rounded-md border p-3 text-sm">
+                <p className="text-xs text-muted-foreground">
+                  {new Date(log.created_at).toLocaleString("zh-CN")}
+                  {" · "}
+                  {ragModeText[log.rag_mode] || log.rag_mode}
+                  {" · 耗时 "}
+                  {log.response_ms} ms
+                </p>
+                <p className="mt-1 font-medium">{log.question}</p>
+                {log.answer && (
+                  <details className="mt-1">
+                    <summary className="cursor-pointer select-none text-xs text-muted-foreground">查看回答</summary>
+                    <div className="mt-1 text-sm whitespace-pre-wrap">
+                      <CitationRichText
+                        answer={log.answer}
+                        sources={log.sources_json || []}
+                        graphContext={log.graph_context_json || []}
+                        projectId={projectId}
+                      />
+                    </div>
+                  </details>
+                )}
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
     </div>
   );
 }

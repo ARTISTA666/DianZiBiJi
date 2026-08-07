@@ -18,7 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { statusText } from "@/components/constants";
-import type { NoteVersion, NoteApproval } from "@/lib/api";
+import type { NoteVersion, NoteApproval, ProjectMember } from "@/lib/api";
 
 export type NoteItem = {
   id: number;
@@ -40,6 +40,7 @@ interface NoteDetailDialogProps {
   onEdit: (note: NoteItem) => void;
   versions: NoteVersion[];
   approvals: NoteApproval[];
+  members: ProjectMember[];
   canReview?: boolean;
   canWrite?: boolean;
 }
@@ -54,9 +55,12 @@ export function NoteDetailDialog({
   onEdit,
   versions,
   approvals,
+  members,
   canReview = false,
   canWrite = false,
 }: NoteDetailDialogProps) {
+  // 审批记录按 created_at 倒序返回，第一条退回即最近一次退回意见。
+  const latestReturn = approvals.find((a) => a.action === "returned");
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {note && (
@@ -70,6 +74,14 @@ export function NoteDetailDialog({
               <span>{note.experiment_date}</span>
               <Badge>{statusText[note.status] || note.status}</Badge>
             </div>
+
+            {/* 已退回笔记置顶展示最近一条退回意见，便于记录人快速定位修订点 */}
+            {note.status === "returned" && latestReturn && (
+              <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+                <p className="font-medium">最近退回意见</p>
+                <p className="mt-0.5 whitespace-pre-wrap">{latestReturn.comment || "退回时未填写意见"}</p>
+              </div>
+            )}
 
             {versions.length > 0 && (
               <div className="rounded-md border p-3">
@@ -87,22 +99,32 @@ export function NoteDetailDialog({
             {approvals.length > 0 && (
               <div className="space-y-2">
                 <p className="text-sm font-medium">审批记录</p>
-                {approvals.map((a) => (
-                  <div key={a.id} className="rounded-md border p-2 text-sm">
-                    <span
-                      className={
-                        a.action === "approved"
-                          ? "text-green-600"
-                          : "text-red-600"
-                      }
-                    >
-                      {a.action === "approved" ? "✓ 通过" : "✗ 退回"}
-                    </span>
-                    {a.comment && (
-                      <p className="text-muted-foreground mt-1">{a.comment}</p>
-                    )}
-                  </div>
-                ))}
+                {approvals.map((a) => {
+                  const isMember = members.some((m) => m.user_id === a.reviewer_user_id);
+                  return (
+                    <div key={a.id} className="rounded-md border p-2 text-sm">
+                      <div className="flex flex-wrap items-center justify-between gap-1">
+                        <span
+                          className={
+                            a.action === "approved"
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }
+                        >
+                          {a.action === "approved" ? "✓ 通过" : "✗ 退回"}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {isMember ? `用户 #${a.reviewer_user_id}` : `#${a.reviewer_user_id}`}
+                          {" · "}
+                          {new Date(a.created_at).toLocaleString("zh-CN")}
+                        </span>
+                      </div>
+                      {a.comment && (
+                        <p className="text-muted-foreground mt-1">{a.comment}</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             )}
 

@@ -112,6 +112,11 @@ export default function DataPage() {
   const [ocrDraft, setOcrDraft] = useState("");
   const [ocrBusy, setOcrBusy] = useState(false);
 
+  // 拒绝审核意见收集 dialog
+  const [rejectTarget, setRejectTarget] = useState<StoredFile | null>(null);
+  const [rejectComment, setRejectComment] = useState("");
+  const [rejectBusy, setRejectBusy] = useState(false);
+
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
@@ -151,16 +156,35 @@ export default function DataPage() {
     }
   };
 
-  const handleReview = async (fileId: number, action: "approve" | "reject") => {
+  const handleReview = async (fileId: number, action: "approve" | "reject", comment = "") => {
     if (!token) return;
     setError("");
     try {
-      await reviewFile(token, fileId, action, "");
+      await reviewFile(token, fileId, action, comment);
       feedback.success(action === "approve" ? "资料审核已通过" : "资料审核已拒绝");
+      // 刷新文件列表，及时反映审核状态与同步提示信息。
+      useProjectStore.getState().invalidateCache();
+      await loadDataTabData(token, projectId);
     } catch (e) {
       const msg = getErrorMessage(e, "审核失败");
       setError(msg);
       feedback.error(msg);
+    }
+  };
+
+  const closeRejectDialog = () => {
+    setRejectTarget(null);
+    setRejectComment("");
+  };
+
+  const confirmReject = async () => {
+    if (!rejectTarget) return;
+    setRejectBusy(true);
+    try {
+      await handleReview(rejectTarget.id, "reject", rejectComment.trim());
+      closeRejectDialog();
+    } finally {
+      setRejectBusy(false);
     }
   };
 
@@ -319,6 +343,11 @@ export default function DataPage() {
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium truncate">{f.original_filename}</p>
                   <p className="text-xs text-muted-foreground">{categoryText[f.file_category] || f.file_category} · {formatFileSize(f.file_size)}</p>
+                  {(f.status === "rejected" || f.knowledge_sync_status === "failed") && f.knowledge_sync_message && (
+                    <p className="mt-0.5 text-xs text-red-600 truncate" title={f.knowledge_sync_message}>
+                      {f.knowledge_sync_message}
+                    </p>
+                  )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <Badge variant="secondary">{knowledgeSyncText[f.knowledge_sync_status] || f.knowledge_sync_status}</Badge>
@@ -332,7 +361,7 @@ export default function DataPage() {
                       <Button aria-label={`通过 ${f.original_filename}`} size="sm" className="bg-green-600 h-8 w-8 p-0" onClick={() => handleReview(f.id, "approve")}>
                         <CheckCircle className="h-4 w-4" />
                       </Button>
-                      <Button aria-label={`拒绝 ${f.original_filename}`} size="sm" variant="destructive" className="h-8 w-8 p-0" onClick={() => handleReview(f.id, "reject")}>
+                      <Button aria-label={`拒绝 ${f.original_filename}`} size="sm" variant="destructive" className="h-8 w-8 p-0" onClick={() => { setRejectTarget(f); setRejectComment(""); }}>
                         <XCircle className="h-4 w-4" />
                       </Button>
                     </>
@@ -369,7 +398,10 @@ export default function DataPage() {
             <DialogHeader><DialogTitle>OCR — {ocrFile.original_filename}</DialogTitle></DialogHeader>
             <div className="space-y-4">
               {ocrBusy ? (
-                <p className="text-sm text-muted-foreground">加载 OCR 结果...</p>
+                <div className="space-y-1">
+                  <p className="text-sm text-muted-foreground">加载 OCR 结果...</p>
+                  <p className="text-xs text-muted-foreground">图片文本识别通常需要数十秒，请勿关闭窗口</p>
+                </div>
               ) : (
                 <>
                   <div className="space-y-2">
@@ -397,6 +429,34 @@ export default function DataPage() {
                   )}
                 </>
               )}
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
+      {/* 拒绝审核意见 Dialog */}
+      <Dialog
+        open={!!rejectTarget}
+        onOpenChange={(open) => { if (!open) closeRejectDialog(); }}
+      >
+        {rejectTarget && (
+          <DialogContent className="max-w-md">
+            <DialogHeader><DialogTitle>拒绝资料 — {rejectTarget.original_filename}</DialogTitle></DialogHeader>
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">请填写拒绝原因，便于上传者快速定位问题并修正。</p>
+              <Textarea
+                aria-label="审核意见"
+                placeholder="审核意见"
+                value={rejectComment}
+                onChange={(e) => setRejectComment(e.target.value)}
+                rows={3}
+                autoFocus
+              />
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={closeRejectDialog} disabled={rejectBusy}>取消</Button>
+                <Button variant="destructive" onClick={confirmReject} disabled={rejectBusy}>
+                  {rejectBusy ? "提交中..." : "确认拒绝"}
+                </Button>
+              </div>
             </div>
           </DialogContent>
         )}

@@ -30,6 +30,53 @@ export const knowledgeSyncText: Record<string, string> = {
   failed: "同步失败",
 };
 
+/**
+ * 审计动作中文映射表：枚举后端全部 audit 写入点
+ * （backend/src/audit.rs 与 api/*.rs 中的 write_audit/AuditEvent）。
+ * 后端新增 action 时前端回退展示原代码，不会报错。
+ */
+export const auditActionText: Record<string, string> = {
+  approve_note: "通过笔记",
+  archive_file: "归档文件",
+  archive_note: "归档笔记",
+  auto_extract_note_kg: "自动提取笔记图谱",
+  change_password: "修改密码",
+  change_permission: "变更成员权限",
+  confirm_file_ocr: "确认 OCR 校对",
+  create_group: "创建小组",
+  create_note: "创建笔记",
+  create_project: "创建项目",
+  create_user: "创建账号",
+  download_file: "下载文件",
+  evaluate_ai_query: "评价 AI 问答",
+  evaluate_ai_query_blind: "盲评 AI 问答",
+  export_blind_review_batch: "导出盲评批次",
+  extract_file_text: "提取文件文本",
+  extract_note_kg: "提取笔记图谱",
+  generate_agent_output: "生成智能体报告",
+  generate_agent_output_failed: "智能体报告生成失败",
+  index_rag_document: "RAG 文档入库",
+  index_rag_document_failed: "RAG 文档入库失败",
+  init_local_rag: "初始化本地知识库",
+  login: "登录",
+  logout: "登出",
+  query_local_rag: "本地知识库问答",
+  rebuild_project_kg: "重建项目图谱",
+  return_note: "退回笔记",
+  review_document: "审核资料",
+  run_rag_experiment: "运行 RAG 对照实验",
+  submit_note: "提交笔记审核",
+  update_file: "更新文件",
+  update_group: "更新小组",
+  update_group_member: "更新小组成员",
+  update_note: "更新笔记",
+  update_project: "更新项目",
+  update_project_member: "更新项目成员",
+  update_user: "更新账号",
+  upload_file: "上传文件",
+  void_note: "作废笔记",
+};
+
 export const agentTaskOptions = [
   { value: "experiment_summary", label: "实验总结" },
   { value: "weekly_report", label: "周报" },

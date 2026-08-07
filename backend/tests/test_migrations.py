@@ -52,6 +52,24 @@ def test_hnsw_concurrent_index_is_created_outside_a_transaction() -> None:
     assert index_seen is True
 
 
+def test_audit_created_at_index_is_created_concurrently_outside_a_transaction() -> None:
+    sql = postgresql_upgrade_sql("0010:0011")
+    transaction_open = False
+    index_seen = False
+    for line in sql.splitlines():
+        statement = line.strip().upper()
+        if statement == "BEGIN;":
+            transaction_open = True
+        elif statement == "COMMIT;":
+            transaction_open = False
+        elif statement.startswith("CREATE INDEX CONCURRENTLY"):
+            index_seen = True
+            assert transaction_open is False
+            assert "IX_AUDIT_LOGS_CREATED_AT" in statement
+
+    assert index_seen is True
+
+
 def test_empty_database_upgrades_to_current_schema(tmp_path: Path) -> None:
     database_path = tmp_path / "fresh.db"
 
@@ -63,7 +81,7 @@ def test_empty_database_upgrades_to_current_schema(tmp_path: Path) -> None:
     assert set(Base.metadata.tables) <= set(inspector.get_table_names())
     assert build_report(inspector, "sqlite")["ok"] is True
     with engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0010"
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0011"
 
 
 def test_one_active_experiment_per_project_is_database_enforced(tmp_path: Path) -> None:

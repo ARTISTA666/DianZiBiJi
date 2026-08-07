@@ -1705,6 +1705,13 @@ CREATE INDEX ix_audit_logs_project_id ON public.audit_logs USING btree (project_
 
 
 --
+-- Name: ix_audit_logs_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX ix_audit_logs_created_at ON public.audit_logs USING btree (created_at DESC);
+
+
+--
 -- Name: ix_experiment_notes_experiment_type; Type: INDEX; Schema: public; Owner: -
 --
 

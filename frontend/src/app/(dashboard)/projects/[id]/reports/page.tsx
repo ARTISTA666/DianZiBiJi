@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { Play, FileText } from "lucide-react";
+import { Play, FileText, Copy, ChevronsDownUp, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { agentTaskOptions } from "@/components/constants";
+import { useActionFeedback } from "@/hooks/use-action-feedback";
+
+const BODY_PREVIEW_LENGTH = 200;
 
 const agentStatusText: Record<string, string> = {
   running: "运行中", completed: "已完成",
@@ -31,6 +34,8 @@ export default function ReportsPage() {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [agentBusy, setAgentBusy] = useState(false);
+  const [expandedRunIds, setExpandedRunIds] = useState<Set<number>>(new Set());
+  const feedback = useActionFeedback();
   const membership = members.find((member) => member.user_id === user?.id);
   const canWrite = user?.role === "super_admin" || membership?.can_write === true;
 
@@ -49,6 +54,24 @@ export default function ReportsPage() {
       });
     } catch (e) { setError(getErrorMessage(e, "生成失败")); }
     finally { setAgentBusy(false); }
+  };
+
+  const toggleExpanded = (runId: number) => {
+    setExpandedRunIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(runId)) next.delete(runId);
+      else next.add(runId);
+      return next;
+    });
+  };
+
+  const handleCopy = async (body: string) => {
+    try {
+      await navigator.clipboard.writeText(body);
+      feedback.success("报告内容已复制");
+    } catch {
+      feedback.error("复制失败，请手动选择文本复制");
+    }
   };
 
   if (busy) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
@@ -89,17 +112,42 @@ export default function ReportsPage() {
         <Card>
           <CardHeader><CardTitle className="text-base">运行记录</CardTitle></CardHeader>
           <CardContent className="space-y-2">
-            {agentRuns.map((run) => (
-              <div key={run.id} className="rounded-md border p-3 text-sm">
-                <p className="font-medium">{run.title || run.task_type}</p>
-                <p className="text-xs text-muted-foreground mt-1">状态: {agentStatusText[run.status] || run.status}</p>
-                {run.body && (
-                  <div className="mt-2 rounded bg-muted/30 p-2 text-xs whitespace-pre-wrap max-h-32 overflow-y-auto">
-                    {run.body}
+            {agentRuns.map((run) => {
+              const expanded = expandedRunIds.has(run.id);
+              const collapsible = run.body.length > BODY_PREVIEW_LENGTH;
+              return (
+                <div key={run.id} className="rounded-md border p-3 text-sm">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="font-medium">{run.title || run.task_type}</p>
+                    {run.body && (
+                      <Button size="sm" variant="ghost" className="h-7 px-2 text-xs" onClick={() => handleCopy(run.body)}>
+                        <Copy className="mr-1 h-3 w-3" />复制
+                      </Button>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    状态: {agentStatusText[run.status] || run.status}
+                    {" · 生成时间: "}
+                    {new Date(run.created_at).toLocaleString("zh-CN")}
+                  </p>
+                  {run.body && (
+                    <>
+                      <div className="mt-2 rounded bg-muted/30 p-2 text-xs whitespace-pre-wrap max-h-64 overflow-y-auto">
+                        {expanded || !collapsible ? run.body : `${run.body.slice(0, BODY_PREVIEW_LENGTH)}…`}
+                      </div>
+                      {collapsible && (
+                        <Button size="sm" variant="ghost" className="mt-1 h-7 px-2 text-xs"
+                          onClick={() => toggleExpanded(run.id)}>
+                          {expanded
+                            ? <><ChevronsDownUp className="mr-1 h-3 w-3" />收起</>
+                            : <><ChevronsUpDown className="mr-1 h-3 w-3" />展开全文</>}
+                        </Button>
+                      )}
+                    </>
+                  )}
+                </div>
+              );
+            })}
           </CardContent>
         </Card>
       )}

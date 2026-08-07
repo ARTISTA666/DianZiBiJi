@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState, KeyboardEvent } from "react";
+import { useEffect, useState, useMemo, KeyboardEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, FolderOpen, ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Plus, FolderOpen, ChevronLeft, ChevronRight, ClipboardCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useAuthStore, useProjectStore } from "@/stores";
+import { getPendingApprovals, type Note } from "@/lib/api";
 import { getErrorMessage } from "@/lib/utils";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { ProjectCardSkeleton } from "@/components/skeletons";
@@ -43,6 +45,7 @@ export default function ProjectsPage() {
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
   const [nameError, setNameError] = useState("");
+  const [pendingNotes, setPendingNotes] = useState<Note[]>([]);
   const feedback = useActionFeedback();
   const canCreateProject = user?.role === "super_admin";
 
@@ -57,6 +60,26 @@ export default function ProjectsPage() {
         .finally(() => setLoading(false));
     }
   }, [token, loadProjects, feedback]);
+
+  // 待审批待办横幅：请求失败静默降级，不打断项目列表使用。
+  useEffect(() => {
+    if (!token) return;
+    getPendingApprovals(token)
+      .then(setPendingNotes)
+      .catch(() => setPendingNotes([]));
+  }, [token]);
+
+  const pendingGroups = useMemo(() => {
+    const byProject = new Map<number, number>();
+    pendingNotes.forEach((note) => {
+      byProject.set(note.project_id, (byProject.get(note.project_id) || 0) + 1);
+    });
+    return [...byProject.entries()].map(([projectId, count]) => ({
+      projectId,
+      count,
+      name: projects.find((p) => p.id === projectId)?.name || `项目 #${projectId}`,
+    }));
+  }, [pendingNotes, projects]);
 
   const handleNameBlur = () => {
     if (!name.trim()) {
@@ -93,6 +116,19 @@ export default function ProjectsPage() {
   return (
     <div className="space-y-6">
       {error && <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p>}
+      {pendingNotes.length > 0 && (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-900">
+          <span className="inline-flex items-center gap-1.5 font-medium">
+            <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
+            你有 {pendingNotes.length} 条待审批笔记
+          </span>
+          {pendingGroups.map((g) => (
+            <Link key={g.projectId} href={`/projects/${g.projectId}/approvals`} className="underline underline-offset-2 hover:text-blue-700">
+              {g.name}（{g.count} 条）
+            </Link>
+          ))}
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">项目</h1>

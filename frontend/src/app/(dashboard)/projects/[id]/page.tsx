@@ -283,6 +283,7 @@ export default function ProjectNotesPage() {
         onEdit={openEdit}
         versions={versions}
         approvals={approvals}
+        members={members}
         canReview={canReview}
         canWrite={canWrite}
       />

@@ -143,7 +143,10 @@ pub async fn initialize_database(pool: &PgPool, settings: &Settings) -> Result<(
             ADD COLUMN IF NOT EXISTS heartbeat_at timestamp with time zone,
             ADD COLUMN IF NOT EXISTS lease_expires_at timestamp with time zone;
         CREATE INDEX IF NOT EXISTS ix_ai_experiment_runs_lease
-            ON public.ai_experiment_runs (status, lease_expires_at)
+            ON public.ai_experiment_runs (status, lease_expires_at);
+        -- Mirrors Alembic migration 0011: time-ordered audit log listings.
+        CREATE INDEX IF NOT EXISTS ix_audit_logs_created_at
+            ON public.audit_logs (created_at DESC)
         "#,
     )
     .execute(&mut *transaction)

@@ -99,6 +99,11 @@ export function NoteListSection({
                         ? "secondary"
                         : "outline"
                     }
+                    className={
+                      note.status === "returned"
+                        ? "border-amber-300 bg-amber-50 text-amber-700"
+                        : undefined
+                    }
                   >
                     {statusText[note.status] || note.status}
                   </Badge>

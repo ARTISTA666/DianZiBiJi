@@ -1201,6 +1201,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/audit-logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Project Audit Logs */
+        get: operations["list_project_audit_logs_projects__project_id__audit_logs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2271,6 +2288,8 @@ export interface components {
              * @enum {string}
              */
             mode: "auto" | "project_rag" | "kg_enhanced_rag";
+            /** History */
+            history?: components["schemas"]["RagHistoryEntry"][] | null;
         };
         /** RagQueryResponse */
         RagQueryResponse: {
@@ -2513,6 +2532,48 @@ export interface components {
          * @enum {string}
          */
         NoteStatus: "draft" | "submitted" | "approved" | "returned" | "archived" | "voided";
+        /** RagHistoryEntry */
+        RagHistoryEntry: {
+            /** Question */
+            question: string;
+            /** Answer */
+            answer: string;
+        };
+        /** AuditLogRead */
+        AuditLogRead: {
+            /** Id */
+            id: number;
+            /** Actor User Id */
+            actor_user_id?: number | null;
+            /** Project Id */
+            project_id?: number | null;
+            /** Action */
+            action: string;
+            /** Target Type */
+            target_type?: string | null;
+            /** Target Id */
+            target_id?: number | null;
+            /** Detail Json */
+            detail_json: {
+                [key: string]: unknown;
+            };
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** PaginatedResponse[AuditLogRead] */
+        PaginatedResponse_AuditLogRead_: {
+            /** Items */
+            items: components["schemas"]["AuditLogRead"][];
+            /** Total */
+            total: number;
+            /** Skip */
+            skip: number;
+            /** Limit */
+            limit: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -5174,6 +5235,46 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_project_audit_logs_projects__project_id__audit_logs_get: {
+        parameters: {
+            query?: {
+                actor_user_id?: number | null;
+                action?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                skip?: number;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: {
+                eln_access_token?: string | null;
+            };
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponse_AuditLogRead_"];
                 };
             };
             /** @description Validation Error */

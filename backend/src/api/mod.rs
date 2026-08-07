@@ -526,7 +526,7 @@ mod tests {
             .filter_map(Value::as_object)
             .map(|path| path.len())
             .sum::<usize>();
-        assert_eq!(operations, 84);
+        assert_eq!(operations, 85);
         assert!(body["paths"]["/api/agents/generate"]["post"].is_object());
         assert!(body["paths"]["/maturity/status"]["get"].is_object());
     }

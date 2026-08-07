@@ -33,7 +33,8 @@ async function login(page: Page, username: string, password: string) {
   await page.getByLabel("账号").fill(username);
   await page.getByLabel("密码").fill(password);
   await page.getByRole("button", { name: "登录" }).click();
-  await expect(page.getByRole("link", { name: "项目" })).toBeVisible();
+  // 项目首页待审批横幅会渲染含项目名的链接，必须精确匹配导航链接本身。
+  await expect(page.getByRole("link", { name: "项目", exact: true })).toBeVisible();
 }
 
 async function logout(page: Page) {
@@ -123,7 +124,7 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
   const approvalCard = page.locator('[data-testid^="approval-note-"]').filter({ hasText: NOTE_TITLE });
   await expect(approvalCard).toBeVisible();
   await approvalCard.getByPlaceholder("审核意见").fill("请补充退火温度和复核结论。");
-  await approvalCard.getByRole("button", { name: "退回" }).click();
+  await approvalCard.getByRole("button", { name: "退回", exact: true }).click();
   await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
   await logout(page);
 
@@ -142,7 +143,7 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
   await page.getByRole("tab", { name: "审批", exact: true }).click();
   const revisedCard = page.locator('[data-testid^="approval-note-"]').filter({ hasText: NOTE_TITLE });
   await revisedCard.getByPlaceholder("审核意见").fill("温度与复核结论完整，批准归档。");
-  await revisedCard.getByRole("button", { name: "通过" }).click();
+  await revisedCard.getByRole("button", { name: "通过", exact: true }).click();
   await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
 
   await logout(page);
@@ -196,7 +197,7 @@ test("多角色完成 AI 资料、图谱、问答与报告协作闭环", async (
   await openProject(page);
   await page.goto(`/projects/${projectId}/kg`, { waitUntil: "networkidle" });
   const noteRow = page.getByText(NOTE_TITLE, { exact: true }).locator("..");
-  await noteRow.getByRole("button", { name: "提取" }).click();
+  await noteRow.getByRole("button", { name: "提取", exact: true }).click();
   await expect(page.getByText("实体已提取", { exact: true })).toBeVisible({ timeout: 60_000 });
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
   await expect(page.getByText("已初始化 · 1 个文件已入库", { exact: true })).toBeVisible();
@@ -231,7 +232,7 @@ test("只读成员只能查阅，不能看到写入或项目管理操作", async
   await expect(page.getByRole("button", { name: `通过 ${path.basename(IMAGE_PATH)}` })).toHaveCount(0);
   await page.goto(`/projects/${projectId}/kg`, { waitUntil: "networkidle" });
   await expect(page.getByRole("button", { name: "重建图谱" })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "提取" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "提取", exact: true })).toHaveCount(0);
   await page.goto(`/projects/${projectId}/reports`, { waitUntil: "networkidle" });
   await expect(page.getByRole("button", { name: "生成", exact: true })).toHaveCount(0);
   await expect(page.getByText("只读成员可以查看已生成报告，不能创建新的智能体任务。", { exact: true })).toBeVisible();

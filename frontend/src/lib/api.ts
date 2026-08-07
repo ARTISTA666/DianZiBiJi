@@ -2,6 +2,9 @@ import { toast } from "sonner";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
 
+/** 会话过期（401 被踢回登录页）时写入 sessionStorage 的标记键。 */
+export const SESSION_EXPIRED_FLAG = "auth.session-expired";
+
 let isRedirecting = false;
 
 export class ApiRequestError extends Error {
@@ -473,6 +476,14 @@ async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): P
   if (!response.ok) {
     if (response.status === 401 && !isRedirecting) {
       isRedirecting = true;
+      // 登录接口自身的 401（账号/密码错误）不算会话过期，不写标记。
+      if (!path.startsWith("/auth/")) {
+        try {
+          sessionStorage.setItem(SESSION_EXPIRED_FLAG, "1");
+        } catch {
+          // sessionStorage 不可用时静默降级，登录页仅缺少过期提示。
+        }
+      }
       try {
         const { useAuthStore } = await import("@/stores/auth-store");
         useAuthStore.getState().logout();
@@ -490,11 +501,8 @@ async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): P
       // Keep non-JSON upstream errors unchanged.
     }
     const requestId = response.headers.get("x-request-id");
-    throw new ApiRequestError(
-      requestId ? `${message}（请求 ${requestId}）` : message,
-      response.status,
-      requestId,
-    );
+    // requestId 仅保留在错误对象上，不拼进用户可见文案。
+    throw new ApiRequestError(message, response.status, requestId);
   }
   if (response.status === 204) return null as unknown as T;
   return response.json() as Promise<T>;
@@ -632,13 +640,41 @@ export function getTemplates(token: string) {
 
 export function getAuditLogs(
   token: string,
-  filters: { actor_user_id?: string; project_id?: string; action?: string; date_from?: string; date_to?: string } = {},
+  filters: {
+    actor_user_id?: string;
+    project_id?: string;
+    action?: string;
+    date_from?: string;
+    date_to?: string;
+    skip?: number;
+    limit?: number;
+  } = {},
 ) {
   const params = new URLSearchParams();
   Object.entries(filters).forEach(([key, value]) => {
-    if (value) params.set(key, value);
+    if (value !== undefined && value !== "") params.set(key, String(value));
   });
   return apiFetch<PaginatedResponse<AuditLog>>(`/audit-logs${params.toString() ? `?${params.toString()}` : ""}`, token);
+}
+
+export function getProjectAuditLogs(
+  token: string,
+  projectId: number,
+  filters: {
+    actor_user_id?: string;
+    action?: string;
+    date_from?: string;
+    date_to?: string;
+    skip?: number;
+    limit?: number;
+  } = {},
+) {
+  const params = new URLSearchParams();
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== "") params.set(key, String(value));
+  });
+  const qs = params.toString();
+  return apiFetch<PaginatedResponse<AuditLog>>(`/projects/${projectId}/audit-logs${qs ? `?${qs}` : ""}`, token);
 }
 
 export type PaginatedResponse<T> = {
@@ -756,8 +792,14 @@ export function syncFileToRag(token: string, fileId: number) {
   return post<RagStatus>(`/files/${fileId}/rag/sync`, token);
 }
 
-export function queryProjectRag(token: string, projectId: number, query: string, mode = "auto") {
-  return post<RagQueryResponse>(`/projects/${projectId}/rag/query`, token, { query, mode });
+export function queryProjectRag(
+  token: string,
+  projectId: number,
+  query: string,
+  mode = "auto",
+  history?: Array<{ question: string; answer: string }>,
+) {
+  return post<RagQueryResponse>(`/projects/${projectId}/rag/query`, token, { query, mode, history });
 }
 
 export function getProjectQueryLogs(token: string, projectId: number) {
