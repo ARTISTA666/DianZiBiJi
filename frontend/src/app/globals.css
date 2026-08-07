@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --foreground: 222 24% 14%;
     --card: 0 0% 100%;
     --card-foreground: 222 24% 14%;
@@ -14,12 +14,18 @@
     --primary-foreground: 210 40% 98%;
     --secondary: 210 20% 96%;
     --secondary-foreground: 222 24% 14%;
-    --muted: 210 20% 96%;
+    --muted: 210 16% 93%;
     --muted-foreground: 218 15% 46%;
     --accent: 156 55% 37%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 210 40% 98%;
+    --success: 142 70% 38%;
+    --success-foreground: 0 0% 100%;
+    --warning: 35 92% 40%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 91% 50%;
+    --info-foreground: 0 0% 100%;
     --border: 220 18% 88%;
     --input: 220 18% 88%;
     --ring: 196 61% 32%;
@@ -38,6 +44,35 @@
     --chart-4: 280 50% 55%;
     --chart-5: 0 60% 55%;
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  }
+
+  /* 最小暗色主题 token：TopNav 通过给 <html> 切换 .dark 类启用。 */
+  .dark {
+    --background: 222 30% 10%;
+    --foreground: 210 40% 96%;
+    --card: 222 26% 14%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 26% 14%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 196 61% 45%;
+    --primary-foreground: 222 30% 10%;
+    --secondary: 220 16% 20%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 220 16% 20%;
+    --muted-foreground: 218 12% 66%;
+    --accent: 156 55% 42%;
+    --accent-foreground: 222 30% 10%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 210 40% 98%;
+    --success: 142 60% 42%;
+    --success-foreground: 0 0% 100%;
+    --warning: 35 90% 45%;
+    --warning-foreground: 0 0% 100%;
+    --info: 217 90% 62%;
+    --info-foreground: 222 30% 10%;
+    --border: 220 14% 24%;
+    --input: 220 14% 24%;
+    --ring: 196 61% 45%;
   }
 
   * {

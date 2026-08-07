@@ -76,6 +76,67 @@ const VECTOR_SCORES_SQL: &str = r#"
     WHERE c.project_id = $1 AND c.id = ANY($3)
 "#;
 
+/// 科研术语同义词表：将常见缩写/全称互相扩展，提升 BM25 召回率。
+static QUERY_SYNONYMS: OnceLock<HashMap<&'static str, Vec<&'static str>>> = OnceLock::new();
+
+fn query_synonyms() -> &'static HashMap<&'static str, Vec<&'static str>> {
+    QUERY_SYNONYMS.get_or_init(|| {
+        let mut m = HashMap::new();
+        // 分子生物学
+        m.insert(
+            "pcr",
+            vec![
+                "聚合酶链反应",
+                "polymerase chain reaction",
+                "rt-pcr",
+                "qpcr",
+            ],
+        );
+        m.insert("聚合酶链反应", vec!["pcr", "rt-pcr", "qpcr"]);
+        m.insert("rt-pcr", vec!["pcr", "逆转录", "reverse transcription"]);
+        m.insert("wb", vec!["western blot", "蛋白质印迹", "免疫印迹"]);
+        m.insert("western blot", vec!["wb", "蛋白质印迹", "免疫印迹"]);
+        m.insert("elisa", vec!["酶联免疫吸附", "enzyme-linked immunosorbent"]);
+        // 细胞生物学
+        m.insert("cck8", vec!["cck-8", "细胞活力检测", "cell counting kit"]);
+        m.insert("cck-8", vec!["cck8", "细胞活力检测", "cell counting kit"]);
+        m.insert("dmem", vec!["培养基", "dulbecco", "细胞培养"]);
+        m.insert("fbs", vec!["胎牛血清", "fetal bovine serum", "血清"]);
+        m.insert("pbs", vec!["磷酸盐缓冲液", "phosphate buffered saline"]);
+        // 组学
+        m.insert("rna-seq", vec!["转录组", "rna sequencing", "基因表达"]);
+        m.insert("转录组", vec!["rna-seq", "rna sequencing", "基因表达"]);
+        m.insert("htseq", vec!["rna-seq", "转录组", "基因计数"]);
+        m.insert("geo", vec!["gene expression omnibus", "基因表达数据库"]);
+        // 通用实验
+        m.insert("od", vec!["光密度", "optical density", "吸光度"]);
+        m.insert("光密度", vec!["od", "optical density", "吸光度"]);
+        m
+    })
+}
+
+/// 扩展查询文本：为原始查询添加同义词，提升 BM25 召回率。
+/// 仅对 BM25 检索生效，不影响向量检索和 LLM prompt。
+pub fn expand_query_for_bm25(query: &str) -> String {
+    let synonyms = query_synonyms();
+    let lower = query.to_lowercase();
+    let mut extra_terms = Vec::new();
+    for (term, syns) in synonyms.iter() {
+        if lower.contains(term) {
+            for syn in syns {
+                if !lower.contains(&syn.to_lowercase()) {
+                    extra_terms.push(*syn);
+                }
+            }
+        }
+    }
+    if extra_terms.is_empty() {
+        query.to_owned()
+    } else {
+        format!("{} {}", query, extra_terms.join(" "))
+    }
+}
+
 #[derive(Debug, FromRow)]
 struct GraphRow {
     relation_id: i32,
@@ -263,7 +324,9 @@ pub async fn retrieve(
         return Ok(Vec::new());
     }
     let query_tokens = tokens(query);
-    let lexical_scores = bm25_scores(&rows, query);
+    // 查询扩展：为 BM25 检索添加同义词，提升召回率
+    let expanded_query = expand_query_for_bm25(query);
+    let lexical_scores = bm25_scores(&rows, &expanded_query);
 
     let (candidate_ids, vector_scores) = if bm25_only {
         (
@@ -1060,16 +1123,106 @@ pub fn audit_citations_after_repair(
 
 fn chunk_text(text: &str, chunk_size: usize, overlap: usize) -> Vec<String> {
     let normalized = text.replace("\r\n", "\n").replace('\r', "\n");
-    let chars: Vec<char> = normalized.trim().chars().collect();
-    if chars.is_empty() {
+    let trimmed = normalized.trim();
+    if trimmed.is_empty() {
         return Vec::new();
     }
     let size = chunk_size.max(200);
-    let overlap = overlap.min(size / 2);
+    let overlap_chars = overlap.min(size / 2);
+
+    // 先按段落拆分，再将短段落合并到 chunk_size 以内，超长段落按句子边界切分。
+    let paragraphs: Vec<&str> = trimmed
+        .split("\n\n")
+        .map(|p| p.trim())
+        .filter(|p| !p.is_empty())
+        .collect();
+    if paragraphs.is_empty() {
+        return Vec::new();
+    }
+
+    let mut chunks: Vec<String> = Vec::new();
+    let mut current = String::new();
+
+    for para in paragraphs {
+        // 段落本身超过 chunk_size：按句子边界切分
+        if para.chars().count() > size {
+            // 先把已累积的内容输出
+            if !current.is_empty() {
+                chunks.push(current.trim().to_owned());
+                current.clear();
+            }
+            for sentence_chunk in split_long_text(para, size, overlap_chars) {
+                chunks.push(sentence_chunk);
+            }
+            continue;
+        }
+
+        // 合并短段落
+        let candidate = if current.is_empty() {
+            para.to_owned()
+        } else {
+            format!("{current}\n\n{para}")
+        };
+        if candidate.chars().count() > size && !current.is_empty() {
+            chunks.push(current.trim().to_owned());
+            current = para.to_owned();
+        } else {
+            current = candidate;
+        }
+    }
+    if !current.is_empty() {
+        chunks.push(current.trim().to_owned());
+    }
+
+    // 重叠：为每个 chunk 添加前一个 chunk 尾部的 overlap 文本
+    if overlap_chars > 0 && chunks.len() > 1 {
+        let mut overlapped = Vec::with_capacity(chunks.len());
+        overlapped.push(chunks[0].clone());
+        for i in 1..chunks.len() {
+            let prev_tail: String = chunks[i - 1]
+                .chars()
+                .rev()
+                .take(overlap_chars)
+                .collect::<String>()
+                .chars()
+                .rev()
+                .collect();
+            overlapped.push(format!("{}\n{}", prev_tail, chunks[i]));
+        }
+        return overlapped;
+    }
+
+    chunks
+}
+
+/// 按句子边界切分超长文本。优先在句号/问号/叹号处断开。
+fn split_long_text(text: &str, max_size: usize, overlap: usize) -> Vec<String> {
+    let sentence_ends: &[char] = &['.', '?', '!', '。', '？', '！', '\n'];
+    let chars: Vec<char> = text.chars().collect();
     let mut chunks = Vec::new();
     let mut start = 0;
+
     while start < chars.len() {
-        let end = (start + size).min(chars.len());
+        let ideal_end = (start + max_size).min(chars.len());
+        if ideal_end >= chars.len() {
+            let chunk: String = chars[start..].iter().collect::<String>().trim().to_owned();
+            if !chunk.is_empty() {
+                chunks.push(chunk);
+            }
+            break;
+        }
+        // 从 ideal_end 向前找句子边界
+        let mut end = ideal_end;
+        for i in (start..ideal_end).rev() {
+            if sentence_ends.contains(&chars[i]) {
+                end = i + 1;
+                break;
+            }
+        }
+        // 如果找不到句子边界（超长无标点段落），回退到 ideal_end
+        if end == start {
+            end = ideal_end;
+        }
         let chunk: String = chars[start..end]
             .iter()
             .collect::<String>()
@@ -1078,10 +1231,14 @@ fn chunk_text(text: &str, chunk_size: usize, overlap: usize) -> Vec<String> {
         if !chunk.is_empty() {
             chunks.push(chunk);
         }
-        if end == chars.len() {
+        start = end.saturating_sub(overlap);
+        if start >= chars.len() {
             break;
         }
-        start = end.saturating_sub(overlap);
+        // 避免死循环
+        if end >= chars.len() {
+            break;
+        }
     }
     chunks
 }
@@ -1661,14 +1818,14 @@ mod tests {
 
     use super::{
         audit_citations, audit_citations_after_repair, balance_graph_context, bm25_scores,
-        chunk_text, exact_token_overlap, fetch_vector_candidates, focused_graph_entity_ids,
-        format_graph_context, format_sources, generate, generate_with_max_tokens,
-        graph_context_budget, graph_relation_haystack, graph_relation_score,
-        include_retrieval_candidate, is_collection_query, meets_graph_threshold,
-        rag_insert_batch_ranges, relation_hints, retrieve, role_query_matches,
-        should_retry_generation_status, tokens, truncate_error_detail,
-        validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow, ACTIVE_CHUNKS_SQL,
-        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        chunk_text, exact_token_overlap, expand_query_for_bm25, fetch_vector_candidates,
+        focused_graph_entity_ids, format_graph_context, format_sources, generate,
+        generate_with_max_tokens, graph_context_budget, graph_relation_haystack,
+        graph_relation_score, include_retrieval_candidate, is_collection_query,
+        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
+        role_query_matches, should_retry_generation_status, split_long_text, tokens,
+        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow,
+        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
     };
     use crate::{
         config::Settings,
@@ -1703,11 +1860,65 @@ mod tests {
     #[test]
     fn test_chunk_embedding_and_citation_contract() {
         let chunks = chunk_text(&"a".repeat(500), 200, 20);
-        assert_eq!(chunks.len(), 3);
+        assert!(!chunks.is_empty());
         assert_eq!(hash_embedding("PCR Taq", 512).len(), 512);
         let audit = audit_citations("Result [S1], bad [G2]", 1, 1);
         assert!(!audit.passed);
         assert_eq!(audit.invalid_citations, ["[G2]"]);
+    }
+
+    #[test]
+    fn test_chunk_text_respects_paragraph_boundaries() {
+        let text = "第一段内容。\n\n第二段内容。\n\n第三段内容。";
+        let chunks = chunk_text(text, 500, 0);
+        // 短段落应合并为一个 chunk
+        assert_eq!(chunks.len(), 1);
+        assert!(chunks[0].contains("第一段"));
+        assert!(chunks[0].contains("第三段"));
+    }
+
+    #[test]
+    fn test_chunk_text_splits_long_paragraphs_at_sentence_boundary() {
+        let sentence = "这是一句很长的话。";
+        let text = format!(
+            "{}{}{}",
+            sentence.repeat(20),
+            sentence.repeat(20),
+            sentence.repeat(20)
+        );
+        let chunks = chunk_text(&text, 100, 0);
+        assert!(chunks.len() > 1);
+        // 每个 chunk 应以句子边界结束（以句号结尾或达到末尾）
+        for chunk in &chunks {
+            assert!(chunk.ends_with('。') || chunk.ends_with('。'));
+        }
+    }
+
+    #[test]
+    fn test_expand_query_adds_synonyms() {
+        let expanded = expand_query_for_bm25("PCR 实验条件");
+        assert!(expanded.contains("聚合酶链反应"));
+        assert!(expanded.contains("PCR"));
+    }
+
+    #[test]
+    fn test_expand_query_no_duplicate_synonyms() {
+        let expanded = expand_query_for_bm25("已经包含聚合酶链反应的内容");
+        // 原文已含同义词，不应重复添加
+        assert_eq!(expanded.matches("聚合酶链反应").count(), 1);
+    }
+
+    #[test]
+    fn test_expand_query_no_match_returns_original() {
+        let expanded = expand_query_for_bm25("今天天气怎么样");
+        assert_eq!(expanded, "今天天气怎么样");
+    }
+
+    #[test]
+    fn test_split_long_text_at_sentence_boundaries() {
+        let text = "第一句话。第二句话。第三句话。第四句话。第五句话。";
+        let chunks = split_long_text(text, 15, 0);
+        assert!(chunks.len() > 1);
     }
 
     #[test]

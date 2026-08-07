@@ -82,6 +82,8 @@ export const agentTaskOptions = [
   { value: "weekly_report", label: "周报" },
   { value: "stage_report", label: "项目阶段报告" },
   { value: "graph_overview", label: "实验过程图谱概览" },
+  { value: "literature_review", label: "文献综述草稿" },
+  { value: "anomaly_detection", label: "实验异常检测" },
 ];
 
 export const kgEntityTypeText: Record<string, string> = {

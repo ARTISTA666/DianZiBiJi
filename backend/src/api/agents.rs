@@ -1,4 +1,7 @@
-use std::{collections::HashSet, time::Instant};
+use std::{
+    collections::{HashMap, HashSet},
+    time::Instant,
+};
 
 use axum::{
     extract::{Path, State},
@@ -352,6 +355,8 @@ fn task_label(task_type: &str) -> Option<&'static str> {
         "weekly_report" => Some("周报"),
         "stage_report" => Some("项目阶段报告"),
         "graph_overview" => Some("实验过程图谱概览"),
+        "literature_review" => Some("文献综述草稿"),
+        "anomaly_detection" => Some("实验异常检测"),
         _ => None,
     }
 }
@@ -444,7 +449,8 @@ fn select_relations(
     notes: &[SourceNote],
     relations: Vec<SourceRelation>,
 ) -> Vec<SourceRelation> {
-    if task_type == "graph_overview" {
+    if task_type == "graph_overview" || task_type == "literature_review" {
+        // 文献综述需要跨主题的广泛实体关联
         return relations.into_iter().take(24).collect();
     }
     let note_ids: HashSet<i32> = notes.iter().map(|note| note.id).collect();
@@ -499,6 +505,89 @@ fn source_context(
         );
         return cap_context(lines.join("\n"));
     }
+
+    // ---- 文献综述草稿：以资料与实验主题为主线组织 ----
+    if task_type == "literature_review" {
+        lines.push("### 文献与资料来源".to_owned());
+        if files.is_empty() {
+            lines.push("- 当前项目暂无已审核资料库文件，仅基于实验笔记整理。".to_owned());
+        } else {
+            lines.extend(
+                files.iter().map(|file| {
+                    format!("- [F{}] {}", file.id, inline_text(&file.original_filename))
+                }),
+            );
+        }
+        lines.push(String::new());
+        lines.push("### 实验主题分类".to_owned());
+        let mut theme_map: HashMap<String, Vec<&SourceNote>> = HashMap::new();
+        for note in notes {
+            theme_map
+                .entry(note.experiment_type.clone())
+                .or_default()
+                .push(note);
+        }
+        if theme_map.is_empty() {
+            lines.push("- 暂无已审核实验笔记可供分类。".to_owned());
+        } else {
+            for (theme, theme_notes) in &theme_map {
+                lines.push(format!(
+                    "- **{}**（{} 条记录）",
+                    inline_text(theme),
+                    theme_notes.len()
+                ));
+                for note in theme_notes.iter().take(5) {
+                    lines.push(format!(
+                        "  - [N{}] {}（{}）",
+                        note.id,
+                        inline_text(&note.title),
+                        display_date(note.experiment_date, "未填日期")
+                    ));
+                }
+            }
+        }
+        lines.push(String::new());
+        lines.push("### 知识图谱关联实体".to_owned());
+        append_relations(&mut lines, relations);
+        lines.push(String::new());
+        lines.push("### 综述撰写要求".to_owned());
+        lines.push("- 按实验主题分节综述，引用上述编号作为证据来源。".to_owned());
+        lines.push("- 对比不同实验主题的方法和结果，指出一致性和差异。".to_owned());
+        lines.push("- 资料不足的主题如实标注「证据不足」，不得虚构内容。".to_owned());
+        return cap_context(lines.join("\n"));
+    }
+
+    // ---- 实验异常检测：聚焦实验结果与参数异常 ----
+    if task_type == "anomaly_detection" {
+        lines.push("### 实验记录与结果数据".to_owned());
+        if notes.is_empty() {
+            lines.push("- 当前范围内无已审核实验笔记，无法进行异常检测。".to_owned());
+            return cap_context(lines.join("\n"));
+        }
+        for note in notes {
+            lines.push(format!(
+                "- [N{}] {}（{}，{}）",
+                note.id,
+                inline_text(&note.title),
+                inline_text(&note.experiment_type),
+                display_date(note.experiment_date, "未填日期")
+            ));
+            // 输出所有字段以便 LLM 识别异常值
+            append_json_fields(&mut lines, &note.fixed_fields_json, 4);
+            append_json_fields(&mut lines, &note.content_json, 4);
+        }
+        lines.push(String::new());
+        lines.push("### 知识图谱依据".to_owned());
+        append_relations(&mut lines, relations);
+        lines.push(String::new());
+        lines.push("### 异常检测要求".to_owned());
+        lines.push("- 逐条检查实验记录中的数值型结果字段，识别明显偏离正常范围的值。".to_owned());
+        lines.push("- 关注缺失数据、重复值、单位不一致等常见问题。".to_owned());
+        lines.push("- 对每条疑似异常给出编号引用和简要原因说明。".to_owned());
+        lines.push("- 如数据不足以判断，明确标注「需人工确认」而非臆断。".to_owned());
+        return cap_context(lines.join("\n"));
+    }
+
     append_source_index(&mut lines, notes, files, relations);
     if notes.is_empty() {
         lines.push("当前范围内暂无已审核实验笔记，无法形成正式实验总结。".to_owned());

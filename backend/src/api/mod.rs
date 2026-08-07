@@ -5,6 +5,7 @@ mod files;
 mod groups;
 mod knowledge_graph;
 mod maturity;
+mod mcp;
 mod notes;
 mod ocr;
 mod projects;
@@ -122,7 +123,8 @@ pub fn build_app(state: AppState) -> Router {
         .merge(audit::router())
         .merge(notes::router())
         .merge(ocr::router())
-        .merge(search::router());
+        .merge(search::router())
+        .merge(mcp::router());
 
     Router::new()
         // ── Operational probes (must stay at root) ───────────────────

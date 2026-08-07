@@ -1,4 +1,7 @@
-use std::collections::{HashMap, HashSet};
+use std::{
+    collections::{HashMap, HashSet},
+    sync::OnceLock,
+};
 
 use regex::Regex;
 use serde_json::{json, Value};
@@ -966,10 +969,10 @@ fn normalize_entity_label(label: &str) -> String {
                         | '）'
                         | '【'
                         | '】'
-                        | '“'
-                        | '”'
-                        | '‘'
-                        | '’'
+                        | '\u{201c}'
+                        | '\u{201d}'
+                        | '\u{2018}'
+                        | '\u{2019}'
                         | '—'
                         | '–'
                         | '·'
@@ -981,12 +984,77 @@ fn normalize_entity_label(label: &str) -> String {
             }
         }
     }
-    normalized.split_whitespace().collect::<Vec<_>>().join(" ")
+    let result: String = normalized.split_whitespace().collect::<Vec<_>>().join(" ");
+    resolve_synonyms(&result)
+}
+
+/// 科研术语同义词消歧：将常见缩写/别名统一为规范形式。
+/// 每个同义词组的首个元素为规范形式。
+static ENTITY_SYNONYMS: OnceLock<HashMap<&'static str, &'static str>> = OnceLock::new();
+
+fn entity_synonyms() -> &'static HashMap<&'static str, &'static str> {
+    ENTITY_SYNONYMS.get_or_init(|| {
+        let groups: Vec<(&str, &[&str])> = vec![
+            ("磷酸盐缓冲液", &["pbs"]),
+            ("聚合酶链反应", &["pcr"]),
+            ("western blot", &["wb", "免疫印迹"]),
+            (
+                "实时荧光定量聚合酶链反应",
+                &["rt-qpcr", "qpcr", "real-time pcr"],
+            ),
+            ("十二烷基硫酸钠", &["sds"]),
+            ("乙二胺四乙酸", &["edta"]),
+            ("三羟甲基氨基甲烷", &["tris"]),
+            ("二甲基亚砜", &["dmso"]),
+            ("牛血清白蛋白", &["bsa"]),
+            ("胎牛血清", &["fbs", "fetal bovine serum"]),
+            ("光密度", &["od", "optical density"]),
+            ("细胞计数试剂盒", &["cck-8", "cck8"]),
+            ("转录组", &["rna-seq", "rnaseq"]),
+        ];
+        let mut map = HashMap::new();
+        for (canonical, synonyms) in groups {
+            for synonym in synonyms {
+                map.insert(*synonym, canonical);
+            }
+        }
+        map
+    })
+}
+
+fn resolve_synonyms(normalized: &str) -> String {
+    let synonyms = entity_synonyms();
+    if synonyms.is_empty() {
+        return normalized.to_owned();
+    }
+    // 整体匹配优先
+    if let Some(&canonical) = synonyms.get(normalized) {
+        return canonical.to_owned();
+    }
+    // 逐 token 替换
+    let tokens: Vec<&str> = normalized.split_whitespace().collect();
+    let mut changed = false;
+    let resolved: Vec<&str> = tokens
+        .iter()
+        .map(|token| {
+            if let Some(&canonical) = synonyms.get(token) {
+                changed = true;
+                canonical
+            } else {
+                token
+            }
+        })
+        .collect();
+    if changed {
+        resolved.join(" ")
+    } else {
+        normalized.to_owned()
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{extract_terms, normalize_entity_label, split_string};
+    use super::{extract_terms, normalize_entity_label, resolve_synonyms, split_string};
     use serde_json::json;
 
     #[test]
@@ -1038,5 +1106,37 @@ mod tests {
             "BioTek Synergy H1"
         ));
         assert!(has_term("result", "produces_result", "细胞活力 95%"));
+    }
+
+    #[test]
+    fn test_resolve_synonyms_maps_abbreviations_to_canonical() {
+        assert_eq!(resolve_synonyms("pbs"), "磷酸盐缓冲液");
+        assert_eq!(resolve_synonyms("wb"), "western blot");
+        assert_eq!(resolve_synonyms("fbs"), "胎牛血清");
+        assert_eq!(resolve_synonyms("cck-8"), "细胞计数试剂盒");
+        assert_eq!(resolve_synonyms("rna-seq"), "转录组");
+    }
+
+    #[test]
+    fn test_resolve_synonyms_preserves_unknown_tokens() {
+        assert_eq!(resolve_synonyms("dmem 培养基"), "dmem 培养基");
+        assert_eq!(resolve_synonyms("taq polymerase"), "taq polymerase");
+    }
+
+    #[test]
+    fn test_normalize_entity_label_includes_synonym_resolution() {
+        // "PBS" 归一化后为 "pbs"，再经同义词解析为 "磷酸盐缓冲液"
+        assert_eq!(normalize_entity_label("PBS"), "磷酸盐缓冲液");
+        // "WB" → "wb" → "western blot"
+        assert_eq!(normalize_entity_label("WB"), "western blot");
+        // "FBS" → "fbs" → "胎牛血清"
+        assert_eq!(normalize_entity_label("FBS"), "胎牛血清");
+    }
+
+    #[test]
+    fn test_normalize_entity_label_synonym_in_compound_label() {
+        // 复合标签中仅替换匹配的 token
+        let result = normalize_entity_label("PBS buffer");
+        assert_eq!(result, "磷酸盐缓冲液 buffer");
     }
 }

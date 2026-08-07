@@ -12,6 +12,7 @@ import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
+import { KnowledgeGraphVisualization } from "@/components/kg-visualization";
 
 export default function KGPage() {
   const { id } = useParams();
@@ -141,6 +142,16 @@ export default function KGPage() {
         <Input value={entityKeyword} onChange={(e) => setEntityKeyword(e.target.value)}
           placeholder="按实体关键词过滤..." className="flex-1" />
       </div>
+
+      {/* 图谱可视化 */}
+      {kgGraph && kgGraph.entities.length > 0 && (
+        <KnowledgeGraphVisualization
+          entities={kgGraph.entities}
+          relations={kgGraph.relations}
+          selectedEntityId={selectedEntityId}
+          onEntitySelect={setSelectedEntityId}
+        />
+      )}
 
       {/* 实体列表 */}
       <Card>
