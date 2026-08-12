@@ -4,7 +4,9 @@ import importlib.util
 import json
 import tempfile
 import unittest
+from contextlib import ExitStack
 from pathlib import Path
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,7 +26,7 @@ class ExportValidationEvidenceTests(unittest.TestCase):
         self.assertNotIn("python", flattened)
         self.assertIn("psql", flattened)
         self.assertTrue(any("rust_schema_versions" in token for token in flattened))
-        self.assertTrue(any("< 2" in token for token in flattened))
+        self.assertTrue(any("< 3" in token for token in flattened))
 
     def test_failed_runtime_causes_nonzero_cli_exit(self) -> None:
         self.assertEqual(MODULE.report_exit_code({"runtime": {"ok": False}}), 1)
@@ -225,6 +227,61 @@ class ExportValidationEvidenceTests(unittest.TestCase):
 
             self.assertTrue(result["ok"])
             self.assertEqual(result["checks"][0]["name"], "https listener")
+
+    def test_rust_contract_results_bind_runtime_and_operation_count(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "rust-contract.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "status": "ok",
+                        "runtime": {"api_runtime": "rust-axum"},
+                        "api": {"operation_count": 85},
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            result = MODULE.rust_contract_results(path)
+
+            self.assertTrue(result["ok"])
+            self.assertEqual(result["api"]["operation_count"], 85)
+
+    def test_export_reads_rust_contract_from_requested_output_dir(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory) / "evidence"
+            output_dir.mkdir()
+            (output_dir / "rust-runtime-contract-latest.json").write_text(
+                json.dumps({"status": "ok", "runtime": {"api_runtime": "rust-axum"}}),
+                encoding="utf-8",
+            )
+            fake_results = {
+                "capture_runtime": {"ok": True},
+                "load_smoke_results": {},
+                "restart_recovery_results": {},
+                "soak_smoke_results": {},
+                "npm_audit_results": {},
+                "production_config_results": {},
+                "secret_hygiene_results": {},
+                "secret_rotation_results": {},
+                "backup_policy_results": {},
+                "monitoring_alerts_results": {},
+                "reverse_proxy_results": {},
+                "playwright_results": {},
+                "graph_results": {},
+                "retrieval_results": {},
+                "backup_results": {},
+                "restore_drill_results": {},
+                "ocr_results": [],
+            }
+            with ExitStack() as stack:
+                stack.enter_context(patch.object(MODULE, "DEFAULT_OUTPUT_DIR", Path(directory) / "missing"))
+                stack.enter_context(patch.object(MODULE, "markdown", return_value=""))
+                for name, value in fake_results.items():
+                    stack.enter_context(patch.object(MODULE, name, return_value=value))
+                report = MODULE.export(output_dir)
+
+            self.assertTrue(report["rust_contract"]["ok"])
 
     def test_metrics_url_is_derived_from_backend_health_url(self) -> None:
         self.assertEqual(

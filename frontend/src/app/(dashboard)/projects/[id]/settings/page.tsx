@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import { UserPlus, UserMinus, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,9 +14,10 @@ import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { getProjectAuditLogs, type AuditLog } from "@/lib/api";
 import { AuditTable } from "@/components/shared/audit-table";
+import { ErrorBanner } from "@/components/shared/error-banner";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
-import { SettingsSkeleton } from "@/components/skeletons";
+import { AuditLogSkeleton, SettingsSkeleton } from "@/components/skeletons";
 
 const rt: Record<string, string> = { owner: "拥有者", reviewer: "审核人", member: "成员", viewer: "观察者" };
 const roleOpts = ["member", "reviewer", "owner", "viewer"];
@@ -52,7 +52,7 @@ export default function SettingsPage() {
   const [userId, setUserId] = useState("");
   const [memberRole, setMemberRole] = useState("member");
   const [canRead, setCanRead] = useState(true);
-  const [canWrite, setCanWrite] = useState(true);
+  const [canWrite, setCanWrite] = useState(false);
   const [canReview, setCanReview] = useState(false);
   const [canEval, setCanEval] = useState(false);
   const [canManage, setCanManage] = useState(false);
@@ -101,7 +101,7 @@ export default function SettingsPage() {
     }
   }, [project]);
 
-  const resetAdd = () => { setUserId(""); setMemberRole("member"); setCanRead(true); setCanWrite(true); setCanReview(false); setCanEval(false); setCanManage(false); setIndependentReview(false); };
+  const resetAdd = () => { setUserId(""); setMemberRole("member"); setCanRead(true); setCanWrite(false); setCanReview(false); setCanEval(false); setCanManage(false); setIndependentReview(false); };
 
   const handleAddMember = async () => {
     if (!token || !userId) return;
@@ -197,12 +197,12 @@ export default function SettingsPage() {
   if (busy) return <SettingsSkeleton />;
 
   if (!canManageProject) {
-    return <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">只有项目管理员可以访问项目设置。</p>;
+    return <ErrorBanner>只有项目管理员可以访问项目设置。</ErrorBanner>;
   }
 
   return (
     <div className="space-y-6">
-      {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p>}
+      {error && <ErrorBanner message={error} />}
 
       {/* 项目信息 */}
       <Card>
@@ -269,7 +269,7 @@ export default function SettingsPage() {
                       </label>
                     ))}
                   </fieldset>
-                  <Button onClick={handleAddMember} disabled={addBusy || !userId} className="w-full">
+                  <Button onClick={handleAddMember} disabled={addBusy || !userId} isLoading={addBusy} className="w-full">
                     {addBusy ? "添加中..." : independentReview ? "添加独立盲评人" : "添加成员"}
                   </Button>
                 </div>
@@ -285,7 +285,7 @@ export default function SettingsPage() {
               {members.map((m) => (
                 <div key={m.id} className="flex items-start justify-between gap-3 rounded-md border p-3">
                   <div>
-                    <p className="text-sm font-medium">用户 #{m.user_id}</p>
+                    <p className="text-sm font-medium">{m.display_name || `用户 #${m.user_id}`} <span className="font-normal text-muted-foreground">(#{m.user_id})</span></p>
                     <div className="flex gap-1 mt-1">
                       <Badge variant="secondary" className="text-xs">{rt[m.project_role] || m.project_role}</Badge>
                       {m.can_read && <Badge variant="outline" className="text-xs">读</Badge>}
@@ -339,7 +339,7 @@ export default function SettingsPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-base">项目操作记录</CardTitle>
-            <Button size="sm" variant="outline" onClick={loadAuditLogs} disabled={auditLoading}>
+            <Button size="sm" variant="outline" onClick={loadAuditLogs} disabled={auditLoading} isLoading={auditLoading}>
               {auditLoading ? "刷新中..." : "刷新"}
             </Button>
           </div>
@@ -347,23 +347,15 @@ export default function SettingsPage() {
         <CardContent>
           {auditError && <p className="mb-2 text-sm text-destructive" role="alert">{auditError}</p>}
           {auditLogs.length === 0 ? (
-            <p className="text-sm text-muted-foreground">{auditLoading ? "加载中..." : "暂无操作记录"}</p>
+            auditLoading
+              ? <AuditLogSkeleton />
+              : <p className="text-sm text-muted-foreground">暂无操作记录</p>
           ) : (
-            <AuditTable logs={auditLogs} />
+            <AuditTable logs={auditLogs} showTechnicalCode={false} />
           )}
         </CardContent>
       </Card>
 
-      {/* 系统测试入口 — 隐藏在日常界面之外 */}
-      <div className="border-t pt-4 text-center">
-        <Link
-          href={`/projects/${projectId}/system-test`}
-          target="_blank"
-          className="text-xs text-muted-foreground/40 hover:text-muted-foreground/60 transition-colors"
-        >
-          系统测试 · 可信性验证
-        </Link>
-      </div>
     </div>
   );
 }

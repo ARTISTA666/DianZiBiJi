@@ -1,0 +1,14 @@
+services:
+  evaluation-lab:
+    build:
+      context: ./evaluation-lab
+    environment:
+      PORT: 4100
+      BACKEND_URL: http://host.docker.internal:8001
+      DATA_ROOT: /data/real/GSE111619
+    volumes:
+      - ./data/real/GSE111619:/data/real/GSE111619:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:4100:4100"

@@ -11,6 +11,7 @@ base64 = "=0.22.1"
 bcrypt = "=0.17.0"
 chrono = { version = "=0.4.41", features = ["serde"] }
 flate2 = "=1.1.2"
+futures-util = "=0.3.33"
 hmac = "=0.12.1"
 image = { version = "=0.25.6", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff", "webp"] }
 pbkdf2 = "=0.12.2"
@@ -24,6 +25,7 @@ subtle = "=2.6.1"
 thiserror = "=2.0.12"
 tokio = { version = "=1.47.0", features = ["fs", "io-util", "macros", "net", "process", "rt-multi-thread", "signal", "time"] }
 tokio-util = { version = "=0.7.19", features = ["io"] }
+tokio-stream = "=0.1.19"
 tower-http = { version = "=0.6.6", features = ["cors", "request-id", "trace"] }
 tracing = "=0.1.41"
 tracing-subscriber = { version = "=0.3.20", features = ["env-filter"] }

@@ -2595,5 +2595,140 @@ ALTER TABLE ONLY public.search_documents
 
 
 --
+-- Agent/MCP runtime tables are part of the Rust-owned baseline.  The runtime
+-- initializer keeps additive ALTER/CREATE fallbacks for legacy databases.
+CREATE TABLE public.mcp_personal_access_tokens (
+    id uuid PRIMARY KEY,
+    user_id integer NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    name varchar(120) NOT NULL,
+    token_prefix varchar(24) NOT NULL,
+    token_hash varchar(64) NOT NULL UNIQUE,
+    scopes_json jsonb NOT NULL DEFAULT '[]'::jsonb,
+    expires_at timestamp with time zone NOT NULL,
+    revoked_at timestamp with time zone,
+    last_used_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE INDEX ix_mcp_pat_user ON public.mcp_personal_access_tokens (user_id, created_at DESC);
+
+CREATE TABLE public.mcp_http_sessions (
+    id uuid PRIMARY KEY,
+    user_id integer NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    protocol_version varchar(20) NOT NULL,
+    expires_at timestamp with time zone NOT NULL,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    last_seen_at timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE INDEX ix_mcp_http_sessions_user ON public.mcp_http_sessions (user_id, expires_at);
+
+CREATE TABLE public.agent_sessions (
+    id uuid PRIMARY KEY,
+    user_id integer NOT NULL REFERENCES public.users(id),
+    project_id integer REFERENCES public.projects(id),
+    status varchar(32) NOT NULL,
+    provider varchar(80) NOT NULL,
+    model_name varchar(160) NOT NULL,
+    prompt_version varchar(120) NOT NULL,
+    source_map_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    usage_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    final_state_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    active_turn uuid,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    updated_at timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE INDEX ix_agent_sessions_user ON public.agent_sessions (user_id, updated_at DESC);
+
+CREATE TABLE public.agent_turns (
+    id uuid PRIMARY KEY,
+    session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+    user_id integer NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    profile varchar(16) NOT NULL DEFAULT 'fast',
+    prompt_version varchar(120) NOT NULL DEFAULT 'agent-orchestrator-v1',
+    status varchar(40) NOT NULL,
+    input_redacted text NOT NULL,
+    plan_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    plan_hash varchar(64),
+    budget_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    usage_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    worker_id varchar(80),
+    heartbeat_at timestamp with time zone,
+    lease_expires_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    updated_at timestamp with time zone NOT NULL DEFAULT now(),
+    completed_at timestamp with time zone,
+    UNIQUE (session_id, id)
+);
+CREATE INDEX ix_agent_turns_session ON public.agent_turns (session_id, created_at DESC);
+CREATE INDEX ix_agent_turns_lease ON public.agent_turns (status, lease_expires_at);
+
+CREATE TABLE public.agent_events (
+    id bigserial PRIMARY KEY,
+    session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+    turn_id uuid REFERENCES public.agent_turns(id) ON DELETE CASCADE,
+    event_type varchar(48) NOT NULL,
+    payload_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    created_at timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE INDEX ix_agent_events_session ON public.agent_events (session_id, id);
+
+CREATE TABLE public.agent_messages (
+    id bigserial PRIMARY KEY,
+    session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+    role varchar(24) NOT NULL,
+    content_redacted text NOT NULL,
+    metadata_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+    created_at timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE INDEX ix_agent_messages_session ON public.agent_messages (session_id, id);
+
+CREATE TABLE public.agent_steps (
+    id bigserial PRIMARY KEY,
+    session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+    turn_id uuid NOT NULL,
+    sequence_no integer NOT NULL,
+    tool_name varchar(120) NOT NULL,
+    risk varchar(24) NOT NULL,
+    arguments_summary text NOT NULL,
+    arguments_hash varchar(64) NOT NULL,
+    result_redacted_json jsonb,
+    idempotency_key varchar(120),
+    status varchar(32) NOT NULL,
+    started_at timestamp with time zone NOT NULL DEFAULT now(),
+    completed_at timestamp with time zone,
+    UNIQUE (session_id, turn_id, sequence_no)
+);
+CREATE UNIQUE INDEX uq_agent_step_idempotency
+    ON public.agent_steps (session_id, tool_name, idempotency_key)
+    WHERE idempotency_key IS NOT NULL;
+
+CREATE TABLE public.agent_pending_actions (
+    id uuid PRIMARY KEY,
+    session_id uuid REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+    user_id integer NOT NULL REFERENCES public.users(id),
+    project_id integer REFERENCES public.projects(id),
+    tool_name varchar(120) NOT NULL,
+    arguments_json jsonb NOT NULL,
+    arguments_summary text NOT NULL,
+    arguments_hash varchar(64) NOT NULL,
+    idempotency_key varchar(120) NOT NULL,
+    status varchar(32) NOT NULL DEFAULT 'pending',
+    expires_at timestamp with time zone NOT NULL,
+    decided_at timestamp with time zone,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    UNIQUE (user_id, tool_name, idempotency_key)
+);
+CREATE INDEX ix_agent_pending_active
+    ON public.agent_pending_actions (user_id, status, expires_at);
+
+CREATE TABLE public.tool_execution_keys (
+    user_id integer NOT NULL REFERENCES public.users(id),
+    tool_name varchar(120) NOT NULL,
+    idempotency_key varchar(120) NOT NULL,
+    arguments_hash varchar(64) NOT NULL,
+    result_json jsonb NOT NULL,
+    created_at timestamp with time zone NOT NULL DEFAULT now(),
+    PRIMARY KEY (user_id, tool_name, idempotency_key)
+);
+
 -- PostgreSQL database dump complete
 --

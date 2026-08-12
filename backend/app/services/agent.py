@@ -155,12 +155,18 @@ class AgentGenerationService:
             "collaboration_steps": steps,
         }
         system_prompt = PROMPTS["agent_writer"].system_prompt
+        task_contracts = {
+            "stage_report": "阶段报告引用规则：每条实验结论只引用支持它的对应笔记编号；方案中的判定边界引用资料编号，阴性对照结论引用阴性对照笔记编号；边界条目中把 [F] 直接放在方案边界旁、把阴性对照的 [N] 直接放在阴性对照事实旁，不要把一个条目的编号扩散到相邻结论。",
+            "literature_review": "文献综述引用规则：资料、方法和泛化边界只用资料编号 [F]；实验笔记 [N] 只能用于明确描述项目自身实验，不能为资料方法或跨样本外推背书；如果任务没有要求描述项目自身实验，则最终草稿不得出现任何 [N] 编号；资料没有支持的主题写‘证据不足’，不要为了完整性添加笔记编号。",
+            "anomaly_detection": "异常检测引用规则：每个异常条目紧邻引用实际包含该数值的记录编号；缺少单位或验证条件时同时写‘需人工确认’，不要用另一条记录的编号代替；按记录分别列出条目，每一条包含异常值或缺失字段的事实行都必须单独带对应 [N] 编号，‘需人工确认’不能代替事实行的直接引用，不要用表格或文末来源汇总。",
+        }
         try:
             client = DeepSeekClient()
             result = await client.generate(
                 system_prompt=system_prompt,
                 user_prompt=(
                     f"任务类型：{TASK_LABELS[task_type]}\n"
+                    f"{task_contracts.get(task_type, '引用规则：每条结论只引用同一条目中直接支持该结论的编号。')}\n"
                     f"请将以下可追溯项目数据整理为正式草稿：\n\n{source_context}"
                 ),
                 temperature=0.1,

@@ -129,16 +129,16 @@ export function TopNav() {
           <form onSubmit={handleChangePassword} className="space-y-4 pt-2">
             <div className="space-y-2">
               <Label htmlFor="current-pw">当前密码</Label>
-              <Input id="current-pw" type="password" required value={currentPw}
+              <Input id="current-pw" type="password" autoComplete="current-password" required value={currentPw}
                 onChange={(e) => setCurrentPw(e.target.value)} placeholder="请输入当前密码" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="new-pw">新密码</Label>
-              <Input id="new-pw" type="password" required minLength={8} value={newPw}
+              <Input id="new-pw" type="password" autoComplete="new-password" required minLength={8} value={newPw}
                 onChange={(e) => setNewPw(e.target.value)} placeholder="至少 8 位" />
             </div>
             {pwError && <p className="text-sm text-destructive">{pwError}</p>}
-            <Button type="submit" disabled={pwBusy} className="w-full">
+            <Button type="submit" disabled={pwBusy} isLoading={pwBusy} className="w-full">
               {pwBusy ? "更新中..." : "更新密码"}
             </Button>
           </form>

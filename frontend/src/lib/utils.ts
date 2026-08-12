@@ -1,3 +1,4 @@
+import type { KeyboardEvent } from "react";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -11,6 +12,16 @@ export function getErrorMessage(e: unknown, fallback = "操作失败"): string {
   const base = e instanceof Error ? e.message : typeof e === "string" ? e : fallback;
   // 全局接入权限/状态指引，保证各调用点无需重复处理。
   return withPermissionHint(e, base);
+}
+
+/**
+ * 卡片作为可点击按钮时的键盘操作支持（Enter/空格触发）。
+ */
+export function handleCardKeyDown(e: KeyboardEvent<HTMLElement>, callback: () => void) {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    callback();
+  }
 }
 
 export function formatFileSize(bytes: number): string {

@@ -68,10 +68,10 @@ export function UserManagement({ token, currentUser, users, busy, runAction }: P
         <CardHeader><CardTitle className="text-base">创建账号</CardTitle></CardHeader>
         <CardContent>
           <form className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-5" onSubmit={handleCreateUser}>
-            <div className="space-y-1"><Label htmlFor="new-username">账号</Label><Input id="new-username" value={newUsername} onChange={(event) => setNewUsername(event.target.value)} required /></div>
+            <div className="space-y-1"><Label htmlFor="new-username">账号</Label><Input id="new-username" autoComplete="username" value={newUsername} onChange={(event) => setNewUsername(event.target.value)} required /></div>
             <div className="space-y-1"><Label htmlFor="new-display-name">显示名</Label><Input id="new-display-name" value={newDisplayName} onChange={(event) => setNewDisplayName(event.target.value)} required /></div>
             <div className="space-y-1"><Label htmlFor="new-email">邮箱</Label><Input id="new-email" type="email" value={newEmail} onChange={(event) => setNewEmail(event.target.value)} /></div>
-            <div className="space-y-1"><Label htmlFor="new-password">初始密码</Label><Input id="new-password" type="password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} minLength={8} required /></div>
+            <div className="space-y-1"><Label htmlFor="new-password">初始密码</Label><Input id="new-password" type="password" autoComplete="new-password" value={newPassword} onChange={(event) => setNewPassword(event.target.value)} minLength={8} required /></div>
             <div className="space-y-1"><Label htmlFor="new-role">系统角色</Label><Select value={newRole} onValueChange={setNewRole}><SelectTrigger id="new-role"><SelectValue /></SelectTrigger><SelectContent>{roles.map((role) => <SelectItem key={role} value={role}>{roleNames[role]}</SelectItem>)}</SelectContent></Select></div>
             <Button className="col-span-1 md:col-span-2 lg:col-span-5" type="submit" disabled={busy}>创建账号</Button>
           </form>

@@ -138,7 +138,7 @@ export default function BlindReviewPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-start gap-3 rounded-md border border-blue-200 bg-blue-50 p-4 text-blue-900">
+      <div className="flex items-start gap-3 rounded-md border border-info/30 bg-info/10 p-4 text-info">
         <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" />
         <div>
           <h2 className="font-semibold">独立人工盲评</h2>
@@ -147,7 +147,7 @@ export default function BlindReviewPage() {
       </div>
 
       {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p>}
-      {message && <p className="rounded-md bg-green-50 px-4 py-2 text-sm text-green-700">{message}</p>}
+      {message && <p className="rounded-md bg-success/10 px-4 py-2 text-sm text-success">{message}</p>}
 
       <Card>
         <CardContent className="grid gap-3 py-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
@@ -194,7 +194,7 @@ export default function BlindReviewPage() {
                   <CardTitle className="flex items-center gap-2 text-base">
                     <ClipboardCheck className="h-4 w-4" />{item.blind_id}
                   </CardTitle>
-                  {completed && <Badge className="bg-green-600"><CheckCircle2 className="mr-1 h-3 w-3" />已提交</Badge>}
+                  {completed && <Badge variant="success"><CheckCircle2 className="mr-1 h-3 w-3" />已提交</Badge>}
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -271,7 +271,7 @@ export default function BlindReviewPage() {
                     onChange={(event) => updateDraft(item.blind_id, { comment: event.target.value })} />
                 </div>
                 {!completed && (
-                  <Button onClick={() => submitReview(item)} disabled={submitting === item.blind_id}>
+                  <Button onClick={() => submitReview(item)} disabled={submitting === item.blind_id} isLoading={submitting === item.blind_id}>
                     {submitting === item.blind_id ? "提交中..." : "提交并继续"}
                   </Button>
                 )}

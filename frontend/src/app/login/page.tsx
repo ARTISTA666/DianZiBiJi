@@ -67,7 +67,7 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           {sessionExpired && (
-            <p className="mb-4 rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-800" role="status">
+            <p className="mb-4 rounded-md bg-warning/10 px-3 py-2 text-sm text-warning" role="status">
               会话已过期，请重新登录
             </p>
           )}
@@ -78,6 +78,7 @@ export default function LoginPage() {
                 id="username"
                 required
                 autoFocus
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="请输入账号"
@@ -89,13 +90,14 @@ export default function LoginPage() {
                 id="password"
                 type="password"
                 required
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="请输入密码"
               />
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" className="w-full" disabled={busy}>
+            <Button type="submit" className="w-full" disabled={busy} isLoading={busy}>
               {busy ? "登录中..." : "登录"}
             </Button>
           </form>

@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { Maximize2, Minimize2, Info } from "lucide-react";
+import { Focus, Info, ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
 
 // react-force-graph-2d 不支持 SSR，需动态导入
@@ -89,8 +88,9 @@ export function KnowledgeGraphVisualization({
   onEntitySelect: (id: number | null) => void;
 }) {
   const graphRef = useRef<any>(null);
-  const [expanded, setExpanded] = useState(false);
-  const [hoveredNode, setHoveredNode] = useState<GraphNode | null>(null);
+  const graphContainerRef = useRef<HTMLDivElement>(null);
+  const fitOnEngineStopRef = useRef(true);
+  const [graphSize, setGraphSize] = useState({ width: 0, height: 320 });
 
   // 构建图数据
   const { nodes, links } = useMemo(() => {
@@ -124,6 +124,65 @@ export function KnowledgeGraphVisualization({
     return { nodes: graphNodes, links: graphLinks };
   }, [entities, relations]);
 
+  // 保持引用稳定：悬停、选中等 UI 状态变化不应让 ForceGraph 误以为整张图换了数据。
+  const graphData = useMemo(() => ({ nodes, links }), [nodes, links]);
+
+  // 让节点之间保持更宽松的间距，并在数据变化后重新适配到容器内。
+  const configureGraph = useCallback(() => {
+    const graph = graphRef.current;
+    if (!graph) return;
+    graph.d3Force("charge")?.strength(-170);
+    graph.d3Force("link")?.distance(52);
+    graph.d3Force("center")?.strength(0.8);
+  }, []);
+
+  const fitGraph = useCallback(() => {
+    graphRef.current?.zoomToFit?.(0, 36);
+  }, []);
+
+  const freezeLayout = useCallback(() => {
+    const currentNodes = graphRef.current?.graphData?.().nodes || [];
+    currentNodes.forEach((node: any) => {
+      if (Number.isFinite(node.x) && Number.isFinite(node.y)) {
+        node.fx = node.x;
+        node.fy = node.y;
+      }
+    });
+  }, []);
+
+  const handleEngineStop = useCallback(() => {
+    if (!fitOnEngineStopRef.current) return;
+    fitOnEngineStopRef.current = false;
+    freezeLayout();
+    fitGraph();
+  }, [fitGraph, freezeLayout]);
+
+  const zoomGraph = useCallback((factor: number) => {
+    const graph = graphRef.current;
+    if (!graph) return;
+    const current = graph.zoom?.() || 1;
+    graph.zoom?.(Math.max(0.3, Math.min(2.2, current * factor)), 180);
+  }, []);
+
+  useEffect(() => {
+    const container = graphContainerRef.current;
+    if (!container) return;
+    const updateSize = () => setGraphSize({ width: container.clientWidth, height: container.clientHeight });
+    updateSize();
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(configureGraph, 120);
+    return () => window.clearTimeout(timer);
+  }, [configureGraph, graphSize.width, graphSize.height, nodes.length, links.length]);
+
+  useEffect(() => {
+    fitOnEngineStopRef.current = true;
+  }, [graphData]);
+
   // 选中实体时高亮关联
   const highlightedIds = useMemo(() => {
     if (selectedEntityId === null) return new Set<number>();
@@ -139,14 +198,9 @@ export function KnowledgeGraphVisualization({
     onEntitySelect(node.id === selectedEntityId ? null : node.id);
   }, [selectedEntityId, onEntitySelect]);
 
-  const handleNodeHover = useCallback((node: any) => {
-    setHoveredNode(node ? {
-      id: node.id,
-      name: node.name,
-      entityType: node.entityType,
-      val: node.val,
-      color: node.color,
-    } : null);
+  const handleNodeDragEnd = useCallback((node: any) => {
+    node.fx = node.x;
+    node.fy = node.y;
   }, []);
 
   // 统计实体类型分布
@@ -172,7 +226,7 @@ export function KnowledgeGraphVisualization({
   }
 
   return (
-    <Card>
+    <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <div>
@@ -181,9 +235,9 @@ export function KnowledgeGraphVisualization({
               {nodes.length} 节点 · {links.length} 边 · 点击节点查看关联
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="min-w-0 flex-1 items-center justify-end gap-2 sm:flex">
             {/* 图例 */}
-            <div className="flex flex-wrap gap-1.5">
+            <div className="hidden min-w-0 flex-1 flex-wrap justify-end gap-1.5 sm:flex">
               {typeDistribution.slice(0, 6).map(([label, count]) => {
                 const entityType = Object.entries(kgEntityTypeText).find(([, v]) => v === label)?.[0] || label;
                 return (
@@ -194,24 +248,32 @@ export function KnowledgeGraphVisualization({
                 );
               })}
             </div>
-            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => setExpanded(!expanded)}>
-              {expanded ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
-            </Button>
+            <div className="flex items-center rounded-md border bg-background/90">
+              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="缩小图谱" title="缩小图谱" onClick={() => zoomGraph(0.8)}>
+                <ZoomOut className="h-3.5 w-3.5" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="放大图谱" title="放大图谱" onClick={() => zoomGraph(1.25)}>
+                <ZoomIn className="h-3.5 w-3.5" />
+              </Button>
+              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="重置图谱视图" title="重置图谱视图" onClick={() => graphRef.current?.zoomToFit?.(250, 36)}>
+                <Focus className="h-3.5 w-3.5" />
+              </Button>
+            </div>
           </div>
         </div>
       </CardHeader>
-      <CardContent className={cn("transition-all duration-300", expanded ? "h-[600px]" : "h-80")}>
-        <ForceGraph2D
+      <CardContent ref={graphContainerRef} className="relative h-[min(68vh,44rem)] min-h-[32rem] overflow-hidden p-0">
+        {graphSize.width > 0 && <ForceGraph2D
           ref={graphRef as any}
-          graphData={{ nodes, links }}
-          width={undefined}
-          height={undefined}
+          graphData={graphData}
+          width={graphSize.width}
+          height={graphSize.height}
           nodeLabel={(node: any) => `${kgEntityTypeText[node.entityType] || node.entityType}: ${node.name}`}
           nodeColor={(node: any) => {
             if (selectedEntityId !== null && !highlightedIds.has(node.id)) return "#e2e8f0";
             return node.color;
           }}
-          nodeRelSize={6}
+          nodeRelSize={4.5}
           nodeVal={(node: any) => node.val}
           linkLabel={(link: any) => `${link.label}（置信度 ${link.confidence.toFixed(2)}）`}
           linkColor={(link: any) => {
@@ -234,20 +296,20 @@ export function KnowledgeGraphVisualization({
           linkDirectionalArrowRelPos={0.9}
           linkCurvature={0.1}
           onNodeClick={handleNodeClick}
-          onNodeHover={handleNodeHover}
-          cooldownTicks={100}
-          d3AlphaDecay={0.05}
-          warmupTicks={50}
-        />
-        {/* 悬浮信息 */}
-        {hoveredNode && (
-          <div className="pointer-events-none absolute bottom-4 left-4 rounded-md border bg-background/90 px-3 py-2 text-xs shadow-sm backdrop-blur">
-            <span className="font-medium">{hoveredNode.name}</span>
-            <span className="ml-2 text-muted-foreground">
-              {kgEntityTypeText[hoveredNode.entityType] || hoveredNode.entityType}
-            </span>
-          </div>
-        )}
+          onNodeDragEnd={handleNodeDragEnd}
+          onBackgroundClick={() => onEntitySelect(null)}
+          enableZoomInteraction={false}
+          enablePointerInteraction
+          onEngineStop={handleEngineStop}
+          minZoom={0.3}
+          maxZoom={2.2}
+          cooldownTicks={90}
+          cooldownTime={1200}
+          d3AlphaDecay={0.08}
+          d3VelocityDecay={0.45}
+          warmupTicks={40}
+          autoPauseRedraw
+        />}
       </CardContent>
     </Card>
   );

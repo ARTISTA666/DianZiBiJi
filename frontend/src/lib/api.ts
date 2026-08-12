@@ -53,6 +53,7 @@ export type ProjectMember = {
   id: number;
   project_id: number;
   user_id: number;
+  display_name?: string;
   project_role: string;
   can_read: boolean;
   can_write: boolean;
@@ -80,7 +81,14 @@ export type Template = {
   id: number;
   name: string;
   experiment_type: string;
-  schema_json: { fields?: Array<{ key: string; label: string; type: string }> };
+  schema_json: {
+    fields?: Array<{
+      key: string;
+      label: string;
+      type: string;
+      required?: boolean;
+    }>;
+  };
   default_content_json: Record<string, unknown>;
   is_active: boolean;
 };
@@ -187,6 +195,7 @@ export type RagQueryResponse = {
     target_entity_type_label: string;
     confidence: number;
     retrieval_score: number;
+    relation_roles: string[];
   }>;
   rag_mode: string;
   query_log_id: number | null;
@@ -200,6 +209,7 @@ export type RagQueryResponse = {
     invalid_citations: string[];
     has_evidence: boolean;
     message: string;
+    repair_attempted: boolean;
   } | null;
 };
 
@@ -394,6 +404,73 @@ export type AgentGenerationRun = {
   created_at: string;
 };
 
+export type AgentRuntimeSnapshot = {
+  session: {
+    id: string;
+    project_id: number | null;
+    status: string;
+    provider: string;
+    model_name: string;
+    prompt_version: string;
+    usage: Record<string, unknown>;
+    active_turn?: string | null;
+  };
+  messages: Array<{ id: number; role: "user" | "assistant"; content: string; metadata: Record<string, unknown> }>;
+  steps: Array<{
+    id: number;
+    sequence_no: number;
+    tool_name: string;
+    risk: string;
+    arguments_summary: string;
+    status: string;
+    result: Record<string, unknown> | null;
+  }>;
+  pending_actions: Array<{
+    id: string;
+    tool_name: string;
+    arguments_summary: string;
+    status: string;
+    expires_at: string;
+  }>;
+  turns?: AgentTurn[];
+};
+
+export type AgentProfile = "fast" | "deep";
+
+export type AgentTurn = {
+  id: string;
+  profile: AgentProfile;
+  prompt_version: string;
+  status: string;
+  input: string;
+  plan?: { text?: string; profile?: AgentProfile; budget?: Record<string, unknown> } | null;
+  plan_hash?: string | null;
+  budget: Record<string, unknown>;
+  usage: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+  completed_at?: string | null;
+};
+
+export type AgentTurnStartResponse = AgentRuntimeSnapshot & {
+  turn_id: string;
+  status: string;
+};
+
+export type AgentTurnPreviewResponse = {
+  turn_id: string;
+  status: "awaiting_plan_approval";
+  plan: NonNullable<AgentTurn["plan"]>;
+  plan_hash: string;
+  budget: Record<string, unknown>;
+};
+
+export type AgentEvent = {
+  id: number;
+  event: string;
+  data: Record<string, unknown>;
+};
+
 export type KnowledgeEntity = {
   id: number;
   project_id: number;
@@ -453,7 +530,12 @@ export type AuditLog = {
 // Authentication uses the HttpOnly cookie set by /auth/login; the token
 // parameter is kept for call-site compatibility but is never sent, so the
 // token no longer needs to live in JS-accessible storage.
-async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): Promise<T> {
+async function apiFetch<T>(
+  path: string,
+  _token?: string,
+  init?: RequestInit,
+  parseResponse: (response: Response) => Promise<T> = (response) => response.json() as Promise<T>,
+): Promise<T> {
   const isFormData = init?.body instanceof FormData;
   let response: Response;
   try {
@@ -490,7 +572,7 @@ async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): P
       } catch {
         // Auth store may already be cleared; proceed with redirect.
       }
-      window.location.href = "/login";
+      window.location.replace("/login");
     }
     const text = await response.text();
     let message = text || `请求失败: ${response.status}`;
@@ -505,7 +587,7 @@ async function apiFetch<T>(path: string, _token?: string, init?: RequestInit): P
     throw new ApiRequestError(message, response.status, requestId);
   }
   if (response.status === 204) return null as unknown as T;
-  return response.json() as Promise<T>;
+  return parseResponse(response);
 }
 
 function jsonInit(method: string, payload?: unknown): RequestInit {
@@ -682,11 +764,19 @@ export type PaginatedResponse<T> = {
   total: number;
 };
 
-export function getProjectNotes(token: string, projectId: number, params: { skip?: number; limit?: number; status?: string } = {}) {
+export function getProjectNotes(token: string, projectId: number, params: {
+  skip?: number;
+  limit?: number;
+  status?: string;
+  search?: string;
+  sort?: string;
+} = {}) {
   const searchParams = new URLSearchParams();
   if (params.skip !== undefined) searchParams.set("skip", String(params.skip));
   if (params.limit !== undefined) searchParams.set("limit", String(params.limit));
   if (params.status) searchParams.set("status", params.status);
+  if (params.search) searchParams.set("search", params.search);
+  if (params.sort) searchParams.set("sort", params.sort);
   const qs = searchParams.toString();
   return apiFetch<PaginatedResponse<Note>>(`/projects/${projectId}/notes${qs ? `?${qs}` : ""}`, token);
 }
@@ -713,6 +803,7 @@ export function updateNote(
     title?: string;
     experiment_type?: string;
     experiment_date?: string;
+    template_id?: number | null;
     fixed_fields_json?: Record<string, string>;
     content_json?: Record<string, unknown>;
     change_summary?: string;
@@ -747,6 +838,10 @@ export function getNoteVersions(token: string, noteId: number) {
 
 export function getNoteApprovals(token: string, noteId: number) {
   return apiFetch<NoteApproval[]>(`/notes/${noteId}/approvals`, token);
+}
+
+export function getNoteFiles(token: string, noteId: number) {
+  return apiFetch<StoredFile[]>(`/notes/${noteId}/files`, token);
 }
 
 export function getPendingApprovals(token: string) {
@@ -838,11 +933,12 @@ export function resumeRagExperiment(token: string, runId: number) {
 }
 
 export async function downloadRagExperiment(token: string, runId: number) {
-  const response = await fetch(`${API_BASE_URL}/rag/experiments/${runId}/export.csv`, {
-    credentials: "include",
-  });
-  if (!response.ok) throw new Error((await response.text()) || `请求失败: ${response.status}`);
-  return response.blob();
+  return apiFetch<Blob>(
+    `/rag/experiments/${runId}/export.csv`,
+    token,
+    undefined,
+    (response) => response.blob(),
+  );
 }
 
 export function evaluateQueryLog(
@@ -851,6 +947,18 @@ export function evaluateQueryLog(
   payload: { score: number; is_accurate: boolean; is_traceable: boolean; comment?: string | null },
 ) {
   return post<AIQueryEvaluation>(`/rag/query-logs/${logId}/evaluation`, token, payload);
+}
+
+export function submitQueryLogFeedback(
+  token: string,
+  logId: number,
+  payload: { value: "helpful" | "not_helpful"; comment?: string | null },
+) {
+  return post<{ accepted: boolean; value: "helpful" | "not_helpful" }>(
+    `/rag/query-logs/${logId}/feedback`,
+    token,
+    payload,
+  );
 }
 
 export function getBlindReviewBatches(token: string, projectId: number) {
@@ -885,12 +993,12 @@ export function evaluateBlindReviewItem(
 }
 
 export async function downloadBlindReviewBatchExport(token: string, projectId: number, batchId: string) {
-  const response = await fetch(
-    `${API_BASE_URL}/projects/${projectId}/rag/blind-review/batches/${encodeURIComponent(batchId)}/export.csv`,
-    { credentials: "include" },
+  return apiFetch<Blob>(
+    `/projects/${projectId}/rag/blind-review/batches/${encodeURIComponent(batchId)}/export.csv`,
+    token,
+    undefined,
+    (response) => response.blob(),
   );
-  if (!response.ok) throw new Error(await response.text());
-  return response.blob();
 }
 
 export function getProjectKnowledgeGraph(token: string, projectId: number) {
@@ -977,4 +1085,105 @@ export function generateAgentOutput(
 
 export function getAgentRuns(token: string, projectId: number) {
   return apiFetch<AgentGenerationRun[]>(`/projects/${projectId}/agents/runs`, token);
+}
+
+export function createAgentSession(token: string, projectId: number | null) {
+  return post<AgentRuntimeSnapshot>("/api/agent/sessions", token, { project_id: projectId });
+}
+
+export function sendAgentSessionMessage(token: string, sessionId: string, content: string) {
+  return post<AgentRuntimeSnapshot>(`/api/agent/sessions/${sessionId}/messages`, token, { content });
+}
+
+export function createAgentTurn(
+  token: string,
+  sessionId: string,
+  content: string,
+  profile: AgentProfile = "fast",
+) {
+  if (profile === "deep") {
+    return post<AgentTurnPreviewResponse>(`/api/agent/sessions/${sessionId}/turns`, token, {
+      content,
+      profile,
+    });
+  }
+  return post<AgentTurnStartResponse>(`/api/agent/sessions/${sessionId}/turns`, token, {
+    content,
+    profile,
+  });
+}
+
+export function startAgentTurn(token: string, sessionId: string, turnId: string, planHash: string) {
+  return post<AgentTurnStartResponse>(
+    `/api/agent/sessions/${sessionId}/turns/${turnId}/start`,
+    token,
+    { plan_hash: planHash },
+  );
+}
+
+export function cancelAgentTurn(token: string, sessionId: string, turnId: string) {
+  return post<{ turn_id: string; status: string }>(
+    `/api/agent/sessions/${sessionId}/turns/${turnId}/cancel`,
+    token,
+  );
+}
+
+/**
+ * Subscribe to the durable Agent event log. EventSource reconnects using the
+ * server-provided event id; callers should treat events as at-least-once and
+ * deduplicate by id before updating UI state.
+ */
+export function subscribeAgentSessionEvents(
+  _token: string,
+  sessionId: string,
+  onEvent: (event: AgentEvent) => void,
+  onError?: () => void,
+) {
+  const source = new EventSource(`${API_BASE_URL}/api/agent/sessions/${sessionId}/events`, {
+    withCredentials: true,
+  });
+  const eventTypes = [
+    "message.delta",
+    "plan.preview",
+    "turn.started",
+    "turn.completed",
+    "turn.cancelled",
+    "tool.started",
+    "tool.completed",
+    "confirmation.required",
+    "confirmation.rejected",
+    "confirmation.completed",
+    "error",
+  ];
+  const listeners = eventTypes.map((eventType) => {
+    const listener = (event: Event) => {
+      const message = event as MessageEvent<string>;
+      let data: Record<string, unknown> = {};
+      try {
+        data = JSON.parse(message.data) as Record<string, unknown>;
+      } catch {
+        data = { value: message.data };
+      }
+      onEvent({ id: Number(message.lastEventId || 0), event: eventType, data });
+    };
+    source.addEventListener(eventType, listener);
+    return [eventType, listener] as const;
+  });
+  source.onerror = () => onError?.();
+  return () => {
+    for (const [eventType, listener] of listeners) source.removeEventListener(eventType, listener);
+    source.close();
+  };
+}
+
+export function approveAgentPendingAction(token: string, actionId: string) {
+  return post<{ id: string; tool: string; status: string; execution_status: string }>(
+    `/api/agent/pending-actions/${actionId}/approve`, token,
+  );
+}
+
+export function rejectAgentPendingAction(token: string, actionId: string) {
+  return post<{ id: string; tool: string; status: string }>(
+    `/api/agent/pending-actions/${actionId}/reject`, token,
+  );
 }

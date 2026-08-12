@@ -1,6 +1,6 @@
 use chrono::{DateTime, NaiveDate, Utc};
 use regex::Regex;
-use serde::{Deserialize, Serialize};
+use serde::{de::Deserializer, Deserialize, Serialize};
 use serde_json::Value;
 use std::sync::OnceLock;
 
@@ -167,6 +167,8 @@ pub struct NoteListQuery {
     pub skip: Option<i64>,
     pub limit: Option<i64>,
     pub status: Option<String>,
+    pub search: Option<String>,
+    pub sort: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -188,7 +190,7 @@ pub struct ProjectMemberCreate {
     pub project_role: String,
     #[serde(default = "default_true")]
     pub can_read: bool,
-    #[serde(default = "default_true")]
+    #[serde(default)]
     pub can_write: bool,
     #[serde(default)]
     pub can_review: bool,
@@ -217,6 +219,7 @@ pub struct ProjectMemberRead {
     pub id: i32,
     pub project_id: i32,
     pub user_id: i32,
+    pub display_name: String,
     pub project_role: String,
     pub can_read: bool,
     pub can_write: bool,
@@ -359,12 +362,26 @@ pub struct NoteUpdate {
     pub title: Option<String>,
     pub experiment_type: Option<String>,
     pub experiment_date: Option<NaiveDate>,
+    /// `None` keeps the current template; `Some(None)` explicitly clears it.
+    #[serde(default, deserialize_with = "deserialize_nullable_field")]
+    pub template_id: Option<Option<i32>>,
     pub fixed_fields_json: Option<Value>,
     pub content_json: Option<Value>,
     /// 自由文本正文。content_json 尚无 "text" 键时会归一写入 content_json["text"]。
     #[serde(default)]
     pub content_text: Option<String>,
     pub change_summary: Option<String>,
+}
+
+/// Preserve the distinction between an omitted PATCH field and an explicit
+/// JSON `null`, so callers can clear nullable values without changing the
+/// semantics of existing partial updates.
+fn deserialize_nullable_field<'de, D, T>(deserializer: D) -> Result<Option<Option<T>>, D::Error>
+where
+    D: Deserializer<'de>,
+    T: Deserialize<'de>,
+{
+    Ok(Some(Option::<T>::deserialize(deserializer)?))
 }
 
 #[derive(Clone, Debug, Serialize, sqlx::FromRow)]
@@ -667,6 +684,9 @@ pub struct RagQueryResponse {
     pub model_name: Option<String>,
     pub fallback_reason: Option<String>,
     pub citation_audit: Option<RagCitationAuditRead>,
+    pub evidence_status: String,
+    pub retrieval_strategy: String,
+    pub retrieval_trace_id: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -674,6 +694,12 @@ pub struct AIQueryEvaluationRequest {
     pub score: i32,
     pub is_accurate: bool,
     pub is_traceable: bool,
+    pub comment: Option<String>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct AIQueryFeedbackRequest {
+    pub value: String,
     pub comment: Option<String>,
 }
 
@@ -818,7 +844,25 @@ pub fn validate_email(value: &str) -> Result<(), &'static str> {
 
 #[cfg(test)]
 mod tests {
-    use super::{validate_email, validate_password, validate_username};
+    use super::{validate_email, validate_password, validate_username, NoteUpdate};
+
+    #[test]
+    fn note_update_round_trips_template_id() {
+        let update: NoteUpdate = serde_json::from_str(r#"{"template_id": 5}"#).unwrap();
+        assert_eq!(update.template_id, Some(Some(5)));
+    }
+
+    #[test]
+    fn note_update_can_clear_template_id() {
+        let update: NoteUpdate = serde_json::from_str(r#"{"template_id": null}"#).unwrap();
+        assert_eq!(update.template_id, Some(None));
+    }
+
+    #[test]
+    fn note_update_omitted_template_keeps_partial_update_semantics() {
+        let update: NoteUpdate = serde_json::from_str(r#"{"title": "revised"}"#).unwrap();
+        assert_eq!(update.template_id, None);
+    }
 
     #[test]
     fn test_user_input_validation_matches_existing_contract() {

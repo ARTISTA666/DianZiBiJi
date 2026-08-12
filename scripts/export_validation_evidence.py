@@ -71,7 +71,7 @@ def run_command(command: list[str]) -> dict:
 def runtime_probe_commands(postgres_user: str, postgres_db: str) -> list[list[str]]:
     schema_check = (
         "DO $$ BEGIN "
-        "IF COALESCE((SELECT max(version) FROM public.rust_schema_versions), 0) < 2 "
+        "IF COALESCE((SELECT max(version) FROM public.rust_schema_versions), 0) < 3 "
         "THEN RAISE EXCEPTION 'Rust schema version is missing'; "
         "END IF; END $$;"
     )
@@ -338,6 +338,24 @@ def reverse_proxy_results(path: Path | None) -> dict:
     return {"source": source(path), **payload}
 
 
+def rust_contract_results(path: Path | None = None) -> dict:
+    """Load the Rust-owned API contract evidence without trusting legacy exporters."""
+
+    path = path or DEFAULT_OUTPUT_DIR / "rust-runtime-contract-latest.json"
+    if not path.is_file():
+        return {"ok": False, "error": "Rust contract evidence was not provided"}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    runtime = payload.get("runtime") if isinstance(payload.get("runtime"), dict) else {}
+    api = payload.get("api") if isinstance(payload.get("api"), dict) else {}
+    return {
+        "ok": payload.get("status") == "ok" and runtime.get("api_runtime") == "rust-axum",
+        "source": source(path),
+        **payload,
+        "api": api,
+        "runtime": runtime,
+    }
+
+
 def ocr_results(root: Path = ROOT) -> list[dict]:
     results = []
     sources = (
@@ -418,6 +436,8 @@ def markdown(report: dict) -> str:
             f"p95={report['runtime'].get('metrics', {}).get('payload', {}).get('p95_duration_ms', 0)}ms)",
             f"- 监控告警探针：{'通过' if report.get('monitoring_alerts', {}).get('ok') else '未通过'}",
             f"- 反向代理/TLS 模板：{'通过' if report.get('reverse_proxy', {}).get('ok') else '未通过'}",
+            f"- Rust API 合同证据：{'通过' if report.get('rust_contract', {}).get('ok') else '未通过'} "
+            f"({report.get('rust_contract', {}).get('api', {}).get('operation_count', 0)} operations)",
         "",
         "## 浏览器端到端测试",
         "",
@@ -530,6 +550,7 @@ def export(
         "backup_policy": backup_policy_results(backup_policy_path),
         "monitoring_alerts": monitoring_alerts_results(monitoring_alerts_path),
         "reverse_proxy": reverse_proxy_results(reverse_proxy_path),
+        "rust_contract": rust_contract_results(output_dir / "rust-runtime-contract-latest.json"),
         "playwright": playwright_results(playwright_path),
         "knowledge_graph": graph_results(graph_path),
         "retrieval": retrieval_results(retrieval_path),

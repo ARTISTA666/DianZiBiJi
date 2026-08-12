@@ -8,7 +8,10 @@ OUTPUT="$ROOT/output/playwright"
 mkdir -p "$OUTPUT"
 
 if [ -n "${E2E_PYTHON:-}" ]; then
-  E2E_PYTHON_BIN=$E2E_PYTHON
+  case "$E2E_PYTHON" in
+    /*) E2E_PYTHON_BIN=$E2E_PYTHON ;;
+    *) E2E_PYTHON_BIN=$ROOT/$E2E_PYTHON ;;
+  esac
 elif [ -x "$ROOT/backend/.venv/bin/python" ]; then
   E2E_PYTHON_BIN=$ROOT/backend/.venv/bin/python
 else

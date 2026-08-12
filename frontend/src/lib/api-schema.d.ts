@@ -1056,6 +1056,162 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/mcp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Open MCP Streamable HTTP Stream */
+        get: operations["open_mcp_stream_api_mcp_get"];
+        put?: never;
+        /** Send MCP JSON-RPC Request */
+        post: operations["send_mcp_request_api_mcp_post"];
+        /** Terminate MCP Session */
+        delete: operations["terminate_mcp_session_api_mcp_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mcp/tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List MCP Personal Access Tokens */
+        get: operations["list_mcp_tokens_api_mcp_tokens_get"];
+        put?: never;
+        /** Create MCP Personal Access Token */
+        post: operations["create_mcp_token_api_mcp_tokens_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mcp/tokens/{token_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke MCP Personal Access Token */
+        delete: operations["revoke_mcp_token_api_mcp_tokens_token_id_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Agent Session */
+        post: operations["create_agent_session_api_agent_sessions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions/{session_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Agent Session */
+        get: operations["get_agent_session_api_agent_sessions_session_id_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions/{session_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run Agent Turn */
+        post: operations["create_agent_message_api_agent_sessions_session_id_messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions/{session_id}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stream Agent Session Events */
+        get: operations["stream_agent_events_api_agent_sessions_session_id_events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/pending-actions/{action_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve Pending Agent Action */
+        post: operations["approve_agent_action_api_agent_pending_actions_action_id_approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/pending-actions/{action_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject Pending Agent Action */
+        post: operations["reject_agent_action_api_agent_pending_actions_action_id_reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/agents/generate": {
         parameters: {
             query?: never;
@@ -1212,6 +1368,74 @@ export interface paths {
         get: operations["list_project_audit_logs_projects__project_id__audit_logs_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions/{session_id}/turns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Agent Turn */
+        post: operations["create_agent_turn_api_agent_sessions_session_id_turns_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions/{session_id}/turns/{turn_id}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start Approved Agent Turn */
+        post: operations["start_agent_turn_api_agent_sessions_session_id_turns_turn_id_start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agent/sessions/{session_id}/turns/{turn_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel Agent Turn */
+        post: operations["cancel_agent_turn_api_agent_sessions_session_id_turns_turn_id_cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/rag/query-logs/{log_id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit Query Feedback */
+        post: operations["submit_query_feedback_rag_query_logs__log_id__feedback_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2214,6 +2438,8 @@ export interface components {
             has_evidence: boolean;
             /** Message */
             message: string;
+            /** Repair Attempted */
+            repair_attempted: boolean;
         };
         /** RagDatasetRead */
         RagDatasetRead: {
@@ -2277,6 +2503,8 @@ export interface components {
              * @default 0
              */
             retrieval_score: number;
+            /** Relation Roles */
+            relation_roles: string[];
         };
         /** RagQueryRequest */
         RagQueryRequest: {
@@ -2290,6 +2518,28 @@ export interface components {
             mode: "auto" | "project_rag" | "kg_enhanced_rag";
             /** History */
             history?: components["schemas"]["RagHistoryEntry"][] | null;
+        };
+        /** AgentSessionCreateRequest */
+        AgentSessionCreateRequest: {
+            /** Project Id */
+            project_id?: number | null;
+        };
+        /** AgentMessageCreateRequest */
+        AgentMessageCreateRequest: {
+            /** Content */
+            content: string;
+        };
+        /** McpPatCreateRequest */
+        McpPatCreateRequest: {
+            /** Name */
+            name: string;
+            /** Scopes */
+            scopes: string[];
+            /**
+             * Expires In Days
+             * @default 30
+             */
+            expires_in_days: number;
         };
         /** RagQueryResponse */
         RagQueryResponse: {
@@ -2320,6 +2570,15 @@ export interface components {
             /** Fallback Reason */
             fallback_reason?: string | null;
             citation_audit?: components["schemas"]["RagCitationAuditRead"] | null;
+            /**
+             * Evidence Status
+             * @enum {string}
+             */
+            evidence_status?: "sufficient" | "partial" | "none";
+            /** Retrieval Strategy */
+            retrieval_strategy?: string;
+            /** Retrieval Trace Id */
+            retrieval_trace_id?: string;
         };
         /** RagSourceRead */
         RagSourceRead: {
@@ -2573,6 +2832,31 @@ export interface components {
             skip: number;
             /** Limit */
             limit: number;
+        };
+        /** AgentTurnCreateRequest */
+        AgentTurnCreateRequest: {
+            content: string;
+            /**
+             * @default fast
+             * @enum {string}
+             */
+            profile: "fast" | "deep";
+            plan_hash?: string | null;
+            approve_plan?: boolean | null;
+        };
+        /** AgentTurnStartRequest */
+        AgentTurnStartRequest: {
+            plan_hash: string;
+        };
+        /** AIQueryFeedbackRequest */
+        AIQueryFeedbackRequest: {
+            /**
+             * Value
+             * @enum {string}
+             */
+            value: "helpful" | "not_helpful";
+            /** Comment */
+            comment?: string | null;
         };
     };
     responses: never;
@@ -4980,6 +5264,303 @@ export interface operations {
             };
         };
     };
+    open_mcp_stream_api_mcp_get: {
+        parameters: {
+            query?: never;
+            header: {
+                "Mcp-Session-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description MCP server-sent event stream */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": string;
+                };
+            };
+        };
+    };
+    send_mcp_request_api_mcp_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description JSON-RPC response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Notification accepted */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    terminate_mcp_session_api_mcp_delete: {
+        parameters: {
+            query?: never;
+            header: {
+                "Mcp-Session-Id": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Session terminated */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    list_mcp_tokens_api_mcp_tokens_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Token metadata; never includes token secrets */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    create_mcp_token_api_mcp_tokens_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["McpPatCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description New token; plaintext is returned once */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    revoke_mcp_token_api_mcp_tokens_token_id_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Token revoked */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    create_agent_session_api_agent_sessions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentSessionCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Agent session state */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    get_agent_session_api_agent_sessions_session_id_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Session, messages, steps, and pending actions */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    create_agent_message_api_agent_sessions_session_id_messages_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentMessageCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Completed or confirmation-pending turn */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    stream_agent_events_api_agent_sessions_session_id_events_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Agent server-sent events */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": string;
+                };
+            };
+        };
+    };
+    approve_agent_action_api_agent_pending_actions_action_id_approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                action_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Executed action result */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    reject_agent_action_api_agent_pending_actions_action_id_reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                action_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Rejected action state */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
     generate_agent_output_api_agents_generate_post: {
         parameters: {
             query?: never;
@@ -5275,6 +5856,125 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PaginatedResponse_AuditLogRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_agent_turn_api_agent_sessions_session_id_turns_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentTurnCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Fast execution result or deep plan preview */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    start_agent_turn_api_agent_sessions_session_id_turns_turn_id_start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+                turn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentTurnStartRequest"];
+            };
+        };
+        responses: {
+            /** @description Started deep Agent turn result */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    cancel_agent_turn_api_agent_sessions_session_id_turns_turn_id_cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                session_id: string;
+                turn_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Cancelled Agent turn */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    submit_query_feedback_rag_query_logs__log_id__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                log_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AIQueryFeedbackRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
             /** @description Validation Error */

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ELN 评测实验室</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-mark">评</div>
+      <div>
+        <strong>ELN 评测实验室</strong>
+        <span>独立性能验证系统</span>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span id="session-label" class="session-label"></span>
+      <button id="logout-button" class="button secondary hidden">退出</button>
+    </header>
+
+    <section id="login-view" class="login-shell">
+      <div class="login-card">
+        <p class="eyebrow">论文性能验证</p>
+        <h1>用实验数据证明系统效果</h1>
+        <p class="muted">这里独立于智能 ELN 主业务，用来运行对照实验、查看冻结基线、分析检索与回答质量。</p>
+        <form id="login-form" class="stack">
+          <label>评测账号<input id="username" name="username" value="admin" autocomplete="username" required /></label>
+          <label>密码<input id="password" name="password" type="password" value="admin123" autocomplete="current-password" required /></label>
+          <button class="button primary" type="submit">进入评测实验室</button>
+          <p id="login-error" class="error"></p>
+        </form>
+      </div>
+    </section>
+
+    <main id="app-view" class="app-shell hidden">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">实验控制台</p>
+          <h1>回答质量、检索质量与系统开销</h1>
+          <p class="muted">主项目负责产生实验数据；本系统负责解释“为什么有效、代价是什么、结论边界在哪里”。</p>
+        </div>
+        <div class="project-picker">
+          <label for="project-select">被测项目</label>
+          <select id="project-select"></select>
+        </div>
+      </section>
+
+      <section id="baseline-meta" class="notice"></section>
+
+      <nav class="tabs" aria-label="评测模块">
+        <button class="tab active" data-tab="overview">基线概览</button>
+        <button class="tab" data-tab="live">运行实验</button>
+        <button class="tab" data-tab="query">单题探针</button>
+        <button class="tab" data-tab="evidence">结论依据</button>
+      </nav>
+
+      <section id="tab-overview" class="tab-panel active">
+        <div id="headline-cards" class="metric-grid"></div>
+        <div class="grid-two">
+          <article class="panel">
+            <div class="panel-heading"><div><h2>回答质量对比</h2><p class="muted">固定题集上的规则化事实覆盖，不是人工语言质量评分。</p></div></div>
+            <div id="answer-table" class="table-wrap"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><h2>检索质量对比</h2><p class="muted">检索到金标准证据的能力，越高越好。</p></div></div>
+            <div id="retrieval-table" class="table-wrap"></div>
+          </article>
+        </div>
+        <article class="panel">
+          <div class="panel-heading"><div><h2>核心解释</h2><p class="muted">把论文里最重要的因果链拆开看。</p></div></div>
+          <div id="explanation-cards" class="explanation-grid"></div>
+        </article>
+      </section>
+
+      <section id="tab-live" class="tab-panel">
+        <article class="panel">
+          <div class="panel-heading"><div><h2>运行多方法对照实验</h2><p class="muted">实验会调用原系统的 RAG 接口；结果记录在原系统，评测实验室只负责控制和解释。</p></div></div>
+          <form id="experiment-form" class="stack">
+            <label>实验名称<input id="experiment-name" value="评测实验室：普通 RAG 与图谱增强 RAG" required /></label>
+            <label>测试问题（每行一题）<textarea id="experiment-questions" rows="5">PCR 实验用了哪些关键试剂？
+PCR 实验的关键结果是什么？
+这个项目包含哪些实验笔记？</textarea></label>
+            <div class="form-row">
+              <label>重复次数<input id="experiment-repetitions" type="number" min="1" max="10" value="3" /></label>
+              <label>随机种子<input id="experiment-seed" type="number" value="20260809" /></label>
+            </div>
+            <div class="mode-list">
+              <label><input type="checkbox" value="pure_llm" /> 纯 LLM</label>
+              <label><input type="checkbox" value="bm25_rag" /> BM25 RAG</label>
+              <label><input type="checkbox" value="project_rag" checked /> 普通 RAG</label>
+              <label><input type="checkbox" value="structured_query" /> 结构化查询</label>
+              <label><input type="checkbox" value="kg_enhanced_rag" checked /> 图谱增强 RAG</label>
+            </div>
+            <div class="inline-actions"><button class="button primary" type="submit">开始实验</button><span id="experiment-status" class="muted"></span></div>
+          </form>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><h2>最近实验</h2><p class="muted">查看运行状态和方法汇总。</p></div><button id="refresh-experiments" class="button secondary">刷新</button></div>
+          <div id="experiment-list" class="run-list"></div>
+        </article>
+      </section>
+
+      <section id="tab-query" class="tab-panel">
+        <article class="panel">
+          <div class="panel-heading"><div><h2>单题探针</h2><p class="muted">同一个问题切换不同模式，观察回答、证据数量、图谱命中和耗时。</p></div></div>
+          <form id="query-form" class="stack">
+            <label>问题<textarea id="query-text" rows="3">PCR 实验用了哪些关键试剂？</textarea></label>
+            <div class="form-row"><label>模式<select id="query-mode"><option value="project_rag">普通 RAG</option><option value="kg_enhanced_rag">图谱增强 RAG</option><option value="pure_llm">纯 LLM</option><option value="structured_query">结构化查询</option></select></label><div class="form-end"><button class="button primary" type="submit">发送探针</button></div></div>
+          </form>
+          <div id="query-result" class="query-result empty">还没有探针结果。</div>
+        </article>
+      </section>
+
+      <section id="tab-evidence" class="tab-panel">
+        <div class="grid-two">
+          <article class="panel"><h2>本系统回答的问题</h2><div class="evidence-list"><div><b>图谱增强为什么更好？</b><span>跨记录关系被显式补进检索上下文，Recall@10 和事实覆盖明显提高。</span></div><div><b>为什么 RAG 比纯 LLM 更准？</b><span>回答不再只依赖模型记忆，而是绑定到项目资料和可追溯来源。</span></div><div><b>AI 效果如何？</b><span>看规则化事实覆盖、精确率、F1、人工盲评和引用审计，不能只看一句回答。</span></div></div></article>
+          <article class="panel"><h2>结论边界</h2><ul class="boundary-list"><li>当前基线来自项目内部冻结题集，不代表所有实验类型。</li><li>自动指标验证可复现性，不等同于专家人工评价。</li><li>图谱增强通常提高召回和覆盖，但会增加上下文与响应耗时。</li><li>论文最终结论应同时报告准确性、延迟、成本和失败案例。</li></ul></article>
+        </div>
+        <article class="panel"><div class="panel-heading"><div><h2>原始基线文件</h2><p class="muted">评测实验室读取这些冻结结果，不修改它们。</p></div></div><div class="file-list"><code>data/real/GSE111619/main_v8_kg_holdout_experiment_report.json</code><code>data/real/GSE111619/main-retrieval-evaluation/report.json</code><code>data/real/GSE111619/main_v8_agent_probe_report.json</code></div></article>
+      </section>
+      <p id="global-error" class="error"></p>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

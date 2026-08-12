@@ -12,7 +12,9 @@ use crate::{
     audit::{write_audit, AuditEvent},
     error::ApiError,
     knowledge_graph::{extract_note, note_graph, project_graph},
-    models::{KnowledgeExtractionRequest, KnowledgeExtractionRunRead, KnowledgeGraphRead},
+    models::{
+        KnowledgeExtractionRequest, KnowledgeExtractionRunRead, KnowledgeGraphRead, UserRecord,
+    },
     permissions::{can_write_project, require_project_access},
     AppState,
 };
@@ -74,6 +76,17 @@ async fn rebuild_project_knowledge(
     CurrentUser(user): CurrentUser,
     Path(project_id): Path<i32>,
 ) -> Result<Json<Vec<KnowledgeExtractionRunRead>>, ApiError> {
+    rebuild_project_knowledge_action(state, user, project_id, client.ip_opt(), client.ua_opt())
+        .await
+}
+
+pub(crate) async fn rebuild_project_knowledge_action(
+    state: AppState,
+    user: UserRecord,
+    project_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
+) -> Result<Json<Vec<KnowledgeExtractionRunRead>>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
     require_write(&state, &user, project_id).await?;
     let mut transaction = state.pool.begin().await?;
@@ -99,8 +112,8 @@ async fn rebuild_project_knowledge(
             target_type: Some("project"),
             target_id: Some(project_id),
             detail: json!({}),
-            ip_address: client.ip_opt().map(str::to_owned),
-            user_agent: client.ua_opt().map(str::to_owned),
+            ip_address: ip_address.map(str::to_owned),
+            user_agent: user_agent.map(str::to_owned),
         },
     )
     .await?;

@@ -8,6 +8,7 @@ import {
   Archive,
   Trash2,
 } from "lucide-react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,10 +19,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { statusText } from "@/components/constants";
-import type { NoteVersion, NoteApproval, ProjectMember } from "@/lib/api";
+import type { NoteVersion, NoteApproval, ProjectMember, StoredFile } from "@/lib/api";
 
 export type NoteItem = {
   id: number;
+  template_id: number | null;
   title: string;
   experiment_type: string;
   experiment_date: string | null;
@@ -34,12 +36,14 @@ interface NoteDetailDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   note: NoteItem | null;
+  projectId: number;
   comment: string;
   onCommentChange: (value: string) => void;
   onAction: (action: string, noteId: number) => void;
   onEdit: (note: NoteItem) => void;
   versions: NoteVersion[];
   approvals: NoteApproval[];
+  attachments: StoredFile[];
   members: ProjectMember[];
   canReview?: boolean;
   canWrite?: boolean;
@@ -49,12 +53,14 @@ export function NoteDetailDialog({
   open,
   onOpenChange,
   note,
+  projectId,
   comment,
   onCommentChange,
   onAction,
   onEdit,
   versions,
   approvals,
+  attachments,
   members,
   canReview = false,
   canWrite = false,
@@ -77,7 +83,7 @@ export function NoteDetailDialog({
 
             {/* 已退回笔记置顶展示最近一条退回意见，便于记录人快速定位修订点 */}
             {note.status === "returned" && latestReturn && (
-              <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+              <div className="rounded-md border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive" role="alert">
                 <p className="font-medium">最近退回意见</p>
                 <p className="mt-0.5 whitespace-pre-wrap">{latestReturn.comment || "退回时未填写意见"}</p>
               </div>
@@ -96,6 +102,22 @@ export function NoteDetailDialog({
             )}
 
             {/* 审批记录 */}
+            {attachments.length > 0 && (
+              <div className="space-y-2">
+                <p className="text-sm font-medium">笔记附件</p>
+                {attachments.map((file) => (
+                  <Link
+                    key={file.id}
+                    href={`/projects/${projectId}/data#file-${file.id}`}
+                    className="block rounded-md border p-2 text-sm hover:bg-muted/60"
+                  >
+                    {file.original_filename}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* 审批记录 */}
             {approvals.length > 0 && (
               <div className="space-y-2">
                 <p className="text-sm font-medium">审批记录</p>
@@ -107,8 +129,8 @@ export function NoteDetailDialog({
                         <span
                           className={
                             a.action === "approved"
-                              ? "text-green-600"
-                              : "text-red-600"
+                              ? "text-success"
+                              : "text-destructive"
                           }
                         >
                           {a.action === "approved" ? "✓ 通过" : "✗ 退回"}
@@ -148,8 +170,7 @@ export function NoteDetailDialog({
                 <>
                   <Button
                     size="sm"
-                    variant="default"
-                    className="bg-green-600 hover:bg-green-700"
+                    variant="success"
                     onClick={() => onAction("approve", note.id)}
                   >
                     <CheckCircle className="mr-1 h-4 w-4" />

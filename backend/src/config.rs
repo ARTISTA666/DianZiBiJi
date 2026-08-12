@@ -1,4 +1,4 @@
-use std::{collections::HashMap, env};
+use std::{collections::HashMap, env, net::IpAddr};
 
 use thiserror::Error;
 
@@ -23,9 +23,15 @@ pub struct Settings {
     pub login_max_concurrent_attempts: usize,
     pub global_rate_limit_read_per_minute: u64,
     pub global_rate_limit_write_per_minute: u64,
+    pub trusted_proxy_ips: Vec<IpAddr>,
     pub cors_origins: String,
     pub app_revision: String,
     pub allow_sensitive_external_ai: bool,
+    pub new_agent_enabled: bool,
+    pub ai_provider: String,
+    pub ai_base_url: String,
+    pub ai_api_key: String,
+    pub ai_model: String,
     pub deepseek_api_base_url: String,
     pub deepseek_api_key: String,
     pub deepseek_model: String,
@@ -33,11 +39,15 @@ pub struct Settings {
     pub embedding_model: String,
     pub embedding_backend: String,
     pub embedding_dimension: usize,
+    pub embedding_api_url: String,
+    pub embedding_api_key: String,
     pub rag_chunk_size: usize,
     pub rag_chunk_overlap: usize,
     pub rag_retrieval_top_k: usize,
     pub rag_collection_retrieval_top_k: usize,
     pub rag_vector_candidate_k: usize,
+    pub rag_retrieval_strategy: String,
+    pub rag_index_version: String,
     pub rag_graph_top_k: usize,
     pub rag_graph_min_score: f64,
     pub rag_min_retrieval_score: f64,
@@ -98,12 +108,27 @@ impl Settings {
                 "GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE",
                 120,
             )?,
+            trusted_proxy_ips: parse_ip_list(values, "TRUSTED_PROXY_IPS", "127.0.0.1,::1")?,
             cors_origins: get(
                 "CORS_ORIGINS",
                 "http://localhost:3000,http://127.0.0.1:3000",
             ),
             app_revision: get("APP_REVISION", "unversioned"),
             allow_sensitive_external_ai: parse_bool(values, "ALLOW_SENSITIVE_EXTERNAL_AI", false)?,
+            new_agent_enabled: parse_bool(values, "NEW_AGENT_ENABLED", false)?,
+            ai_provider: get("AI_PROVIDER", "deepseek"),
+            ai_base_url: values
+                .get("AI_BASE_URL")
+                .cloned()
+                .unwrap_or_else(|| get("DEEPSEEK_API_BASE_URL", "https://api.deepseek.com")),
+            ai_api_key: values
+                .get("AI_API_KEY")
+                .cloned()
+                .unwrap_or_else(|| get("DEEPSEEK_API_KEY", "")),
+            ai_model: values
+                .get("AI_MODEL")
+                .cloned()
+                .unwrap_or_else(|| get("DEEPSEEK_MODEL", "deepseek-v4-flash")),
             deepseek_api_base_url: get("DEEPSEEK_API_BASE_URL", "https://api.deepseek.com"),
             deepseek_api_key: get("DEEPSEEK_API_KEY", ""),
             deepseek_model: get("DEEPSEEK_MODEL", "deepseek-v4-flash"),
@@ -111,11 +136,15 @@ impl Settings {
             embedding_model: get("EMBEDDING_MODEL", "rust-hash-512-v1"),
             embedding_backend: get("EMBEDDING_BACKEND", "hash"),
             embedding_dimension: parse(values, "EMBEDDING_DIMENSION", 512)?,
+            embedding_api_url: get("EMBEDDING_API_URL", ""),
+            embedding_api_key: get("EMBEDDING_API_KEY", ""),
             rag_chunk_size: parse(values, "RAG_CHUNK_SIZE", 700)?,
             rag_chunk_overlap: parse(values, "RAG_CHUNK_OVERLAP", 120)?,
             rag_retrieval_top_k: parse(values, "RAG_RETRIEVAL_TOP_K", 6)?,
             rag_collection_retrieval_top_k: parse(values, "RAG_COLLECTION_RETRIEVAL_TOP_K", 12)?,
             rag_vector_candidate_k: parse(values, "RAG_VECTOR_CANDIDATE_K", 30)?,
+            rag_retrieval_strategy: get("RAG_RETRIEVAL_STRATEGY", "rrf-v1"),
+            rag_index_version: get("RAG_INDEX_VERSION", "structured-v1"),
             rag_graph_top_k: parse(values, "RAG_GRAPH_TOP_K", 10)?,
             rag_graph_min_score: parse(values, "RAG_GRAPH_MIN_SCORE", 1.0)?,
             rag_min_retrieval_score: parse(values, "RAG_MIN_RETRIEVAL_SCORE", 0.15)?,
@@ -135,6 +164,13 @@ impl Settings {
         self.deepseek_model
             .split_once('#')
             .map_or(self.deepseek_model.as_str(), |(model, _)| model)
+            .trim()
+    }
+
+    pub fn normalized_ai_model(&self) -> &str {
+        self.ai_model
+            .split_once('#')
+            .map_or(self.ai_model.as_str(), |(model, _)| model)
             .trim()
     }
 
@@ -163,6 +199,21 @@ impl Settings {
 
     fn validate_runtime(&self) -> Result<(), ConfigError> {
         self.validate_embedding()?;
+        if !matches!(self.ai_provider.as_str(), "deepseek" | "openai_compatible") {
+            return Err(ConfigError::InvalidValue {
+                name: "AI_PROVIDER",
+                value: self.ai_provider.clone(),
+            });
+        }
+        if !matches!(
+            self.rag_retrieval_strategy.as_str(),
+            "rrf-v1" | "legacy-weighted"
+        ) {
+            return Err(ConfigError::InvalidValue {
+                name: "RAG_RETRIEVAL_STRATEGY",
+                value: self.rag_retrieval_strategy.clone(),
+            });
+        }
         if !self.rag_graph_min_score.is_finite() || self.rag_graph_min_score < 0.0 {
             return Err(ConfigError::InvalidValue {
                 name: "RAG_GRAPH_MIN_SCORE",
@@ -282,8 +333,8 @@ impl Settings {
         }
         if self.app_env == "production" {
             // Deployment metadata is only mandatory for real releases.
-            if self.deepseek_api_key.trim().is_empty() {
-                problems.push("DEEPSEEK_API_KEY must be configured");
+            if self.ai_api_key.trim().is_empty() {
+                problems.push("AI_API_KEY (or DEEPSEEK_API_KEY) must be configured");
             }
             if self.app_revision.trim().is_empty() || self.app_revision == "unversioned" {
                 problems.push("APP_REVISION must identify the deployed release");
@@ -300,23 +351,54 @@ impl Settings {
     }
 
     fn validate_embedding(&self) -> Result<(), ConfigError> {
-        if self.embedding_backend != "hash" {
-            return Err(ConfigError::InvalidValue {
-                name: "EMBEDDING_BACKEND",
-                value: self.embedding_backend.clone(),
-            });
-        }
-        if self.embedding_model != "rust-hash-512-v1" {
-            return Err(ConfigError::InvalidValue {
-                name: "EMBEDDING_MODEL",
-                value: self.embedding_model.clone(),
-            });
-        }
-        if self.embedding_dimension != 512 {
-            return Err(ConfigError::InvalidValue {
-                name: "EMBEDDING_DIMENSION",
-                value: self.embedding_dimension.to_string(),
-            });
+        match self.embedding_backend.as_str() {
+            "hash" if matches!(self.app_env.as_str(), "development" | "test") => {
+                if self.embedding_model != "rust-hash-512-v1" {
+                    return Err(ConfigError::InvalidValue {
+                        name: "EMBEDDING_MODEL",
+                        value: self.embedding_model.clone(),
+                    });
+                }
+                if self.embedding_dimension != 512 {
+                    return Err(ConfigError::InvalidValue {
+                        name: "EMBEDDING_DIMENSION",
+                        value: self.embedding_dimension.to_string(),
+                    });
+                }
+            }
+            "openai_compatible" => {
+                if self.embedding_model != "BAAI/bge-m3" {
+                    return Err(ConfigError::InvalidValue {
+                        name: "EMBEDDING_MODEL",
+                        value: self.embedding_model.clone(),
+                    });
+                }
+                if self.embedding_dimension != 1024 {
+                    return Err(ConfigError::InvalidValue {
+                        name: "EMBEDDING_DIMENSION",
+                        value: self.embedding_dimension.to_string(),
+                    });
+                }
+                let parsed = self
+                    .embedding_api_url
+                    .parse::<reqwest::Url>()
+                    .map_err(|_| ConfigError::InvalidValue {
+                        name: "EMBEDDING_API_URL",
+                        value: self.embedding_api_url.clone(),
+                    })?;
+                if parsed.scheme() != "https" && self.app_env == "production" {
+                    return Err(ConfigError::InvalidValue {
+                        name: "EMBEDDING_API_URL",
+                        value: self.embedding_api_url.clone(),
+                    });
+                }
+            }
+            _ => {
+                return Err(ConfigError::InvalidValue {
+                    name: "EMBEDDING_BACKEND",
+                    value: self.embedding_backend.clone(),
+                });
+            }
         }
         Ok(())
     }
@@ -337,6 +419,27 @@ where
         name,
         value: value.clone(),
     })
+}
+
+fn parse_ip_list(
+    values: &HashMap<String, String>,
+    name: &'static str,
+    default: &str,
+) -> Result<Vec<IpAddr>, ConfigError> {
+    values
+        .get(name)
+        .map(String::as_str)
+        .unwrap_or(default)
+        .split(',')
+        .map(str::trim)
+        .filter(|value| !value.is_empty())
+        .map(|value| {
+            value.parse().map_err(|_| ConfigError::InvalidValue {
+                name,
+                value: value.to_owned(),
+            })
+        })
+        .collect()
 }
 
 fn parse_bool(
@@ -447,7 +550,19 @@ mod tests {
 
     #[test]
     fn test_settings_rejects_unsafe_production_defaults() {
-        let values = HashMap::from([("APP_ENV".to_owned(), "production".to_owned())]);
+        let values = HashMap::from([
+            ("APP_ENV".to_owned(), "production".to_owned()),
+            (
+                "EMBEDDING_BACKEND".to_owned(),
+                "openai_compatible".to_owned(),
+            ),
+            ("EMBEDDING_MODEL".to_owned(), "BAAI/bge-m3".to_owned()),
+            ("EMBEDDING_DIMENSION".to_owned(), "1024".to_owned()),
+            (
+                "EMBEDDING_API_URL".to_owned(),
+                "https://embedding.example.org/v1/embeddings".to_owned(),
+            ),
+        ]);
 
         let error = Settings::from_map(&values).unwrap_err();
 
@@ -475,6 +590,52 @@ mod tests {
         let error = Settings::from_map(&values).unwrap_err();
 
         assert!(error.to_string().contains("DEEPSEEK_MAX_CONCURRENCY"));
+    }
+
+    #[test]
+    fn test_ai_provider_settings_override_legacy_deepseek_values() {
+        let settings = Settings::from_map(&HashMap::from([
+            ("AI_PROVIDER".to_owned(), "openai_compatible".to_owned()),
+            (
+                "AI_BASE_URL".to_owned(),
+                "https://provider.example/v1".to_owned(),
+            ),
+            ("AI_API_KEY".to_owned(), "new-secret".to_owned()),
+            ("AI_MODEL".to_owned(), "provider-model".to_owned()),
+            (
+                "DEEPSEEK_API_BASE_URL".to_owned(),
+                "https://legacy.example".to_owned(),
+            ),
+            ("DEEPSEEK_API_KEY".to_owned(), "legacy-secret".to_owned()),
+            ("DEEPSEEK_MODEL".to_owned(), "legacy-model".to_owned()),
+        ]))
+        .unwrap();
+
+        assert_eq!(settings.ai_provider, "openai_compatible");
+        assert_eq!(settings.ai_base_url, "https://provider.example/v1");
+        assert_eq!(settings.ai_api_key, "new-secret");
+        assert_eq!(settings.normalized_ai_model(), "provider-model");
+    }
+
+    #[test]
+    fn test_ai_provider_settings_fall_back_to_legacy_deepseek_values() {
+        let settings = Settings::from_map(&HashMap::from([
+            (
+                "DEEPSEEK_API_BASE_URL".to_owned(),
+                "https://legacy.example".to_owned(),
+            ),
+            ("DEEPSEEK_API_KEY".to_owned(), "legacy-secret".to_owned()),
+            (
+                "DEEPSEEK_MODEL".to_owned(),
+                "legacy-model # comment".to_owned(),
+            ),
+        ]))
+        .unwrap();
+
+        assert_eq!(settings.ai_provider, "deepseek");
+        assert_eq!(settings.ai_base_url, "https://legacy.example");
+        assert_eq!(settings.ai_api_key, "legacy-secret");
+        assert_eq!(settings.normalized_ai_model(), "legacy-model");
     }
 
     #[test]

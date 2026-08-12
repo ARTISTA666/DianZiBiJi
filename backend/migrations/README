@@ -1,15 +1,17 @@
 # Legacy Alembic migration history
 
 The Alembic revisions in this directory are retained for databases created by
-the former Python backend. Revisions `0001` through `0010` are historical
+the former Python backend. Revisions `0001` through `0012` are historical
 records and must remain available because some deployed databases may already
 have applied them. `0001` through `0005` describe the pre-Rust baseline;
-`0006` through `0010` are later legacy changes that are not executed by the
+`0006` through `0012` are later legacy changes that are not executed by the
 production Rust image.
 
 The production Rust image does not execute Alembic. The Rust backend bootstraps
 fresh databases from `sql/0001_initial.sql`, accepts databases upgraded through
-the legacy Alembic history, and is the only forward schema owner beginning
-with `rust_schema_versions` version 3. Do not add new Alembic revisions; add
-future schema upgrades to both the fresh-install SQL and the Rust upgrade path,
-with PostgreSQL integration coverage.
+the complete legacy Alembic history (ending at `0012`), and is the only
+forward schema owner beginning with `rust_schema_versions` version 3. Do not
+add new Alembic revisions; add future schema upgrades to both the fresh-install
+SQL and the Rust upgrade path, with PostgreSQL integration coverage. A legacy
+database that does not satisfy the Rust runtime signature is rejected at
+startup rather than being silently stamped as compatible.

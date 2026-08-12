@@ -4,6 +4,7 @@ import { AuthGuard } from "@/components/shared/AuthGuard";
 import { TopNav } from "@/components/shared/TopNav";
 import { MainNav } from "@/components/shared/MainNav";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { AgentAssistant } from "@/components/shared/AgentAssistant";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,6 +21,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <ErrorBoundary>{children}</ErrorBoundary>
           </div>
         </main>
+        <AgentAssistant />
       </div>
     </AuthGuard>
   );

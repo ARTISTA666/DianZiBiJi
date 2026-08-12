@@ -33,6 +33,11 @@ services:
       SEED_DEMO_DATA: "true"
       ALLOW_SENSITIVE_EXTERNAL_AI: "true"
       CORS_ORIGINS: http://127.0.0.1:13000
+      # The acceptance suite intentionally walks every role and project in one
+      # browser-origin. Keep production's per-IP quota unchanged while
+      # preventing the suite itself from becoming the thing it measures.
+      GLOBAL_RATE_LIMIT_READ_PER_MINUTE: "10000"
+      GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE: "2000"
       DEEPSEEK_API_BASE_URL: http://llm-stub:8080
       DEEPSEEK_API_KEY: e2e-key
       DEEPSEEK_MODEL: e2e-stub

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useTransition } from "react";
 import { useParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -80,7 +80,6 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
   const isBlindReviewPath = pathname === blindReviewPath;
 
   const [isPending, startTransition] = useTransition();
-  const [contentVisible, setContentVisible] = useState(true);
 
   const activeTab = useMemo<TabValue>(() => {
     const segments = pathname.split("/");
@@ -180,13 +179,14 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
         </BreadcrumbList>
       </Breadcrumb>
 
+      {/* 标题区：项目名为视觉主体；Dropdown 触发器仅作切换入口，chevron 弱化提示 */}
       <div>
         <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-1 text-2xl font-bold tracking-tight hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md px-1 -mx-1">
                 {project.name}
-                <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                <ChevronDown className="h-4 w-4 text-muted-foreground" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-56">
@@ -209,22 +209,25 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
       </div>
 
       {!evaluationOnly && projectDataErrors.length > 0 && (
-        <div className="rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900" role="alert">
+        <div className="rounded-md border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-warning" role="alert">
           部分项目数据加载失败：{projectDataErrors.join("、")}。请刷新后重试。
         </div>
       )}
 
       <Tabs value={activeTab} onValueChange={(v) => {
-        setContentVisible(false);
         startTransition(() => {
           const target = v === "notes" ? `/projects/${projectId}` : `/projects/${projectId}/${v}`;
           router.push(target);
         });
-        setTimeout(() => setContentVisible(true), 50);
       }}>
-        <TabsList className="w-full justify-start overflow-x-auto">
+        {/* GitHub 式下划线风格：仅覆盖视觉 className，role/文案/角标不变 */}
+        <TabsList className="h-auto w-full justify-start overflow-x-auto rounded-none border-b bg-transparent p-0">
           {tabs.map((t) => (
-            <TabsTrigger key={t.value} value={t.value}>
+            <TabsTrigger
+              key={t.value}
+              value={t.value}
+              className="rounded-none border-b-2 border-transparent bg-transparent px-3 py-2 text-muted-foreground shadow-none data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none"
+            >
               {t.label}
               {t.value === "approvals" && pendingApprovalCount > 0 && (
                 // aria-hidden 保证角标不进入 tab 的 accessible name（E2E 按精确名称匹配）。
@@ -241,7 +244,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
         </TabsList>
       </Tabs>
 
-      <div className={`mt-4 transition-opacity duration-200 ${isPending || !contentVisible ? "opacity-0" : "opacity-100"}`}>{children}</div>
+      <div className={`mt-4 transition-opacity duration-200 ${isPending ? "opacity-0" : "opacity-100"}`}>{children}</div>
     </div>
   );
 }

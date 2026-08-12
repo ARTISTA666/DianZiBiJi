@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuthStore, useProjectStore } from "@/stores";
-import { getNoteVersions, type Note, type ProjectMember } from "@/lib/api";
+import { getNoteVersions, type Note, type ProjectMember, type StoredFile } from "@/lib/api";
 import { getErrorMessage } from "@/lib/utils";
 import { statusText } from "@/components/constants";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
@@ -32,10 +32,56 @@ interface ApprovalCardProps {
   onAction: (noteId: number, action: "approve" | "return") => void;
 }
 
+interface FileApprovalCardProps {
+  file: StoredFile;
+  comment: string;
+  onCommentChange: (value: string) => void;
+  onAction: (fileId: number, action: "approve" | "reject") => void;
+}
+
+function FileApprovalCard({ file, comment, onCommentChange, onAction }: FileApprovalCardProps) {
+  return (
+    <Card data-testid={`approval-file-${file.id}`}>
+      <CardHeader className="pb-2">
+        <div className="flex items-start justify-between">
+          <CardTitle className="text-base flex items-center gap-2">
+            <FileCheck className="h-4 w-4 text-muted-foreground" />
+            {file.original_filename}
+          </CardTitle>
+          <Badge variant="secondary">待审核资料</Badge>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          知识文档 · {file.mime_type || "未知格式"} · {file.file_size} bytes
+        </p>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          <Textarea
+            placeholder="审核意见"
+            value={comment}
+            onChange={(event) => onCommentChange(event.target.value)}
+            rows={2}
+          />
+          <div className="flex gap-2">
+            <Button size="sm" variant="success" onClick={() => onAction(file.id, "approve")}>
+              <CheckCircle className="mr-1 h-4 w-4" />通过
+            </Button>
+            <Button size="sm" variant="destructive" onClick={() => onAction(file.id, "reject")}>
+              <XCircle className="mr-1 h-4 w-4" />拒绝
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 function ApprovalCard({ token, note, members, comment, onCommentChange, onAction }: ApprovalCardProps) {
   const [previewText, setPreviewText] = useState("");
   const [submittedAt, setSubmittedAt] = useState<string | null>(null);
   const [expanded, setExpanded] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(true);
+  const [previewError, setPreviewError] = useState("");
 
   // 拉取最新版内容用于审批前预览；失败静默降级，不阻塞审批操作。
   useEffect(() => {
@@ -44,15 +90,23 @@ function ApprovalCard({ token, note, members, comment, onCommentChange, onAction
       .then((versions) => {
         if (cancelled) return;
         const latest = versions[0];
-        if (!latest) return;
+        if (!latest) {
+          setPreviewError("未找到笔记版本，请刷新后重试");
+          setPreviewLoading(false);
+          return;
+        }
         const text = (latest.content_json?.text as string)
           || (latest.content_json?.content as string)
           || "";
         setPreviewText(text);
         setSubmittedAt(latest.created_at);
+        setPreviewError("");
+        setPreviewLoading(false);
       })
-      .catch(() => {
-        // 预览加载失败时保留审批操作能力，仅缺少内容预览。
+      .catch((cause) => {
+        if (cancelled) return;
+        setPreviewError(getErrorMessage(cause, "笔记内容加载失败，请刷新后重试"));
+        setPreviewLoading(false);
       });
     return () => { cancelled = true; };
   }, [token, note.id]);
@@ -84,6 +138,8 @@ function ApprovalCard({ token, note, members, comment, onCommentChange, onAction
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
+          {previewLoading && <p className="text-sm text-muted-foreground">正在加载笔记内容...</p>}
+          {previewError && <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">{previewError}</p>}
           {previewText && (
             <div className="rounded-md border bg-muted/30 p-3 text-sm">
               <p className="whitespace-pre-wrap break-words">{shownText}</p>
@@ -105,10 +161,10 @@ function ApprovalCard({ token, note, members, comment, onCommentChange, onAction
             rows={2}
           />
           <div className="flex gap-2">
-            <Button size="sm" className="bg-green-600 hover:bg-green-700" onClick={() => onAction(note.id, "approve")}>
+            <Button size="sm" variant="success" disabled={previewLoading || !!previewError} onClick={() => onAction(note.id, "approve")}>
               <CheckCircle className="mr-1 h-4 w-4" />通过
             </Button>
-            <Button size="sm" variant="destructive" onClick={() => onAction(note.id, "return")}>
+            <Button size="sm" variant="destructive" disabled={previewLoading || !!previewError} onClick={() => onAction(note.id, "return")}>
               <XCircle className="mr-1 h-4 w-4" />退回
             </Button>
           </div>
@@ -124,9 +180,12 @@ export default function ApprovalsPage() {
   const router = useRouter();
   const token = useAuthStore((s) => s.token);
   const pendingNotes = useProjectStore((s) => s.pendingNotes);
+  const files = useProjectStore((s) => s.files);
   const members = useProjectStore((s) => s.members);
   const loadBaseProjectData = useProjectStore((s) => s.loadBaseProjectData);
+  const reviewFile = useProjectStore((s) => s.reviewFile);
   const [comment, setComment] = useState<Record<number, string>>({});
+  const [fileComment, setFileComment] = useState<Record<number, string>>({});
   const [error, setError] = useState("");
   const b = useProjectStore((s) => s.busy);
   const feedback = useActionFeedback();
@@ -158,11 +217,34 @@ export default function ApprovalsPage() {
     }
   };
 
+  const handleFileAction = async (fileId: number, action: "approve" | "reject") => {
+    if (!token) return;
+    try {
+      await reviewFile(token, fileId, action, fileComment[fileId] || "");
+      setFileComment((current) => {
+        const next = { ...current };
+        delete next[fileId];
+        return next;
+      });
+      loadBaseProjectData(token, projectId);
+      feedback.success(action === "approve" ? "资料已通过" : "资料已拒绝");
+    } catch (e) {
+      const msg = getErrorMessage(e, "资料审核失败");
+      handleError(msg);
+      feedback.error(msg);
+    }
+  };
+
   if (b) return <ApprovalsListSkeleton />;
 
   const projectPending = pendingNotes.filter((n) => n.project_id === projectId);
+  const projectPendingFiles = files.filter((file) => (
+    file.project_id === projectId
+    && file.file_category === "knowledge_document"
+    && file.status === "uploaded"
+  ));
 
-  if (projectPending.length === 0) {
+  if (projectPending.length === 0 && projectPendingFiles.length === 0) {
     return (
       <Card className="border-dashed">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
@@ -191,6 +273,15 @@ export default function ApprovalsPage() {
           comment={comment[note.id] || ""}
           onCommentChange={(value) => setComment((c) => ({ ...c, [note.id]: value }))}
           onAction={handleAction}
+        />
+      ))}
+      {projectPendingFiles.map((file) => (
+        <FileApprovalCard
+          key={file.id}
+          file={file}
+          comment={fileComment[file.id] || ""}
+          onCommentChange={(value) => setFileComment((current) => ({ ...current, [file.id]: value }))}
+          onAction={handleFileAction}
         />
       ))}
     </div>

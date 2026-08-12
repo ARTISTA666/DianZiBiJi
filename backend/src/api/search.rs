@@ -5,7 +5,7 @@ use axum::{
     Json, Router,
 };
 use serde_json::Value;
-use sqlx::FromRow;
+use sqlx::{FromRow, Postgres, Transaction};
 
 use crate::{
     api::auth::CurrentUser,
@@ -29,6 +29,7 @@ struct IndexableNote {
     experiment_type: String,
     fixed_fields_json: Option<Value>,
     content_json: Option<Value>,
+    status: String,
 }
 
 #[derive(Debug, FromRow)]
@@ -75,7 +76,8 @@ async fn reindex_search(
         sqlx::query_as::<_, IndexableNote>(
             r#"
             SELECT n.id, n.project_id, n.title, n.experiment_type,
-                   v.fixed_fields_json, v.content_json
+                   v.fixed_fields_json, v.content_json,
+                   lower(n.status::text) AS status
             FROM experiment_notes n
             LEFT JOIN note_versions v ON v.id = n.current_version_id
             WHERE n.project_id = ANY($1) AND n.status = 'APPROVED'::notestatus
@@ -87,28 +89,7 @@ async fn reindex_search(
         .await?
     };
     for note in &notes {
-        let search_text = build_search_text(note);
-        sqlx::query(
-            r#"
-            INSERT INTO search_documents (
-                note_id, project_id, title, search_text, source_ids, updated_at
-            )
-            VALUES ($1, $2, $3, $4, $5, now())
-            ON CONFLICT (note_id) DO UPDATE SET
-                project_id = EXCLUDED.project_id,
-                title = EXCLUDED.title,
-                search_text = EXCLUDED.search_text,
-                source_ids = EXCLUDED.source_ids,
-                updated_at = now()
-            "#,
-        )
-        .bind(note.id)
-        .bind(note.project_id)
-        .bind(&note.title)
-        .bind(search_text)
-        .bind(note.id.to_string())
-        .execute(&mut *transaction)
-        .await?;
+        upsert_search_document(&mut transaction, note).await?;
     }
     transaction.commit().await?;
     let total_documents = sqlx::query_scalar("SELECT count(*) FROM search_documents")
@@ -118,6 +99,66 @@ async fn reindex_search(
         total_documents,
         project_documents: notes.len(),
     }))
+}
+
+pub(crate) async fn sync_note(
+    transaction: &mut Transaction<'_, Postgres>,
+    note_id: i32,
+) -> Result<(), sqlx::Error> {
+    let note = sqlx::query_as::<_, IndexableNote>(
+        r#"
+        SELECT n.id, n.project_id, n.title, n.experiment_type,
+               v.fixed_fields_json, v.content_json,
+               lower(n.status::text) AS status
+        FROM experiment_notes n
+        LEFT JOIN note_versions v ON v.id = n.current_version_id
+        WHERE n.id = $1
+        "#,
+    )
+    .bind(note_id)
+    .fetch_optional(&mut **transaction)
+    .await?;
+
+    match note {
+        Some(note) if note.status == "approved" => {
+            upsert_search_document(transaction, &note).await?;
+        }
+        _ => {
+            sqlx::query("DELETE FROM search_documents WHERE note_id = $1")
+                .bind(note_id)
+                .execute(&mut **transaction)
+                .await?;
+        }
+    }
+    Ok(())
+}
+
+async fn upsert_search_document(
+    transaction: &mut Transaction<'_, Postgres>,
+    note: &IndexableNote,
+) -> Result<(), sqlx::Error> {
+    sqlx::query(
+        r#"
+        INSERT INTO search_documents (
+            note_id, project_id, title, search_text, source_ids, updated_at
+        )
+        VALUES ($1, $2, $3, $4, $5, now())
+        ON CONFLICT (note_id) DO UPDATE SET
+            project_id = EXCLUDED.project_id,
+            title = EXCLUDED.title,
+            search_text = EXCLUDED.search_text,
+            source_ids = EXCLUDED.source_ids,
+            updated_at = now()
+        "#,
+    )
+    .bind(note.id)
+    .bind(note.project_id)
+    .bind(&note.title)
+    .bind(build_search_text(note))
+    .bind(note.id.to_string())
+    .execute(&mut **transaction)
+    .await?;
+    Ok(())
 }
 
 async fn search(
@@ -346,6 +387,17 @@ mod tests {
         )
         .await;
 
+        let (automatic_search_status, automatic_results) = call(
+            &app,
+            "POST",
+            "/api/search",
+            Some(admin),
+            Some(json!({"query": "taq band", "project_id": project_id})),
+        )
+        .await;
+        assert_eq!(automatic_search_status, StatusCode::OK);
+        assert_eq!(automatic_results[0]["note_id"], note_id);
+
         let (index_status, indexed) = call(
             &app,
             "POST",
@@ -367,6 +419,26 @@ mod tests {
         assert_eq!(search_status, StatusCode::OK);
         assert_eq!(results[0]["note_id"], note_id);
         assert!(results[0]["snippet"].as_str().unwrap().contains("Taq"));
+
+        let (archive_status, _) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/archive"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(archive_status, StatusCode::OK);
+        let (archived_search_status, archived_results) = call(
+            &app,
+            "POST",
+            "/api/search",
+            Some(admin),
+            Some(json!({"query": "taq", "project_id": project_id})),
+        )
+        .await;
+        assert_eq!(archived_search_status, StatusCode::OK);
+        assert!(archived_results.as_array().unwrap().is_empty());
 
         let (_, outsider) = call(
             &app,

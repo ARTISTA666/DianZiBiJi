@@ -132,3 +132,50 @@ export function SettingsSkeleton() {
     </div>
   );
 }
+
+/** 通用页面级加载骨架，替代纯文本「加载中...」。 */
+export function PageLoadingSkeleton() {
+  return (
+    <div className="space-y-4" aria-busy="true">
+      <Skeleton className="h-4 w-40" />
+      <div className="space-y-3">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="p-4 border rounded-lg space-y-2">
+            <Skeleton className="h-5 w-1/3" />
+            <Skeleton className="h-4 w-2/3" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** 操作记录表格加载骨架。 */
+export function AuditLogSkeleton() {
+  return (
+    <div className="space-y-2" aria-busy="true">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="flex items-center justify-between gap-3 rounded-md border p-3">
+          <div className="flex-1 space-y-1.5">
+            <Skeleton className="h-4 w-1/3" />
+            <Skeleton className="h-3 w-1/4" />
+          </div>
+          <Skeleton className="h-4 w-28" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** 全屏居中加载骨架（如 AuthGuard 会话恢复）。 */
+export function FullScreenLoadingSkeleton() {
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <div className="w-48 space-y-3" aria-busy="true">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="mx-auto h-4 w-3/4" />
+        <Skeleton className="mx-auto h-4 w-1/2" />
+      </div>
+    </div>
+  );
+}

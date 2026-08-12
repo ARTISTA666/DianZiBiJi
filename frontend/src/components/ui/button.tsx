@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -12,6 +13,7 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        success: "bg-success text-success-foreground hover:bg-success/90",
         outline:
           "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary:
@@ -37,17 +39,27 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  /** 为 true 时自动显示加载指示并禁用按钮，children 文案保持不截断。 */
+  isLoading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, variant, size, asChild = false, isLoading = false, disabled, children, ...props },
+    ref
+  ) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
+        disabled={disabled || isLoading}
+        aria-busy={isLoading || undefined}
         {...props}
-      />
+      >
+        {isLoading && !asChild && <Loader2 className="animate-spin" aria-hidden="true" />}
+        {children}
+      </Comp>
     )
   }
 )

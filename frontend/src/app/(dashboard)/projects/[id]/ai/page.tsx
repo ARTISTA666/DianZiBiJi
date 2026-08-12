@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useParams } from "next/navigation";
-import { Database, Send, Sparkles, Download, HelpCircle, MessageSquarePlus, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { Database, Send, Sparkles, Download, HelpCircle, MessageSquarePlus, Loader2, ThumbsDown, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,14 +12,17 @@ import { Tooltip as UITooltip, TooltipContent, TooltipTrigger } from "@/componen
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { ErrorBanner } from "@/components/shared/error-banner";
 import { CitationRichText, RagAnswerBlock, ragModeText, type RagSource, type RagGraphContextItem } from "@/lib/citations";
+import { submitQueryLogFeedback } from "@/lib/api";
 
 const modes = [
   { value: "auto", label: "自动选择", desc: "系统根据问题类型自动选择最佳检索策略" },
   { value: "project_rag", label: "项目级 RAG", desc: "基于项目资料库的向量+BM25 混合检索，适合查找实验资料中的具体内容" },
-  { value: "kg_enhanced_rag", label: "图谱增强 RAG", desc: "在 RAG 基础上叠加知识图谱关系，适合查找实体间的关联（如试剂→仪器→结果）" },
+  { value: "kg_enhanced_rag", label: "图谱增强 RAG", desc: "在 RAG 基础上叠加知识图谱关系，适合回答关系型问题（如试剂→仪器→结果）" },
+  { value: "structured_query", label: "结构化查询", desc: "只依据知识图谱关系回答，适合精确核对关系和结构化指标" },
   { value: "pure_llm", label: "纯 LLM", desc: "不检索资料库，直接由大模型回答，适合通用知识问题" },
-  { value: "bm25_rag", label: "BM25 RAG", desc: "仅使用关键词匹配检索，适合精确术语查找（如特定基因名、试剂名）" },
+  { value: "bm25_rag", label: "BM25 RAG", desc: "仅使用关键词匹配检索，适合术语精确查找（如特定基因名、试剂名）" },
 ] as const;
 
 /** 根据回答中的来源和图谱上下文，生成 2-3 个追问建议。 */
@@ -28,18 +32,18 @@ function suggestFollowUps(
   graphContext: RagGraphContextItem[],
 ): string[] {
   const suggestions: string[] = [];
-  // 基于来源文件名建议深入问题
+  // 基于来源文件名建议深入
   if (sources.length > 0) {
     const fname = sources[0].filename;
     if (fname) suggestions.push(`关于 ${fname} 还有哪些细节？`);
   }
-  // 基于图谱关系建议关联查询
+  // 基于图谱上下文建议关联查询
   if (graphContext.length > 0) {
     const rel = graphContext[0];
-    suggestions.push(`${rel.source_label} 和 ${rel.target_label} 之间有什么关联？`);
+    suggestions.push(`与 ${rel.source_label} 和 ${rel.target_label} 有什么关联？`);
   }
-  // 通用追问
-  if (suggestions.length < 3) suggestions.push("请总结以上回答的关键要点");
+  // 通用建议
+  suggestions.push("请总结以上问题的关键要点");
   return suggestions.slice(0, 3);
 }
 
@@ -97,6 +101,8 @@ export default function AIPage() {
   const [busy, setBusy] = useState(false);
   const [initBusy, setInitBusy] = useState(false);
   const [error, setError] = useState("");
+  const [answerFeedback, setAnswerFeedback] = useState<Record<number, "helpful" | "not_helpful">>({});
+  const [feedbackBusy, setFeedbackBusy] = useState<number | null>(null);
   const feedback = useActionFeedback();
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -106,6 +112,12 @@ export default function AIPage() {
     || membership?.can_manage === true
     || membership?.project_role === "owner";
   const ragReady = ragStatus?.initialized === true;
+  const pureLlmMode = mode === "pure_llm";
+  const datasetIndependentMode = pureLlmMode || mode === "structured_query";
+  const modeAvailable = datasetIndependentMode || ragReady;
+  const ragSyncSummary = ragStatus && ragStatus.initialized
+    ? `已初始化 · ${ragStatus.synced_count} 个文件已入库${ragStatus.pending_sync_count > 0 ? ` · 待入库 ${ragStatus.pending_sync_count}` : ""}${ragStatus.failed_sync_count > 0 ? ` · 失败 ${ragStatus.failed_sync_count}` : ""}`
+    : null;
 
   // 最后一轮回答的追问建议
   const followUpSuggestions = useMemo(() => {
@@ -161,7 +173,7 @@ export default function AIPage() {
 
   const handleAsk = async (overrideQuestion?: string) => {
     const q = (overrideQuestion || question).trim();
-    if (!token || !q || busy || !ragReady) return;
+    if (!token || !q || busy || !modeAvailable) return;
     setBusy(true); setError("");
     try {
       await queryRag(token, projectId, q, mode);
@@ -181,21 +193,35 @@ export default function AIPage() {
     feedback.success("对话已导出");
   }, [ragConversation, selectedProject, projectId, feedback]);
 
+  const handleAnswerFeedback = async (logId: number | null, value: "helpful" | "not_helpful") => {
+    if (!token || logId === null || feedbackBusy !== null || answerFeedback[logId]) return;
+    setFeedbackBusy(logId);
+    try {
+      await submitQueryLogFeedback(token, logId, { value });
+      setAnswerFeedback((current) => ({ ...current, [logId]: value }));
+      feedback.success("感谢反馈，我们会用于后续优化");
+    } catch (e) {
+      feedback.error(getErrorMessage(e, "反馈提交失败"));
+    } finally {
+      setFeedbackBusy(null);
+    }
+  };
+
   // 未初始化时的引导步骤
   const initSteps = [
     { label: "上传实验资料", desc: "在「资料」标签页上传实验相关的文档和附件" },
     { label: "审核通过资料", desc: "审核人员对上传的资料进行审核确认" },
     { label: "初始化资料库", desc: "点击下方「初始化资料库」按钮，将审核通过的资料同步到 AI 知识库" },
-    { label: "开始 AI 问答", desc: "资料库就绪后即可在上方输入问题进行智能问答" },
+    { label: "开始 AI 问答", desc: "项目资料问答需资料库就绪；纯 LLM 模式无需初始化即可使用" },
   ];
 
   return (
     <div className="space-y-4">
       {error && (
-        <div className="flex items-center justify-between rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">
+        <ErrorBanner className="flex items-center justify-between">
           <span>{error}</span>
           <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => { setError(""); }}>关闭</Button>
-        </div>
+        </ErrorBanner>
       )}
 
       {/* 资料库状态卡片 */}
@@ -209,15 +235,15 @@ export default function AIPage() {
                 {ragStatus === null
                   ? "状态加载中..."
                   : ragReady
-                    ? `已初始化 · ${ragStatus.synced_count} 个文件已入库`
-                    : "尚未初始化，初始化后才能使用 AI 问答"}
+                    ? ragSyncSummary
+                    : "尚未初始化；项目资料问答需初始化，纯 LLM 模式可直接使用"}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {!ragReady && ragStatus !== null && canManage && (
-              <Button size="sm" onClick={handleInit} disabled={initBusy}>
-                {initBusy ? (<><Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />初始化中...</>) : "初始化资料库"}
+              <Button size="sm" onClick={handleInit} disabled={initBusy} isLoading={initBusy}>
+                {initBusy ? "初始化中..." : "初始化资料库"}
               </Button>
             )}
             {ragReady && (
@@ -226,7 +252,7 @@ export default function AIPage() {
                   <HelpCircle className="h-4 w-4 cursor-help text-muted-foreground" />
                 </TooltipTrigger>
                 <TooltipContent side="left" className="max-w-xs text-xs">
-                  资料库已同步 {ragStatus.synced_count} 个文件。新审核通过的文件需重新初始化才能进入知识库。
+                  资料库已同步 {ragStatus.synced_count} 个文件。新审核通过的文件请到“资料”页执行本地向量入库；初始化只负责创建资料库或切换模型。
                 </TooltipContent>
               </UITooltip>
             )}
@@ -234,12 +260,23 @@ export default function AIPage() {
         </CardContent>
       </Card>
 
+      {ragReady && ragStatus && (ragStatus.pending_sync_count > 0 || ragStatus.failed_sync_count > 0) && (
+        <ErrorBanner>
+          <span>
+            {ragStatus.pending_sync_count > 0 && `有 ${ragStatus.pending_sync_count} 个已审核资料等待入库。`}
+            {ragStatus.failed_sync_count > 0 && `有 ${ragStatus.failed_sync_count} 个资料入库失败，请重试。`}
+            {" "}
+            <Link className="underline" href={`/projects/${projectId}/data`}>前往资料页处理</Link>
+          </span>
+        </ErrorBanner>
+      )}
+
       {/* 未初始化引导 */}
       {!ragReady && ragStatus !== null && (
         <Card className="border-dashed">
           <CardHeader>
             <CardTitle className="text-base">快速开始 AI 问答</CardTitle>
-            <CardDescription>按以下步骤完成资料库初始化，即可使用基于项目资料的智能问答</CardDescription>
+            <CardDescription>初始化后可使用项目资料问答；纯 LLM 和知识图谱结构化查询可直接使用</CardDescription>
           </CardHeader>
           <CardContent>
             <ol className="space-y-3">
@@ -285,6 +322,31 @@ export default function AIPage() {
                   </div>
                   <Card className="bg-muted/50"><CardContent className="py-4">
                     <RagAnswerBlock result={entry.result} projectId={projectId} />
+                    {entry.result.query_log_id !== null && (
+                      <div className="mt-3 flex items-center gap-2 border-t pt-2 text-xs text-muted-foreground">
+                        <span>这个回答有帮助吗？</span>
+                        <Button
+                          variant={answerFeedback[entry.result.query_log_id] === "helpful" ? "secondary" : "ghost"}
+                          size="sm"
+                          className="h-7 px-2"
+                          disabled={feedbackBusy !== null || Boolean(answerFeedback[entry.result.query_log_id])}
+                          aria-label="回答有帮助"
+                          onClick={() => handleAnswerFeedback(entry.result.query_log_id, "helpful")}
+                        >
+                          <ThumbsUp className="h-3.5 w-3.5" />有帮助
+                        </Button>
+                        <Button
+                          variant={answerFeedback[entry.result.query_log_id] === "not_helpful" ? "secondary" : "ghost"}
+                          size="sm"
+                          className="h-7 px-2"
+                          disabled={feedbackBusy !== null || Boolean(answerFeedback[entry.result.query_log_id])}
+                          aria-label="回答没有帮助"
+                          onClick={() => handleAnswerFeedback(entry.result.query_log_id, "not_helpful")}
+                        >
+                          <ThumbsDown className="h-3.5 w-3.5" />没帮助
+                        </Button>
+                      </div>
+                    )}
                   </CardContent></Card>
                 </div>
               ))}
@@ -300,7 +362,7 @@ export default function AIPage() {
           )}
 
           {/* 追问建议 */}
-          {followUpSuggestions.length > 0 && !busy && ragReady && (
+          {followUpSuggestions.length > 0 && !busy && modeAvailable && (
             <div className="flex flex-wrap gap-2">
               <MessageSquarePlus className="h-4 w-4 text-muted-foreground" />
               {followUpSuggestions.map((suggestion, i) => (
@@ -334,11 +396,13 @@ export default function AIPage() {
               </TooltipContent>
             </UITooltip>
             <Input ref={inputRef} value={question} onChange={(e) => setQuestion(e.target.value)}
-              placeholder={ragReady ? "输入问题... (⌘K 聚焦，Enter 发送)" : "请先初始化项目资料库"}
+              placeholder={modeAvailable
+                ? (pureLlmMode ? "输入通用问题... (⌘K 聚焦，Enter 发送)" : "输入问题... (⌘K 聚焦，Enter 发送)")
+                : "请先初始化项目资料库"}
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleAsk(); } }}
-              disabled={!ragReady || busy}
+              disabled={!modeAvailable || busy}
               className="flex-1" />
-            <Button onClick={() => handleAsk()} disabled={!ragReady || busy || !question.trim()}>
+            <Button onClick={() => handleAsk()} disabled={!modeAvailable || busy || !question.trim()} isLoading={busy}>
               <Send className="mr-2 h-4 w-4" />{busy ? "查询中..." : "提问"}
             </Button>
           </div>

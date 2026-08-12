@@ -99,6 +99,10 @@ pub async fn can_write_project(
     user: &UserRecord,
     project_id: i32,
 ) -> Result<bool, ApiError> {
+    let project = fetch_project(pool, project_id).await?;
+    if !project_is_active(&project) {
+        return Ok(false);
+    }
     if user.role == "super_admin" {
         return Ok(true);
     }
@@ -156,6 +160,10 @@ pub async fn can_review_project(
     user: &UserRecord,
     project_id: i32,
 ) -> Result<bool, ApiError> {
+    let project = fetch_project(pool, project_id).await?;
+    if !project_is_active(&project) {
+        return Ok(false);
+    }
     if user.role == "super_admin" {
         return Ok(true);
     }
@@ -257,6 +265,10 @@ async fn membership_flag(
         .await?)
 }
 
+fn project_is_active(project: &ProjectRead) -> bool {
+    project.status == "active"
+}
+
 #[cfg(test)]
 mod tests {
     use super::{project_allows_external_ai, ProjectRead};
@@ -279,5 +291,14 @@ mod tests {
         assert!(project_allows_external_ai(&project(false), true));
         assert!(!project_allows_external_ai(&project(true), false));
         assert!(project_allows_external_ai(&project(true), true));
+    }
+
+    #[test]
+    fn test_archived_project_is_not_active() {
+        let mut archived = project(false);
+        archived.status = "archived".to_owned();
+
+        assert!(!super::project_is_active(&archived));
+        assert!(super::project_is_active(&project(false)));
     }
 }

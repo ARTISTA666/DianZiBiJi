@@ -187,8 +187,8 @@ export function AuditLog({
           <Input aria-label="开始时间" type="datetime-local" value={auditDateFrom} onChange={(event) => setAuditDateFrom(event.target.value)} />
           <Input aria-label="结束时间" type="datetime-local" value={auditDateTo} onChange={(event) => setAuditDateTo(event.target.value)} />
           <div className="flex gap-2 md:col-span-5">
-            <Button type="submit" disabled={busy || querying}>{querying ? "查询中..." : "查询审计日志"}</Button>
-            <Button type="button" variant="outline" onClick={handleExport} disabled={busy || exporting || auditLogs.length === 0}>
+            <Button type="submit" disabled={busy || querying} isLoading={querying}>{querying ? "查询中..." : "查询审计日志"}</Button>
+            <Button type="button" variant="outline" onClick={handleExport} disabled={busy || exporting || auditLogs.length === 0} isLoading={exporting}>
               <Download className="mr-1 h-4 w-4" />{exporting ? "导出中..." : "导出 CSV"}
             </Button>
           </div>

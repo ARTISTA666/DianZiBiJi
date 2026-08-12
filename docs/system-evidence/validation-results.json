@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-16T15:52:38.244024+00:00",
+  "generated_at": "2026-08-10T12:03:35.203523+00:00",
   "runtime": {
-    "captured_at": "2026-07-16T15:52:39.664003+00:00",
+    "captured_at": "2026-08-10T12:03:35.581286+00:00",
     "platform": {
       "system": "Darwin",
-      "release": "25.5.0",
+      "release": "25.6.0",
       "machine": "arm64"
     },
     "commands": [
@@ -26,43 +26,20 @@
           "compose",
           "exec",
           "-T",
-          "backend",
-          "alembic",
-          "current"
+          "db",
+          "psql",
+          "-v",
+          "ON_ERROR_STOP=1",
+          "-U",
+          "eln_user",
+          "-d",
+          "eln",
+          "-tAc",
+          "DO $$ BEGIN IF COALESCE((SELECT max(version) FROM public.rust_schema_versions), 0) < 3 THEN RAISE EXCEPTION 'Rust schema version is missing'; END IF; END $$;"
         ],
         "exit_code": 0,
         "passed": true,
-        "stdout": "0003_user_auth_version (head)",
-        "stderr": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL."
-      },
-      {
-        "command": [
-          "docker",
-          "compose",
-          "exec",
-          "-T",
-          "backend",
-          "alembic",
-          "check"
-        ],
-        "exit_code": 0,
-        "passed": true,
-        "stdout": "No new upgrade operations detected.",
-        "stderr": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments\n/app/migrations/env.py:74: SAWarning: Did not recognize type 'vector' of column 'embedding'\n  context.run_migrations()\nINFO  [alembic.ddl.postgresql] Detected sequence named 'group_projects_id_seq' as owned by integer column 'group_projects(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'files_id_seq' as owned by integer column 'files(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'project_members_id_seq' as owned by integer column 'project_members(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'kg_extraction_runs_id_seq' as owned by integer column 'kg_extraction_runs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'audit_logs_id_seq' as owned by integer column 'audit_logs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'project_reviewers_id_seq' as owned by integer column 'project_reviewers(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'kg_relations_id_seq' as owned by integer column 'kg_relations(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'group_members_id_seq' as owned by integer column 'group_members(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'rag_file_syncs_id_seq' as owned by integer column 'rag_file_syncs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'kg_entities_id_seq' as owned by integer column 'kg_entities(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'projects_id_seq' as owned by integer column 'projects(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'ai_query_logs_id_seq' as owned by integer column 'ai_query_logs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'note_approvals_id_seq' as owned by integer column 'note_approvals(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'ai_query_evaluations_id_seq' as owned by integer column 'ai_query_evaluations(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'file_ocr_results_id_seq' as owned by integer column 'file_ocr_results(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'groups_id_seq' as owned by integer column 'groups(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'agent_generation_runs_id_seq' as owned by integer column 'agent_generation_runs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'users_id_seq' as owned by integer column 'users(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'search_documents_id_seq' as owned by integer column 'search_documents(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'note_versions_id_seq' as owned by integer column 'note_versions(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'experiment_notes_id_seq' as owned by integer column 'experiment_notes(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'experiment_templates_id_seq' as owned by integer column 'experiment_templates(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'ai_experiment_runs_id_seq' as owned by integer column 'ai_experiment_runs(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'rag_document_chunks_id_seq' as owned by integer column 'rag_document_chunks(id)', assuming SERIAL and omitting\nINFO  [alembic.ddl.postgresql] Detected sequence named 'project_rag_datasets_id_seq' as owned by integer column 'project_rag_datasets(id)', assuming SERIAL and omitting\nINFO  [alembic.autogenerate.compare.types] Couldn't determine database type for column 'rag_document_chunks.embedding'\nINFO  [alembic.autogenerate.compare.types] Couldn't determine database type for column 'rag_document_chunks.embedding'"
-      },
-      {
-        "command": [
-          "docker",
-          "compose",
-          "exec",
-          "-T",
-          "backend",
-          "python",
-          "scripts/verify_runtime_schema.py"
-        ],
-        "exit_code": 0,
-        "passed": true,
-        "stdout": "{\n  \"checked_at\": \"2026-07-16T15:52:39.563357+00:00\",\n  \"dialect\": \"postgresql\",\n  \"ok\": true,\n  \"checks\": [\n    {\n      \"id\": \"ocr_table_exists\",\n      \"passed\": true,\n      \"detail\": {}\n    },\n    {\n      \"id\": \"evaluation_table_exists\",\n      \"passed\": true,\n      \"detail\": {}\n    },\n    {\n      \"id\": \"ocr_columns_complete\",\n      \"passed\": true,\n      \"detail\": {\n        \"missing_columns\": []\n      }\n    },\n    {\n      \"id\": \"evaluation_columns_complete\",\n      \"passed\": true,\n      \"detail\": {\n        \"missing_columns\": []\n      }\n    },\n    {\n      \"id\": \"multi_reviewer_unique_constraint_present\",\n      \"passed\": true,\n      \"detail\": {\n        \"expected_name\": \"uq_ai_query_evaluation_log_evaluator\"\n      }\n    },\n    {\n      \"id\": \"legacy_single_reviewer_constraint_absent\",\n      \"passed\": true,\n      \"detail\": {\n        \"legacy_name\": \"uq_ai_query_evaluation_log\"\n      }\n    }\n  ]\n}",
+        "stdout": "DO",
         "stderr": ""
       },
       {
@@ -92,7 +69,7 @@
         "url": "http://127.0.0.1:3000",
         "status": 200,
         "passed": true,
-        "body": "<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/40e15cc745facc20.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-52d428ccd66bfe75.js\"/><script src=\"/_next/static/chunks/4bd1b696-215e5051988c3dde.js\" async=\"\"></script><script src=\"/_next/static/chunks/794-0fc36bf1952fbc29.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-3f94d1654d7621f8.js\" async=\"\"></script><script src=\"/_next/static/chunks/512-1606fe8539aa3165.js\" async=\"\"></script><script src=\"/_next/static/chunks/app/page-dacd168dfdd6047e.js\" async=\"\"></script><title>智能电子实验笔记系统</title><meta name=\"description\" content=\"课题组级智能 ELN MVP\"/><script src=\"/_next/static/chunks/polyfills-42372ed130431b0a.js\" noModule=\"\"></script></head><body><div hidden=\"\"><!--$--><!--/$--></div><main class=\"min-h-sc"
+        "body": "<!DOCTYPE html><html lang=\"zh-CN\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"stylesheet\" href=\"/_next/static/css/8df52c1bc1e771de.css\" data-precedence=\"next\"/><link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-2324a7ef2991011d.js\"/><script src=\"/_next/static/chunks/4bd1b696-92152b0f5947070d.js\" async=\"\"></script><script src=\"/_next/static/chunks/794-d2f4a544a61ef54e.js\" async=\"\"></script><script src=\"/_next/static/chunks/main-app-1a6aaf075bf9cd72.js\" async=\"\"></script><script src=\"/_next/static/chunks/171-37d5e7b9e8f10450.js\" async=\"\"></script><script src=\"/_next/static/chunks/744-cd781765da9d8a85.js\" async=\"\"></script><script src=\"/_next/static/chunks/721-db3448e1fed50c3d.js\" async=\"\"></script><script src=\"/_next/static/chunks/app/layout-aa176e8c644dbe00.js\" async=\"\"></script><script src=\"/_next/static/chunks/7-6dd40328ab71e509.js\" async=\"\"></script><script src=\"/_next/static/chunks/9"
       }
     ],
     "metrics": {
@@ -100,18 +77,24 @@
       "status": 200,
       "ok": true,
       "payload": {
-        "status": "ok",
-        "revision": "unversioned",
-        "uptime_seconds": 2539.282,
+        "avg_duration_ms": 0.08,
         "in_flight": 1,
-        "total_requests": 361,
-        "status_counts": {
-          "2xx": 361
+        "latency_sample_count": 143,
+        "max_duration_ms": 4,
+        "p95_duration_ms": 0,
+        "revision": "unversioned",
+        "runtime": {
+          "api_runtime": "rust-axum",
+          "embedding_backend": "hash",
+          "embedding_dimension": 512,
+          "embedding_model": "rust-hash-512-v1"
         },
-        "avg_duration_ms": 4.91,
-        "p95_duration_ms": 18,
-        "max_duration_ms": 390,
-        "latency_sample_count": 361
+        "status": "ok",
+        "status_counts": {
+          "2xx": 143
+        },
+        "total_requests": 143,
+        "uptime_seconds": 1307.176
       }
     },
     "ok": true
@@ -119,26 +102,37 @@
   "load_smoke": {
     "ok": true,
     "source": {
-      "path": "docs/system-evidence/load-smoke-latest.json",
-      "sha256": "58955e5ef070e78eb60e5d99a43be9b360c544c3164c209a337d26b0dd10d063",
+      "path": "output/playwright/load-smoke.json",
+      "sha256": "16891d9a3814aed713ca74c3f84b836e04665682eabd26f680067fe4ea4f86cc",
       "bytes": 89
     },
     "requests": 90,
     "successful": 90,
     "errors": [],
-    "p95_ms": 31,
-    "max_ms": 43
+    "p95_ms": 12,
+    "max_ms": 16
+  },
+  "restart_recovery": {
+    "ok": true,
+    "source": {
+      "path": "output/playwright/restart-recovery.json",
+      "sha256": "05e179a5a2af609494d3d05fff85320eb7beb835d049168b2b2b35716d201404",
+      "bytes": 74
+    },
+    "run_id": 2,
+    "interrupted": true,
+    "resumed_status": "completed"
   },
   "soak_smoke": {
     "ok": true,
     "source": {
       "path": "docs/system-evidence/soak-smoke-latest.json",
-      "sha256": "1b09f5a2e3192b6aaaf580e310cf2e8088463018dc020b986a73182cf3163ae9",
-      "bytes": 677
+      "sha256": "d511d09350b2e207354855cd83af750f071116cb51dc7a9df44a76d683f44637",
+      "bytes": 671
     },
-    "started_at": "2026-07-16T14:44:06.067367+00:00",
-    "duration_seconds": 3.0,
-    "interval_seconds": 1.0,
+    "started_at": "2026-07-28T13:07:00.194348+00:00",
+    "duration_seconds": 60.0,
+    "interval_seconds": 30.0,
     "requests_per_cycle": 30,
     "concurrency": 5,
     "cycles": [
@@ -146,22 +140,22 @@
         "requests": 30,
         "successful": 30,
         "errors": [],
-        "p95_ms": 15,
-        "max_ms": 17
+        "p95_ms": 5,
+        "max_ms": 7
       },
       {
         "requests": 30,
         "successful": 30,
         "errors": [],
-        "p95_ms": 12,
-        "max_ms": 14
+        "p95_ms": 5,
+        "max_ms": 6
       },
       {
         "requests": 30,
         "successful": 30,
         "errors": [],
-        "p95_ms": 13,
-        "max_ms": 17
+        "p95_ms": 4,
+        "max_ms": 5
       }
     ],
     "summary": {
@@ -169,8 +163,8 @@
       "requests": 90,
       "successful": 90,
       "errors": [],
-      "p95_ms": 15,
-      "max_ms": 17,
+      "p95_ms": 5,
+      "max_ms": 7,
       "ok": true
     }
   },
@@ -178,7 +172,7 @@
     "ok": true,
     "source": {
       "path": "docs/system-evidence/npm-audit-latest.json",
-      "sha256": "1d553688c2b2e970e184bfe5d03e56b7d0ef23b4d4bd7c55b843c449af4dc42d",
+      "sha256": "c9d3c6d35ff523d8170db359f32ceae9a448ab9476fe6bb967774a901589530e",
       "bytes": 364
     },
     "vulnerabilities": {
@@ -191,13 +185,19 @@
     }
   },
   "production_config": {
+    "source": {
+      "path": "docs/system-evidence/production-config-latest.json",
+      "sha256": "8ad51f41e93520d79a446ce11ad118f3f4c0c8fe92b9e5d974fb85ae14b72b11",
+      "bytes": 721
+    },
     "ok": true,
-    "status": "passed",
-    "app_env": "production",
-    "message": "Production configuration passed safety checks.",
-    "env_file": "docs/system-evidence/env-production-evidence",
-    "env_file_sha256": "1466e1d885d5d98c0f3130f8025ffb75fe4ef6927505adcd7e59a0b762db10ec",
-    "checked_keys": [
+    "status": "skipped_non_production",
+    "app_env": "development",
+    "message": "Production safety checks are enforced only when APP_ENV=production.",
+    "env_file": null,
+    "env_file_sha256": null,
+    "checked_keys": [],
+    "missing_checked_keys": [
       "APP_ENV",
       "APP_REVISION",
       "BOOTSTRAP_ADMIN_PASSWORD",
@@ -206,17 +206,15 @@
       "SECRET_KEY",
       "SEED_DEMO_DATA"
     ],
-    "missing_checked_keys": [],
     "checks": {
-      "app_env_is_production": true,
-      "secret_key_non_default": true,
-      "bootstrap_admin_password_non_default": true,
-      "postgres_password_non_default": true,
-      "seed_demo_data_disabled": true,
+      "app_env_is_production": false,
+      "secret_key_non_default": false,
+      "bootstrap_admin_password_non_default": false,
+      "postgres_password_non_default": false,
+      "seed_demo_data_disabled": false,
       "deepseek_api_key_present": true,
-      "app_revision_present": true
-    },
-    "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/production-config-latest.json"
+      "app_revision_present": false
+    }
   },
   "secret_hygiene": {
     "source": {
@@ -240,11 +238,11 @@
   "secret_rotation": {
     "source": {
       "path": "docs/system-evidence/secret-rotation-latest.json",
-      "sha256": "90ef6244fcf8428378b86f81c67a9d764821d90f22b8d2f9bf1e49f46896c9d2",
+      "sha256": "fde87c7aa0913423b7c675757dc1e495b6c6cc7610831d0d483533c3b1d35602",
       "bytes": 1712
     },
     "ok": true,
-    "generated_at": "2026-07-16T15:29:57.107399+00:00",
+    "generated_at": "2026-07-28T13:03:55.685857+00:00",
     "runbook": "/Users/yusong/Downloads/new/full-system/docs/operations/secret-rotation.md",
     "checks": [
       {
@@ -317,11 +315,11 @@
   "backup_policy": {
     "source": {
       "path": "docs/system-evidence/backup-policy-latest.json",
-      "sha256": "eb2c5040fbc08a2342996d427e54112c24527a0f93801a1dc846050e8d28353b",
+      "sha256": "30d709f90d8fd91d2b8e1b9ffa709784bcdcbac5d4c0286f60b6cc53ef18e32d",
       "bytes": 1351
     },
     "ok": true,
-    "generated_at": "2026-07-16T15:34:52.740494+00:00",
+    "generated_at": "2026-07-28T13:03:55.686253+00:00",
     "runbook": "/Users/yusong/Downloads/new/full-system/docs/operations/backup-restore.md",
     "checks": [
       {
@@ -384,32 +382,32 @@
   "monitoring_alerts": {
     "source": {
       "path": "docs/system-evidence/monitoring-alerts-latest.json",
-      "sha256": "b9c22e96a3a640b851bd61fdbac39c1fb09320e767b8994df943d5e01c7dee48",
-      "bytes": 1642
+      "sha256": "32b5c010e4f57e1915f4949cd136d22b25857466ba2aac369aab253384ea8897",
+      "bytes": 1641
     },
     "ok": true,
-    "generated_at": "2026-07-16T15:23:19.791777+00:00",
+    "generated_at": "2026-07-28T13:05:34.383161+00:00",
     "thresholds": {
       "max_p95_ms": 2000,
       "max_error_rate": 0.01,
       "max_in_flight": 50
     },
     "metrics": {
-      "status": "ok",
-      "revision": "unversioned",
-      "uptime_seconds": 779.409,
+      "avg_duration_ms": 5.57,
       "in_flight": 1,
-      "total_requests": 178,
+      "latency_sample_count": 112,
+      "max_duration_ms": 352,
+      "p95_duration_ms": 24,
+      "revision": "unversioned",
+      "status": "ok",
       "status_counts": {
-        "2xx": 178
+        "2xx": 112
       },
-      "avg_duration_ms": 8.91,
-      "p95_duration_ms": 23,
-      "max_duration_ms": 390,
-      "latency_sample_count": 178
+      "total_requests": 112,
+      "uptime_seconds": 176.63
     },
     "derived": {
-      "total_requests": 178,
+      "total_requests": 112,
       "error_requests": 0,
       "error_rate": 0.0
     },
@@ -430,14 +428,14 @@
       },
       {
         "name": "metrics has traffic",
-        "actual": 178,
+        "actual": 112,
         "operator": ">=",
         "expected": 1,
         "passed": true
       },
       {
         "name": "p95 latency ms",
-        "actual": 23,
+        "actual": 24,
         "operator": "<=",
         "expected": 2000,
         "passed": true
@@ -473,11 +471,11 @@
   "reverse_proxy": {
     "source": {
       "path": "docs/system-evidence/reverse-proxy-latest.json",
-      "sha256": "7370091c5131bf6ef553b8df1f7d9763d277529041e01e07650c07f65f54a10c",
+      "sha256": "00d583317ae253332aa719b4943599e626aee7ff851aee811add734ea10f9227",
       "bytes": 2309
     },
     "ok": true,
-    "generated_at": "2026-07-16T15:26:30.134521+00:00",
+    "generated_at": "2026-07-28T13:03:55.685914+00:00",
     "template": "/Users/yusong/Downloads/new/full-system/deploy/nginx.conf.template",
     "checks": [
       {
@@ -569,35 +567,86 @@
       }
     ]
   },
+  "rust_contract": {
+    "ok": true,
+    "source": {
+      "backend_url": "http://127.0.0.1:8001",
+      "metrics_url": "http://127.0.0.1:8001/metrics",
+      "openapi_url": "http://127.0.0.1:8001/openapi.json"
+    },
+    "api": {
+      "openapi_sha256": "2c77237b4fec0e8f6c1ad91028b7c338c0f3b8b92abeb1eae433c915a6f02811",
+      "openapi_version": "3.1.0",
+      "operation_count": 85,
+      "path_count": 70
+    },
+    "captured_at": "2026-08-10T12:03:26.888612+00:00",
+    "revision": "unversioned",
+    "runtime": {
+      "api_runtime": "rust-axum",
+      "embedding_backend": "hash",
+      "embedding_dimension": 512,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    "schema": "full-system.rust-runtime-contract-evidence",
+    "schema_version": 1,
+    "status": "ok"
+  },
   "playwright": {
+    "captured_at": "2026-08-10T12:00:55.561Z",
     "source": {
       "path": "output/playwright/results.json",
-      "sha256": "614b486b0deaee39e82868536c7b92731b23ce4fd840a0e3354fa0582b973057",
-      "bytes": 5321
+      "sha256": "29d38069efbd731f7fbd7d66beb1827d6803d2225dba9bf51cddab97fe91df35",
+      "bytes": 10994
     },
     "stats": {
-      "startTime": "2026-07-16T15:01:18.208Z",
-      "duration": 12098.086,
-      "expected": 3,
+      "startTime": "2026-08-10T12:00:55.561Z",
+      "duration": 107061.183,
+      "expected": 8,
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
     },
     "tests": [
       {
+        "title": "真实课题组四项目全员协作与 AI 验收",
+        "status": "passed",
+        "duration_ms": 52477
+      },
+      {
         "title": "登录并完成笔记审批",
         "status": "passed",
-        "duration_ms": 1868
+        "duration_ms": 1999
       },
       {
         "title": "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
         "status": "passed",
-        "duration_ms": 7417
+        "duration_ms": 7300
       },
       {
         "title": "独立评价人只能在盲评页面提交评价",
         "status": "passed",
-        "duration_ms": 1567
+        "duration_ms": 4693
+      },
+      {
+        "title": "系统管理员完成账号、小组和审计闭环",
+        "status": "passed",
+        "duration_ms": 5289
+      },
+      {
+        "title": "项目负责人、记录员和审核人完成退回修订审批闭环",
+        "status": "passed",
+        "duration_ms": 13633
+      },
+      {
+        "title": "多角色完成 AI 资料、图谱、问答与报告协作闭环",
+        "status": "passed",
+        "duration_ms": 12526
+      },
+      {
+        "title": "只读成员只能查阅，不能看到写入或项目管理操作",
+        "status": "passed",
+        "duration_ms": 5759
       }
     ]
   },
@@ -755,18 +804,18 @@
   "backup": {
     "ok": true,
     "source": {
-      "path": "/private/tmp/eln-maturity-backup-20260716T142815Z/manifest.txt",
-      "sha256": "12ce9fe2b440d37ac53b8393959a62ff95923f514175060b79e0d17c1d93f7d7",
+      "path": "backups/release-e2e-20260809/manifest.txt",
+      "sha256": "c1fe35e1a8e25270401cae9883d665debfeed1aa1321d341c712f9330f607293",
       "bytes": 246
     },
-    "path": "/private/tmp/eln-maturity-backup-20260716T142815Z",
+    "path": "backups/release-e2e-20260809",
     "manifest": {
       "manifest_version": "1",
-      "created_at": "20260716T142815Z",
+      "created_at": "20260809T141808Z",
       "app_revision": "unversioned",
       "database": "eln",
-      "database_sha256": "2925f4e4624ed501ea844ddf0a7a9d284026ef03ad2726a0ea7104ad68bf88db",
-      "storage_sha256": "a604cbef285bef682e4f463de4c6c84caf155952b2214ddcaf858430fa6118c0"
+      "database_sha256": "8e8e235910ce7354b1d639c650694ee85783aed14a0ccfa02aa8377ab44d825e",
+      "storage_sha256": "451d8a83dc41f62a5b1c37b6b8f751d2449116ceeed30f2d4faf0480e828bd42"
     },
     "checks": {
       "database.dump": true,
@@ -778,19 +827,19 @@
   "restore_drill": {
     "source": {
       "path": "docs/system-evidence/restore-drill-latest.json",
-      "sha256": "144d964384d9081ca4b958a7d681bd15a5abf57e00b81e801ab672bf26e097cf",
-      "bytes": 724
+      "sha256": "07e60c11dcb5de7b978f1e9f668b4e09bca9e63e03eac314260dd3d864324f69",
+      "bytes": 743
     },
     "ok": true,
-    "generated_at": "2026-07-16T15:19:36.936451+00:00",
-    "backup": "/private/tmp/eln-maturity-backup-20260716T142815Z",
+    "generated_at": "2026-08-09T14:18:27.450283+00:00",
+    "backup": "/Users/yusong/Downloads/new/full-system/backups/release-e2e-20260809",
     "manifest": {
       "manifest_version": "1",
-      "created_at": "20260716T142815Z",
+      "created_at": "20260809T141808Z",
       "app_revision": "unversioned",
       "database": "eln",
-      "database_sha256": "2925f4e4624ed501ea844ddf0a7a9d284026ef03ad2726a0ea7104ad68bf88db",
-      "storage_sha256": "a604cbef285bef682e4f463de4c6c84caf155952b2214ddcaf858430fa6118c0"
+      "database_sha256": "8e8e235910ce7354b1d639c650694ee85783aed14a0ccfa02aa8377ab44d825e",
+      "storage_sha256": "451d8a83dc41f62a5b1c37b6b8f751d2449116ceeed30f2d4faf0480e828bd42"
     },
     "checks": {
       "database.dump": true,
@@ -799,12 +848,12 @@
     "database": {
       "dump_list_readable": true,
       "restored": true,
-      "public_table_count": 26
+      "public_table_count": 27
     },
     "storage": {
       "restored": true,
-      "file_count": 28,
-      "bytes": 1489698
+      "file_count": 39,
+      "bytes": 2211616
     }
   },
   "ocr": [

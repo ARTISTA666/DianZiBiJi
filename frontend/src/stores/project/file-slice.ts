@@ -56,9 +56,9 @@ export const createFileSlice: StateCreator<ProjectStoreState, [], [], FileSlice>
   archiveFile: async (token, fileId) => {
     const { selectedProjectId } = get();
     const requestEpoch = epochs.projectData;
-    await archiveFile(token, fileId);
+    const archived = await archiveFile(token, fileId);
     if (isCurrentProjectRequest(get, selectedProjectId, requestEpoch)) {
-      set((s) => ({ files: s.files.filter((f) => f.id !== fileId) }));
+      set((s) => ({ files: s.files.map((file) => file.id === fileId ? archived : file) }));
     }
   },
 

@@ -1,7 +1,6 @@
 use std::{
     collections::{HashMap, HashSet},
     sync::OnceLock,
-    time::Duration,
 };
 
 use regex::Regex;
@@ -10,11 +9,14 @@ use sha2::{Digest, Sha256};
 use sqlx::{FromRow, PgPool, Postgres, QueryBuilder, Transaction};
 
 use crate::{
+    ai_provider::GenerationRequest,
     error::ApiError,
     models::{RagCitationAuditRead, RagGraphContextRead, RagSourceRead},
     ocr::{extract_text, OcrSource},
     AppState,
 };
+
+pub use crate::ai_provider::{GenerationError, GenerationResult};
 
 const MAX_GRAPH_CONTEXT_CHARS: usize = 6_000;
 const RAG_INSERT_BATCH_SIZE: usize = 64;
@@ -53,27 +55,29 @@ const ACTIVE_CHUNKS_SQL: &str = r#"
       AND f.status = 'APPROVED'::filestatus
       AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
       AND f.knowledge_sync_status = 'synced'
+      AND c.index_version = $2
     ORDER BY c.id
 "#;
 
 const VECTOR_CANDIDATE_SQL: &str = r#"
     SELECT c.id,
-           GREATEST(0.0, 1.0 - (c.embedding <=> $2::vector)) AS vector_score
+           GREATEST(0.0, 1.0 - (c.embedding <=> $3::vector)) AS vector_score
     FROM rag_document_chunks c
     JOIN files f ON f.id = c.file_id
     WHERE c.project_id = $1
       AND f.status = 'APPROVED'::filestatus
       AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
       AND f.knowledge_sync_status = 'synced'
-    ORDER BY c.embedding <=> $2::vector, c.id
-    LIMIT $3
+      AND c.index_version = $2
+    ORDER BY c.embedding <=> $3::vector, c.id
+    LIMIT $4
 "#;
 
 const VECTOR_SCORES_SQL: &str = r#"
     SELECT c.id,
-           GREATEST(0.0, 1.0 - (c.embedding <=> $2::vector)) AS vector_score
+           GREATEST(0.0, 1.0 - (c.embedding <=> $3::vector)) AS vector_score
     FROM rag_document_chunks c
-    WHERE c.project_id = $1 AND c.id = ANY($3)
+    WHERE c.project_id = $1 AND c.index_version = $2 AND c.id = ANY($4)
 "#;
 
 /// 科研术语同义词表：将常见缩写/全称互相扩展，提升 BM25 召回率。
@@ -150,20 +154,6 @@ struct GraphRow {
     target_entity_type: String,
     confidence: f64,
     properties: Value,
-}
-
-#[derive(Clone, Debug)]
-pub struct GenerationResult {
-    pub answer: String,
-    pub request_id: Option<String>,
-    pub model: String,
-    pub usage: Value,
-}
-
-#[derive(Debug)]
-pub enum GenerationError {
-    Configuration(String),
-    Request(String),
 }
 
 pub async fn fetch_rag_file(pool: &PgPool, file_id: i32) -> Result<RagFileRecord, ApiError> {
@@ -252,12 +242,13 @@ pub async fn index_file(
         .execute(&mut **transaction)
         .await
         .map_err(|error| error.to_string())?;
-    let metadata = json!({"filename": file.original_filename});
+    let metadata =
+        json!({"filename": file.original_filename, "chunk_version": settings.rag_index_version});
     for range in rag_insert_batch_ranges(chunks.len()) {
         let mut query = QueryBuilder::<Postgres>::new(
             "INSERT INTO rag_document_chunks (\
                 project_id, file_id, chunk_index, content, content_hash,\
-                character_count, embedding, metadata_json, created_at\
+                character_count, embedding, metadata_json, chunk_version, index_version, created_at\
             ) ",
         );
         query.push_values(range, |mut row, index| {
@@ -275,6 +266,8 @@ pub async fn index_file(
                 // 若用 push 会在占位符与类型转换之间插入逗号，生成非法 SQL。
                 .push_unseparated("::vector")
                 .push_bind(metadata.clone())
+                .push_bind(&settings.rag_index_version)
+                .push_bind(&settings.rag_index_version)
                 .push("now()");
         });
         query
@@ -318,6 +311,7 @@ pub async fn retrieve(
     let settings = &state.settings;
     let rows = sqlx::query_as::<_, ChunkRow>(ACTIVE_CHUNKS_SQL)
         .bind(project_id)
+        .bind(&settings.rag_index_version)
         .fetch_all(pool)
         .await?;
     if rows.is_empty() {
@@ -348,8 +342,9 @@ pub async fn retrieve(
         let vector_candidates = fetch_vector_candidates(
             pool,
             project_id,
+            &settings.rag_index_version,
             &query_vector,
-            settings.rag_vector_candidate_k,
+            settings.rag_vector_candidate_k.min(30),
         )
         .await?;
         let mut vector_scores = vector_candidates
@@ -374,7 +369,7 @@ pub async fn retrieve(
                 .unwrap_or(std::cmp::Ordering::Equal)
                 .then_with(|| left.0.cmp(&right.0))
         });
-        lexical_candidates.truncate(settings.rag_vector_candidate_k);
+        lexical_candidates.truncate(settings.rag_vector_candidate_k.min(30));
         for (id, _) in lexical_candidates {
             if seen.insert(id) {
                 candidate_ids.push(id);
@@ -387,8 +382,14 @@ pub async fn retrieve(
             .filter(|id| !vector_scores.contains_key(id))
             .collect::<Vec<_>>();
         if !missing_vector_scores.is_empty() {
-            for candidate in
-                fetch_vector_scores(pool, project_id, &query_vector, &missing_vector_scores).await?
+            for candidate in fetch_vector_scores(
+                pool,
+                project_id,
+                &settings.rag_index_version,
+                &query_vector,
+                &missing_vector_scores,
+            )
+            .await?
             {
                 vector_scores.insert(candidate.id, candidate.vector_score);
             }
@@ -400,6 +401,31 @@ pub async fn retrieve(
         .into_iter()
         .map(|row| (row.id, row))
         .collect::<HashMap<_, _>>();
+    let mut vector_ranking = candidate_ids.clone();
+    vector_ranking.sort_by(|left, right| {
+        vector_scores
+            .get(right)
+            .unwrap_or(&0.0)
+            .partial_cmp(vector_scores.get(left).unwrap_or(&0.0))
+            .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| left.cmp(right))
+    });
+    let mut lexical_ranking = candidate_ids.clone();
+    lexical_ranking.sort_by(|left, right| {
+        lexical_scores
+            .get(right)
+            .unwrap_or(&0.0)
+            .partial_cmp(lexical_scores.get(left).unwrap_or(&0.0))
+            .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| left.cmp(right))
+    });
+    let lexical_first = query_prefers_lexical_exact_match(query);
+    let rrf_scores = if lexical_first {
+        weighted_reciprocal_rank_fusion(&vector_ranking, &lexical_ranking, 60.0, 0.25, 0.75)
+    } else {
+        reciprocal_rank_fusion(&vector_ranking, &lexical_ranking, 60.0)
+    };
+    let normalized_query = query.trim().to_lowercase();
     let mut scored = Vec::new();
     for chunk_id in candidate_ids {
         let Some(row) = rows_by_id.get(&chunk_id) else {
@@ -413,6 +439,21 @@ pub async fn retrieve(
         let lexical_score = lexical_scores.get(&row.id).copied().unwrap_or_default();
         let retrieval_score = if bm25_only {
             lexical_score
+        } else if settings.rag_retrieval_strategy == "rrf-v1" {
+            let mut score = rrf_scores.get(&row.id).copied().unwrap_or_default();
+            let content = row.content.to_lowercase();
+            let filename = row.filename.to_lowercase();
+            if lexical_first {
+                let overlap = exact_token_overlap(&query_tokens, &format!("{content} {filename}"));
+                score += (overlap as f64 * 0.02).min(0.12);
+            }
+            if !normalized_query.is_empty() && content.contains(&normalized_query) {
+                score += 0.15;
+            }
+            if !normalized_query.is_empty() && filename.contains(&normalized_query) {
+                score += 0.10;
+            }
+            score.min(1.0)
         } else {
             0.7 * vector_score + 0.3 * lexical_score
         };
@@ -455,32 +496,150 @@ pub async fn retrieve(
             .rag_collection_retrieval_top_k
             .max(settings.rag_retrieval_top_k)
             .min(settings.rag_vector_candidate_k)
+            .min(12)
     } else {
-        settings.rag_retrieval_top_k
+        settings.rag_retrieval_top_k.min(6)
     };
-    Ok(scored
+    let candidates = scored
         .into_iter()
-        .filter(|(score, _)| {
+        .filter(|(score, source)| {
             include_retrieval_candidate(*score, bm25_only, query_tokens.is_empty())
-                && *score >= settings.rag_min_retrieval_score
+                && passes_relevance_floor(
+                    *score,
+                    source.vector_score.unwrap_or_default(),
+                    source.lexical_score.unwrap_or_default(),
+                    bm25_only,
+                    settings.rag_min_retrieval_score,
+                )
         })
-        .map(|(_, source)| source)
-        .take(limit)
-        .collect())
+        .collect();
+    Ok(select_diverse_sources(candidates, limit))
+}
+
+fn reciprocal_rank_fusion(
+    vector_ranking: &[i32],
+    lexical_ranking: &[i32],
+    rank_constant: f64,
+) -> HashMap<i32, f64> {
+    weighted_reciprocal_rank_fusion(vector_ranking, lexical_ranking, rank_constant, 1.0, 1.0)
+}
+
+fn weighted_reciprocal_rank_fusion(
+    vector_ranking: &[i32],
+    lexical_ranking: &[i32],
+    rank_constant: f64,
+    vector_weight: f64,
+    lexical_weight: f64,
+) -> HashMap<i32, f64> {
+    let mut scores = HashMap::new();
+    for (ranking, weight) in [
+        (vector_ranking, vector_weight),
+        (lexical_ranking, lexical_weight),
+    ] {
+        for (index, id) in ranking.iter().enumerate() {
+            *scores.entry(*id).or_insert(0.0) += weight / (rank_constant + index as f64 + 1.0);
+        }
+    }
+    let maximum = scores.values().copied().fold(0.0_f64, f64::max);
+    if maximum > 0.0 {
+        for score in scores.values_mut() {
+            *score /= maximum;
+        }
+    }
+    scores
+}
+
+/// Exact identifiers, numeric thresholds and column/field lookups are better
+/// anchored by lexical evidence than by semantic similarity.  The offline
+/// holdout showed the same pattern: removing vector candidates improved MRR,
+/// while graph context still provided the largest recall gain.
+pub fn query_prefers_lexical_exact_match(query: &str) -> bool {
+    let normalized = query.to_lowercase();
+    let identifier_terms = [
+        "gse",
+        "gsm",
+        "srr",
+        "sra",
+        "srx",
+        "samn",
+        "id",
+        "编号",
+        "列名",
+        "字段",
+        "软件",
+        "工具",
+        "版本",
+        "total_count",
+        "detected_gene_rows",
+        "ct",
+        "阈值",
+        "计数",
+        "行数",
+        "最高",
+        "最低",
+        "相差",
+        "非零",
+        "单位",
+        "样本",
+    ];
+    identifier_terms
+        .iter()
+        .any(|term| normalized.contains(term))
+        || (normalized
+            .chars()
+            .any(|character| character.is_ascii_digit())
+            && ["多少", "几个", "比较", "异常", "结果", "值"]
+                .iter()
+                .any(|term| normalized.contains(term)))
+}
+
+fn select_diverse_sources(ranked: Vec<(f64, RagSourceRead)>, limit: usize) -> Vec<RagSourceRead> {
+    let mut file_counts = HashMap::<i32, usize>::new();
+    let mut selected = Vec::with_capacity(limit);
+    for (_, source) in ranked {
+        if let Some(file_id) = source.file_id {
+            let count = file_counts.entry(file_id).or_default();
+            if *count >= 3 {
+                continue;
+            }
+            *count += 1;
+        }
+        selected.push(source);
+        if selected.len() >= limit {
+            break;
+        }
+    }
+    selected
 }
 
 fn include_retrieval_candidate(score: f64, bm25_only: bool, query_tokens_empty: bool) -> bool {
     score > 0.0 || (!bm25_only && query_tokens_empty)
 }
 
+fn passes_relevance_floor(
+    retrieval_score: f64,
+    vector_score: f64,
+    lexical_score: f64,
+    bm25_only: bool,
+    minimum: f64,
+) -> bool {
+    if bm25_only {
+        retrieval_score >= minimum
+    } else {
+        vector_score >= minimum || lexical_score >= minimum
+    }
+}
+
 async fn fetch_vector_candidates(
     pool: &PgPool,
     project_id: i32,
+    index_version: &str,
     query_vector: &str,
     candidate_k: usize,
 ) -> Result<Vec<VectorCandidateRow>, sqlx::Error> {
     sqlx::query_as(VECTOR_CANDIDATE_SQL)
         .bind(project_id)
+        .bind(index_version)
         .bind(query_vector)
         .bind(i64::try_from(candidate_k).unwrap_or(i64::MAX))
         .fetch_all(pool)
@@ -490,11 +649,13 @@ async fn fetch_vector_candidates(
 async fn fetch_vector_scores(
     pool: &PgPool,
     project_id: i32,
+    index_version: &str,
     query_vector: &str,
     chunk_ids: &[i32],
 ) -> Result<Vec<VectorCandidateRow>, sqlx::Error> {
     sqlx::query_as(VECTOR_SCORES_SQL)
         .bind(project_id)
+        .bind(index_version)
         .bind(query_vector)
         .bind(chunk_ids)
         .fetch_all(pool)
@@ -914,135 +1075,19 @@ pub async fn generate_with_max_tokens(
     temperature: f64,
     max_tokens: u32,
 ) -> Result<GenerationResult, GenerationError> {
-    let api_key = state.settings.deepseek_api_key.trim();
-    if api_key.is_empty() {
-        return Err(GenerationError::Configuration(
-            "DEEPSEEK_API_KEY is not configured".to_owned(),
-        ));
-    }
-    let model = state.settings.normalized_deepseek_model();
-    if model.is_empty() {
-        return Err(GenerationError::Configuration(
-            "DEEPSEEK_MODEL is not configured".to_owned(),
-        ));
-    }
-    let url = format!(
-        "{}/chat/completions",
-        state.settings.deepseek_api_base_url.trim_end_matches('/')
-    );
-    let payload = json!({
-        "model": model,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt}
-        ],
-        "temperature": temperature,
-        "max_tokens": max_tokens,
-        "stream": false,
-        "thinking": {"type": "disabled"}
-    });
-    let mut last_error = String::new();
-    for attempt in 0..3 {
-        let mut retry_after_secs = None;
-        let generation_permit = state.generation_limiter.acquire().await.map_err(|_| {
-            GenerationError::Configuration(
-                "Generation concurrency limiter is unavailable".to_owned(),
-            )
-        })?;
-        let response = state
-            .client
-            .post(&url)
-            .bearer_auth(api_key)
-            .timeout(Duration::from_secs(180))
-            .json(&payload)
-            .send()
-            .await;
-        let should_retry = match response {
-            Ok(response) if response.status().is_success() => {
-                retry_after_secs = response
-                    .headers()
-                    .get("retry-after")
-                    .and_then(|value| value.to_str().ok())
-                    .and_then(|value| value.parse::<u64>().ok());
-                match parse_generation_response(response, model, attempt).await {
-                    Ok(result) => return Ok(result),
-                    Err(error) => {
-                        last_error = error;
-                        true
-                    }
-                }
-            }
-            Ok(response) => {
-                retry_after_secs = response
-                    .headers()
-                    .get("retry-after")
-                    .and_then(|value| value.to_str().ok())
-                    .and_then(|value| value.parse::<u64>().ok());
-                let status = response.status();
-                let detail = response.text().await.unwrap_or_default();
-                last_error = format!(
-                    "DeepSeek request failed: {status} {}",
-                    truncate_error_detail(&detail, 1000)
-                );
-                should_retry_generation_status(status)
-            }
-            Err(error) => {
-                last_error = format!("DeepSeek request failed: {error}");
-                true
-            }
-        };
-        drop(generation_permit);
-        if !should_retry {
-            break;
-        }
-        if attempt < 2 {
-            let delay = retry_after_secs.unwrap_or(1 << attempt).min(30);
-            tokio::time::sleep(Duration::from_secs(delay)).await;
-        }
-    }
-    Err(GenerationError::Request(last_error))
-}
-
-async fn parse_generation_response(
-    response: reqwest::Response,
-    fallback_model: &str,
-    attempt: usize,
-) -> Result<GenerationResult, String> {
-    let request_id = response
-        .headers()
-        .get("x-request-id")
-        .and_then(|value| value.to_str().ok())
-        .map(str::to_owned);
-    let body: Value = response
-        .json()
-        .await
-        .map_err(|error| format!("DeepSeek returned invalid JSON: {error}"))?;
-    let answer = body["choices"][0]["message"]["content"]
-        .as_str()
-        .unwrap_or_default()
-        .trim()
-        .to_owned();
-    if answer.is_empty() {
-        return Err("DeepSeek returned an empty completion".to_owned());
-    }
-    let provider_usage = body.get("usage").cloned().unwrap_or_else(|| json!({}));
-    let usage = if let Some(mut fields) = provider_usage.as_object().cloned() {
-        fields.insert("generation_attempts".to_owned(), json!(attempt + 1));
-        Value::Object(fields)
-    } else {
-        json!({
-            "provider_usage": provider_usage,
-            "generation_attempts": attempt + 1
+    state
+        .ai_provider
+        .generate(GenerationRequest {
+            system_prompt: system_prompt.to_owned(),
+            user_prompt: user_prompt.to_owned(),
+            temperature,
+            max_tokens,
+            tools: Vec::new(),
         })
-    };
-    Ok(GenerationResult {
-        answer,
-        request_id: request_id.or_else(|| body["id"].as_str().map(str::to_owned)),
-        model: body["model"].as_str().unwrap_or(fallback_model).to_owned(),
-        usage,
-    })
+        .await
 }
 
+#[cfg(test)]
 fn truncate_error_detail(detail: &str, max_bytes: usize) -> &str {
     let mut end = detail.len().min(max_bytes);
     while !detail.is_char_boundary(end) {
@@ -1051,6 +1096,7 @@ fn truncate_error_detail(detail: &str, max_bytes: usize) -> &str {
     &detail[..end]
 }
 
+#[cfg(test)]
 fn should_retry_generation_status(status: reqwest::StatusCode) -> bool {
     matches!(status.as_u16(), 408 | 425 | 429 | 500..=599)
 }
@@ -1247,7 +1293,6 @@ fn tokens(text: &str) -> HashSet<String> {
     token_frequencies(text).into_keys().collect()
 }
 
-#[cfg(test)]
 fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) -> usize {
     let text_tokens = tokens(text);
     query_tokens.intersection(&text_tokens).count()
@@ -1822,10 +1867,12 @@ mod tests {
         focused_graph_entity_ids, format_graph_context, format_sources, generate,
         generate_with_max_tokens, graph_context_budget, graph_relation_haystack,
         graph_relation_score, include_retrieval_candidate, is_collection_query,
-        meets_graph_threshold, rag_insert_batch_ranges, relation_hints, retrieve,
-        role_query_matches, should_retry_generation_status, split_long_text, tokens,
-        truncate_error_detail, validate_embedding_dimensions, vector_literal, ChunkRow, GraphRow,
-        ACTIVE_CHUNKS_SQL, MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL,
+        meets_graph_threshold, passes_relevance_floor, query_prefers_lexical_exact_match,
+        rag_insert_batch_ranges, reciprocal_rank_fusion, relation_hints, retrieve,
+        role_query_matches, select_diverse_sources, should_retry_generation_status,
+        split_long_text, tokens, truncate_error_detail, validate_embedding_dimensions,
+        vector_literal, weighted_reciprocal_rank_fusion, ChunkRow, GraphRow, ACTIVE_CHUNKS_SQL,
+        MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL, VECTOR_SCORES_SQL,
     };
     use crate::{
         config::Settings,
@@ -1865,6 +1912,15 @@ mod tests {
         let audit = audit_citations("Result [S1], bad [G2]", 1, 1);
         assert!(!audit.passed);
         assert_eq!(audit.invalid_citations, ["[G2]"]);
+    }
+
+    #[test]
+    fn test_vector_queries_bind_index_version_and_embedding_separately() {
+        for query in [VECTOR_CANDIDATE_SQL, VECTOR_SCORES_SQL] {
+            assert!(query.contains("c.index_version = $2"));
+            assert!(query.contains("c.embedding <=> $3::vector"));
+            assert!(!query.contains("c.embedding <=> $2::vector"));
+        }
     }
 
     #[test]
@@ -2336,6 +2392,14 @@ mod tests {
     }
 
     #[test]
+    fn test_rrf_relevance_floor_uses_actual_evidence_scores() {
+        assert!(passes_relevance_floor(1.0, 0.05, 0.8, false, 0.15));
+        assert!(!passes_relevance_floor(1.0, 0.05, 0.0, false, 0.15));
+        assert!(passes_relevance_floor(0.15, 0.0, 0.15, true, 0.15));
+        assert!(!passes_relevance_floor(0.1499, 0.0, 0.1499, true, 0.15));
+    }
+
+    #[test]
     fn test_vector_candidate_sql_is_hnsw_bounded_without_returning_embeddings() {
         let active_sql = ACTIVE_CHUNKS_SQL
             .split_whitespace()
@@ -2347,8 +2411,9 @@ mod tests {
             .join(" ");
 
         assert!(!active_sql.contains("embedding"));
-        assert!(vector_sql.contains("ORDER BY c.embedding <=> $2::vector"));
-        assert!(vector_sql.contains("LIMIT $3"));
+        assert!(vector_sql.contains("c.index_version = $2"));
+        assert!(vector_sql.contains("ORDER BY c.embedding <=> $3::vector"));
+        assert!(vector_sql.contains("LIMIT $4"));
         assert!(!vector_sql.contains("embedding::text"));
     }
 
@@ -2367,6 +2432,7 @@ mod tests {
                 "RustCandidates123!".to_owned(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
             ("RAG_VECTOR_CANDIDATE_K".to_owned(), "2".to_owned()),
             ("RAG_RETRIEVAL_TOP_K".to_owned(), "2".to_owned()),
             ("RAG_COLLECTION_RETRIEVAL_TOP_K".to_owned(), "2".to_owned()),
@@ -2478,10 +2544,15 @@ mod tests {
             chunk_ids.push(chunk_id);
         }
 
-        let vector_candidates =
-            fetch_vector_candidates(&pool, project_id, &vector_literal(&query_embedding), 2)
-                .await
-                .unwrap();
+        let vector_candidates = fetch_vector_candidates(
+            &pool,
+            project_id,
+            "legacy-v1",
+            &vector_literal(&query_embedding),
+            2,
+        )
+        .await
+        .unwrap();
         assert_eq!(vector_candidates.len(), 2);
         assert_eq!(vector_candidates[0].id, chunk_ids[0]);
         assert!(!vector_candidates
@@ -2517,9 +2588,12 @@ mod tests {
         assert!(results
             .iter()
             .any(|source| source.file_id == Some(file_ids[0])));
-        assert!(results
-            .iter()
-            .any(|source| source.file_id == Some(file_ids[1])));
+        assert!(
+            results
+                .iter()
+                .any(|source| source.file_id == Some(file_ids[2])),
+            "expected lexical rescue in results: {results:?}"
+        );
     }
 
     #[tokio::test]
@@ -2537,6 +2611,7 @@ mod tests {
                 "RustMinScore123!".to_owned(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
         ]))
         .unwrap();
         let pool = connect_database(&settings).await.unwrap();
@@ -2600,10 +2675,13 @@ mod tests {
         .unwrap();
 
         // 默认阈值 0.15：哈希碰撞产生的低相关度候选必须被过滤。
-        let filtered = retrieve(&state, project_id, "golf sierra mountain", false)
+        let filtered = retrieve(&state, project_id, "golf sierra mountain xyzzy", false)
             .await
             .unwrap();
-        assert!(filtered.is_empty());
+        assert!(
+            filtered.is_empty(),
+            "low-relevance result leaked: {filtered:?}"
+        );
         // 相关查询高于默认阈值，不受影响。
         let relevant = retrieve(&state, project_id, "What does the PCR protocol use?", false)
             .await
@@ -2615,15 +2693,21 @@ mod tests {
             ("DATABASE_URL".to_owned(), database_url.clone()),
             ("RAG_MIN_RETRIEVAL_SCORE".to_owned(), "0".to_owned()),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
         ]))
         .unwrap();
         let legacy_state = AppState::new(pool.clone(), legacy_settings).unwrap();
-        let legacy = retrieve(&legacy_state, project_id, "golf sierra mountain", false)
-            .await
-            .unwrap();
+        let legacy = retrieve(
+            &legacy_state,
+            project_id,
+            "golf sierra mountain xyzzy",
+            false,
+        )
+        .await
+        .unwrap();
         assert_eq!(legacy.len(), 1);
-        let legacy_score = legacy[0].retrieval_score.unwrap();
-        assert!(legacy_score > 0.0 && legacy_score < 0.15);
+        let legacy_vector_score = legacy[0].vector_score.unwrap();
+        assert!(legacy_vector_score > 0.0 && legacy_vector_score < 0.15);
 
         // 边界值：恰好等于阈值的 bm25_only 候选应通过，略高于阈值则被过滤。
         let lexical_score = bm25_scores(
@@ -2642,6 +2726,7 @@ mod tests {
                 lexical_score.to_string(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
         ]))
         .unwrap();
         let boundary_state = AppState::new(pool.clone(), boundary_settings).unwrap();
@@ -2656,6 +2741,7 @@ mod tests {
                 (lexical_score + 0.0001).to_string(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
         ]))
         .unwrap();
         let above_state = AppState::new(pool.clone(), above_settings).unwrap();
@@ -2855,5 +2941,58 @@ mod tests {
 
         assert_eq!(result.answer, "ok");
         assert_eq!(result.usage["generation_attempts"], 2);
+    }
+
+    #[test]
+    fn test_rrf_v1_fuses_rankings_without_score_scale_bias() {
+        let scores = reciprocal_rank_fusion(&[10, 20, 30], &[30, 20, 40], 60.0);
+        assert!(scores[&20] > scores[&10]);
+        assert!(scores[&30] > scores[&10]);
+        assert!(scores[&30] > scores[&20]);
+        assert!(scores.values().all(|score| *score > 0.0 && *score <= 1.0));
+    }
+
+    #[test]
+    fn test_exact_queries_weight_lexical_evidence_first() {
+        assert!(query_prefers_lexical_exact_match(
+            "GSM111619 的 total_count 和 detected_gene_rows 是多少？"
+        ));
+        assert!(query_prefers_lexical_exact_match("Ct 31.7 是否偏离阈值？"));
+        assert!(!query_prefers_lexical_exact_match(
+            "请概括这个项目的研究意义"
+        ));
+
+        let scores = weighted_reciprocal_rank_fusion(&[3, 2, 1], &[1, 2, 3], 60.0, 0.25, 0.75);
+        assert!(scores[&1] > scores[&3]);
+    }
+
+    #[test]
+    fn test_source_selection_caps_each_file_at_three_chunks() {
+        let ranked = (1..=8)
+            .map(|id| {
+                (
+                    1.0 / id as f64,
+                    RagSourceRead {
+                        chunk_id: Some(id),
+                        file_id: Some(if id <= 6 { 1 } else { 2 }),
+                        filename: Some("document".to_owned()),
+                        dify_document_id: None,
+                        snippet: Some("evidence".to_owned()),
+                        vector_score: Some(1.0),
+                        lexical_score: Some(1.0),
+                        retrieval_score: Some(1.0 / id as f64),
+                    },
+                )
+            })
+            .collect();
+        let selected = select_diverse_sources(ranked, 6);
+        assert_eq!(
+            selected
+                .iter()
+                .filter(|source| source.file_id == Some(1))
+                .count(),
+            3
+        );
+        assert_eq!(selected.len(), 5);
     }
 }

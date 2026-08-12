@@ -26,6 +26,8 @@ GET,/groups/{group_id}/members,groups,List Group Members,list_group_members_grou
 POST,/groups/{group_id}/members,groups,Add Group Member,add_group_member_groups__group_id__members_post
 DELETE,/groups/{group_id}/members/{user_id},groups,Remove Group Member,remove_group_member_groups__group_id__members__user_id__delete
 GET,/health,,Health,health_health_get
+GET,/maturity/status,maturity,Maturity Status,maturity_status_maturity_status_get
+GET,/metrics,,Runtime Metrics,runtime_metrics_metrics_get
 GET,/notes/{note_id},notes,Get Note,get_note_notes__note_id__get
 PATCH,/notes/{note_id},notes,Update Note,update_note_notes__note_id__patch
 GET,/notes/{note_id}/approvals,notes,List Note Approvals,list_note_approvals_notes__note_id__approvals_get
@@ -44,6 +46,7 @@ POST,/projects,projects,Create Project,create_project_projects_post
 GET,/projects/{project_id},projects,Get Project,get_project_projects__project_id__get
 PATCH,/projects/{project_id},projects,Update Project,update_project_projects__project_id__patch
 GET,/projects/{project_id}/agents/runs,agents,List Agent Runs,list_agent_runs_projects__project_id__agents_runs_get
+GET,/projects/{project_id}/audit-logs,audit,List Project Audit Logs,list_project_audit_logs_projects__project_id__audit_logs_get
 GET,/projects/{project_id}/documents,files,List Project Documents,list_project_documents_projects__project_id__documents_get
 POST,/projects/{project_id}/documents,files,Upload Project Document,upload_project_document_projects__project_id__documents_post
 GET,/projects/{project_id}/files,files,List Project Files,list_project_files_projects__project_id__files_get
@@ -52,12 +55,13 @@ GET,/projects/{project_id}/kg/graph,knowledge-graph,Get Project Knowledge Graph,
 POST,/projects/{project_id}/kg/rebuild,knowledge-graph,Rebuild Project Knowledge Graph,rebuild_project_knowledge_graph_projects__project_id__kg_rebuild_post
 GET,/projects/{project_id}/members,projects,List Project Members,list_project_members_projects__project_id__members_get
 POST,/projects/{project_id}/members,projects,Add Project Member,add_project_member_projects__project_id__members_post
-PATCH,/projects/{project_id}/members/{user_id},projects,Update Project Member,update_project_member_projects__project_id__members__user_id__patch
 DELETE,/projects/{project_id}/members/{user_id},projects,Remove Project Member,remove_project_member_projects__project_id__members__user_id__delete
+PATCH,/projects/{project_id}/members/{user_id},projects,Update Project Member,update_project_member_projects__project_id__members__user_id__patch
 GET,/projects/{project_id}/notes,notes,List Notes,list_notes_projects__project_id__notes_get
 POST,/projects/{project_id}/notes,notes,Create Note,create_note_projects__project_id__notes_post
 GET,/projects/{project_id}/rag/analytics,rag,Get Project Query Analytics,get_project_query_analytics_projects__project_id__rag_analytics_get
 GET,/projects/{project_id}/rag/blind-review/batches,rag,List Blind Review Batches,list_blind_review_batches_projects__project_id__rag_blind_review_batches_get
+GET,/projects/{project_id}/rag/blind-review/batches/{batch_id}/export.csv,rag,Export Blind Review Batch,export_blind_review_batch_projects__project_id__rag_blind_review_batches__batch_id__export_csv_get
 GET,/projects/{project_id}/rag/blind-review/items,rag,List Blind Review Items,list_blind_review_items_projects__project_id__rag_blind_review_items_get
 POST,/projects/{project_id}/rag/blind-review/items/{blind_id}/evaluation,rag,Evaluate Blind Review Item,evaluate_blind_review_item_projects__project_id__rag_blind_review_items__blind_id__evaluation_post
 GET,/projects/{project_id}/rag/experiments,rag,List Rag Experiments,list_rag_experiments_projects__project_id__rag_experiments_get
@@ -68,11 +72,15 @@ GET,/projects/{project_id}/rag/query-logs,rag,List Project Query Logs,list_proje
 GET,/projects/{project_id}/rag/status,rag,Get Project Rag Status,get_project_rag_status_projects__project_id__rag_status_get
 POST,/projects/{project_id}/reviewers,projects,Add Project Reviewer,add_project_reviewer_projects__project_id__reviewers_post
 DELETE,/projects/{project_id}/reviewers/{user_id},projects,Remove Project Reviewer,remove_project_reviewer_projects__project_id__reviewers__user_id__delete
+GET,/rag/experiments/{run_id},rag,Get Rag Experiment,get_rag_experiment_rag_experiments__run_id__get
 GET,/rag/experiments/{run_id}/export.csv,rag,Export Rag Experiment,export_rag_experiment_rag_experiments__run_id__export_csv_get
+POST,/rag/experiments/{run_id}/resume,rag,Resume Rag Experiment,resume_rag_experiment_rag_experiments__run_id__resume_post
 POST,/rag/query-logs/{log_id}/evaluation,rag,Upsert Query Evaluation,upsert_query_evaluation_rag_query_logs__log_id__evaluation_post
+GET,/ready,,Ready,ready_ready_get
 GET,/templates,templates,List Templates,list_templates_templates_get
 GET,/users,users,List Users,list_users_users_get
 POST,/users,users,Create User,create_user_users_post
+POST,/users/me/password,users,Change Own Password,change_own_password_users_me_password_post
 GET,/users/{user_id},users,Get User,get_user_users__user_id__get
 PATCH,/users/{user_id},users,Update User,update_user_users__user_id__patch
 POST,/users/{user_id}/disable,users,Disable User,disable_user_users__user_id__disable_post

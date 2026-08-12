@@ -1,3 +1,4 @@
+mod agent_runtime;
 mod agents;
 mod audit;
 mod auth;
@@ -19,7 +20,10 @@ pub use rag::schedule_queued_experiments;
 use std::{sync::OnceLock, time::Instant};
 
 use axum::{
-    extract::{DefaultBodyLimit, FromRequestParts, Query, Request, State},
+    extract::{
+        connect_info::MockConnectInfo, ConnectInfo, DefaultBodyLimit, FromRequestParts, Query,
+        Request, State,
+    },
     http::{header, request::Parts, HeaderMap, HeaderValue, Method, StatusCode},
     middleware::{self, Next},
     response::{Html, IntoResponse, Response},
@@ -112,6 +116,7 @@ pub fn build_app(state: AppState) -> Router {
     let business_router = Router::new()
         .merge(auth::router())
         .merge(agents::router())
+        .merge(agent_runtime::router())
         .merge(files::router())
         .merge(users::router())
         .merge(projects::router())
@@ -353,24 +358,39 @@ const RATE_LIMIT_EXEMPT_PATHS: &[&str] = &[
     "/auth/login",
 ];
 
-/// Extract the client IP address from the request, preferring proxy headers.
-fn client_ip(request: &Request) -> String {
-    request
-        .headers()
-        .get("x-forwarded-for")
-        .and_then(|v| v.to_str().ok())
-        .and_then(|v| v.split(',').next())
-        .map(str::trim)
-        .filter(|s| !s.is_empty())
+/// Extract the client IP without allowing arbitrary clients to choose the
+/// value used for rate limits and audit records.
+fn client_ip(request: &Request, settings: &crate::config::Settings) -> String {
+    let peer_ip = request
+        .extensions()
+        .get::<ConnectInfo<std::net::SocketAddr>>()
+        .map(|ConnectInfo(address)| address.ip())
         .or_else(|| {
             request
+                .extensions()
+                .get::<MockConnectInfo<std::net::SocketAddr>>()
+                .map(|MockConnectInfo(address)| address.ip())
+        });
+    let trusted_proxy = peer_ip.is_some_and(|ip| settings.trusted_proxy_ips.contains(&ip));
+
+    if trusted_proxy {
+        for header_name in ["x-forwarded-for", "x-real-ip"] {
+            if let Some(ip) = request
                 .headers()
-                .get("x-real-ip")
-                .and_then(|v| v.to_str().ok())
-                .filter(|s| !s.is_empty())
-        })
-        .unwrap_or("unknown")
-        .to_owned()
+                .get(header_name)
+                .and_then(|value| value.to_str().ok())
+                .and_then(|value| value.split(',').next())
+                .map(str::trim)
+                .and_then(|value| value.parse::<std::net::IpAddr>().ok())
+            {
+                return ip.to_string();
+            }
+        }
+    }
+
+    peer_ip
+        .map(|ip| ip.to_string())
+        .unwrap_or_else(|| "unknown".to_owned())
 }
 
 async fn rate_limit_middleware(
@@ -382,7 +402,7 @@ async fn rate_limit_middleware(
     if RATE_LIMIT_EXEMPT_PATHS.contains(&path) {
         return next.run(request).await;
     }
-    let ip = client_ip(&request);
+    let ip = client_ip(&request, &state.settings);
     let is_read = matches!(
         *request.method(),
         Method::GET | Method::HEAD | Method::OPTIONS
@@ -420,7 +440,7 @@ async fn observe_request(
         .headers_mut()
         .insert("x-request-id", HeaderValue::from_str(&request_id).unwrap());
     // Extract client IP and User-Agent and store in request extensions.
-    let ip = client_ip(&request);
+    let ip = client_ip(&request, &state.settings);
     let user_agent = request
         .headers()
         .get(header::USER_AGENT)
@@ -456,17 +476,18 @@ async fn observe_request(
 
 #[cfg(test)]
 mod tests {
-    use std::collections::HashMap;
+    use std::{collections::HashMap, net::SocketAddr};
 
     use axum::{
         body::{to_bytes, Body},
+        extract::connect_info::MockConnectInfo,
         http::{Method, Request, StatusCode},
     };
     use serde_json::Value;
     use sqlx::postgres::PgPoolOptions;
     use tower::ServiceExt;
 
-    use super::build_app;
+    use super::{build_app, client_ip};
     use crate::{config::Settings, AppState};
 
     fn test_state() -> AppState {
@@ -528,7 +549,18 @@ mod tests {
             .filter_map(Value::as_object)
             .map(|path| path.len())
             .sum::<usize>();
-        assert_eq!(operations, 85);
+        assert_eq!(operations, 101);
+        assert!(body["paths"]["/api/mcp"]["post"].is_object());
+        assert!(body["paths"]["/api/agent/sessions"]["post"].is_object());
+        assert!(body["paths"]["/api/agent/sessions/{session_id}/turns"]["post"].is_object());
+        assert!(
+            body["paths"]["/api/agent/sessions/{session_id}/turns/{turn_id}/start"]["post"]
+                .is_object()
+        );
+        assert!(
+            body["paths"]["/api/agent/sessions/{session_id}/turns/{turn_id}/cancel"]["post"]
+                .is_object()
+        );
         assert!(body["paths"]["/api/agents/generate"]["post"].is_object());
         assert!(body["paths"]["/maturity/status"]["get"].is_object());
     }
@@ -719,7 +751,8 @@ mod tests {
 
     #[tokio::test]
     async fn test_rate_limit_respects_x_forwarded_for() {
-        let app = build_app(rate_limited_test_state(1000, 1));
+        let app = build_app(rate_limited_test_state(1000, 1))
+            .layer(MockConnectInfo(SocketAddr::from(([127, 0, 0, 1], 1234))));
         // First request from IP-A succeeds.
         let r1 = app
             .clone()
@@ -760,5 +793,22 @@ mod tests {
             .await
             .unwrap();
         assert_ne!(r3.status(), StatusCode::TOO_MANY_REQUESTS);
+    }
+
+    #[test]
+    fn client_ip_ignores_forwarded_headers_from_untrusted_peer() {
+        let settings = Settings::from_map(&HashMap::new()).unwrap();
+        let mut request = Request::get("/")
+            .header("x-forwarded-for", "203.0.113.10")
+            .body(Body::empty())
+            .unwrap();
+        request
+            .extensions_mut()
+            .insert(axum::extract::ConnectInfo(SocketAddr::from((
+                [192, 0, 2, 10],
+                1234,
+            ))));
+
+        assert_eq!(client_ip(&request, &settings), "192.0.2.10");
     }
 }

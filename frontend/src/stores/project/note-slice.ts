@@ -20,7 +20,11 @@ export interface NoteSlice {
   notesTotal: number;
   pendingNotes: Note[];
 
-  loadNotesPaginated: (token: string, projectId: number, params?: { skip?: number; limit?: number; status?: string }) => Promise<void>;
+  loadNotesPaginated: (
+    token: string,
+    projectId: number,
+    params?: { skip?: number; limit?: number; status?: string; search?: string; sort?: string },
+  ) => Promise<void>;
   createNote: (token: string, data: NoteCreatePayload) => Promise<Note>;
   updateNote: (token: string, noteId: number, data: NoteUpdatePayload) => Promise<Note>;
   submitNote: (token: string, noteId: number) => Promise<void>;
@@ -66,6 +70,7 @@ export const createNoteSlice: StateCreator<ProjectStoreState, [], [], NoteSlice>
       title: data.title,
       experiment_type: data.experiment_type,
       experiment_date: data.experiment_date,
+      template_id: data.template_id,
       fixed_fields_json: data.fixed_fields_json,
       content_json: data.content_json,
       change_summary: data.change_summary,

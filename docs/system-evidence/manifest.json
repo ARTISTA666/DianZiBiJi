@@ -1,7 +1,18 @@
 {
   "app_revision": "unversioned",
+  "contract": {
+    "generator": "export_rust_contract_evidence.py",
+    "openapi_sha256": "2c77237b4fec0e8f6c1ad91028b7c338c0f3b8b92abeb1eae433c915a6f02811",
+    "runtime": {
+      "api_runtime": "rust-axum",
+      "embedding_backend": "hash",
+      "embedding_dimension": 512,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    "schema": "full-system.rust-runtime-contract-evidence"
+  },
   "counts": {
-    "api_operations": 77,
+    "api_operations": 85,
     "database_tables": 26,
     "sample_files": 8,
     "sample_graph_relations": 50
@@ -9,9 +20,9 @@
   "database_dialect": "postgresql",
   "files": [
     {
-      "bytes": 7885,
+      "bytes": 8630,
       "name": "api-list.csv",
-      "sha256": "db434ebd7de9647f7d4900a00d112e8f3570a0e4758c0ba1b5b5e6770d8df648"
+      "sha256": "0ecdf84fff193ff9d6052ec40ff662002fa653fd6d0e56c44b444e6a01ae23cb"
     },
     {
       "bytes": 832,
@@ -34,14 +45,19 @@
       "sha256": "ee771b16d53d4eb1a2fdf6db26a151ab415caed1778db93d3a086068555186bf"
     },
     {
-      "bytes": 175623,
+      "bytes": 199885,
       "name": "openapi.json",
-      "sha256": "99baae531f079a0bfec6102b39b9e61a7bf81f0865271b081f542ef51e28fae2"
+      "sha256": "2c77237b4fec0e8f6c1ad91028b7c338c0f3b8b92abeb1eae433c915a6f02811"
     },
     {
       "bytes": 21096,
       "name": "project-input-output-sample.json",
       "sha256": "6fd4d8e4107c9f17f525150b70061230efec4c0d8699da3db7a23c869ef38b95"
+    },
+    {
+      "bytes": 700,
+      "name": "rust-runtime-contract-latest.json",
+      "sha256": "58d2d9956302864d886c9fb7d4c2d4296c7216bcff98509d38b0d7c8f45b3e51"
     },
     {
       "bytes": 34416,
@@ -54,7 +70,7 @@
       "sha256": "2cfb89188f508903d0b58ba5e509404a0ae7ff12df7e04804ec1b3f4dfe89e8d"
     }
   ],
-  "generated_at": "2026-07-13T12:13:45.748983+00:00",
+  "generated_at": "2026-08-10T12:03:26.891462+00:00",
   "project": {
     "description": "NCBI GEO GSE111619 公开 RNA-seq 数据验证项目；仅以原始 GEO 文档作为向量语料，用冻结题集验证知识图谱关系补证。",
     "id": 3,

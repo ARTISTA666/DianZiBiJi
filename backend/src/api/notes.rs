@@ -5,7 +5,7 @@ use axum::{
     Json, Router,
 };
 use serde_json::json;
-use sqlx::{PgPool, Postgres, Transaction};
+use sqlx::{Executor, PgPool, Postgres, Transaction};
 
 use crate::{
     api::auth::CurrentUser,
@@ -107,15 +107,27 @@ async fn list_notes(
     require_project_access(&state.pool, &user, project_id).await?;
     let (skip, limit) = page_bounds(query.skip, query.limit);
     let status = query.status.as_deref();
+    let search = query
+        .search
+        .as_deref()
+        .map(str::trim)
+        .filter(|value| !value.is_empty());
+    let order_by = match query.sort.as_deref() {
+        Some("updated_asc") => "updated_at ASC, id ASC",
+        Some("created_desc") => "created_at DESC, id DESC",
+        _ => "updated_at DESC, id DESC",
+    };
     let total: i64 = sqlx::query_scalar(
         r#"
         SELECT count(*) FROM experiment_notes
         WHERE project_id = $1
           AND ($2::text IS NULL OR lower(status::text) = lower($2))
+          AND ($3::text IS NULL OR title ILIKE '%' || $3 || '%')
         "#,
     )
     .bind(project_id)
     .bind(status)
+    .bind(search)
     .fetch_one(&state.pool)
     .await?;
     let query_sql = format!(
@@ -123,14 +135,16 @@ async fn list_notes(
         SELECT {NOTE_COLUMNS} FROM experiment_notes
         WHERE project_id = $1
           AND ($2::text IS NULL OR lower(status::text) = lower($2))
-        ORDER BY updated_at DESC
-        OFFSET $3
-        LIMIT $4
+          AND ($3::text IS NULL OR title ILIKE '%' || $3 || '%')
+        ORDER BY {order_by}
+        OFFSET $4
+        LIMIT $5
         "#
     );
     let items = sqlx::query_as::<_, NoteRead>(&query_sql)
         .bind(project_id)
         .bind(status)
+        .bind(search)
         .bind(skip)
         .bind(limit)
         .fetch_all(&state.pool)
@@ -156,8 +170,16 @@ async fn create_note(
     validate_content_text_length(payload.content_text.as_deref(), &state.settings)?;
     let content_json =
         effective_content_json(&payload.content_json, payload.content_text.as_deref());
+    validate_content_json_text_length(&content_json, &state.settings)?;
 
     let mut transaction = state.pool.begin().await?;
+    validate_note_template(
+        &mut *transaction,
+        payload.template_id,
+        &payload.experiment_type,
+        &payload.fixed_fields_json,
+    )
+    .await?;
     let note_id: i32 = sqlx::query_scalar(
         r#"
         INSERT INTO experiment_notes (
@@ -272,6 +294,21 @@ async fn update_note(
         .fixed_fields_json
         .or_else(|| current.as_ref().map(|item| item.fixed_fields_json.clone()))
         .unwrap_or_else(|| json!({}));
+    let template_id = match payload.template_id {
+        Some(template_id) => template_id,
+        None => locked.template_id,
+    };
+    let experiment_type = payload
+        .experiment_type
+        .as_deref()
+        .unwrap_or(&locked.experiment_type);
+    validate_note_template(
+        &mut *transaction,
+        template_id,
+        experiment_type,
+        &fixed_fields,
+    )
+    .await?;
     let (content_base, allow_override) = match payload.content_json {
         Some(requested) => (requested, false),
         None => (
@@ -287,6 +324,7 @@ async fn update_note(
         payload.content_text.as_deref(),
         allow_override,
     );
+    validate_content_json_text_length(&content, &state.settings)?;
     let change_summary = payload
         .change_summary
         .unwrap_or_else(|| "Updated draft".to_owned());
@@ -314,7 +352,8 @@ async fn update_note(
         SET title = COALESCE($2, title),
             experiment_type = COALESCE($3, experiment_type),
             experiment_date = COALESCE($4, experiment_date),
-            current_version_id = $5,
+            template_id = $5,
+            current_version_id = $6,
             updated_at = now()
         WHERE id = $1
         "#,
@@ -323,6 +362,7 @@ async fn update_note(
     .bind(payload.title)
     .bind(payload.experiment_type)
     .bind(payload.experiment_date)
+    .bind(template_id)
     .bind(version_id)
     .execute(&mut *transaction)
     .await?;
@@ -347,8 +387,18 @@ async fn submit_note(
     CurrentUser(user): CurrentUser,
     Path(note_id): Path<i32>,
 ) -> Result<Json<NoteRead>, ApiError> {
+    submit_note_action(&state, &user, note_id, client.ip_opt(), client.ua_opt()).await
+}
+
+pub(crate) async fn submit_note_action(
+    state: &AppState,
+    user: &UserRecord,
+    note_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
+) -> Result<Json<NoteRead>, ApiError> {
     let note = fetch_note(&state.pool, note_id).await?;
-    let project = require_project_access(&state.pool, &user, note.project_id).await?;
+    let project = require_project_access(&state.pool, user, note.project_id).await?;
     if note.owner_user_id != user.id {
         return Err(ApiError::new(
             StatusCode::FORBIDDEN,
@@ -392,7 +442,7 @@ async fn submit_note(
         let run = extract_note(&mut transaction, note_id, user.id, true).await?;
         audit_note(
             &mut transaction,
-            &user,
+            user,
             "auto_extract_note_kg",
             note.project_id,
             note_id,
@@ -401,20 +451,21 @@ async fn submit_note(
                 "relations": run.extracted_relations,
                 "trigger": "submit_without_approval"
             }),
-            client.ip_opt(),
-            client.ua_opt(),
+            ip_address,
+            user_agent,
         )
         .await?;
     }
+    crate::api::search::sync_note(&mut transaction, note_id).await?;
     audit_note(
         &mut transaction,
-        &user,
+        user,
         "submit_note",
         note.project_id,
         note_id,
         json!({"approval_enabled": project.approval_enabled}),
-        client.ip_opt(),
-        client.ua_opt(),
+        ip_address,
+        user_agent,
     )
     .await?;
     transaction.commit().await?;
@@ -492,6 +543,7 @@ async fn archive_note(
     .execute(&mut *transaction)
     .await?;
     clear_note_artifacts(&mut transaction, note_id).await?;
+    crate::api::search::sync_note(&mut transaction, note_id).await?;
     audit_note(
         &mut transaction,
         &user,
@@ -548,6 +600,7 @@ async fn void_note(
     .execute(&mut *transaction)
     .await?;
     clear_note_artifacts(&mut transaction, note_id).await?;
+    crate::api::search::sync_note(&mut transaction, note_id).await?;
     insert_approval(
         &mut transaction,
         note_id,
@@ -612,7 +665,7 @@ async fn approve_note(
     Path(note_id): Path<i32>,
     Json(payload): Json<ApprovalRequest>,
 ) -> Result<Json<NoteRead>, ApiError> {
-    review_note(
+    review_note_action(
         &state,
         &user,
         note_id,
@@ -631,7 +684,7 @@ async fn return_note(
     Path(note_id): Path<i32>,
     Json(payload): Json<ApprovalRequest>,
 ) -> Result<Json<NoteRead>, ApiError> {
-    review_note(
+    review_note_action(
         &state,
         &user,
         note_id,
@@ -643,7 +696,7 @@ async fn return_note(
     .await
 }
 
-async fn review_note(
+pub(crate) async fn review_note_action(
     state: &AppState,
     user: &UserRecord,
     note_id: i32,
@@ -723,6 +776,7 @@ async fn review_note(
         )
         .await?;
     }
+    crate::api::search::sync_note(&mut transaction, note_id).await?;
     audit_note(
         &mut transaction,
         user,
@@ -865,6 +919,16 @@ fn validate_content_text_length(
     Ok(())
 }
 
+fn validate_content_json_text_length(
+    content_json: &serde_json::Value,
+    settings: &crate::config::Settings,
+) -> Result<(), ApiError> {
+    validate_content_text_length(
+        content_json.get("text").and_then(serde_json::Value::as_str),
+        settings,
+    )
+}
+
 fn validate_note_create(payload: &NoteCreate) -> Result<(), ApiError> {
     if payload.title.trim().is_empty() || payload.experiment_type.trim().is_empty() {
         return Err(ApiError::new(
@@ -876,6 +940,116 @@ fn validate_note_create(payload: &NoteCreate) -> Result<(), ApiError> {
         return Err(ApiError::new(
             StatusCode::UNPROCESSABLE_ENTITY,
             "Note fields must be JSON objects",
+        ));
+    }
+    Ok(())
+}
+
+/// Validate the relationship between a note's selected template and its
+/// structured fixed fields while the write transaction is still open.
+///
+/// Notes created before templates were introduced may legitimately have no
+/// template. Once a template is selected, however, it must be active, match
+/// the note's experiment type, and reject fields that are not declared by the
+/// template schema. Required schema fields are enforced when the schema marks
+/// them as such; legacy schemas without that flag remain backward compatible.
+async fn validate_note_template<'e, E>(
+    executor: E,
+    template_id: Option<i32>,
+    experiment_type: &str,
+    fixed_fields_json: &serde_json::Value,
+) -> Result<(), ApiError>
+where
+    E: Executor<'e, Database = Postgres>,
+{
+    let Some(template_id) = template_id else {
+        return Ok(());
+    };
+
+    let template = sqlx::query_as::<_, (String, serde_json::Value)>(
+        r#"
+        SELECT experiment_type, schema_json
+        FROM experiment_templates
+        WHERE id = $1 AND is_active = true
+        "#,
+    )
+    .bind(template_id)
+    .fetch_optional(executor)
+    .await?
+    .ok_or_else(|| {
+        ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Selected template is not active",
+        )
+    })?;
+
+    if template.0 != experiment_type {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Template experiment type does not match note",
+        ));
+    }
+    validate_template_fields(&template.1, fixed_fields_json)
+}
+
+fn validate_template_fields(
+    schema_json: &serde_json::Value,
+    fixed_fields_json: &serde_json::Value,
+) -> Result<(), ApiError> {
+    let values = fixed_fields_json.as_object().ok_or_else(|| {
+        ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Note fields must be JSON objects",
+        )
+    })?;
+    let fields = schema_json
+        .get("fields")
+        .and_then(serde_json::Value::as_array)
+        .ok_or_else(|| {
+            ApiError::new(
+                StatusCode::UNPROCESSABLE_ENTITY,
+                "Template schema must define fields",
+            )
+        })?;
+
+    let mut declared = std::collections::HashSet::with_capacity(fields.len());
+    for field in fields {
+        let key = field
+            .get("key")
+            .and_then(serde_json::Value::as_str)
+            .filter(|value| !value.trim().is_empty())
+            .ok_or_else(|| {
+                ApiError::new(
+                    StatusCode::UNPROCESSABLE_ENTITY,
+                    "Template schema contains an invalid field",
+                )
+            })?;
+        if !declared.insert(key) {
+            return Err(ApiError::new(
+                StatusCode::UNPROCESSABLE_ENTITY,
+                "Template schema contains duplicate fields",
+            ));
+        }
+        if field
+            .get("required")
+            .and_then(serde_json::Value::as_bool)
+            .unwrap_or(false)
+            && values
+                .get(key)
+                .and_then(serde_json::Value::as_str)
+                .is_none_or(|value| value.trim().is_empty())
+        {
+            return Err(ApiError::new(
+                StatusCode::UNPROCESSABLE_ENTITY,
+                format!("Required template field is missing: {key}"),
+            ));
+        }
+    }
+
+    if let Some(unknown) = values.keys().find(|key| !declared.contains(key.as_str())) {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            format!("Field is not declared by selected template: {unknown}"),
         ));
     }
     Ok(())
@@ -1124,6 +1298,72 @@ mod tests {
     }
 
     #[test]
+    fn test_content_json_text_obeys_note_text_limit() {
+        let settings = Settings::from_map(&HashMap::from([(
+            "DOCUMENT_TEXT_MAX_CHARS".to_owned(),
+            "3".to_owned(),
+        )]))
+        .unwrap();
+
+        assert!(
+            super::validate_content_json_text_length(&json!({"text": "123"}), &settings).is_ok()
+        );
+        assert!(
+            super::validate_content_json_text_length(&json!({"text": "1234"}), &settings).is_err()
+        );
+        assert!(
+            super::validate_content_json_text_length(&json!({"value": "1234"}), &settings).is_ok()
+        );
+    }
+
+    #[test]
+    fn test_template_fields_reject_unknown_keys() {
+        let schema = json!({
+            "fields": [
+                {"key": "reagents", "type": "textarea"},
+                {"key": "result", "type": "textarea"}
+            ]
+        });
+
+        let error = super::validate_template_fields(
+            &schema,
+            &json!({"reagents": "Taq", "typo": "should fail"}),
+        )
+        .unwrap_err();
+        assert_eq!(error.status, StatusCode::UNPROCESSABLE_ENTITY);
+        assert_eq!(
+            error.detail,
+            "Field is not declared by selected template: typo"
+        );
+    }
+
+    #[test]
+    fn test_template_fields_enforce_required_keys_and_allow_optional_keys() {
+        let schema = json!({
+            "fields": [
+                {"key": "sample", "required": true},
+                {"key": "result", "required": false}
+            ]
+        });
+
+        assert!(super::validate_template_fields(&schema, &json!({})).is_err());
+        assert!(super::validate_template_fields(&schema, &json!({"sample": "  "})).is_err());
+        assert!(super::validate_template_fields(&schema, &json!({"sample": "A"})).is_ok());
+        assert!(super::validate_template_fields(
+            &schema,
+            &json!({"sample": "A", "result": "positive"}),
+        )
+        .is_ok());
+    }
+
+    #[test]
+    fn test_template_fields_reject_malformed_schema() {
+        let error = super::validate_template_fields(&json!({}), &json!({})).unwrap_err();
+        assert_eq!(error.status, StatusCode::UNPROCESSABLE_ENTITY);
+        assert_eq!(error.detail, "Template schema must define fields");
+    }
+
+    #[test]
     fn test_merge_content_text_override_mode_replaces_previous_version_text() {
         let merged = super::merge_content_text(
             &json!({"text": "Old version text", "html": "<p>keep</p>"}),
@@ -1267,6 +1507,19 @@ mod tests {
         .await;
         assert_eq!(updated_status, StatusCode::OK);
         assert_eq!(updated["title"], "PCR updated");
+
+        let (filtered_status, filtered) = call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/notes?search=updated&sort=updated_asc&limit=10"),
+            Some(&writer_token),
+            None,
+        )
+        .await;
+        assert_eq!(filtered_status, StatusCode::OK);
+        assert_eq!(filtered["total"], 1);
+        assert_eq!(filtered["items"][0]["title"], "PCR updated");
+
         let (versions_status, versions) = call(
             &app,
             "GET",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import { useParams } from "next/navigation";
 import { Play, FileText, Copy, ChevronsDownUp, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,13 +11,60 @@ import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { agentTaskOptions } from "@/components/constants";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
+import { ErrorBanner } from "@/components/shared/error-banner";
+import { PageLoadingSkeleton } from "@/components/skeletons";
 
 const BODY_PREVIEW_LENGTH = 200;
 
 const agentStatusText: Record<string, string> = {
   running: "运行中", completed: "已完成",
-  failed: "失败", pending: "等待中", cancelled: "已取消",
+  needs_review: "待人工复核", failed: "失败", pending: "等待中", cancelled: "已取消",
 };
+
+function renderInline(text: string): ReactNode[] {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={index}>{part.slice(2, -2)}</strong>;
+    }
+    return <span key={index}>{part}</span>;
+  });
+}
+
+function renderReportBody(body: string): ReactNode[] {
+  const blocks: ReactNode[] = [];
+  let bullets: string[] = [];
+  const flushBullets = () => {
+    if (bullets.length === 0) return;
+    blocks.push(
+      <ul key={`list-${blocks.length}`} className="list-disc space-y-1 pl-5">
+        {bullets.map((item, index) => <li key={index}>{renderInline(item)}</li>)}
+      </ul>,
+    );
+    bullets = [];
+  };
+
+  body.replace(/\r/g, "").split("\n").forEach((rawLine, index) => {
+    const line = rawLine.trim();
+    if (!line || line === "---") {
+      flushBullets();
+      return;
+    }
+    const bullet = line.match(/^[-*]\s+(.+)/);
+    if (bullet) {
+      bullets.push(bullet[1]);
+      return;
+    }
+    flushBullets();
+    const heading = line.match(/^#{2,6}\s+(.+)/);
+    if (heading) {
+      blocks.push(<h3 key={`heading-${index}`} className="pt-2 text-base font-semibold text-foreground">{renderInline(heading[1])}</h3>);
+      return;
+    }
+    blocks.push(<p key={`paragraph-${index}`}>{renderInline(line)}</p>);
+  });
+  flushBullets();
+  return blocks;
+}
 
 export default function ReportsPage() {
   const { id } = useParams();
@@ -74,11 +121,11 @@ export default function ReportsPage() {
     }
   };
 
-  if (busy) return <p className="text-sm text-muted-foreground py-8 text-center">加载中...</p>;
+  if (busy) return <PageLoadingSkeleton />;
 
   return (
     <div className="space-y-4">
-      {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">{error}</p>}
+      {error && <ErrorBanner message={error} />}
 
       <Card>
         <CardHeader><CardTitle className="text-base">智能体报告</CardTitle></CardHeader>
@@ -90,7 +137,7 @@ export default function ReportsPage() {
             </Select>
             <Input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-36" />
             <Input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-36" />
-            <Button onClick={handleGenerate} disabled={agentBusy}>
+            <Button onClick={handleGenerate} disabled={agentBusy} isLoading={agentBusy}>
               <Play className="mr-2 h-4 w-4" />{agentBusy ? "生成中..." : "生成"}
             </Button>
           </div> : <p className="text-sm text-muted-foreground">只读成员可以查看已生成报告，不能创建新的智能体任务。</p>}
@@ -130,10 +177,20 @@ export default function ReportsPage() {
                     {" · 生成时间: "}
                     {new Date(run.created_at).toLocaleString("zh-CN")}
                   </p>
+                  {run.status === "needs_review" && (
+                    <p className="mt-2 rounded bg-amber-50 px-2 py-1 text-xs text-amber-800">
+                      引用校验未完全通过。请人工核对来源后再使用此草稿。
+                    </p>
+                  )}
                   {run.body && (
                     <>
-                      <div className="mt-2 rounded bg-muted/30 p-2 text-xs whitespace-pre-wrap max-h-64 overflow-y-auto">
-                        {expanded || !collapsible ? run.body : `${run.body.slice(0, BODY_PREVIEW_LENGTH)}…`}
+                      <div className={`mt-3 rounded-lg border bg-background p-4 text-sm leading-7 ${expanded || !collapsible ? "" : "max-h-80 overflow-hidden"}`}>
+                        {renderReportBody(run.body)}
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                        <span>来源笔记 {run.source_note_ids_json.length}</span>
+                        <span>来源资料 {run.source_file_ids_json.length}</span>
+                        <span>图谱依据 {run.source_graph_relation_ids_json.length}</span>
                       </div>
                       {collapsible && (
                         <Button size="sm" variant="ghost" className="mt-1 h-7 px-2 text-xs"

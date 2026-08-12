@@ -29,7 +29,14 @@ def test_rag_retrieval_limits_are_safe() -> None:
 
 
 def test_production_rejects_default_secrets_and_demo_data() -> None:
-    settings = Settings(app_env="production", seed_demo_data=True)
+    # Keep this unit test independent of a developer's repository ``.env``;
+    # production must reject the unset release credentials explicitly.
+    settings = Settings(
+        app_env="production",
+        seed_demo_data=True,
+        deepseek_api_key="",
+        app_revision="unversioned",
+    )
 
     with pytest.raises(RuntimeError, match="Unsafe production configuration") as error:
         settings.validate_runtime()

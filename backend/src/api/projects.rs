@@ -54,8 +54,11 @@ const PROJECT_COLUMNS: &str = r#"
 "#;
 
 const MEMBER_COLUMNS: &str = r#"
-    id, project_id, user_id, lower(project_role::text) AS project_role,
-    can_read, can_write, can_review, can_evaluate, can_manage,
+    project_members.id, project_members.project_id, project_members.user_id,
+    lower(project_members.project_role::text) AS project_role,
+    u.display_name,
+    project_members.can_read, project_members.can_write, project_members.can_review,
+    project_members.can_evaluate, project_members.can_manage,
     EXISTS(
         SELECT 1 FROM project_reviewers pr
         WHERE pr.project_id = project_members.project_id
@@ -364,7 +367,7 @@ async fn list_project_members(
     let project = require_project_metadata_access(&state.pool, &user, project_id).await?;
     if can_access_project(&state.pool, &user, &project).await? {
         let query = format!(
-            "SELECT {MEMBER_COLUMNS} FROM project_members WHERE project_id = $1 ORDER BY id"
+            "SELECT {MEMBER_COLUMNS} FROM project_members JOIN users u ON u.id = project_members.user_id WHERE project_members.project_id = $1 ORDER BY project_members.id"
         );
         return Ok(Json(
             sqlx::query_as::<_, ProjectMemberRead>(&query)
@@ -374,7 +377,7 @@ async fn list_project_members(
         ));
     }
     let query = format!(
-        "SELECT {MEMBER_COLUMNS} FROM project_members WHERE project_id = $1 AND user_id = $2 ORDER BY id"
+        "SELECT {MEMBER_COLUMNS} FROM project_members JOIN users u ON u.id = project_members.user_id WHERE project_members.project_id = $1 AND project_members.user_id = $2 ORDER BY project_members.id"
     );
     Ok(Json(
         sqlx::query_as::<_, ProjectMemberRead>(&query)
@@ -391,6 +394,27 @@ async fn update_project_member(
     CurrentUser(user): CurrentUser,
     Path((project_id, user_id)): Path<(i32, i32)>,
     Json(payload): Json<ProjectMemberUpdate>,
+) -> Result<Json<ProjectMemberRead>, ApiError> {
+    update_project_member_action(
+        state,
+        user,
+        project_id,
+        user_id,
+        payload,
+        client.ip_opt(),
+        client.ua_opt(),
+    )
+    .await
+}
+
+pub(crate) async fn update_project_member_action(
+    state: AppState,
+    user: UserRecord,
+    project_id: i32,
+    user_id: i32,
+    payload: ProjectMemberUpdate,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
 ) -> Result<Json<ProjectMemberRead>, ApiError> {
     require_project_manager(&state.pool, &user, project_id).await?;
     if let Some(role) = &payload.project_role {
@@ -458,8 +482,8 @@ async fn update_project_member(
         project_id,
         "user",
         user_id,
-        client.ip_opt(),
-        client.ua_opt(),
+        ip_address,
+        user_agent,
     )
     .await?;
     transaction.commit().await?;
@@ -778,7 +802,7 @@ async fn fetch_optional_membership(
     user_id: i32,
 ) -> Result<Option<ProjectMemberRead>, ApiError> {
     let query = format!(
-        "SELECT {MEMBER_COLUMNS} FROM project_members WHERE project_id = $1 AND user_id = $2"
+        "SELECT {MEMBER_COLUMNS} FROM project_members JOIN users u ON u.id = project_members.user_id WHERE project_members.project_id = $1 AND project_members.user_id = $2"
     );
     Ok(sqlx::query_as::<_, ProjectMemberRead>(&query)
         .bind(project_id)
@@ -1249,6 +1273,36 @@ mod tests {
         )
         .await;
         assert_eq!(owner_as_reviewer, StatusCode::CONFLICT);
+    }
+
+    #[tokio::test]
+    async fn test_add_member_defaults_to_read_only() {
+        let Some((app, pool, admin_token)) = test_project_app().await else {
+            return;
+        };
+        let (owner_id, _, _) = create_test_user(&app, &admin_token, "member").await;
+        let (member_id, _, _) = create_test_user(&app, &admin_token, "member").await;
+        let project_id = create_test_project(&app, &admin_token, owner_id).await;
+
+        let (status, _) = request_json(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/members"),
+            Some(&admin_token),
+            Some(json!({"user_id": member_id})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+
+        let permissions: (bool, bool, bool, bool, bool) = sqlx::query_as(
+            "SELECT can_read, can_write, can_review, can_evaluate, can_manage FROM project_members WHERE project_id = $1 AND user_id = $2",
+        )
+        .bind(project_id as i32)
+        .bind(member_id as i32)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(permissions, (true, false, false, false, false));
     }
 
     #[tokio::test]
@@ -2433,5 +2487,104 @@ mod tests {
         .await;
         assert_eq!(last_manager, StatusCode::CONFLICT);
         assert_eq!(body["detail"], "项目至少需保留一名管理员");
+    }
+
+    #[tokio::test]
+    async fn test_archived_project_blocks_note_write_and_review() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let admin_username = format!("archive_admin_{suffix}");
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            ("SECRET_KEY".to_owned(), "rust-archive-secret".to_owned()),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool, settings).unwrap());
+        let admin_token = login(&app, &admin_username, "RustAdmin123!").await;
+
+        let (created, project) = request_json(
+            &app,
+            "POST",
+            "/projects",
+            Some(&admin_token),
+            Some(json!({
+                "name": format!("Archived Project {suffix}"),
+                "approval_enabled": true
+            })),
+        )
+        .await;
+        assert_eq!(created, StatusCode::OK);
+        let project_id = project["id"].as_i64().unwrap();
+
+        let (note_created, note) = request_json(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(&admin_token),
+            Some(json!({
+                "title": "Note before archive",
+                "experiment_type": "PCR",
+                "content_json": {"text": "result"}
+            })),
+        )
+        .await;
+        assert_eq!(note_created, StatusCode::OK);
+        let note_id = note["id"].as_i64().unwrap();
+
+        let (submitted, _) = request_json(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/submit"),
+            Some(&admin_token),
+            None,
+        )
+        .await;
+        assert_eq!(submitted, StatusCode::OK);
+
+        let (archived, _) = request_json(
+            &app,
+            "PATCH",
+            &format!("/projects/{project_id}"),
+            Some(&admin_token),
+            Some(json!({"status": "archived"})),
+        )
+        .await;
+        assert_eq!(archived, StatusCode::OK);
+
+        let (write_status, _) = request_json(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(&admin_token),
+            Some(json!({
+                "title": "Note after archive",
+                "experiment_type": "PCR",
+                "content_json": {"text": "blocked"}
+            })),
+        )
+        .await;
+        assert_eq!(write_status, StatusCode::FORBIDDEN);
+
+        let (review_status, _) = request_json(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/approve"),
+            Some(&admin_token),
+            Some(json!({"comment": "blocked after archive"})),
+        )
+        .await;
+        assert_eq!(review_status, StatusCode::FORBIDDEN);
     }
 }

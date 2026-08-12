@@ -18,6 +18,7 @@ import { useAuthStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ErrorBanner } from "@/components/shared/error-banner";
 import { UserManagement } from "./user-management";
 import { GroupManagement } from "./group-management";
 import { AuditLog } from "./audit-log";
@@ -118,7 +119,7 @@ export default function AdminPage() {
   };
 
   if (currentUser?.role !== "super_admin") {
-    return <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive" role="alert">只有系统管理员可以访问此页面。</p>;
+    return <ErrorBanner>只有系统管理员可以访问此页面。</ErrorBanner>;
   }
   if (loading) return (
     <div className="space-y-6">
@@ -138,7 +139,7 @@ export default function AdminPage() {
         <h1 className="text-2xl font-bold tracking-tight">系统管理</h1>
         <p className="mt-1 text-sm text-muted-foreground">维护账号、小组和全局审计记录</p>
       </div>
-      {error && <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive" role="alert">{error}</p>}
+      {error && <ErrorBanner message={error} />}
 
       <Tabs defaultValue="users">
         <TabsList>

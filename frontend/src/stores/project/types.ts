@@ -14,6 +14,7 @@ export type NoteUpdatePayload = {
   title?: string;
   experiment_type?: string;
   experiment_date?: string;
+  template_id?: number | null;
   fixed_fields_json?: Record<string, string>;
   content_json?: Record<string, unknown>;
   change_summary?: string;

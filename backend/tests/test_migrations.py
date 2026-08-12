@@ -81,7 +81,7 @@ def test_empty_database_upgrades_to_current_schema(tmp_path: Path) -> None:
     assert set(Base.metadata.tables) <= set(inspector.get_table_names())
     assert build_report(inspector, "sqlite")["ok"] is True
     with engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0011"
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0012"
 
 
 def test_one_active_experiment_per_project_is_database_enforced(tmp_path: Path) -> None:

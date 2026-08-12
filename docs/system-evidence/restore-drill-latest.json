@@ -1,14 +1,14 @@
 {
   "ok": true,
-  "generated_at": "2026-07-28T14:01:49.132621+00:00",
-  "backup": "/private/tmp/eln-maturity-backup-20260728T2202CST",
+  "generated_at": "2026-08-09T14:18:27.450283+00:00",
+  "backup": "/Users/yusong/Downloads/new/full-system/backups/release-e2e-20260809",
   "manifest": {
     "manifest_version": "1",
-    "created_at": "20260728T140059Z",
+    "created_at": "20260809T141808Z",
     "app_revision": "unversioned",
     "database": "eln",
-    "database_sha256": "5a6912d391eaa23e6a87c29aeb330219929b85ecd3fe16410a59f318072e4d1a",
-    "storage_sha256": "b9893e4fe83a9d9388812be3496485097e2b57ca9580b10a3ea575c613ea01db"
+    "database_sha256": "8e8e235910ce7354b1d639c650694ee85783aed14a0ccfa02aa8377ab44d825e",
+    "storage_sha256": "451d8a83dc41f62a5b1c37b6b8f751d2449116ceeed30f2d4faf0480e828bd42"
   },
   "checks": {
     "database.dump": true,
@@ -21,7 +21,7 @@
   },
   "storage": {
     "restored": true,
-    "file_count": 32,
-    "bytes": 1496090
+    "file_count": 39,
+    "bytes": 2211616
   }
 }

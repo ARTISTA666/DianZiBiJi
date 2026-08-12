@@ -70,7 +70,12 @@ _PROMPT_TO_RUST: dict[str, list[Path]] = {
 }
 
 # Persisted failure-event versions are telemetry identifiers, not prompts.
-_NON_PROMPT_RUST_VERSIONS = {"rag-retrieval-failure-v1"}
+_NON_PROMPT_RUST_VERSIONS = {
+    "rag-retrieval-failure-v1",
+    "retrieval-no-evidence-v1",  # Failed-retrieval telemetry, not a generation prompt.
+    "rrf-v1",  # Retrieval strategy, not a generation prompt.
+    "structured-v1",  # RAG index version, not a generation prompt.
+}
 
 
 # ---------------------------------------------------------------------------

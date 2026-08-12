@@ -11,6 +11,7 @@ export const ragModeText: Record<string, string> = {
   auto: "自动选择",
   project_rag: "项目级 RAG",
   kg_enhanced_rag: "图谱增强 RAG",
+  structured_query: "结构化查询",
   pure_llm: "纯 LLM",
   bm25_rag: "BM25 RAG",
 };
@@ -44,10 +45,13 @@ function SourceCitationChip({
   source: RagSource;
   projectId: number;
 }) {
+  const href = source.file_id
+    ? `/projects/${projectId}/data#file-${source.file_id}`
+    : `/projects/${projectId}/data`;
   return (
     <span className="group relative inline-block align-baseline">
       <Link
-        href={`/projects/${projectId}/data`}
+        href={href}
         title="点击跳转到资料页"
         className="mx-0.5 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-1.5 text-xs font-medium text-primary no-underline hover:bg-primary/20"
       >
@@ -144,7 +148,7 @@ export function RagSourceList({ sources, projectId }: { sources: RagSource[]; pr
         {sources.map((src, i) => (
           <Link
             key={i}
-            href={`/projects/${projectId}/data`}
+            href={src.file_id ? `/projects/${projectId}/data#file-${src.file_id}` : `/projects/${projectId}/data`}
             className="block rounded-md border p-2 text-xs no-underline hover:bg-muted/60"
           >
             <p className="font-medium text-foreground">
@@ -166,6 +170,12 @@ export function RagSourceList({ sources, projectId }: { sources: RagSource[]; pr
 /** 质量元信息行：模式、耗时、引用校验、降级原因。 */
 export function RagMetaInfo({ result }: { result: RagQueryResponse }) {
   const audit = result.citation_audit;
+  const noProjectEvidence = audit?.has_evidence === false;
+  const noEvidenceLabel = result.rag_mode === "pure_llm"
+    ? "无项目证据（纯 LLM）"
+    : result.rag_mode === "structured_query"
+      ? "未命中图谱证据"
+      : "未命中项目证据";
   return (
     <div className="mt-3 flex flex-wrap items-center gap-2 border-t pt-2 text-xs text-muted-foreground">
       <Badge variant="outline" className="font-normal">
@@ -174,15 +184,19 @@ export function RagMetaInfo({ result }: { result: RagQueryResponse }) {
       {result.response_ms !== null && <span>耗时 {result.response_ms} ms</span>}
       {audit && (
         <Badge
-          variant={audit.passed ? "secondary" : "destructive"}
+          variant={noProjectEvidence ? "outline" : audit.passed ? "secondary" : "destructive"}
           className="font-normal"
           title={audit.message}
         >
-          {audit.passed ? "引用校验通过" : `引用校验未通过：${audit.message}`}
+          {noProjectEvidence
+            ? noEvidenceLabel
+            : audit.passed
+              ? "引用校验通过"
+              : `引用校验未通过：${audit.message}`}
         </Badge>
       )}
       {result.fallback_reason && (
-        <span className="text-amber-600 dark:text-amber-500">降级：{result.fallback_reason}</span>
+        <span className="text-warning">降级：{result.fallback_reason}</span>
       )}
     </div>
   );

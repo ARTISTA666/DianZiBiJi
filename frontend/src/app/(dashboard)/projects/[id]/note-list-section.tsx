@@ -1,14 +1,16 @@
 "use client";
 
-import { KeyboardEvent } from "react";
-import { FileText, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmptyState } from "@/components/shared/empty-state";
+import { PagePagination } from "@/components/shared/page-pagination";
 import { statusText } from "@/components/constants";
+import { handleCardKeyDown } from "@/lib/utils";
 
 export type NoteListNote = {
   id: number;
+  template_id: number | null;
   title: string;
   experiment_type: string;
   experiment_date: string | null;
@@ -23,18 +25,19 @@ interface NoteListSectionProps {
   page: number;
   onPageChange: (page: number) => void;
   onSelectNote: (note: NoteListNote) => void;
-  searchQuery: string;
-  serverNotesCount: number;
 }
 
-const NOTES_PER_PAGE = 10;
-
-const handleCardKeyDown = (e: KeyboardEvent, callback: () => void) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    callback();
-  }
+// 状态徽章语义色映射：approved=success、submitted=info、returned=warning、
+// voided=destructive、draft=灰（secondary），其余状态回退 outline。
+const statusBadgeVariant: Record<string, "success" | "info" | "warning" | "destructive" | "secondary" | "outline"> = {
+  approved: "success",
+  submitted: "info",
+  returned: "warning",
+  voided: "destructive",
+  draft: "secondary",
 };
+
+const NOTES_PER_PAGE = 10;
 
 export function NoteListSection({
   notes,
@@ -42,8 +45,6 @@ export function NoteListSection({
   page,
   onPageChange,
   onSelectNote,
-  searchQuery,
-  serverNotesCount,
 }: NoteListSectionProps) {
   const totalPages = Math.max(1, Math.ceil(total / NOTES_PER_PAGE));
   const rangeStart = total === 0 ? 0 : page * NOTES_PER_PAGE + 1;
@@ -56,20 +57,13 @@ export function NoteListSection({
         {total > 0
           ? `第 ${rangeStart}-${rangeEnd} 条，共 ${total} 条`
           : "暂无笔记"}
-        {searchQuery.trim() && notes.length !== serverNotesCount && (
-          <span>（筛选显示 {notes.length} 条）</span>
-        )}
       </p>
 
       {notes.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="py-12 text-center">
-            <FileText className="mx-auto h-10 w-10 text-muted-foreground/50" />
-            <p className="mt-3 text-sm text-muted-foreground">
-              {total === 0 ? "暂无笔记" : "没有匹配的笔记"}
-            </p>
-          </CardContent>
-        </Card>
+        <EmptyState
+          icon={FileText}
+          title={total === 0 ? "暂无笔记" : "没有匹配的笔记"}
+        />
       ) : (
         <div className="space-y-3">
           {notes.map((note) => (
@@ -91,20 +85,7 @@ export function NoteListSection({
                       {note.experiment_type} · {note.experiment_date || "—"}
                     </p>
                   </div>
-                  <Badge
-                    variant={
-                      note.status === "approved"
-                        ? "default"
-                        : note.status === "submitted"
-                        ? "secondary"
-                        : "outline"
-                    }
-                    className={
-                      note.status === "returned"
-                        ? "border-amber-300 bg-amber-50 text-amber-700"
-                        : undefined
-                    }
-                  >
+                  <Badge variant={statusBadgeVariant[note.status] || "outline"}>
                     {statusText[note.status] || note.status}
                   </Badge>
                 </div>
@@ -116,34 +97,18 @@ export function NoteListSection({
 
       {/* 分页控件 */}
       {total > NOTES_PER_PAGE && (
-        <div className="flex items-center justify-between border-t pt-4">
-          <p className="text-sm text-muted-foreground">
-            第 {rangeStart}-{rangeEnd} 条，共 {total} 条
-          </p>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page === 0}
-              onClick={() => onPageChange(page - 1)}
-            >
-              <ChevronLeft className="mr-1 h-4 w-4" />
-              上一页
-            </Button>
-            <span className="text-sm text-muted-foreground">
-              第 {page + 1} / {totalPages} 页
-            </span>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={page >= totalPages - 1}
-              onClick={() => onPageChange(page + 1)}
-            >
-              下一页
-              <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+        <PagePagination
+          startItem={rangeStart}
+          endItem={rangeEnd}
+          total={total}
+          hasPrev={page > 0}
+          hasNext={page < totalPages - 1}
+          onPrev={() => onPageChange(page - 1)}
+          onNext={() => onPageChange(page + 1)}
+          pageInfo={`第 ${page + 1} / ${totalPages} 页`}
+          separator="-"
+          className="border-t pt-4"
+        />
       )}
     </>
   );

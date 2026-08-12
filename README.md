@@ -14,7 +14,7 @@
 
 - 文档解析：TXT/Markdown/CSV/TSV/SOFT/JSON/XML/HTML/PDF，以及上述文本格式的 gzip 压缩文件
 - 文本分块：可配置块大小与重叠长度
-- 嵌入实现：`rust-hash-512-v1`（纯 Rust、确定性、512 维）
+- 嵌入实现：开发/测试使用 `rust-hash-512-v1`；生产固定使用 OpenAI-compatible `BAAI/bge-m3`（1024 维）
 - 生成推理：Rust 后端通过 HTTPS 调用 DeepSeek 官方 OpenAI 兼容接口
 - 向量存储：PostgreSQL 16 + pgvector
 - 检索：向量相似度与词法相关度混合排序；普通问题返回 6 个资料块，集合型问题可扩展到 12 个
@@ -55,13 +55,16 @@ POSTGRES_PASSWORD=replace-with-at-least-12-characters
 SEED_DEMO_DATA=false
 CORS_ORIGINS=https://eln.example.org
 NEXT_PUBLIC_API_BASE_URL=/api
-DEEPSEEK_API_BASE_URL=https://api.deepseek.com
-DEEPSEEK_API_KEY=your-official-api-key
-DEEPSEEK_MODEL=deepseek-v4-flash
+AI_PROVIDER=deepseek
+AI_BASE_URL=https://api.deepseek.com
+AI_API_KEY=your-official-api-key
+AI_MODEL=deepseek-v4-flash
 ALLOW_SENSITIVE_EXTERNAL_AI=false
-EMBEDDING_BACKEND=hash
-EMBEDDING_MODEL=rust-hash-512-v1
-EMBEDDING_DIMENSION=512
+EMBEDDING_BACKEND=openai_compatible
+EMBEDDING_MODEL=BAAI/bge-m3
+EMBEDDING_DIMENSION=1024
+EMBEDDING_API_URL=https://embedding.example.org/v1/embeddings
+EMBEDDING_API_KEY=replace-with-provider-key
 APP_REVISION=0123456789abcdef0123456789abcdef01234567
 ```
 
@@ -76,7 +79,7 @@ backend/.venv/bin/python scripts/check_reverse_proxy_config.py \
   --output docs/system-evidence/reverse-proxy-latest.json
 ```
 
-密钥轮换流程见 [docs/operations/secret-rotation.md](docs/operations/secret-rotation.md)，覆盖 `SECRET_KEY`、管理员/用户密码、`POSTGRES_PASSWORD` 和 `DEEPSEEK_API_KEY` 的备份、变更、验证、回滚和旧凭据撤销。修改该手册后运行：
+密钥轮换流程见 [docs/operations/secret-rotation.md](docs/operations/secret-rotation.md)，覆盖 `SECRET_KEY`、管理员/用户密码、`POSTGRES_PASSWORD` 和 `AI_API_KEY`（兼容期含 `DEEPSEEK_API_KEY`）的备份、变更、验证、回滚和旧凭据撤销。修改该手册后运行：
 
 ```bash
 backend/.venv/bin/python scripts/check_secret_rotation_runbook.py \
@@ -107,7 +110,7 @@ docker compose up -d --build
 
 项目使用同一套 Docker 配置，不需要维护 Windows 和 macOS 两套代码。Compose 默认构建生产前端并通过 `next start` 运行，不挂载源代码或使用开发服务器；代码变更后需要重新构建镜像。
 
-后端构建镜像固定使用 `rust:1.88-slim-bookworm`，仓库中的 `backend/rust-toolchain.toml` 同时把本地工具链固定为 Rust 1.88.0。纯 Rust 哈希嵌入无需下载模型。
+后端构建镜像固定使用 `rust:1.88-slim-bookworm`，仓库中的 `backend/rust-toolchain.toml` 同时把本地工具链固定为 Rust 1.88.0。开发/测试哈希嵌入无需下载模型；生产 embedding endpoint、模型名和维度必须同时固定。
 
 ## 备份与恢复
 
@@ -182,6 +185,15 @@ ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/run_gse111619_experiment.
 内部评测 run #4 使用 984 个原始语料块和 12 道项目内部冻结的问题。普通 RAG 命中 9/32 个预设事实，图谱增强 RAG 命中 25/32 个。这是自动文本匹配结果，不是答案准确率。题目和规则由项目开发方编写，因此该结果只用于开发诊断，不作为论文的最终效果证据。完整账目和限制见 `data/real/GSE111619/gse111619_kg_holdout_analysis.md`。
 
 ## 验证
+
+没有人工测试人员时，可先用以下只读命令快速确认本地栈是否可用：
+
+```bash
+backend/.venv/bin/python scripts/check_local_health.py \
+  --output docs/system-evidence/local-health-latest.json
+```
+
+它会单独检查 Rust API、PostgreSQL、持久化存储、前端首页和运行指标，并把开发模式与生产配置缺口区分开；不会打印密钥，也不会写入业务数据。
 
 macOS 或 Linux 本地开发环境：
 
@@ -327,7 +339,7 @@ backend/.venv/bin/python scripts/release_maturity_gate.py \
 
 证据包 SHA-256 清单写入已被 Git 忽略的 `output/release-evidence/maturity-evidence-manifest.json`；它只允许从 clean checkout 冻结，并绑定当前 Git commit、`backend/Cargo.lock` 与 `frontend/package-lock.json`。门禁会重新校验这些来源信息、证据文件和当前 checkout，随后把同一 `source_revision` 贯穿内部门禁、最终门禁和确认性评审完成门禁；运行时 `/maturity/status` 还会要求该 revision 与 `APP_REVISION` 一致。门禁结果写入 `docs/experiments/main-maturity-gate-latest.json` 和 `docs/experiments/main-maturity-gate-latest.md`。只要门禁失败，就不启动人工评审；优先修复报告中的失败项。即使门禁通过，仍需独立人工评审、外部冻结语料和更长时间 soak 后才能声称最终成熟。
 
-最终成熟门禁用于判断是否可以启动论文确认性人工评审：
+最终成熟门禁用于判断是否可以启动论文确认性人工评审；它不是受控试运行的唯一上线门槛。若目标是先收集真实用户反馈，可使用 `scripts/controlled_beta_gate.py`，但生产配置、TLS、备份、运行时健康检查和内部门禁仍必须通过：
 
 ```bash
 backend/.venv/bin/python scripts/freeze_final_maturity_evidence.py --replace
@@ -337,7 +349,7 @@ backend/.venv/bin/python scripts/freeze_final_maturity_evidence.py \
 backend/.venv/bin/python scripts/final_maturity_gate.py
 ```
 
-它要求内部门禁通过、`docs/system-evidence/production-config-latest.json` 与 `validation-results.json` 内嵌生产配置快照均为 `passed`，且 env 文件 SHA-256、关键项清单和结构化生产检查 `checks` 完全一致并全部通过；还要求外部冻结包通过、经 `scripts/check_long_soak_report.py` 校验的长时 soak 证据通过、经 `scripts/check_tls_deployment.py` 生成的真实 TLS 部署证据通过、经 `scripts/check_offsite_backup_evidence.py` 校验的异地加密备份证据通过，并且最终证据 SHA-256 manifest 验证通过。当前缺少这些外部/生产证据时，该门禁应当失败，并把阻塞项写入 `docs/experiments/final-maturity-gate-latest.md`。
+它要求内部门禁通过、`docs/system-evidence/production-config-latest.json` 与 `validation-results.json` 内嵌生产配置快照均为 `passed`，且 env 文件 SHA-256、关键项清单和结构化生产检查 `checks` 完全一致并全部通过；还要求外部冻结包通过、经 `scripts/check_long_soak_report.py` 校验的长时 soak 证据通过、经 `scripts/check_tls_deployment.py` 生成的真实 TLS 部署证据通过、经 `scripts/check_offsite_backup_evidence.py` 校验的异地加密备份证据通过，并且最终证据 SHA-256 manifest 验证通过。当前缺少这些外部/生产证据时，该门禁应当失败，并把阻塞项写入 `docs/experiments/final-maturity-gate-latest.md`。这条门禁仍用于论文确认性人工评审和正式人工质量声明；受控试运行策略见 [docs/operations/controlled-beta-launch.md](docs/operations/controlled-beta-launch.md)。
 
 当前整改状态、代码冻结前置和外部事项的执行顺序见 [发布整改状态（2026-07-30）](docs/operations/release-remediation-2026-07-30.md)。
 前端“报告”页会通过 `/maturity/status` 只读显示内部门禁、最终成熟门禁和确认性人工评审完成门禁，并区分 `human_review_allowed`（可启动正式评审）与 `human_review_report_allowed`（可发布人工评审结果）；只要最终成熟门禁失败，页面会明确提示不要启动正式人工评审。

@@ -14,7 +14,9 @@ pub const INITIAL_SCHEMA: &str = include_str!("../sql/0001_initial.sql");
 const DATABASE_INITIALIZATION_LOCK_ID: i64 = 4_545_704_429_315_697;
 const RAG_HNSW_INITIALIZATION_LOCK_ID: i64 = 4_545_704_429_315_698;
 const RAG_HNSW_INDEX_NAME: &str = "ix_rag_chunks_embedding_hnsw";
-const RUST_SCHEMA_VERSION: i32 = 3;
+const RUST_SCHEMA_VERSION: i32 = 4;
+const LEGACY_SCHEMA_RECOVERY_GUIDANCE: &str =
+    "Apply the complete legacy Alembic history through 0012_kg_entities_unique_natural_key with the previous migration image, or restore a compatible backup.";
 const LEGACY_EXPERIMENT_STALE_GRACE_SECONDS: i32 = 600;
 pub const EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS: u64 = 2;
 pub const EXPERIMENT_LEASE_SECONDS: i32 = 6;
@@ -54,8 +56,14 @@ const RUNTIME_SCHEMA_SIGNATURE: &[(&str, &[&str])] = &[
         "project_rag_datasets",
         &["id", "provider", "embedding_model", "generation_model"],
     ),
-    ("rag_file_syncs", &["id", "chunk_count", "content_hash"]),
-    ("rag_document_chunks", &["id", "embedding"]),
+    (
+        "rag_file_syncs",
+        &["id", "chunk_count", "content_hash", "index_version"],
+    ),
+    (
+        "rag_document_chunks",
+        &["id", "embedding", "chunk_version", "index_version"],
+    ),
     (
         "ai_query_logs",
         &[
@@ -86,6 +94,47 @@ const RUNTIME_SCHEMA_SIGNATURE: &[(&str, &[&str])] = &[
             "prompt_version",
             "usage_json",
         ],
+    ),
+    (
+        "mcp_personal_access_tokens",
+        &["id", "token_hash", "scopes_json", "revoked_at"],
+    ),
+    (
+        "mcp_http_sessions",
+        &["id", "user_id", "protocol_version", "expires_at"],
+    ),
+    (
+        "agent_sessions",
+        &["id", "project_id", "status", "usage_json", "active_turn"],
+    ),
+    (
+        "agent_turns",
+        &[
+            "id",
+            "session_id",
+            "prompt_version",
+            "profile",
+            "status",
+            "plan_hash",
+            "lease_expires_at",
+        ],
+    ),
+    (
+        "agent_events",
+        &["id", "session_id", "turn_id", "event_type"],
+    ),
+    (
+        "agent_messages",
+        &["id", "session_id", "role", "content_redacted"],
+    ),
+    ("agent_steps", &["id", "session_id", "tool_name", "status"]),
+    (
+        "agent_pending_actions",
+        &["id", "tool_name", "arguments_hash", "expires_at", "status"],
+    ),
+    (
+        "tool_execution_keys",
+        &["user_id", "tool_name", "idempotency_key", "result_json"],
     ),
 ];
 
@@ -146,9 +195,179 @@ pub async fn initialize_database(pool: &PgPool, settings: &Settings) -> Result<(
             ON public.ai_experiment_runs (status, lease_expires_at);
         -- Mirrors Alembic migration 0011: time-ordered audit log listings.
         CREATE INDEX IF NOT EXISTS ix_audit_logs_created_at
-            ON public.audit_logs (created_at DESC)
+            ON public.audit_logs (created_at DESC);
+
+        CREATE TABLE IF NOT EXISTS public.mcp_personal_access_tokens (
+            id uuid PRIMARY KEY,
+            user_id integer NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+            name varchar(120) NOT NULL,
+            token_prefix varchar(24) NOT NULL,
+            token_hash varchar(64) NOT NULL UNIQUE,
+            scopes_json jsonb NOT NULL DEFAULT '[]'::jsonb,
+            expires_at timestamp with time zone NOT NULL,
+            revoked_at timestamp with time zone,
+            last_used_at timestamp with time zone,
+            created_at timestamp with time zone NOT NULL DEFAULT now()
+        );
+        CREATE INDEX IF NOT EXISTS ix_mcp_pat_user ON public.mcp_personal_access_tokens (user_id, created_at DESC);
+
+        CREATE TABLE IF NOT EXISTS public.mcp_http_sessions (
+            id uuid PRIMARY KEY,
+            user_id integer NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+            protocol_version varchar(20) NOT NULL,
+            expires_at timestamp with time zone NOT NULL,
+            created_at timestamp with time zone NOT NULL DEFAULT now(),
+            last_seen_at timestamp with time zone NOT NULL DEFAULT now()
+        );
+        CREATE INDEX IF NOT EXISTS ix_mcp_http_sessions_user
+            ON public.mcp_http_sessions (user_id, expires_at);
+
+        CREATE TABLE IF NOT EXISTS public.agent_sessions (
+            id uuid PRIMARY KEY,
+            user_id integer NOT NULL REFERENCES public.users(id),
+            project_id integer REFERENCES public.projects(id),
+            status varchar(32) NOT NULL,
+            provider varchar(80) NOT NULL,
+            model_name varchar(160) NOT NULL,
+            prompt_version varchar(120) NOT NULL,
+            source_map_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            usage_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            final_state_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            created_at timestamp with time zone NOT NULL DEFAULT now(),
+            updated_at timestamp with time zone NOT NULL DEFAULT now()
+        );
+        CREATE INDEX IF NOT EXISTS ix_agent_sessions_user ON public.agent_sessions (user_id, updated_at DESC);
+        ALTER TABLE public.agent_sessions
+            ADD COLUMN IF NOT EXISTS active_turn uuid;
+
+        CREATE TABLE IF NOT EXISTS public.agent_turns (
+            id uuid PRIMARY KEY,
+            session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+            user_id integer NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+            profile varchar(16) NOT NULL DEFAULT 'fast',
+            prompt_version varchar(120) NOT NULL DEFAULT 'agent-orchestrator-v1',
+            status varchar(40) NOT NULL,
+            input_redacted text NOT NULL,
+            plan_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            plan_hash varchar(64),
+            budget_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            usage_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            worker_id varchar(80),
+            heartbeat_at timestamp with time zone,
+            lease_expires_at timestamp with time zone,
+            created_at timestamp with time zone NOT NULL DEFAULT now(),
+            updated_at timestamp with time zone NOT NULL DEFAULT now(),
+            completed_at timestamp with time zone,
+            UNIQUE (session_id, id)
+        );
+        CREATE INDEX IF NOT EXISTS ix_agent_turns_session ON public.agent_turns (session_id, created_at DESC);
+        CREATE INDEX IF NOT EXISTS ix_agent_turns_lease ON public.agent_turns (status, lease_expires_at);
+        ALTER TABLE public.agent_turns
+            ADD COLUMN IF NOT EXISTS prompt_version varchar(120) NOT NULL DEFAULT 'agent-orchestrator-v1';
+        CREATE TABLE IF NOT EXISTS public.agent_events (
+            id bigserial PRIMARY KEY,
+            session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+            turn_id uuid REFERENCES public.agent_turns(id) ON DELETE CASCADE,
+            event_type varchar(48) NOT NULL,
+            payload_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            created_at timestamp with time zone NOT NULL DEFAULT now()
+        );
+        CREATE INDEX IF NOT EXISTS ix_agent_events_session ON public.agent_events (session_id, id);
+
+        CREATE TABLE IF NOT EXISTS public.agent_messages (
+            id bigserial PRIMARY KEY,
+            session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+            role varchar(24) NOT NULL,
+            content_redacted text NOT NULL,
+            metadata_json jsonb NOT NULL DEFAULT '{}'::jsonb,
+            created_at timestamp with time zone NOT NULL DEFAULT now()
+        );
+        CREATE INDEX IF NOT EXISTS ix_agent_messages_session ON public.agent_messages (session_id, id);
+
+        CREATE TABLE IF NOT EXISTS public.agent_steps (
+            id bigserial PRIMARY KEY,
+            session_id uuid NOT NULL REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+            turn_id uuid NOT NULL,
+            sequence_no integer NOT NULL,
+            tool_name varchar(120) NOT NULL,
+            risk varchar(24) NOT NULL,
+            arguments_summary text NOT NULL,
+            arguments_hash varchar(64) NOT NULL,
+            result_redacted_json jsonb,
+            idempotency_key varchar(120),
+            status varchar(32) NOT NULL,
+            started_at timestamp with time zone NOT NULL DEFAULT now(),
+            completed_at timestamp with time zone,
+            UNIQUE (session_id, turn_id, sequence_no)
+        );
+        CREATE UNIQUE INDEX IF NOT EXISTS uq_agent_step_idempotency
+            ON public.agent_steps (session_id, tool_name, idempotency_key)
+            WHERE idempotency_key IS NOT NULL;
+
+        CREATE TABLE IF NOT EXISTS public.agent_pending_actions (
+            id uuid PRIMARY KEY,
+            session_id uuid REFERENCES public.agent_sessions(id) ON DELETE CASCADE,
+            user_id integer NOT NULL REFERENCES public.users(id),
+            project_id integer REFERENCES public.projects(id),
+            tool_name varchar(120) NOT NULL,
+            arguments_json jsonb NOT NULL,
+            arguments_summary text NOT NULL,
+            arguments_hash varchar(64) NOT NULL,
+            idempotency_key varchar(120) NOT NULL,
+            status varchar(32) NOT NULL DEFAULT 'pending',
+            expires_at timestamp with time zone NOT NULL,
+            decided_at timestamp with time zone,
+            created_at timestamp with time zone NOT NULL DEFAULT now(),
+            UNIQUE (user_id, tool_name, idempotency_key)
+        );
+        CREATE INDEX IF NOT EXISTS ix_agent_pending_active
+            ON public.agent_pending_actions (user_id, status, expires_at);
+
+        CREATE TABLE IF NOT EXISTS public.tool_execution_keys (
+            user_id integer NOT NULL REFERENCES public.users(id),
+            tool_name varchar(120) NOT NULL,
+            idempotency_key varchar(120) NOT NULL,
+            arguments_hash varchar(64) NOT NULL,
+            result_json jsonb NOT NULL,
+            created_at timestamp with time zone NOT NULL DEFAULT now(),
+            PRIMARY KEY (user_id, tool_name, idempotency_key)
+        );
+
+        ALTER TABLE public.rag_file_syncs
+            ADD COLUMN IF NOT EXISTS index_version varchar(80) NOT NULL DEFAULT 'legacy-v1';
+        ALTER TABLE public.rag_document_chunks
+            ADD COLUMN IF NOT EXISTS chunk_version varchar(80) NOT NULL DEFAULT 'legacy-v1',
+            ADD COLUMN IF NOT EXISTS index_version varchar(80) NOT NULL DEFAULT 'legacy-v1';
+        CREATE INDEX IF NOT EXISTS ix_rag_chunks_project_version
+            ON public.rag_document_chunks (project_id, index_version, id)
         "#,
     )
+    .execute(&mut *transaction)
+    .await?;
+    sqlx::query(
+        r#"
+        UPDATE public.rag_file_syncs
+        SET sync_status='stale', sync_message='Index version changed; explicit rebuild required', updated_at=now()
+        WHERE sync_status='synced' AND index_version <> $1
+        "#,
+    )
+    .bind(&settings.rag_index_version)
+    .execute(&mut *transaction)
+    .await?;
+    sqlx::query(
+        r#"
+        UPDATE public.files AS f
+        SET knowledge_sync_status='pending_sync',
+            knowledge_sync_message='Index version changed; explicit rebuild required'
+        WHERE f.status='APPROVED'::filestatus
+          AND f.file_category='KNOWLEDGE_DOCUMENT'::filecategory
+          AND EXISTS (
+              SELECT 1 FROM public.rag_file_syncs AS r
+              WHERE r.file_id=f.id AND r.sync_status='stale' AND r.index_version <> $1
+          )
+        "#,
+    )
+    .bind(&settings.rag_index_version)
     .execute(&mut *transaction)
     .await?;
     // Mirrors legacy Alembic migration 0010: file_size must be bigint so
@@ -206,8 +425,9 @@ pub async fn initialize_database(pool: &PgPool, settings: &Settings) -> Result<(
     .execute(&mut *transaction)
     .await?;
     sqlx::query(
-        "INSERT INTO public.rust_schema_versions (version) VALUES (2) ON CONFLICT DO NOTHING",
+        "INSERT INTO public.rust_schema_versions (version) VALUES ($1) ON CONFLICT DO NOTHING",
     )
+    .bind(RUST_SCHEMA_VERSION)
     .execute(&mut *transaction)
     .await?;
     ensure_seed_data(&mut transaction, settings).await?;
@@ -329,6 +549,45 @@ fn runtime_schema_gaps(columns: &[(String, String)]) -> Vec<String> {
     gaps
 }
 
+fn runtime_index_gaps(indexes: &[String]) -> Vec<String> {
+    let available = indexes.iter().map(String::as_str).collect::<HashSet<_>>();
+    let required = [
+        (
+            "index.kg_entities_project_natural_key",
+            [
+                "uq_kg_entity_project_natural_key",
+                "ux_kg_entities_project_natural_key",
+            ],
+        ),
+        (
+            "index.kg_entities_project_normalized_label",
+            [
+                "ix_kg_entities_normalized_label",
+                "ix_kg_entities_project_normalized_label",
+            ],
+        ),
+    ];
+    required
+        .into_iter()
+        .filter_map(|(label, aliases)| {
+            (!aliases.iter().any(|alias| available.contains(alias))).then_some(label.to_owned())
+        })
+        .collect()
+}
+
+fn runtime_schema_error(gaps: &[String]) -> String {
+    let shown = gaps.iter().take(16).cloned().collect::<Vec<_>>().join(", ");
+    let remainder = gaps.len().saturating_sub(16);
+    let suffix = if remainder == 0 {
+        String::new()
+    } else {
+        format!(" (and {remainder} more)")
+    };
+    format!(
+        "Existing database schema is incompatible with this Rust backend; missing {shown}{suffix}. {LEGACY_SCHEMA_RECOVERY_GUIDANCE} Refusing to stamp Rust schema version {RUST_SCHEMA_VERSION}."
+    )
+}
+
 async fn validate_runtime_schema(
     transaction: &mut Transaction<'_, Postgres>,
 ) -> Result<(), DatabaseError> {
@@ -342,6 +601,11 @@ async fn validate_runtime_schema(
     .fetch_all(&mut **transaction)
     .await?;
     let mut gaps = runtime_schema_gaps(&columns);
+    let indexes: Vec<String> =
+        sqlx::query_scalar("SELECT indexname FROM pg_indexes WHERE schemaname = 'public'")
+            .fetch_all(&mut **transaction)
+            .await?;
+    gaps.extend(runtime_index_gaps(&indexes));
     let active_index_exists: bool = sqlx::query_scalar(
         "SELECT to_regclass('public.uq_ai_experiment_runs_one_active_per_project') IS NOT NULL",
     )
@@ -353,17 +617,7 @@ async fn validate_runtime_schema(
     if gaps.is_empty() {
         return Ok(());
     }
-
-    let shown = gaps.iter().take(16).cloned().collect::<Vec<_>>().join(", ");
-    let remainder = gaps.len().saturating_sub(16);
-    let suffix = if remainder == 0 {
-        String::new()
-    } else {
-        format!(" (and {remainder} more)")
-    };
-    Err(DatabaseError::Domain(format!(
-        "Existing database schema is incompatible with this Rust backend; missing {shown}{suffix}. Apply legacy migrations through 0004_experiment_single_active with the previous migration image, or restore a compatible backup. Refusing to stamp Rust schema version 2."
-    )))
+    Err(DatabaseError::Domain(runtime_schema_error(&gaps)))
 }
 
 pub async fn recover_interrupted_experiment_runs(pool: &PgPool) -> Result<usize, DatabaseError> {
@@ -827,9 +1081,10 @@ mod tests {
 
     use super::{
         connect_database, initialize_database, recover_interrupted_experiment_runs,
-        recovered_experiment_summary, runtime_schema_gaps, seed_templates,
-        EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS, EXPERIMENT_LEASE_SECONDS, INITIAL_SCHEMA,
-        STALE_EXPERIMENT_REAPER_INTERVAL_SECONDS,
+        recovered_experiment_summary, runtime_index_gaps, runtime_schema_error,
+        runtime_schema_gaps, seed_templates, EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS,
+        EXPERIMENT_LEASE_SECONDS, INITIAL_SCHEMA, LEGACY_SCHEMA_RECOVERY_GUIDANCE,
+        RUST_SCHEMA_VERSION, STALE_EXPERIMENT_REAPER_INTERVAL_SECONDS,
     };
     use crate::config::Settings;
 
@@ -873,6 +1128,15 @@ mod tests {
             "ai_query_evaluations",
             "ai_experiment_runs",
             "agent_generation_runs",
+            "mcp_personal_access_tokens",
+            "mcp_http_sessions",
+            "agent_sessions",
+            "agent_turns",
+            "agent_events",
+            "agent_messages",
+            "agent_steps",
+            "agent_pending_actions",
+            "tool_execution_keys",
         ];
 
         for table in required {
@@ -912,6 +1176,23 @@ mod tests {
         assert!(gaps.contains(&"project_members.can_evaluate".to_owned()));
         assert!(gaps.contains(&"file_ocr_results.id".to_owned()));
         assert!(gaps.contains(&"ai_query_logs.experiment_execution_order".to_owned()));
+    }
+
+    #[test]
+    fn test_runtime_schema_error_guides_legacy_databases_to_current_history() {
+        assert!(LEGACY_SCHEMA_RECOVERY_GUIDANCE.contains("0012"));
+        assert!(LEGACY_SCHEMA_RECOVERY_GUIDANCE.contains("compatible backup"));
+        let message = runtime_schema_error(&["index.example".to_owned()]);
+        assert!(message.contains(&format!("version {RUST_SCHEMA_VERSION}")));
+    }
+
+    #[test]
+    fn test_runtime_index_signature_requires_kg_natural_key_and_label_indexes() {
+        let gaps = runtime_index_gaps(&["uq_ai_experiment_runs_one_active_per_project".to_owned()]);
+
+        assert!(gaps.contains(&"index.kg_entities_project_natural_key".to_owned()));
+        assert!(gaps.contains(&"index.kg_entities_project_normalized_label".to_owned()));
+        assert!(!gaps.contains(&"index.uq_ai_experiment_runs_one_active_per_project".to_owned()));
     }
 
     #[test]
@@ -1029,7 +1310,7 @@ mod tests {
             .contains("USING hnsw (embedding vector_cosine_ops)"));
         assert!(index_valid);
         assert!(index_ready);
-        assert_eq!(schema_version, 3);
+        assert_eq!(schema_version, RUST_SCHEMA_VERSION);
     }
 
     #[tokio::test]
@@ -1085,7 +1366,7 @@ mod tests {
                 DROP COLUMN heartbeat_at,
                 DROP COLUMN lease_expires_at;
             DROP INDEX IF EXISTS public.ix_rag_chunks_embedding_hnsw;
-            DELETE FROM public.rust_schema_versions WHERE version = 3
+            DELETE FROM public.rust_schema_versions WHERE version = 4
             "#,
         )
         .execute(&database_pool)
@@ -1120,13 +1401,13 @@ mod tests {
         assert!(upgraded.is_ok(), "existing database upgrade: {upgraded:?}");
         assert_eq!(lease_columns, 3);
         let (index_definition, index_valid, index_ready) =
-            index_state.expect("v2 schema upgrade must create the HNSW index");
+            index_state.expect("Rust schema upgrade must create the HNSW index");
         assert!(index_definition
             .replace("public.vector_cosine_ops", "vector_cosine_ops")
             .contains("USING hnsw (embedding vector_cosine_ops)"));
         assert!(index_valid);
         assert!(index_ready);
-        assert_eq!(version, 3);
+        assert_eq!(version, RUST_SCHEMA_VERSION);
     }
 
     #[tokio::test]

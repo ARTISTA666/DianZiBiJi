@@ -154,6 +154,7 @@ async fn upload_file(
             "Unsupported file category",
         ));
     }
+    validate_file_association(file_category, note_id)?;
     if let Some(note_id) = note_id {
         let valid: bool = sqlx::query_scalar(
             "SELECT EXISTS(SELECT 1 FROM experiment_notes WHERE id = $1 AND project_id = $2)",
@@ -607,7 +608,7 @@ async fn reject_document(
     .await
 }
 
-async fn review_file_action(
+pub(crate) async fn review_file_action(
     state: &AppState,
     user: &UserRecord,
     file_id: i32,
@@ -631,11 +632,12 @@ async fn review_file_action(
     if !can_review_project(&state.pool, user, record.project_id).await? {
         return Err(ApiError::new(StatusCode::FORBIDDEN, "需要审核权限"));
     }
+    let should_sync = payload.action == "approve";
     let (status, sync_status, message) = match payload.action.as_str() {
         "approve" => (
             "APPROVED",
             "pending_sync",
-            "资料已审核通过，等待后续 RAG/Dify 同步任务处理".to_owned(),
+            "资料已审核通过，正在自动进入本地知识库".to_owned(),
         ),
         "reject" => (
             "REJECTED",
@@ -687,7 +689,24 @@ async fn review_file_action(
     )
     .await?;
     transaction.commit().await?;
+    if should_sync {
+        crate::api::rag::sync_approved_file(state, user, file_id, ip_address, user_agent).await?;
+    }
     Ok(Json(fetch_file(&state.pool, file_id).await?.into()))
+}
+
+fn validate_file_association(file_category: &str, note_id: Option<i32>) -> Result<(), ApiError> {
+    match (file_category, note_id) {
+        ("note_attachment", None) => Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Note attachments must reference a note",
+        )),
+        ("knowledge_document", Some(_)) => Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Knowledge documents cannot reference a note",
+        )),
+        _ => Ok(()),
+    }
 }
 
 async fn download_file(
@@ -833,6 +852,14 @@ mod tests {
         AppState,
     };
 
+    #[test]
+    fn file_associations_are_explicit() {
+        assert!(super::validate_file_association("note_attachment", Some(7)).is_ok());
+        assert!(super::validate_file_association("knowledge_document", None).is_ok());
+        assert!(super::validate_file_association("note_attachment", None).is_err());
+        assert!(super::validate_file_association("knowledge_document", Some(7)).is_err());
+    }
+
     async fn request(
         app: &Router,
         method: &str,
@@ -961,7 +988,7 @@ mod tests {
         .await;
         assert_eq!(review_status, StatusCode::OK);
         assert_eq!(reviewed["status"], "approved");
-        assert_eq!(reviewed["knowledge_sync_status"], "pending_sync");
+        assert_eq!(reviewed["knowledge_sync_status"], "synced");
 
         let (download_status, downloaded) = request(
             &app,

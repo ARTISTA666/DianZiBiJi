@@ -62,6 +62,19 @@ async function addProjectMember(
   await expect(page.getByText("成员已添加", { exact: true })).toBeVisible();
 }
 
+async function freshAdminApi() {
+  const anonymous = await request.newContext({ baseURL: API_URL });
+  const loginResponse = await anonymous.post("/auth/login", {
+    data: { username: "admin", password: "admin123" },
+  });
+  const loginData = await checkedJson(loginResponse);
+  await anonymous.dispose();
+  return request.newContext({
+    baseURL: API_URL,
+    extraHTTPHeaders: { Authorization: `Bearer ${loginData.access_token}` },
+  });
+}
+
 test.beforeAll(async () => {
   const anonymous = await request.newContext({ baseURL: API_URL });
   const loginResponse = await anonymous.post("/auth/login", {
@@ -98,9 +111,12 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
   projectId = Number(page.url().match(/\/projects\/(\d+)/)?.[1]);
   expect(projectId).toBeGreaterThan(0);
 
-  await addProjectMember(page, authorId);
+  await addProjectMember(page, authorId, async (dialog) => {
+    await dialog.locator("fieldset").getByRole("checkbox").nth(1).check();
+  });
   await addProjectMember(page, reviewerId, async (dialog) => {
-    // 保留默认写权限：OCR 提取文本需要写权限，确认校对需要审权限
+    // OCR 提取文本需要写权限，确认资料和笔记需要审核权限
+    await dialog.locator("fieldset").getByRole("checkbox").nth(1).check();
     await dialog.locator("fieldset").getByRole("checkbox").nth(2).check();
   });
   await logout(page);
@@ -155,6 +171,43 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
   await expect(page.getByRole("dialog").getByText("已审核", { exact: true })).toBeVisible();
 });
 
+test("笔记附件必须关联笔记并在资料页保留关联关系", async ({ page }) => {
+  const filename = path.basename(path.resolve(__dirname, "fixtures/system-validation-notes.txt"));
+
+  await login(page, AUTHOR, PASSWORD);
+  await openProject(page);
+  await page.goto(`/projects/${projectId}/data`, { waitUntil: "networkidle" });
+
+  const uploadButton = page.getByRole("button", { name: "上传", exact: true });
+  await page.getByLabel("选择上传文件").setInputFiles(path.resolve(__dirname, "fixtures/system-validation-notes.txt"));
+  // 先选文件再选笔记，确认 UI 不会发出后端必然拒绝的孤立附件请求。
+  await expect(uploadButton).toBeDisabled();
+  await page.getByLabel("关联笔记").click();
+  await page.getByRole("option", { name: NOTE_TITLE, exact: true }).click();
+  await expect(uploadButton).toBeEnabled();
+  await uploadButton.click();
+
+  const fileRow = page.locator('[data-testid^="file-row-"]').filter({ hasText: filename });
+  await expect(fileRow).toBeVisible();
+  await expect(fileRow).toContainText("笔记附件");
+  await expect(fileRow).toContainText(`关联笔记：${NOTE_TITLE}`);
+  await expect(fileRow.getByRole("button", { name: `通过 ${filename}` })).toHaveCount(0);
+
+  // 之前的项目负责人流程会登出 admin，按设计撤销该账号的所有旧 token。
+  // 用新会话做数据库合同核对，避免验收脚本依赖已被安全撤销的 token。
+  const verificationApi = await freshAdminApi();
+  try {
+    const notes = await checkedJson(await verificationApi.get(`/projects/${projectId}/notes?search=${encodeURIComponent(NOTE_TITLE)}`));
+    const note = notes.items.find((item: { title: string }) => item.title === NOTE_TITLE);
+    expect(note).toBeTruthy();
+    const files = await checkedJson(await verificationApi.get(`/projects/${projectId}/files`));
+    const uploaded = files.items.find((item: { original_filename: string }) => item.original_filename === filename);
+    expect(uploaded).toMatchObject({ file_category: "note_attachment", note_id: note.id });
+  } finally {
+    await verificationApi.dispose();
+  }
+});
+
 test("多角色完成 AI 资料、图谱、问答与报告协作闭环", async ({ page }) => {
   const filename = path.basename(IMAGE_PATH);
 
@@ -185,20 +238,29 @@ test("多角色完成 AI 资料、图谱、问答与报告协作闭环", async (
   await login(page, "admin", "admin123");
   await openProject(page);
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
-  await page.getByRole("button", { name: "初始化资料库" }).click();
-  await expect(page.getByText("项目资料库已初始化", { exact: true })).toBeVisible();
+  const initializeButton = page.getByRole("button", { name: "初始化资料库" });
+  if (await initializeButton.isVisible()) {
+    await initializeButton.click();
+    await expect(page.getByText("项目资料库已初始化", { exact: true })).toBeVisible();
+  } else {
+    await expect(page.getByText("项目资料库", { exact: true })).toBeVisible();
+  }
   await page.getByRole("tab", { name: "资料", exact: true }).click();
   const ownerFileRow = page.locator('[data-testid^="file-row-"]').filter({ hasText: filename });
-  await ownerFileRow.getByRole("button", { name: "本地向量入库" }).click();
-  await expect(page.getByText("资料已同步到 AI 知识库")).toBeVisible({ timeout: 120_000 });
+  const syncButton = ownerFileRow.getByRole("button", { name: /(?:本地|重试)向量入库/ });
+  if (await syncButton.count() > 0) {
+    await syncButton.click();
+    await expect(page.getByText("资料已同步到 AI 知识库")).toBeVisible({ timeout: 120_000 });
+  } else {
+    await expect(ownerFileRow.getByText("已入库", { exact: true })).toBeVisible();
+  }
   await logout(page);
 
   await login(page, AUTHOR, PASSWORD);
   await openProject(page);
   await page.goto(`/projects/${projectId}/kg`, { waitUntil: "networkidle" });
-  const noteRow = page.getByText(NOTE_TITLE, { exact: true }).locator("..");
-  await noteRow.getByRole("button", { name: "提取", exact: true }).click();
-  await expect(page.getByText("实体已提取", { exact: true })).toBeVisible({ timeout: 60_000 });
+  await page.getByRole("button", { name: "重建图谱", exact: true }).click();
+  await expect(page.getByText("图谱已重建", { exact: true })).toBeVisible({ timeout: 60_000 });
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
   await expect(page.getByText("已初始化 · 1 个文件已入库", { exact: true })).toBeVisible();
   await page.getByPlaceholder("输入问题...").fill("这份项目资料的实验结论是什么？");

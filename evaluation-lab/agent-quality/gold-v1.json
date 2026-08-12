@@ -1,0 +1,68 @@
+{
+  "schema": "full-system.agent-quality-gold",
+  "schema_version": 1,
+  "prompt_version": "agent-v10-evidence-ledger",
+  "description": "五类 Agent 的冻结合成金标准。仅用于验证生成端的事实、引用和拒答边界，不替代真实项目全链路与人工评审。",
+  "known_citations": ["[N101]", "[N102]", "[N103]", "[N104]", "[N105]", "[F201]", "[F202]", "[R301]"],
+  "cases": [
+    {
+      "id": "experiment-summary-01",
+      "task_type": "experiment_summary",
+      "task_label": "实验总结",
+      "context": "## 实验总结\n- 项目编号：9001\n- 生成范围：2026-08-01 ~ 2026-08-07\n\n### 主要结论\n- [N101] PCR 梯度实验：58℃ 退火时目标条带最清晰，60℃ 条带变弱。\n- [N102] PCR 重复实验：58℃ 条件下 3 次重复均得到单一目标条带。\n\n### 实验记录概览\n- [N101] PCR 梯度实验（PCR，2026-08-03）\n- [N102] PCR 重复实验（PCR，2026-08-05）",
+      "criteria": [
+        {"id": "best-temperature", "required_all": ["58℃", "最清晰"], "anchor_any": ["58℃"], "allowed_citations": ["[N101]"]},
+        {"id": "repeatability", "required_all": ["3次", "单一目标条带"], "anchor_any": ["3次", "3 次"], "allowed_citations": ["[N102]"]}
+      ],
+      "forbidden_claims": ["62℃ 最佳", "4 次重复"]
+    },
+    {
+      "id": "weekly-report-01",
+      "task_type": "weekly_report",
+      "task_label": "周报",
+      "context": "## 周报\n- 项目编号：9001\n- 生成范围：2026-08-01 ~ 2026-08-07\n\n### 主要结论\n- [N101] 2026-08-03 完成 PCR 退火温度梯度，58℃ 目标条带最清晰。\n- [N103] 2026-08-06 完成污染复查，阴性对照未见扩增。\n\n### 后续计划依据\n- [R301] PCR 梯度实验 --后续步骤--> 以 58℃ 做独立复验。",
+      "criteria": [
+        {"id": "completed-work", "required_all": ["58℃", "目标条带最清晰"], "anchor_any": ["58℃"], "allowed_citations": ["[N101]"]},
+        {"id": "negative-control", "required_all": ["阴性对照", "未见扩增"], "anchor_any": ["阴性对照"], "allowed_citations": ["[N103]"]},
+        {"id": "next-step", "required_all": ["58℃", "独立复验"], "anchor_any": ["独立复验"], "allowed_citations": ["[R301]"]}
+      ],
+      "forbidden_claims": ["阴性对照出现扩增", "实验已经定稿"]
+    },
+    {
+      "id": "stage-report-01",
+      "task_type": "stage_report",
+      "task_label": "项目阶段报告",
+      "context": "## 项目阶段报告\n- 项目编号：9001\n- 生成范围：2026-07-01 ~ 2026-08-07\n\n### 主要结论\n- [N101] PCR 梯度实验显示 58℃ 目标条带最清晰。\n- [N102] 58℃ 条件下 3 次重复均得到单一目标条带。\n- [N103] 阴性对照未见扩增。\n\n### 资料依据\n- [F201] protocol.txt：方案规定候选退火温度需经独立重复和阴性对照后才能锁定。",
+      "criteria": [
+        {"id": "stage-finding", "required_all": ["58℃", "最清晰"], "anchor_any": ["58℃"], "allowed_citations": ["[N101]"]},
+        {"id": "stage-repeats", "required_all": ["3次", "单一目标条带"], "anchor_any": ["3次", "3 次"], "allowed_citations": ["[N102]"]},
+        {"id": "stage-boundary", "required_all": ["独立重复", "阴性对照"], "anchor_any": ["锁定", "结论", "阴性对照"], "allowed_citations": ["[F201]", "[N103]"]}
+      ],
+      "forbidden_claims": ["已证明适用于所有样本", "无需进一步验证"]
+    },
+    {
+      "id": "literature-review-01",
+      "task_type": "literature_review",
+      "task_label": "文献综述草稿",
+      "context": "## 文献综述草稿\n- 项目编号：9001\n\n### 文献与资料来源\n- [F201] protocol.txt：梯度 PCR 方案覆盖 56℃、58℃ 和 60℃，并要求设置阴性对照。\n- [F202] methods-note.txt：方法说明建议用独立重复验证候选退火温度；未提供跨样本泛化结论。\n\n### 实验主题分类\n- PCR 优化（2 条记录）\n  - [N101] PCR 梯度实验（2026-08-03）\n  - [N102] PCR 重复实验（2026-08-05）\n\n### 综述撰写要求\n- 资料不足的主题如实标注「证据不足」，不得虚构内容。",
+      "criteria": [
+        {"id": "temperature-range", "required_all": ["56℃", "58℃", "60℃"], "anchor_any": ["56℃"], "allowed_citations": ["[F201]"]},
+        {"id": "validation-method", "required_all": ["独立重复", "验证"], "anchor_any": ["独立重复"], "allowed_citations": ["[F202]"]},
+        {"id": "generalization-boundary", "required_all": ["跨样本", "证据不足"], "anchor_any": ["跨样本", "泛化"], "allowed_citations": ["[F202]"]}
+      ],
+      "forbidden_claims": ["适用于所有 PCR 体系", "已完成临床验证"]
+    },
+    {
+      "id": "anomaly-detection-01",
+      "task_type": "anomaly_detection",
+      "task_label": "实验异常检测",
+      "context": "## 实验异常检测\n- 项目编号：9001\n\n### 实验记录与结果数据\n- [N104] qPCR 重复孔（qPCR，2026-08-06）\n  - Ct：18.2, 18.4, 31.7\n- [N105] 蛋白定量（BCA，2026-08-07）\n  - 浓度：2.1\n  - 单位：未填写\n\n### 异常检测要求\n- 对每条疑似异常给出编号引用和简要原因。\n- 数据不足以判断时标注「需人工确认」而非臆断。",
+      "criteria": [
+        {"id": "ct-outlier", "required_all": ["31.7", "偏离"], "anchor_any": ["31.7"], "allowed_citations": ["[N104]"]},
+        {"id": "missing-unit", "required_all": ["单位", "未填写"], "anchor_any": ["单位"], "allowed_citations": ["[N105]"]},
+        {"id": "manual-confirmation", "required_all": ["需人工确认"], "anchor_any": ["需人工确认"], "allowed_citations": ["[N104]", "[N105]"]}
+      ],
+      "forbidden_claims": ["31.7 由仪器故障导致", "浓度单位为 mg/mL"]
+    }
+  ]
+}

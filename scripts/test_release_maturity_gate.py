@@ -11,6 +11,7 @@ from types import SimpleNamespace
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import freeze_system_evidence as SYSTEM_FREEZE  # noqa: E402
+from check_rag_evidence import canonical_sha256  # noqa: E402
 
 SCRIPT = ROOT / "scripts" / "release_maturity_gate.py"
 SPEC = importlib.util.spec_from_file_location("release_maturity_gate", SCRIPT)
@@ -63,10 +64,38 @@ def system_manifest(files: list[Path], root: Path, commit: str = COMMIT) -> dict
 
 
 def retrieval_report(recall10: float = 0.95) -> dict:
+    configuration = {
+        "candidate_k": 30,
+        "embedding_backend": "openai_compatible",
+        "embedding_model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+    }
+    bindings = {
+        "api_runtime": "rust-axum",
+        "image_digest": "sha256:image",
+        "git_revision": COMMIT,
+        "embedding_backend": "openai_compatible",
+        "embedding_model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+        "embedding_model_sha256": "b" * 64,
+        "corpus_sha256": "c" * 64,
+        "questions_sha256": "d" * 64,
+        "retrieval_parameters_sha256": canonical_sha256(configuration),
+    }
     return {
         "question_count": 20,
         "fact_count": 56,
-        "corpus": {"chunk_count": 984},
+        "corpus": {"chunk_count": 984, "sha256": bindings["corpus_sha256"]},
+        "questions_sha256": bindings["questions_sha256"],
+        "configuration": configuration,
+        "reproducibility_verified": True,
+        "runtime": {
+            "api_runtime": "rust-axum",
+            "embedding_backend": "openai_compatible",
+            "embedding_model": "BAAI/bge-m3",
+            "embedding_dimension": 1024,
+        },
+        "evidence_bindings": bindings,
         "aggregate": [
             {"mode": "hybrid_rag", "Recall@10": 0.80, "nDCG@10": 0.70},
             {"mode": "graph_enhanced_rag", "Recall@10": recall10, "nDCG@10": 0.75},
@@ -634,18 +663,23 @@ def test_gate_passes_with_manifest_covering_gate_inputs(tmp_path: Path, monkeypa
         lambda *_args, **_kwargs: {"git_commit": COMMIT, "worktree_clean": True},
     )
     retrieval = write_json(tmp_path / "retrieval.json", retrieval_report())
+    retrieval_runtime_manifest = write_json(
+        tmp_path / "retrieval-runtime-manifest.json",
+        {"evidence_bindings": json.loads(retrieval.read_text(encoding="utf-8"))["evidence_bindings"]},
+    )
     experiment = write_json(tmp_path / "experiment.json", experiment_report())
     agent = write_json(tmp_path / "agent.json", agent_report())
     system = write_json(tmp_path / "system.json", system_evidence_report())
     extras = [write_json(tmp_path / f"extra-{index}.json", {"index": index}) for index in range(6)]
     manifest = write_json(
         tmp_path / "manifest.json",
-        system_manifest([retrieval, experiment, agent, system, *extras], tmp_path),
+        system_manifest([retrieval, retrieval_runtime_manifest, experiment, agent, system, *extras], tmp_path),
     )
 
     report = MODULE.build_report(
         SimpleNamespace(
             retrieval_report=retrieval,
+            retrieval_runtime_manifest=retrieval_runtime_manifest,
             experiment_report=experiment,
             agent_report=agent,
             system_evidence_report=system,

@@ -11,6 +11,7 @@ use thiserror::Error;
 use tokio::sync::{OwnedSemaphorePermit, Semaphore};
 
 use crate::{
+    ai_provider::{AiProvider, OpenAiCompatibleProvider},
     config::Settings,
     embedding::{EmbeddingError, EmbeddingService},
 };
@@ -116,8 +117,8 @@ pub struct AppState {
     pub pool: PgPool,
     pub settings: Arc<Settings>,
     pub client: reqwest::Client,
+    pub ai_provider: Arc<dyn AiProvider>,
     pub embeddings: EmbeddingService,
-    pub(crate) generation_limiter: Arc<Semaphore>,
     // Process-local by design; horizontally scaled deployments need shared
     // source-aware protection if one budget must span every backend replica.
     login_attempt_limiter: Arc<Semaphore>,
@@ -269,7 +270,19 @@ pub enum StateError {
 impl AppState {
     pub fn new(pool: PgPool, settings: Settings) -> Result<Self, StateError> {
         let embeddings = EmbeddingService::new(&settings)?;
-        let generation_limiter = Arc::new(Semaphore::new(settings.deepseek_max_concurrency));
+        let client = reqwest::Client::builder()
+            .redirect(Policy::none())
+            .build()?;
+        let ai_provider: Arc<dyn AiProvider> = Arc::new(
+            OpenAiCompatibleProvider::new(
+                client.clone(),
+                settings.ai_base_url.clone(),
+                settings.ai_api_key.clone(),
+                settings.normalized_ai_model().to_owned(),
+                settings.deepseek_max_concurrency,
+            )
+            .with_provider_name(settings.ai_provider.clone()),
+        );
         let login_attempt_limiter =
             Arc::new(Semaphore::new(settings.login_max_concurrent_attempts));
         let login_rate_limiter = Arc::new(Mutex::new(LoginRateLimiter::new(
@@ -288,11 +301,9 @@ impl AppState {
         Ok(Self {
             pool,
             settings: Arc::new(settings),
-            client: reqwest::Client::builder()
-                .redirect(Policy::none())
-                .build()?,
+            client,
+            ai_provider,
             embeddings,
-            generation_limiter,
             login_attempt_limiter,
             login_rate_limiter,
             global_rate_limiter,
@@ -368,6 +379,12 @@ impl AppState {
         json!({
             "status": "ok",
             "revision": self.settings.app_revision,
+            "runtime": {
+                "api_runtime": "rust-axum",
+                "embedding_backend": self.settings.embedding_backend,
+                "embedding_model": self.settings.embedding_model,
+                "embedding_dimension": self.settings.embedding_dimension,
+            },
             "uptime_seconds": (self.started_at.elapsed().as_secs_f64() * 1000.0).round() / 1000.0,
             "in_flight": metrics.in_flight,
             "total_requests": metrics.total_requests,
@@ -402,6 +419,22 @@ mod tests {
         let state = AppState::new(pool, settings).unwrap();
 
         assert_eq!(state.settings.app_revision, "unversioned");
+    }
+
+    #[tokio::test]
+    async fn metrics_snapshot_contains_non_secret_runtime_embedding_fingerprint() {
+        let settings = Settings::from_map(&HashMap::new()).unwrap();
+        let pool = PgPoolOptions::new()
+            .connect_lazy("postgresql://unused:unused@127.0.0.1/unused")
+            .unwrap();
+        let state = AppState::new(pool, settings).unwrap();
+
+        let snapshot = state.metrics_snapshot();
+
+        assert_eq!(snapshot["runtime"]["api_runtime"], "rust-axum");
+        assert_eq!(snapshot["runtime"]["embedding_backend"], "hash");
+        assert_eq!(snapshot["runtime"]["embedding_model"], "rust-hash-512-v1");
+        assert_eq!(snapshot["runtime"]["embedding_dimension"], 512);
     }
 
     #[test]

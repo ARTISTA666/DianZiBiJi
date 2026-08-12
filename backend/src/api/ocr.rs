@@ -306,7 +306,23 @@ async fn confirm_result(
     )
     .await?;
     transaction.commit().await?;
-    Ok(Json(fetch_result(&state, result_id).await?.into()))
+    let confirmed = fetch_result(&state, result_id).await?;
+    if let Ok(file) = crate::rag::fetch_rag_file(&state.pool, locked_context.file_id).await {
+        if file.file_category == "knowledge_document" && file.status == "approved" {
+            if let Err(error) = crate::api::rag::sync_approved_file(
+                &state,
+                &user,
+                file.id,
+                client.ip_opt(),
+                client.ua_opt(),
+            )
+            .await
+            {
+                tracing::warn!(file_id = file.id, %error.detail, "OCR confirmed but automatic RAG indexing failed");
+            }
+        }
+    }
+    Ok(Json(confirmed.into()))
 }
 
 #[derive(Debug, FromRow)]
@@ -553,6 +569,19 @@ mod tests {
         )
         .await;
         let project_id = project["id"].as_i64().unwrap();
+        let (_, note) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(admin),
+            Some(json!({
+                "title": format!("OCR source note {suffix}"),
+                "experiment_type": "text extraction",
+                "content_json": {"text": "OCR source"}
+            })),
+        )
+        .await;
+        let note_id = note["id"].as_i64().unwrap();
         let boundary = "eln-ocr-boundary";
         let multipart = format!(
             "--{boundary}\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"notes.txt\"\r\nContent-Type: text/plain\r\n\r\nexperiment temperature 58 C\r\n--{boundary}--\r\n"
@@ -560,7 +589,9 @@ mod tests {
         let (_, uploaded) = call(
             &app,
             "POST",
-            &format!("/projects/{project_id}/files?file_category=note_attachment"),
+            &format!(
+                "/projects/{project_id}/files?file_category=note_attachment&note_id={note_id}"
+            ),
             Some(admin),
             Some(&format!("multipart/form-data; boundary={boundary}")),
             multipart.into_bytes(),
@@ -664,6 +695,19 @@ mod tests {
         )
         .await;
         let project_id = project["id"].as_i64().unwrap();
+        let (_, note) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(&admin),
+            Some(json!({
+                "title": format!("OCR concurrency source note {suffix}"),
+                "experiment_type": "text extraction",
+                "content_json": {"text": "OCR concurrency source"}
+            })),
+        )
+        .await;
+        let note_id = note["id"].as_i64().unwrap();
         let boundary = "eln-ocr-concurrency-boundary";
         let multipart = format!(
             "--{boundary}\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"race.txt\"\r\nContent-Type: text/plain\r\n\r\nconcurrent extraction\r\n--{boundary}--\r\n"
@@ -671,7 +715,9 @@ mod tests {
         let (_, uploaded) = call(
             &app,
             "POST",
-            &format!("/projects/{project_id}/files?file_category=note_attachment"),
+            &format!(
+                "/projects/{project_id}/files?file_category=note_attachment&note_id={note_id}"
+            ),
             Some(&admin),
             Some(&format!("multipart/form-data; boundary={boundary}")),
             multipart.into_bytes(),

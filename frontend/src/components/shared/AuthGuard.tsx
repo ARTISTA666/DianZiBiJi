@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/stores";
+import { FullScreenLoadingSkeleton } from "@/components/skeletons";
 
 export function AuthGuard({ children }: { children: React.ReactNode }) {
   const token = useAuthStore((s) => s.token);
@@ -25,11 +26,7 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
   }, [checking, token]);
 
   if (checking || !token) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-sm text-muted-foreground">加载中...</p>
-      </div>
-    );
+    return <FullScreenLoadingSkeleton />;
   }
 
   return <>{children}</>;

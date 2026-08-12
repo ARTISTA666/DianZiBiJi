@@ -137,6 +137,23 @@ test("登录并完成笔记审批", async ({ page }) => {
   await card.getByRole("button", { name: "通过", exact: true }).click();
 
   await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
+
+  // 纯 LLM 不依赖项目资料库初始化，确保空资料库也能完成通用问答。
+  await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
+  await page.getByRole("combobox").click();
+  await page.getByRole("option", { name: "纯 LLM", exact: true }).click();
+  await page.getByPlaceholder(/输入通用问题/).fill("什么是 PCR？");
+  await page.getByRole("button", { name: "提问", exact: true }).click();
+  await expect(page.getByText(/E2E 固定回答/).first()).toBeVisible({ timeout: 60_000 });
+
+  // 结构化查询只读取知识图谱，同样不应被资料库初始化状态阻塞。
+  await page.getByRole("combobox").click();
+  await page.getByRole("option", { name: "结构化查询", exact: true }).click();
+  const structuredQuestion = "PCR 使用了什么试剂？";
+  await page.getByPlaceholder(/输入问题/).fill(structuredQuestion);
+  await page.getByRole("button", { name: "提问", exact: true }).click();
+  const structuredTurn = page.getByText(structuredQuestion, { exact: true }).locator("..").locator("..");
+  await expect(structuredTurn.getByText(/结构化查询未找到|E2E 固定回答/)).toBeVisible({ timeout: 60_000 });
 });
 
 
@@ -166,8 +183,13 @@ test("图片 OCR、人工校对、入库、问答和五方法实验形成闭环"
   await page.getByRole("button", { name: "确认校对并签名" }).click();
   await expect(page.getByText("文本校对已确认，图片资料现可进入 RAG 入库流程")).toBeVisible();
 
-  await fileRow.getByRole("button", { name: "本地向量入库" }).click();
-  await expect(page.getByText("资料已同步到 AI 知识库")).toBeVisible({ timeout: 120_000 });
+  const syncButton = fileRow.getByRole("button", { name: /(?:本地|重试)向量入库/ });
+  if (await syncButton.count() > 0) {
+    await syncButton.click();
+    await expect(page.getByText("资料已同步到 AI 知识库")).toBeVisible({ timeout: 120_000 });
+  } else {
+    await expect(fileRow.getByText("已入库", { exact: true })).toBeVisible();
+  }
 
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
   await expect(page.getByText("已初始化 · 1 个文件已入库", { exact: true })).toBeVisible();
@@ -175,13 +197,22 @@ test("图片 OCR、人工校对、入库、问答和五方法实验形成闭环"
   await page.getByRole("button", { name: "提问", exact: true }).click();
   await expect(page.getByText(/E2E 固定回答/).first()).toBeVisible({ timeout: 60_000 });
 
-  await page.goto(`/projects/${projectId}/system-test`, { waitUntil: "networkidle" });
-  await page.getByLabel("实验名称").fill("E2E 五方法问答实验");
-  await page.getByLabel("测试问题（每行一个）").fill(OCR_QUESTION);
-  await page.getByLabel("每种方法重复次数").fill("1");
-  await page.getByLabel("随机种子").fill("20260713");
-  await page.getByRole("button", { name: "运行五方法对照实验" }).click();
-  await expect(page.getByText(/对照实验 #\d+ 已结束：成功 5，失败 0/)).toBeVisible({ timeout: 120_000 });
+  // 盲评题目来自实验运行。实验控制台已从主项目移出，测试直接调用原系统
+  // 的实验 API 准备最小题集，避免把旧页面重新耦合进主系统验收。
+  const experiment = await checkedJson(await adminApi.post(`/projects/${projectId}/rag/experiments`, {
+    data: {
+      name: "E2E 盲评题集准备",
+      questions: [OCR_QUESTION],
+        modes: ["pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag"],
+      repetitions: 1,
+      randomize_order: false,
+      random_seed: 20260713,
+    },
+  }));
+  await expect.poll(async () => {
+    const current = await checkedJson(await adminApi.get(`/rag/experiments/${experiment.id}`));
+    return current.status;
+  }, { timeout: 120_000 }).toBe("completed");
 });
 
 
@@ -246,7 +277,7 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await page.getByLabel("设为独立盲评人").check();
   await page.getByRole("button", { name: "添加独立盲评人" }).click();
   const reviewerRow = page.locator("div.rounded-md.border.p-3").filter({
-    has: page.getByText(`用户 #${managedUserId}`, { exact: true }),
+    has: page.getByText(`${MANAGED_DISPLAY_NAME} (#${managedUserId})`, { exact: true }),
   });
   await expect(reviewerRow).toBeVisible();
   await expect(reviewerRow.getByText("独立盲评", { exact: true })).toBeVisible();

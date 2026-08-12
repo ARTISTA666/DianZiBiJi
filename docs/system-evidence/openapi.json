@@ -121,8 +121,8 @@
           "random_seed": {
             "anyOf": [
               {
-                "maximum": 2147483647.0,
-                "minimum": 0.0,
+                "maximum": 2147483647,
+                "minimum": 0,
                 "type": "integer"
               },
               {
@@ -138,8 +138,8 @@
           },
           "repetitions": {
             "default": 1,
-            "maximum": 10.0,
-            "minimum": 1.0,
+            "maximum": 10,
+            "minimum": 1,
             "title": "Repetitions",
             "type": "integer"
           }
@@ -387,8 +387,8 @@
             "type": "boolean"
           },
           "score": {
-            "maximum": 5.0,
-            "minimum": 1.0,
+            "maximum": 5,
+            "minimum": 1,
             "title": "Score",
             "type": "integer"
           }
@@ -565,6 +565,11 @@
           },
           "retrieval_config_json": {
             "additionalProperties": true,
+            "properties": {
+              "retrieval_min_score": {
+                "type": "number"
+              }
+            },
             "title": "Retrieval Config Json",
             "type": "object"
           },
@@ -850,6 +855,80 @@
           }
         },
         "title": "ApprovalRequest",
+        "type": "object"
+      },
+      "AuditLogRead": {
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "actor_user_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actor User Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "detail_json": {
+            "additionalProperties": true,
+            "title": "Detail Json",
+            "type": "object"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          },
+          "target_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Id"
+          },
+          "target_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Type"
+          }
+        },
+        "required": [
+          "id",
+          "action",
+          "detail_json",
+          "created_at"
+        ],
+        "title": "AuditLogRead",
         "type": "object"
       },
       "BlindReviewBatchRead": {
@@ -1700,6 +1779,10 @@
             "title": "Content Json",
             "type": "object"
           },
+          "content_text": {
+            "title": "Content Text",
+            "type": "string"
+          },
           "experiment_date": {
             "anyOf": [
               {
@@ -1831,6 +1914,18 @@
         "title": "NoteRead",
         "type": "object"
       },
+      "NoteStatus": {
+        "enum": [
+          "draft",
+          "submitted",
+          "approved",
+          "returned",
+          "archived",
+          "voided"
+        ],
+        "title": "NoteStatus",
+        "type": "string"
+      },
       "NoteUpdate": {
         "properties": {
           "change_summary": {
@@ -1855,6 +1950,10 @@
               }
             ],
             "title": "Content Json"
+          },
+          "content_text": {
+            "title": "Content Text",
+            "type": "string"
           },
           "experiment_date": {
             "anyOf": [
@@ -2086,6 +2185,130 @@
         "title": "OcrJobResult",
         "type": "object"
       },
+      "PaginatedResponse_AuditLogRead_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AuditLogRead"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "skip": {
+            "title": "Skip",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "skip",
+          "limit"
+        ],
+        "title": "PaginatedResponse[AuditLogRead]",
+        "type": "object"
+      },
+      "PaginatedResponse_FileRead_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/FileRead"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "default": 50,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "skip": {
+            "default": 0,
+            "title": "Skip",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total"
+        ],
+        "title": "PaginatedResponse[FileRead]",
+        "type": "object"
+      },
+      "PaginatedResponse_NoteRead_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/NoteRead"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "default": 50,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "skip": {
+            "default": 0,
+            "title": "Skip",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total"
+        ],
+        "title": "PaginatedResponse[NoteRead]",
+        "type": "object"
+      },
+      "PaginatedResponse_UserRead_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/UserRead"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "default": 50,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "skip": {
+            "default": 0,
+            "title": "Skip",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total"
+        ],
+        "title": "PaginatedResponse[UserRead]",
+        "type": "object"
+      },
       "ProjectCreate": {
         "properties": {
           "approval_enabled": {
@@ -2129,6 +2352,37 @@
           "name"
         ],
         "title": "ProjectCreate",
+        "type": "object"
+      },
+      "ProjectListResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ProjectRead"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "default": 20,
+            "title": "Limit",
+            "type": "integer"
+          },
+          "skip": {
+            "default": 0,
+            "title": "Skip",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total"
+        ],
+        "title": "ProjectListResponse",
         "type": "object"
       },
       "ProjectMemberCreate": {
@@ -2200,6 +2454,10 @@
             "title": "Id",
             "type": "integer"
           },
+          "is_independent_reviewer": {
+            "title": "Is Independent Reviewer",
+            "type": "boolean"
+          },
           "project_id": {
             "title": "Project Id",
             "type": "integer"
@@ -2222,7 +2480,8 @@
           "can_write",
           "can_review",
           "can_evaluate",
-          "can_manage"
+          "can_manage",
+          "is_independent_reviewer"
         ],
         "title": "ProjectMemberRead",
         "type": "object"
@@ -2474,6 +2733,46 @@
         "title": "ProjectUpdate",
         "type": "object"
       },
+      "RagCitationAuditRead": {
+        "properties": {
+          "citation_count": {
+            "title": "Citation Count",
+            "type": "integer"
+          },
+          "has_evidence": {
+            "title": "Has Evidence",
+            "type": "boolean"
+          },
+          "invalid_citations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Invalid Citations",
+            "type": "array"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "repair_attempted": {
+            "title": "Repair Attempted",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "passed",
+          "citation_count",
+          "has_evidence",
+          "message",
+          "repair_attempted"
+        ],
+        "title": "RagCitationAuditRead",
+        "type": "object"
+      },
       "RagDatasetRead": {
         "properties": {
           "created_at": {
@@ -2553,6 +2852,13 @@
             "title": "Relation Label",
             "type": "string"
           },
+          "relation_roles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Relation Roles",
+            "type": "array"
+          },
           "relation_type": {
             "title": "Relation Type",
             "type": "string"
@@ -2607,13 +2913,46 @@
           "target_label",
           "target_entity_type",
           "target_entity_type_label",
-          "confidence"
+          "confidence",
+          "relation_roles"
         ],
         "title": "RagGraphContextRead",
         "type": "object"
       },
+      "RagHistoryEntry": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "answer"
+        ],
+        "title": "RagHistoryEntry",
+        "type": "object"
+      },
       "RagQueryRequest": {
         "properties": {
+          "history": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/RagHistoryEntry"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "History"
+          },
           "mode": {
             "default": "auto",
             "enum": [
@@ -2640,6 +2979,16 @@
           "answer": {
             "title": "Answer",
             "type": "string"
+          },
+          "citation_audit": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RagCitationAuditRead"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "conversation_id": {
             "anyOf": [
@@ -3004,6 +3353,8 @@
       "UserCreate": {
         "properties": {
           "display_name": {
+            "maxLength": 120,
+            "minLength": 1,
             "title": "Display Name",
             "type": "string"
           },
@@ -3020,6 +3371,8 @@
             "title": "Email"
           },
           "password": {
+            "maxLength": 128,
+            "minLength": 8,
             "title": "Password",
             "type": "string"
           },
@@ -3029,6 +3382,9 @@
             "type": "string"
           },
           "username": {
+            "maxLength": 64,
+            "minLength": 3,
+            "pattern": "^[A-Za-z0-9_.-]+$",
             "title": "Username",
             "type": "string"
           }
@@ -3039,6 +3395,26 @@
           "display_name"
         ],
         "title": "UserCreate",
+        "type": "object"
+      },
+      "UserPasswordChange": {
+        "properties": {
+          "current_password": {
+            "title": "Current Password",
+            "type": "string"
+          },
+          "new_password": {
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "New Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "current_password",
+          "new_password"
+        ],
+        "title": "UserPasswordChange",
         "type": "object"
       },
       "UserRead": {
@@ -3114,6 +3490,8 @@
           "password": {
             "anyOf": [
               {
+                "maxLength": 128,
+                "minLength": 8,
                 "type": "string"
               },
               {
@@ -3613,6 +3991,45 @@
               ],
               "title": "Date To"
             }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Skip",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "cookie",
+            "name": "eln_access_token",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Eln Access Token"
+            }
           }
         ],
         "responses": {
@@ -3620,12 +4037,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "additionalProperties": true,
-                    "type": "object"
-                  },
+                  "additionalProperties": true,
                   "title": "Response List Audit Logs Audit Logs Get",
-                  "type": "array"
+                  "type": "object"
                 }
               }
             },
@@ -4500,6 +4914,54 @@
         "summary": "Health"
       }
     },
+    "/maturity/status": {
+      "get": {
+        "operationId": "maturity_status_maturity_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Maturity Status Maturity Status Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Maturity Status",
+        "tags": [
+          "maturity"
+        ]
+      }
+    },
+    "/metrics": {
+      "get": {
+        "operationId": "runtime_metrics_metrics_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Runtime Metrics Metrics Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Runtime Metrics"
+      }
+    },
     "/notes/{note_id}": {
       "get": {
         "operationId": "get_note_notes__note_id__get",
@@ -5190,20 +5652,51 @@
     "/projects": {
       "get": {
         "operationId": "list_projects_projects_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skip",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Skip",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/ProjectRead"
-                  },
-                  "title": "Response List Projects Projects Get",
-                  "type": "array"
+                  "$ref": "#/components/schemas/ProjectListResponse"
                 }
               }
             },
             "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
           }
         },
         "security": [
@@ -5414,6 +5907,158 @@
         ]
       }
     },
+    "/projects/{project_id}/audit-logs": {
+      "get": {
+        "operationId": "list_project_audit_logs_projects__project_id__audit_logs_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "schema": {
+              "title": "Project Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "actor_user_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Actor User Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "action",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Action"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Skip",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "cookie",
+            "name": "eln_access_token",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Eln Access Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_AuditLogRead_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Project Audit Logs",
+        "tags": [
+          "audit"
+        ]
+      }
+    },
     "/projects/{project_id}/documents": {
       "get": {
         "operationId": "list_project_documents_projects__project_id__documents_get",
@@ -5532,6 +6177,45 @@
               "title": "Project Id",
               "type": "integer"
             }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Skip",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "cookie",
+            "name": "eln_access_token",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Eln Access Token"
+            }
           }
         ],
         "responses": {
@@ -5539,11 +6223,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/FileRead"
-                  },
-                  "title": "Response List Project Files Projects  Project Id  Files Get",
-                  "type": "array"
+                  "$ref": "#/components/schemas/PaginatedResponse_FileRead_"
                 }
               }
             },
@@ -5991,6 +6671,61 @@
               "title": "Project Id",
               "type": "integer"
             }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Skip",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/NoteStatus"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "cookie",
+            "name": "eln_access_token",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Eln Access Token"
+            }
           }
         ],
         "responses": {
@@ -5998,11 +6733,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/NoteRead"
-                  },
-                  "title": "Response List Notes Projects  Project Id  Notes Get",
-                  "type": "array"
+                  "$ref": "#/components/schemas/PaginatedResponse_NoteRead_"
                 }
               }
             },
@@ -6178,6 +6909,60 @@
           }
         ],
         "summary": "List Blind Review Batches",
+        "tags": [
+          "rag"
+        ]
+      }
+    },
+    "/projects/{project_id}/rag/blind-review/batches/{batch_id}/export.csv": {
+      "get": {
+        "operationId": "export_blind_review_batch_projects__project_id__rag_blind_review_batches__batch_id__export_csv_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "schema": {
+              "title": "Project Id",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export Blind Review Batch",
         "tags": [
           "rag"
         ]
@@ -6400,7 +7185,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "202": {
             "content": {
               "application/json": {
                 "schema": {
@@ -6749,6 +7534,53 @@
         ]
       }
     },
+    "/rag/experiments/{run_id}": {
+      "get": {
+        "operationId": "get_rag_experiment_rag_experiments__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AIExperimentRunRead"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Rag Experiment",
+        "tags": [
+          "rag"
+        ]
+      }
+    },
     "/rag/experiments/{run_id}/export.csv": {
       "get": {
         "operationId": "export_rag_experiment_rag_experiments__run_id__export_csv_get",
@@ -6789,6 +7621,53 @@
           }
         ],
         "summary": "Export Rag Experiment",
+        "tags": [
+          "rag"
+        ]
+      }
+    },
+    "/rag/experiments/{run_id}/resume": {
+      "post": {
+        "operationId": "resume_rag_experiment_rag_experiments__run_id__resume_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AIExperimentRunRead"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Resume Rag Experiment",
         "tags": [
           "rag"
         ]
@@ -6851,6 +7730,26 @@
         ]
       }
     },
+    "/ready": {
+      "get": {
+        "operationId": "ready_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ready Ready Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Ready"
+      }
+    },
     "/templates": {
       "get": {
         "operationId": "list_templates_templates_get",
@@ -6884,20 +7783,67 @@
     "/users": {
       "get": {
         "operationId": "list_users_users_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skip",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Skip",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "cookie",
+            "name": "eln_access_token",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Eln Access Token"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/UserRead"
-                  },
-                  "title": "Response List Users Users Get",
-                  "type": "array"
+                  "$ref": "#/components/schemas/PaginatedResponse_UserRead_"
                 }
               }
             },
             "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
           }
         },
         "security": [
@@ -6950,6 +7896,52 @@
           }
         ],
         "summary": "Create User",
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/users/me/password": {
+      "post": {
+        "operationId": "change_own_password_users_me_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPasswordChange"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Change Own Password",
         "tags": [
           "users"
         ]

@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from freeze_system_evidence import GIT_COMMIT, verify_manifest as verify_system_evidence_manifest
+from check_rag_evidence import REQUIRED_BINDINGS, canonical_sha256, validate as validate_rag_evidence
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,7 @@ DEFAULT_EXPERIMENT_REPORT = ROOT / "data" / "real" / "GSE111619" / "main_v8_kg_h
 DEFAULT_AGENT_REPORT = ROOT / "data" / "real" / "GSE111619" / "main_v8_agent_probe_report.json"
 DEFAULT_SYSTEM_EVIDENCE_REPORT = ROOT / "docs" / "system-evidence" / "validation-results.json"
 DEFAULT_EVIDENCE_MANIFEST = ROOT / "output" / "release-evidence" / "maturity-evidence-manifest.json"
+DEFAULT_RETRIEVAL_RUNTIME_MANIFEST = ROOT / "output" / "release-evidence" / "rag-runtime-manifest.json"
 DEFAULT_OUTPUT = ROOT / "docs" / "experiments" / "maturity-gate-latest.json"
 DEFAULT_MARKDOWN = ROOT / "docs" / "experiments" / "maturity-gate-latest.md"
 
@@ -123,7 +125,10 @@ def safe_checks(name: str, fn, report: dict[str, Any] | None) -> list[dict[str, 
         ]
 
 
-def retrieval_checks(report: dict[str, Any] | None) -> list[dict[str, Any]]:
+def retrieval_checks(
+    report: dict[str, Any] | None,
+    runtime_manifest: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
     if report is None:
         return [
             {
@@ -140,7 +145,37 @@ def retrieval_checks(report: dict[str, Any] | None) -> list[dict[str, Any]]:
         raise ValueError("retrieval report has no aggregate rows")
     graph = row_by_mode(aggregate, "graph_enhanced_rag")
     hybrid = row_by_mode(aggregate, "hybrid_rag")
+    bindings = report.get("evidence_bindings") or {}
+    configuration = report.get("configuration") or {}
+    expected_bindings = sorted(set(REQUIRED_BINDINGS) - set(bindings))
+    if runtime_manifest is None:
+        runtime_consistency = {
+            "name": "retrieval runtime evidence manifest",
+            "actual": "missing",
+            "operator": "present",
+            "expected": "runtime evidence manifest",
+            "passed": False,
+        }
+    else:
+        runtime_consistency = check(
+            "retrieval runtime evidence consistency",
+            validate_rag_evidence(report, runtime_manifest),
+            "==",
+            [],
+        )
     return [
+        check("retrieval evidence binding completeness", expected_bindings, "==", []),
+        runtime_consistency,
+        check("retrieval runtime", bindings.get("api_runtime"), "==", "rust-axum"),
+        check("retrieval reproducibility", report.get("reproducibility_verified"), "==", True),
+        check(
+            "retrieval parameters hash",
+            bindings.get("retrieval_parameters_sha256"),
+            "==",
+            canonical_sha256(configuration),
+        ),
+        check("retrieval corpus hash binding", bindings.get("corpus_sha256"), "==", corpus.get("sha256")),
+        check("retrieval question-set hash binding", bindings.get("questions_sha256"), "==", report.get("questions_sha256")),
         check("retrieval question count", report.get("question_count", 0), ">=", THRESHOLDS["retrieval_question_count_min"]),
         check("retrieval gold fact count", report.get("fact_count", 0), ">=", THRESHOLDS["retrieval_fact_count_min"]),
         check("retrieval corpus chunk count", corpus.get("chunk_count", 0), ">=", THRESHOLDS["retrieval_chunk_count_min"]),
@@ -421,18 +456,28 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
     agent_path = args.agent_report or DEFAULT_AGENT_REPORT
     system_evidence_path = args.system_evidence_report or DEFAULT_SYSTEM_EVIDENCE_REPORT
     evidence_manifest_path = getattr(args, "evidence_manifest", None)
+    retrieval_runtime_manifest_path = getattr(args, "retrieval_runtime_manifest", None)
     agent = load_json(agent_path) if agent_path.is_file() else None
     system_evidence = load_json(system_evidence_path) if system_evidence_path.is_file() else None
+    retrieval_runtime_manifest = (
+        load_json(retrieval_runtime_manifest_path)
+        if retrieval_runtime_manifest_path
+        else None
+    )
     groups = {
-        "retrieval": safe_checks("retrieval", retrieval_checks, retrieval),
+        "retrieval": safe_checks(
+            "retrieval",
+            lambda value: retrieval_checks(value, retrieval_runtime_manifest),
+            retrieval,
+        ),
         "rag_experiment": safe_checks("RAG experiment", experiment_checks, experiment),
         "agent": safe_checks("agent", agent_checks, agent),
         "system": safe_checks("system", system_evidence_checks, system_evidence),
     }
-    manifest_checks, source_revision = evaluate_evidence_manifest(
-        evidence_manifest_path,
-        [args.retrieval_report, args.experiment_report, agent_path, system_evidence_path],
-    )
+    manifest_inputs = [args.retrieval_report, args.experiment_report, agent_path, system_evidence_path]
+    if retrieval_runtime_manifest_path:
+        manifest_inputs.append(retrieval_runtime_manifest_path)
+    manifest_checks, source_revision = evaluate_evidence_manifest(evidence_manifest_path, manifest_inputs)
     if manifest_checks:
         groups["evidence_manifest"] = manifest_checks
     failures = [
@@ -449,6 +494,9 @@ def build_report(args: argparse.Namespace) -> dict[str, Any]:
         "thresholds": THRESHOLDS,
         "inputs": {
             "retrieval_report": str(args.retrieval_report),
+            "retrieval_runtime_manifest": str(retrieval_runtime_manifest_path)
+            if retrieval_runtime_manifest_path
+            else None,
             "experiment_report": str(args.experiment_report),
             "agent_report": str(agent_path) if agent_path.is_file() else None,
             "system_evidence_report": str(system_evidence_path) if system_evidence_path.is_file() else None,
@@ -513,6 +561,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--markdown", type=Path, default=DEFAULT_MARKDOWN)
     parser.add_argument("--evidence-manifest", type=Path, default=DEFAULT_EVIDENCE_MANIFEST)
+    parser.add_argument(
+        "--retrieval-runtime-manifest",
+        type=Path,
+        default=DEFAULT_RETRIEVAL_RUNTIME_MANIFEST,
+    )
     return parser.parse_args()
 
 

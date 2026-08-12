@@ -28,12 +28,16 @@ REQUIRED_PRODUCTION_KEYS = {
     "SEED_DEMO_DATA",
     "CORS_ORIGINS",
     "NEXT_PUBLIC_API_BASE_URL",
-    "DEEPSEEK_API_BASE_URL",
-    "DEEPSEEK_API_KEY",
+    "AI_PROVIDER",
+    "AI_BASE_URL",
+    "AI_API_KEY",
+    "AI_MODEL",
     "APP_REVISION",
+    "TRUSTED_PROXY_IPS",
     "EMBEDDING_BACKEND",
     "EMBEDDING_MODEL",
     "EMBEDDING_DIMENSION",
+    "EMBEDDING_API_URL",
 }
 
 REQUIRED_PRODUCTION_CHECKS = {
@@ -47,6 +51,7 @@ REQUIRED_PRODUCTION_CHECKS = {
     "deepseek_api_uses_https",
     "deepseek_api_key_present",
     "app_revision_present",
+    "trusted_proxy_ips_configured",
     "embedding_matches_rust_runtime",
     "rust_runtime_settings_accepted",
     "compose_ports_bind_loopback",
@@ -160,13 +165,19 @@ def production_checks(
         "seed_demo_data_disabled": not settings.seed_demo_data,
         "cors_origins_are_https": bool(cors_origins) and all(is_https_origin(origin) for origin in cors_origins),
         "frontend_api_is_same_origin": values.get("NEXT_PUBLIC_API_BASE_URL") == "/api",
-        "deepseek_api_uses_https": is_https_origin(values.get("DEEPSEEK_API_BASE_URL", "")),
-        "deepseek_api_key_present": bool(settings.deepseek_api_key.strip()),
+        "deepseek_api_uses_https": is_https_origin(
+            values.get("AI_BASE_URL") or values.get("DEEPSEEK_API_BASE_URL", "")
+        ),
+        "deepseek_api_key_present": bool(
+            (values.get("AI_API_KEY") or settings.deepseek_api_key).strip()
+        ),
         "app_revision_present": bool(settings.app_revision.strip()) and settings.app_revision != "unversioned",
+        "trusted_proxy_ips_configured": bool(values.get("TRUSTED_PROXY_IPS", "").strip()),
         "embedding_matches_rust_runtime": (
-            values.get("EMBEDDING_BACKEND") == "hash"
-            and values.get("EMBEDDING_MODEL") == "rust-hash-512-v1"
-            and values.get("EMBEDDING_DIMENSION") == "512"
+            values.get("EMBEDDING_BACKEND") == "openai_compatible"
+            and values.get("EMBEDDING_MODEL") == "BAAI/bge-m3"
+            and values.get("EMBEDDING_DIMENSION") == "1024"
+            and is_https_origin(values.get("EMBEDDING_API_URL", ""))
         ),
         "rust_runtime_settings_accepted": bool((runtime_check or {}).get("passed")),
         "compose_ports_bind_loopback": compose_safe,
@@ -176,9 +187,22 @@ def production_checks(
 def check(
     env_file: Path | None = None, rust_config_checker: Path | None = None
 ) -> dict:
-    settings = Settings(_env_file=env_file) if env_file else Settings()
-    keys = checked_keys(env_file)
     values = read_env_values(env_file)
+    compatibility_overrides = {
+        "deepseek_api_base_url": values.get("AI_BASE_URL")
+        or values.get("DEEPSEEK_API_BASE_URL"),
+        "deepseek_api_key": values.get("AI_API_KEY") or values.get("DEEPSEEK_API_KEY"),
+        "deepseek_model": values.get("AI_MODEL") or values.get("DEEPSEEK_MODEL"),
+    }
+    compatibility_overrides = {
+        key: value for key, value in compatibility_overrides.items() if value is not None
+    }
+    settings = (
+        Settings(_env_file=env_file, **compatibility_overrides)
+        if env_file
+        else Settings(**compatibility_overrides)
+    )
+    keys = checked_keys(env_file)
     runtime_check = (
         rust_runtime_config_check(values, rust_config_checker)
         if settings.app_env == "production"

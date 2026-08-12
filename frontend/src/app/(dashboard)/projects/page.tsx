@@ -1,30 +1,31 @@
 "use client";
 
-import { useEffect, useState, useMemo, KeyboardEvent } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Plus, FolderOpen, ChevronLeft, ChevronRight, ClipboardCheck } from "lucide-react";
+import { Plus, FolderOpen, ClipboardCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ErrorBanner } from "@/components/shared/error-banner";
+import { EmptyState } from "@/components/shared/empty-state";
+import { PagePagination } from "@/components/shared/page-pagination";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getPendingApprovals, type Note } from "@/lib/api";
-import { getErrorMessage } from "@/lib/utils";
+import { getErrorMessage, handleCardKeyDown } from "@/lib/utils";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { ProjectCardSkeleton } from "@/components/skeletons";
 
 const PAGE_SIZE = 20;
 const statusMap: Record<string, string> = { active: "进行中", archived: "已归档", pending: "待启动" };
-
-const handleCardKeyDown = (e: KeyboardEvent, callback: () => void) => {
-  if (e.key === "Enter" || e.key === " ") {
-    e.preventDefault();
-    callback();
-  }
+const statusBadgeVariant: Record<string, "success" | "info" | "secondary"> = {
+  active: "success",
+  pending: "info",
+  archived: "secondary",
 };
 
 export default function ProjectsPage() {
@@ -115,20 +116,8 @@ export default function ProjectsPage() {
 
   return (
     <div className="space-y-6">
-      {error && <p className="rounded-md bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p>}
-      {pendingNotes.length > 0 && (
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-900">
-          <span className="inline-flex items-center gap-1.5 font-medium">
-            <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
-            你有 {pendingNotes.length} 条待审批笔记
-          </span>
-          {pendingGroups.map((g) => (
-            <Link key={g.projectId} href={`/projects/${g.projectId}/approvals`} className="underline underline-offset-2 hover:text-blue-700">
-              {g.name}（{g.count} 条）
-            </Link>
-          ))}
-        </div>
-      )}
+      {error && <ErrorBanner message={error} />}
+      {/* PageHeader：标题 + 描述 + 右侧主 CTA（页面唯一主操作，默认 size） */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">项目</h1>
@@ -137,7 +126,7 @@ export default function ProjectsPage() {
         {canCreateProject && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button size="sm"><Plus className="mr-2 h-4 w-4" />新建项目</Button>
+              <Button><Plus className="mr-2 h-4 w-4" />新建项目</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader><DialogTitle>新建项目</DialogTitle></DialogHeader>
@@ -151,7 +140,7 @@ export default function ProjectsPage() {
                   <Label htmlFor="pdesc">项目描述</Label>
                   <Textarea id="pdesc" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="可选" rows={3} />
                 </div>
-                <Button onClick={handleCreate} disabled={busy || !name.trim()} className="w-full">
+                <Button onClick={handleCreate} disabled={busy || !name.trim()} isLoading={busy} className="w-full">
                   {busy ? "创建中..." : "创建"}
                 </Button>
               </div>
@@ -159,6 +148,20 @@ export default function ProjectsPage() {
           </Dialog>
         )}
       </div>
+      {/* 待审批横幅：页头下方首屏第一要素 */}
+      {pendingNotes.length > 0 && (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-md border border-info/30 bg-info/10 px-4 py-3 text-sm text-info">
+          <span className="inline-flex items-center gap-1.5 font-medium">
+            <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
+            你有 {pendingNotes.length} 条待审批笔记
+          </span>
+          {pendingGroups.map((g) => (
+            <Link key={g.projectId} href={`/projects/${g.projectId}/approvals`} className="underline underline-offset-2 hover:text-info/80">
+              {g.name}（{g.count} 条）
+            </Link>
+          ))}
+        </div>
+      )}
 
       {loading ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -167,15 +170,11 @@ export default function ProjectsPage() {
           ))}
         </div>
       ) : projects.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <FolderOpen className="h-12 w-12 text-muted-foreground/50" />
-            <h3 className="mt-4 text-lg font-medium">暂无项目</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {canCreateProject ? "点击「新建项目」创建你的第一个实验项目" : "当前账号暂无可访问的项目，请联系系统管理员"}
-            </p>
-          </CardContent>
-        </Card>
+        <EmptyState
+          icon={FolderOpen}
+          title="暂无项目"
+          description={canCreateProject ? "点击「新建项目」创建你的第一个实验项目" : "当前账号暂无可访问的项目，请联系系统管理员"}
+        />
       ) : (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -184,7 +183,7 @@ export default function ProjectsPage() {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-base">{p.name}</CardTitle>
-                    <Badge variant="secondary" className="text-xs">{statusMap[p.status] || p.status}</Badge>
+                    <Badge variant={statusBadgeVariant[p.status] || "secondary"} className="text-xs">{statusMap[p.status] || p.status}</Badge>
                   </div>
                   {p.description && <CardDescription className="line-clamp-2 mt-1">{p.description}</CardDescription>}
                 </CardHeader>
@@ -194,31 +193,16 @@ export default function ProjectsPage() {
 
           {/* Pagination */}
           {projectTotal > PAGE_SIZE && (
-            <div className="flex items-center justify-between pt-2">
-              <p className="text-sm text-muted-foreground">
-                第 {startItem}–{endItem} 条，共 {projectTotal} 条
-              </p>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={!hasPrev}
-                  onClick={() => token && loadPrevProjectsPage(token)}
-                >
-                  <ChevronLeft className="mr-1 h-4 w-4" />
-                  上一页
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={!hasNext}
-                  onClick={() => token && loadNextProjectsPage(token)}
-                >
-                  下一页
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
-              </div>
-            </div>
+            <PagePagination
+              startItem={startItem}
+              endItem={endItem}
+              total={projectTotal}
+              hasPrev={hasPrev}
+              hasNext={hasNext}
+              onPrev={() => token && loadPrevProjectsPage(token)}
+              onNext={() => token && loadNextProjectsPage(token)}
+              className="pt-2"
+            />
           )}
         </>
       )}

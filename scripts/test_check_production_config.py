@@ -43,14 +43,18 @@ def safe_production_values(**overrides: str) -> dict[str, str]:
         "BOOTSTRAP_ADMIN_PASSWORD": "a-secure-bootstrap-password",
         "POSTGRES_PASSWORD": "a-secure-database-password",
         "SEED_DEMO_DATA": "false",
-        "DEEPSEEK_API_BASE_URL": "https://api.deepseek.com",
-        "DEEPSEEK_API_KEY": "production-api-key",
+        "AI_PROVIDER": "deepseek",
+        "AI_BASE_URL": "https://api.deepseek.com",
+        "AI_API_KEY": "production-api-key",
+        "AI_MODEL": "deepseek-v4-flash",
         "APP_REVISION": "release-2026.07.29",
+        "TRUSTED_PROXY_IPS": "127.0.0.1,::1",
         "CORS_ORIGINS": "https://eln.example.org",
         "NEXT_PUBLIC_API_BASE_URL": "/api",
-        "EMBEDDING_BACKEND": "hash",
-        "EMBEDDING_MODEL": "rust-hash-512-v1",
-        "EMBEDDING_DIMENSION": "512",
+        "EMBEDDING_BACKEND": "openai_compatible",
+        "EMBEDDING_MODEL": "BAAI/bge-m3",
+        "EMBEDDING_DIMENSION": "1024",
+        "EMBEDDING_API_URL": "https://embedding.example.org/v1/embeddings",
     }
     values.update(overrides)
     return values
@@ -71,7 +75,7 @@ def test_production_rejects_browser_api_pointing_at_user_localhost(tmp_path: Pat
 def test_production_rejects_rust_incompatible_embedding(tmp_path: Path) -> None:
     env = write_env(
         tmp_path / ".env",
-        **safe_production_values(EMBEDDING_MODEL="BAAI/bge-small-zh-v1.5"),
+        **safe_production_values(EMBEDDING_MODEL="rust-hash-512-v1"),
     )
 
     result = MODULE.check(env)
@@ -139,7 +143,7 @@ def test_production_requires_env_file_to_cover_all_required_keys(tmp_path: Path)
         BOOTSTRAP_ADMIN_PASSWORD="a-secure-bootstrap-password",
         POSTGRES_PASSWORD="a-secure-database-password",
         SEED_DEMO_DATA="false",
-        DEEPSEEK_API_KEY="production-api-key",
+        AI_API_KEY="production-api-key",
     )
 
     result = MODULE.check(env)
@@ -152,7 +156,7 @@ def test_production_requires_env_file_to_cover_all_required_keys(tmp_path: Path)
         "BOOTSTRAP_ADMIN_PASSWORD",
         "POSTGRES_PASSWORD",
         "SEED_DEMO_DATA",
-        "DEEPSEEK_API_KEY",
+        "AI_API_KEY",
     }
     assert set(result["missing_checked_keys"]) == MODULE.REQUIRED_PRODUCTION_KEYS - supplied
     assert "one env file" in result["message"]
