@@ -104,6 +104,8 @@ pub(crate) fn tokens(text: &str) -> HashSet<String> {
     token_frequencies(text).into_keys().collect()
 }
 
+/// 仅被测试与图谱评分实验使用：生产检索已改为候选循环外预计算词集。
+#[cfg(test)]
 pub(crate) fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) -> usize {
     let text_tokens = tokens(text);
     query_tokens.intersection(&text_tokens).count()

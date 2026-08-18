@@ -13,7 +13,7 @@ use crate::{
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{
-        validate_project_role, validate_project_status, ProjectCreate, ProjectListQuery,
+        validate_project_role, validate_project_status, Paginated, ProjectCreate, ProjectListQuery,
         ProjectListResponse, ProjectMemberCreate, ProjectMemberRead, ProjectMemberUpdate,
         ProjectRead, ProjectReviewerCreate, ProjectReviewerRead, ProjectUpdate, UserRecord,
     },
@@ -120,7 +120,7 @@ async fn list_projects(
             .await?;
         (total, items)
     };
-    Ok(Json(ProjectListResponse {
+    Ok(Json(Paginated {
         items,
         total,
         skip: query.skip,

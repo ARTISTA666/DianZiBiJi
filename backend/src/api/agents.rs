@@ -474,44 +474,61 @@ async fn load_files(pool: &PgPool, project_id: i32) -> Result<Vec<SourceFile>, A
 fn select_source_files(
     task_type: &str,
     notes: &[SourceNote],
-    mut files: Vec<SourceFile>,
+    files: Vec<SourceFile>,
 ) -> Vec<SourceFile> {
-    files.sort_by(|left, right| {
-        file_relevance_score(task_type, notes, right)
-            .cmp(&file_relevance_score(task_type, notes, left))
-            .then_with(|| {
-                indexed_file_content(right)
-                    .is_some()
-                    .cmp(&indexed_file_content(left).is_some())
-            })
-            .then_with(|| right.id.cmp(&left.id))
-    });
-    files.truncate(MAX_AGENT_SOURCE_FILES);
-    files
-}
-
-fn file_relevance_score(task_type: &str, notes: &[SourceNote], file: &SourceFile) -> usize {
-    let Some(content) = indexed_file_content(file) else {
-        return 0;
-    };
-    let haystack = format!("{}\n{}", file.original_filename, content).to_lowercase();
+    // 每个文件只评分一次：原实现把评分放进排序比较器，导致 O(N·log N) 次
+    // 重复的字符串分配/小写化/全文扫描。评分键（相关度、有无索引内容、
+    // 文件 id）构成全序，先打分后按同一次序排序，结果逐位一致。
     let task_terms: &[&str] = match task_type {
         "literature_review" => &["文献", "研究", "综述", "paper", "review", "protocol"],
         "anomaly_detection" => &["异常", "偏差", "结果", "outlier", "error", "result"],
         _ => &["实验", "结果", "方法", "experiment", "result", "method"],
     };
-    let task_score = task_terms
-        .iter()
-        .filter(|term| haystack.contains(**term))
-        .count();
-    let note_score = notes
+    let note_terms: Vec<String> = notes
         .iter()
         .flat_map(|note| [&note.title, &note.experiment_type])
         .filter_map(|term| {
             let term = term.trim().to_lowercase();
             (term.chars().count() >= 2).then_some(term)
         })
-        .filter(|term| haystack.contains(term))
+        .collect();
+    let mut entries: Vec<(SourceFile, (usize, bool, i32))> = files
+        .into_iter()
+        .map(|file| {
+            let key = (
+                file_relevance_score(task_terms, &note_terms, &file),
+                indexed_file_content(&file).is_some(),
+                file.id,
+            );
+            (file, key)
+        })
+        .collect();
+    entries.sort_by(|(_, left), (_, right)| {
+        right
+            .0
+            .cmp(&left.0)
+            .then_with(|| right.1.cmp(&left.1))
+            .then_with(|| right.2.cmp(&left.2))
+    });
+    entries
+        .into_iter()
+        .map(|(file, _)| file)
+        .take(MAX_AGENT_SOURCE_FILES)
+        .collect()
+}
+
+fn file_relevance_score(task_terms: &[&str], note_terms: &[String], file: &SourceFile) -> usize {
+    let Some(content) = indexed_file_content(file) else {
+        return 0;
+    };
+    let haystack = format!("{}\n{}", file.original_filename, content).to_lowercase();
+    let task_score = task_terms
+        .iter()
+        .filter(|term| haystack.contains(**term))
+        .count();
+    let note_score = note_terms
+        .iter()
+        .filter(|term| haystack.contains(term.as_str()))
         .count();
     task_score + note_score.saturating_mul(3)
 }

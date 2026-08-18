@@ -75,23 +75,35 @@ pub struct UserRead {
     pub status: String,
 }
 
-pub fn validate_role(value: &str) -> Result<(), &'static str> {
-    if matches!(
-        value,
-        "super_admin" | "pi" | "group_leader" | "project_owner" | "reviewer" | "member"
-    ) {
+fn validate_membership(
+    value: &str,
+    allowed: &[&str],
+    unsupported: &'static str,
+) -> Result<(), &'static str> {
+    if allowed.contains(&value) {
         Ok(())
     } else {
-        Err("Unsupported user role")
+        Err(unsupported)
     }
 }
 
+pub fn validate_role(value: &str) -> Result<(), &'static str> {
+    validate_membership(
+        value,
+        &[
+            "super_admin",
+            "pi",
+            "group_leader",
+            "project_owner",
+            "reviewer",
+            "member",
+        ],
+        "Unsupported user role",
+    )
+}
+
 pub fn validate_user_status(value: &str) -> Result<(), &'static str> {
-    if matches!(value, "active" | "disabled") {
-        Ok(())
-    } else {
-        Err("Unsupported user status")
-    }
+    validate_membership(value, &["active", "disabled"], "Unsupported user status")
 }
 
 #[derive(Debug, Deserialize)]
@@ -130,13 +142,8 @@ pub struct ProjectRead {
     pub owner_user_id: Option<i32>,
 }
 
-#[derive(Debug, Serialize)]
-pub struct ProjectListResponse {
-    pub items: Vec<ProjectRead>,
-    pub total: i64,
-    pub skip: i64,
-    pub limit: i64,
-}
+/// 项目列表响应与通用分页结构完全同构，直接复用，避免重复定义漂移。
+pub type ProjectListResponse = Paginated<ProjectRead>;
 
 #[derive(Debug, Serialize)]
 pub struct Paginated<T> {
@@ -186,7 +193,7 @@ fn default_project_limit() -> i64 {
 #[derive(Debug, Deserialize)]
 pub struct ProjectMemberCreate {
     pub user_id: i32,
-    #[serde(default = "default_project_member_role")]
+    #[serde(default = "default_member_role")]
     pub project_role: String,
     #[serde(default = "default_true")]
     pub can_read: bool,
@@ -198,10 +205,6 @@ pub struct ProjectMemberCreate {
     pub can_evaluate: bool,
     #[serde(default)]
     pub can_manage: bool,
-}
-
-fn default_project_member_role() -> String {
-    "member".to_owned()
 }
 
 #[derive(Debug, Default, Deserialize)]
@@ -249,19 +252,15 @@ pub struct ProjectReviewerRead {
 }
 
 pub fn validate_project_role(value: &str) -> Result<(), &'static str> {
-    if matches!(value, "owner" | "reviewer" | "member" | "viewer") {
-        Ok(())
-    } else {
-        Err("Unsupported project role")
-    }
+    validate_membership(
+        value,
+        &["owner", "reviewer", "member", "viewer"],
+        "Unsupported project role",
+    )
 }
 
 pub fn validate_project_status(value: &str) -> Result<(), &'static str> {
-    if matches!(value, "active" | "archived") {
-        Ok(())
-    } else {
-        Err("Unsupported project status")
-    }
+    validate_membership(value, &["active", "archived"], "Unsupported project status")
 }
 
 #[derive(Debug, Deserialize)]
@@ -289,12 +288,8 @@ pub struct GroupRead {
 #[derive(Debug, Deserialize)]
 pub struct GroupMemberCreate {
     pub user_id: i32,
-    #[serde(default = "default_group_role")]
+    #[serde(default = "default_member_role")]
     pub group_role: String,
-}
-
-fn default_group_role() -> String {
-    "member".to_owned()
 }
 
 #[derive(Clone, Debug, Serialize, sqlx::FromRow)]

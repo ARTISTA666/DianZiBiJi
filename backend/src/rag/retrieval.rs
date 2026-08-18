@@ -7,7 +7,7 @@ use sqlx::PgPool;
 use sqlx::{FromRow, PgConnection, Postgres, Transaction};
 
 use super::{
-    bm25::{bm25_scores, exact_token_overlap, expand_query_for_bm25, tokens},
+    bm25::{bm25_scores, expand_query_for_bm25, tokens},
     index::validate_embedding_dimensions,
     round6, vector_literal,
 };
@@ -180,6 +180,17 @@ async fn retrieve_with_connection(
         (candidate_ids, vector_scores)
     };
 
+    let lexical_first = query_prefers_lexical_exact_match(query);
+    let use_rrf = !bm25_only && settings.rag_retrieval_strategy == "rrf-v1";
+    // 词法优先且走 rrf-v1 时，预先为每个块切好 content+filename 词集，
+    // 避免在候选评分循环里对每个候选重复分词（结果与原实现逐位一致）。
+    let content_token_sets = if use_rrf && lexical_first {
+        rows.iter()
+            .map(|row| (row.id, tokens(&format!("{} {}", row.content, row.filename))))
+            .collect::<HashMap<_, _>>()
+    } else {
+        HashMap::new()
+    };
     let rows_by_id = rows
         .into_iter()
         .map(|row| (row.id, row))
@@ -202,7 +213,6 @@ async fn retrieve_with_connection(
             .unwrap_or(std::cmp::Ordering::Equal)
             .then_with(|| left.cmp(right))
     });
-    let lexical_first = query_prefers_lexical_exact_match(query);
     let rrf_scores = if lexical_first {
         weighted_reciprocal_rank_fusion(&vector_ranking, &lexical_ranking, 60.0, 0.25, 0.75)
     } else {
@@ -222,12 +232,15 @@ async fn retrieve_with_connection(
         let lexical_score = lexical_scores.get(&row.id).copied().unwrap_or_default();
         let retrieval_score = if bm25_only {
             lexical_score
-        } else if settings.rag_retrieval_strategy == "rrf-v1" {
+        } else if use_rrf {
             let mut score = rrf_scores.get(&row.id).copied().unwrap_or_default();
             let content = row.content.to_lowercase();
             let filename = row.filename.to_lowercase();
             if lexical_first {
-                let overlap = exact_token_overlap(&query_tokens, &format!("{content} {filename}"));
+                let overlap = content_token_sets
+                    .get(&row.id)
+                    .map(|set| query_tokens.intersection(set).count())
+                    .unwrap_or_default();
                 score += (overlap as f64 * 0.02).min(0.12);
             }
             if !normalized_query.is_empty() && content.contains(&normalized_query) {
