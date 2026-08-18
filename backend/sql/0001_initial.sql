@@ -949,8 +949,10 @@ CREATE TABLE public.rag_document_chunks (
     content text NOT NULL,
     content_hash character varying(64) NOT NULL,
     character_count integer NOT NULL,
-    embedding public.vector(512) NOT NULL,
+    embedding public.vector(1024) NOT NULL,
     metadata_json json NOT NULL,
+    chunk_version character varying(80) DEFAULT 'legacy-unknown'::character varying NOT NULL,
+    index_version character varying(80) DEFAULT 'legacy-unknown'::character varying NOT NULL,
     created_at timestamp with time zone DEFAULT now() NOT NULL
 );
 
@@ -991,7 +993,8 @@ CREATE TABLE public.rag_file_syncs (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     chunk_count integer DEFAULT 0 NOT NULL,
-    content_hash character varying(64)
+    content_hash character varying(64),
+    index_version character varying(80) DEFAULT 'legacy-unknown'::character varying NOT NULL
 );
 
 
@@ -2122,6 +2125,13 @@ CREATE INDEX ix_rag_document_chunks_file_id ON public.rag_document_chunks USING 
 --
 
 CREATE INDEX ix_rag_document_chunks_project_id ON public.rag_document_chunks USING btree (project_id);
+
+-- Name: ix_rag_chunks_project_version; Type: INDEX; Schema: public; Owner: -
+-- Structural identity index used by version-bound Rust retrieval.
+-- legacy-unknown is a compatibility marker, not model/corpus provenance.
+--
+
+CREATE INDEX ix_rag_chunks_project_version ON public.rag_document_chunks USING btree (project_id, index_version, id);
 
 
 --

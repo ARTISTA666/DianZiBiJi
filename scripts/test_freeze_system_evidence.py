@@ -261,3 +261,387 @@ def test_git_checkout_state_reports_clean_when_status_is_empty(tmp_path: Path, m
 
     assert state == {"git_commit": COMMIT, "worktree_clean": True}
     assert ["status", "--porcelain=v1", "--untracked-files=all", "--", "."] in calls
+
+
+def test_rust_pilot_readiness_blocks_unbound_candidate_and_emits_required_fields(tmp_path: Path) -> None:
+    protocol = tmp_path / "protocol.md"
+    questions = tmp_path / "questions.json"
+    evaluator = tmp_path / "evaluator.py"
+    openapi = tmp_path / "openapi.json"
+    runtime = tmp_path / "runtime.json"
+    for path, content in (
+        (protocol, "protocol"),
+        (questions, "[]"),
+        (evaluator, "evaluator"),
+        (openapi, "{}"),
+    ):
+        path.write_text(content, encoding="utf-8")
+    runtime.write_text(
+        json.dumps(
+            {
+                "revision": "unversioned",
+                "runtime": {
+                    "api_runtime": "rust-axum",
+                    "embedding_backend": "hash",
+                    "embedding_model": "rust-hash-512-v1",
+                    "embedding_dimension": 512,
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=protocol,
+        questions=questions,
+        evaluator=evaluator,
+        openapi=openapi,
+        runtime_contract=runtime,
+        checkout={
+            "base_revision": COMMIT,
+            "tracked_worktree_clean": False,
+            "worktree_clean": False,
+        },
+    )
+
+    assert readiness["schema"] == MODULE.RUST_PILOT_READINESS_SCHEMA
+    assert readiness["overall_verdict"] == "BLOCKED"
+    assert readiness["checks"]["base_revision"]["value"] == COMMIT
+    assert readiness["checks"]["tracked_worktree_clean"]["status"] == "FAIL"
+    assert readiness["checks"]["app_revision"]["value"] is None
+    assert readiness["checks"]["image_digest"]["value"] is None
+    assert readiness["checks"]["corpus_snapshot_hash"]["value"] is None
+    assert readiness["checks"]["graph_snapshot_hash"]["value"] is None
+    assert readiness["checks"]["embedding_backend"]["status"] == "BLOCKED"
+    assert readiness["gates"]["G5A"]["status"] == "BLOCKED"
+    assert readiness["gates"]["G5B"]["status"] == "BLOCKED"
+
+
+def test_rust_pilot_readiness_does_not_accept_unversioned_or_hash_as_formal_binding(
+    tmp_path: Path,
+) -> None:
+    files = {}
+    for name in ("protocol.md", "questions.json", "evaluator.py", "openapi.json"):
+        path = tmp_path / name
+        path.write_text(name, encoding="utf-8")
+        files[name] = path
+    runtime = tmp_path / "runtime.json"
+    runtime.write_text(
+        json.dumps(
+            {
+                "revision": "unversioned",
+                "runtime": {
+                    "api_runtime": "rust-axum",
+                    "embedding_backend": "hash",
+                    "embedding_model": "rust-hash-512-v1",
+                    "embedding_dimension": 512,
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=files["protocol.md"],
+        questions=files["questions.json"],
+        evaluator=files["evaluator.py"],
+        openapi=files["openapi.json"],
+        runtime_contract=runtime,
+        checkout={
+            "base_revision": COMMIT,
+            "tracked_worktree_clean": True,
+            "worktree_clean": True,
+        },
+    )
+
+    assert readiness["overall_verdict"] == "BLOCKED"
+    assert readiness["checks"]["app_revision"]["status"] == "FAIL"
+    assert readiness["checks"]["embedding_backend"]["value"] == "hash"
+    assert readiness["checks"]["embedding_model"]["value"] == "rust-hash-512-v1"
+    assert readiness["checks"]["embedding_dimension"]["value"] == 512
+    assert readiness["checks"]["embedding_backend"]["reason"]
+
+
+def test_rust_pilot_readiness_reports_in_scope_untracked_files_separately(tmp_path: Path) -> None:
+    files = {}
+    for name in ("protocol.md", "questions.json", "evaluator.py", "openapi.json"):
+        path = tmp_path / name
+        path.write_text(name, encoding="utf-8")
+        files[name] = path
+    runtime = tmp_path / "runtime.json"
+    runtime.write_text("{}", encoding="utf-8")
+
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=files["protocol.md"],
+        questions=files["questions.json"],
+        evaluator=files["evaluator.py"],
+        openapi=files["openapi.json"],
+        runtime_contract=runtime,
+        checkout={
+            "base_revision": COMMIT,
+            "tracked_worktree_clean": True,
+            "worktree_clean": True,
+            "in_scope_untracked_files": ["docs/experiments/rust-retrieval-pilot-protocol-v1.md"],
+        },
+    )
+
+    assert readiness["checks"]["in_scope_untracked_files"]["status"] == "FAIL"
+    assert readiness["checks"]["in_scope_untracked_files"]["value"] == [
+        "docs/experiments/rust-retrieval-pilot-protocol-v1.md"
+    ]
+    assert readiness["overall_verdict"] == "BLOCKED"
+
+
+def test_rust_pilot_readiness_writes_atomic_assets_without_mutating_inputs(tmp_path: Path) -> None:
+    files = {}
+    relative_files = {
+        "protocol.md": Path("docs/experiments/rust-retrieval-pilot-protocol-v1.md"),
+        "questions.json": Path("data/real/GSE111619/gse111619_questions.json"),
+        "evaluator.py": Path("scripts/evaluate_rust_retrieval.py"),
+        "openapi.json": Path("backend/openapi.json"),
+    }
+    for name, relative_path in relative_files.items():
+        path = tmp_path / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(name, encoding="utf-8")
+        files[name] = path
+    runtime = tmp_path / "runtime.json"
+    runtime.write_text("{}", encoding="utf-8")
+    before = {path: path.read_bytes() for path in (*files.values(), runtime)}
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=files["protocol.md"],
+        questions=files["questions.json"],
+        evaluator=files["evaluator.py"],
+        openapi=files["openapi.json"],
+        runtime_contract=runtime,
+        checkout={
+            "base_revision": COMMIT,
+            "tracked_worktree_clean": True,
+            "worktree_clean": True,
+            "in_scope_untracked_files": [],
+        },
+    )
+    output = tmp_path / "preflight.json"
+    manifest = tmp_path / "manifest.json"
+    gate_script = tmp_path / "scripts" / "freeze_system_evidence.py"
+    gate_script.parent.mkdir(parents=True, exist_ok=True)
+    gate_script.write_bytes(SCRIPT.read_bytes())
+
+    result = MODULE.write_rust_pilot_readiness(
+        readiness,
+        output=output,
+        manifest_output=manifest,
+        manifest_inputs=[files["protocol.md"], files["questions.json"], files["evaluator.py"], files["openapi.json"]],
+        gate_script=gate_script,
+        root=tmp_path,
+    )
+
+    assert result["output"] == str(output)
+    assert json.loads(output.read_text(encoding="utf-8"))["overall_verdict"] == "BLOCKED"
+    written_manifest = json.loads(manifest.read_text(encoding="utf-8"))
+    assert written_manifest["schema"] == MODULE.RUST_PILOT_READINESS_MANIFEST_SCHEMA
+    assert written_manifest["preflight_sha256"]
+    assert written_manifest["files"]
+    assert written_manifest["local_manifest_inputs_complete"] is True
+    assert written_manifest["freeze_requirements_complete"] is False
+    assert written_manifest["input_failures"] == []
+    assert all(not Path(item["path"]).is_absolute() for item in written_manifest["files"])
+    assert {item["path"] for item in written_manifest["files"]} == {
+        "docs/experiments/rust-retrieval-pilot-protocol-v1.md",
+        "data/real/GSE111619/gse111619_questions.json",
+        "scripts/evaluate_rust_retrieval.py",
+        "backend/openapi.json",
+        "scripts/freeze_system_evidence.py",
+    }
+    protocol_entry = next(
+        item
+        for item in written_manifest["files"]
+        if item["path"] == "docs/experiments/rust-retrieval-pilot-protocol-v1.md"
+    )
+    assert protocol_entry["sha256"] == hashlib.sha256(files["protocol.md"].read_bytes()).hexdigest()
+    assert {path: path.read_bytes() for path in (*files.values(), runtime)} == before
+
+
+def test_rust_pilot_readiness_manifest_includes_runtime_and_implementation_inputs(tmp_path: Path) -> None:
+    files = {}
+    for name in ("protocol.md", "questions.json", "evaluator.py", "tests.py", "openapi.json", "runtime.json", "method.rs"):
+        path = tmp_path / name
+        path.write_text("{}" if name.endswith(".json") else name, encoding="utf-8")
+        files[name] = path
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=files["protocol.md"],
+        questions=files["questions.json"],
+        evaluator=files["evaluator.py"],
+        evaluator_tests=files["tests.py"],
+        openapi=files["openapi.json"],
+        runtime_contract=files["runtime.json"],
+        implementation_files=[files["method.rs"]],
+        checkout={
+            "base_revision": COMMIT,
+            "tracked_worktree_clean": True,
+            "worktree_clean": True,
+            "in_scope_untracked_files": [],
+        },
+    )
+    output = tmp_path / "preflight.json"
+    manifest = tmp_path / "manifest.json"
+    gate_script = tmp_path / "freeze_system_evidence.py"
+    gate_script.write_bytes(SCRIPT.read_bytes())
+    MODULE.write_rust_pilot_readiness(
+        readiness,
+        output=output,
+        manifest_output=manifest,
+        manifest_inputs=[files[name] for name in ("protocol.md", "questions.json", "evaluator.py", "tests.py", "openapi.json", "runtime.json", "method.rs")],
+        gate_script=gate_script,
+        root=tmp_path,
+    )
+    manifest_payload = json.loads(manifest.read_text(encoding="utf-8"))
+    assert manifest_payload["local_manifest_inputs_complete"] is True
+    assert manifest_payload["freeze_requirements_complete"] is False
+    assert readiness["checks"]["implementation_files"]["status"] == "PASS"
+    assert readiness["input_hashes"]["implementation_files"][0]["path"] == "method.rs"
+    assert {Path(item["path"]).name for item in manifest_payload["files"]} >= {
+        "protocol.md",
+        "questions.json",
+        "evaluator.py",
+        "tests.py",
+        "openapi.json",
+        "runtime.json",
+        "method.rs",
+        "freeze_system_evidence.py",
+    }
+
+
+def test_rust_pilot_readiness_manifest_marks_missing_required_input_null_and_fail(tmp_path: Path) -> None:
+    existing = tmp_path / "docs" / "experiments" / "rust-retrieval-pilot-protocol-v1.md"
+    existing.parent.mkdir(parents=True)
+    existing.write_text("protocol", encoding="utf-8")
+    missing = tmp_path / "data" / "real" / "GSE111619" / "gse111619_questions.json"
+    gate_script = tmp_path / "scripts" / "freeze_system_evidence.py"
+    gate_script.parent.mkdir(parents=True)
+    gate_script.write_bytes(SCRIPT.read_bytes())
+    readiness = {"overall_verdict": "BLOCKED", "lifecycle": "NOT_FROZEN"}
+    output = tmp_path / "preflight.json"
+    manifest = tmp_path / "manifest.json"
+
+    MODULE.write_rust_pilot_readiness(
+        readiness,
+        output=output,
+        manifest_output=manifest,
+        manifest_inputs=[existing, missing],
+        gate_script=gate_script,
+        root=tmp_path,
+    )
+
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    missing_entry = next(
+        item
+        for item in payload["files"]
+        if item["path"] == "data/real/GSE111619/gse111619_questions.json"
+    )
+    assert missing_entry == {
+        "path": "data/real/GSE111619/gse111619_questions.json",
+        "sha256": None,
+        "status": "FAIL",
+    }
+    assert payload["local_manifest_inputs_complete"] is False
+    assert payload["freeze_requirements_complete"] is False
+    assert payload["input_failures"] == ["data/real/GSE111619/gse111619_questions.json"]
+
+
+def test_rust_pilot_readiness_fails_missing_required_implementation_file(tmp_path: Path) -> None:
+    files = {}
+    for name in ("protocol.md", "questions.json", "evaluator.py", "openapi.json", "runtime.json"):
+        path = tmp_path / name
+        path.write_text("{}", encoding="utf-8")
+        files[name] = path
+    missing = tmp_path / "backend" / "src" / "missing.rs"
+
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=files["protocol.md"],
+        questions=files["questions.json"],
+        evaluator=files["evaluator.py"],
+        openapi=files["openapi.json"],
+        runtime_contract=files["runtime.json"],
+        implementation_files=[missing],
+        checkout={"base_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True},
+    )
+
+    assert readiness["checks"]["implementation_files"]["status"] == "FAIL"
+    assert readiness["input_hashes"]["implementation_files"] == [
+        {"path": "backend/src/missing.rs", "sha256": None, "status": "FAIL"}
+    ]
+    assert readiness["overall_verdict"] == "BLOCKED"
+
+
+def test_default_system_manifest_contract_does_not_gain_rust_pilot_fields(tmp_path: Path, monkeypatch) -> None:
+    write_lockfiles(tmp_path)
+    monkeypatch.setattr(MODULE, "git_checkout_state", clean_checkout)
+    source = tmp_path / "system.json"
+    source.write_text("{}\n", encoding="utf-8")
+    manifest_path = tmp_path / "manifest.json"
+
+    MODULE.freeze([source], manifest_path, tmp_path, replace=False)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    assert manifest["schema"] == "full-system.system-evidence-manifest"
+    assert manifest["schema_version"] == 1
+    assert "rust_pilot_readiness" not in manifest
+    assert "overall_verdict" not in manifest
+
+
+def test_rust_pilot_readiness_cli_is_explicit_and_does_not_query_http(tmp_path: Path, monkeypatch) -> None:
+    files = {}
+    for name in ("protocol.md", "questions.json", "evaluator.py", "tests.py", "openapi.json", "runtime.json"):
+        path = tmp_path / name
+        path.write_text("{}" if name.endswith(".json") else name, encoding="utf-8")
+        files[name] = path
+    monkeypatch.setattr(MODULE, "rust_pilot_checkout_state", lambda _root: {
+        "base_revision": COMMIT,
+        "tracked_worktree_clean": False,
+        "worktree_clean": False,
+        "in_scope_untracked_files": [],
+    })
+    readiness = MODULE.build_rust_pilot_readiness(
+        root=tmp_path,
+        protocol=files["protocol.md"],
+        questions=files["questions.json"],
+        evaluator=files["evaluator.py"],
+        evaluator_tests=files["tests.py"],
+        openapi=files["openapi.json"],
+        runtime_contract=files["runtime.json"],
+    )
+    assert readiness["overall_verdict"] == "BLOCKED"
+
+
+def test_rust_pilot_gate_evidence_requires_self_hash_generator_and_command(tmp_path: Path) -> None:
+    gate = tmp_path / "g5a.json"
+    gate.write_text(json.dumps({"passed": True}), encoding="utf-8")
+    result = MODULE._gate_evidence_check(gate, "G5A")
+    assert result["status"] == "BLOCKED"
+    assert result["value"] is True
+
+
+def test_rust_pilot_gate_evidence_accepts_current_hash_bound_report(tmp_path: Path) -> None:
+    gate = tmp_path / "g5a.json"
+    report = tmp_path / "g5a-report.json"
+    report.write_text("{\"passed\": true}\n", encoding="utf-8")
+    payload = {
+        "passed": True,
+        "generator": "test-gate.py",
+        "generator_version": 1,
+        "command": "test-gate.py --verify",
+        "report_sha256": "placeholder",
+        "report_path": str(report),
+    }
+    gate.write_text(json.dumps(payload), encoding="utf-8")
+    payload["report_sha256"] = hashlib.sha256(report.read_bytes()).hexdigest()
+    gate.write_text(json.dumps(payload), encoding="utf-8")
+    result = MODULE._gate_evidence_check(gate, "G5A")
+    assert result["status"] == "PASS"

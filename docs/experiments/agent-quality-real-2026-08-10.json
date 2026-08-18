@@ -1,0 +1,88 @@
+{
+  "schema": "full-system.agent-quality-report",
+  "schema_version": 1,
+  "run_date": "2026-08-10",
+  "run_kind": "direct-provider-agent-prompt-contract",
+  "gold_sha256": "479b7c404610fe9963912ee28faf3628058fbda9f424a869b5d95793f8b6238b",
+  "system_prompt_sha256": "b7afe2b436cf17a026553e0d2906272b10cefe46c97e913ba84ee6949336f63d",
+  "prompt_version": "agent-v9-budgeted-rag-evidence",
+  "model": "deepseek-v4-flash",
+  "case_count": 5,
+  "automated_gate_passed": true,
+  "summary": {
+    "fact_consistency": 0.9333333333333333,
+    "citation_precision": 0.9,
+    "citation_recall": 0.9333333333333333,
+    "boundary_pass_rate": 1.0,
+    "total_tokens": 3408,
+    "total_elapsed_ms": 22075,
+    "max_case_elapsed_ms": 6837,
+    "provider_cost": null,
+    "provider_cost_note": "提供方响应未返回费用；仅归档 token，不在缺少当期计价快照时推算金额。",
+    "human_review_status": "pending"
+  },
+  "cases": [
+    {
+      "id": "experiment-summary-01",
+      "fact_consistency": 1.0,
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "boundary_passed": true,
+      "elapsed_ms": 3236,
+      "total_tokens": 586,
+      "answer_chars": 539,
+      "answer_sha256": "29ac741a3c0097f06074140bc87e8fe2c0cde18e932b74bd8befde5f8969a495"
+    },
+    {
+      "id": "weekly-report-01",
+      "fact_consistency": 1.0,
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "boundary_passed": true,
+      "elapsed_ms": 3481,
+      "total_tokens": 504,
+      "answer_chars": 405,
+      "answer_sha256": "36d4cfd08ed8461c6373f2f8667701ddd731d57298394e92320917616458f652"
+    },
+    {
+      "id": "stage-report-01",
+      "fact_consistency": 1.0,
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "boundary_passed": true,
+      "elapsed_ms": 3097,
+      "total_tokens": 574,
+      "answer_chars": 511,
+      "answer_sha256": "fe4be263879e00743ca3048d55db2149c9f7da25e6f58edc8f1c379b49d89a"
+    },
+    {
+      "id": "literature-review-01",
+      "fact_consistency": 1.0,
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "boundary_passed": true,
+      "elapsed_ms": 6837,
+      "total_tokens": 901,
+      "answer_chars": 1031,
+      "answer_sha256": "d3d09d3d0497c03e4997e286bc64e0f0516c1fda7997f606f6cf98742a8578ee"
+    },
+    {
+      "id": "anomaly-detection-01",
+      "fact_consistency": 0.6666666666666666,
+      "citation_precision": 1.0,
+      "citation_recall": 0.6666666666666666,
+      "boundary_passed": true,
+      "elapsed_ms": 5424,
+      "total_tokens": 843,
+      "answer_chars": 1006,
+      "answer_sha256": "17f8e5affd9100665217d4d87a017145bb5faa1efc385786e86cb1144a6c12f7"
+    }
+  ],
+  "limitations": [
+    "冻结合成上下文直接调用提供方，未覆盖 Rust API 的数据库选择、上下文截断和落库链路。",
+    "文献综述输出包含金标准未映射的额外来源编号，严格 citation precision 为 0.5，需人工判断这些引用是有效补充还是悬空引用。",
+    "异常检测对 Ct 31.7 的自动规则未命中，需人工区分模型遗漏与同义表达造成的规则假阴性。",
+    "自动字符串规则不能替代独立科研人员对事实含义和写作质量的盲评。",
+    "未保存提示词或回答正文，只能通过哈希识别输出变化。"
+  ]
+}

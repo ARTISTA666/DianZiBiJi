@@ -602,12 +602,25 @@ pub struct RagDatasetRead {
 }
 
 #[derive(Debug, Serialize)]
+pub struct RagCorpusSnapshotRead {
+    pub dataset_id: Option<i32>,
+    pub corpus_snapshot_hash: Option<String>,
+    pub corpus_chunk_count: i64,
+    pub rag_index_version: String,
+    pub embedding_model: Option<String>,
+    pub graph_snapshot_hash: Option<String>,
+    pub graph_entity_count: i64,
+    pub graph_relation_count: i64,
+}
+
+#[derive(Debug, Serialize)]
 pub struct RagStatusRead {
     pub initialized: bool,
     pub dataset: Option<RagDatasetRead>,
     pub pending_sync_count: i64,
     pub failed_sync_count: i64,
     pub synced_count: i64,
+    pub corpus_snapshot: RagCorpusSnapshotRead,
 }
 
 #[derive(Debug, Deserialize)]
@@ -618,6 +631,14 @@ pub struct RagQueryRequest {
     /// 可选的多轮对话历史（由客户端传入最近若干轮），用于拼入提示词。
     #[serde(default)]
     pub history: Option<Vec<RagHistoryEntry>>,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct RagRetrievalRequest {
+    pub query: String,
+    pub mode: String,
+    pub expected_corpus_snapshot_hash: String,
+    pub expected_graph_snapshot_hash: String,
 }
 
 /// 一轮历史对话：用户问题与系统回答。
@@ -641,6 +662,10 @@ pub struct RagSourceRead {
     pub vector_score: Option<f64>,
     pub lexical_score: Option<f64>,
     pub retrieval_score: Option<f64>,
+    pub content: Option<String>,
+    pub content_sha256: Option<String>,
+    pub file_hash: Option<String>,
+    pub chunk_index: Option<i32>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -650,15 +675,20 @@ pub struct RagGraphContextRead {
     pub relation_label: String,
     pub source_entity_id: i32,
     pub source_label: String,
+    pub source_normalized_label: String,
+    pub source_natural_key: String,
     pub source_entity_type: String,
     pub source_entity_type_label: String,
     pub target_entity_id: i32,
     pub target_label: String,
+    pub target_normalized_label: String,
+    pub target_natural_key: String,
     pub target_entity_type: String,
     pub target_entity_type_label: String,
     pub confidence: f64,
     pub retrieval_score: f64,
     pub relation_roles: Vec<String>,
+    pub relation_properties: Value,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -687,6 +717,27 @@ pub struct RagQueryResponse {
     pub evidence_status: String,
     pub retrieval_strategy: String,
     pub retrieval_trace_id: String,
+}
+
+#[derive(Debug, Serialize)]
+pub struct RagRetrievalResponse {
+    pub retrieval_only: bool,
+    pub generation_invoked: bool,
+    pub llm_query_rewrite_invoked: bool,
+    pub citation_repair_invoked: bool,
+    pub mode: String,
+    pub sources: Vec<RagSourceRead>,
+    pub graph_context: Vec<RagGraphContextRead>,
+    pub effective_retrieval_config: Value,
+    pub actual_corpus_snapshot_hash: String,
+    pub actual_graph_snapshot_hash: String,
+    pub used_corpus_snapshot_hash: String,
+    pub used_graph_snapshot_hash: String,
+    pub corpus_snapshot_hash: String,
+    pub graph_snapshot_hash: String,
+    pub corpus_chunk_count: i64,
+    pub graph_entity_count: i64,
+    pub graph_relation_count: i64,
 }
 
 #[derive(Debug, Deserialize)]

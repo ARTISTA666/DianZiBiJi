@@ -63,7 +63,24 @@ type Response<Name extends keyof Schemas> = DeepRequired<Schemas[Name]>;
 type Expect<T extends true> = T;
 type IsAssignable<Backend, Frontend> = Backend extends Frontend ? true : false;
 
+type RagStatusSnapshot = RagStatus["corpus_snapshot"];
+type RagStatusSnapshotFields = Pick<
+  RagStatusSnapshot,
+  "graph_snapshot_hash" | "graph_entity_count" | "graph_relation_count"
+>;
+
+// The status snapshot must expose the graph identity and counts used by the
+// retrieval evidence contract. This intentionally fails if the handwritten
+// client type drifts behind the generated OpenAPI schema.
+type RagStatusSnapshotFieldsPresent = Expect<
+  IsAssignable<
+    Pick<Response<"RagCorpusSnapshotRead">, keyof RagStatusSnapshotFields>,
+    RagStatusSnapshotFields
+  >
+>;
+
 export type ApiContractChecks = [
+  RagStatusSnapshotFieldsPresent,
   // auth / users
   Expect<IsAssignable<Response<"TokenResponse">, LoginResponse>>,
   Expect<IsAssignable<Response<"CurrentUserResponse">, CurrentUser>>,

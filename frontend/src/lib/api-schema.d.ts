@@ -1442,6 +1442,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/rag/experiments/{run_id}/evidence.json": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Rag Experiment Evidence */
+        get: operations["export_rag_experiment_evidence_rag_experiments__run_id__evidence_json_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/rag/retrieve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retrieval-only RAG evidence */
+        post: operations["retrieve_project_rag_projects__project_id__rag_retrieve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2474,37 +2508,27 @@ export interface components {
         };
         /** RagGraphContextRead */
         RagGraphContextRead: {
-            /** Relation Id */
             relation_id: number;
-            /** Relation Type */
             relation_type: string;
-            /** Relation Label */
             relation_label: string;
-            /** Source Entity Id */
             source_entity_id: number;
-            /** Source Label */
             source_label: string;
-            /** Source Entity Type */
+            source_normalized_label: string;
+            source_natural_key: string;
             source_entity_type: string;
-            /** Source Entity Type Label */
             source_entity_type_label: string;
-            /** Target Entity Id */
             target_entity_id: number;
-            /** Target Label */
             target_label: string;
-            /** Target Entity Type */
+            target_normalized_label: string;
+            target_natural_key: string;
             target_entity_type: string;
-            /** Target Entity Type Label */
             target_entity_type_label: string;
-            /** Confidence */
             confidence: number;
-            /**
-             * Retrieval Score
-             * @default 0
-             */
             retrieval_score: number;
-            /** Relation Roles */
             relation_roles: string[];
+            relation_properties: {
+                [key: string]: unknown;
+            };
         };
         /** RagQueryRequest */
         RagQueryRequest: {
@@ -2582,22 +2606,18 @@ export interface components {
         };
         /** RagSourceRead */
         RagSourceRead: {
-            /** Chunk Id */
             chunk_id?: number | null;
-            /** File Id */
             file_id?: number | null;
-            /** Filename */
             filename?: string | null;
-            /** Dify Document Id */
             dify_document_id?: string | null;
-            /** Snippet */
             snippet?: string | null;
-            /** Vector Score */
             vector_score?: number | null;
-            /** Lexical Score */
             lexical_score?: number | null;
-            /** Retrieval Score */
             retrieval_score?: number | null;
+            content?: string | null;
+            content_sha256?: string | null;
+            file_hash?: string | null;
+            chunk_index?: number | null;
         };
         /** RagStatusRead */
         RagStatusRead: {
@@ -2610,6 +2630,7 @@ export interface components {
             failed_sync_count: number;
             /** Synced Count */
             synced_count: number;
+            corpus_snapshot: components["schemas"]["RagCorpusSnapshotRead"];
         };
         /** SearchRequest */
         SearchRequest: {
@@ -2857,6 +2878,219 @@ export interface components {
             value: "helpful" | "not_helpful";
             /** Comment */
             comment?: string | null;
+        };
+        /** RagEvidencePackage */
+        RagEvidencePackage: {
+            /** @enum {string} */
+            schema_version: "rag-evidence-package-v1";
+            experiment: components["schemas"]["RagEvidenceExperiment"];
+            /** Rag Evidence Config Snapshot */
+            config_snapshot: {
+                [key: string]: unknown;
+            };
+            summary: components["schemas"]["RagEvidenceSummary"];
+            case_count: number;
+            cases: components["schemas"]["RagEvidenceCase"][];
+        };
+        /** RagEvidenceExperiment */
+        RagEvidenceExperiment: {
+            id: number;
+            project_id: number;
+            created_by: number;
+            name: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "interrupted" | "completed" | "completed_with_errors" | "failed";
+            questions: string[];
+            modes: ("pure_llm" | "bm25_rag" | "project_rag" | "structured_query" | "kg_enhanced_rag")[];
+            total_cases: number;
+            completed_cases: number;
+            failed_cases: number;
+            /** Format: date-time */
+            created_at: string;
+            completed_at: string | null;
+            repetitions: number;
+            randomize_order: boolean;
+            random_seed: number;
+            execution_plan_hash: string;
+            embedding_model: string;
+            generation_model: string;
+            questions_sha256: string;
+            corpus_snapshot_hash: string | null;
+            rag_index_version: string | null;
+            graph_schema_version: string | null;
+        } & {
+            [key: string]: unknown;
+        };
+        /** RagEvidenceCase */
+        RagEvidenceCase: {
+            query_log_id: number | null;
+            question_index: number;
+            question: string;
+            /** @enum {string} */
+            mode: "pure_llm" | "bm25_rag" | "project_rag" | "structured_query" | "kg_enhanced_rag";
+            repetition_index: number;
+            execution_order: number;
+            /** @enum {string} */
+            status: "completed" | "failed";
+            failure_scope: "case" | null;
+            failure_code: "query_error" | null;
+            answer: string | null;
+            source_count: number;
+            graph_hit_count: number;
+            response_ms: number;
+            provider: string;
+            model: string | null;
+            prompt_version: string | null;
+            fallback_reason: string | null;
+            error: string | null;
+            sources: components["schemas"]["RagEvidenceSource"][];
+            graph_context: components["schemas"]["RagEvidenceGraphContext"][];
+            retrieval_config: components["schemas"]["RagEvidenceRetrievalConfig"];
+            /** Rag Evidence Usage */
+            usage: {
+                [key: string]: unknown;
+            };
+            /** Rag Evidence Citation Audit */
+            citation_audit: {
+                [key: string]: unknown;
+            };
+            created_at: string | null;
+        } & {
+            [key: string]: unknown;
+        };
+        /** RagEvidenceRunFatalError */
+        RagEvidenceRunFatalError: {
+            error: string;
+            /** @enum {string} */
+            failure_scope: "run";
+            /** @enum {string} */
+            failure_code: "creator_user_missing" | "input_binding_drift" | "worker_error";
+        };
+        /** RagEvidenceSummaryError */
+        RagEvidenceSummaryError: {
+            case_index?: number | null;
+            question_index?: number | null;
+            mode?: string | null;
+            repetition_index?: number | null;
+            error: string;
+            /** @enum {string} */
+            failure_scope: "case" | "run";
+            /** @enum {string} */
+            failure_code: "query_error" | "creator_user_missing" | "input_binding_drift" | "worker_error";
+        };
+        /** RagEvidenceSummary */
+        RagEvidenceSummary: {
+            fatal_error: components["schemas"]["RagEvidenceRunFatalError"] | null;
+            errors: components["schemas"]["RagEvidenceSummaryError"][];
+            execution_plan: {
+                [key: string]: unknown;
+            }[];
+            unexecuted_cases: number;
+        } & {
+            [key: string]: unknown;
+        };
+        /** RagEvidenceSource */
+        RagEvidenceSource: {
+            chunk_id: number;
+            file_id: number;
+            filename?: string | null;
+            dify_document_id?: string | null;
+            snippet?: string | null;
+            vector_score?: number | null;
+            lexical_score?: number | null;
+            retrieval_score?: number | null;
+        } & {
+            [key: string]: unknown;
+        };
+        /** RagEvidenceGraphContext */
+        RagEvidenceGraphContext: {
+            relation_id: number;
+            relation_type?: string;
+            relation_label?: string;
+            source_entity_id: number;
+            source_label?: string;
+            source_entity_type?: string;
+            source_entity_type_label?: string;
+            target_entity_id: number;
+            target_label?: string;
+            target_entity_type?: string;
+            target_entity_type_label?: string;
+            confidence?: number;
+            retrieval_score?: number;
+            relation_roles?: string[];
+        } & {
+            [key: string]: unknown;
+        };
+        /** RagEvidenceRetrievalConfig */
+        RagEvidenceRetrievalConfig: {
+            embedding_model?: string;
+            index_version?: string;
+            graph_schema_version?: string;
+            retrieval_strategy?: string;
+            retrieval_top_k?: number;
+            collection_retrieval_top_k?: number;
+            effective_retrieval_top_k?: number;
+            vector_candidate_k?: number;
+            graph_top_k?: number;
+            effective_graph_top_k?: number;
+            chunk_size?: number;
+            chunk_overlap?: number;
+            graph_min_score?: number;
+            retrieval_min_score?: number;
+            retrieval_applied?: boolean;
+            graph_retrieval_applied?: boolean;
+            /** Rag Evidence Citation Audit */
+            citation_audit?: {
+                [key: string]: unknown;
+            };
+        } & {
+            [key: string]: unknown;
+        };
+        /** ApiErrorResponse */
+        ApiErrorResponse: {
+            detail: string;
+        };
+        /** RagCorpusSnapshotRead */
+        RagCorpusSnapshotRead: {
+            dataset_id: number | null;
+            corpus_snapshot_hash: string | null;
+            corpus_chunk_count: number;
+            rag_index_version: string;
+            embedding_model: string | null;
+            graph_snapshot_hash: string | null;
+            graph_entity_count: number;
+            graph_relation_count: number;
+        };
+        /** RagRetrievalRequest */
+        RagRetrievalRequest: {
+            query: string;
+            /** @enum {string} */
+            mode: "bm25_rag" | "project_rag" | "kg_enhanced_rag";
+            expected_corpus_snapshot_hash: string;
+            expected_graph_snapshot_hash: string;
+        };
+        /** RagRetrievalResponse */
+        RagRetrievalResponse: {
+            retrieval_only: boolean;
+            generation_invoked: boolean;
+            llm_query_rewrite_invoked: boolean;
+            citation_repair_invoked: boolean;
+            /** @enum {string} */
+            mode: "bm25_rag" | "project_rag" | "kg_enhanced_rag";
+            sources: components["schemas"]["RagSourceRead"][];
+            graph_context: components["schemas"]["RagGraphContextRead"][];
+            effective_retrieval_config: {
+                [key: string]: unknown;
+            };
+            actual_corpus_snapshot_hash: string;
+            actual_graph_snapshot_hash: string;
+            used_corpus_snapshot_hash: string;
+            used_graph_snapshot_hash: string;
+            corpus_snapshot_hash: string;
+            graph_snapshot_hash: string;
+            corpus_chunk_count: number;
+            graph_entity_count: number;
+            graph_relation_count: number;
         };
     };
     responses: never;
@@ -5984,6 +6218,99 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_rag_experiment_evidence_rag_experiments__run_id__evidence_json_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                run_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RagEvidencePackage"];
+                };
+            };
+            /** @description Independent reviewers cannot access unblinded evidence exports */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponse"];
+                };
+            };
+            /** @description Evidence export unavailable until the run reaches a supported terminal state */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    retrieve_project_rag_projects__project_id__rag_retrieve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RagRetrievalRequest"];
+            };
+        };
+        responses: {
+            /** @description Retrieval evidence without generation */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RagRetrievalResponse"];
+                };
+            };
+            /** @description Snapshot identity drift */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponse"];
+                };
+            };
+            /** @description Invalid retrieval-only request */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponse"];
                 };
             };
         };

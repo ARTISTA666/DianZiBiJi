@@ -1,0 +1,283 @@
+{
+  "app_revision": null,
+  "base_revision": "89354a9ea09829ade69461aaecb6fce6de287529",
+  "blockers": [
+    "app_revision",
+    "tracked_worktree_clean",
+    "in_scope_untracked_files",
+    "image_digest",
+    "embedding_backend",
+    "embedding_model",
+    "embedding_dimension",
+    "corpus_snapshot_hash",
+    "graph_snapshot_hash",
+    "G5A",
+    "G5B"
+  ],
+  "checks": {
+    "G5A": {
+      "reason": "no current G5A gate evidence was supplied",
+      "status": "BLOCKED",
+      "value": null
+    },
+    "G5B": {
+      "reason": "no current G5B gate evidence was supplied",
+      "status": "BLOCKED",
+      "value": null
+    },
+    "app_revision": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/rust-runtime-contract-latest.json",
+      "reason": "runtime app_revision is missing, unversioned, or does not equal base_revision",
+      "status": "FAIL",
+      "value": null
+    },
+    "base_revision": {
+      "status": "PASS",
+      "value": "89354a9ea09829ade69461aaecb6fce6de287529"
+    },
+    "corpus_snapshot_hash": {
+      "reason": "no formally frozen database corpus snapshot was supplied",
+      "status": "FAIL",
+      "value": null
+    },
+    "embedding_backend": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/rust-runtime-contract-latest.json",
+      "reason": "runtime is not a hash-bound formal BGE-M3 artifact",
+      "status": "BLOCKED",
+      "value": "hash"
+    },
+    "embedding_dimension": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/rust-runtime-contract-latest.json",
+      "reason": "embedding dimension is not the formally bound 1024-dimensional model",
+      "status": "BLOCKED",
+      "value": 512
+    },
+    "embedding_model": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/rust-runtime-contract-latest.json",
+      "reason": "runtime model is not a formally bound BAAI/bge-m3 artifact",
+      "status": "BLOCKED",
+      "value": "rust-hash-512-v1"
+    },
+    "evaluator_sha256": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/scripts/evaluate_rust_retrieval.py",
+      "status": "PASS",
+      "value": "2c3a54a03d19c9f20fcae6681e6e68d9e0f3ea7bee0fcad3627701b23b3418d4"
+    },
+    "evaluator_tests_sha256": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/scripts/test_evaluate_rust_retrieval.py",
+      "status": "PASS",
+      "value": "af57548585547c049ba2625ab8a141601900f97c0f96c8b48b8399c6bafdab4f"
+    },
+    "graph_snapshot_hash": {
+      "reason": "no formally frozen database graph snapshot was supplied",
+      "status": "FAIL",
+      "value": null
+    },
+    "image_digest": {
+      "reason": "no immutable sha256 image digest was supplied",
+      "status": "BLOCKED",
+      "value": null
+    },
+    "implementation_files": {
+      "status": "PASS",
+      "value": [
+        {
+          "path": "backend/src/rag.rs",
+          "sha256": "504bec58f7471eb4295f1e7e4c627daaf050a76739b875cf565074a8210e5246",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/src/api/rag.rs",
+          "sha256": "f777ae878bb69ea300b1fc6d5ddc8c28a84a2d181a4d14e1d63188ef7ae8308d",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/src/api/mod.rs",
+          "sha256": "0b41f2e354c2b6b93cc0ce77c18d4c645d5b7b2709470426d426c4eac5d06cbb",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/src/models.rs",
+          "sha256": "684541c2f64e033b060d9e0f5bcd3e7a39cc9d96dfe43f549fb7a0529ad18587",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/src/state.rs",
+          "sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/src/embedding.rs",
+          "sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/rust-toolchain.toml",
+          "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+          "status": "PASS"
+        },
+        {
+          "path": "backend/Cargo.lock",
+          "sha256": "a3bbafd245dfb3970439b5f19f63b5a4aafe5e770e82c50351ca4478a0f73704",
+          "status": "PASS"
+        },
+        {
+          "path": "frontend/src/lib/api-schema.d.ts",
+          "sha256": "345e6b43f394c664e39cb9eb85c59a26dc4a16a8ce1c509700380b0cea5f05aa",
+          "status": "PASS"
+        },
+        {
+          "path": "frontend/src/lib/api.ts",
+          "sha256": "f51f3b6c1bba0268a198fad5fadb7a115269f1f8e28adea7aee7d322b30d53fa",
+          "status": "PASS"
+        },
+        {
+          "path": "scripts/evaluate_retrieval.py",
+          "sha256": "ee628b3d2dfcf5b39fa951326e245c50935588cf1c3109be2f1f26e998db14ca",
+          "status": "PASS"
+        }
+      ]
+    },
+    "in_scope_untracked_files": {
+      "reason": "in-scope untracked candidate files exist",
+      "status": "FAIL",
+      "value": [
+        "docs/experiments/rust-retrieval-pilot-protocol-v1.md",
+        "docs/system-evidence/rust-runtime-contract-latest.json",
+        "scripts/test_update_rag_evidence_openapi.py",
+        "scripts/update_rag_evidence_openapi.py"
+      ]
+    },
+    "openapi_sha256": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/backend/openapi.json",
+      "status": "PASS",
+      "value": "1d7a418a2e9a450c864a28b92079eb166c15f24794873d1e83801094a0421be7"
+    },
+    "protocol_sha256": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/experiments/rust-retrieval-pilot-protocol-v1.md",
+      "status": "PASS",
+      "value": "6e13652df8bedd175a5a7bd00b0600fcfb70132d20a9b2386a86a89df46b3c25"
+    },
+    "questions_sha256": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/data/real/GSE111619/gse111619_questions.json",
+      "status": "PASS",
+      "value": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a"
+    },
+    "runtime": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/rust-runtime-contract-latest.json",
+      "status": "PASS",
+      "value": "rust-axum"
+    },
+    "runtime_contract_sha256": {
+      "evidence": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/rust-runtime-contract-latest.json",
+      "status": "PASS",
+      "value": "58d2d9956302864d886c9fb7d4c2d4296c7216bcff98509d38b0d7c8f45b3e51"
+    },
+    "tracked_worktree_clean": {
+      "reason": "tracked files are modified",
+      "status": "FAIL",
+      "value": false
+    }
+  },
+  "embedding": {
+    "backend": "hash",
+    "dimension": 512,
+    "model": "rust-hash-512-v1"
+  },
+  "freeze_requirements_complete": false,
+  "gates": {
+    "G5A": {
+      "reason": "no current G5A gate evidence was supplied",
+      "status": "BLOCKED",
+      "value": null
+    },
+    "G5B": {
+      "reason": "no current G5B gate evidence was supplied",
+      "status": "BLOCKED",
+      "value": null
+    }
+  },
+  "generated_at": "2026-08-13T05:39:55.530203+00:00",
+  "image_digest": null,
+  "in_scope_untracked_files": [
+    "docs/experiments/rust-retrieval-pilot-protocol-v1.md",
+    "docs/system-evidence/rust-runtime-contract-latest.json",
+    "scripts/test_update_rag_evidence_openapi.py",
+    "scripts/update_rag_evidence_openapi.py"
+  ],
+  "input_hashes": {
+    "corpus": null,
+    "evaluator": "2c3a54a03d19c9f20fcae6681e6e68d9e0f3ea7bee0fcad3627701b23b3418d4",
+    "evaluator_tests": "af57548585547c049ba2625ab8a141601900f97c0f96c8b48b8399c6bafdab4f",
+    "graph": null,
+    "implementation_files": [
+      {
+        "path": "backend/src/rag.rs",
+        "sha256": "504bec58f7471eb4295f1e7e4c627daaf050a76739b875cf565074a8210e5246",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/src/api/rag.rs",
+        "sha256": "f777ae878bb69ea300b1fc6d5ddc8c28a84a2d181a4d14e1d63188ef7ae8308d",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/src/api/mod.rs",
+        "sha256": "0b41f2e354c2b6b93cc0ce77c18d4c645d5b7b2709470426d426c4eac5d06cbb",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/src/models.rs",
+        "sha256": "684541c2f64e033b060d9e0f5bcd3e7a39cc9d96dfe43f549fb7a0529ad18587",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/src/state.rs",
+        "sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/src/embedding.rs",
+        "sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/rust-toolchain.toml",
+        "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "status": "PASS"
+      },
+      {
+        "path": "backend/Cargo.lock",
+        "sha256": "a3bbafd245dfb3970439b5f19f63b5a4aafe5e770e82c50351ca4478a0f73704",
+        "status": "PASS"
+      },
+      {
+        "path": "frontend/src/lib/api-schema.d.ts",
+        "sha256": "345e6b43f394c664e39cb9eb85c59a26dc4a16a8ce1c509700380b0cea5f05aa",
+        "status": "PASS"
+      },
+      {
+        "path": "frontend/src/lib/api.ts",
+        "sha256": "f51f3b6c1bba0268a198fad5fadb7a115269f1f8e28adea7aee7d322b30d53fa",
+        "status": "PASS"
+      },
+      {
+        "path": "scripts/evaluate_retrieval.py",
+        "sha256": "ee628b3d2dfcf5b39fa951326e245c50935588cf1c3109be2f1f26e998db14ca",
+        "status": "PASS"
+      }
+    ],
+    "openapi": "1d7a418a2e9a450c864a28b92079eb166c15f24794873d1e83801094a0421be7",
+    "protocol": "6e13652df8bedd175a5a7bd00b0600fcfb70132d20a9b2386a86a89df46b3c25",
+    "questions": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a",
+    "runtime_contract": "58d2d9956302864d886c9fb7d4c2d4296c7216bcff98509d38b0d7c8f45b3e51"
+  },
+  "lifecycle": "NOT_FROZEN",
+  "overall_verdict": "BLOCKED",
+  "protocol_status": "DRAFT",
+  "runtime": "rust-axum",
+  "schema": "full-system.rust-retrieval-pilot-freeze-readiness",
+  "schema_version": 1,
+  "scope": "INTERNAL_EXPLORATORY Rust retrieval-only candidate; no retrieval queries executed",
+  "tracked_worktree_clean": false
+}

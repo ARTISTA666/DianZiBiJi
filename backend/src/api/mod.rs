@@ -549,7 +549,7 @@ mod tests {
             .filter_map(Value::as_object)
             .map(|path| path.len())
             .sum::<usize>();
-        assert_eq!(operations, 101);
+        assert_eq!(operations, 103);
         assert!(body["paths"]["/api/mcp"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions/{session_id}/turns"]["post"].is_object());
@@ -563,6 +563,263 @@ mod tests {
         );
         assert!(body["paths"]["/api/agents/generate"]["post"].is_object());
         assert!(body["paths"]["/maturity/status"]["get"].is_object());
+        let retrieval = &body["paths"]["/projects/{project_id}/rag/retrieve"]["post"];
+        assert!(retrieval.is_object());
+        assert_eq!(
+            retrieval["requestBody"]["content"]["application/json"]["schema"]["$ref"],
+            "#/components/schemas/RagRetrievalRequest"
+        );
+        assert_eq!(
+            retrieval["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
+            "#/components/schemas/RagRetrievalResponse"
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagRetrievalRequest"]["required"],
+            serde_json::json!([
+                "query",
+                "mode",
+                "expected_corpus_snapshot_hash",
+                "expected_graph_snapshot_hash"
+            ])
+        );
+        for field in [
+            "retrieval_only",
+            "generation_invoked",
+            "llm_query_rewrite_invoked",
+            "citation_repair_invoked",
+            "sources",
+            "graph_context",
+            "effective_retrieval_config",
+            "actual_corpus_snapshot_hash",
+            "actual_graph_snapshot_hash",
+            "used_corpus_snapshot_hash",
+            "used_graph_snapshot_hash",
+            "corpus_snapshot_hash",
+            "graph_snapshot_hash",
+            "corpus_chunk_count",
+            "graph_entity_count",
+            "graph_relation_count",
+        ] {
+            assert!(
+                body["components"]["schemas"]["RagRetrievalResponse"]["required"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .any(|value| value == field)
+            );
+        }
+        assert_eq!(
+            body["components"]["schemas"]["RagStatusRead"]["properties"]["corpus_snapshot"]["$ref"],
+            "#/components/schemas/RagCorpusSnapshotRead"
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagCorpusSnapshotRead"]["required"],
+            serde_json::json!([
+                "dataset_id",
+                "corpus_snapshot_hash",
+                "corpus_chunk_count",
+                "rag_index_version",
+                "embedding_model",
+                "graph_snapshot_hash",
+                "graph_entity_count",
+                "graph_relation_count"
+            ])
+        );
+    }
+
+    #[tokio::test]
+    async fn test_openapi_evidence_contract_exposes_failure_metadata() {
+        let response = build_app(test_state())
+            .oneshot(Request::get("/openapi.json").body(Body::empty()).unwrap())
+            .await
+            .unwrap();
+
+        let body: Value =
+            serde_json::from_slice(&to_bytes(response.into_body(), 256 * 1024).await.unwrap())
+                .unwrap();
+        let schema = &body["paths"]["/rag/experiments/{run_id}/evidence.json"]["get"]["responses"]
+            ["200"]["content"]["application/json"]["schema"];
+
+        assert_eq!(schema["$ref"], "#/components/schemas/RagEvidencePackage");
+        assert_eq!(
+            body["paths"]["/rag/experiments/{run_id}/evidence.json"]["get"]["responses"]["403"]
+                ["content"]["application/json"]["schema"]["$ref"],
+            "#/components/schemas/ApiErrorResponse"
+        );
+        assert_eq!(
+            body["paths"]["/rag/experiments/{run_id}/evidence.json"]["get"]["responses"]["409"]
+                ["content"]["application/json"]["schema"]["$ref"],
+            "#/components/schemas/ApiErrorResponse"
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceSummary"]["required"],
+            serde_json::json!([
+                "fatal_error",
+                "errors",
+                "execution_plan",
+                "unexecuted_cases"
+            ])
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["required"]
+                .as_array()
+                .unwrap()
+                .len(),
+            24
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["modes"]["items"]
+                ["enum"],
+            serde_json::json!([
+                "pure_llm",
+                "bm25_rag",
+                "project_rag",
+                "structured_query",
+                "kg_enhanced_rag"
+            ])
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["name"]
+                ["minLength"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["name"]
+                ["maxLength"],
+            255
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["questions"]
+                ["minItems"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["questions"]
+                ["maxItems"],
+            50
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["questions"]
+                ["uniqueItems"],
+            true
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["questions"]
+                ["items"]["minLength"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["questions"]
+                ["items"]["maxLength"],
+            4000
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["modes"]
+                ["minItems"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["modes"]
+                ["maxItems"],
+            5
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["modes"]
+                ["uniqueItems"],
+            true
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["repetitions"]
+                ["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]["repetitions"]
+                ["maximum"],
+            10
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceExperiment"]["properties"]
+                ["execution_plan_hash"]["pattern"],
+            "^[0-9a-f]{64}$"
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["failure_scope"]
+                ["anyOf"][0]["enum"],
+            serde_json::json!(["case"])
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["query_log_id"]["anyOf"]
+                [0]["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["question_index"]
+                ["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["question"]["minLength"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["question"]["maxLength"],
+            4000
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["mode"]["enum"],
+            serde_json::json!([
+                "pure_llm",
+                "bm25_rag",
+                "project_rag",
+                "structured_query",
+                "kg_enhanced_rag"
+            ])
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["repetition_index"]
+                ["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["execution_order"]
+                ["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["response_ms"]
+                ["minimum"],
+            0
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["failure_code"]["anyOf"]
+                [0]["enum"],
+            serde_json::json!(["query_error"])
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceRunFatalError"]["properties"]
+                ["failure_scope"]["enum"],
+            serde_json::json!(["run"])
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceSource"]["properties"]["chunk_id"]["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceGraphContext"]["properties"]["relation_id"]
+                ["minimum"],
+            1
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceCase"]["properties"]["retrieval_config"]
+                ["$ref"],
+            "#/components/schemas/RagEvidenceRetrievalConfig"
+        );
+        assert_eq!(
+            body["components"]["schemas"]["RagEvidenceRetrievalConfig"]["properties"]
+                ["retrieval_top_k"]["minimum"],
+            1
+        );
     }
 
     #[tokio::test]

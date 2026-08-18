@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-08-10T13:04:16.996876+00:00",
+  "local_ready": true,
+  "status": "ready",
+  "app_env": "development",
+  "production_readiness": {
+    "status": "not_production_mode",
+    "note": "当前 APP_ENV=development，未执行生产发布判断。",
+    "checks": {
+      "APP_ENV=production": false,
+      "SEED_DEMO_DATA=false": false,
+      "APP_REVISION 已绑定": false,
+      "DeepSeek API key 已配置": true,
+      "生产 embedding=OpenAI-compatible/BAAI/bge-m3/1024": false
+    }
+  },
+  "runtime": {
+    "api_runtime": "rust-axum",
+    "revision": "unversioned",
+    "embedding_backend": "hash",
+    "embedding_model": "rust-hash-512-v1",
+    "embedding_dimension": 512
+  },
+  "checks": [
+    {
+      "name": "Rust API 就绪",
+      "passed": true,
+      "severity": "error",
+      "detail": "HTTP 200 / status=ready"
+    },
+    {
+      "name": "PostgreSQL",
+      "passed": true,
+      "severity": "error",
+      "detail": "database=ok"
+    },
+    {
+      "name": "持久化存储",
+      "passed": true,
+      "severity": "error",
+      "detail": "storage=ok"
+    },
+    {
+      "name": "前端首页",
+      "passed": true,
+      "severity": "error",
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "运行指标",
+      "passed": true,
+      "severity": "error",
+      "detail": "HTTP 200 / status=ok"
+    },
+    {
+      "name": "Axum 对外运行时",
+      "passed": true,
+      "severity": "error",
+      "detail": "api_runtime=rust-axum"
+    }
+  ],
+  "sources": {
+    "ready": "http://127.0.0.1:8001/ready",
+    "metrics": "http://127.0.0.1:8001/metrics",
+    "frontend": "http://127.0.0.1:3000/"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "api": {
+    "openapi_sha256": "2c77237b4fec0e8f6c1ad91028b7c338c0f3b8b92abeb1eae433c915a6f02811",
+    "openapi_version": "3.1.0",
+    "operation_count": 85,
+    "path_count": 70
+  },
+  "captured_at": "2026-08-10T12:03:26.888612+00:00",
+  "revision": "unversioned",
+  "runtime": {
+    "api_runtime": "rust-axum",
+    "embedding_backend": "hash",
+    "embedding_dimension": 512,
+    "embedding_model": "rust-hash-512-v1"
+  },
+  "schema": "full-system.rust-runtime-contract-evidence",
+  "schema_version": 1,
+  "source": {
+    "backend_url": "http://127.0.0.1:8001",
+    "metrics_url": "http://127.0.0.1:8001/metrics",
+    "openapi_url": "http://127.0.0.1:8001/openapi.json"
+  },
+  "status": "ok"
+}

@@ -6,7 +6,7 @@ use std::{
 use regex::Regex;
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
-use sqlx::{FromRow, PgPool, Postgres, QueryBuilder, Transaction};
+use sqlx::{FromRow, PgConnection, PgPool, Postgres, QueryBuilder, Transaction};
 
 use crate::{
     ai_provider::GenerationRequest,
@@ -20,6 +20,243 @@ pub use crate::ai_provider::{GenerationError, GenerationResult};
 
 const MAX_GRAPH_CONTEXT_CHARS: usize = 6_000;
 const RAG_INSERT_BATCH_SIZE: usize = 64;
+/// Version of the knowledge-graph schema consumed by the production Rust retriever.
+///
+/// The graph rows are produced by the legacy extraction pipeline, so this value
+/// deliberately matches `backend/app/services/kg_constants.py`. It is exported
+/// with experiment evidence so a paper run cannot silently mix graph schemas.
+pub const GRAPH_SCHEMA_VERSION: &str = "kg-v3-numbered-list-expansion";
+
+/// Shared graph visibility predicate.  Retrieval and evidence snapshots must
+/// never silently diverge on whether a note-derived relation is approved.
+pub const GRAPH_RELATIONS_SCOPE_FILTER: &str = r#"
+    (
+        r.source_type NOT IN ('note', 'note_extraction')
+        OR r.source_type IS NULL
+        OR r.source_id IN (
+            SELECT id FROM experiment_notes
+            WHERE project_id = $1 AND status = 'APPROVED'::notestatus
+        )
+    )
+"#;
+
+#[derive(Clone, Debug)]
+pub struct DocumentSnapshot {
+    pub hash: String,
+    pub chunk_count: i64,
+}
+
+#[derive(Clone, Debug)]
+pub struct GraphSnapshot {
+    pub hash: String,
+    pub entity_count: i64,
+    pub relation_count: i64,
+}
+
+#[derive(Debug, FromRow)]
+struct DocumentSnapshotRow {
+    chunk_id: i32,
+    file_id: i32,
+    filename: String,
+    file_hash: String,
+    chunk_index: i32,
+    stored_content_hash: String,
+    content: String,
+    embedding_text: String,
+}
+
+#[derive(Debug, FromRow)]
+struct GraphSnapshotRow {
+    relation_id: i32,
+    relation_type: String,
+    source_type: Option<String>,
+    source_id: Option<i32>,
+    source_entity_id: i32,
+    confidence: f64,
+    relation_properties: Value,
+    source_entity_type: String,
+    source_label: String,
+    source_normalized_label: String,
+    source_natural_key: String,
+    source_properties: Value,
+    target_entity_type: String,
+    target_entity_id: i32,
+    target_label: String,
+    target_normalized_label: String,
+    target_natural_key: String,
+    target_properties: Value,
+}
+
+const DOCUMENT_SNAPSHOT_SQL: &str = r#"
+    SELECT c.id AS chunk_id, c.file_id, f.original_filename AS filename, f.file_hash,
+           c.chunk_index, c.content_hash AS stored_content_hash, c.content,
+           c.embedding::text AS embedding_text
+    FROM rag_document_chunks c
+    JOIN files f ON f.id = c.file_id
+    WHERE c.project_id = $1
+      AND f.status = 'APPROVED'::filestatus
+      AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
+      AND f.knowledge_sync_status = 'synced'
+      AND c.index_version = $2
+    ORDER BY c.id
+"#;
+
+const GRAPH_SNAPSHOT_SELECT: &str = r#"
+    r.id AS relation_id, r.relation_type, r.source_type, r.source_id,
+    r.source_entity_id, r.target_entity_id, r.confidence,
+    r.properties AS relation_properties,
+    s.entity_type AS source_entity_type, s.label AS source_label,
+    s.normalized_label AS source_normalized_label,
+    s.natural_key AS source_natural_key, s.properties AS source_properties,
+    t.entity_type AS target_entity_type, t.label AS target_label,
+    t.normalized_label AS target_normalized_label,
+    t.natural_key AS target_natural_key, t.properties AS target_properties
+"#;
+
+fn scoped_graph_relations_sql(select_clause: &str) -> String {
+    format!(
+        r#"
+    SELECT {select_clause}
+    FROM kg_relations r
+    JOIN kg_entities s ON s.id = r.source_entity_id
+    JOIN kg_entities t ON t.id = r.target_entity_id
+    WHERE r.project_id = $1 AND {GRAPH_RELATIONS_SCOPE_FILTER}
+    ORDER BY r.id
+"#
+    )
+}
+
+fn graph_snapshot_sql() -> String {
+    scoped_graph_relations_sql(GRAPH_SNAPSHOT_SELECT)
+}
+
+fn sha256_hex(bytes: impl AsRef<[u8]>) -> String {
+    format!("{:x}", Sha256::digest(bytes))
+}
+
+fn require_content_hash(content: &str, stored: &str) -> Result<(), ApiError> {
+    let actual = sha256_hex(content.as_bytes());
+    if actual == stored {
+        Ok(())
+    } else {
+        Err(ApiError::new(
+            axum::http::StatusCode::CONFLICT,
+            format!("RAG content hash mismatch: stored={stored}, actual={actual}"),
+        ))
+    }
+}
+
+async fn document_snapshot_with_connection(
+    connection: &mut PgConnection,
+    project_id: i32,
+    index_version: &str,
+) -> Result<DocumentSnapshot, ApiError> {
+    let rows = sqlx::query_as::<_, DocumentSnapshotRow>(DOCUMENT_SNAPSHOT_SQL)
+        .bind(project_id)
+        .bind(index_version)
+        .fetch_all(&mut *connection)
+        .await?;
+    let mut material = Vec::with_capacity(rows.len());
+    for row in &rows {
+        require_content_hash(&row.content, &row.stored_content_hash)?;
+        material.push(json!({
+            "chunk_id": row.chunk_id,
+            "file_id": row.file_id,
+            "filename": row.filename,
+            "file_hash": row.file_hash,
+            "chunk_index": row.chunk_index,
+            "content_sha256": sha256_hex(row.content.as_bytes()),
+            "stored_content_hash": row.stored_content_hash,
+            "embedding_sha256": sha256_hex(row.embedding_text.as_bytes()),
+            "index_version": index_version,
+        }));
+    }
+    let snapshot_material = serde_json::to_vec(&json!({
+        "index_version": index_version,
+        "chunks": material,
+    }))
+    .map_err(|error| ApiError::internal(error.to_string()))?;
+    Ok(DocumentSnapshot {
+        hash: sha256_hex(snapshot_material),
+        chunk_count: rows.len() as i64,
+    })
+}
+
+pub async fn document_snapshot(
+    pool: &PgPool,
+    project_id: i32,
+    index_version: &str,
+) -> Result<DocumentSnapshot, ApiError> {
+    let mut connection = pool.acquire().await?;
+    document_snapshot_with_connection(&mut connection, project_id, index_version).await
+}
+
+pub async fn document_snapshot_in_transaction(
+    transaction: &mut Transaction<'_, Postgres>,
+    project_id: i32,
+    index_version: &str,
+) -> Result<DocumentSnapshot, ApiError> {
+    document_snapshot_with_connection(transaction, project_id, index_version).await
+}
+
+async fn graph_snapshot_with_connection(
+    connection: &mut PgConnection,
+    project_id: i32,
+) -> Result<GraphSnapshot, ApiError> {
+    let graph_sql = graph_snapshot_sql();
+    let rows = sqlx::query_as::<_, GraphSnapshotRow>(&graph_sql)
+        .bind(project_id)
+        .fetch_all(&mut *connection)
+        .await?;
+    let mut entities = HashSet::new();
+    let mut material = Vec::with_capacity(rows.len());
+    for row in &rows {
+        entities.insert(row.source_entity_id);
+        entities.insert(row.target_entity_id);
+        material.push(json!({
+            "relation_id": row.relation_id,
+            "relation_type": row.relation_type,
+            "source_type": row.source_type,
+            "source_id": row.source_id,
+            "source_entity_id": row.source_entity_id,
+            "confidence": row.confidence,
+            "relation_properties": row.relation_properties,
+            "source_entity_type": row.source_entity_type,
+            "source_label": row.source_label,
+            "source_normalized_label": row.source_normalized_label,
+            "source_natural_key": row.source_natural_key,
+            "source_properties": row.source_properties,
+            "target_entity_type": row.target_entity_type,
+            "target_entity_id": row.target_entity_id,
+            "target_label": row.target_label,
+            "target_normalized_label": row.target_normalized_label,
+            "target_natural_key": row.target_natural_key,
+            "target_properties": row.target_properties,
+        }));
+    }
+    let snapshot_material = serde_json::to_vec(&json!({
+        "graph_schema_version": GRAPH_SCHEMA_VERSION,
+        "relations": material,
+    }))
+    .map_err(|error| ApiError::internal(error.to_string()))?;
+    Ok(GraphSnapshot {
+        hash: sha256_hex(snapshot_material),
+        entity_count: entities.len() as i64,
+        relation_count: rows.len() as i64,
+    })
+}
+
+pub async fn graph_snapshot(pool: &PgPool, project_id: i32) -> Result<GraphSnapshot, ApiError> {
+    let mut connection = pool.acquire().await?;
+    graph_snapshot_with_connection(&mut connection, project_id).await
+}
+
+pub async fn graph_snapshot_in_transaction(
+    transaction: &mut Transaction<'_, Postgres>,
+    project_id: i32,
+) -> Result<GraphSnapshot, ApiError> {
+    graph_snapshot_with_connection(transaction, project_id).await
+}
 
 #[derive(Clone, Debug, FromRow)]
 pub struct RagFileRecord {
@@ -38,6 +275,9 @@ struct ChunkRow {
     id: i32,
     file_id: i32,
     filename: String,
+    file_hash: String,
+    chunk_index: i32,
+    content_hash: String,
     content: String,
 }
 
@@ -47,8 +287,9 @@ struct VectorCandidateRow {
     vector_score: f64,
 }
 
-const ACTIVE_CHUNKS_SQL: &str = r#"
-    SELECT c.id, c.file_id, f.original_filename AS filename, c.content
+pub const ACTIVE_CHUNKS_SQL: &str = r#"
+    SELECT c.id, c.file_id, f.original_filename AS filename, f.file_hash,
+           c.chunk_index, c.content_hash, c.content
     FROM rag_document_chunks c
     JOIN files f ON f.id = c.file_id
     WHERE c.project_id = $1
@@ -121,19 +362,26 @@ fn query_synonyms() -> &'static HashMap<&'static str, Vec<&'static str>> {
 
 /// 扩展查询文本：为原始查询添加同义词，提升 BM25 召回率。
 /// 仅对 BM25 检索生效，不影响向量检索和 LLM prompt。
-pub fn expand_query_for_bm25(query: &str) -> String {
+pub fn bm25_expansion_terms(query: &str) -> Vec<String> {
     let synonyms = query_synonyms();
     let lower = query.to_lowercase();
-    let mut extra_terms = Vec::new();
+    let mut extra_terms = HashSet::new();
     for (term, syns) in synonyms.iter() {
         if lower.contains(term) {
             for syn in syns {
                 if !lower.contains(&syn.to_lowercase()) {
-                    extra_terms.push(*syn);
+                    extra_terms.insert((*syn).to_owned());
                 }
             }
         }
     }
+    let mut extra_terms = extra_terms.into_iter().collect::<Vec<_>>();
+    extra_terms.sort();
+    extra_terms
+}
+
+pub fn expand_query_for_bm25(query: &str) -> String {
+    let extra_terms = bm25_expansion_terms(query);
     if extra_terms.is_empty() {
         query.to_owned()
     } else {
@@ -148,9 +396,13 @@ struct GraphRow {
     source_type: Option<String>,
     source_entity_id: i32,
     source_label: String,
+    source_normalized_label: String,
+    source_natural_key: String,
     source_entity_type: String,
     target_entity_id: i32,
     target_label: String,
+    target_normalized_label: String,
+    target_natural_key: String,
     target_entity_type: String,
     confidence: f64,
     properties: Value,
@@ -307,12 +559,32 @@ pub async fn retrieve(
     query: &str,
     bm25_only: bool,
 ) -> Result<Vec<RagSourceRead>, ApiError> {
-    let pool = &state.pool;
+    let mut connection = state.pool.acquire().await?;
+    retrieve_with_connection(state, project_id, query, bm25_only, &mut connection).await
+}
+
+pub async fn retrieve_in_transaction(
+    state: &AppState,
+    project_id: i32,
+    query: &str,
+    bm25_only: bool,
+    transaction: &mut Transaction<'_, Postgres>,
+) -> Result<Vec<RagSourceRead>, ApiError> {
+    retrieve_with_connection(state, project_id, query, bm25_only, transaction).await
+}
+
+async fn retrieve_with_connection(
+    state: &AppState,
+    project_id: i32,
+    query: &str,
+    bm25_only: bool,
+    connection: &mut PgConnection,
+) -> Result<Vec<RagSourceRead>, ApiError> {
     let settings = &state.settings;
     let rows = sqlx::query_as::<_, ChunkRow>(ACTIVE_CHUNKS_SQL)
         .bind(project_id)
         .bind(&settings.rag_index_version)
-        .fetch_all(pool)
+        .fetch_all(&mut *connection)
         .await?;
     if rows.is_empty() {
         return Ok(Vec::new());
@@ -339,8 +611,8 @@ pub async fn retrieve(
         validate_embedding_dimensions(&query_embedding, settings.embedding_dimension)
             .map_err(ApiError::internal)?;
         let query_vector = vector_literal(&query_embedding);
-        let vector_candidates = fetch_vector_candidates(
-            pool,
+        let vector_candidates = fetch_vector_candidates_with_connection(
+            connection,
             project_id,
             &settings.rag_index_version,
             &query_vector,
@@ -382,8 +654,8 @@ pub async fn retrieve(
             .filter(|id| !vector_scores.contains_key(id))
             .collect::<Vec<_>>();
         if !missing_vector_scores.is_empty() {
-            for candidate in fetch_vector_scores(
-                pool,
+            for candidate in fetch_vector_scores_with_connection(
+                connection,
                 project_id,
                 &settings.rag_index_version,
                 &query_vector,
@@ -468,6 +740,10 @@ pub async fn retrieve(
                 vector_score: Some(round6(vector_score)),
                 lexical_score: Some(round6(lexical_score)),
                 retrieval_score: Some(round6(retrieval_score)),
+                content: Some(row.content.clone()),
+                content_sha256: Some(row.content_hash.clone()),
+                file_hash: Some(row.file_hash.clone()),
+                chunk_index: Some(row.chunk_index),
             },
         ));
     }
@@ -630,8 +906,27 @@ fn passes_relevance_floor(
     }
 }
 
+#[cfg(test)]
 async fn fetch_vector_candidates(
     pool: &PgPool,
+    project_id: i32,
+    index_version: &str,
+    query_vector: &str,
+    candidate_k: usize,
+) -> Result<Vec<VectorCandidateRow>, sqlx::Error> {
+    let mut connection = pool.acquire().await?;
+    fetch_vector_candidates_with_connection(
+        &mut connection,
+        project_id,
+        index_version,
+        query_vector,
+        candidate_k,
+    )
+    .await
+}
+
+async fn fetch_vector_candidates_with_connection(
+    connection: &mut PgConnection,
     project_id: i32,
     index_version: &str,
     query_vector: &str,
@@ -642,12 +937,32 @@ async fn fetch_vector_candidates(
         .bind(index_version)
         .bind(query_vector)
         .bind(i64::try_from(candidate_k).unwrap_or(i64::MAX))
-        .fetch_all(pool)
+        .fetch_all(&mut *connection)
         .await
 }
 
+#[cfg(test)]
+#[allow(dead_code)]
 async fn fetch_vector_scores(
     pool: &PgPool,
+    project_id: i32,
+    index_version: &str,
+    query_vector: &str,
+    chunk_ids: &[i32],
+) -> Result<Vec<VectorCandidateRow>, sqlx::Error> {
+    let mut connection = pool.acquire().await?;
+    fetch_vector_scores_with_connection(
+        &mut connection,
+        project_id,
+        index_version,
+        query_vector,
+        chunk_ids,
+    )
+    .await
+}
+
+async fn fetch_vector_scores_with_connection(
+    connection: &mut PgConnection,
     project_id: i32,
     index_version: &str,
     query_vector: &str,
@@ -658,7 +973,7 @@ async fn fetch_vector_scores(
         .bind(index_version)
         .bind(query_vector)
         .bind(chunk_ids)
-        .fetch_all(pool)
+        .fetch_all(&mut *connection)
         .await
 }
 
@@ -669,32 +984,46 @@ pub async fn relevant_graph_context(
     limit: usize,
     min_score: f64,
 ) -> Result<Vec<RagGraphContextRead>, ApiError> {
-    let rows = sqlx::query_as::<_, GraphRow>(
+    let mut connection = pool.acquire().await?;
+    relevant_graph_context_with_connection(&mut connection, project_id, query, limit, min_score)
+        .await
+}
+
+pub async fn relevant_graph_context_in_transaction(
+    project_id: i32,
+    query: &str,
+    limit: usize,
+    min_score: f64,
+    transaction: &mut Transaction<'_, Postgres>,
+) -> Result<Vec<RagGraphContextRead>, ApiError> {
+    relevant_graph_context_with_connection(transaction, project_id, query, limit, min_score).await
+}
+
+async fn relevant_graph_context_with_connection(
+    connection: &mut PgConnection,
+    project_id: i32,
+    query: &str,
+    limit: usize,
+    min_score: f64,
+) -> Result<Vec<RagGraphContextRead>, ApiError> {
+    let graph_sql = scoped_graph_relations_sql(
         r#"
-        SELECT r.id AS relation_id, r.relation_type, r.source_type,
-               s.id AS source_entity_id, s.label AS source_label,
-               s.entity_type AS source_entity_type,
-               t.id AS target_entity_id, t.label AS target_label,
-               t.entity_type AS target_entity_type,
-               r.confidence, r.properties
-        FROM kg_relations r
-        JOIN kg_entities s ON s.id = r.source_entity_id
-        JOIN kg_entities t ON t.id = r.target_entity_id
-        WHERE r.project_id = $1
-          AND (
-              r.source_type NOT IN ('note', 'note_extraction')
-              OR r.source_type IS NULL
-              OR r.source_id IN (
-                  SELECT id FROM experiment_notes
-                  WHERE project_id = $1 AND status = 'APPROVED'::notestatus
-              )
-          )
-        ORDER BY r.id
+        r.id AS relation_id, r.relation_type, r.source_type,
+        s.id AS source_entity_id, s.label AS source_label,
+        s.normalized_label AS source_normalized_label,
+        s.natural_key AS source_natural_key,
+        s.entity_type AS source_entity_type,
+        t.id AS target_entity_id, t.label AS target_label,
+        t.normalized_label AS target_normalized_label,
+        t.natural_key AS target_natural_key,
+        t.entity_type AS target_entity_type,
+        r.confidence, r.properties
         "#,
-    )
-    .bind(project_id)
-    .fetch_all(pool)
-    .await?;
+    );
+    let rows = sqlx::query_as::<_, GraphRow>(&graph_sql)
+        .bind(project_id)
+        .fetch_all(&mut *connection)
+        .await?;
     let normalized_query = query.to_lowercase();
     let query_tokens = tokens(query);
     let hints = relation_hints(&normalized_query);
@@ -723,10 +1052,14 @@ pub async fn relevant_graph_context(
                 relation_type: row.relation_type,
                 source_entity_id: row.source_entity_id,
                 source_label: row.source_label,
+                source_normalized_label: row.source_normalized_label,
+                source_natural_key: row.source_natural_key,
                 source_entity_type_label: entity_type_label(&row.source_entity_type).to_owned(),
                 source_entity_type: row.source_entity_type,
                 target_entity_id: row.target_entity_id,
                 target_label: row.target_label,
+                target_normalized_label: row.target_normalized_label,
+                target_natural_key: row.target_natural_key,
                 target_entity_type_label: entity_type_label(&row.target_entity_type).to_owned(),
                 target_entity_type: row.target_entity_type,
                 confidence: row.confidence,
@@ -740,6 +1073,7 @@ pub async fn relevant_graph_context(
                     .filter_map(Value::as_str)
                     .map(str::to_owned)
                     .collect(),
+                relation_properties: row.properties.clone(),
             },
         ));
     }
@@ -1167,6 +1501,30 @@ pub fn audit_citations_after_repair(
     audit
 }
 
+/// Remove prompt-template citation placeholders such as `[S编号]` / `[G编号]`
+/// from a generated answer before citation auditing.
+///
+/// The prompt uses these bracketed forms to describe the required citation
+/// syntax, but a model may echo the placeholder itself in a meta-sentence
+/// (for example "未提供对应的 [G编号]"). Such text is not a citation and must
+/// not be counted as an invalid evidence marker, otherwise one formatting echo
+/// makes an otherwise auditable experiment case fail the whole evidence
+/// package. We keep `S编号` / `G编号` as plain text so the sentence remains
+/// readable without turning the placeholder into a fake citation.
+pub fn strip_citation_template_placeholders(answer: &str) -> String {
+    let regex = Regex::new(r"(?i)\[([SG])\s*编号\]").unwrap();
+    regex
+        .replace_all(answer, |capture: &regex::Captures<'_>| {
+            let kind = capture
+                .get(1)
+                .map(|matched| matched.as_str())
+                .unwrap_or_default()
+                .to_uppercase();
+            format!("{kind}编号")
+        })
+        .into_owned()
+}
+
 fn chunk_text(text: &str, chunk_size: usize, overlap: usize) -> Vec<String> {
     let normalized = text.replace("\r\n", "\n").replace('\r', "\n");
     let trimmed = normalized.trim();
@@ -1277,7 +1635,10 @@ fn split_long_text(text: &str, max_size: usize, overlap: usize) -> Vec<String> {
         if !chunk.is_empty() {
             chunks.push(chunk);
         }
-        start = end.saturating_sub(overlap);
+        // 必须保证 start 严格前进：当句子边界恰好落在“窗口起点 + overlap”处时，
+        // end - overlap 会等于原 start，导致窗口原地踏步并无限循环（内存无限增长直到 OOM）。
+        // 正常情况保留 overlap 语义，极端情况至少前进一个字符。
+        start = (end.saturating_sub(overlap)).max(start + 1);
         if start >= chars.len() {
             break;
         }
@@ -1846,7 +2207,7 @@ pub fn merge_usage(values: &[Value]) -> Value {
 #[cfg(test)]
 mod tests {
     use std::{
-        collections::HashMap,
+        collections::{HashMap, HashSet},
         sync::{
             atomic::{AtomicUsize, Ordering},
             Arc,
@@ -1862,16 +2223,17 @@ mod tests {
     use uuid::Uuid;
 
     use super::{
-        audit_citations, audit_citations_after_repair, balance_graph_context, bm25_scores,
-        chunk_text, exact_token_overlap, expand_query_for_bm25, fetch_vector_candidates,
-        focused_graph_entity_ids, format_graph_context, format_sources, generate,
-        generate_with_max_tokens, graph_context_budget, graph_relation_haystack,
-        graph_relation_score, include_retrieval_candidate, is_collection_query,
+        audit_citations, audit_citations_after_repair, balance_graph_context, bm25_expansion_terms,
+        bm25_scores, chunk_text, exact_token_overlap, expand_query_for_bm25,
+        fetch_vector_candidates, focused_graph_entity_ids, format_graph_context, format_sources,
+        generate, generate_with_max_tokens, graph_context_budget, graph_relation_haystack,
+        graph_relation_score, graph_snapshot_sql, include_retrieval_candidate, is_collection_query,
         meets_graph_threshold, passes_relevance_floor, query_prefers_lexical_exact_match,
         rag_insert_batch_ranges, reciprocal_rank_fusion, relation_hints, retrieve,
         role_query_matches, select_diverse_sources, should_retry_generation_status,
-        split_long_text, tokens, truncate_error_detail, validate_embedding_dimensions,
-        vector_literal, weighted_reciprocal_rank_fusion, ChunkRow, GraphRow, ACTIVE_CHUNKS_SQL,
+        split_long_text, strip_citation_template_placeholders, tokens, truncate_error_detail,
+        validate_embedding_dimensions, vector_literal, weighted_reciprocal_rank_fusion, ChunkRow,
+        GraphRow, ACTIVE_CHUNKS_SQL, DOCUMENT_SNAPSHOT_SQL, GRAPH_RELATIONS_SCOPE_FILTER,
         MAX_GRAPH_CONTEXT_CHARS, VECTOR_CANDIDATE_SQL, VECTOR_SCORES_SQL,
     };
     use crate::{
@@ -1951,6 +2313,19 @@ mod tests {
     }
 
     #[test]
+    fn test_split_long_text_terminates_when_sentence_end_falls_at_window_start() {
+        // 回归：当段落中最后一个句子边界恰好位于“窗口起点 + overlap”处时，
+        // 旧实现 end - overlap 会等于原 start，窗口原地踏步形成无限循环（OOM）。
+        // 首窗口 [0,700) 内最后一个 '.' 位于位置 119 -> end=120 -> start'=120-120=0。
+        let segment = format!("{}x.", "x".repeat(118));
+        let text = segment.repeat(6) + &"y".repeat(600);
+        let chunks = split_long_text(&text, 700, 120);
+        assert!(!chunks.is_empty());
+        let joined: usize = chunks.iter().map(|chunk| chunk.chars().count()).sum();
+        assert!(joined >= text.chars().count());
+    }
+
+    #[test]
     fn test_expand_query_adds_synonyms() {
         let expanded = expand_query_for_bm25("PCR 实验条件");
         assert!(expanded.contains("聚合酶链反应"));
@@ -1968,6 +2343,42 @@ mod tests {
     fn test_expand_query_no_match_returns_original() {
         let expanded = expand_query_for_bm25("今天天气怎么样");
         assert_eq!(expanded, "今天天气怎么样");
+    }
+
+    #[test]
+    fn test_bm25_expansion_terms_are_sorted_and_deduplicated() {
+        let terms = bm25_expansion_terms("PCR rt-PCR");
+        let mut sorted_unique = terms.clone();
+        sorted_unique.sort();
+        sorted_unique.dedup();
+        assert_eq!(terms, sorted_unique);
+        assert_eq!(terms, bm25_expansion_terms("rt-PCR PCR"));
+    }
+
+    #[test]
+    fn test_snapshot_sql_contains_all_order_and_identity_fields() {
+        assert!(DOCUMENT_SNAPSHOT_SQL.contains("c.id AS chunk_id"));
+        assert!(DOCUMENT_SNAPSHOT_SQL.contains("ORDER BY c.id"));
+        let graph_sql = graph_snapshot_sql();
+        for field in [
+            "r.id AS relation_id",
+            "r.source_entity_id",
+            "r.target_entity_id",
+            "ORDER BY r.id",
+        ] {
+            assert!(
+                graph_sql.contains(field),
+                "missing graph snapshot field: {field}"
+            );
+        }
+        assert!(graph_sql.contains(GRAPH_RELATIONS_SCOPE_FILTER));
+    }
+
+    #[test]
+    fn test_graph_snapshot_entity_count_semantics_use_endpoint_ids() {
+        let endpoint_ids = [10, 10, 11, 12];
+        let entities = endpoint_ids.iter().copied().collect::<HashSet<_>>();
+        assert_eq!(entities.len(), 3);
     }
 
     #[test]
@@ -2003,6 +2414,37 @@ mod tests {
     }
 
     #[test]
+    fn test_strip_citation_template_placeholders_removes_brackets_only() {
+        assert_eq!(
+            strip_citation_template_placeholders(
+                "知识图谱上下文中未提供与该条记录直接对应的 [G编号]。[S2] 和 [G8] 保留。"
+            ),
+            "知识图谱上下文中未提供与该条记录直接对应的 G编号。[S2] 和 [G8] 保留。"
+        );
+        assert_eq!(
+            strip_citation_template_placeholders("资料引用写作 [S编号]，图谱引用写作 [G编号]。"),
+            "资料引用写作 S编号，图谱引用写作 G编号。"
+        );
+    }
+
+    #[test]
+    fn test_strip_citation_template_placeholders_is_case_insensitive_and_space_tolerant() {
+        assert_eq!(
+            strip_citation_template_placeholders("使用 [s 编号] 说明来源。"),
+            "使用 S编号 说明来源。"
+        );
+    }
+
+    #[test]
+    fn test_stripped_template_placeholder_is_not_counted_as_invalid_citation() {
+        let answer = strip_citation_template_placeholders("对应关系未提供 [G编号]。[S1] 有效。");
+        let audit = audit_citations(&answer, 1, 0);
+
+        assert!(audit.passed);
+        assert_eq!(audit.invalid_citations, Vec::<String>::new());
+    }
+
+    #[test]
     fn test_rag_insert_batch_ranges_cover_chunks_without_oversized_batches() {
         let ranges = rag_insert_batch_ranges(129);
 
@@ -2025,12 +2467,18 @@ mod tests {
                 id: 1,
                 file_id: 1,
                 filename: "common.txt".to_owned(),
+                file_hash: "file-1".to_owned(),
+                chunk_index: 0,
+                content_hash: "content-1".to_owned(),
                 content: "common ".repeat(12),
             },
             ChunkRow {
                 id: 2,
                 file_id: 2,
                 filename: "rare.txt".to_owned(),
+                file_hash: "file-2".to_owned(),
+                chunk_index: 0,
+                content_hash: "content-2".to_owned(),
                 content: "common raremarker".to_owned(),
             },
         ];
@@ -2065,9 +2513,13 @@ mod tests {
             source_type: Some("note_extraction".to_owned()),
             source_entity_id: 10,
             source_label: "PCR experiment".to_owned(),
+            source_normalized_label: "pcr experiment".to_owned(),
+            source_natural_key: "pcr-10".to_owned(),
             source_entity_type: "note".to_owned(),
             target_entity_id: 11,
             target_label: "PBS buffer solution".to_owned(),
+            target_normalized_label: "pbs buffer solution".to_owned(),
+            target_natural_key: "pbs-11".to_owned(),
             target_entity_type: "reagent".to_owned(),
             confidence: 0.9,
             properties: json!({"roles": ["group"]}),
@@ -2086,9 +2538,13 @@ mod tests {
             source_type: Some("note_extraction".to_owned()),
             source_entity_id: 10,
             source_label: "PCR experiment".to_owned(),
+            source_normalized_label: "pcr experiment".to_owned(),
+            source_natural_key: "pcr-10".to_owned(),
             source_entity_type: "note".to_owned(),
             target_entity_id: 11,
             target_label: "Taq".to_owned(),
+            target_normalized_label: "taq".to_owned(),
+            target_natural_key: "taq-11".to_owned(),
             target_entity_type: "reagent".to_owned(),
             confidence: 0.9,
             properties: json!({}),
@@ -2123,9 +2579,13 @@ mod tests {
                 source_type: Some("note_extraction".to_owned()),
                 source_entity_id: 10,
                 source_label: "PCR condition experiment".to_owned(),
+                source_normalized_label: "pcr condition experiment".to_owned(),
+                source_natural_key: "pcr-10".to_owned(),
                 source_entity_type: "note".to_owned(),
                 target_entity_id: 11,
                 target_label: "Taq DNA Polymerase".to_owned(),
+                target_normalized_label: "taq dna polymerase".to_owned(),
+                target_natural_key: "taq-11".to_owned(),
                 target_entity_type: "reagent".to_owned(),
                 confidence: 0.9,
                 properties: json!({}),
@@ -2136,9 +2596,13 @@ mod tests {
                 source_type: Some("note_extraction".to_owned()),
                 source_entity_id: 20,
                 source_label: "Western blot experiment".to_owned(),
+                source_normalized_label: "western blot experiment".to_owned(),
+                source_natural_key: "western-20".to_owned(),
                 source_entity_type: "note".to_owned(),
                 target_entity_id: 21,
                 target_label: "RIPA buffer".to_owned(),
+                target_normalized_label: "ripa buffer".to_owned(),
+                target_natural_key: "ripa-21".to_owned(),
                 target_entity_type: "reagent".to_owned(),
                 confidence: 0.9,
                 properties: json!({}),
@@ -2156,9 +2620,13 @@ mod tests {
             source_type: Some("project".to_owned()),
             source_entity_id: 30,
             source_label: "资料库".to_owned(),
+            source_normalized_label: "资料库".to_owned(),
+            source_natural_key: "project-30".to_owned(),
             source_entity_type: "project".to_owned(),
             target_entity_id: 31,
             target_label: "protocol.pdf".to_owned(),
+            target_normalized_label: "protocol.pdf".to_owned(),
+            target_natural_key: "protocol-31".to_owned(),
             target_entity_type: "file".to_owned(),
             confidence: 0.9,
             properties: json!({}),
@@ -2177,15 +2645,20 @@ mod tests {
             relation_label: "使用试剂".to_owned(),
             source_entity_id,
             source_label: format!("note-{source_entity_id}"),
+            source_normalized_label: format!("note-{source_entity_id}"),
+            source_natural_key: format!("note-{source_entity_id}"),
             source_entity_type: "note".to_owned(),
             source_entity_type_label: "实验笔记".to_owned(),
             target_entity_id,
             target_label: format!("reagent-{target_entity_id}"),
+            target_normalized_label: format!("reagent-{target_entity_id}"),
+            target_natural_key: format!("reagent-{target_entity_id}"),
             target_entity_type: "reagent".to_owned(),
             target_entity_type_label: "试剂".to_owned(),
             confidence: 0.9,
             retrieval_score,
             relation_roles: vec![],
+            relation_properties: json!({}),
         };
         let selected = balance_graph_context(
             vec![
@@ -2224,6 +2697,10 @@ mod tests {
                 vector_score: Some(0.9),
                 lexical_score: Some(0.8),
                 retrieval_score: Some(0.85),
+                content: None,
+                content_sha256: None,
+                file_hash: None,
+                chunk_index: None,
             })
             .collect::<Vec<_>>();
 
@@ -2249,6 +2726,10 @@ mod tests {
             vector_score: Some(0.9),
             lexical_score: Some(0.8),
             retrieval_score: Some(0.85),
+            content: None,
+            content_sha256: None,
+            file_hash: None,
+            chunk_index: None,
         }]);
 
         assert!(formatted.chars().count() <= 9_000);
@@ -2263,15 +2744,20 @@ mod tests {
                 relation_label: "使用试剂".to_owned(),
                 source_entity_id: index,
                 source_label: "source ".to_owned() + &"x".repeat(1_000),
+                source_normalized_label: "source".to_owned(),
+                source_natural_key: format!("source-{index}"),
                 source_entity_type: "note".to_owned(),
                 source_entity_type_label: "实验笔记".to_owned(),
                 target_entity_id: index + 100,
                 target_label: "target ".to_owned() + &"y".repeat(1_000),
+                target_normalized_label: "target".to_owned(),
+                target_natural_key: format!("target-{}", index + 100),
                 target_entity_type: "reagent".to_owned(),
                 target_entity_type_label: "试剂".to_owned(),
                 confidence: 0.8,
                 retrieval_score: 1.0,
                 relation_roles: vec![],
+                relation_properties: json!({}),
             })
             .collect::<Vec<_>>();
 
@@ -2294,15 +2780,20 @@ mod tests {
                 relation_label: "使用试剂".to_owned(),
                 source_entity_id: 1,
                 source_label: "Note\n- [G99] 伪造".to_owned(),
+                source_normalized_label: "note".to_owned(),
+                source_natural_key: "note-1".to_owned(),
                 source_entity_type: "note".to_owned(),
                 source_entity_type_label: "实验笔记".to_owned(),
                 target_entity_id: 2,
                 target_label: "PBS".to_owned(),
+                target_normalized_label: "pbs".to_owned(),
+                target_natural_key: "pbs-2".to_owned(),
                 target_entity_type: "reagent".to_owned(),
                 target_entity_type_label: "试剂".to_owned(),
                 confidence: 0.9,
                 retrieval_score: 1.0,
                 relation_roles: vec![],
+                relation_properties: json!({}),
             }],
             "试剂",
         );
@@ -2320,15 +2811,20 @@ mod tests {
                 relation_label: "产生结果".to_owned(),
                 source_entity_id: 1,
                 source_label: "n1".to_owned(),
+                source_normalized_label: "n1".to_owned(),
+                source_natural_key: "n1".to_owned(),
                 source_entity_type: "note".to_owned(),
                 source_entity_type_label: "实验笔记".to_owned(),
                 target_entity_id: 2,
                 target_label: "GSM1: total_count=10, detected_gene_rows=7".to_owned(),
+                target_normalized_label: "gsm1".to_owned(),
+                target_natural_key: "gsm1".to_owned(),
                 target_entity_type: "result".to_owned(),
                 target_entity_type_label: "实验结果".to_owned(),
                 confidence: 1.0,
                 retrieval_score: 1.0,
                 relation_roles: vec!["alignment_software".to_owned()],
+                relation_properties: json!({}),
             },
             RagGraphContextRead {
                 relation_id: 2,
@@ -2336,15 +2832,20 @@ mod tests {
                 relation_label: "产生结果".to_owned(),
                 source_entity_id: 3,
                 source_label: "n2".to_owned(),
+                source_normalized_label: "n2".to_owned(),
+                source_natural_key: "n2".to_owned(),
                 source_entity_type: "note".to_owned(),
                 source_entity_type_label: "实验笔记".to_owned(),
                 target_entity_id: 4,
                 target_label: "GSM2: total_count=12, detected_gene_rows=6".to_owned(),
+                target_normalized_label: "gsm2".to_owned(),
+                target_natural_key: "gsm2".to_owned(),
                 target_entity_type: "result".to_owned(),
                 target_entity_type_label: "实验结果".to_owned(),
                 confidence: 1.0,
                 retrieval_score: 1.0,
                 relation_roles: vec![],
+                relation_properties: json!({}),
             },
         ];
 
@@ -2432,7 +2933,7 @@ mod tests {
                 "RustCandidates123!".to_owned(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
-            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "structured-v1".to_owned()),
             ("RAG_VECTOR_CANDIDATE_K".to_owned(), "2".to_owned()),
             ("RAG_RETRIEVAL_TOP_K".to_owned(), "2".to_owned()),
             ("RAG_COLLECTION_RETRIEVAL_TOP_K".to_owned(), "2".to_owned()),
@@ -2527,8 +3028,8 @@ mod tests {
                 r#"
                 INSERT INTO rag_document_chunks (
                     project_id, file_id, chunk_index, content, content_hash,
-                    character_count, embedding, metadata_json
-                ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json)
+                    character_count, embedding, metadata_json, chunk_version, index_version
+                ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json, $7, $8)
                 RETURNING id
                 "#,
             )
@@ -2538,16 +3039,44 @@ mod tests {
             .bind(format!("candidate-chunk-{suffix}-{index}"))
             .bind(contents[index].chars().count() as i32)
             .bind(&embeddings[index])
+            .bind(&state.settings.rag_index_version)
+            .bind(&state.settings.rag_index_version)
             .fetch_one(&pool)
             .await
             .unwrap();
             chunk_ids.push(chunk_id);
         }
 
+        let mut stale_chunk_ids = Vec::new();
+        for (stale_index, stale_version) in [(4, "legacy-v1"), (5, "legacy-unknown")] {
+            let stale_chunk_id: i32 = sqlx::query_scalar(
+                r#"
+                INSERT INTO rag_document_chunks (
+                    project_id, file_id, chunk_index, content, content_hash,
+                    character_count, embedding, metadata_json, chunk_version, index_version
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7::vector, '{}'::json, $8, $9)
+                RETURNING id
+                "#,
+            )
+            .bind(project_id)
+            .bind(file_ids[0])
+            .bind(stale_index)
+            .bind(format!("stale {stale_version} raremarker evidence"))
+            .bind(format!("stale-chunk-{suffix}-{stale_version}"))
+            .bind(4_i32)
+            .bind(&embeddings[0])
+            .bind(stale_version)
+            .bind(stale_version)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+            stale_chunk_ids.push(stale_chunk_id);
+        }
+
         let vector_candidates = fetch_vector_candidates(
             &pool,
             project_id,
-            "legacy-v1",
+            "structured-v1",
             &vector_literal(&query_embedding),
             2,
         )
@@ -2594,6 +3123,11 @@ mod tests {
                 .any(|source| source.file_id == Some(file_ids[2])),
             "expected lexical rescue in results: {results:?}"
         );
+        assert!(results.iter().all(|source| {
+            source
+                .chunk_id
+                .is_some_and(|chunk_id| !stale_chunk_ids.contains(&chunk_id))
+        }));
     }
 
     #[tokio::test]
@@ -2611,7 +3145,7 @@ mod tests {
                 "RustMinScore123!".to_owned(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
-            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "structured-v1".to_owned()),
         ]))
         .unwrap();
         let pool = connect_database(&settings).await.unwrap();
@@ -2658,11 +3192,11 @@ mod tests {
         let content = "PCR protocol uses Taq polymerase at 58 C.";
         sqlx::query(
             r#"
-            INSERT INTO rag_document_chunks (
-                project_id, file_id, chunk_index, content, content_hash,
-                character_count, embedding, metadata_json
-            ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json)
-            "#,
+                INSERT INTO rag_document_chunks (
+                    project_id, file_id, chunk_index, content, content_hash,
+                    character_count, embedding, metadata_json, chunk_version, index_version
+                ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json, $7, $8)
+                "#,
         )
         .bind(project_id)
         .bind(file_id)
@@ -2670,6 +3204,8 @@ mod tests {
         .bind(format!("minscore-chunk-{suffix}"))
         .bind(content.chars().count() as i32)
         .bind(vector_literal(&hash_embedding(content, 512)))
+        .bind(&state.settings.rag_index_version)
+        .bind(&state.settings.rag_index_version)
         .execute(&pool)
         .await
         .unwrap();
@@ -2693,7 +3229,7 @@ mod tests {
             ("DATABASE_URL".to_owned(), database_url.clone()),
             ("RAG_MIN_RETRIEVAL_SCORE".to_owned(), "0".to_owned()),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
-            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "structured-v1".to_owned()),
         ]))
         .unwrap();
         let legacy_state = AppState::new(pool.clone(), legacy_settings).unwrap();
@@ -2715,6 +3251,9 @@ mod tests {
                 id: 1,
                 file_id,
                 filename: format!("minscore-{suffix}.txt"),
+                file_hash: format!("file-{suffix}"),
+                chunk_index: 0,
+                content_hash: format!("content-{suffix}"),
                 content: content.to_owned(),
             }],
             "polymerase taq",
@@ -2726,7 +3265,7 @@ mod tests {
                 lexical_score.to_string(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
-            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "structured-v1".to_owned()),
         ]))
         .unwrap();
         let boundary_state = AppState::new(pool.clone(), boundary_settings).unwrap();
@@ -2741,7 +3280,7 @@ mod tests {
                 (lexical_score + 0.0001).to_string(),
             ),
             ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
-            ("RAG_INDEX_VERSION".to_owned(), "legacy-v1".to_owned()),
+            ("RAG_INDEX_VERSION".to_owned(), "structured-v1".to_owned()),
         ]))
         .unwrap();
         let above_state = AppState::new(pool.clone(), above_settings).unwrap();
@@ -2981,6 +3520,10 @@ mod tests {
                         vector_score: Some(1.0),
                         lexical_score: Some(1.0),
                         retrieval_score: Some(1.0 / id as f64),
+                        content: None,
+                        content_sha256: None,
+                        file_hash: None,
+                        chunk_index: None,
                     },
                 )
             })

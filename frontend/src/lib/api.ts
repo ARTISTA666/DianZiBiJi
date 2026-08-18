@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import type { components } from "./api-schema";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
 
@@ -160,13 +161,7 @@ export type RagDataset = {
   updated_at: string;
 };
 
-export type RagStatus = {
-  initialized: boolean;
-  dataset: RagDataset | null;
-  pending_sync_count: number;
-  failed_sync_count: number;
-  synced_count: number;
-};
+export type RagStatus = components["schemas"]["RagStatusRead"];
 
 export type RagQueryResponse = {
   answer: string;
@@ -935,6 +930,15 @@ export function resumeRagExperiment(token: string, runId: number) {
 export async function downloadRagExperiment(token: string, runId: number) {
   return apiFetch<Blob>(
     `/rag/experiments/${runId}/export.csv`,
+    token,
+    undefined,
+    (response) => response.blob(),
+  );
+}
+
+export async function downloadRagExperimentEvidence(token: string, runId: number) {
+  return apiFetch<Blob>(
+    `/rag/experiments/${runId}/evidence.json`,
     token,
     undefined,
     (response) => response.blob(),

@@ -15,11 +15,12 @@ const DATABASE_INITIALIZATION_LOCK_ID: i64 = 4_545_704_429_315_697;
 const RAG_HNSW_INITIALIZATION_LOCK_ID: i64 = 4_545_704_429_315_698;
 const RAG_HNSW_INDEX_NAME: &str = "ix_rag_chunks_embedding_hnsw";
 const RUST_SCHEMA_VERSION: i32 = 4;
+// Compatibility marker only: it is not an index/chunk version or provenance.
 const LEGACY_SCHEMA_RECOVERY_GUIDANCE: &str =
-    "Apply the complete legacy Alembic history through 0012_kg_entities_unique_natural_key with the previous migration image, or restore a compatible backup.";
+    "Apply the complete legacy Alembic history through 0013_rust_retrieval_identity with the previous migration image, or restore a compatible backup.";
 const LEGACY_EXPERIMENT_STALE_GRACE_SECONDS: i32 = 600;
-pub const EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS: u64 = 2;
-pub const EXPERIMENT_LEASE_SECONDS: i32 = 6;
+pub const EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS: u64 = 5;
+pub const EXPERIMENT_LEASE_SECONDS: i32 = 30;
 pub const STALE_EXPERIMENT_REAPER_INTERVAL_SECONDS: u64 = 1;
 
 // This is the minimum schema shape required by the Rust runtime.  Checking a
@@ -185,6 +186,70 @@ pub async fn initialize_database(pool: &PgPool, settings: &Settings) -> Result<(
             .execute(&mut *transaction)
             .await?;
     }
+    // Align the pgvector embedding column with the configured embedding dimension.
+    // The vector(n) type has a fixed dimension; the runtime inserts vectors of
+    // settings.embedding_dimension. A mismatch (e.g. a legacy 512-dim schema with
+    // a 1024-dim bge-m3 config) makes every chunk insert fail with a dimension
+    // error, so the column and its HNSW index are rebuilt to match and all
+    // previously synced chunks are marked stale: an embedding change invalidates
+    // the whole index and requires an explicit rebuild anyway.
+    let embedding_column_dim: Option<i32> = sqlx::query_scalar(
+        r#"
+        SELECT atttypmod
+        FROM pg_attribute
+        WHERE attrelid = 'public.rag_document_chunks'::regclass
+          AND attname = 'embedding'
+          AND NOT attisdropped
+        "#,
+    )
+    .fetch_optional(&mut *transaction)
+    .await?;
+    let configured_dim = i32::try_from(settings.embedding_dimension)
+        .map_err(|_| DatabaseError::Domain("EMBEDDING_DIMENSION does not fit i32".to_owned()))?;
+    if embedding_column_dim != Some(configured_dim) {
+        if embedding_column_dim.is_some() {
+            sqlx::raw_sql(
+                r#"
+                -- 旧维度 chunk 全部失效：清空后重建列（非空表不能直接 ADD COLUMN ... NOT NULL）。
+                DELETE FROM public.rag_document_chunks;
+                DROP INDEX IF EXISTS ix_rag_chunks_embedding_hnsw;
+                ALTER TABLE public.rag_document_chunks DROP COLUMN embedding;
+                "#,
+            )
+            .execute(&mut *transaction)
+            .await?;
+        }
+        // PostgreSQL 类型修饰符不接受绑定参数，必须内联常量；维度来自配置的整数。
+        let add_embedding_column = format!(
+            "ALTER TABLE public.rag_document_chunks ADD COLUMN embedding public.vector({configured_dim}) NOT NULL"
+        );
+        sqlx::raw_sql(&add_embedding_column)
+            .execute(&mut *transaction)
+            .await?;
+        sqlx::query(
+            "CREATE INDEX ix_rag_chunks_embedding_hnsw ON public.rag_document_chunks USING hnsw (embedding public.vector_cosine_ops)",
+        )
+        .execute(&mut *transaction)
+        .await?;
+        // 维度变更使既有 chunk 全部失效：标记 stale，等待显式重建。
+        sqlx::query(
+            r#"
+            UPDATE public.rag_file_syncs SET sync_status = 'stale', updated_at = now()
+            WHERE sync_status = 'synced'
+            "#,
+        )
+        .execute(&mut *transaction)
+        .await?;
+        sqlx::query(
+            r#"
+            UPDATE public.files SET knowledge_sync_status = 'pending_sync',
+                knowledge_sync_message = 'Embedding dimension changed; explicit rebuild required'
+            WHERE knowledge_sync_status = 'synced'
+            "#,
+        )
+        .execute(&mut *transaction)
+        .await?;
+    }
     sqlx::raw_sql(
         r#"
         ALTER TABLE public.ai_experiment_runs
@@ -334,10 +399,25 @@ pub async fn initialize_database(pool: &PgPool, settings: &Settings) -> Result<(
         );
 
         ALTER TABLE public.rag_file_syncs
-            ADD COLUMN IF NOT EXISTS index_version varchar(80) NOT NULL DEFAULT 'legacy-v1';
+            ADD COLUMN IF NOT EXISTS index_version varchar(80) NOT NULL DEFAULT 'legacy-unknown';
         ALTER TABLE public.rag_document_chunks
-            ADD COLUMN IF NOT EXISTS chunk_version varchar(80) NOT NULL DEFAULT 'legacy-v1',
-            ADD COLUMN IF NOT EXISTS index_version varchar(80) NOT NULL DEFAULT 'legacy-v1';
+            ADD COLUMN IF NOT EXISTS chunk_version varchar(80) NOT NULL DEFAULT 'legacy-unknown',
+            ADD COLUMN IF NOT EXISTS index_version varchar(80) NOT NULL DEFAULT 'legacy-unknown';
+        ALTER TABLE public.rag_file_syncs
+            ALTER COLUMN index_version SET DEFAULT 'legacy-unknown';
+        ALTER TABLE public.rag_document_chunks
+            ALTER COLUMN chunk_version SET DEFAULT 'legacy-unknown',
+            ALTER COLUMN index_version SET DEFAULT 'legacy-unknown';
+        -- legacy-unknown is a compatibility marker only, never model/corpus provenance.
+        UPDATE public.rag_file_syncs
+        SET index_version='legacy-unknown'
+        WHERE index_version='legacy-v1';
+        UPDATE public.rag_document_chunks
+        SET chunk_version='legacy-unknown'
+        WHERE chunk_version='legacy-v1';
+        UPDATE public.rag_document_chunks
+        SET index_version='legacy-unknown'
+        WHERE index_version='legacy-v1';
         CREATE INDEX IF NOT EXISTS ix_rag_chunks_project_version
             ON public.rag_document_chunks (project_id, index_version, id)
         "#,
@@ -1151,6 +1231,13 @@ mod tests {
                 "missing experiment lease column {lease_column}"
             );
         }
+        for identity_column in ["chunk_version", "index_version"] {
+            assert!(
+                INITIAL_SCHEMA.contains(&format!("{identity_column} character varying(80)")),
+                "missing Rust retrieval identity column {identity_column}"
+            );
+        }
+        assert!(INITIAL_SCHEMA.contains("ix_rag_chunks_project_version"));
         assert!(INITIAL_SCHEMA.contains("uq_ai_experiment_runs_one_active_per_project"));
         assert!(
             INITIAL_SCHEMA.contains(
@@ -1180,7 +1267,7 @@ mod tests {
 
     #[test]
     fn test_runtime_schema_error_guides_legacy_databases_to_current_history() {
-        assert!(LEGACY_SCHEMA_RECOVERY_GUIDANCE.contains("0012"));
+        assert!(LEGACY_SCHEMA_RECOVERY_GUIDANCE.contains("0013"));
         assert!(LEGACY_SCHEMA_RECOVERY_GUIDANCE.contains("compatible backup"));
         let message = runtime_schema_error(&["index.example".to_owned()]);
         assert!(message.contains(&format!("version {RUST_SCHEMA_VERSION}")));
@@ -1228,8 +1315,12 @@ mod tests {
 
     #[test]
     fn experiment_lease_timing_fits_restart_recovery_window() {
-        assert!(EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS * 2 < EXPERIMENT_LEASE_SECONDS as u64);
-        assert!(EXPERIMENT_LEASE_SECONDS as u64 + STALE_EXPERIMENT_REAPER_INTERVAL_SECONDS < 10);
+        // 编译期不变量：心跳必须在租约内至少完成两次续租，避免单次心跳延迟触发清扫器误判。
+        const _: () =
+            assert!(EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS * 2 < EXPERIMENT_LEASE_SECONDS as u64);
+        // 租约不能过长：worker 崩溃后，清扫器应在可接受的窗口内恢复运行。
+        const _: () = assert!(EXPERIMENT_LEASE_SECONDS <= 120);
+        const _: () = assert!(STALE_EXPERIMENT_REAPER_INTERVAL_SECONDS <= 10);
     }
 
     #[tokio::test]
@@ -1286,18 +1377,26 @@ mod tests {
             .await
             .unwrap();
         let index_state = rag_hnsw_index_state(&database_pool).await;
+        let identity_columns: Vec<(String, String, String, Option<String>)> = sqlx::query_as(
+            r#"
+            SELECT table_name, column_name, is_nullable, column_default
+            FROM information_schema.columns
+            WHERE table_schema = 'public'
+              AND (
+                  (table_name = 'rag_file_syncs' AND column_name = 'index_version')
+                  OR (table_name = 'rag_document_chunks' AND column_name IN ('chunk_version', 'index_version'))
+              )
+            ORDER BY table_name, column_name
+            "#,
+        )
+        .fetch_all(&database_pool)
+        .await
+        .unwrap();
         let schema_version: i32 =
             sqlx::query_scalar("SELECT max(version) FROM public.rust_schema_versions")
                 .fetch_one(&database_pool)
                 .await
                 .unwrap();
-        database_pool.close().await;
-        sqlx::query(&format!(r#"DROP DATABASE "{database_name}""#))
-            .execute(&admin_pool)
-            .await
-            .unwrap();
-        admin_pool.close().await;
-
         assert!(results.0.is_ok(), "first initializer: {:?}", results.0);
         assert!(results.1.is_ok(), "second initializer: {:?}", results.1);
         assert!(results.2.is_ok(), "third initializer: {:?}", results.2);
@@ -1311,6 +1410,26 @@ mod tests {
         assert!(index_valid);
         assert!(index_ready);
         assert_eq!(schema_version, RUST_SCHEMA_VERSION);
+        assert_eq!(identity_columns.len(), 3);
+        assert!(identity_columns
+            .iter()
+            .all(|(_, _, nullable, default)| nullable == "NO"
+                && default
+                    .as_deref()
+                    .is_some_and(|value| value.contains("legacy-unknown"))));
+        let version_index_definition: String = sqlx::query_scalar(
+            "SELECT pg_get_indexdef(indexrelid) FROM pg_index WHERE indexrelid = 'ix_rag_chunks_project_version'::regclass",
+        )
+        .fetch_one(&database_pool)
+        .await
+        .unwrap();
+        assert!(version_index_definition.ends_with("(project_id, index_version, id)"));
+        database_pool.close().await;
+        sqlx::query(&format!(r#"DROP DATABASE "{database_name}""#))
+            .execute(&admin_pool)
+            .await
+            .unwrap();
+        admin_pool.close().await;
     }
 
     #[tokio::test]
@@ -1360,11 +1479,32 @@ mod tests {
             .unwrap();
         sqlx::raw_sql(
             r#"
+            ALTER TABLE public.rag_file_syncs
+                ALTER COLUMN index_version SET DEFAULT 'legacy-v1';
+            ALTER TABLE public.rag_document_chunks
+                ALTER COLUMN chunk_version SET DEFAULT 'legacy-v1',
+                ALTER COLUMN index_version SET DEFAULT 'legacy-v1';
+            "#,
+        )
+        .execute(&database_pool)
+        .await
+        .unwrap();
+        initialize_database(&database_pool, &settings)
+            .await
+            .unwrap();
+        sqlx::raw_sql(
+            r#"
             DROP INDEX public.ix_ai_experiment_runs_lease;
             ALTER TABLE public.ai_experiment_runs
                 DROP COLUMN worker_id,
                 DROP COLUMN heartbeat_at,
                 DROP COLUMN lease_expires_at;
+            DROP INDEX IF EXISTS public.ix_rag_chunks_project_version;
+            ALTER TABLE public.rag_file_syncs
+                DROP COLUMN index_version;
+            ALTER TABLE public.rag_document_chunks
+                DROP COLUMN chunk_version,
+                DROP COLUMN index_version;
             DROP INDEX IF EXISTS public.ix_rag_chunks_embedding_hnsw;
             DELETE FROM public.rust_schema_versions WHERE version = 4
             "#,
@@ -1483,6 +1623,122 @@ mod tests {
         assert_eq!(recovered.2, 0);
         assert_eq!(recovered.3["unexecuted_cases"], 4);
         assert!(recovered.4.is_some());
+    }
+
+    #[tokio::test]
+    async fn embedding_column_dimension_aligns_with_runtime_config_on_existing_database() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let database_name = format!("eln_dim_{suffix}");
+        let admin_options = PgConnectOptions::from_str(&database_url)
+            .unwrap()
+            .database("postgres");
+        let admin_pool = PgPoolOptions::new()
+            .max_connections(1)
+            .connect_with(admin_options)
+            .await
+            .unwrap();
+        sqlx::query(&format!(r#"CREATE DATABASE "{database_name}""#))
+            .execute(&admin_pool)
+            .await
+            .unwrap();
+        let database_options = PgConnectOptions::from_str(&database_url)
+            .unwrap()
+            .database(&database_name);
+        let database_pool = PgPoolOptions::new()
+            .max_connections(2)
+            .connect_with(database_options)
+            .await
+            .unwrap();
+        let make_settings = |dim: usize| {
+            let mut map = HashMap::from([
+                (
+                    "DATABASE_URL".to_owned(),
+                    database_pool.connect_options().to_url_lossy().to_string(),
+                ),
+                (
+                    "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                    format!("rust_dim_{suffix}"),
+                ),
+                (
+                    "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                    "RustDim123!".to_owned(),
+                ),
+                ("EMBEDDING_DIMENSION".to_owned(), dim.to_string()),
+            ]);
+            // 1024 维只对 openai_compatible + BAAI/bge-m3 配置合法；512 维用默认 hash 后端。
+            if dim == 1024 {
+                map.insert(
+                    "EMBEDDING_BACKEND".to_owned(),
+                    "openai_compatible".to_owned(),
+                );
+                map.insert("EMBEDDING_MODEL".to_owned(), "BAAI/bge-m3".to_owned());
+                map.insert(
+                    "EMBEDDING_API_URL".to_owned(),
+                    "http://localhost:11434/v1/embeddings".to_owned(),
+                );
+            }
+            Settings::from_map(&map).unwrap()
+        };
+        // fresh init with the configured dimension (1024)
+        initialize_database(&database_pool, &make_settings(1024))
+            .await
+            .unwrap();
+        // simulate the legacy 512-dim schema
+        sqlx::raw_sql(
+            r#"
+            ALTER TABLE public.rag_document_chunks
+                ALTER COLUMN embedding TYPE public.vector(512)
+            "#,
+        )
+        .execute(&database_pool)
+        .await
+        .unwrap();
+        // re-running initialize must realign the column to the configured dimension
+        initialize_database(&database_pool, &make_settings(1024))
+            .await
+            .unwrap();
+        let dim: i32 = sqlx::query_scalar(
+            r#"
+            SELECT atttypmod FROM pg_attribute
+            WHERE attrelid = 'public.rag_document_chunks'::regclass
+              AND attname = 'embedding' AND NOT attisdropped
+            "#,
+        )
+        .fetch_one(&database_pool)
+        .await
+        .unwrap();
+        assert_eq!(dim, 1024);
+        let index_exists: bool = sqlx::query_scalar(
+            r#"
+            SELECT EXISTS(
+                SELECT 1 FROM pg_indexes
+                WHERE tablename = 'rag_document_chunks'
+                  AND indexname = 'ix_rag_chunks_embedding_hnsw'
+            )
+            "#,
+        )
+        .fetch_one(&database_pool)
+        .await
+        .unwrap();
+        assert!(index_exists);
+        // 512-dim settings must also be honored (dev hash backend)
+        initialize_database(&database_pool, &make_settings(512))
+            .await
+            .unwrap();
+        let dim512: i32 = sqlx::query_scalar(
+            r#"
+            SELECT atttypmod FROM pg_attribute
+            WHERE attrelid = 'public.rag_document_chunks'::regclass
+              AND attname = 'embedding' AND NOT attisdropped
+            "#,
+        )
+        .fetch_one(&database_pool)
+        .await
+        .unwrap();
+        assert_eq!(dim512, 512);
     }
 
     #[tokio::test]

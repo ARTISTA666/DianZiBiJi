@@ -3,6 +3,9 @@ use std::{
     time::{Duration, Instant},
 };
 
+#[cfg(test)]
+use std::sync::{Arc, OnceLock};
+
 use axum::{
     body::Body,
     extract::{Path, Query, State},
@@ -25,17 +28,20 @@ use crate::{
     error::ApiError,
     models::{
         AIExperimentRunRead, AIExperimentRunRequest, AIQueryEvaluationRead,
-        AIQueryEvaluationRequest, AIQueryFeedbackRequest, BlindReviewQuery, RagDatasetRead,
-        RagHistoryEntry, RagQueryRequest, RagQueryResponse, RagStatusRead, UserRecord,
+        AIQueryEvaluationRequest, AIQueryFeedbackRequest, BlindReviewQuery, RagCorpusSnapshotRead,
+        RagDatasetRead, RagHistoryEntry, RagQueryRequest, RagQueryResponse, RagRetrievalRequest,
+        RagRetrievalResponse, RagStatusRead, UserRecord,
     },
     permissions::{
         can_access_project, can_evaluate_project, can_manage_project, fetch_project,
         require_external_ai, require_project_access, require_project_metadata_access,
     },
     rag::{
-        audit_citations, audit_citations_after_repair, fetch_rag_file, format_graph_context,
-        format_sources, generate, graph_context_budget, index_file, merge_usage,
-        relevant_graph_context, retrieve, GenerationError,
+        audit_citations, audit_citations_after_repair, document_snapshot_in_transaction,
+        fetch_rag_file, format_graph_context, format_sources, generate, graph_context_budget,
+        graph_snapshot_in_transaction, index_file, merge_usage, relevant_graph_context,
+        relevant_graph_context_in_transaction, retrieve, retrieve_in_transaction,
+        strip_citation_template_placeholders, GenerationError,
     },
     AppState,
 };
@@ -44,6 +50,38 @@ const DATASET_COLUMNS: &str = r#"
     id, project_id, dify_dataset_id, dify_dataset_name, provider,
     embedding_model, generation_model, status, created_by, created_at, updated_at
 "#;
+const REPEATABLE_READ_READ_ONLY_SQL: &str =
+    "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY";
+
+#[cfg(test)]
+#[derive(Clone)]
+struct RetrievalTestPause {
+    started: Arc<tokio::sync::Notify>,
+    release: Arc<tokio::sync::Notify>,
+}
+
+#[cfg(test)]
+static RETRIEVAL_TEST_PAUSE: OnceLock<std::sync::Mutex<Option<RetrievalTestPause>>> =
+    OnceLock::new();
+
+#[cfg(test)]
+static RETRIEVAL_TEST_LOCK: OnceLock<tokio::sync::Mutex<()>> = OnceLock::new();
+
+#[cfg(test)]
+struct RetrievalTestPauseGuard;
+
+#[cfg(test)]
+impl Drop for RetrievalTestPauseGuard {
+    fn drop(&mut self) {
+        if let Some(pause) = RETRIEVAL_TEST_PAUSE.get() {
+            if let Ok(mut pause) = pause.lock() {
+                if let Some(active) = pause.take() {
+                    active.release.notify_waiters();
+                }
+            }
+        }
+    }
+}
 
 const RAG_MODES: &[&str] = &[
     "auto",
@@ -60,6 +98,15 @@ const KG_GRAPH_CONTEXT_BUDGET_FALLBACK: &str =
     "Graph context exceeded prompt budget; explicit KG mode continued with project documents only";
 const STRUCTURED_GRAPH_BUDGET_FALLBACK: &str =
     "Graph context exceeded prompt budget; no safe structured context was available";
+const EXPERIMENT_CSV_HEADER: &str = concat!(
+    "\u{feff}experiment_run_id,question_index,question,mode,repetition_index,execution_order,",
+    "status,query_log_id,answer,source_count,graph_hit_count,response_ms,provider,model,",
+    "prompt_version,fallback_reason,sources_json,graph_context_json,usage_json,error,",
+    "retrieval_config_json,embedding_model,corpus_snapshot_hash,rag_index_version,index_version,",
+    "graph_schema_version,",
+    "retrieval_strategy,retrieval_top_k,collection_retrieval_top_k,vector_candidate_k,graph_top_k,",
+    "chunk_size,chunk_overlap,graph_min_score,retrieval_min_score\r\n"
+);
 
 #[derive(Clone, Copy)]
 struct ExperimentLogContext {
@@ -74,6 +121,10 @@ pub fn router() -> Router<AppState> {
         .route("/projects/{project_id}/rag/init", post(init_project_rag))
         .route("/projects/{project_id}/rag/status", get(get_rag_status))
         .route("/files/{file_id}/rag/sync", post(sync_file))
+        .route(
+            "/projects/{project_id}/rag/retrieve",
+            post(retrieve_project_rag),
+        )
         .route("/projects/{project_id}/rag/query", post(query_project_rag))
         .route(
             "/projects/{project_id}/rag/query-logs",
@@ -97,6 +148,10 @@ pub fn router() -> Router<AppState> {
         .route(
             "/rag/experiments/{run_id}/export.csv",
             get(export_experiment),
+        )
+        .route(
+            "/rag/experiments/{run_id}/evidence.json",
+            get(export_experiment_evidence),
         )
         .route(
             "/projects/{project_id}/rag/blind-review/batches",
@@ -142,6 +197,12 @@ struct QueryLogRow {
     experiment_repetition_index: Option<i32>,
     experiment_execution_order: Option<i32>,
     created_at: chrono::DateTime<chrono::Utc>,
+}
+
+#[allow(dead_code)]
+struct ActiveCorpusSnapshot {
+    hash: String,
+    chunk_count: i64,
 }
 
 const EXPERIMENT_COLUMNS: &str = r#"
@@ -531,6 +592,154 @@ async fn query_project_rag(
     .await
 }
 
+fn valid_snapshot_hash(value: &str) -> bool {
+    value.len() == 64
+        && value.bytes().all(|byte| byte.is_ascii_hexdigit())
+        && value
+            .chars()
+            .all(|character| !character.is_ascii_uppercase())
+}
+
+async fn retrieve_project_rag(
+    State(state): State<AppState>,
+    CurrentUser(user): CurrentUser,
+    Path(project_id): Path<i32>,
+    Json(payload): Json<RagRetrievalRequest>,
+) -> Result<Json<RagRetrievalResponse>, ApiError> {
+    require_project_access(&state.pool, &user, project_id).await?;
+    // This route returns only local retrieval evidence and never contacts an
+    // external AI provider.  External-AI policy therefore must not block it;
+    // blind-review access remains enforced below as a separate permission.
+    require_unblinded_access(&state, &user, project_id).await?;
+    let query = validate_query(&payload.query)?;
+    if !matches!(
+        payload.mode.as_str(),
+        "bm25_rag" | "project_rag" | "kg_enhanced_rag"
+    ) {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "retrieval-only 仅支持 bm25_rag、project_rag、kg_enhanced_rag",
+        ));
+    }
+    if !valid_snapshot_hash(&payload.expected_corpus_snapshot_hash)
+        || !valid_snapshot_hash(&payload.expected_graph_snapshot_hash)
+    {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "retrieval-only 必须提供小写 SHA-256 文档/图谱快照",
+        ));
+    }
+
+    // PostgreSQL READ COMMITTED obtains a new snapshot per statement.  The
+    // evaluator's identity binding therefore requires an explicit stable,
+    // read-only transaction before any identity or retrieval SELECT.
+    let mut transaction = state.pool.begin().await?;
+    sqlx::query(REPEATABLE_READ_READ_ONLY_SQL)
+        .execute(&mut *transaction)
+        .await?;
+
+    let dataset = sqlx::query_as::<_, RagDatasetRead>(&format!(
+        "SELECT {DATASET_COLUMNS} FROM project_rag_datasets WHERE project_id = $1"
+    ))
+    .bind(project_id)
+    .fetch_optional(&mut *transaction)
+    .await?
+    .ok_or_else(|| {
+        ApiError::new(
+            StatusCode::CONFLICT,
+            "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+        )
+    })?;
+    require_compatible_embedding(&state, &dataset)?;
+
+    let document = document_snapshot_in_transaction(
+        &mut transaction,
+        project_id,
+        &state.settings.rag_index_version,
+    )
+    .await?;
+    let graph = graph_snapshot_in_transaction(&mut transaction, project_id).await?;
+    if document.hash != payload.expected_corpus_snapshot_hash
+        || graph.hash != payload.expected_graph_snapshot_hash
+    {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            json!({
+                "error": "retrieval_snapshot_drift",
+                "expected_corpus_snapshot_hash": payload.expected_corpus_snapshot_hash,
+                "actual_corpus_snapshot_hash": document.hash,
+                "expected_graph_snapshot_hash": payload.expected_graph_snapshot_hash,
+                "actual_graph_snapshot_hash": graph.hash,
+            })
+            .to_string(),
+        ));
+    }
+
+    #[cfg(test)]
+    let test_pause = RETRIEVAL_TEST_PAUSE
+        .get()
+        .and_then(|pause| pause.lock().ok().and_then(|pause| pause.clone()));
+    #[cfg(test)]
+    if let Some(pause) = test_pause {
+        pause.started.notify_one();
+        pause.release.notified().await;
+    }
+
+    let sources = retrieve_in_transaction(
+        &state,
+        project_id,
+        query,
+        payload.mode == "bm25_rag",
+        &mut transaction,
+    )
+    .await?;
+    let collection_query = crate::rag::is_collection_query(query);
+    let graph_enabled = payload.mode == "kg_enhanced_rag";
+    let graph_context = if graph_enabled {
+        let graph_rows = relevant_graph_context_in_transaction(
+            project_id,
+            query,
+            if collection_query {
+                state.settings.rag_graph_top_k.max(30)
+            } else {
+                state.settings.rag_graph_top_k
+            },
+            state.settings.rag_graph_min_score,
+            &mut transaction,
+        )
+        .await?;
+        let visible = graph_context_budget(&graph_rows, query);
+        graph_rows.into_iter().take(visible).collect()
+    } else {
+        Vec::new()
+    };
+    let mut effective_config = effective_retrieval_config(&state.settings, &payload.mode, query);
+    effective_config["effective_source_count"] = json!(sources.len());
+    effective_config["effective_graph_return_count"] = json!(graph_context.len());
+    effective_config["graph_context_budget_chars"] = json!(6_000);
+    transaction.commit().await?;
+
+    Ok(Json(RagRetrievalResponse {
+        retrieval_only: true,
+        generation_invoked: false,
+        llm_query_rewrite_invoked: false,
+        citation_repair_invoked: false,
+        mode: payload.mode,
+        sources,
+        graph_context,
+        effective_retrieval_config: effective_config,
+        actual_corpus_snapshot_hash: document.hash.clone(),
+        actual_graph_snapshot_hash: graph.hash.clone(),
+        used_corpus_snapshot_hash: document.hash.clone(),
+        used_graph_snapshot_hash: graph.hash.clone(),
+        corpus_snapshot_hash: document.hash,
+        graph_snapshot_hash: graph.hash,
+        corpus_chunk_count: document.chunk_count,
+        graph_entity_count: graph.entity_count,
+        graph_relation_count: graph.relation_count,
+    }))
+}
+
 /// 判断项目是否存在可检索的活跃知识块（与 crate::rag::ACTIVE_CHUNKS_SQL 的过滤条件一致）。
 async fn project_has_active_rag_chunks(
     state: &AppState,
@@ -855,6 +1064,7 @@ async fn query_project_rag_inner(
     if payload.mode == "pure_llm" && !result.answer.starts_with("无项目证据") {
         result.answer = format!("无项目证据：{}", result.answer);
     }
+    result.answer = strip_citation_template_placeholders(&result.answer);
     let mut usage_values = rewrite_usage.into_iter().collect::<Vec<_>>();
     usage_values.push(result.usage.clone());
     let mut citation_audit = audit_citations(&result.answer, sources.len(), graph_context.len());
@@ -883,6 +1093,7 @@ async fn query_project_rag_inner(
         };
         usage_values.push(repaired.usage.clone());
         result = repaired;
+        result.answer = strip_citation_template_placeholders(&result.answer);
         citation_audit =
             audit_citations_after_repair(&result.answer, sources.len(), graph_context.len());
         enforce_required_citations(
@@ -1495,27 +1706,7 @@ async fn run_experiment(
             "Experiment name must contain between 1 and 255 characters",
         ));
     }
-    let questions: Vec<String> = payload
-        .questions
-        .into_iter()
-        .map(|question| question.trim().to_owned())
-        .filter(|question| !question.is_empty())
-        .collect();
-    if questions.is_empty() || questions.len() > 50 {
-        return Err(ApiError::new(
-            StatusCode::UNPROCESSABLE_ENTITY,
-            "At least one and at most 50 questions are required",
-        ));
-    }
-    if questions
-        .iter()
-        .any(|question| question.chars().count() > MAX_RAG_QUERY_CHARS)
-    {
-        return Err(ApiError::new(
-            StatusCode::UNPROCESSABLE_ENTITY,
-            format!("Each question cannot exceed {MAX_RAG_QUERY_CHARS} characters"),
-        ));
-    }
+    let questions = normalize_experiment_questions(payload.questions)?;
     let allowed_modes = [
         "pure_llm",
         "bm25_rag",
@@ -1549,7 +1740,7 @@ async fn run_experiment(
             "Repetitions must be between 1 and 10",
         ));
     }
-    if modes.iter().any(|mode| mode_requires_dataset(mode)) {
+    let corpus_snapshot_hash = if modes.iter().any(|mode| mode_requires_dataset(mode)) {
         let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
             ApiError::new(
                 StatusCode::CONFLICT,
@@ -1559,7 +1750,11 @@ async fn run_experiment(
         if modes.iter().any(|mode| mode_uses_embeddings(mode)) {
             require_compatible_embedding(&state, &dataset)?;
         }
-    }
+        Some(fetch_active_corpus_snapshot_hash(&state, project_id).await?)
+    } else {
+        None
+    };
+    let questions_hash = questions_sha256(&questions);
     let seed = payload.random_seed.unwrap_or_else(|| {
         let digest = Sha256::digest(uuid::Uuid::new_v4().as_bytes());
         i32::from_be_bytes([digest[0] & 0x7f, digest[1], digest[2], digest[3]])
@@ -1619,6 +1814,10 @@ async fn run_experiment(
     .bind(json!({
         "embedding_model": state.settings.embedding_model,
         "generation_model": state.ai_provider.model(),
+        "questions_sha256": questions_hash,
+        "corpus_snapshot_hash": corpus_snapshot_hash,
+        "rag_index_version": state.settings.rag_index_version,
+        "graph_schema_version": crate::rag::GRAPH_SCHEMA_VERSION,
         "experiment_protocol": {
             "repetitions": payload.repetitions,
             "randomize_order": payload.randomize_order,
@@ -1710,6 +1909,564 @@ async fn export_experiment(
     experiment_csv_response(&state, &run, &format!("rag-experiment-{run_id}.csv")).await
 }
 
+async fn export_experiment_evidence(
+    State(state): State<AppState>,
+    CurrentUser(user): CurrentUser,
+    Path(run_id): Path<i32>,
+) -> Result<Response, ApiError> {
+    let run = fetch_experiment(&state, run_id).await?;
+    require_project_access(&state.pool, &user, run.project_id).await?;
+    require_unblinded_access(&state, &user, run.project_id).await?;
+    if let Some(detail) = evidence_export_status_error(&run.status) {
+        return Err(ApiError::new(StatusCode::CONFLICT, detail));
+    }
+    let logs = sqlx::query_as::<_, QueryLogRow>(
+        r#"
+        SELECT id, project_id, user_id, question, answer, rag_mode,
+               graph_hit_count, source_count, response_ms, conversation_id,
+               graph_context_json, sources_json, provider, model_name,
+               prompt_version, retrieval_config_json, usage_json,
+               fallback_reason, error_message, experiment_run_id,
+               experiment_case_index, experiment_repetition_index,
+               experiment_execution_order, created_at
+        FROM ai_query_logs WHERE experiment_run_id = $1
+        ORDER BY experiment_execution_order, id
+        "#,
+    )
+    .bind(run_id)
+    .fetch_all(&state.pool)
+    .await?;
+    let cases = logs.into_iter().map(experiment_evidence_case).collect();
+    let package = build_experiment_evidence_package(
+        &json!({
+            "id": run.id,
+            "project_id": run.project_id,
+            "created_by": run.created_by,
+            "name": run.name,
+            "status": run.status,
+            "questions": run.questions_json,
+            "modes": run.modes_json,
+            "config_snapshot": run.config_snapshot_json,
+            "summary": run.summary_json,
+            "total_cases": run.total_cases,
+            "completed_cases": run.completed_cases,
+            "failed_cases": run.failed_cases,
+            "created_at": run.created_at,
+            "completed_at": run.completed_at,
+        }),
+        cases,
+    );
+    let body = serde_json::to_vec_pretty(&package).map_err(ApiError::internal)?;
+    let mut response = Body::from(body).into_response();
+    response.headers_mut().insert(
+        header::CONTENT_TYPE,
+        HeaderValue::from_static("application/json; charset=utf-8"),
+    );
+    if let Ok(value) = HeaderValue::from_str(&format!(
+        "attachment; filename=\"rag-experiment-{run_id}-evidence.json\""
+    )) {
+        response
+            .headers_mut()
+            .insert(header::CONTENT_DISPOSITION, value);
+    }
+    Ok(response)
+}
+
+fn evidence_export_status_error(status: &str) -> Option<&'static str> {
+    match status {
+        "queued" | "running" => {
+            Some("Experiment evidence is unavailable until the run reaches a terminal state")
+        }
+        "interrupted" | "completed" | "completed_with_errors" | "failed" => None,
+        _ => Some("Experiment evidence is unavailable for an unsupported run status"),
+    }
+}
+
+fn experiment_evidence_case(log: QueryLogRow) -> Value {
+    let failed = log.error_message.is_some();
+    let citation_audit = log
+        .retrieval_config_json
+        .get("citation_audit")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    json!({
+        "query_log_id": log.id,
+        "question_index": log.experiment_case_index,
+        "question": log.question,
+        "mode": log.rag_mode,
+        "repetition_index": log.experiment_repetition_index,
+        "execution_order": log.experiment_execution_order,
+        "status": if failed { "failed" } else { "completed" },
+        "failure_scope": if failed { json!("case") } else { Value::Null },
+        "failure_code": if failed { json!("query_error") } else { Value::Null },
+        "answer": log.answer,
+        "source_count": log.source_count,
+        "graph_hit_count": log.graph_hit_count,
+        "response_ms": log.response_ms,
+        "provider": log.provider,
+        "model": log.model_name,
+        "prompt_version": log.prompt_version,
+        "fallback_reason": log.fallback_reason,
+        "error": log.error_message,
+        "sources": log.sources_json,
+        "graph_context": log.graph_context_json,
+        "retrieval_config": log.retrieval_config_json,
+        "usage": log.usage_json,
+        "citation_audit": citation_audit,
+        "created_at": log.created_at,
+    })
+}
+
+fn normalize_experiment_questions(raw_questions: Vec<String>) -> Result<Vec<String>, ApiError> {
+    let questions: Vec<String> = raw_questions
+        .into_iter()
+        .map(|question| question.trim().to_owned())
+        .filter(|question| !question.is_empty())
+        .collect();
+    if questions.is_empty() || questions.len() > 50 {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "At least one and at most 50 questions are required",
+        ));
+    }
+    if questions
+        .iter()
+        .any(|question| question.chars().count() > MAX_RAG_QUERY_CHARS)
+    {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            format!("Each question cannot exceed {MAX_RAG_QUERY_CHARS} characters"),
+        ));
+    }
+    let mut seen = HashSet::new();
+    if questions.iter().any(|question| !seen.insert(question)) {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Experiment questions must not contain duplicates",
+        ));
+    }
+    Ok(questions)
+}
+
+fn questions_sha256(questions: &[String]) -> String {
+    let bytes = serde_json::to_vec(questions).expect("question arrays are JSON serializable");
+    format!("{:x}", Sha256::digest(bytes))
+}
+
+struct ExperimentRuntimeBindings<'a> {
+    corpus_snapshot_hash: Option<&'a str>,
+    index_version: &'a str,
+    embedding_model: &'a str,
+    generation_model: &'a str,
+    graph_schema_version: &'a str,
+}
+
+fn validate_experiment_input_bindings(
+    config: &Value,
+    questions: &Value,
+    modes: &Value,
+    runtime: ExperimentRuntimeBindings<'_>,
+) -> Result<(), String> {
+    let questions = questions
+        .as_array()
+        .ok_or_else(|| "questions_json must be an array".to_owned())?
+        .iter()
+        .map(|question| question.as_str().map(ToOwned::to_owned))
+        .collect::<Option<Vec<_>>>()
+        .ok_or_else(|| "questions_json must contain only strings".to_owned())?;
+    let expected_questions_hash = config
+        .get("questions_sha256")
+        .and_then(Value::as_str)
+        .ok_or_else(|| "config_snapshot.questions_sha256 is missing".to_owned())?;
+    let actual_questions_hash = questions_sha256(&questions);
+    if actual_questions_hash != expected_questions_hash {
+        return Err("questions_sha256 does not match the queued question set".to_owned());
+    }
+
+    for (key, current) in [
+        ("rag_index_version", runtime.index_version),
+        ("embedding_model", runtime.embedding_model),
+        ("generation_model", runtime.generation_model),
+        ("graph_schema_version", runtime.graph_schema_version),
+    ] {
+        let expected = config
+            .get(key)
+            .and_then(Value::as_str)
+            .ok_or_else(|| format!("config_snapshot.{key} is missing"))?;
+        if expected != current {
+            return Err(format!(
+                "config_snapshot.{key} does not match the runtime value"
+            ));
+        }
+    }
+
+    let dataset_backed = modes
+        .as_array()
+        .ok_or_else(|| "modes_json must be an array".to_owned())?
+        .iter()
+        .map(|mode| {
+            mode.as_str()
+                .ok_or_else(|| "modes_json must contain only strings".to_owned())
+        })
+        .collect::<Result<Vec<_>, _>>()?
+        .into_iter()
+        .any(mode_requires_dataset);
+    let expected_corpus_hash = config.get("corpus_snapshot_hash");
+    if dataset_backed {
+        let expected_corpus_hash = expected_corpus_hash
+            .and_then(Value::as_str)
+            .ok_or_else(|| "config_snapshot.corpus_snapshot_hash is missing".to_owned())?;
+        if runtime.corpus_snapshot_hash != Some(expected_corpus_hash) {
+            return Err(
+                "config_snapshot.corpus_snapshot_hash does not match the active corpus".to_owned(),
+            );
+        }
+    } else if expected_corpus_hash.is_some_and(|hash| !hash.is_null()) {
+        return Err("non-dataset experiments must not carry a corpus_snapshot_hash".to_owned());
+    }
+    Ok(())
+}
+
+async fn validate_current_experiment_input_bindings(
+    state: &AppState,
+    run: &AIExperimentRunRead,
+) -> Result<(), ApiError> {
+    if run.total_cases == 0 {
+        return Ok(());
+    }
+    let current_corpus_hash = if run
+        .modes_json
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter_map(Value::as_str)
+        .any(mode_requires_dataset)
+    {
+        Some(fetch_active_corpus_snapshot_hash(state, run.project_id).await?)
+    } else {
+        None
+    };
+    let generation_model = state.ai_provider.model();
+    validate_experiment_input_bindings(
+        &run.config_snapshot_json,
+        &run.questions_json,
+        &run.modes_json,
+        ExperimentRuntimeBindings {
+            corpus_snapshot_hash: current_corpus_hash.as_deref(),
+            index_version: &state.settings.rag_index_version,
+            embedding_model: &state.settings.embedding_model,
+            generation_model,
+            graph_schema_version: crate::rag::GRAPH_SCHEMA_VERSION,
+        },
+    )
+    .map_err(|detail| {
+        ApiError::new(
+            StatusCode::CONFLICT,
+            format!("Experiment input binding drift detected: {detail}"),
+        )
+    })
+}
+
+fn snapshot_sha256(index_version: &str, rows: &[(i32, i32, String)]) -> String {
+    let mut rows = rows.to_vec();
+    rows.sort_by(|left, right| {
+        left.0
+            .cmp(&right.0)
+            .then(left.1.cmp(&right.1))
+            .then(left.2.cmp(&right.2))
+    });
+    let material = json!({
+        "index_version": index_version,
+        "chunks": rows.into_iter().map(|(file_id, chunk_index, content_hash)| {
+            json!({
+                "file_id": file_id,
+                "chunk_index": chunk_index,
+                "content_hash": content_hash,
+            })
+        }).collect::<Vec<_>>(),
+    });
+    let bytes = serde_json::to_vec(&material).expect("corpus snapshot is JSON serializable");
+    format!("{:x}", Sha256::digest(bytes))
+}
+
+async fn fetch_active_corpus_snapshot(
+    state: &AppState,
+    project_id: i32,
+) -> Result<ActiveCorpusSnapshot, ApiError> {
+    let rows: Vec<(i32, i32, String)> = sqlx::query_as(
+        r#"
+        SELECT c.file_id, c.chunk_index, c.content_hash
+        FROM rag_document_chunks c
+        JOIN files f ON f.id = c.file_id
+        WHERE c.project_id = $1
+          AND f.status = 'APPROVED'::filestatus
+          AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
+          AND f.knowledge_sync_status = 'synced'
+          AND c.index_version = $2
+        ORDER BY c.file_id, c.chunk_index
+        "#,
+    )
+    .bind(project_id)
+    .bind(&state.settings.rag_index_version)
+    .fetch_all(&state.pool)
+    .await?;
+    Ok(ActiveCorpusSnapshot {
+        hash: snapshot_sha256(&state.settings.rag_index_version, &rows),
+        chunk_count: rows.len() as i64,
+    })
+}
+
+async fn fetch_active_corpus_snapshot_hash(
+    state: &AppState,
+    project_id: i32,
+) -> Result<String, ApiError> {
+    Ok(fetch_active_corpus_snapshot(state, project_id).await?.hash)
+}
+
+fn build_experiment_evidence_package(run: &Value, mut cases: Vec<Value>) -> Value {
+    let summary = run.get("summary").cloned().unwrap_or_else(|| json!({}));
+    let logged_orders: HashSet<i32> = cases
+        .iter()
+        .filter_map(|case| case["execution_order"].as_i64())
+        .filter_map(|order| i32::try_from(order).ok())
+        .collect();
+    if let Some(errors) = summary.get("errors").and_then(Value::as_array) {
+        for error in errors {
+            let Some(order) = error["execution_order"]
+                .as_i64()
+                .and_then(|value| i32::try_from(value).ok())
+            else {
+                continue;
+            };
+            if logged_orders.contains(&order) {
+                continue;
+            }
+            cases.push(json!({
+                "query_log_id": null,
+                "question_index": error["question_index"],
+                "question": error["question"],
+                "mode": error["mode"],
+                "repetition_index": error["repetition_index"].as_i64().unwrap_or(1),
+                "execution_order": order,
+                "status": "failed",
+                "failure_scope": error
+                    .get("failure_scope")
+                    .cloned()
+                    .unwrap_or_else(|| json!("case")),
+                "failure_code": error
+                    .get("failure_code")
+                    .cloned()
+                    .unwrap_or_else(|| json!("query_error")),
+                "answer": null,
+                "source_count": 0,
+                "graph_hit_count": 0,
+                "response_ms": 0,
+                "provider": "system",
+                "model": null,
+                "prompt_version": "experiment-unlogged-failure-v1",
+                "fallback_reason": null,
+                "error": error["error"],
+                "sources": [],
+                "graph_context": [],
+                "retrieval_config": {},
+                "usage": {},
+                "citation_audit": {},
+            }));
+        }
+    }
+    cases.sort_by_key(|case| case["execution_order"].as_i64().unwrap_or(i64::MAX));
+    let config = run
+        .get("config_snapshot")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    let protocol = config
+        .get("experiment_protocol")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    json!({
+        "schema_version": "rag-evidence-package-v1",
+        "experiment": {
+            "id": run["id"],
+            "project_id": run["project_id"],
+            "created_by": run["created_by"],
+            "name": run["name"],
+            "status": run["status"],
+            "questions": run["questions"],
+            "modes": run["modes"],
+            "total_cases": run["total_cases"],
+            "completed_cases": run["completed_cases"],
+            "failed_cases": run["failed_cases"],
+            "created_at": run["created_at"],
+            "completed_at": run["completed_at"],
+            "repetitions": protocol["repetitions"],
+            "randomize_order": protocol["randomize_order"],
+            "random_seed": protocol["random_seed"],
+            "execution_plan_hash": protocol["execution_plan_hash"],
+            "embedding_model": config["embedding_model"],
+            "generation_model": config["generation_model"],
+            "questions_sha256": config["questions_sha256"],
+            "corpus_snapshot_hash": config["corpus_snapshot_hash"],
+            "rag_index_version": config["rag_index_version"],
+            "graph_schema_version": config["graph_schema_version"],
+        },
+        "config_snapshot": config,
+        "summary": summary,
+        "case_count": cases.len(),
+        "cases": cases,
+    })
+}
+
+#[cfg(test)]
+mod evidence_package_tests {
+    use serde_json::{json, Value};
+
+    use super::{build_experiment_evidence_package, evidence_export_status_error};
+
+    #[test]
+    fn test_evidence_export_rejects_non_terminal_run() {
+        assert!(evidence_export_status_error("queued").is_some());
+        assert!(evidence_export_status_error("running").is_some());
+        assert!(evidence_export_status_error("interrupted").is_none());
+        assert!(evidence_export_status_error("completed").is_none());
+        assert!(evidence_export_status_error("failed").is_none());
+        assert!(evidence_export_status_error("unsupported").is_some());
+    }
+
+    #[test]
+    fn test_evidence_package_binds_protocol_cases_and_audit() {
+        let package = build_experiment_evidence_package(
+            &json!({
+                "id": 12,
+                "project_id": 7,
+                "name": "confirmatory RAG run",
+                "status": "completed",
+                "questions": ["问题一"],
+                "modes": ["project_rag", "kg_enhanced_rag"],
+                "config_snapshot": {
+                    "embedding_model": "hash-v1",
+                    "questions_sha256": "questions-sha",
+                    "corpus_snapshot_hash": "corpus-sha",
+                    "rag_index_version": "structured-v1",
+                    "graph_schema_version": "kg-v3-numbered-list-expansion",
+                    "experiment_protocol": {
+                        "repetitions": 1,
+                        "randomize_order": false,
+                        "random_seed": 42,
+                        "execution_plan_hash": "plan-sha"
+                    }
+                }
+            }),
+            vec![json!({
+                "query_log_id": 99,
+                "question_index": 1,
+                "question": "问题一",
+                "mode": "project_rag",
+                "status": "completed",
+                "answer": "回答 [S1]",
+                "source_count": 1,
+                "graph_hit_count": 0,
+                "sources": [{"file_id": 3}],
+                "graph_context": [],
+                "retrieval_config": {"index_version": "structured-v1"},
+                "citation_audit": {"passed": true, "citation_count": 1}
+            })],
+        );
+
+        assert_eq!(package["schema_version"], "rag-evidence-package-v1");
+        assert_eq!(package["experiment"]["repetitions"], 1);
+        assert_eq!(package["experiment"]["randomize_order"], false);
+        assert_eq!(package["experiment"]["execution_plan_hash"], "plan-sha");
+        assert_eq!(package["experiment"]["questions_sha256"], "questions-sha");
+        assert_eq!(package["experiment"]["corpus_snapshot_hash"], "corpus-sha");
+        assert_eq!(package["experiment"]["rag_index_version"], "structured-v1");
+        assert_eq!(
+            package["experiment"]["graph_schema_version"],
+            "kg-v3-numbered-list-expansion"
+        );
+        assert_eq!(package["cases"][0]["query_log_id"], 99);
+        assert_eq!(package["cases"][0]["citation_audit"]["passed"], true);
+        assert_eq!(
+            package["cases"][0]["retrieval_config"]["index_version"],
+            "structured-v1"
+        );
+        assert_eq!(package["cases"][0]["source_count"], 1);
+        assert_eq!(package["cases"][0]["graph_hit_count"], 0);
+    }
+
+    #[test]
+    fn test_evidence_package_preserves_unlogged_failures() {
+        let package = build_experiment_evidence_package(
+            &json!({
+                "id": 12,
+                "project_id": 7,
+                "status": "completed_with_errors",
+                "questions": [],
+                "modes": [],
+                "summary": {
+                    "errors": [{
+                        "question_index": 2,
+                        "question": "失败问题",
+                        "mode": "kg_enhanced_rag",
+                        "repetition_index": 1,
+                        "execution_order": 2,
+                        "error": "timeout"
+                    }]
+                },
+                "config_snapshot": {}
+            }),
+            vec![],
+        );
+
+        assert_eq!(package["case_count"], 1);
+        assert_eq!(package["cases"][0]["status"], "failed");
+        assert_eq!(package["cases"][0]["error"], "timeout");
+        assert_eq!(package["cases"][0]["query_log_id"], Value::Null);
+        assert_eq!(
+            package["cases"][0]["prompt_version"],
+            "experiment-unlogged-failure-v1"
+        );
+        assert_eq!(package["cases"][0]["source_count"], 0);
+        assert_eq!(package["cases"][0]["graph_hit_count"], 0);
+    }
+
+    #[test]
+    fn test_evidence_package_does_not_duplicate_logged_failures() {
+        let package = build_experiment_evidence_package(
+            &json!({
+                "id": 12,
+                "project_id": 7,
+                "status": "completed_with_errors",
+                "summary": {
+                    "errors": [{
+                        "question_index": 1,
+                        "question": "失败问题",
+                        "mode": "project_rag",
+                        "repetition_index": 1,
+                        "execution_order": 1,
+                        "error": "timeout"
+                    }]
+                },
+                "config_snapshot": {}
+            }),
+            vec![json!({
+                "query_log_id": 99,
+                "question_index": 1,
+                "question": "失败问题",
+                "mode": "project_rag",
+                "repetition_index": 1,
+                "execution_order": 1,
+                "status": "failed",
+                "error": "timeout",
+                "citation_audit": {}
+            })],
+        );
+
+        assert_eq!(package["case_count"], 1);
+        assert_eq!(package["cases"].as_array().unwrap().len(), 1);
+        assert_eq!(package["cases"][0]["query_log_id"], 99);
+    }
+}
+
 pub async fn schedule_queued_experiments(state: &AppState) -> Result<usize, ApiError> {
     let queued: Vec<(i32, i32)> = sqlx::query_as(
         "SELECT id, created_by FROM ai_experiment_runs WHERE status = 'queued' ORDER BY id",
@@ -1736,7 +2493,11 @@ pub async fn schedule_queued_experiments(state: &AppState) -> Result<usize, ApiE
                     UPDATE ai_experiment_runs SET status = 'failed', completed_at = now(),
                         summary_json = (
                             summary_json::jsonb || jsonb_build_object(
-                                'fatal_error', jsonb_build_object('error', 'Creator user no longer exists')
+                                'fatal_error', jsonb_build_object(
+                                    'error', 'Creator user no longer exists',
+                                    'failure_scope', 'run',
+                                    'failure_code', 'creator_user_missing'
+                                )
                             )
                         )::json
                     WHERE id = $1 AND status = 'queued'
@@ -1757,13 +2518,18 @@ fn spawn_experiment(state: AppState, user: UserRecord, run_id: i32) {
     tokio::spawn(async move {
         if let Err(error) = execute_experiment(state.clone(), user, run_id).await {
             tracing::error!(run_id, %error.detail, "RAG experiment failed unexpectedly");
+            let failure_code = experiment_run_failure_code(&error.detail);
             let _ = sqlx::query(
                 r#"
                 UPDATE ai_experiment_runs SET status = 'failed', completed_at = now(),
                     worker_id = NULL, heartbeat_at = NULL, lease_expires_at = NULL,
                     summary_json = (
                         summary_json::jsonb || jsonb_build_object(
-                            'fatal_error', jsonb_build_object('error', $2)
+                            'fatal_error', jsonb_build_object(
+                                'error', $2,
+                                'failure_scope', 'run',
+                                'failure_code', $4
+                            )
                         )
                     )::json
                 WHERE id = $1 AND status = 'running' AND worker_id = $3
@@ -1773,10 +2539,19 @@ fn spawn_experiment(state: AppState, user: UserRecord, run_id: i32) {
             .bind(run_id)
             .bind(error.detail)
             .bind(state.worker_id())
+            .bind(failure_code)
             .execute(&state.pool)
             .await;
         }
     });
+}
+
+fn experiment_run_failure_code(detail: &str) -> &'static str {
+    if detail.contains("input binding drift") {
+        "input_binding_drift"
+    } else {
+        "worker_error"
+    }
 }
 
 async fn claim_experiment(state: &AppState, run_id: i32) -> Result<bool, ApiError> {
@@ -1824,6 +2599,7 @@ async fn execute_experiment(
         return Ok(());
     }
     let mut run = fetch_experiment(&state, run_id).await?;
+    validate_current_experiment_input_bindings(&state, &run).await?;
     let plan = run
         .summary_json
         .get("execution_plan")
@@ -1851,6 +2627,12 @@ async fn execute_experiment(
             .as_i64()
             .is_some_and(|order| !attempted.contains(&(order as i32)))
     }) {
+        // 案例之间的处理（输入绑定校验、日志写入、计划迭代等）不经过查询心跳循环；
+        // 在开始每个案例前显式续租，避免租约在案例间隙过期被清扫器误判为中断。
+        if !renew_experiment_lease(&state, run_id).await? {
+            return Ok(());
+        }
+        validate_current_experiment_input_bindings(&state, &run).await?;
         let mode = case["mode"].as_str().unwrap_or("project_rag").to_owned();
         let question = case["question"].as_str().unwrap_or_default().to_owned();
         let order = case["execution_order"].as_i64().unwrap_or_default() as i32;
@@ -1901,7 +2683,9 @@ async fn execute_experiment(
                     "repetition_index": repetition_index,
                     "mode": mode,
                     "execution_order": order,
-                    "error": error.detail
+                    "error": error.detail,
+                    "failure_scope": "case",
+                    "failure_code": "query_error"
                 }));
             }
         }
@@ -2096,40 +2880,41 @@ async fn experiment_csv_response(
     .bind(run.id)
     .fetch_all(&state.pool)
     .await?;
-    let mut csv = String::from("\u{feff}experiment_run_id,question_index,question,mode,repetition_index,execution_order,status,query_log_id,answer,source_count,graph_hit_count,response_ms,provider,model,prompt_version,fallback_reason,sources_json,graph_context_json,usage_json,error\r\n");
+    let mut csv = String::from(EXPERIMENT_CSV_HEADER);
     for log in &logs {
-        csv.push_str(
-            &[
-                run.id.to_string(),
-                log.experiment_case_index.unwrap_or_default().to_string(),
-                csv_escape(&log.question),
-                csv_escape(&log.rag_mode),
-                log.experiment_repetition_index.unwrap_or(1).to_string(),
-                log.experiment_execution_order
-                    .unwrap_or_default()
-                    .to_string(),
-                if log.error_message.is_some() {
-                    "failed"
-                } else {
-                    "completed"
-                }
-                .to_owned(),
-                log.id.to_string(),
-                csv_escape(log.answer.as_deref().unwrap_or_default()),
-                log.source_count.to_string(),
-                log.graph_hit_count.to_string(),
-                log.response_ms.to_string(),
-                csv_escape(&log.provider),
-                csv_escape(log.model_name.as_deref().unwrap_or_default()),
-                csv_escape(&log.prompt_version),
-                csv_escape(log.fallback_reason.as_deref().unwrap_or_default()),
-                csv_escape(&log.sources_json.to_string()),
-                csv_escape(&log.graph_context_json.to_string()),
-                csv_escape(&log.usage_json.to_string()),
-                csv_escape(log.error_message.as_deref().unwrap_or_default()),
-            ]
-            .join(","),
-        );
+        let retrieval_fields =
+            retrieval_snapshot_csv_fields(&run.config_snapshot_json, &log.retrieval_config_json);
+        let mut row = vec![
+            run.id.to_string(),
+            log.experiment_case_index.unwrap_or_default().to_string(),
+            csv_escape(&log.question),
+            csv_escape(&log.rag_mode),
+            log.experiment_repetition_index.unwrap_or(1).to_string(),
+            log.experiment_execution_order
+                .unwrap_or_default()
+                .to_string(),
+            if log.error_message.is_some() {
+                "failed"
+            } else {
+                "completed"
+            }
+            .to_owned(),
+            log.id.to_string(),
+            csv_escape(log.answer.as_deref().unwrap_or_default()),
+            log.source_count.to_string(),
+            log.graph_hit_count.to_string(),
+            log.response_ms.to_string(),
+            csv_escape(&log.provider),
+            csv_escape(log.model_name.as_deref().unwrap_or_default()),
+            csv_escape(&log.prompt_version),
+            csv_escape(log.fallback_reason.as_deref().unwrap_or_default()),
+            csv_escape(&log.sources_json.to_string()),
+            csv_escape(&log.graph_context_json.to_string()),
+            csv_escape(&log.usage_json.to_string()),
+            csv_escape(log.error_message.as_deref().unwrap_or_default()),
+        ];
+        row.extend(retrieval_fields.into_iter().map(|value| csv_escape(&value)));
+        csv.push_str(&row.join(","));
         csv.push_str("\r\n");
     }
     let logged_orders: std::collections::HashSet<i32> = logs
@@ -2169,36 +2954,66 @@ fn append_missing_experiment_errors(
         if logged_orders.contains(&order) {
             continue;
         }
-        csv.push_str(
-            &[
-                run_id.to_string(),
-                error["question_index"]
-                    .as_i64()
-                    .unwrap_or_default()
-                    .to_string(),
-                csv_escape(error["question"].as_str().unwrap_or_default()),
-                csv_escape(error["mode"].as_str().unwrap_or_default()),
-                error["repetition_index"].as_i64().unwrap_or(1).to_string(),
-                order.to_string(),
-                "failed".to_owned(),
-                String::new(),
-                String::new(),
-                "0".to_owned(),
-                "0".to_owned(),
-                "0".to_owned(),
-                csv_escape("system"),
-                String::new(),
-                String::new(),
-                String::new(),
-                csv_escape("[]"),
-                csv_escape("[]"),
-                csv_escape("{}"),
-                csv_escape(error["error"].as_str().unwrap_or_default()),
-            ]
-            .join(","),
-        );
+        let mut row = vec![
+            run_id.to_string(),
+            error["question_index"]
+                .as_i64()
+                .unwrap_or_default()
+                .to_string(),
+            csv_escape(error["question"].as_str().unwrap_or_default()),
+            csv_escape(error["mode"].as_str().unwrap_or_default()),
+            error["repetition_index"].as_i64().unwrap_or(1).to_string(),
+            order.to_string(),
+            "failed".to_owned(),
+            String::new(),
+            String::new(),
+            "0".to_owned(),
+            "0".to_owned(),
+            "0".to_owned(),
+            csv_escape("system"),
+            String::new(),
+            "experiment-unlogged-failure-v1".to_owned(),
+            String::new(),
+            csv_escape("[]"),
+            csv_escape("[]"),
+            csv_escape("{}"),
+            csv_escape(error["error"].as_str().unwrap_or_default()),
+        ];
+        row.extend(std::iter::repeat_n(String::new(), 15));
+        csv.push_str(&row.join(","));
         csv.push_str("\r\n");
     }
+}
+
+fn retrieval_snapshot_csv_fields(run_config: &Value, retrieval_config: &Value) -> Vec<String> {
+    let scalar = |value: Option<&Value>| match value {
+        Some(Value::String(value)) => value.clone(),
+        Some(Value::Number(value)) => value.to_string(),
+        Some(Value::Bool(value)) => value.to_string(),
+        _ => String::new(),
+    };
+
+    vec![
+        retrieval_config.to_string(),
+        scalar(retrieval_config.get("embedding_model")),
+        scalar(run_config.get("corpus_snapshot_hash")),
+        scalar(run_config.get("rag_index_version")),
+        scalar(retrieval_config.get("index_version")),
+        scalar(
+            retrieval_config
+                .get("graph_schema_version")
+                .or_else(|| run_config.get("graph_schema_version")),
+        ),
+        scalar(retrieval_config.get("retrieval_strategy")),
+        scalar(retrieval_config.get("retrieval_top_k")),
+        scalar(retrieval_config.get("collection_retrieval_top_k")),
+        scalar(retrieval_config.get("vector_candidate_k")),
+        scalar(retrieval_config.get("graph_top_k")),
+        scalar(retrieval_config.get("chunk_size")),
+        scalar(retrieval_config.get("chunk_overlap")),
+        scalar(retrieval_config.get("graph_min_score")),
+        scalar(retrieval_config.get("retrieval_min_score")),
+    ]
 }
 
 fn csv_escape(value: &str) -> String {
@@ -2870,7 +3685,32 @@ fn require_compatible_embedding(
 }
 
 async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead, ApiError> {
-    let dataset = fetch_dataset(state, project_id).await?;
+    // Status is the source of the evaluator's expected dual snapshot.  Keep
+    // dataset, document snapshot, graph snapshot, and counts in one stable MVCC
+    // view; READ COMMITTED would otherwise allow a status that never coexisted.
+    let mut transaction = state.pool.begin().await?;
+    sqlx::query(REPEATABLE_READ_READ_ONLY_SQL)
+        .execute(&mut *transaction)
+        .await?;
+    let dataset = {
+        let query =
+            format!("SELECT {DATASET_COLUMNS} FROM project_rag_datasets WHERE project_id = $1");
+        sqlx::query_as::<_, RagDatasetRead>(&query)
+            .bind(project_id)
+            .fetch_optional(&mut *transaction)
+            .await?
+    };
+    let dataset_id = dataset.as_ref().map(|record| record.id);
+    let embedding_model = dataset
+        .as_ref()
+        .map(|record| record.embedding_model.clone());
+    let active_corpus = document_snapshot_in_transaction(
+        &mut transaction,
+        project_id,
+        &state.settings.rag_index_version,
+    )
+    .await?;
+    let active_graph = graph_snapshot_in_transaction(&mut transaction, project_id).await?;
     let (pending_sync_count, failed_sync_count, synced_count): (i64, i64, i64) = sqlx::query_as(
         r#"
             SELECT
@@ -2895,14 +3735,25 @@ async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead
     )
     .bind(project_id)
     .bind(&state.settings.rag_index_version)
-    .fetch_one(&state.pool)
+    .fetch_one(&mut *transaction)
     .await?;
+    transaction.commit().await?;
     Ok(RagStatusRead {
         initialized: dataset.is_some(),
         dataset,
         pending_sync_count,
         failed_sync_count,
         synced_count,
+        corpus_snapshot: RagCorpusSnapshotRead {
+            dataset_id,
+            corpus_snapshot_hash: dataset_id.map(|_| active_corpus.hash),
+            corpus_chunk_count: active_corpus.chunk_count,
+            rag_index_version: state.settings.rag_index_version.clone(),
+            embedding_model,
+            graph_snapshot_hash: dataset_id.map(|_| active_graph.hash),
+            graph_entity_count: active_graph.entity_count,
+            graph_relation_count: active_graph.relation_count,
+        },
     })
 }
 
@@ -3179,16 +4030,27 @@ async fn insert_query_log(
     Ok(log_id)
 }
 
-fn retrieval_config(
+fn effective_retrieval_config(
     settings: &crate::config::Settings,
     mode: &str,
     question: &str,
-    citation_audit: &crate::models::RagCitationAuditRead,
 ) -> Value {
     let collection_query = crate::rag::is_collection_query(question);
-    let retrieval_applied = !matches!(mode, "pure_llm" | "structured_query");
-    let graph_retrieval_applied = matches!(mode, "auto" | "structured_query" | "kg_enhanced_rag");
+    let bm25_enabled = matches!(mode, "bm25_rag" | "project_rag" | "kg_enhanced_rag");
+    let vector_enabled = matches!(mode, "project_rag" | "kg_enhanced_rag");
+    let graph_retrieval_applied = mode == "kg_enhanced_rag";
+    let exact_query = crate::rag::query_prefers_lexical_exact_match(question);
+    let expanded_terms = crate::rag::bm25_expansion_terms(question);
+    let expanded_query = crate::rag::expand_query_for_bm25(question);
     json!({
+        "mode": mode,
+        "bm25_enabled": bm25_enabled,
+        "vector_enabled": vector_enabled,
+        "graph_enabled": graph_retrieval_applied,
+        "deterministic_synonym_expansion": true,
+        "normalized_query": question.trim().to_lowercase(),
+        "bm25_expanded_query": expanded_query,
+        "bm25_expanded_terms": expanded_terms,
         "embedding_backend": settings.embedding_backend,
         "embedding_model": settings.embedding_model,
         "embedding_dimension": settings.embedding_dimension,
@@ -3201,8 +4063,9 @@ fn retrieval_config(
                 .rag_collection_retrieval_top_k
                 .max(settings.rag_retrieval_top_k)
                 .min(settings.rag_vector_candidate_k)
+                .min(12)
         } else {
-            settings.rag_retrieval_top_k
+            settings.rag_retrieval_top_k.min(6)
         },
         "vector_candidate_k": settings.rag_vector_candidate_k,
         "graph_top_k": settings.rag_graph_top_k,
@@ -3212,14 +4075,15 @@ fn retrieval_config(
             settings.rag_graph_top_k
         },
         "collection_query": collection_query,
-        "retrieval_applied": retrieval_applied,
+        "retrieval_applied": bm25_enabled || vector_enabled,
         "graph_retrieval_applied": graph_retrieval_applied,
         "graph_min_score": settings.rag_graph_min_score,
         "retrieval_min_score": settings.rag_min_retrieval_score,
         "retrieval_strategy": settings.rag_retrieval_strategy,
         "index_version": settings.rag_index_version,
+        "graph_schema_version": crate::rag::GRAPH_SCHEMA_VERSION,
         "vector_candidate_limit": settings.rag_vector_candidate_k.min(30),
-        "lexical_candidate_limit": 30,
+        "lexical_candidate_limit": settings.rag_vector_candidate_k.min(30),
         "max_chunks_per_file": 3,
         "ordinary_result_limit": 6,
         "collection_result_limit": 12,
@@ -3228,13 +4092,33 @@ fn retrieval_config(
         "bm25_b": 0.75,
         "fusion_algorithm": if settings.rag_retrieval_strategy == "rrf-v1" { "rrf" } else { "weighted" },
         "rrf_rank_constant": if settings.rag_retrieval_strategy == "rrf-v1" { Some(60.0) } else { None },
-        "exact_query_lexical_first": crate::rag::query_prefers_lexical_exact_match(question),
-        "exact_query_vector_weight": if crate::rag::query_prefers_lexical_exact_match(question) { Some(0.25) } else { Some(0.5) },
-        "exact_query_lexical_weight": if crate::rag::query_prefers_lexical_exact_match(question) { Some(0.75) } else { Some(0.5) },
+        "exact_query_lexical_first": exact_query,
+        "rrf_vector_weight": if settings.rag_retrieval_strategy == "rrf-v1" {
+            if exact_query { 0.25 } else { 1.0 }
+        } else {
+            0.7
+        },
+        "rrf_lexical_weight": if settings.rag_retrieval_strategy == "rrf-v1" {
+            if exact_query { 0.75 } else { 1.0 }
+        } else {
+            0.3
+        },
+        "rrf_normalized_vector_weight": if exact_query { 0.25 } else { 0.5 },
+        "rrf_normalized_lexical_weight": if exact_query { 0.75 } else { 0.5 },
         "legacy_vector_weight": if settings.rag_retrieval_strategy == "legacy-weighted" { Some(0.7) } else { None },
         "legacy_lexical_weight": if settings.rag_retrieval_strategy == "legacy-weighted" { Some(0.3) } else { None },
-        "citation_audit": citation_audit
     })
+}
+
+fn retrieval_config(
+    settings: &crate::config::Settings,
+    mode: &str,
+    question: &str,
+    citation_audit: &crate::models::RagCitationAuditRead,
+) -> Value {
+    let mut config = effective_retrieval_config(settings, mode, question);
+    config["citation_audit"] = json!(citation_audit);
+    config
 }
 
 fn has_marker(answer: &str, kind: char) -> bool {
@@ -3397,6 +4281,8 @@ mod tests {
         Json, Router,
     };
     use serde_json::{json, Value};
+    use sha2::{Digest, Sha256};
+    use tokio::sync::Notify;
     use tower::ServiceExt;
     use uuid::Uuid;
 
@@ -3404,11 +4290,15 @@ mod tests {
         append_missing_experiment_errors, build_citation_repair_prompt, build_prompts,
         claim_experiment, csv_escape, enforce_required_citations, format_history_context,
         graph_fallback_reason, include_summary_error_orders, insert_query_log, is_ocr_document,
-        mode_requires_dataset, neutralize_answer, neutralize_blind_text, parse_rewrite_queries,
-        query_log_limit, renew_experiment_lease, retrieval_config, schedule_queued_experiments,
-        should_repair_citations, transition_interrupted_to_queued, validate_feedback,
+        mode_requires_dataset, neutralize_answer, neutralize_blind_text,
+        normalize_experiment_questions, parse_rewrite_queries, query_log_limit, questions_sha256,
+        renew_experiment_lease, retrieval_config, retrieval_snapshot_csv_fields,
+        schedule_queued_experiments, should_repair_citations, snapshot_sha256,
+        transition_interrupted_to_queued, validate_experiment_input_bindings, validate_feedback,
         validate_query, validate_query_log_for_evaluation, ExperimentLogContext,
-        MAX_RAG_QUERY_CHARS, STRUCTURED_GRAPH_BUDGET_FALLBACK,
+        ExperimentRuntimeBindings, RetrievalTestPause, RetrievalTestPauseGuard,
+        EXPERIMENT_CSV_HEADER, MAX_RAG_QUERY_CHARS, REPEATABLE_READ_READ_ONLY_SQL,
+        RETRIEVAL_TEST_LOCK, RETRIEVAL_TEST_PAUSE, STRUCTURED_GRAPH_BUDGET_FALLBACK,
     };
     use crate::models::AIQueryFeedbackRequest;
 
@@ -3611,7 +4501,22 @@ mod tests {
         assert_eq!(config["index_version"], "structured-v1");
         assert_eq!(config["fusion_algorithm"], "rrf");
         assert_eq!(config["rrf_rank_constant"], 60.0);
+        assert_eq!(config["rrf_vector_weight"], 0.25);
+        assert_eq!(config["rrf_lexical_weight"], 0.75);
+        assert_eq!(config["rrf_normalized_vector_weight"], 0.25);
+        assert_eq!(config["rrf_normalized_lexical_weight"], 0.75);
+        assert_eq!(config["lexical_candidate_limit"], 30);
+        assert_eq!(config["bm25_expanded_terms"], json!([]));
+        assert_eq!(config["normalized_query"], "列出所有样本");
         assert_eq!(config["max_chunks_per_file"], 3);
+    }
+
+    #[test]
+    fn test_snapshot_and_retrieval_share_repeatable_read_only_contract() {
+        assert_eq!(
+            REPEATABLE_READ_READ_ONLY_SQL,
+            "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY"
+        );
     }
 
     #[test]
@@ -3677,10 +4582,38 @@ mod tests {
             &std::collections::HashSet::from([1]),
         );
 
+        let row = csv
+            .strip_suffix("\r\n")
+            .unwrap()
+            .split(',')
+            .collect::<Vec<_>>();
+        assert_eq!(row.len(), 35);
         assert_eq!(
-            csv,
-            "9,2,'=SUM(A1),project_rag,1,2,failed,,,0,0,0,system,,,,[],[],{},timeout\r\n"
+            row[..20],
+            [
+                "9",
+                "2",
+                "'=SUM(A1)",
+                "project_rag",
+                "1",
+                "2",
+                "failed",
+                "",
+                "",
+                "0",
+                "0",
+                "0",
+                "system",
+                "",
+                "experiment-unlogged-failure-v1",
+                "",
+                "[]",
+                "[]",
+                "{}",
+                "timeout",
+            ]
         );
+        assert!(row[20..].iter().all(|value| value.is_empty()));
     }
 
     #[test]
@@ -3710,6 +4643,130 @@ mod tests {
     }
 
     #[test]
+    fn test_experiment_questions_are_trimmed_and_unique() {
+        let questions =
+            normalize_experiment_questions(vec!["  问题一  ".to_owned(), "问题二".to_owned()])
+                .unwrap();
+        assert_eq!(questions, vec!["问题一", "问题二"]);
+
+        let error =
+            normalize_experiment_questions(vec!["问题一".to_owned(), "  问题一  ".to_owned()])
+                .unwrap_err();
+        assert_eq!(error.status, StatusCode::UNPROCESSABLE_ENTITY);
+        assert!(error.detail.contains("duplicates"));
+    }
+
+    #[test]
+    fn test_input_hashes_are_stable_and_bound_to_inputs() {
+        let questions = vec!["问题一".to_owned(), "Question two".to_owned()];
+        let reordered_questions = vec!["Question two".to_owned(), "问题一".to_owned()];
+        let rows = vec![(2, 1, "chunk-b".to_owned()), (1, 0, "chunk-a".to_owned())];
+        let reordered_rows = vec![rows[1].clone(), rows[0].clone()];
+
+        let question_hash = questions_sha256(&questions);
+        assert_eq!(question_hash, questions_sha256(&questions));
+        assert_ne!(question_hash, questions_sha256(&reordered_questions));
+        assert_eq!(question_hash.len(), 64);
+
+        let snapshot_hash = snapshot_sha256("structured-v1", &rows);
+        assert_eq!(
+            snapshot_hash,
+            snapshot_sha256("structured-v1", &reordered_rows)
+        );
+        assert_ne!(snapshot_hash, snapshot_sha256("next-index", &rows));
+        assert_eq!(snapshot_hash.len(), 64);
+    }
+
+    #[test]
+    fn test_experiment_input_bindings_fail_closed_on_runtime_drift() {
+        let questions = vec!["问题一".to_owned()];
+        let corpus_hash = "c".repeat(64);
+        let config = json!({
+            "embedding_model": "embed-v1",
+            "generation_model": "generate-v1",
+            "questions_sha256": questions_sha256(&questions),
+            "corpus_snapshot_hash": corpus_hash,
+            "rag_index_version": "structured-v1",
+            "graph_schema_version": "kg-v3-numbered-list-expansion"
+        });
+        let modes = json!(["project_rag"]);
+
+        assert!(validate_experiment_input_bindings(
+            &config,
+            &json!(questions),
+            &modes,
+            ExperimentRuntimeBindings {
+                corpus_snapshot_hash: Some(&corpus_hash),
+                index_version: "structured-v1",
+                embedding_model: "embed-v1",
+                generation_model: "generate-v1",
+                graph_schema_version: "kg-v3-numbered-list-expansion",
+            }
+        )
+        .is_ok());
+
+        let corpus_error = validate_experiment_input_bindings(
+            &config,
+            &json!(questions),
+            &modes,
+            ExperimentRuntimeBindings {
+                corpus_snapshot_hash: Some(&"d".repeat(64)),
+                index_version: "structured-v1",
+                embedding_model: "embed-v1",
+                generation_model: "generate-v1",
+                graph_schema_version: "kg-v3-numbered-list-expansion",
+            },
+        )
+        .unwrap_err();
+        assert!(corpus_error.contains("corpus_snapshot_hash"));
+
+        let question_error = validate_experiment_input_bindings(
+            &config,
+            &json!(["发生漂移的问题"]),
+            &modes,
+            ExperimentRuntimeBindings {
+                corpus_snapshot_hash: Some(&corpus_hash),
+                index_version: "structured-v1",
+                embedding_model: "embed-v1",
+                generation_model: "generate-v1",
+                graph_schema_version: "kg-v3-numbered-list-expansion",
+            },
+        )
+        .unwrap_err();
+        assert!(question_error.contains("questions_sha256"));
+
+        let model_error = validate_experiment_input_bindings(
+            &config,
+            &json!(questions),
+            &modes,
+            ExperimentRuntimeBindings {
+                corpus_snapshot_hash: Some(&corpus_hash),
+                index_version: "structured-v1",
+                embedding_model: "embed-v2",
+                generation_model: "generate-v1",
+                graph_schema_version: "kg-v3-numbered-list-expansion",
+            },
+        )
+        .unwrap_err();
+        assert!(model_error.contains("embedding_model"));
+
+        let graph_error = validate_experiment_input_bindings(
+            &config,
+            &json!(questions),
+            &modes,
+            ExperimentRuntimeBindings {
+                corpus_snapshot_hash: Some(&corpus_hash),
+                index_version: "structured-v1",
+                embedding_model: "embed-v1",
+                generation_model: "generate-v1",
+                graph_schema_version: "kg-v2-numbered-list-expansion",
+            },
+        )
+        .unwrap_err();
+        assert!(graph_error.contains("graph_schema_version"));
+    }
+
+    #[test]
     fn test_non_document_modes_do_not_require_rag_dataset() {
         assert!(!mode_requires_dataset("pure_llm"));
         assert!(!mode_requires_dataset("structured_query"));
@@ -3725,6 +4782,85 @@ mod tests {
             assert!(cell.starts_with('\''), "unsafe CSV cell: {escaped:?}");
         }
         assert_eq!(csv_escape("ordinary"), "ordinary");
+    }
+
+    #[test]
+    fn test_experiment_csv_binds_retrieval_snapshot_to_run_and_query_log() {
+        let run_config = json!({
+            "corpus_snapshot_hash": "corpus-sha",
+            "rag_index_version": "index-v1",
+            "graph_schema_version": "rust-kg-v1"
+        });
+        let retrieval_config = json!({
+            "embedding_model": "embed-v1",
+            "index_version": "index-v1",
+            "retrieval_strategy": "rrf-v1",
+            "retrieval_top_k": 6,
+            "collection_retrieval_top_k": 12,
+            "vector_candidate_k": 30,
+            "graph_top_k": 10,
+            "chunk_size": 800,
+            "chunk_overlap": 120,
+            "graph_min_score": 1.0,
+            "retrieval_min_score": 0.2
+        });
+
+        let header = EXPERIMENT_CSV_HEADER
+            .trim_start_matches('\u{feff}')
+            .trim_end_matches("\r\n");
+        let header_fields: Vec<&str> = header.split(',').collect();
+        assert_eq!(header_fields.len(), 35);
+        for field in [
+            "retrieval_config_json",
+            "embedding_model",
+            "corpus_snapshot_hash",
+            "rag_index_version",
+            "index_version",
+            "graph_schema_version",
+            "retrieval_strategy",
+            "retrieval_top_k",
+            "collection_retrieval_top_k",
+            "vector_candidate_k",
+            "graph_top_k",
+            "chunk_size",
+            "chunk_overlap",
+            "graph_min_score",
+            "retrieval_min_score",
+        ] {
+            assert!(header_fields.contains(&field), "missing CSV field: {field}");
+        }
+        assert_eq!(
+            retrieval_snapshot_csv_fields(&run_config, &retrieval_config),
+            vec![
+                "{\"chunk_overlap\":120,\"chunk_size\":800,\"collection_retrieval_top_k\":12,\"embedding_model\":\"embed-v1\",\"graph_min_score\":1.0,\"graph_top_k\":10,\"index_version\":\"index-v1\",\"retrieval_min_score\":0.2,\"retrieval_strategy\":\"rrf-v1\",\"retrieval_top_k\":6,\"vector_candidate_k\":30}".to_owned(),
+                "embed-v1".to_owned(),
+                "corpus-sha".to_owned(),
+                "index-v1".to_owned(),
+                "index-v1".to_owned(),
+                "rust-kg-v1".to_owned(),
+                "rrf-v1".to_owned(),
+                "6".to_owned(),
+                "12".to_owned(),
+                "30".to_owned(),
+                "10".to_owned(),
+                "800".to_owned(),
+                "120".to_owned(),
+                "1.0".to_owned(),
+                "0.2".to_owned(),
+            ]
+        );
+    }
+
+    #[test]
+    fn test_retrieval_config_records_production_graph_schema_version() {
+        let settings = Settings::from_map(&HashMap::new()).unwrap();
+        let audit = crate::rag::audit_citations("[G1]", 0, 1);
+        let config = retrieval_config(&settings, "structured_query", "列出所有样本", &audit);
+
+        assert_eq!(
+            config["graph_schema_version"],
+            crate::rag::GRAPH_SCHEMA_VERSION
+        );
     }
 
     async fn mock_deepseek() -> String {
@@ -3747,6 +4883,435 @@ mod tests {
             .unwrap();
         });
         format!("http://{address}")
+    }
+
+    #[tokio::test]
+    async fn test_retrieval_only_rr_snapshot_drift_and_concurrent_write_fail_closed() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let _test_lock = RETRIEVAL_TEST_LOCK
+            .get_or_init(|| tokio::sync::Mutex::new(()))
+            .lock()
+            .await;
+        let admin_username = format!("retrieval_snapshot_admin_{suffix}");
+        let snapshot_started = std::sync::Arc::new(Notify::new());
+        let snapshot_release = std::sync::Arc::new(Notify::new());
+        RETRIEVAL_TEST_PAUSE
+            .get_or_init(|| std::sync::Mutex::new(None))
+            .lock()
+            .unwrap()
+            .replace(RetrievalTestPause {
+                started: snapshot_started.clone(),
+                release: snapshot_release.clone(),
+            });
+        let _pause_guard = RetrievalTestPauseGuard;
+        let storage = tempfile::tempdir().unwrap();
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "retrieval-snapshot-secret".to_owned(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RetrievalSnapshot123!".to_owned(),
+            ),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+            ("RAG_MIN_RETRIEVAL_SCORE".to_owned(), "0".to_owned()),
+            ("RAG_GRAPH_MIN_SCORE".to_owned(), "0".to_owned()),
+            (
+                "STORAGE_ROOT".to_owned(),
+                storage.path().to_string_lossy().into_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let state = AppState::new(pool.clone(), settings).unwrap();
+        let app = build_app(state.clone());
+        let (_, login) = json_call(
+            &app,
+            "POST",
+            "/auth/login",
+            None,
+            Some(json!({
+                "username": admin_username,
+                "password": "RetrievalSnapshot123!"
+            })),
+        )
+        .await;
+        let admin = login["access_token"].as_str().unwrap().to_owned();
+        let (_, project) = json_call(
+            &app,
+            "POST",
+            "/projects",
+            Some(&admin),
+            Some(json!({"name": format!("Retrieval snapshot {suffix}")})),
+        )
+        .await;
+        let project_id = project["id"].as_i64().unwrap() as i32;
+        let user_id: i32 = sqlx::query_scalar("SELECT id FROM users WHERE username = $1")
+            .bind(format!("retrieval_snapshot_admin_{suffix}"))
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        let _: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO project_rag_datasets (
+                project_id, dify_dataset_id, dify_dataset_name, provider,
+                embedding_model, generation_model, status, created_by,
+                created_at, updated_at
+            ) VALUES ($1, $2, $3, 'local_test', 'rust-hash-512-v1', 'test', 'active', $4, now(), now())
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(format!("snapshot-dataset-{suffix}"))
+        .bind(format!("Snapshot dataset {suffix}"))
+        .bind(user_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let old_file_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO files (
+                project_id, uploaded_by, file_category, original_filename,
+                storage_path, file_size, file_hash, status, knowledge_sync_status
+            ) VALUES ($1, $2, 'KNOWLEDGE_DOCUMENT'::filecategory, $3, $4, 1, $5,
+                      'APPROVED'::filestatus, 'synced')
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(user_id)
+        .bind(format!("old-{suffix}.txt"))
+        .bind(format!("/tmp/old-{suffix}.txt"))
+        .bind(format!("old-file-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let old_content = "old-marker evidence";
+        let old_content_hash = format!("{:x}", Sha256::digest(old_content.as_bytes()));
+        let embedding_literal = format!(
+            "[{}]",
+            (0..512)
+                .map(|index| if index == 0 { "1" } else { "0" })
+                .collect::<Vec<_>>()
+                .join(",")
+        );
+        let old_chunk_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO rag_document_chunks (
+                project_id, file_id, chunk_index, content, content_hash,
+                character_count, embedding, metadata_json, chunk_version, index_version
+            ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json, $7, $7)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(old_file_id)
+        .bind(old_content)
+        .bind(old_content_hash)
+        .bind(old_content.chars().count() as i32)
+        .bind(&embedding_literal)
+        .bind(&state.settings.rag_index_version)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        sqlx::query(
+            r#"
+            INSERT INTO rag_file_syncs (
+                file_id, project_id, dify_dataset_id, dify_document_id,
+                sync_status, chunk_count, content_hash, index_version,
+                created_at, updated_at, synced_at
+            ) VALUES ($1, $2, $3, $4, 'synced', 1, $5, $6, now(), now(), now())
+            "#,
+        )
+        .bind(old_file_id)
+        .bind(project_id)
+        .bind(format!("snapshot-dataset-{suffix}"))
+        .bind(format!("old-doc-{suffix}"))
+        .bind(format!("old-file-{suffix}"))
+        .bind(&state.settings.rag_index_version)
+        .execute(&pool)
+        .await
+        .unwrap();
+        let old_source_entity_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO kg_entities (
+                project_id, entity_type, label, normalized_label, natural_key,
+                source_type, source_id, properties
+            ) VALUES ($1, 'marker', 'old-marker', 'old-marker', $2, 'manual', NULL, '{}'::json)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(format!("old-marker-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let old_target_entity_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO kg_entities (
+                project_id, entity_type, label, normalized_label, natural_key,
+                source_type, source_id, properties
+            ) VALUES ($1, 'result', 'old-result', 'old-result', $2, 'manual', NULL, '{}'::json)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(format!("old-result-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let old_relation_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO kg_relations (
+                project_id, source_entity_id, target_entity_id, relation_type,
+                source_type, source_id, confidence, properties
+            ) VALUES ($1, $2, $3, 'uses', 'manual', NULL, 1.0, '{}'::json)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(old_source_entity_id)
+        .bind(old_target_entity_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+
+        let (_, initial_status) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/status"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        let old_corpus_hash = initial_status["corpus_snapshot"]["corpus_snapshot_hash"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let old_graph_hash = initial_status["corpus_snapshot"]["graph_snapshot_hash"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        assert_eq!(initial_status["corpus_snapshot"]["corpus_chunk_count"], 1);
+        assert_eq!(initial_status["corpus_snapshot"]["graph_entity_count"], 2);
+        assert_eq!(initial_status["corpus_snapshot"]["graph_relation_count"], 1);
+
+        let route_app = app.clone();
+        let route_admin = admin.clone();
+        let old_corpus_for_route = old_corpus_hash.clone();
+        let old_graph_for_route = old_graph_hash.clone();
+        let retrieval = tokio::spawn(async move {
+            json_call(
+                &route_app,
+                "POST",
+                &format!("/projects/{project_id}/rag/retrieve"),
+                Some(&route_admin),
+                Some(json!({
+                    "query": "old-marker",
+                    "mode": "kg_enhanced_rag",
+                    "expected_corpus_snapshot_hash": old_corpus_for_route,
+                    "expected_graph_snapshot_hash": old_graph_for_route
+                })),
+            )
+            .await
+        });
+        snapshot_started.notified().await;
+
+        let new_file_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO files (
+                project_id, uploaded_by, file_category, original_filename,
+                storage_path, file_size, file_hash, status, knowledge_sync_status
+            ) VALUES ($1, $2, 'KNOWLEDGE_DOCUMENT'::filecategory, $3, $4, 1, $5,
+                      'APPROVED'::filestatus, 'synced')
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(user_id)
+        .bind(format!("new-{suffix}.txt"))
+        .bind(format!("/tmp/new-{suffix}.txt"))
+        .bind(format!("new-file-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let new_content = "new-marker evidence";
+        let new_chunk_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO rag_document_chunks (
+                project_id, file_id, chunk_index, content, content_hash,
+                character_count, embedding, metadata_json, chunk_version, index_version
+            ) VALUES ($1, $2, 0, $3, $4, $5, $6::vector, '{}'::json, $7, $7)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(new_file_id)
+        .bind(new_content)
+        .bind(format!("{:x}", Sha256::digest(new_content.as_bytes())))
+        .bind(new_content.chars().count() as i32)
+        .bind(&embedding_literal)
+        .bind(&state.settings.rag_index_version)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        sqlx::query(
+            r#"
+            INSERT INTO rag_file_syncs (
+                file_id, project_id, dify_dataset_id, dify_document_id,
+                sync_status, chunk_count, content_hash, index_version,
+                created_at, updated_at, synced_at
+            ) VALUES ($1, $2, $3, $4, 'synced', 1, $5, $6, now(), now(), now())
+            "#,
+        )
+        .bind(new_file_id)
+        .bind(project_id)
+        .bind(format!("snapshot-dataset-{suffix}"))
+        .bind(format!("new-doc-{suffix}"))
+        .bind(format!("new-file-{suffix}"))
+        .bind(&state.settings.rag_index_version)
+        .execute(&pool)
+        .await
+        .unwrap();
+        let new_source_entity_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO kg_entities (
+                project_id, entity_type, label, normalized_label, natural_key,
+                source_type, source_id, properties
+            ) VALUES ($1, 'marker', 'new-marker', 'new-marker', $2, 'manual', NULL, '{}'::json)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(format!("new-marker-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let new_target_entity_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO kg_entities (
+                project_id, entity_type, label, normalized_label, natural_key,
+                source_type, source_id, properties
+            ) VALUES ($1, 'result', 'new-result', 'new-result', $2, 'manual', NULL, '{}'::json)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(format!("new-result-{suffix}"))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let new_relation_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO kg_relations (
+                project_id, source_entity_id, target_entity_id, relation_type,
+                source_type, source_id, confidence, properties
+            ) VALUES ($1, $2, $3, 'uses', 'manual', NULL, 1.0, '{}'::json)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id)
+        .bind(new_source_entity_id)
+        .bind(new_target_entity_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        snapshot_release.notify_one();
+
+        let (retrieval_status, retrieval_body) = retrieval.await.unwrap();
+        assert_eq!(retrieval_status, StatusCode::OK);
+        assert_eq!(retrieval_body["retrieval_only"], true);
+        assert_eq!(retrieval_body["generation_invoked"], false);
+        assert_eq!(retrieval_body["llm_query_rewrite_invoked"], false);
+        assert_eq!(retrieval_body["citation_repair_invoked"], false);
+        assert_eq!(
+            retrieval_body["actual_corpus_snapshot_hash"],
+            old_corpus_hash
+        );
+        assert_eq!(retrieval_body["used_corpus_snapshot_hash"], old_corpus_hash);
+        assert_eq!(
+            retrieval_body["actual_corpus_snapshot_hash"],
+            retrieval_body["used_corpus_snapshot_hash"]
+        );
+        assert_eq!(retrieval_body["corpus_snapshot_hash"], old_corpus_hash);
+        assert_eq!(retrieval_body["actual_graph_snapshot_hash"], old_graph_hash);
+        assert_eq!(retrieval_body["used_graph_snapshot_hash"], old_graph_hash);
+        assert_eq!(
+            retrieval_body["actual_graph_snapshot_hash"],
+            retrieval_body["used_graph_snapshot_hash"]
+        );
+        assert_eq!(retrieval_body["graph_snapshot_hash"], old_graph_hash);
+        assert_eq!(retrieval_body["corpus_chunk_count"], 1);
+        assert_eq!(retrieval_body["graph_entity_count"], 2);
+        assert_eq!(retrieval_body["graph_relation_count"], 1);
+        assert!(retrieval_body["sources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|source| source["chunk_id"] != new_chunk_id));
+        assert!(retrieval_body["graph_context"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|relation| relation["relation_id"] != new_relation_id));
+        assert_ne!(old_chunk_id, 0);
+        assert_ne!(old_chunk_id, new_chunk_id);
+        assert_ne!(old_relation_id, new_relation_id);
+
+        let (_, final_status) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/status"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert_ne!(
+            final_status["corpus_snapshot"]["corpus_snapshot_hash"],
+            old_corpus_hash
+        );
+        assert_ne!(
+            final_status["corpus_snapshot"]["graph_snapshot_hash"],
+            old_graph_hash
+        );
+        assert_eq!(final_status["corpus_snapshot"]["corpus_chunk_count"], 2);
+        assert_eq!(final_status["corpus_snapshot"]["graph_entity_count"], 4);
+        assert_eq!(final_status["corpus_snapshot"]["graph_relation_count"], 2);
+        let new_corpus_hash = final_status["corpus_snapshot"]["corpus_snapshot_hash"]
+            .as_str()
+            .unwrap();
+        let new_graph_hash = final_status["corpus_snapshot"]["graph_snapshot_hash"]
+            .as_str()
+            .unwrap();
+
+        let (stale_status, stale_body) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/retrieve"),
+            Some(&admin),
+            Some(json!({
+                "query": "old-marker",
+                "mode": "bm25_rag",
+                "expected_corpus_snapshot_hash": old_corpus_hash,
+                "expected_graph_snapshot_hash": old_graph_hash
+            })),
+        )
+        .await;
+        assert_eq!(stale_status, StatusCode::CONFLICT);
+        let stale_detail: Value =
+            serde_json::from_str(stale_body["detail"].as_str().unwrap()).unwrap();
+        assert_eq!(stale_detail["actual_corpus_snapshot_hash"], new_corpus_hash);
+        assert_eq!(stale_detail["actual_graph_snapshot_hash"], new_graph_hash);
     }
 
     #[tokio::test]
@@ -4417,6 +5982,76 @@ mod tests {
         assert_eq!(export_status, StatusCode::OK);
         assert!(String::from_utf8(csv).unwrap().contains("project_rag"));
 
+        let (evidence_status, evidence_bytes) = request(
+            &app,
+            "GET",
+            &format!("/rag/experiments/{run_id}/evidence.json"),
+            Some(admin),
+            None,
+            Vec::new(),
+        )
+        .await;
+        assert_eq!(evidence_status, StatusCode::OK);
+        let evidence: Value = serde_json::from_slice(&evidence_bytes).unwrap();
+        assert_eq!(evidence["schema_version"], "rag-evidence-package-v1");
+        assert_eq!(evidence["experiment"]["status"], "completed");
+        assert_eq!(evidence["experiment"]["repetitions"], 1);
+        assert_eq!(evidence["experiment"]["randomize_order"], false);
+        assert!(evidence["experiment"]["questions_sha256"].is_string());
+        assert!(evidence["experiment"]["corpus_snapshot_hash"].is_string());
+        assert_eq!(evidence["experiment"]["rag_index_version"], "structured-v1");
+        assert_eq!(
+            evidence["experiment"]["questions_sha256"],
+            questions_sha256(&["What does the PCR protocol use?".to_owned()])
+        );
+        let corpus_rows: Vec<(i32, i32, String)> = sqlx::query_as(
+            r#"
+            SELECT c.file_id, c.chunk_index, c.content_hash
+            FROM rag_document_chunks c
+            JOIN files f ON f.id = c.file_id
+            WHERE c.project_id = $1
+              AND f.status = 'APPROVED'::filestatus
+              AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
+              AND f.knowledge_sync_status = 'synced'
+              AND c.index_version = $2
+            ORDER BY c.file_id, c.chunk_index
+            "#,
+        )
+        .bind(project_id as i32)
+        .bind(&state.settings.rag_index_version)
+        .fetch_all(&state.pool)
+        .await
+        .unwrap();
+        assert_eq!(
+            evidence["experiment"]["corpus_snapshot_hash"],
+            snapshot_sha256(&state.settings.rag_index_version, &corpus_rows)
+        );
+        assert_eq!(evidence["case_count"], 1);
+        assert_eq!(evidence["cases"].as_array().unwrap().len(), 1);
+        assert!(evidence["cases"][0]["query_log_id"].is_number());
+        assert!(evidence["cases"][0]["citation_audit"].is_object());
+
+        sqlx::query("UPDATE ai_experiment_runs SET status = 'running' WHERE id = $1")
+            .bind(run_id as i32)
+            .execute(&state.pool)
+            .await
+            .unwrap();
+        let (non_terminal_evidence_status, _) = request(
+            &app,
+            "GET",
+            &format!("/rag/experiments/{run_id}/evidence.json"),
+            Some(admin),
+            None,
+            Vec::new(),
+        )
+        .await;
+        assert_eq!(non_terminal_evidence_status, StatusCode::CONFLICT);
+        sqlx::query("UPDATE ai_experiment_runs SET status = 'completed' WHERE id = $1")
+            .bind(run_id as i32)
+            .execute(&state.pool)
+            .await
+            .unwrap();
+
         let evaluator_name = format!("rag_evaluator_{suffix}");
         let (_, evaluator) = json_call(
             &app,
@@ -4459,6 +6094,16 @@ mod tests {
         )
         .await;
         let evaluator_token = evaluator_login["access_token"].as_str().unwrap();
+        let (evaluator_evidence_status, _) = request(
+            &app,
+            "GET",
+            &format!("/rag/experiments/{run_id}/evidence.json"),
+            Some(evaluator_token),
+            None,
+            Vec::new(),
+        )
+        .await;
+        assert_eq!(evaluator_evidence_status, StatusCode::FORBIDDEN);
         let (projects_status, projects) = json_call(
             &app,
             "GET",
@@ -4627,6 +6272,80 @@ mod tests {
                 .await
                 .unwrap();
         assert_eq!(queued_status, "completed");
+
+        let drift_questions = vec!["What does the PCR protocol use?".to_owned()];
+        let drift_plan = json!([{
+            "question_index": 1,
+            "question": drift_questions[0],
+            "repetition_index": 1,
+            "mode": "project_rag",
+            "execution_order": 1
+        }]);
+        let drift_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO ai_experiment_runs (
+                project_id, created_by, name, status, questions_json, modes_json,
+                config_snapshot_json, summary_json, total_cases, completed_cases,
+                failed_cases, created_at, completed_at
+            )
+            VALUES ($1, $2, 'input binding drift verification', 'queued', $3, $4, $5, $6,
+                    1, 0, 0, now(), NULL)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id as i32)
+        .bind(admin_id)
+        .bind(json!(drift_questions))
+        .bind(json!(["project_rag"]))
+        .bind(json!({
+            "embedding_model": state.settings.embedding_model,
+            "generation_model": state.ai_provider.model(),
+            "questions_sha256": questions_sha256(&drift_questions),
+            "corpus_snapshot_hash": snapshot_sha256(
+                &state.settings.rag_index_version,
+                &corpus_rows
+            ),
+            "rag_index_version": state.settings.rag_index_version
+        }))
+        .bind(json!({"execution_plan": drift_plan, "errors": []}))
+        .fetch_one(&state.pool)
+        .await
+        .unwrap();
+        sqlx::query("UPDATE rag_document_chunks SET content_hash = $2 WHERE file_id = $1")
+            .bind(file_id as i32)
+            .bind("d".repeat(64))
+            .execute(&state.pool)
+            .await
+            .unwrap();
+        assert_eq!(schedule_queued_experiments(&state).await.unwrap(), 1);
+        for _ in 0..40 {
+            let status: String =
+                sqlx::query_scalar("SELECT status FROM ai_experiment_runs WHERE id = $1")
+                    .bind(drift_id)
+                    .fetch_one(&state.pool)
+                    .await
+                    .unwrap();
+            if status == "failed" {
+                break;
+            }
+            tokio::time::sleep(std::time::Duration::from_millis(25)).await;
+        }
+        let (drift_status, drift_summary): (String, Value) =
+            sqlx::query_as("SELECT status, summary_json FROM ai_experiment_runs WHERE id = $1")
+                .bind(drift_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        assert_eq!(drift_status, "failed");
+        assert!(drift_summary["fatal_error"]["error"]
+            .as_str()
+            .unwrap()
+            .contains("input binding drift"));
+        assert_eq!(drift_summary["fatal_error"]["failure_scope"], "run");
+        assert_eq!(
+            drift_summary["fatal_error"]["failure_code"],
+            "input_binding_drift"
+        );
 
         sqlx::query(
             "UPDATE project_rag_datasets SET embedding_model = 'legacy-bge' WHERE project_id = $1",

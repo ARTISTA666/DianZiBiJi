@@ -1,0 +1,349 @@
+{
+  "generated_at": "2026-08-12T04:50:10.935169+00:00",
+  "passed": false,
+  "scope": "controlled beta launch readiness; human review is post-launch",
+  "human_review": "post_launch_pending",
+  "checks": [
+    {
+      "name": "evidence report passed: main-maturity-gate-latest.json",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/experiments/main-maturity-gate-latest.json",
+        "exists": true,
+        "passed": false,
+        "failures": [
+          {
+            "group": "retrieval",
+            "name": "retrieval evidence binding completeness",
+            "actual": [
+              "api_runtime",
+              "corpus_sha256",
+              "embedding_backend",
+              "embedding_dimension",
+              "embedding_model",
+              "embedding_model_sha256",
+              "git_revision",
+              "image_digest",
+              "questions_sha256",
+              "retrieval_parameters_sha256"
+            ],
+            "operator": "==",
+            "expected": [],
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval runtime evidence manifest",
+            "actual": "missing",
+            "operator": "present",
+            "expected": "runtime evidence manifest",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval runtime",
+            "actual": null,
+            "operator": "==",
+            "expected": "rust-axum",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval reproducibility",
+            "actual": false,
+            "operator": "==",
+            "expected": true,
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval parameters hash",
+            "actual": null,
+            "operator": "==",
+            "expected": "4721edb85c333e08d20e0a3301eb9ecba7787534fa0e088a790670f150180652",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval corpus hash binding",
+            "actual": null,
+            "operator": "==",
+            "expected": "ef12ac88e4bebb0ef8cba991f6496f08c612dd420ba75bd5fa93e080c796cb07",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval question-set hash binding",
+            "actual": null,
+            "operator": "==",
+            "expected": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a",
+            "passed": false
+          },
+          {
+            "group": "system",
+            "name": "production config preflight",
+            "actual": "skipped_non_production",
+            "operator": "==",
+            "expected": "passed",
+            "passed": false
+          },
+          {
+            "group": "evidence_manifest",
+            "name": "maturity evidence manifest verified",
+            "actual": false,
+            "operator": "==",
+            "expected": true,
+            "passed": false
+          },
+          {
+            "group": "evidence_manifest",
+            "name": "maturity evidence manifest matches current checkout",
+            "actual": false,
+            "operator": "==",
+            "expected": true,
+            "passed": false
+          },
+          {
+            "group": "evidence_manifest",
+            "name": "maturity evidence manifest covers gate inputs",
+            "actual": [
+              "output/release-evidence/rag-runtime-manifest.json"
+            ],
+            "operator": "==",
+            "expected": [],
+            "passed": false
+          }
+        ],
+        "scope": "full-system release-candidate maturity gate"
+      }
+    },
+    {
+      "name": "production configuration passed",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/production-config-latest.json",
+        "status": "skipped_non_production",
+        "checks": {
+          "app_env_is_production": false,
+          "secret_key_non_default": false,
+          "bootstrap_admin_password_non_default": false,
+          "postgres_password_non_default": false,
+          "seed_demo_data_disabled": false,
+          "deepseek_api_key_present": true,
+          "app_revision_present": false
+        },
+        "missing_checks": []
+      }
+    },
+    {
+      "name": "evidence report passed: tls-deployment-latest.json",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/tls-deployment-latest.json",
+        "exists": false,
+        "passed": null,
+        "failures": null,
+        "scope": null
+      }
+    },
+    {
+      "name": "evidence report passed: offsite-backup-latest.json",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/offsite-backup-latest.json",
+        "exists": false,
+        "passed": null,
+        "failures": null,
+        "scope": null
+      }
+    },
+    {
+      "name": "runtime endpoint healthy: http://127.0.0.1:8001/health",
+      "passed": true,
+      "detail": {
+        "url": "http://127.0.0.1:8001/health",
+        "status": 200,
+        "header_ok": true,
+        "body": "{\"status\":\"ok\"}"
+      }
+    },
+    {
+      "name": "runtime endpoint healthy: http://127.0.0.1:8001/ready",
+      "passed": true,
+      "detail": {
+        "url": "http://127.0.0.1:8001/ready",
+        "status": 200,
+        "header_ok": true,
+        "body": "{\"checks\":{\"database\":\"ok\",\"storage\":\"ok\"},\"revision\":\"unversioned\",\"status\":\"ready\"}"
+      }
+    },
+    {
+      "name": "Docker Compose configuration valid",
+      "passed": true,
+      "detail": {
+        "returncode": 0,
+        "stderr": ""
+      }
+    }
+  ],
+  "failures": [
+    {
+      "name": "evidence report passed: main-maturity-gate-latest.json",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/experiments/main-maturity-gate-latest.json",
+        "exists": true,
+        "passed": false,
+        "failures": [
+          {
+            "group": "retrieval",
+            "name": "retrieval evidence binding completeness",
+            "actual": [
+              "api_runtime",
+              "corpus_sha256",
+              "embedding_backend",
+              "embedding_dimension",
+              "embedding_model",
+              "embedding_model_sha256",
+              "git_revision",
+              "image_digest",
+              "questions_sha256",
+              "retrieval_parameters_sha256"
+            ],
+            "operator": "==",
+            "expected": [],
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval runtime evidence manifest",
+            "actual": "missing",
+            "operator": "present",
+            "expected": "runtime evidence manifest",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval runtime",
+            "actual": null,
+            "operator": "==",
+            "expected": "rust-axum",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval reproducibility",
+            "actual": false,
+            "operator": "==",
+            "expected": true,
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval parameters hash",
+            "actual": null,
+            "operator": "==",
+            "expected": "4721edb85c333e08d20e0a3301eb9ecba7787534fa0e088a790670f150180652",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval corpus hash binding",
+            "actual": null,
+            "operator": "==",
+            "expected": "ef12ac88e4bebb0ef8cba991f6496f08c612dd420ba75bd5fa93e080c796cb07",
+            "passed": false
+          },
+          {
+            "group": "retrieval",
+            "name": "retrieval question-set hash binding",
+            "actual": null,
+            "operator": "==",
+            "expected": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a",
+            "passed": false
+          },
+          {
+            "group": "system",
+            "name": "production config preflight",
+            "actual": "skipped_non_production",
+            "operator": "==",
+            "expected": "passed",
+            "passed": false
+          },
+          {
+            "group": "evidence_manifest",
+            "name": "maturity evidence manifest verified",
+            "actual": false,
+            "operator": "==",
+            "expected": true,
+            "passed": false
+          },
+          {
+            "group": "evidence_manifest",
+            "name": "maturity evidence manifest matches current checkout",
+            "actual": false,
+            "operator": "==",
+            "expected": true,
+            "passed": false
+          },
+          {
+            "group": "evidence_manifest",
+            "name": "maturity evidence manifest covers gate inputs",
+            "actual": [
+              "output/release-evidence/rag-runtime-manifest.json"
+            ],
+            "operator": "==",
+            "expected": [],
+            "passed": false
+          }
+        ],
+        "scope": "full-system release-candidate maturity gate"
+      }
+    },
+    {
+      "name": "production configuration passed",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/production-config-latest.json",
+        "status": "skipped_non_production",
+        "checks": {
+          "app_env_is_production": false,
+          "secret_key_non_default": false,
+          "bootstrap_admin_password_non_default": false,
+          "postgres_password_non_default": false,
+          "seed_demo_data_disabled": false,
+          "deepseek_api_key_present": true,
+          "app_revision_present": false
+        },
+        "missing_checks": []
+      }
+    },
+    {
+      "name": "evidence report passed: tls-deployment-latest.json",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/tls-deployment-latest.json",
+        "exists": false,
+        "passed": null,
+        "failures": null,
+        "scope": null
+      }
+    },
+    {
+      "name": "evidence report passed: offsite-backup-latest.json",
+      "passed": false,
+      "detail": {
+        "source": "/Users/yusong/Downloads/new/full-system/docs/system-evidence/offsite-backup-latest.json",
+        "exists": false,
+        "passed": null,
+        "failures": null,
+        "scope": null
+      }
+    }
+  ],
+  "launch_policy": {
+    "human_review_required": false,
+    "technical_safety_checks_required": true,
+    "user_feedback_collection": "required after launch"
+  }
+}

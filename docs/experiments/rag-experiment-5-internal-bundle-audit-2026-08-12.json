@@ -1,0 +1,4827 @@
+{
+  "schema_version": "rag-internal-five-mode-bundle-audit-v1",
+  "generated_at_utc": "2026-08-16T07:27:47.387851+00:00",
+  "scope": "internal developer-authored automatic experiment; not independent confirmation",
+  "inputs": {
+    "report": "data/real/experiment-5/internal-five-mode-experiment-report.json",
+    "csv": "data/real/experiment-5/internal-five-mode-experiment.csv",
+    "run_config": "data/real/experiment-5/run-config.json",
+    "questions": "data/real/GSE111619/gse111619_kg_holdout_questions.json",
+    "freeze_manifest": "docs/experiments/rag-experiment-5-internal-freeze-manifest-v2.json",
+    "validation": "data/real/experiment-5/internal-five-mode-validation.json"
+  },
+  "git": {
+    "revision": "89354a9ea09829ade69461aaecb6fce6de287529",
+    "dirty": true
+  },
+  "consistency_passed": false,
+  "paper_ready": false,
+  "paper_blockers": [
+    "app_revision_is_bound",
+    "external_freeze_inputs_present",
+    "multi_project_question_set_ready",
+    "independent_human_review_present",
+    "confirmatory_evidence_package_present"
+  ],
+  "failure_summary": {
+    "failed_check_count": 153,
+    "failed_check_names": [
+      "app_revision_is_bound",
+      "citation_audit_recomputed_matches_report",
+      "confirmatory_evidence_package_present",
+      "csv_retrieval_bindings_bound",
+      "csv_row_integrity",
+      "external_freeze_inputs_present",
+      "independent_human_review_present",
+      "input_freeze_manifest_verifies",
+      "multi_project_question_set_ready",
+      "row_100_retrieval_snapshot_bound",
+      "row_101_retrieval_snapshot_bound",
+      "row_102_retrieval_snapshot_bound",
+      "row_103_retrieval_snapshot_bound",
+      "row_104_retrieval_snapshot_bound",
+      "row_105_retrieval_snapshot_bound",
+      "row_106_retrieval_snapshot_bound",
+      "row_107_retrieval_snapshot_bound",
+      "row_108_retrieval_snapshot_bound",
+      "row_109_retrieval_snapshot_bound",
+      "row_10_retrieval_snapshot_bound",
+      "row_110_retrieval_snapshot_bound",
+      "row_111_retrieval_snapshot_bound",
+      "row_112_retrieval_snapshot_bound",
+      "row_113_retrieval_snapshot_bound",
+      "row_114_retrieval_snapshot_bound",
+      "row_115_retrieval_snapshot_bound",
+      "row_116_retrieval_snapshot_bound",
+      "row_117_retrieval_snapshot_bound",
+      "row_119_retrieval_snapshot_bound",
+      "row_11_retrieval_snapshot_bound",
+      "row_120_retrieval_snapshot_bound",
+      "row_121_retrieval_snapshot_bound",
+      "row_123_retrieval_snapshot_bound",
+      "row_124_retrieval_snapshot_bound",
+      "row_125_retrieval_snapshot_bound",
+      "row_126_retrieval_snapshot_bound",
+      "row_127_retrieval_snapshot_bound",
+      "row_129_retrieval_snapshot_bound",
+      "row_12_retrieval_snapshot_bound",
+      "row_130_retrieval_snapshot_bound",
+      "row_132_retrieval_snapshot_bound",
+      "row_134_retrieval_snapshot_bound",
+      "row_135_retrieval_snapshot_bound",
+      "row_136_retrieval_snapshot_bound",
+      "row_137_retrieval_snapshot_bound",
+      "row_138_retrieval_snapshot_bound",
+      "row_13_retrieval_snapshot_bound",
+      "row_140_retrieval_snapshot_bound",
+      "row_141_retrieval_snapshot_bound",
+      "row_142_retrieval_snapshot_bound",
+      "row_144_retrieval_snapshot_bound",
+      "row_145_retrieval_snapshot_bound",
+      "row_146_retrieval_snapshot_bound",
+      "row_147_retrieval_snapshot_bound",
+      "row_148_retrieval_snapshot_bound",
+      "row_149_retrieval_snapshot_bound",
+      "row_150_retrieval_snapshot_bound",
+      "row_151_retrieval_snapshot_bound",
+      "row_152_retrieval_snapshot_bound",
+      "row_153_retrieval_snapshot_bound",
+      "row_154_retrieval_snapshot_bound",
+      "row_155_retrieval_snapshot_bound",
+      "row_156_retrieval_snapshot_bound",
+      "row_158_retrieval_snapshot_bound",
+      "row_159_retrieval_snapshot_bound",
+      "row_15_retrieval_snapshot_bound",
+      "row_160_retrieval_snapshot_bound",
+      "row_161_retrieval_snapshot_bound",
+      "row_162_retrieval_snapshot_bound",
+      "row_163_retrieval_snapshot_bound",
+      "row_165_retrieval_snapshot_bound",
+      "row_166_retrieval_snapshot_bound",
+      "row_167_retrieval_snapshot_bound",
+      "row_169_retrieval_snapshot_bound",
+      "row_16_retrieval_snapshot_bound",
+      "row_170_retrieval_snapshot_bound",
+      "row_171_retrieval_snapshot_bound",
+      "row_172_retrieval_snapshot_bound",
+      "row_173_retrieval_snapshot_bound",
+      "row_174_retrieval_snapshot_bound",
+      "row_175_retrieval_snapshot_bound",
+      "row_176_retrieval_snapshot_bound",
+      "row_177_retrieval_snapshot_bound",
+      "row_178_retrieval_snapshot_bound",
+      "row_179_retrieval_snapshot_bound",
+      "row_17_retrieval_snapshot_bound",
+      "row_180_retrieval_snapshot_bound",
+      "row_181_retrieval_snapshot_bound",
+      "row_18_retrieval_snapshot_bound",
+      "row_20_retrieval_snapshot_bound",
+      "row_21_retrieval_snapshot_bound",
+      "row_24_retrieval_snapshot_bound",
+      "row_26_retrieval_snapshot_bound",
+      "row_27_retrieval_snapshot_bound",
+      "row_29_retrieval_snapshot_bound",
+      "row_2_retrieval_snapshot_bound",
+      "row_30_retrieval_snapshot_bound",
+      "row_31_retrieval_snapshot_bound",
+      "row_32_retrieval_snapshot_bound",
+      "row_34_retrieval_snapshot_bound",
+      "row_35_retrieval_snapshot_bound",
+      "row_36_retrieval_snapshot_bound",
+      "row_37_retrieval_snapshot_bound",
+      "row_38_retrieval_snapshot_bound",
+      "row_39_retrieval_snapshot_bound",
+      "row_3_retrieval_snapshot_bound",
+      "row_40_retrieval_snapshot_bound",
+      "row_42_retrieval_snapshot_bound",
+      "row_44_retrieval_snapshot_bound",
+      "row_45_retrieval_snapshot_bound",
+      "row_46_retrieval_snapshot_bound",
+      "row_47_retrieval_snapshot_bound",
+      "row_48_retrieval_snapshot_bound",
+      "row_49_retrieval_snapshot_bound",
+      "row_50_retrieval_snapshot_bound",
+      "row_52_retrieval_snapshot_bound",
+      "row_53_retrieval_snapshot_bound",
+      "row_54_retrieval_snapshot_bound",
+      "row_55_retrieval_snapshot_bound",
+      "row_57_retrieval_snapshot_bound",
+      "row_58_retrieval_snapshot_bound",
+      "row_5_retrieval_snapshot_bound",
+      "row_60_retrieval_snapshot_bound",
+      "row_64_retrieval_snapshot_bound",
+      "row_66_retrieval_snapshot_bound",
+      "row_68_retrieval_snapshot_bound",
+      "row_69_retrieval_snapshot_bound",
+      "row_6_retrieval_snapshot_bound",
+      "row_70_retrieval_snapshot_bound",
+      "row_71_retrieval_snapshot_bound",
+      "row_72_retrieval_snapshot_bound",
+      "row_73_retrieval_snapshot_bound",
+      "row_76_retrieval_snapshot_bound",
+      "row_77_retrieval_snapshot_bound",
+      "row_79_retrieval_snapshot_bound",
+      "row_80_retrieval_snapshot_bound",
+      "row_81_retrieval_snapshot_bound",
+      "row_83_retrieval_snapshot_bound",
+      "row_84_retrieval_snapshot_bound",
+      "row_85_retrieval_snapshot_bound",
+      "row_86_retrieval_snapshot_bound",
+      "row_87_retrieval_snapshot_bound",
+      "row_88_retrieval_snapshot_bound",
+      "row_89_retrieval_snapshot_bound",
+      "row_8_retrieval_snapshot_bound",
+      "row_90_retrieval_snapshot_bound",
+      "row_91_retrieval_snapshot_bound",
+      "row_93_retrieval_snapshot_bound",
+      "row_94_retrieval_snapshot_bound",
+      "row_95_retrieval_snapshot_bound",
+      "row_98_retrieval_snapshot_bound",
+      "row_99_retrieval_snapshot_bound",
+      "row_9_retrieval_snapshot_bound"
+    ],
+    "paper_blocker_failed_names": [
+      "app_revision_is_bound",
+      "external_freeze_inputs_present",
+      "multi_project_question_set_ready",
+      "independent_human_review_present",
+      "confirmatory_evidence_package_present"
+    ],
+    "paper_blockers_match": true
+  },
+  "paper_blocker_archive_mapping": [
+    {
+      "check_name": "report_scope_is_internal_only",
+      "archive_item": "范围声明（不属于八项最低清单）",
+      "requirement": "明确区分内部开发证据与确认性证据"
+    },
+    {
+      "check_name": "app_revision_is_bound",
+      "archive_item": "8. 版本归档",
+      "requirement": "代码 revision 与运行时版本可复核"
+    },
+    {
+      "check_name": "external_freeze_inputs_present",
+      "archive_item": "1. 数据绑定",
+      "requirement": "语料快照、文件清单与哈希齐备"
+    },
+    {
+      "check_name": "multi_project_question_set_ready",
+      "archive_item": "2. 问题集绑定",
+      "requirement": "至少 3 个项目、至少 60 题"
+    },
+    {
+      "check_name": "independent_human_review_present",
+      "archive_item": "6. 人工评价",
+      "requirement": "双人盲评、签核与一致性统计齐备"
+    },
+    {
+      "check_name": "confirmatory_evidence_package_present",
+      "archive_item": "4. 逐案例证据",
+      "requirement": "同批次 v1 证据包与逐案例证据齐备"
+    }
+  ],
+  "row_integrity": {
+    "expected_rows": 180,
+    "actual_rows": 180,
+    "unique_case_keys": 180,
+    "completed_rows": 180,
+    "failed_rows": 0,
+    "unique_positive_query_log_ids": true,
+    "question_indices_bound": true,
+    "question_texts_bound": true,
+    "repetition_indices_bound": true,
+    "methods_bound": true,
+    "runtime_bindings_bound": true,
+    "retrieval_bindings_bound": false,
+    "retrieval_binding_gaps": {
+      "pure_llm": {
+        "required_fields": [],
+        "row_count": 36,
+        "rows_with_complete_snapshot": 36,
+        "rows_with_any_gap": 0,
+        "missing_by_field": {},
+        "mismatch_by_field": {}
+      },
+      "bm25_rag": {
+        "required_fields": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "row_count": 36,
+        "rows_with_complete_snapshot": 0,
+        "rows_with_any_gap": 36,
+        "missing_by_field": {
+          "corpus_snapshot_hash": 36,
+          "retrieval_top_k": 36,
+          "collection_retrieval_top_k": 36,
+          "chunk_size": 36,
+          "chunk_overlap": 36
+        },
+        "mismatch_by_field": {
+          "corpus_snapshot_hash": 0,
+          "retrieval_top_k": 0,
+          "collection_retrieval_top_k": 0,
+          "chunk_size": 0,
+          "chunk_overlap": 0
+        }
+      },
+      "project_rag": {
+        "required_fields": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "row_count": 36,
+        "rows_with_complete_snapshot": 0,
+        "rows_with_any_gap": 36,
+        "missing_by_field": {
+          "embedding_model": 36,
+          "corpus_snapshot_hash": 36,
+          "retrieval_top_k": 36,
+          "collection_retrieval_top_k": 36,
+          "vector_candidate_k": 36,
+          "chunk_size": 36,
+          "chunk_overlap": 36
+        },
+        "mismatch_by_field": {
+          "embedding_model": 0,
+          "corpus_snapshot_hash": 0,
+          "retrieval_top_k": 0,
+          "collection_retrieval_top_k": 0,
+          "vector_candidate_k": 0,
+          "chunk_size": 0,
+          "chunk_overlap": 0
+        }
+      },
+      "structured_query": {
+        "required_fields": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "row_count": 36,
+        "rows_with_complete_snapshot": 0,
+        "rows_with_any_gap": 36,
+        "missing_by_field": {
+          "graph_schema_version": 36,
+          "graph_top_k": 36,
+          "graph_min_score": 36
+        },
+        "mismatch_by_field": {
+          "graph_schema_version": 0,
+          "graph_top_k": 0,
+          "graph_min_score": 0
+        }
+      },
+      "kg_enhanced_rag": {
+        "required_fields": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "row_count": 36,
+        "rows_with_complete_snapshot": 0,
+        "rows_with_any_gap": 36,
+        "missing_by_field": {
+          "embedding_model": 36,
+          "corpus_snapshot_hash": 36,
+          "retrieval_top_k": 36,
+          "collection_retrieval_top_k": 36,
+          "vector_candidate_k": 36,
+          "graph_top_k": 36,
+          "chunk_size": 36,
+          "chunk_overlap": 36,
+          "graph_min_score": 36
+        },
+        "mismatch_by_field": {
+          "embedding_model": 0,
+          "corpus_snapshot_hash": 0,
+          "retrieval_top_k": 0,
+          "collection_retrieval_top_k": 0,
+          "vector_candidate_k": 0,
+          "graph_top_k": 0,
+          "chunk_size": 0,
+          "chunk_overlap": 0,
+          "graph_min_score": 0
+        }
+      }
+    },
+    "retrieval_gap_summary_violations": [],
+    "case_key_domain_valid": true,
+    "source_json_valid_rows": 180,
+    "graph_json_valid_rows": 180,
+    "ok": false
+  },
+  "citation_audit": {
+    "completed_answer_count": 180,
+    "answers_with_source_marker": 90,
+    "answers_with_any_evidence_marker": 140,
+    "kg_answers_with_graph_context": 36,
+    "kg_answers_with_graph_marker": 36,
+    "invalid_marker_rows": [
+      {
+        "row": 6,
+        "question_index": 4,
+        "question_id": "H04",
+        "mode": "bm25_rag",
+        "repetition_index": 1,
+        "query_log_id": 128,
+        "markers": [
+          "[S1-S12]"
+        ],
+        "source_count": 12,
+        "graph_hit_count": 0
+      },
+      {
+        "row": 50,
+        "question_index": 4,
+        "question_id": "H04",
+        "mode": "bm25_rag",
+        "repetition_index": 3,
+        "query_log_id": 172,
+        "markers": [
+          "[S1-S12]"
+        ],
+        "source_count": 12,
+        "graph_hit_count": 0
+      },
+      {
+        "row": 69,
+        "question_index": 3,
+        "question_id": "H03",
+        "mode": "bm25_rag",
+        "repetition_index": 2,
+        "query_log_id": 191,
+        "markers": [
+          "[S6-S12]"
+        ],
+        "source_count": 12,
+        "graph_hit_count": 0
+      },
+      {
+        "row": 151,
+        "question_index": 4,
+        "question_id": "H04",
+        "mode": "bm25_rag",
+        "repetition_index": 2,
+        "query_log_id": 273,
+        "markers": [
+          "[S1-S12]"
+        ],
+        "source_count": 12,
+        "graph_hit_count": 0
+      }
+    ],
+    "out_of_range_marker_rows": [],
+    "reported_audit_mismatch": true,
+    "reported_summary_mismatches": [
+      {
+        "field": "all_citation_indices_in_range",
+        "recomputed": false,
+        "reported": true
+      },
+      {
+        "mode": "bm25_rag",
+        "field": "invalid_marker_rows",
+        "recomputed": 4,
+        "reported": 0
+      },
+      {
+        "mode": "bm25_rag",
+        "field": "invalid_source_marker_rows",
+        "recomputed": 4,
+        "reported": 0
+      }
+    ],
+    "by_mode": {
+      "pure_llm": {
+        "completed": 36,
+        "with_source_marker": 0,
+        "with_graph_marker": 0,
+        "with_any_evidence_marker": 0,
+        "invalid_marker_rows": 0,
+        "invalid_source_marker_rows": 0,
+        "invalid_graph_marker_rows": 0,
+        "source_marker_answer_rate": 0.0,
+        "graph_marker_answer_rate": 0.0,
+        "evidence_marker_answer_rate": 0.0
+      },
+      "bm25_rag": {
+        "completed": 36,
+        "with_source_marker": 32,
+        "with_graph_marker": 0,
+        "with_any_evidence_marker": 32,
+        "invalid_marker_rows": 4,
+        "invalid_source_marker_rows": 4,
+        "invalid_graph_marker_rows": 0,
+        "source_marker_answer_rate": 0.8889,
+        "graph_marker_answer_rate": 0.0,
+        "evidence_marker_answer_rate": 0.8889
+      },
+      "project_rag": {
+        "completed": 36,
+        "with_source_marker": 36,
+        "with_graph_marker": 0,
+        "with_any_evidence_marker": 36,
+        "invalid_marker_rows": 0,
+        "invalid_source_marker_rows": 0,
+        "invalid_graph_marker_rows": 0,
+        "source_marker_answer_rate": 1.0,
+        "graph_marker_answer_rate": 0.0,
+        "evidence_marker_answer_rate": 1.0
+      },
+      "structured_query": {
+        "completed": 36,
+        "with_source_marker": 0,
+        "with_graph_marker": 36,
+        "with_any_evidence_marker": 36,
+        "invalid_marker_rows": 0,
+        "invalid_source_marker_rows": 0,
+        "invalid_graph_marker_rows": 0,
+        "source_marker_answer_rate": 0.0,
+        "graph_marker_answer_rate": 1.0,
+        "evidence_marker_answer_rate": 1.0
+      },
+      "kg_enhanced_rag": {
+        "completed": 36,
+        "with_source_marker": 22,
+        "with_graph_marker": 36,
+        "with_any_evidence_marker": 36,
+        "invalid_marker_rows": 0,
+        "invalid_source_marker_rows": 0,
+        "invalid_graph_marker_rows": 0,
+        "source_marker_answer_rate": 0.6111,
+        "graph_marker_answer_rate": 1.0,
+        "evidence_marker_answer_rate": 1.0
+      }
+    },
+    "strict_source_marker_answer_rate": 0.5,
+    "strict_evidence_marker_answer_rate": 0.7778,
+    "kg_graph_marker_rate_when_context_available": 1.0,
+    "all_strict_citation_indices_in_range": false
+  },
+  "recomputed_mode_summary": [
+    {
+      "mode": "pure_llm",
+      "completed": 36,
+      "failed": 0,
+      "hit_facts": 0,
+      "total_facts": 96,
+      "micro_fact_coverage": 0.0,
+      "macro_fact_coverage": 0.0,
+      "forbidden_fact_hits": 0,
+      "closed_set_fact_precision": 0.0,
+      "closed_set_fact_f1": 0.0,
+      "closed_set_exact_correct_cases": 0,
+      "closed_set_exact_case_accuracy": 0.0,
+      "avg_source_count": 0.0,
+      "avg_graph_hit_count": 0.0,
+      "mean_response_ms": 1831.69,
+      "p95_response_ms": 2493,
+      "prompt_tokens": 2124,
+      "completion_tokens": 2256,
+      "total_tokens": 4380
+    },
+    {
+      "mode": "bm25_rag",
+      "completed": 36,
+      "failed": 0,
+      "hit_facts": 41,
+      "total_facts": 96,
+      "micro_fact_coverage": 0.4271,
+      "macro_fact_coverage": 0.3722,
+      "forbidden_fact_hits": 8,
+      "closed_set_fact_precision": 0.8367,
+      "closed_set_fact_f1": 0.5655,
+      "closed_set_exact_correct_cases": 8,
+      "closed_set_exact_case_accuracy": 0.2222,
+      "avg_source_count": 11.0,
+      "avg_graph_hit_count": 0.0,
+      "mean_response_ms": 3803.61,
+      "p95_response_ms": 5278,
+      "prompt_tokens": 97731,
+      "completion_tokens": 4412,
+      "total_tokens": 102143
+    },
+    {
+      "mode": "project_rag",
+      "completed": 36,
+      "failed": 0,
+      "hit_facts": 29,
+      "total_facts": 96,
+      "micro_fact_coverage": 0.3021,
+      "macro_fact_coverage": 0.2889,
+      "forbidden_fact_hits": 3,
+      "closed_set_fact_precision": 0.9062,
+      "closed_set_fact_f1": 0.4531,
+      "closed_set_exact_correct_cases": 3,
+      "closed_set_exact_case_accuracy": 0.0833,
+      "avg_source_count": 11.0,
+      "avg_graph_hit_count": 0.0,
+      "mean_response_ms": 2058.39,
+      "p95_response_ms": 2810,
+      "prompt_tokens": 120966,
+      "completion_tokens": 4089,
+      "total_tokens": 125055
+    },
+    {
+      "mode": "structured_query",
+      "completed": 36,
+      "failed": 0,
+      "hit_facts": 87,
+      "total_facts": 96,
+      "micro_fact_coverage": 0.9062,
+      "macro_fact_coverage": 0.95,
+      "forbidden_fact_hits": 27,
+      "closed_set_fact_precision": 0.7632,
+      "closed_set_fact_f1": 0.8286,
+      "closed_set_exact_correct_cases": 24,
+      "closed_set_exact_case_accuracy": 0.6667,
+      "avg_source_count": 0.0,
+      "avg_graph_hit_count": 22.6667,
+      "mean_response_ms": 8.56,
+      "p95_response_ms": 13,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0
+    },
+    {
+      "mode": "kg_enhanced_rag",
+      "completed": 36,
+      "failed": 0,
+      "hit_facts": 87,
+      "total_facts": 96,
+      "micro_fact_coverage": 0.9062,
+      "macro_fact_coverage": 0.9278,
+      "forbidden_fact_hits": 0,
+      "closed_set_fact_precision": 1.0,
+      "closed_set_fact_f1": 0.9508,
+      "closed_set_exact_correct_cases": 30,
+      "closed_set_exact_case_accuracy": 0.8333,
+      "avg_source_count": 11.0,
+      "avg_graph_hit_count": 22.6667,
+      "mean_response_ms": 3061.56,
+      "p95_response_ms": 5289,
+      "prompt_tokens": 162834,
+      "completion_tokens": 4625,
+      "total_tokens": 167459
+    }
+  ],
+  "recomputed_comparisons_vs_project_rag": {
+    "pure_llm": {
+      "paired_case_count": 36,
+      "mean_fact_coverage_delta": -0.2889,
+      "improved_cases": 0,
+      "tied_cases": 19,
+      "worse_cases": 17,
+      "coverage_sign_test_two_sided_p": 1.5e-05,
+      "comparison_exact_only_cases": 0,
+      "project_exact_only_cases": 3,
+      "mcnemar_exact_two_sided_p": 0.25,
+      "mean_response_time_delta_ms": -226.69
+    },
+    "bm25_rag": {
+      "paired_case_count": 36,
+      "mean_fact_coverage_delta": 0.0833,
+      "improved_cases": 6,
+      "tied_cases": 26,
+      "worse_cases": 4,
+      "coverage_sign_test_two_sided_p": 0.753906,
+      "comparison_exact_only_cases": 6,
+      "project_exact_only_cases": 1,
+      "mcnemar_exact_two_sided_p": 0.125,
+      "mean_response_time_delta_ms": 1745.22
+    },
+    "structured_query": {
+      "paired_case_count": 36,
+      "mean_fact_coverage_delta": 0.6611,
+      "improved_cases": 30,
+      "tied_cases": 3,
+      "worse_cases": 3,
+      "coverage_sign_test_two_sided_p": 1e-06,
+      "comparison_exact_only_cases": 21,
+      "project_exact_only_cases": 0,
+      "mcnemar_exact_two_sided_p": 1e-06,
+      "mean_response_time_delta_ms": -2049.83
+    },
+    "kg_enhanced_rag": {
+      "paired_case_count": 36,
+      "mean_fact_coverage_delta": 0.6389,
+      "improved_cases": 27,
+      "tied_cases": 9,
+      "worse_cases": 0,
+      "coverage_sign_test_two_sided_p": 0.0,
+      "comparison_exact_only_cases": 27,
+      "project_exact_only_cases": 0,
+      "mcnemar_exact_two_sided_p": 0.0,
+      "mean_response_time_delta_ms": 1003.17
+    }
+  },
+  "validation_snapshot": {
+    "present": true,
+    "path": "data/real/experiment-5/internal-five-mode-validation.json",
+    "warning_count": 4
+  },
+  "checks": [
+    {
+      "name": "question_set_sha256",
+      "passed": true,
+      "severity": "required",
+      "actual": "ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889",
+      "expected": "ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889"
+    },
+    {
+      "name": "question_count_matches_freeze",
+      "passed": true,
+      "severity": "required",
+      "actual": 12,
+      "expected": 12
+    },
+    {
+      "name": "selected_question_ids_match",
+      "passed": true,
+      "severity": "required",
+      "actual": [
+        "H01",
+        "H02",
+        "H03",
+        "H04",
+        "H05",
+        "H06",
+        "H07",
+        "H08",
+        "H09",
+        "H10",
+        "H11",
+        "H12"
+      ],
+      "expected": [
+        "H01",
+        "H02",
+        "H03",
+        "H04",
+        "H05",
+        "H06",
+        "H07",
+        "H08",
+        "H09",
+        "H10",
+        "H11",
+        "H12"
+      ]
+    },
+    {
+      "name": "gold_fact_count_matches_freeze",
+      "passed": true,
+      "severity": "required",
+      "actual": 32,
+      "expected": 32
+    },
+    {
+      "name": "method_order_matches_run_config",
+      "passed": true,
+      "severity": "required",
+      "actual": [
+        "pure_llm",
+        "bm25_rag",
+        "project_rag",
+        "structured_query",
+        "kg_enhanced_rag"
+      ],
+      "expected": [
+        "pure_llm",
+        "bm25_rag",
+        "project_rag",
+        "structured_query",
+        "kg_enhanced_rag"
+      ]
+    },
+    {
+      "name": "repetition_count_matches",
+      "passed": true,
+      "severity": "required",
+      "actual": 3,
+      "expected": 3
+    },
+    {
+      "name": "random_seed_matches",
+      "passed": true,
+      "severity": "required",
+      "actual": 20260713,
+      "expected": 20260713
+    },
+    {
+      "name": "generation.provider_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": "deepseek",
+      "expected": "deepseek"
+    },
+    {
+      "name": "generation.model_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": "deepseek-v4-flash",
+      "expected": "deepseek-v4-flash"
+    },
+    {
+      "name": "generation.temperature_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 0.1,
+      "expected": 0.1
+    },
+    {
+      "name": "generation.max_tokens_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 1800,
+      "expected": 1800
+    },
+    {
+      "name": "retrieval.chunk_size_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 700,
+      "expected": 700
+    },
+    {
+      "name": "retrieval.chunk_overlap_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 120,
+      "expected": 120
+    },
+    {
+      "name": "retrieval.retrieval_top_k_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 6,
+      "expected": 6
+    },
+    {
+      "name": "retrieval.collection_retrieval_top_k_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 12,
+      "expected": 12
+    },
+    {
+      "name": "retrieval.vector_candidate_k_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 30,
+      "expected": 30
+    },
+    {
+      "name": "retrieval.graph_top_k_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 10,
+      "expected": 10
+    },
+    {
+      "name": "retrieval.graph_min_score_matches_snapshot",
+      "passed": true,
+      "severity": "required",
+      "actual": 1.0,
+      "expected": 1.0
+    },
+    {
+      "name": "input_freeze_manifest_verifies",
+      "passed": false,
+      "severity": "required",
+      "actual": false,
+      "expected": true
+    },
+    {
+      "name": "row_2_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_3_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_5_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_6_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_8_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_9_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_10_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_11_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_12_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_13_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_15_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_16_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_17_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_18_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_20_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_21_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_24_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_26_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_27_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_29_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_30_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_31_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_32_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_34_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_35_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_36_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_37_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_38_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_39_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_40_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_42_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_44_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_45_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_46_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_47_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_48_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_49_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_50_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_52_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_53_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_54_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_55_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_57_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_58_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_60_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_64_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_66_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_68_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_69_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_70_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_71_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_72_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_73_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_76_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_77_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_79_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_80_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_81_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_83_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_84_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_85_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_86_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_87_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_88_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_89_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_90_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_91_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_93_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_94_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_95_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_98_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_99_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_100_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_101_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_102_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_103_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_104_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_105_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_106_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_107_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_108_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_109_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_110_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_111_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_112_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_113_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_114_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_115_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_116_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_117_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_119_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_120_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_121_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_123_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_124_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_125_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_126_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_127_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_129_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_130_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_132_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_134_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_135_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_136_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_137_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_138_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_140_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_141_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_142_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_144_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_145_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_146_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_147_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_148_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_149_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_150_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_151_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_152_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_153_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_154_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_155_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_156_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_158_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_159_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_160_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_161_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_162_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_163_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_165_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_166_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_167_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_169_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_170_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_171_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_172_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_173_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_174_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "graph_schema_version",
+          "graph_top_k",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "graph_schema_version": "kg-v3-numbered-list-expansion",
+        "graph_top_k": 10,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_175_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_176_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_177_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_178_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "chunk_size",
+          "chunk_overlap"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "chunk_size": 700,
+        "chunk_overlap": 120
+      }
+    },
+    {
+      "name": "row_179_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_180_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "row_181_retrieval_snapshot_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "missing": [
+          "embedding_model",
+          "corpus_snapshot_hash",
+          "retrieval_top_k",
+          "collection_retrieval_top_k",
+          "vector_candidate_k",
+          "graph_top_k",
+          "chunk_size",
+          "chunk_overlap",
+          "graph_min_score"
+        ],
+        "mismatches": []
+      },
+      "expected": {
+        "embedding_model": "BAAI/bge-small-zh-v1.5",
+        "corpus_snapshot_hash": "2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9",
+        "retrieval_top_k": 6,
+        "collection_retrieval_top_k": 12,
+        "vector_candidate_k": 30,
+        "graph_top_k": 10,
+        "chunk_size": 700,
+        "chunk_overlap": 120,
+        "graph_min_score": 1.0
+      }
+    },
+    {
+      "name": "csv_question_indices_bound",
+      "passed": true,
+      "severity": "required",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "csv_question_texts_bound",
+      "passed": true,
+      "severity": "required",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "csv_repetition_indices_bound",
+      "passed": true,
+      "severity": "required",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "csv_methods_bound",
+      "passed": true,
+      "severity": "required",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "csv_runtime_bindings_bound",
+      "passed": true,
+      "severity": "required",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "csv_retrieval_bindings_bound",
+      "passed": false,
+      "severity": "required",
+      "actual": false,
+      "expected": true
+    },
+    {
+      "name": "retrieval_gap_summary_valid",
+      "passed": true,
+      "severity": "required",
+      "actual": [],
+      "expected": "canonical fields, bounded counts, and complete/any-gap partition"
+    },
+    {
+      "name": "csv_case_key_domain_valid",
+      "passed": true,
+      "severity": "required",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "csv_row_integrity",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "expected_rows": 180,
+        "actual_rows": 180,
+        "unique_case_keys": 180,
+        "completed_rows": 180,
+        "failed_rows": 0,
+        "unique_positive_query_log_ids": true,
+        "question_indices_bound": true,
+        "question_texts_bound": true,
+        "repetition_indices_bound": true,
+        "methods_bound": true,
+        "runtime_bindings_bound": true,
+        "retrieval_bindings_bound": false,
+        "retrieval_binding_gaps": {
+          "pure_llm": {
+            "required_fields": [],
+            "row_count": 36,
+            "rows_with_complete_snapshot": 36,
+            "rows_with_any_gap": 0,
+            "missing_by_field": {},
+            "mismatch_by_field": {}
+          },
+          "bm25_rag": {
+            "required_fields": [
+              "corpus_snapshot_hash",
+              "retrieval_top_k",
+              "collection_retrieval_top_k",
+              "chunk_size",
+              "chunk_overlap"
+            ],
+            "row_count": 36,
+            "rows_with_complete_snapshot": 0,
+            "rows_with_any_gap": 36,
+            "missing_by_field": {
+              "corpus_snapshot_hash": 36,
+              "retrieval_top_k": 36,
+              "collection_retrieval_top_k": 36,
+              "chunk_size": 36,
+              "chunk_overlap": 36
+            },
+            "mismatch_by_field": {
+              "corpus_snapshot_hash": 0,
+              "retrieval_top_k": 0,
+              "collection_retrieval_top_k": 0,
+              "chunk_size": 0,
+              "chunk_overlap": 0
+            }
+          },
+          "project_rag": {
+            "required_fields": [
+              "embedding_model",
+              "corpus_snapshot_hash",
+              "retrieval_top_k",
+              "collection_retrieval_top_k",
+              "vector_candidate_k",
+              "chunk_size",
+              "chunk_overlap"
+            ],
+            "row_count": 36,
+            "rows_with_complete_snapshot": 0,
+            "rows_with_any_gap": 36,
+            "missing_by_field": {
+              "embedding_model": 36,
+              "corpus_snapshot_hash": 36,
+              "retrieval_top_k": 36,
+              "collection_retrieval_top_k": 36,
+              "vector_candidate_k": 36,
+              "chunk_size": 36,
+              "chunk_overlap": 36
+            },
+            "mismatch_by_field": {
+              "embedding_model": 0,
+              "corpus_snapshot_hash": 0,
+              "retrieval_top_k": 0,
+              "collection_retrieval_top_k": 0,
+              "vector_candidate_k": 0,
+              "chunk_size": 0,
+              "chunk_overlap": 0
+            }
+          },
+          "structured_query": {
+            "required_fields": [
+              "graph_schema_version",
+              "graph_top_k",
+              "graph_min_score"
+            ],
+            "row_count": 36,
+            "rows_with_complete_snapshot": 0,
+            "rows_with_any_gap": 36,
+            "missing_by_field": {
+              "graph_schema_version": 36,
+              "graph_top_k": 36,
+              "graph_min_score": 36
+            },
+            "mismatch_by_field": {
+              "graph_schema_version": 0,
+              "graph_top_k": 0,
+              "graph_min_score": 0
+            }
+          },
+          "kg_enhanced_rag": {
+            "required_fields": [
+              "embedding_model",
+              "corpus_snapshot_hash",
+              "retrieval_top_k",
+              "collection_retrieval_top_k",
+              "vector_candidate_k",
+              "graph_top_k",
+              "chunk_size",
+              "chunk_overlap",
+              "graph_min_score"
+            ],
+            "row_count": 36,
+            "rows_with_complete_snapshot": 0,
+            "rows_with_any_gap": 36,
+            "missing_by_field": {
+              "embedding_model": 36,
+              "corpus_snapshot_hash": 36,
+              "retrieval_top_k": 36,
+              "collection_retrieval_top_k": 36,
+              "vector_candidate_k": 36,
+              "graph_top_k": 36,
+              "chunk_size": 36,
+              "chunk_overlap": 36,
+              "graph_min_score": 36
+            },
+            "mismatch_by_field": {
+              "embedding_model": 0,
+              "corpus_snapshot_hash": 0,
+              "retrieval_top_k": 0,
+              "collection_retrieval_top_k": 0,
+              "vector_candidate_k": 0,
+              "graph_top_k": 0,
+              "chunk_size": 0,
+              "chunk_overlap": 0,
+              "graph_min_score": 0
+            }
+          }
+        },
+        "retrieval_gap_summary_violations": [],
+        "case_key_domain_valid": true,
+        "source_json_valid_rows": 180,
+        "graph_json_valid_rows": 180,
+        "ok": false
+      },
+      "expected": "complete unique planned rows"
+    },
+    {
+      "name": "mode_summary_recomputed_matches_report",
+      "passed": true,
+      "severity": "required",
+      "actual": [],
+      "expected": "all mode summary fields match recomputation"
+    },
+    {
+      "name": "paired_comparisons_recomputed_match_report",
+      "passed": true,
+      "severity": "required",
+      "actual": [],
+      "expected": "paired comparison fields match recomputation"
+    },
+    {
+      "name": "citation_audit_recomputed_matches_report",
+      "passed": false,
+      "severity": "required",
+      "actual": {
+        "recomputed": {
+          "completed_answer_count": 180,
+          "answers_with_source_marker": 90,
+          "answers_with_any_evidence_marker": 140,
+          "kg_answers_with_graph_context": 36,
+          "kg_answers_with_graph_marker": 36,
+          "invalid_marker_rows": [
+            {
+              "row": 6,
+              "question_index": 4,
+              "question_id": "H04",
+              "mode": "bm25_rag",
+              "repetition_index": 1,
+              "query_log_id": 128,
+              "markers": [
+                "[S1-S12]"
+              ],
+              "source_count": 12,
+              "graph_hit_count": 0
+            },
+            {
+              "row": 50,
+              "question_index": 4,
+              "question_id": "H04",
+              "mode": "bm25_rag",
+              "repetition_index": 3,
+              "query_log_id": 172,
+              "markers": [
+                "[S1-S12]"
+              ],
+              "source_count": 12,
+              "graph_hit_count": 0
+            },
+            {
+              "row": 69,
+              "question_index": 3,
+              "question_id": "H03",
+              "mode": "bm25_rag",
+              "repetition_index": 2,
+              "query_log_id": 191,
+              "markers": [
+                "[S6-S12]"
+              ],
+              "source_count": 12,
+              "graph_hit_count": 0
+            },
+            {
+              "row": 151,
+              "question_index": 4,
+              "question_id": "H04",
+              "mode": "bm25_rag",
+              "repetition_index": 2,
+              "query_log_id": 273,
+              "markers": [
+                "[S1-S12]"
+              ],
+              "source_count": 12,
+              "graph_hit_count": 0
+            }
+          ],
+          "out_of_range_marker_rows": [],
+          "reported_audit_mismatch": true,
+          "reported_summary_mismatches": [
+            {
+              "field": "all_citation_indices_in_range",
+              "recomputed": false,
+              "reported": true
+            },
+            {
+              "mode": "bm25_rag",
+              "field": "invalid_marker_rows",
+              "recomputed": 4,
+              "reported": 0
+            },
+            {
+              "mode": "bm25_rag",
+              "field": "invalid_source_marker_rows",
+              "recomputed": 4,
+              "reported": 0
+            }
+          ],
+          "by_mode": {
+            "pure_llm": {
+              "completed": 36,
+              "with_source_marker": 0,
+              "with_graph_marker": 0,
+              "with_any_evidence_marker": 0,
+              "invalid_marker_rows": 0,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.0,
+              "graph_marker_answer_rate": 0.0,
+              "evidence_marker_answer_rate": 0.0
+            },
+            "bm25_rag": {
+              "completed": 36,
+              "with_source_marker": 32,
+              "with_graph_marker": 0,
+              "with_any_evidence_marker": 32,
+              "invalid_marker_rows": 4,
+              "invalid_source_marker_rows": 4,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.8889,
+              "graph_marker_answer_rate": 0.0,
+              "evidence_marker_answer_rate": 0.8889
+            },
+            "project_rag": {
+              "completed": 36,
+              "with_source_marker": 36,
+              "with_graph_marker": 0,
+              "with_any_evidence_marker": 36,
+              "invalid_marker_rows": 0,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 1.0,
+              "graph_marker_answer_rate": 0.0,
+              "evidence_marker_answer_rate": 1.0
+            },
+            "structured_query": {
+              "completed": 36,
+              "with_source_marker": 0,
+              "with_graph_marker": 36,
+              "with_any_evidence_marker": 36,
+              "invalid_marker_rows": 0,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.0,
+              "graph_marker_answer_rate": 1.0,
+              "evidence_marker_answer_rate": 1.0
+            },
+            "kg_enhanced_rag": {
+              "completed": 36,
+              "with_source_marker": 22,
+              "with_graph_marker": 36,
+              "with_any_evidence_marker": 36,
+              "invalid_marker_rows": 0,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.6111,
+              "graph_marker_answer_rate": 1.0,
+              "evidence_marker_answer_rate": 1.0
+            }
+          },
+          "strict_source_marker_answer_rate": 0.5,
+          "strict_evidence_marker_answer_rate": 0.7778,
+          "kg_graph_marker_rate_when_context_available": 1.0,
+          "all_strict_citation_indices_in_range": false
+        },
+        "reported": {
+          "completed_answer_count": 180,
+          "answers_with_source_marker": 90,
+          "answers_with_any_evidence_marker": 140,
+          "kg_answers_with_graph_context": 36,
+          "kg_answers_with_graph_marker": 36,
+          "invalid_source_marker_rows": [],
+          "invalid_graph_marker_rows": [],
+          "source_marker_answer_rate": 0.5,
+          "evidence_marker_answer_rate": 0.7778,
+          "kg_graph_marker_rate_when_context_available": 1.0,
+          "all_citation_indices_in_range": true,
+          "by_mode": {
+            "structured_query": {
+              "completed": 36,
+              "with_source_marker": 0,
+              "with_graph_marker": 36,
+              "with_any_evidence_marker": 36,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.0,
+              "graph_marker_answer_rate": 1.0,
+              "evidence_marker_answer_rate": 1.0
+            },
+            "bm25_rag": {
+              "completed": 36,
+              "with_source_marker": 32,
+              "with_graph_marker": 0,
+              "with_any_evidence_marker": 32,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.8889,
+              "graph_marker_answer_rate": 0.0,
+              "evidence_marker_answer_rate": 0.8889
+            },
+            "pure_llm": {
+              "completed": 36,
+              "with_source_marker": 0,
+              "with_graph_marker": 0,
+              "with_any_evidence_marker": 0,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.0,
+              "graph_marker_answer_rate": 0.0,
+              "evidence_marker_answer_rate": 0.0
+            },
+            "kg_enhanced_rag": {
+              "completed": 36,
+              "with_source_marker": 22,
+              "with_graph_marker": 36,
+              "with_any_evidence_marker": 36,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 0.6111,
+              "graph_marker_answer_rate": 1.0,
+              "evidence_marker_answer_rate": 1.0
+            },
+            "project_rag": {
+              "completed": 36,
+              "with_source_marker": 36,
+              "with_graph_marker": 0,
+              "with_any_evidence_marker": 36,
+              "invalid_source_marker_rows": 0,
+              "invalid_graph_marker_rows": 0,
+              "source_marker_answer_rate": 1.0,
+              "graph_marker_answer_rate": 0.0,
+              "evidence_marker_answer_rate": 1.0
+            }
+          }
+        }
+      },
+      "expected": "matching strict citation audit"
+    },
+    {
+      "name": "report_scope_is_internal_only",
+      "passed": true,
+      "severity": "paper_blocker",
+      "actual": "internal development evidence; not an independent blind evaluation",
+      "expected": "confirmatory evidence"
+    },
+    {
+      "name": "app_revision_is_bound",
+      "passed": false,
+      "severity": "paper_blocker",
+      "actual": "unversioned",
+      "expected": "versioned revision"
+    },
+    {
+      "name": "external_freeze_inputs_present",
+      "passed": false,
+      "severity": "paper_blocker",
+      "actual": [
+        "data/real/experiment-5/corpus-manifest.json",
+        "data/real/experiment-5/questions.json",
+        "data/real/experiment-5/gold-facts.json"
+      ],
+      "expected": "all blocking inputs present"
+    },
+    {
+      "name": "multi_project_question_set_ready",
+      "passed": false,
+      "severity": "paper_blocker",
+      "actual": {
+        "project_count": 1,
+        "question_count": 12
+      },
+      "expected": {
+        "project_count": ">=3",
+        "question_count": ">=60"
+      }
+    },
+    {
+      "name": "independent_human_review_present",
+      "passed": false,
+      "severity": "paper_blocker",
+      "actual": {
+        "filled_fields": 0,
+        "rows": 180
+      },
+      "expected": "two independent signed reviews"
+    },
+    {
+      "name": "confirmatory_evidence_package_present",
+      "passed": false,
+      "severity": "paper_blocker",
+      "actual": "internal CSV/report only",
+      "expected": "rag-evidence-package-v1"
+    },
+    {
+      "name": "paper_gate_consistent",
+      "passed": true,
+      "severity": "required",
+      "actual": {
+        "consistency_passed": false,
+        "paper_ready": false,
+        "paper_blockers": [
+          "app_revision_is_bound",
+          "external_freeze_inputs_present",
+          "multi_project_question_set_ready",
+          "independent_human_review_present",
+          "confirmatory_evidence_package_present"
+        ]
+      },
+      "expected": "top-level paper gate fields match severity-derived checks"
+    }
+  ]
+}

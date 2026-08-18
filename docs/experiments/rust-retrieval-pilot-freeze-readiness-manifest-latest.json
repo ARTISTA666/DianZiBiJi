@@ -1,0 +1,106 @@
+{
+  "files": [
+    {
+      "path": "docs/experiments/rust-retrieval-pilot-protocol-v1.md",
+      "sha256": "6e13652df8bedd175a5a7bd00b0600fcfb70132d20a9b2386a86a89df46b3c25",
+      "status": "PASS"
+    },
+    {
+      "path": "data/real/GSE111619/gse111619_questions.json",
+      "sha256": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a",
+      "status": "PASS"
+    },
+    {
+      "path": "scripts/evaluate_rust_retrieval.py",
+      "sha256": "2c3a54a03d19c9f20fcae6681e6e68d9e0f3ea7bee0fcad3627701b23b3418d4",
+      "status": "PASS"
+    },
+    {
+      "path": "scripts/test_evaluate_rust_retrieval.py",
+      "sha256": "af57548585547c049ba2625ab8a141601900f97c0f96c8b48b8399c6bafdab4f",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/openapi.json",
+      "sha256": "1d7a418a2e9a450c864a28b92079eb166c15f24794873d1e83801094a0421be7",
+      "status": "PASS"
+    },
+    {
+      "path": "docs/system-evidence/rust-runtime-contract-latest.json",
+      "sha256": "58d2d9956302864d886c9fb7d4c2d4296c7216bcff98509d38b0d7c8f45b3e51",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/src/rag.rs",
+      "sha256": "504bec58f7471eb4295f1e7e4c627daaf050a76739b875cf565074a8210e5246",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/src/api/rag.rs",
+      "sha256": "f777ae878bb69ea300b1fc6d5ddc8c28a84a2d181a4d14e1d63188ef7ae8308d",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/src/api/mod.rs",
+      "sha256": "0b41f2e354c2b6b93cc0ce77c18d4c645d5b7b2709470426d426c4eac5d06cbb",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/src/models.rs",
+      "sha256": "684541c2f64e033b060d9e0f5bcd3e7a39cc9d96dfe43f549fb7a0529ad18587",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/src/state.rs",
+      "sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/src/embedding.rs",
+      "sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/rust-toolchain.toml",
+      "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "status": "PASS"
+    },
+    {
+      "path": "backend/Cargo.lock",
+      "sha256": "a3bbafd245dfb3970439b5f19f63b5a4aafe5e770e82c50351ca4478a0f73704",
+      "status": "PASS"
+    },
+    {
+      "path": "frontend/src/lib/api-schema.d.ts",
+      "sha256": "345e6b43f394c664e39cb9eb85c59a26dc4a16a8ce1c509700380b0cea5f05aa",
+      "status": "PASS"
+    },
+    {
+      "path": "frontend/src/lib/api.ts",
+      "sha256": "f51f3b6c1bba0268a198fad5fadb7a115269f1f8e28adea7aee7d322b30d53fa",
+      "status": "PASS"
+    },
+    {
+      "path": "scripts/evaluate_retrieval.py",
+      "sha256": "ee628b3d2dfcf5b39fa951326e245c50935588cf1c3109be2f1f26e998db14ca",
+      "status": "PASS"
+    },
+    {
+      "path": "scripts/freeze_system_evidence.py",
+      "sha256": "8968ba99bdbe2f818bedecaddef6ee02bf8fe24e6ef4d4af299bd4c556d2a4b8",
+      "status": "PASS"
+    }
+  ],
+  "freeze_requirements_complete": false,
+  "generated_at": "2026-08-13T05:39:55.531929+00:00",
+  "generator": "freeze_system_evidence.py",
+  "generator_version": 1,
+  "input_failures": [],
+  "lifecycle": "NOT_FROZEN",
+  "local_manifest_inputs_complete": true,
+  "overall_verdict": "BLOCKED",
+  "preflight_path": "docs/experiments/rust-retrieval-pilot-freeze-readiness-latest.json",
+  "preflight_sha256": "e77bc3ff71a0bbff3c68e0772f84cbd7a54eaa60d1170ea2d3099cb94e25ff7b",
+  "schema": "full-system.rust-retrieval-pilot-freeze-readiness-manifest",
+  "schema_version": 1
+}
