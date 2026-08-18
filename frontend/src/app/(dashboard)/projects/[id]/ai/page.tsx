@@ -13,7 +13,8 @@ import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { ErrorBanner } from "@/components/shared/error-banner";
-import { CitationRichText, RagAnswerBlock, ragModeText, type RagSource, type RagGraphContextItem } from "@/lib/citations";
+import { CitationRichText, RagAnswerBlock, ragModeText } from "@/lib/citations";
+import { exportConversation, suggestFollowUps } from "@/lib/ai-conversation";
 import { submitQueryLogFeedback } from "@/lib/api";
 
 const modes = [
@@ -24,62 +25,6 @@ const modes = [
   { value: "pure_llm", label: "纯 LLM", desc: "不检索资料库，直接由大模型回答，适合通用知识问题" },
   { value: "bm25_rag", label: "BM25 RAG", desc: "仅使用关键词匹配检索，适合术语精确查找（如特定基因名、试剂名）" },
 ] as const;
-
-/** 根据回答中的来源和图谱上下文，生成 2-3 个追问建议。 */
-function suggestFollowUps(
-  lastQuestion: string,
-  sources: RagSource[],
-  graphContext: RagGraphContextItem[],
-): string[] {
-  const suggestions: string[] = [];
-  // 基于来源文件名建议深入
-  if (sources.length > 0) {
-    const fname = sources[0].filename;
-    if (fname) suggestions.push(`关于 ${fname} 还有哪些细节？`);
-  }
-  // 基于图谱上下文建议关联查询
-  if (graphContext.length > 0) {
-    const rel = graphContext[0];
-    suggestions.push(`与 ${rel.source_label} 和 ${rel.target_label} 有什么关联？`);
-  }
-  // 通用建议
-  suggestions.push("请总结以上问题的关键要点");
-  return suggestions.slice(0, 3);
-}
-
-/** 将当前对话导出为 Markdown。 */
-function exportConversation(
-  conversation: { question: string; result: { answer: string; rag_mode: string; response_ms: number | null; sources: RagSource[] } }[],
-  projectName: string,
-) {
-  const lines: string[] = [`# ${projectName} — AI 问答记录`, ``, `导出时间：${new Date().toLocaleString("zh-CN")}`, ``];
-  conversation.forEach((entry, i) => {
-    lines.push(`## 问题 ${i + 1}`);
-    lines.push(``);
-    lines.push(entry.question);
-    lines.push(``);
-    lines.push(`### 回答（${ragModeText[entry.result.rag_mode] || entry.result.rag_mode}，${entry.result.response_ms ?? "—"} ms）`);
-    lines.push(``);
-    lines.push(entry.result.answer);
-    lines.push(``);
-    if (entry.result.sources.length > 0) {
-      lines.push(`**来源：**`);
-      entry.result.sources.forEach((s, j) => {
-        lines.push(`- [S${j + 1}] ${s.filename || "未知文件"}（相关度 ${s.retrieval_score?.toFixed(3) ?? "—"}）`);
-      });
-      lines.push(``);
-    }
-    lines.push(`---`);
-    lines.push(``);
-  });
-  const blob = new Blob([lines.join("\n")], { type: "text/markdown;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `${projectName}-AI问答-${new Date().toISOString().slice(0, 10)}.md`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
 
 export default function AIPage() {
   const { id } = useParams();
