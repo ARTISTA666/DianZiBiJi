@@ -74,6 +74,33 @@ interface CrossSliceActions extends TabCacheState {
 
 export type ProjectStoreState = CoreSlice & NoteSlice & FileSlice & AiSlice & CrossSliceActions;
 
+/**
+ * 单资源 tab 加载器工厂：四个结构一致的加载器共享同一实现。
+ * 行为与原逐个实现完全一致（项目守卫 → 30s 缓存 → 会话纪元校验 →
+ * 按成功与否写入字段/错误标签/缓存时间戳）。
+ */
+const singleTabLoader = <Data>(config: {
+  cacheKey: keyof TabCacheState;
+  label: string;
+  fetcher: (token: string, projectId: number) => Promise<Data>;
+  apply: (data: Data) => Partial<ProjectStoreState>;
+}) => {
+  return async (token: string, projectId: number) => {
+    const state = useProjectStore.getState();
+    if (state.selectedProjectId !== projectId) return;
+    const sessionEpoch = epochs.session;
+    if (Date.now() - state[config.cacheKey] < CACHE_TTL_MS) return;
+    const result = await Promise.allSettled([config.fetcher(token, projectId)]);
+    const current = useProjectStore.getState();
+    if (!isCurrentSessionRequest(sessionEpoch) || current.selectedProjectId !== projectId) return;
+    useProjectStore.setState({
+      ...(result[0].status === "fulfilled" ? config.apply(result[0].value) : {}),
+      projectDataErrors: mergeProjectDataErrors(current.projectDataErrors, [config.label], result),
+      [config.cacheKey]: result[0].status === "fulfilled" ? Date.now() : 0,
+    } as Partial<ProjectStoreState>);
+  };
+};
+
 export const useProjectStore = create<ProjectStoreState>()((set, get, store) => ({
   ...createCoreSlice(set, get, store),
   ...createNoteSlice(set, get, store),
@@ -200,57 +227,33 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
     });
   },
 
-  loadKGTabData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
-    const sessionEpoch = epochs.session;
-    if (Date.now() - get().kgTabLastFetchedAt < CACHE_TTL_MS) return;
-    const result = await Promise.allSettled([getProjectKnowledgeGraph(token, projectId)]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
-    set({
-      ...(result[0].status === "fulfilled" ? { kgGraph: result[0].value } : {}),
-      projectDataErrors: mergeProjectDataErrors(get().projectDataErrors, ["知识图谱"], result),
-      kgTabLastFetchedAt: result[0].status === "fulfilled" ? Date.now() : 0,
-    });
-  },
+  loadKGTabData: singleTabLoader({
+    cacheKey: "kgTabLastFetchedAt",
+    label: "知识图谱",
+    fetcher: getProjectKnowledgeGraph,
+    apply: (graph) => ({ kgGraph: graph }),
+  }),
 
-  loadReportsTabData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
-    const sessionEpoch = epochs.session;
-    if (Date.now() - get().reportsTabLastFetchedAt < CACHE_TTL_MS) return;
-    const result = await Promise.allSettled([getAgentRuns(token, projectId)]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
-    set({
-      ...(result[0].status === "fulfilled" ? { agentRuns: result[0].value } : {}),
-      projectDataErrors: mergeProjectDataErrors(get().projectDataErrors, ["报告记录"], result),
-      reportsTabLastFetchedAt: result[0].status === "fulfilled" ? Date.now() : 0,
-    });
-  },
+  loadReportsTabData: singleTabLoader({
+    cacheKey: "reportsTabLastFetchedAt",
+    label: "报告记录",
+    fetcher: getAgentRuns,
+    apply: (runs) => ({ agentRuns: runs }),
+  }),
 
-  loadDataTabData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
-    const sessionEpoch = epochs.session;
-    if (Date.now() - get().dataTabLastFetchedAt < CACHE_TTL_MS) return;
-    const result = await Promise.allSettled([getProjectFiles(token, projectId)]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
-    set({
-      ...(result[0].status === "fulfilled" ? { files: result[0].value.items } : {}),
-      projectDataErrors: mergeProjectDataErrors(get().projectDataErrors, ["项目资料"], result),
-      dataTabLastFetchedAt: result[0].status === "fulfilled" ? Date.now() : 0,
-    });
-  },
+  loadDataTabData: singleTabLoader({
+    cacheKey: "dataTabLastFetchedAt",
+    label: "项目资料",
+    fetcher: getProjectFiles,
+    apply: (result) => ({ files: result.items }),
+  }),
 
-  loadBlindReviewTabData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
-    const sessionEpoch = epochs.session;
-    if (Date.now() - get().blindReviewTabLastFetchedAt < CACHE_TTL_MS) return;
-    const result = await Promise.allSettled([getBlindReviewBatches(token, projectId)]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
-    set({
-      ...(result[0].status === "fulfilled" ? { blindReviewBatches: result[0].value } : {}),
-      projectDataErrors: mergeProjectDataErrors(get().projectDataErrors, ["盲评"], result),
-      blindReviewTabLastFetchedAt: result[0].status === "fulfilled" ? Date.now() : 0,
-    });
-  },
+  loadBlindReviewTabData: singleTabLoader({
+    cacheKey: "blindReviewTabLastFetchedAt",
+    label: "盲评",
+    fetcher: getBlindReviewBatches,
+    apply: (batches) => ({ blindReviewBatches: batches }),
+  }),
 
   loadSettingsTabData: async (token, projectId) => {
     if (get().selectedProjectId !== projectId) return;
