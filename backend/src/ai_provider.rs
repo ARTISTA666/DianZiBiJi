@@ -132,6 +132,24 @@ impl OpenAiCompatibleProvider {
         }
     }
 
+    fn ensure_configured(&self) -> Result<(), GenerationError> {
+        if self.api_key.trim().is_empty() {
+            return Err(GenerationError::Configuration(
+                "AI_API_KEY is not configured".to_owned(),
+            ));
+        }
+        if self.model.trim().is_empty() {
+            return Err(GenerationError::Configuration(
+                "AI_MODEL is not configured".to_owned(),
+            ));
+        }
+        Ok(())
+    }
+
+    fn chat_completions_url(&self) -> String {
+        format!("{}/chat/completions", self.base_url.trim_end_matches('/'))
+    }
+
     fn build_payload(model: &str, request: &GenerationRequest) -> Value {
         let mut payload = json!({
             "model": model,
@@ -169,17 +187,8 @@ impl OpenAiCompatibleProvider {
         &self,
         request: GenerationRequest,
     ) -> Result<GenerationResult, GenerationError> {
-        if self.api_key.trim().is_empty() {
-            return Err(GenerationError::Configuration(
-                "AI_API_KEY is not configured".to_owned(),
-            ));
-        }
-        if self.model.trim().is_empty() {
-            return Err(GenerationError::Configuration(
-                "AI_MODEL is not configured".to_owned(),
-            ));
-        }
-        let url = format!("{}/chat/completions", self.base_url.trim_end_matches('/'));
+        self.ensure_configured()?;
+        let url = self.chat_completions_url();
         let payload = Self::build_payload(&self.model, &request);
         let started = std::time::Instant::now();
         let mut last_error = String::new();
@@ -272,11 +281,7 @@ impl OpenAiCompatibleProvider {
         &self,
         request: GenerationRequest,
     ) -> Result<GenerationStream, GenerationError> {
-        if self.api_key.trim().is_empty() || self.model.trim().is_empty() {
-            return Err(GenerationError::Configuration(
-                "AI provider streaming is not configured".to_owned(),
-            ));
-        }
+        self.ensure_configured()?;
         let permit = self.limiter.clone().acquire_owned().await.map_err(|_| {
             GenerationError::Configuration(
                 "Generation concurrency limiter is unavailable".to_owned(),
@@ -287,10 +292,7 @@ impl OpenAiCompatibleProvider {
         payload["stream_options"] = json!({"include_usage": true});
         let response = self
             .client
-            .post(format!(
-                "{}/chat/completions",
-                self.base_url.trim_end_matches('/')
-            ))
+            .post(self.chat_completions_url())
             .bearer_auth(self.api_key.trim())
             .timeout(Duration::from_secs(180))
             .json(&payload)
@@ -312,6 +314,7 @@ impl OpenAiCompatibleProvider {
             let _permit = permit;
             let mut bytes = response.bytes_stream();
             let mut buffer = String::new();
+            let mut event_data = String::new();
             while let Some(next) = bytes.next().await {
                 match next {
                     Ok(chunk) => buffer.push_str(&String::from_utf8_lossy(&chunk)),
@@ -327,13 +330,26 @@ impl OpenAiCompatibleProvider {
                 while let Some(newline) = buffer.find('\n') {
                     let line = buffer[..newline].trim().to_owned();
                     buffer.drain(..=newline);
-                    if let Some(delta) = parse_stream_line(&line) {
-                        let done = delta.as_ref().is_ok_and(|item| item.done);
-                        if sender.send(delta).await.is_err() || done {
+                    if line.is_empty() {
+                        // SSE 事件以空行结尾：把累积的 data 行按规范拼接后解析。
+                        // 单行 JSON 事件与旧逐行解析行为完全一致，同时兼容
+                        // 跨多行发送的事件负载。
+                        if forward_stream_event(&sender, &event_data).await {
                             return;
                         }
+                        event_data.clear();
+                        continue;
+                    }
+                    if let Some(data) = line.strip_prefix("data:").map(str::trim) {
+                        event_data.push_str(data);
+                        event_data.push('\n');
                     }
                 }
+            }
+            // 流在空行分隔前就结束：冲刷最后一个未完成事件（部分服务端
+            // 发送 `data: [DONE]` 后直接关闭连接）。
+            if !event_data.is_empty() && forward_stream_event(&sender, &event_data).await {
+                return;
             }
             let _ = sender
                 .send(Ok(GenerationDelta {
@@ -345,6 +361,19 @@ impl OpenAiCompatibleProvider {
         });
         Ok(Box::pin(ReceiverStream::new(receiver)))
     }
+}
+
+/// 解析并转发一个完整 SSE 事件；返回 true 表示流已结束（收到 done
+/// 标记或接收端已断开），调用方应立即停止。
+async fn forward_stream_event(
+    sender: &tokio::sync::mpsc::Sender<Result<GenerationDelta, GenerationError>>,
+    event_data: &str,
+) -> bool {
+    let Some(delta) = parse_stream_event(event_data) else {
+        return false;
+    };
+    let done = delta.as_ref().is_ok_and(|item| item.done);
+    sender.send(delta).await.is_err() || done
 }
 
 impl AiProvider for OpenAiCompatibleProvider {
@@ -375,8 +404,13 @@ impl AiProvider for OpenAiCompatibleProvider {
     }
 }
 
-fn parse_stream_line(line: &str) -> Option<Result<GenerationDelta, GenerationError>> {
-    let data = line.strip_prefix("data:")?.trim();
+/// 解析一个完整 SSE 事件的 data 载荷（多个 data 行已按规范拼接）。
+/// 返回 `None` 表示空事件或仅含 keep-alive 注释，调用方直接丢弃。
+fn parse_stream_event(data: &str) -> Option<Result<GenerationDelta, GenerationError>> {
+    let data = data.trim();
+    if data.is_empty() {
+        return None;
+    }
     if data == "[DONE]" {
         return Some(Ok(GenerationDelta {
             content: String::new(),
@@ -497,7 +531,7 @@ mod tests {
     use serde_json::json;
 
     use super::{
-        parse_generation_body, parse_stream_line, AiProvider, GenerationRequest,
+        parse_generation_body, parse_stream_event, AiProvider, GenerationRequest,
         OpenAiCompatibleProvider, ProviderCapabilities, ToolDefinition,
     };
 
@@ -587,11 +621,21 @@ mod tests {
 
     #[test]
     fn provider_parses_stream_delta_and_done_marker() {
-        let delta = parse_stream_line(r#"data: {"choices":[{"delta":{"content":"片段"}}]}"#)
+        let delta = parse_stream_event(r#"{"choices":[{"delta":{"content":"片段"}}]}"#)
             .unwrap()
             .unwrap();
         assert_eq!(delta.content, "片段");
         assert!(!delta.done);
-        assert!(parse_stream_line("data: [DONE]").unwrap().unwrap().done);
+        assert!(parse_stream_event("[DONE]").unwrap().unwrap().done);
+        assert!(parse_stream_event("").is_none());
+    }
+
+    #[test]
+    fn provider_joins_multiline_stream_events() {
+        // 按 SSE 规范跨行发送的事件：两个 data 行拼接成一个 JSON 载荷。
+        let delta = parse_stream_event("{\"choices\":[{\"delta\":{\"content\":\"片段\"}}\n,{}]}")
+            .unwrap()
+            .unwrap();
+        assert_eq!(delta.content, "片段");
     }
 }
