@@ -120,7 +120,7 @@ pub struct AppState {
     pub ai_provider: Arc<dyn AiProvider>,
     pub embeddings: EmbeddingService,
     // Simple in‑process cache for query embeddings – key is the raw query string.
-    pub embedding_cache: std::sync::Arc<AsyncMutex<std::collections::HashMap<String, Vec<f32>>>>,
+    pub embedding_cache: std::sync::Arc<AsyncMutex<std::collections::HashMap<String, std::sync::Arc<Vec<f32>>>>>,
     // Process-local by design; horizontally scaled deployments need shared
     // source-aware protection if one budget must span every backend replica.
     login_attempt_limiter: Arc<Semaphore>,

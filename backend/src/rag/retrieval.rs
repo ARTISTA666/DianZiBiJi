@@ -12,6 +12,7 @@ use super::{
     round6, vector_literal,
 };
 use crate::{error::ApiError, models::RagSourceRead, AppState};
+use std::sync::Arc;
 
 #[derive(Debug, FromRow)]
 pub(crate) struct ChunkRow {
@@ -115,8 +116,8 @@ async fn retrieve_with_connection(
         let query_embedding = {
             // 先锁住缓存进行读写。
             let mut cache = state.embedding_cache.lock().await;
-            if let Some(vec) = cache.get(query) {
-                vec.clone()
+            if let Some(arc_vec) = cache.get(query) {
+                (**arc_vec).clone()
             } else {
                 let vec = state
                     .embeddings
@@ -126,7 +127,7 @@ async fn retrieve_with_connection(
                     .into_iter()
                     .next()
                     .ok_or_else(|| ApiError::internal("Embedding returned no query vector"))?;
-                cache.insert(query.to_string(), vec.clone());
+                cache.insert(query.to_string(), std::sync::Arc::new(vec.clone()));
                 vec
             }
         };
