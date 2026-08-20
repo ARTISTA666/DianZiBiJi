@@ -84,7 +84,13 @@ impl EmbeddingService {
                     .to_owned(),
             ));
         }
-        parse_embedding_response(&payload, texts.len(), self.dimensions)
+        {
+            let mut vectors = parse_embedding_response(&payload, texts.len(), self.dimensions)?;
+            for vec in vectors.iter_mut() {
+                normalize(vec);
+            }
+            Ok(vectors)
+        }
     }
 }
 
