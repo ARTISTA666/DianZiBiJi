@@ -12,7 +12,7 @@ use super::{
     round6, vector_literal,
 };
 use crate::{error::ApiError, models::RagSourceRead, AppState};
-use std::sync::Arc;
+// removed unused import
 
 #[derive(Debug, FromRow)]
 pub(crate) struct ChunkRow {
