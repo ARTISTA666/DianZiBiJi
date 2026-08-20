@@ -111,48 +111,87 @@ pub(crate) fn exact_token_overlap(query_tokens: &HashSet<String>, text: &str) ->
     query_tokens.intersection(&text_tokens).count()
 }
 
-pub(crate) fn bm25_scores(rows: &[ChunkRow], query: &str) -> HashMap<i32, f64> {
-    if rows.is_empty() {
-        return HashMap::new();
-    }
-    let query_terms = token_frequencies(query);
-    if query_terms.is_empty() {
-        return rows.iter().map(|row| (row.id, 0.0)).collect();
-    }
-    let documents: Vec<HashMap<String, usize>> = rows
-        .iter()
-        .map(|row| token_frequencies(&row.content))
-        .collect();
-    let mut document_frequency = HashMap::<String, usize>::new();
-    for document in &documents {
-        for term in document.keys() {
-            *document_frequency.entry(term.clone()).or_insert(0) += 1;
+/// 预计算的 BM25 文档索引：将文档 token 频率和语料统计一次性算好，
+/// 之后可以面向不同查询反复打分而无需重新分词。
+pub(crate) struct Bm25Index {
+    /// (chunk_id, 文档词频)
+    documents: Vec<(i32, HashMap<String, usize>)>,
+    document_frequency: HashMap<String, usize>,
+    average_document_length: f64,
+    document_count: f64,
+}
+
+impl Bm25Index {
+    /// 从 chunk 行集中构建 BM25 倒排索引——此函数分词整个语料，
+    /// 是 BM25 检索路径中最重的步骤，适合只调一次后缓存复用。
+    pub(crate) fn build(rows: &[ChunkRow]) -> Self {
+        let documents: Vec<(i32, HashMap<String, usize>)> = rows
+            .iter()
+            .map(|row| (row.id, token_frequencies(&row.content)))
+            .collect();
+        let mut document_frequency = HashMap::<String, usize>::new();
+        for (_, document) in &documents {
+            for term in document.keys() {
+                *document_frequency.entry(term.clone()).or_insert(0) += 1;
+            }
+        }
+        let average_document_length = if documents.is_empty() {
+            0.0
+        } else {
+            documents
+                .iter()
+                .map(|(_, document)| document.values().sum::<usize>() as f64)
+                .sum::<f64>()
+                / documents.len() as f64
+        };
+        Self {
+            documents,
+            document_frequency,
+            average_document_length,
+            document_count: rows.len() as f64,
         }
     }
-    let average_document_length = documents
-        .iter()
-        .map(|document| document.values().sum::<usize>() as f64)
-        .sum::<f64>()
-        / documents.len() as f64;
-    let document_count = rows.len() as f64;
-    let scores = rows.iter().zip(documents).map(|(row, document)| {
-        let document_length = document.values().sum::<usize>() as f64;
-        let raw_score = query_terms.keys().fold(0.0, |score, term| {
-            let Some(&term_frequency) = document.get(term) else {
-                return score;
-            };
-            let document_frequency = document_frequency.get(term).copied().unwrap_or_default();
-            let idf = ((document_count - document_frequency as f64 + 0.5)
-                / (document_frequency as f64 + 0.5)
-                + 1.0)
-                .ln();
-            let normalized_length = document_length / average_document_length.max(1.0);
-            let denominator = term_frequency as f64 + 1.2 * (1.0 - 0.75 + 0.75 * normalized_length);
-            score + idf * (term_frequency as f64 * 2.2) / denominator
-        });
-        (row.id, raw_score / (raw_score + 1.0))
-    });
-    scores.collect()
+
+    /// 使用预计算索引对查询打分——O(N·T) 但 N 已被裁剪到候选集，
+    /// 且分词步骤已被 `build` 预先完成。
+    pub(crate) fn score(&self, query: &str) -> HashMap<i32, f64> {
+        if self.documents.is_empty() {
+            return HashMap::new();
+        }
+        let query_terms = token_frequencies(query);
+        if query_terms.is_empty() {
+            return self.documents.iter().map(|(id, _)| (*id, 0.0)).collect();
+        }
+        let avg = self.average_document_length.max(1.0);
+        let n = self.document_count;
+        self.documents
+            .iter()
+            .map(|(id, document)| {
+                let document_length = document.values().sum::<usize>() as f64;
+                let raw_score = query_terms.keys().fold(0.0, |score, term| {
+                    let Some(&term_frequency) = document.get(term) else {
+                        return score;
+                    };
+                    let df = self
+                        .document_frequency
+                        .get(term)
+                        .copied()
+                        .unwrap_or_default();
+                    let idf = ((n - df as f64 + 0.5) / (df as f64 + 0.5) + 1.0).ln();
+                    let normalized_length = document_length / avg;
+                    let denominator =
+                        term_frequency as f64 + 1.2 * (1.0 - 0.75 + 0.75 * normalized_length);
+                    score + idf * (term_frequency as f64 * 2.2) / denominator
+                });
+                (*id, raw_score / (raw_score + 1.0))
+            })
+            .collect()
+    }
+}
+
+#[cfg(test)]
+pub(crate) fn bm25_scores(rows: &[ChunkRow], query: &str) -> HashMap<i32, f64> {
+    Bm25Index::build(rows).score(query)
 }
 
 #[cfg(test)]

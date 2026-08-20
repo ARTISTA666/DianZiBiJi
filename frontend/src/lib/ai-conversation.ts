@@ -27,7 +27,7 @@ export function suggestFollowUps(
   if (filename) suggestions.push(`关于 ${filename} 还有哪些细节？`);
   // 基于图谱上下文建议关联查询
   const relation = graphContext[0];
-  if (relation) {
+  if (relation && relation.source_label && relation.target_label) {
     suggestions.push(`与 ${relation.source_label} 和 ${relation.target_label} 有什么关联？`);
   }
   // 通用建议
@@ -40,6 +40,7 @@ export function exportConversation(
   conversation: AiConversationEntry[],
   projectName: string,
 ) {
+  if (typeof window === "undefined") return;
   const lines: string[] = [`# ${projectName} — AI 问答记录`, ``, `导出时间：${new Date().toLocaleString("zh-CN")}`, ``];
   conversation.forEach((entry, i) => {
     lines.push(`## 问题 ${i + 1}`);

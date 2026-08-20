@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import type { RagQueryResponse } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -16,7 +16,9 @@ export const ragModeText: Record<string, string> = {
   bm25_rag: "BM25 RAG",
 };
 
+// 正则提升至模块作用域的源字符串，避免每次渲染重新构造 RegExp 对象。
 const CITATION_SOURCE = String.raw`\[(S|G)(\d+)\]`;
+const CITATION_REGEX = () => new RegExp(CITATION_SOURCE, "gi");
 
 export function snippetPreview(text: string | null | undefined, limit = 120): string {
   if (!text) return "";
@@ -36,7 +38,7 @@ function Tooltip({ children }: { children: ReactNode }) {
   );
 }
 
-function SourceCitationChip({
+function SourceCitationChipInner({
   marker,
   source,
   projectId,
@@ -71,8 +73,9 @@ function SourceCitationChip({
     </span>
   );
 }
+const SourceCitationChip = React.memo(SourceCitationChipInner);
 
-function GraphCitationChip({ marker, context }: { marker: string; context: RagGraphContextItem }) {
+function GraphCitationChipInner({ marker, context }: { marker: string; context: RagGraphContextItem }) {
   return (
     <span className="group relative inline-block align-baseline">
       <span className="mx-0.5 inline-flex cursor-help items-center rounded-full border border-emerald-600/30 bg-emerald-600/10 px-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
@@ -89,6 +92,7 @@ function GraphCitationChip({ marker, context }: { marker: string; context: RagGr
     </span>
   );
 }
+const GraphCitationChip = React.memo(GraphCitationChipInner);
 
 /**
  * 将回答文本按 [S#] / [G#] 引用标记切分为文本段与引用 chip。
@@ -108,7 +112,7 @@ export function CitationRichText({
   projectId: number;
 }) {
   const segments: ReactNode[] = [];
-  const pattern = new RegExp(CITATION_SOURCE, "gi");
+  const pattern = CITATION_REGEX();
   let lastIndex = 0;
   let key = 0;
   let match: RegExpExecArray | null;

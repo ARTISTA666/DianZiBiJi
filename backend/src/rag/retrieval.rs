@@ -7,7 +7,7 @@ use sqlx::PgPool;
 use sqlx::{FromRow, PgConnection, Postgres, Transaction};
 
 use super::{
-    bm25::{bm25_scores, expand_query_for_bm25, tokens},
+    bm25::{expand_query_for_bm25, tokens, Bm25Index},
     index::validate_embedding_dimensions,
     round6, vector_literal,
 };
@@ -103,7 +103,9 @@ async fn retrieve_with_connection(
     let query_tokens = tokens(query);
     // 查询扩展：为 BM25 检索添加同义词，提升召回率
     let expanded_query = expand_query_for_bm25(query);
-    let lexical_scores = bm25_scores(&rows, &expanded_query);
+    // 预构建 BM25 倒排索引——一次分词全语料后复用，避免重复 token_frequencies。
+    let bm25_index = Bm25Index::build(&rows);
+    let lexical_scores = bm25_index.score(&expanded_query);
 
     let (candidate_ids, vector_scores) = if bm25_only {
         (
@@ -182,17 +184,9 @@ async fn retrieve_with_connection(
 
     let lexical_first = query_prefers_lexical_exact_match(query);
     let use_rrf = !bm25_only && settings.rag_retrieval_strategy == "rrf-v1";
-    // 词法优先且走 rrf-v1 时，预先为每个块切好 content+filename 词集，
-    // 避免在候选评分循环里对每个候选重复分词（结果与原实现逐位一致）。
-    let content_token_sets = if use_rrf && lexical_first {
-        rows.iter()
-            .map(|row| (row.id, tokens(&format!("{} {}", row.content, row.filename))))
-            .collect::<HashMap<_, _>>()
-    } else {
-        HashMap::new()
-    };
+    // 用引用映射避免将整个 ChunkRow 二次克隆进 HashMap——零拷贝查询。
     let rows_by_id = rows
-        .into_iter()
+        .iter()
         .map(|row| (row.id, row))
         .collect::<HashMap<_, _>>();
     let mut vector_ranking = candidate_ids.clone();
@@ -237,10 +231,10 @@ async fn retrieve_with_connection(
             let content = row.content.to_lowercase();
             let filename = row.filename.to_lowercase();
             if lexical_first {
-                let overlap = content_token_sets
-                    .get(&row.id)
-                    .map(|set| query_tokens.intersection(set).count())
-                    .unwrap_or_default();
+                // 延迟分词：只在最终候选集上计算 token 交集，
+                // 而非对所有文档预计算，大幅减少分词开销。
+                let row_tokens = tokens(&format!("{} {}", row.content, row.filename));
+                let overlap = query_tokens.intersection(&row_tokens).count();
                 score += (overlap as f64 * 0.02).min(0.12);
             }
             if !normalized_query.is_empty() && content.contains(&normalized_query) {

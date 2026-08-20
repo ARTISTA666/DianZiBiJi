@@ -56,6 +56,7 @@ pub(crate) fn scoped_graph_relations_sql(select_clause: &str) -> String {
     JOIN kg_entities t ON t.id = r.target_entity_id
     WHERE r.project_id = $1 AND {GRAPH_RELATIONS_SCOPE_FILTER}
     ORDER BY r.id
+    LIMIT 5000
 "#
     )
 }
