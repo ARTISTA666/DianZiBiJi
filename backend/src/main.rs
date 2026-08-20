@@ -86,6 +86,47 @@ fn monitor_stale_experiment_runs(pool: PgPool) {
     });
 }
 
+/// 定期自动过期 Agent pending action——当用户未及时确认/拒绝时，
+/// 将过期的 action 标记为 expired 并释放对应会话，防止会话无限期卡在
+/// awaiting_confirmation 状态。
+fn monitor_expired_pending_actions(pool: PgPool) {
+    tokio::spawn(async move {
+        let mut interval = tokio::time::interval(Duration::from_secs(5));
+        interval.tick().await;
+        loop {
+            interval.tick().await;
+            match sqlx::query(
+                r#"
+                WITH expired AS (
+                    UPDATE agent_pending_actions
+                    SET status = 'expired', decided_at = now()
+                    WHERE status = 'pending' AND expires_at <= now()
+                    RETURNING id, session_id
+                )
+                UPDATE agent_sessions s
+                SET active_turn = NULL,
+                    status = 'completed',
+                    final_state_json = jsonb_build_object('reason', 'pending_action_expired'),
+                    updated_at = now()
+                FROM expired e
+                WHERE s.id = e.session_id AND s.status = 'awaiting_confirmation'
+                "#,
+            )
+            .execute(&pool)
+            .await
+            {
+                Ok(result) if result.rows_affected() > 0 => {
+                    warn!(rows = result.rows_affected(), "auto-expired stale agent pending actions");
+                }
+                Ok(_) => {}
+                Err(error) => {
+                    error!(%error, "failed to expire stale agent pending actions");
+                }
+            }
+        }
+    });
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let startup_mode = startup_mode(env::args_os())
@@ -115,6 +156,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         warn!(recovered, "recovered interrupted RAG experiment runs");
     }
     monitor_stale_experiment_runs(pool.clone());
+    monitor_expired_pending_actions(pool.clone());
     let state = AppState::new(pool, settings)?;
     let scheduled = schedule_queued_experiments(&state).await?;
     if scheduled > 0 {

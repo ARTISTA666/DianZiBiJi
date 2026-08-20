@@ -151,7 +151,7 @@ export function RagSourceList({ sources, projectId }: { sources: RagSource[]; pr
       <div className="space-y-1.5">
         {sources.map((src, i) => (
           <Link
-            key={i}
+            key={src.file_id ?? `s${i}`}
             href={src.file_id ? `/projects/${projectId}/data#file-${src.file_id}` : `/projects/${projectId}/data`}
             className="block rounded-md border p-2 text-xs no-underline hover:bg-muted/60"
           >
@@ -206,8 +206,10 @@ export function RagMetaInfo({ result }: { result: RagQueryResponse }) {
   );
 }
 
-/** 完整回答块：富文本回答 + 来源列表 + 元信息。 */
-export function RagAnswerBlock({
+/** 完整回答块：富文本回答 + 来源列表 + 元信息。
+ *  使用 React.memo 包装——每条对话条目是独立的，
+ *  新增对话不会重渲染已有对话。 */
+function RagAnswerBlockInner({
   result,
   projectId,
 }: {
@@ -229,3 +231,4 @@ export function RagAnswerBlock({
     </div>
   );
 }
+export const RagAnswerBlock = React.memo(RagAnswerBlockInner);

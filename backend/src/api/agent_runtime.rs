@@ -952,27 +952,37 @@ async fn reject_pending_action(
     CurrentUser(user): CurrentUser,
     Path(action_id): Path<uuid::Uuid>,
 ) -> Result<Json<Value>, ApiError> {
-    let updated: Option<(String, Option<uuid::Uuid>)> = sqlx::query_as(
-        "UPDATE agent_pending_actions SET status='rejected',decided_at=now() WHERE id=$1 AND user_id=$2 AND status='pending' AND expires_at>now() RETURNING tool_name,session_id"
-    ).bind(action_id).bind(user.id).fetch_optional(&state.pool).await?;
-    let (tool, session_id) = updated.ok_or_else(|| {
+    // 与 approve_pending_action 保持一致的锁序：先 SELECT ... FOR UPDATE
+    // 锁住 pending action 行，再更新 turn 和 session，消除死锁风险。
+    let mut transaction = state.pool.begin().await?;
+    let row: Option<(String, Option<uuid::Uuid>)> = sqlx::query_as(
+        "SELECT tool_name,session_id FROM agent_pending_actions WHERE id=$1 AND user_id=$2 AND status='pending' AND expires_at>now() FOR UPDATE"
+    ).bind(action_id).bind(user.id).fetch_optional(&mut *transaction).await?;
+    let (tool, session_id) = row.ok_or_else(|| {
         ApiError::new(
             axum::http::StatusCode::CONFLICT,
             "Pending action is expired, replayed, or unavailable",
         )
     })?;
+    sqlx::query("UPDATE agent_pending_actions SET status='rejected',decided_at=now() WHERE id=$1")
+        .bind(action_id)
+        .execute(&mut *transaction)
+        .await?;
     if let Some(session_id) = session_id {
         sqlx::query("UPDATE agent_turns SET status='completed',completed_at=now(),updated_at=now() WHERE id=(SELECT active_turn FROM agent_sessions WHERE id=$1 AND user_id=$2)")
             .bind(session_id)
             .bind(user.id)
-            .execute(&state.pool)
+            .execute(&mut *transaction)
             .await?;
         sqlx::query("UPDATE agent_sessions SET active_turn=NULL,status='completed',final_state_json=$2,updated_at=now() WHERE id=$1 AND user_id=$3")
             .bind(session_id)
             .bind(json!({"pending_action_id":action_id,"decision":"rejected"}))
             .bind(user.id)
-            .execute(&state.pool)
+            .execute(&mut *transaction)
             .await?;
+    }
+    transaction.commit().await?;
+    if let Some(session_id) = session_id {
         append_session_event(
             &state,
             session_id,
