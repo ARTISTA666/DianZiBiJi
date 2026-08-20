@@ -12,6 +12,7 @@ pub mod models;
 pub mod ocr;
 pub mod permissions;
 pub mod rag;
+pub mod mock_ai_provider;
 pub mod prompt;
 pub mod security;
 pub mod state;

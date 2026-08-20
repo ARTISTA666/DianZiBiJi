@@ -12,6 +12,7 @@ use tokio::sync::{OwnedSemaphorePermit, Semaphore, Mutex as AsyncMutex};
 
 use crate::{
     ai_provider::{AiProvider, OpenAiCompatibleProvider},
+    mock_ai_provider::MockAiProvider,
     config::Settings,
     embedding::{EmbeddingError, EmbeddingService},
 };
@@ -275,16 +276,20 @@ impl AppState {
         let client = reqwest::Client::builder()
             .redirect(Policy::none())
             .build()?;
-        let ai_provider: Arc<dyn AiProvider> = Arc::new(
-            OpenAiCompatibleProvider::new(
-                client.clone(),
-                settings.ai_base_url.clone(),
-                settings.ai_api_key.clone(),
-                settings.normalized_ai_model().to_owned(),
-                settings.deepseek_max_concurrency,
+        let ai_provider: Arc<dyn AiProvider> = if settings.ai_provider == "mock" {
+            Arc::new(MockAiProvider::new())
+        } else {
+            Arc::new(
+                OpenAiCompatibleProvider::new(
+                    client.clone(),
+                    settings.ai_base_url.clone(),
+                    settings.ai_api_key.clone(),
+                    settings.normalized_ai_model().to_owned(),
+                    settings.deepseek_max_concurrency,
+                )
+                .with_provider_name(settings.ai_provider.clone()),
             )
-            .with_provider_name(settings.ai_provider.clone()),
-        );
+        };
         let login_attempt_limiter =
             Arc::new(Semaphore::new(settings.login_max_concurrent_attempts));
         let login_rate_limiter = Arc::new(Mutex::new(LoginRateLimiter::new(
