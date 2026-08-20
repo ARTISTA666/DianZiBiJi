@@ -8,7 +8,7 @@ use reqwest::redirect::Policy;
 use serde_json::{json, Value};
 use sqlx::PgPool;
 use thiserror::Error;
-use tokio::sync::{OwnedSemaphorePermit, Semaphore};
+use tokio::sync::{OwnedSemaphorePermit, Semaphore, Mutex as AsyncMutex};
 
 use crate::{
     ai_provider::{AiProvider, OpenAiCompatibleProvider},
@@ -119,6 +119,8 @@ pub struct AppState {
     pub client: reqwest::Client,
     pub ai_provider: Arc<dyn AiProvider>,
     pub embeddings: EmbeddingService,
+    // Simple in‑process cache for query embeddings – key is the raw query string.
+    pub embedding_cache: std::sync::Arc<AsyncMutex<std::collections::HashMap<String, Vec<f32>>>>,
     // Process-local by design; horizontally scaled deployments need shared
     // source-aware protection if one budget must span every backend replica.
     login_attempt_limiter: Arc<Semaphore>,
@@ -304,6 +306,7 @@ impl AppState {
             client,
             ai_provider,
             embeddings,
+            embedding_cache: std::sync::Arc::new(AsyncMutex::new(std::collections::HashMap::new())),
             login_attempt_limiter,
             login_rate_limiter,
             global_rate_limiter,

@@ -111,14 +111,25 @@ async fn retrieve_with_connection(
             HashMap::new(),
         )
     } else {
-        let query_embedding = state
-            .embeddings
-            .embed(&[query.to_owned()])
-            .await
-            .map_err(ApiError::internal)?
-            .into_iter()
-            .next()
-            .ok_or_else(|| ApiError::internal("Embedding returned no query vector"))?;
+        // 尝试从进程缓存中读取已计算的查询向量，若不存在则调用 embedding 服务并写入缓存。
+        let query_embedding = {
+            // 先锁住缓存进行读写。
+            let mut cache = state.embedding_cache.lock().await;
+            if let Some(vec) = cache.get(query) {
+                vec.clone()
+            } else {
+                let vec = state
+                    .embeddings
+                    .embed(&[query.to_owned()])
+                    .await
+                    .map_err(ApiError::internal)?
+                    .into_iter()
+                    .next()
+                    .ok_or_else(|| ApiError::internal("Embedding returned no query vector"))?;
+                cache.insert(query.to_string(), vec.clone());
+                vec
+            }
+        };
         validate_embedding_dimensions(&query_embedding, settings.embedding_dimension)
             .map_err(ApiError::internal)?;
         let query_vector = vector_literal(&query_embedding);
