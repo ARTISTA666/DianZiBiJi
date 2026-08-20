@@ -27,6 +27,7 @@ pub use graph::{
     relevant_graph_context_in_transaction, GRAPH_RELATIONS_SCOPE_FILTER,
 };
 pub use index::{fetch_rag_file, index_file, RagFileRecord};
+pub(crate) use retrieval::select_diverse_sources;
 pub use retrieval::{
     is_collection_query, query_prefers_lexical_exact_match, retrieve, retrieve_in_transaction,
     ACTIVE_CHUNKS_SQL,

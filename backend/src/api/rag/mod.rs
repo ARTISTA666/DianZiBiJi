@@ -2322,6 +2322,8 @@ fn parse_rewrite_queries(original: &str, raw: &str) -> Vec<String> {
         })
 }
 
+/// 多路检索结果合并：先按相关度排序并去重块，再复用核心检索模块的
+/// 「每文件最多 3 块」多样性选择，保证两条路径的截断语义完全一致。
 fn merge_retrieved_sources(
     mut sources: Vec<crate::models::RagSourceRead>,
     limit: usize,
@@ -2334,26 +2336,13 @@ fn merge_retrieved_sources(
             .unwrap_or(std::cmp::Ordering::Equal)
             .then_with(|| left.chunk_id.cmp(&right.chunk_id))
     });
-    let mut chunks = HashSet::new();
-    let mut file_counts = std::collections::HashMap::<i32, usize>::new();
-    let mut merged = Vec::new();
-    for source in sources {
-        if source.chunk_id.is_some_and(|id| !chunks.insert(id)) {
-            continue;
-        }
-        if let Some(file_id) = source.file_id {
-            let count = file_counts.entry(file_id).or_default();
-            if *count >= 3 {
-                continue;
-            }
-            *count += 1;
-        }
-        merged.push(source);
-        if merged.len() >= limit {
-            break;
-        }
-    }
-    merged
+    let mut seen_chunks = HashSet::new();
+    let ranked = sources
+        .into_iter()
+        .filter(|source| source.chunk_id.is_none_or(|id| seen_chunks.insert(id)))
+        .map(|source| (source.retrieval_score.unwrap_or_default(), source))
+        .collect();
+    crate::rag::select_diverse_sources(ranked, limit)
 }
 
 #[cfg(test)]

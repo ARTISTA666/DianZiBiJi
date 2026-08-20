@@ -393,7 +393,10 @@ pub fn query_prefers_lexical_exact_match(query: &str) -> bool {
                 .any(|term| normalized.contains(term)))
 }
 
-fn select_diverse_sources(ranked: Vec<(f64, RagSourceRead)>, limit: usize) -> Vec<RagSourceRead> {
+pub(crate) fn select_diverse_sources(
+    ranked: Vec<(f64, RagSourceRead)>,
+    limit: usize,
+) -> Vec<RagSourceRead> {
     let mut file_counts = HashMap::<i32, usize>::new();
     let mut selected = Vec::with_capacity(limit);
     for (_, source) in ranked {
