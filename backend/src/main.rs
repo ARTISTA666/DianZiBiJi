@@ -116,7 +116,10 @@ fn monitor_expired_pending_actions(pool: PgPool) {
             .await
             {
                 Ok(result) if result.rows_affected() > 0 => {
-                    warn!(rows = result.rows_affected(), "auto-expired stale agent pending actions");
+                    warn!(
+                        rows = result.rows_affected(),
+                        "auto-expired stale agent pending actions"
+                    );
                 }
                 Ok(_) => {}
                 Err(error) => {
