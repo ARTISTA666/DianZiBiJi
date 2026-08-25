@@ -1,10 +1,8 @@
 // 实验区：RAG 实验运行/租约、证据导出与 CSV 导出。
 
-use std::{
-    collections::HashSet,
-    panic::{catch_unwind, AssertUnwindSafe},
-    time::Duration,
-};
+use std::{collections::HashSet, panic::AssertUnwindSafe, time::Duration};
+
+use futures_util::FutureExt;
 
 use axum::{
     body::Body,
@@ -872,8 +870,15 @@ fn spawn_experiment(state: AppState, user: UserRecord, run_id: i32) {
     let panic_pool = state.pool.clone();
     let worker_id = state.worker_id().to_owned();
     tokio::spawn(async move {
-        let result = catch_unwind(AssertUnwindSafe(|| async move {
-            if let Err(error) = execute_experiment(state, user, run_id).await {
+        // 必须对「已构造的 Future」调用 catch_unwind 并真正 await：
+        // std::panic::catch_unwind 包同步闭包只会构造出 Future 而不执行它，
+        // 实验体会被整体丢弃，run 永远停在非终态（僵尸 run）。
+        let result = AssertUnwindSafe(execute_experiment(state, user, run_id))
+            .catch_unwind()
+            .await;
+        match result {
+            Ok(Ok(())) => {}
+            Ok(Err(error)) => {
                 tracing::error!(run_id, %error.detail, "RAG experiment failed unexpectedly");
                 let failure_code = experiment_run_failure_code(&error.detail);
                 let _ = sqlx::query(
@@ -900,34 +905,34 @@ fn spawn_experiment(state: AppState, user: UserRecord, run_id: i32) {
                 .execute(&worker_pool)
                 .await;
             }
-        }));
-        if let Err(panic_payload) = result {
-            tracing::error!(run_id, "RAG experiment worker panicked, marking as failed");
-            let panic_message = panic_payload
-                .downcast_ref::<String>()
-                .map(String::as_str)
-                .or_else(|| panic_payload.downcast_ref::<&str>().copied())
-                .unwrap_or("worker panic");
-            let _ = sqlx::query(
-                r#"
-                UPDATE ai_experiment_runs SET status = 'failed', completed_at = now(),
-                    worker_id = NULL, heartbeat_at = NULL, lease_expires_at = NULL,
-                    summary_json = (
-                        summary_json::jsonb || jsonb_build_object(
-                            'fatal_error', jsonb_build_object(
-                                'error', $2,
-                                'failure_scope', 'run',
-                                'failure_code', 'worker_panic'
+            Err(panic_payload) => {
+                tracing::error!(run_id, "RAG experiment worker panicked, marking as failed");
+                let panic_message = panic_payload
+                    .downcast_ref::<String>()
+                    .map(String::as_str)
+                    .or_else(|| panic_payload.downcast_ref::<&str>().copied())
+                    .unwrap_or("worker panic");
+                let _ = sqlx::query(
+                    r#"
+                    UPDATE ai_experiment_runs SET status = 'failed', completed_at = now(),
+                        worker_id = NULL, heartbeat_at = NULL, lease_expires_at = NULL,
+                        summary_json = (
+                            summary_json::jsonb || jsonb_build_object(
+                                'fatal_error', jsonb_build_object(
+                                    'error', $2,
+                                    'failure_scope', 'run',
+                                    'failure_code', 'worker_panic'
+                                )
                             )
-                        )
-                    )::json
-                WHERE id = $1 AND status = 'running'
-                "#,
-            )
-            .bind(run_id)
-            .bind(panic_message)
-            .execute(&panic_pool)
-            .await;
+                        )::json
+                    WHERE id = $1 AND status = 'running'
+                    "#,
+                )
+                .bind(run_id)
+                .bind(panic_message)
+                .execute(&panic_pool)
+                .await;
+            }
         }
     });
 }
