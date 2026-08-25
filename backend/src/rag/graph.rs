@@ -56,7 +56,25 @@ pub(crate) fn scoped_graph_relations_sql(select_clause: &str) -> String {
     JOIN kg_entities t ON t.id = r.target_entity_id
     WHERE r.project_id = $1 AND {GRAPH_RELATIONS_SCOPE_FILTER}
     ORDER BY r.id
-    LIMIT 5000
+"#
+    )
+}
+
+/// 检索路径的图谱关系扫描上限。只约束 `relevant_graph_context` 的读取，
+/// 不作用于快照：快照哈希是证据契约的一部分，必须覆盖项目全部可见关系，
+/// 否则语料超过上限时哈希会静默漂移（检索与证据快照绝不能分叉）。
+const GRAPH_RELATIONS_RETRIEVAL_LIMIT: usize = 5000;
+
+fn scoped_graph_relations_sql_bounded(select_clause: &str) -> String {
+    format!(
+        r#"
+    SELECT {select_clause}
+    FROM kg_relations r
+    JOIN kg_entities s ON s.id = r.source_entity_id
+    JOIN kg_entities t ON t.id = r.target_entity_id
+    WHERE r.project_id = $1 AND {GRAPH_RELATIONS_SCOPE_FILTER}
+    ORDER BY r.id
+    LIMIT {GRAPH_RELATIONS_RETRIEVAL_LIMIT}
 "#
     )
 }
@@ -90,7 +108,7 @@ async fn relevant_graph_context_with_connection(
     limit: usize,
     min_score: f64,
 ) -> Result<Vec<RagGraphContextRead>, ApiError> {
-    let graph_sql = scoped_graph_relations_sql(
+    let graph_sql = scoped_graph_relations_sql_bounded(
         r#"
         r.id AS relation_id, r.relation_type, r.source_type,
         s.id AS source_entity_id, s.label AS source_label,
