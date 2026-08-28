@@ -69,3 +69,13 @@ scripts/run-system-e2e.sh
 | `deploy/nginx.conf.template` | `backend/.venv/bin/python scripts/check_reverse_proxy_config.py` |
 
 CI（`.github/workflows/ci.yml`）以相同分组运行 backend-python、backend-rust、frontend、system-e2e 四个 job；本地至少跑通与改动对应的分组再提交。
+
+## 并线协作约定（多 Agent 并行推进论文）
+
+本仓库由多个 AI agent 并线推进论文（当前：证据线 ZCode、文字线 GPT），遵守以下规则：
+
+- **域分区**：文字线只做纯语言/叙事修改，**不动任何数字、证据句、公式、引文编号**，不碰 `backend/`、`reviews/`、`docs/system-evidence/`、`agent-work/`；证据线负责对照代码与证据的机制性修改、测试、实验与评审。跨线需求写入状态文件协商，不得自行跨线。
+- **单写者窗口**：`docs/毕业论文重构稿.md` 任意时刻只有一个 agent 持窗修改。开工前必读 `docs/并线协作状态.md` 确认当前持窗方；窗口内小步提交，收工必须更新状态文件并释放窗口。
+- **提交纪律**：commit message 标注归属（`[文字线]`/`[证据线]`），一次提交只含一类改动；论文每处修改须可经 `git diff` 审计，修改前先对照 `reviews/round-0N/baseline-thesis-snapshot.md` 类基线。
+- **互审**：每轮合并后由证据线的 `/thesis-review` 对对方改动区域做快速复审，重点核查技术含义与数字未被破坏。
+- **大文件不入库**：`data/real/`（129MB 数据集）、`agent-work/` 实验工作区（44MB DRAFT 材料，仅 `thesis-agents/` 等文本资产入库）、编译产物 PDF 保持本地，不提交。
