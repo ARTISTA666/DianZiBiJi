@@ -4,23 +4,23 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
+          "border-primary/20 bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:text-primary-foreground",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "border-border/60 bg-secondary/80 text-secondary-foreground hover:bg-secondary",
         destructive:
-          "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
+          "border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20 dark:bg-destructive/20",
         success:
-          "border-transparent bg-success text-success-foreground hover:bg-success/80",
+          "border-success/30 bg-success/10 text-success hover:bg-success/20 dark:bg-success/20",
         warning:
-          "border-transparent bg-warning text-warning-foreground hover:bg-warning/80",
+          "border-warning/30 bg-warning/10 text-warning hover:bg-warning/20 dark:bg-warning/20",
         info:
-          "border-transparent bg-info text-info-foreground hover:bg-info/80",
-        outline: "text-foreground",
+          "border-info/30 bg-info/10 text-info hover:bg-info/20 dark:bg-info/20",
+        outline: "border-border text-foreground/80 hover:bg-muted/50",
       },
     },
     defaultVariants: {
