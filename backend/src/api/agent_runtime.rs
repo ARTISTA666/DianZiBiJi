@@ -1339,6 +1339,23 @@ mod tests {
         tool_allowed_for_permissions, AgentProfile, MAX_TOOL_STEPS,
     };
     use crate::api::mcp::{find_tool, ToolRisk};
+    use std::collections::HashMap;
+
+    use axum::{
+        body::{to_bytes, Body},
+        http::{Request, StatusCode},
+        Router,
+    };
+    use serde_json::Value;
+    use tower::ServiceExt;
+    use uuid::Uuid;
+
+    use crate::{
+        build_app,
+        config::Settings,
+        db::{connect_database, initialize_database},
+        AppState,
+    };
 
     #[test]
     fn trace_redaction_removes_secrets_and_limits_untrusted_text() {
@@ -1398,5 +1415,506 @@ mod tests {
         assert!(tool_allowed_for_permissions(&review, true, true, false));
         assert!(!tool_allowed_for_permissions(&draft, false, true, false));
         assert_eq!(draft.risk, ToolRisk::Low);
+    }
+
+    // ---------- 高风险工具确认队列与幂等防重放(数据库集成测试) ----------
+    // 对应论文创新点三声称的三项性质:高风险动作必须人工确认才执行;
+    // 过期或已消费的确认动作不可再用;同一幂等键不产生第二次执行副作用。
+
+    fn test_action_sha256_hex(bytes: &[u8]) -> String {
+        use sha2::{Digest, Sha256};
+        format!("{:x}", Sha256::digest(bytes))
+    }
+
+    async fn call(
+        app: &Router,
+        method: &str,
+        path: &str,
+        token: Option<&str>,
+        body: Option<Value>,
+    ) -> (StatusCode, Value) {
+        let mut request = Request::builder().method(method).uri(path);
+        if let Some(token) = token {
+            request = request.header("authorization", format!("Bearer {token}"));
+        }
+        if body.is_some() {
+            request = request.header("content-type", "application/json");
+        }
+        let response = app
+            .clone()
+            .oneshot(
+                request
+                    .body(Body::from(
+                        body.map_or_else(String::new, |value| value.to_string()),
+                    ))
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+        let status = response.status();
+        let bytes = to_bytes(response.into_body(), 128 * 1024).await.unwrap();
+        let payload = if bytes.is_empty() {
+            Value::Null
+        } else {
+            serde_json::from_slice(&bytes).unwrap()
+        };
+        (status, payload)
+    }
+
+    async fn boot_confirmation_test_app(
+        prefix: &str,
+    ) -> Option<(Router, sqlx::PgPool, String, String)> {
+        let database_url = std::env::var("TEST_DATABASE_URL").ok()?;
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let admin_username = format!("{prefix}_{suffix}");
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "rust-confirmation-secret".to_owned(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool.clone(), settings).unwrap());
+        let (_, login) = call(
+            &app,
+            "POST",
+            "/auth/login",
+            None,
+            Some(json!({"username": admin_username, "password": "RustAdmin123!"})),
+        )
+        .await;
+        let token = login["access_token"].as_str().unwrap().to_owned();
+        Some((app, pool, token, admin_username))
+    }
+
+    async fn create_review_note(app: &Router, token: &str, name: &str) -> (i64, i64) {
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let (_, project) = call(
+            app,
+            "POST",
+            "/projects",
+            Some(token),
+            Some(json!({"name": format!("{name} {suffix}"), "approval_enabled": true})),
+        )
+        .await;
+        let project_id = project["id"].as_i64().unwrap();
+        let (_, note) = call(
+            app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(token),
+            Some(json!({
+                "title": "Confirmation queue test note",
+                "experiment_type": "Cell assay",
+                "experiment_date": "2026-08-28",
+                "fixed_fields_json": {"result": "viable"},
+                "content_json": {"text": "Cells remained viable"}
+            })),
+        )
+        .await;
+        (project_id, note["id"].as_i64().unwrap())
+    }
+
+    async fn request_review_confirmation(
+        app: &Router,
+        token: &str,
+        project_id: i64,
+        note_id: i64,
+        idempotency_key: &str,
+        decision: &str,
+    ) -> (StatusCode, Value) {
+        call(
+            app,
+            "POST",
+            "/api/mcp",
+            Some(token),
+            Some(json!({
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "tools/call",
+                "params": {"name": "review_note", "arguments": {
+                    "project_id": project_id,
+                    "note_id": note_id,
+                    "decision": decision,
+                    "idempotency_key": idempotency_key
+                }}
+            })),
+        )
+        .await
+    }
+
+    async fn insert_pending_action(
+        pool: &sqlx::PgPool,
+        user_id: i32,
+        project_id: i64,
+        idempotency_key: &str,
+        arguments: &Value,
+        status: &str,
+        expired: bool,
+    ) -> uuid::Uuid {
+        let action_id = uuid::Uuid::new_v4();
+        let hash = test_action_sha256_hex(&serde_json::to_vec(arguments).unwrap());
+        let expiry = if expired {
+            "now() - interval '1 minute'"
+        } else {
+            "now() + interval '10 minutes'"
+        };
+        sqlx::query(&format!(
+            r#"INSERT INTO agent_pending_actions
+               (id,user_id,project_id,tool_name,arguments_json,arguments_summary,arguments_hash,idempotency_key,status,expires_at)
+               VALUES ($1,$2,$3,'review_note',$4,'itest replay',$5,$6,$7,{expiry})"#
+        ))
+        .bind(action_id)
+        .bind(user_id)
+        .bind(project_id as i32)
+        .bind(arguments)
+        .bind(&hash)
+        .bind(idempotency_key)
+        .bind(status)
+        .execute(pool)
+        .await
+        .unwrap();
+        action_id
+    }
+
+    #[tokio::test]
+    async fn high_risk_tool_waits_for_confirmation_and_rejection_blocks_execution() {
+        let Some((app, pool, token, admin_username)) =
+            boot_confirmation_test_app("safety_reject").await
+        else {
+            return;
+        };
+        let user_id: i32 = sqlx::query_scalar("SELECT id FROM users WHERE username=$1")
+            .bind(&admin_username)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        let (project_id, note_id) = create_review_note(&app, &token, "Safety Reject Project").await;
+
+        // 高风险工具调用不直接执行,而是进入确认队列
+        let (status, body) = request_review_confirmation(
+            &app,
+            &token,
+            project_id,
+            note_id,
+            "itest-reject-0001",
+            "approve",
+        )
+        .await;
+        assert_eq!(
+            status,
+            StatusCode::OK,
+            "tools/call confirmation_required body: {body}"
+        );
+        let structured = &body["result"]["structuredContent"];
+        assert_eq!(structured["code"], "confirmation_required");
+        let action_id: uuid::Uuid = structured["pending_action_id"]
+            .as_str()
+            .unwrap()
+            .parse()
+            .unwrap();
+
+        let note_status: String =
+            sqlx::query_scalar("SELECT status::text FROM experiment_notes WHERE id=$1")
+                .bind(note_id)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        assert_ne!(note_status, "APPROVED");
+
+        // 拒绝后确认动作关闭,再次确认返回 409,且执行键从未落库
+        let (reject_status, rejected) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{action_id}/reject"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(reject_status, StatusCode::OK);
+        assert_eq!(rejected["status"], "rejected");
+
+        let (approve_after_reject, _) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{action_id}/approve"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(approve_after_reject, StatusCode::CONFLICT);
+
+        let executed_keys: i64 = sqlx::query_scalar(
+            "SELECT count(*) FROM tool_execution_keys WHERE user_id=$1 AND tool_name='review_note' AND idempotency_key='itest-reject-0001'",
+        )
+        .bind(user_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(executed_keys, 0);
+    }
+
+    #[tokio::test]
+    async fn confirmed_action_executes_once_and_same_key_replays_cached_result() {
+        let Some((app, pool, token, admin_username)) =
+            boot_confirmation_test_app("safety_approve").await
+        else {
+            return;
+        };
+        let user_id: i32 = sqlx::query_scalar("SELECT id FROM users WHERE username=$1")
+            .bind(&admin_username)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        let (project_id, note_id) =
+            create_review_note(&app, &token, "Safety Approve Project").await;
+
+        let (_, first_call) = request_review_confirmation(
+            &app,
+            &token,
+            project_id,
+            note_id,
+            "itest-approve-0001",
+            "approve",
+        )
+        .await;
+        let first_action: uuid::Uuid = first_call["result"]["structuredContent"]
+            ["pending_action_id"]
+            .as_str()
+            .unwrap()
+            .parse()
+            .unwrap();
+
+        // 业务规则:笔记须先提交审核,审批确认才能执行
+        let (submit_status, _) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/submit"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(submit_status, StatusCode::OK);
+
+        // 首次确认真正执行:笔记进入 APPROVED,执行键落库
+        let (approve_status, approved) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{first_action}/approve"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(
+            approve_status,
+            StatusCode::OK,
+            "first approve body: {approved}"
+        );
+        assert_eq!(approved["status"], "completed");
+        assert_eq!(approved["replayed"], false);
+        let note_status: String =
+            sqlx::query_scalar("SELECT status::text FROM experiment_notes WHERE id=$1")
+                .bind(note_id)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        assert_eq!(note_status, "APPROVED");
+
+        let stored: (String, Value) = sqlx::query_as(
+            "SELECT arguments_hash,result_json FROM tool_execution_keys WHERE user_id=$1 AND tool_name='review_note' AND idempotency_key=$2",
+        )
+        .bind(user_id)
+        .bind("itest-approve-0001")
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let first_arguments = json!({
+            "project_id": project_id,
+            "note_id": note_id,
+            "decision": "approve",
+            "idempotency_key": "itest-approve-0001"
+        });
+        assert_eq!(
+            stored.0,
+            test_action_sha256_hex(&serde_json::to_vec(&first_arguments).unwrap())
+        );
+
+        // 库级防重放:同一 (user, tool, idempotency_key) 二次写入违反主键
+        let duplicate = sqlx::query(
+            "INSERT INTO tool_execution_keys (user_id,tool_name,idempotency_key,arguments_hash,result_json) VALUES ($1,'review_note',$2,$3,'{}')",
+        )
+        .bind(user_id)
+        .bind("itest-approve-0001")
+        .bind(&stored.0)
+        .execute(&pool)
+        .await;
+        assert!(duplicate.is_err());
+
+        // 防重放第一层(创建去重):同 key 重新调用工具返回同一个已完成动作,
+        // 不会创建新的待确认行(agent_pending_actions 有 (user,tool,key) 唯一约束)
+        let (_, second_call) = request_review_confirmation(
+            &app,
+            &token,
+            project_id,
+            note_id,
+            "itest-approve-0001",
+            "approve",
+        )
+        .await;
+        let second_action: uuid::Uuid = second_call["result"]["structuredContent"]
+            ["pending_action_id"]
+            .as_str()
+            .unwrap()
+            .parse()
+            .unwrap();
+        assert_eq!(second_action, first_action);
+        let pending_rows: i64 = sqlx::query_scalar(
+            "SELECT count(*) FROM agent_pending_actions WHERE user_id=$1 AND tool_name='review_note' AND idempotency_key='itest-approve-0001'",
+        )
+        .bind(user_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(pending_rows, 1);
+
+        // 防重放第二层(状态保护):对已完成的动作再次确认返回 409,不重复执行
+        let (replay_status, _replayed) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{second_action}/approve"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(replay_status, StatusCode::CONFLICT);
+        let replayed_keys: i64 = sqlx::query_scalar(
+            "SELECT count(*) FROM tool_execution_keys WHERE user_id=$1 AND tool_name='review_note' AND idempotency_key='itest-approve-0001'",
+        )
+        .bind(user_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(replayed_keys, 1);
+
+        // 防重放第三层(缓存参数校验):执行键已存在且参数哈希不同,确认被拒绝
+        let tamper_key = "itest-tamper-0001";
+        let tamper_hash = test_action_sha256_hex(br#"{"seed":"original"}"#);
+        sqlx::query(
+            "INSERT INTO tool_execution_keys (user_id,tool_name,idempotency_key,arguments_hash,result_json) VALUES ($1,'review_note',$2,$3,'{\"cached\":true}')",
+        )
+        .bind(user_id)
+        .bind(tamper_key)
+        .bind(&tamper_hash)
+        .execute(&pool)
+        .await
+        .unwrap();
+        let (_, tampered_call) =
+            request_review_confirmation(&app, &token, project_id, note_id, tamper_key, "reject")
+                .await;
+        let tampered_action: uuid::Uuid = tampered_call["result"]["structuredContent"]
+            ["pending_action_id"]
+            .as_str()
+            .unwrap()
+            .parse()
+            .unwrap();
+        let (tampered_status, _) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{tampered_action}/approve"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(tampered_status, StatusCode::CONFLICT);
+        let tamper_keys: i64 = sqlx::query_scalar(
+            "SELECT count(*) FROM tool_execution_keys WHERE user_id=$1 AND tool_name='review_note' AND idempotency_key=$2",
+        )
+        .bind(user_id)
+        .bind(tamper_key)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(tamper_keys, 1);
+    }
+
+    #[tokio::test]
+    async fn expired_or_consumed_pending_actions_cannot_be_confirmed() {
+        let Some((app, pool, token, admin_username)) =
+            boot_confirmation_test_app("safety_expire").await
+        else {
+            return;
+        };
+        let user_id: i32 = sqlx::query_scalar("SELECT id FROM users WHERE username=$1")
+            .bind(&admin_username)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        let (project_id, note_id) = create_review_note(&app, &token, "Safety Expire Project").await;
+        let arguments = json!({
+            "project_id": project_id,
+            "note_id": note_id,
+            "decision": "approve",
+            "idempotency_key": "itest-expire-0001"
+        });
+
+        let expired = insert_pending_action(
+            &pool,
+            user_id,
+            project_id,
+            "itest-expire-0001",
+            &arguments,
+            "pending",
+            true,
+        )
+        .await;
+        let (approve_expired, _) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{expired}/approve"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(approve_expired, StatusCode::CONFLICT);
+        let (reject_expired, _) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{expired}/reject"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(reject_expired, StatusCode::CONFLICT);
+
+        let consumed = insert_pending_action(
+            &pool,
+            user_id,
+            project_id,
+            "itest-expire-0002",
+            &arguments,
+            "completed",
+            false,
+        )
+        .await;
+        let (approve_consumed, _) = call(
+            &app,
+            "POST",
+            &format!("/api/agent/pending-actions/{consumed}/approve"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(approve_consumed, StatusCode::CONFLICT);
     }
 }
