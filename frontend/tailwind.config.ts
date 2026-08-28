@@ -82,6 +82,38 @@ const config: Config = {
   		fontFamily: {
   			sans: ["var(--font-sans)"],
   		},
+  		boxShadow: {
+  			subtle: "0 1px 2px 0 rgba(0, 0, 0, 0.04), 0 1px 3px 0 rgba(0, 0, 0, 0.03)",
+  			card: "0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.06)",
+  			"card-hover": "0 4px 14px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)",
+  			elevate: "0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04)",
+  			"glow-primary": "0 0 20px -5px hsl(var(--primary) / 0.35)",
+  		},
+  		keyframes: {
+  			"accordion-down": {
+  				from: { height: "0" },
+  				to: { height: "var(--radix-accordion-content-height)" },
+  			},
+  			"accordion-up": {
+  				from: { height: "var(--radix-accordion-content-height)" },
+  				to: { height: "0" },
+  			},
+  			shimmer: {
+  				"100%": {
+  					transform: "translateX(100%)",
+  				},
+  			},
+  			pulseSlow: {
+  				"0%, 100%": { opacity: "1" },
+  				"50%": { opacity: "0.5" },
+  			},
+  		},
+  		animation: {
+  			"accordion-down": "accordion-down 0.2s ease-out",
+  			"accordion-up": "accordion-up 0.2s ease-out",
+  			shimmer: "shimmer 2s infinite",
+  			"pulse-slow": "pulseSlow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+  		},
   	}
   },
   plugins: [tailwindcssAnimate],
