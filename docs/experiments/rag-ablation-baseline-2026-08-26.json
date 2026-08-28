@@ -1,0 +1,1307 @@
+{
+  "meta": {
+    "deliverable_date_label": "2026-08-26",
+    "executed_at_local": "2026-08-25",
+    "reference_experiment": "docs/experiments/rag-experiment-4.csv (mode=project_rag 为普通 RAG 臂)",
+    "scoring_rule_source": "scripts/analyze_rag_experiment.py 的 GOLD_RULES（AST 提取，规则与匹配方法逐字一致：全部要点组命中、不区分大小写子串）",
+    "notes": [
+      "任务描述称实验数据在项目 19；当前 eln 库中不存在项目 19，演示数据实际位于项目 1（论文演示项目：KG-RAG 实验流程），两臂均以项目 1 为准。",
+      "数据库为活库且与实验 4 运行时（2026-06/07）相比存在数据漂移：项目 1 现仅存 4 条已审核笔记（实验 4 时为 15 条），导致 Q15/Q18/Q19 的 SQL 查询无法返回全部 gold 要点（如质粒、离心机相关实体已不存在），相应未完成判定如实保留。",
+      "Arm A 首轮执行时 DeepSeek 账户余额不足（HTTP 402 Insufficient Balance），20 题全部失败；账户充值后于同日重跑，20/20 成功。首轮失败记录未计入最终结果。"
+    ]
+  },
+  "arm_a_bare_llm": {
+    "config": {
+      "base_url": "https://api.deepseek.com",
+      "model": "deepseek-v4-flash",
+      "temperature": 0.1,
+      "max_tokens": 1800,
+      "stream": false,
+      "system_prompt": "你是一名科研助理。请直接回答用户的问题。",
+      "retries": "3 次尝试（退避 1s/2s）"
+    },
+    "summary": {
+      "total_cases": 20,
+      "run_succeeded": 20,
+      "task_completed": 2,
+      "task_completion_rate_all20": 10.0,
+      "traceable_count": 0,
+      "avg_response_ms": 5854.9,
+      "median_response_ms": 5407.4,
+      "avg_total_tokens": 590.5,
+      "sum_total_tokens": 11811
+    },
+    "results": [
+      {
+        "question_index": 1,
+        "question": "PCR 条件优化实验的退火温度优化依据是什么？",
+        "category": "资料事实型",
+        "ok": true,
+        "answer": "PCR 退火温度优化的主要依据是**引物的理论熔解温度（Tm 值）**，并结合实验目的与酶活性的要求。具体来说：\n\n- **基础原则**：退火温度通常设定为引物 Tm 值 **低 3~5°C**，因为较低的退火温度有利于引物稳定结合，但过低会增加非特异性扩增。\n- **计算方式**：  \n  - 短引物（~20 bp）常用公式：**Tm = 2×(A+T) + 4×(G+C)**  \n  - 长引物或精确设计建议使用软件（如 Primer Premier、Oligo Analyzer）基于热力学参数计算 Tm。\n- **梯度 PCR 优化**：以计算出的 Tm 为中心，设置 **±5~10°C** 的温度梯度（如 55~65°C）进行扩增，比较各温度下的产物条带。优先选择**条带明亮、无非特异性条带或引物二聚体的最高退火温度**，以获得高特异性且高效的扩增。\n- **其他考量**：退火时间一般为 15~30 秒；若模板 GC 含量高或引物 Tm 差异大，可进行 touchdown PCR（从高于 Tm 5~10°C 逐步降至较低温度），以提高特异性。\n\n最终优化结果需结合电泳图判断，兼顾产率与特异性。",
+        "finish_reason": "stop",
+        "response_ms": 5881.9,
+        "total_tokens": 557,
+        "prompt_tokens": 107,
+        "completion_tokens": 450,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 5881.9,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "非特异性"
+          ],
+          "missing_groups": [
+            "58℃/58°C",
+            "条带最清晰/条带清晰"
+          ]
+        }
+      },
+      {
+        "question_index": 2,
+        "question": "PCR 体系配置和循环条件主要来自哪份资料？",
+        "category": "资料事实型",
+        "ok": true,
+        "answer": "PCR体系配置和循环条件通常依据以下资料确定：\n\n1. **聚合酶厂商说明书**（如TaKaRa、NEB、Thermo Fisher等）——这是最直接的来源，其中包含推荐的反应缓冲液、dNTP浓度、Mg²⁺浓度、退火温度及延伸时间等。\n2. **标准分子生物学手册**，如《分子克隆》（Sambrook等）或《PCR Primer: A Laboratory Manual》，提供通用设计原则和优化策略。\n3. **具体文献或实验方案**——如果你在复现某篇论文或某个数据库（如Addgene、Protocols.io）中的实验，通常以其“Methods”部分为准。\n\n如果你指的是某一份特定资料（例如课题组内部SOP或试剂盒附带的protocol），请提供更多上下文，我可以帮你进一步确认。",
+        "finish_reason": "stop",
+        "response_ms": 7993.2,
+        "total_tokens": 687,
+        "prompt_tokens": 107,
+        "completion_tokens": 580,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 7993.2,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "PCR_protocol_demo.txt"
+          ]
+        }
+      },
+      {
+        "question_index": 3,
+        "question": "CCK-8 检测步骤和读数要求主要来自哪份资料？",
+        "category": "资料事实型",
+        "ok": true,
+        "answer": "CCK-8 检测步骤和读数要求主要来自**所用试剂盒的生产商说明书**，最经典的是**日本同仁化学（Dojindo）的 Cell Counting Kit-8（CCK-8）官方说明书**。若在实验室中，通常也会依据**本单位制定的标准操作程序（SOP）**，或参考已发表文献中按照该说明书优化的方法。具体引用时，请以你实际使用的试剂盒批号对应说明书为准。",
+        "finish_reason": "stop",
+        "response_ms": 6273.7,
+        "total_tokens": 599,
+        "prompt_tokens": 110,
+        "completion_tokens": 489,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 6273.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "cell_assay_reference_demo.txt"
+          ]
+        }
+      },
+      {
+        "question_index": 4,
+        "question": "细胞活力检测实验中读数和统计应关注什么？",
+        "category": "资料事实型",
+        "ok": true,
+        "answer": "在细胞活力检测实验中，读数和统计应重点关注以下方面：\n\n1. **读数（检测）环节**  \n   - **选择合适波长**：根据所用试剂（如MTT、CCK-8、ATP法等）选择对应吸收波长（如MTT为570nm，CCK-8为450nm），必要时设参比波长（如630nm）扣除背景。  \n   - **扣除空白对照**：使用不含细胞的培养基+试剂孔作为空白，读取时先调零或数据减去空白值。  \n   - **确保信号在线性范围**：预实验确定最佳细胞接种密度和培养时间，使OD值落在仪器的线性检测区间（通常0.2~2.0之间），避免过饱和或过低。  \n   - **避免气泡干扰**：加样后静置片刻，轻拍板底去除气泡，否则影响光吸收读数。  \n   - **重复测量**：每组设至少3~6个复孔（重复孔），读取时每孔可读取多点（如酶标仪的多点扫描）取均值。\n\n2. **统计（数据分析）环节**  \n   - **数据归一化**：通常以对照组的平均活力设为100%，实验组以相对活力（百分比）表示。  \n   - **计算均值和标准差**：剔除明显异常值（如加样失误导致的极端值），但需有依据，不可随意删除。  \n   - **统计方法选择**：  \n     - 多组比较：单因素方差分析（ANOVA），随后进行事后多重比较（如Dunnett、Tukey）。  \n     - 两组比较：独立样本t检验（若方差齐）；若方差不齐用Welch检验。  \n     - 剂量-效应数据：可进行非线性回归拟合（如IC50计算）。  \n   - **明确显著性标注**：*P<0.05，**P<0.01，***P<0.001，需在图中标明。  \n   - **重复性验证**：至少3次独立生物学重复实验，而非仅技术重复；统计应基于独立重复的平均值，而非所有孔合并。  \n   - **软件工具**：常用GraphPad Prism、SPSS、R等，注意选择正确的检验假设（如正态性和方差齐性检验）。  \n\n**总结**：读数要准确、稳定、无干扰；统计要规范、重复、归一化，并正确进行显著性检验。",
+        "finish_reason": "stop",
+        "response_ms": 6435.7,
+        "total_tokens": 640,
+        "prompt_tokens": 105,
+        "completion_tokens": 535,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 6435.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "读数",
+            "统计"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 5,
+        "question": "项目资料库中哪些资料已经同步到知识库？",
+        "category": "资料事实型",
+        "ok": true,
+        "answer": "很抱歉，我目前无法直接访问您的项目资料库或知识库系统，因此无法提供具体的同步清单。要确认哪些资料已同步，请您：\n\n1. 检查项目资料库与知识库之间的同步记录或日志（如果有的话）。\n2. 对比两者的文件列表或版本信息。\n3. 或者将资料清单提供给我，我可以帮您分析哪些可能已同步。\n\n如果您能提供更多上下文或授权访问相关系统，我会尽力协助。",
+        "finish_reason": "stop",
+        "response_ms": 5787.7,
+        "total_tokens": 563,
+        "prompt_tokens": 106,
+        "completion_tokens": 457,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 5787.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "无法确认/无法回答"
+          ]
+        }
+      },
+      {
+        "question_index": 6,
+        "question": "PCR 条件优化实验使用了哪些试剂？",
+        "category": "实验对象关系型",
+        "ok": true,
+        "answer": "PCR 条件优化实验通常需要以下试剂：\n\n- **模板 DNA**（基因组 DNA、cDNA 或质粒等）  \n- **上游引物（Forward Primer）** 和 **下游引物（Reverse Primer）**  \n- **dNTP 混合液**（dATP、dCTP、dGTP、dTTP）  \n- **耐热 DNA 聚合酶**（如 Taq DNA 聚合酶、Pfu 等）  \n- **PCR 缓冲液**（通常含 Tris-HCl、KCl 及 Mg²⁺）  \n- **MgCl₂ 溶液**（用于单独调整 Mg²⁺ 浓度，优化特异性）  \n- **无菌去离子水**（或无核酸酶水）  \n\n此外，根据优化目的，可能还会用到**增强剂/添加剂**，如 **DMSO、甘油、甜菜碱（Betaine）、BSA** 等，用来改善高 GC 含量或复杂模板的扩增效率。",
+        "finish_reason": "stop",
+        "response_ms": 5431.9,
+        "total_tokens": 580,
+        "prompt_tokens": 103,
+        "completion_tokens": 477,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 5431.9,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "dNTP",
+            "模板 DNA"
+          ],
+          "missing_groups": [
+            "Taq DNA Polymerase",
+            "MgCl2"
+          ]
+        }
+      },
+      {
+        "question_index": 7,
+        "question": "PCR 条件优化实验使用了哪些样本？",
+        "category": "实验对象关系型",
+        "ok": true,
+        "answer": "您好，您的问题缺少具体实验背景（如物种、基因、文献来源等），我无法确定您所指的“PCR 条件优化实验”具体使用了哪些样本。\n\n一般情况下，PCR 条件优化实验常使用的样本包括：\n\n- **标准 DNA 模板**：如质粒 DNA、基因组 DNA（人、小鼠、细菌等）；\n- **cDNA**（逆转录产物，用于 RT-PCR 优化）；\n- **阳性对照**（已知含目标序列的样本）；\n- **阴性对照**（如无模板对照 NTC、无逆转录对照等）。\n\n如果您能提供更多信息（例如实验目的、引物序列、参考文献），我可以给出更准确的回答。",
+        "finish_reason": "stop",
+        "response_ms": 5382.9,
+        "total_tokens": 532,
+        "prompt_tokens": 103,
+        "completion_tokens": 429,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 5382.9,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "样本 A/样本A",
+            "样本 B/样本B"
+          ]
+        }
+      },
+      {
+        "question_index": 8,
+        "question": "细胞活力检测实验使用了哪些试剂和仪器？",
+        "category": "实验对象关系型",
+        "ok": true,
+        "answer": "常用的细胞活力检测实验主要包括**MTT法**、**CCK-8法**和**台盼蓝排斥法**。不同方法所需的试剂和仪器有所差异，具体如下：\n\n---\n\n### 1. MTT法（最经典的方法）\n**试剂：**\n- **MTT溶液**（噻唑蓝，通常配制成5 mg/mL的PBS溶液，需避光保存）\n- **DMSO**（二甲基亚砜，用于溶解甲臜结晶）\n- 细胞培养基（如DMEM或RPMI 1640，含血清）\n- PBS缓冲液（用于洗涤细胞）\n\n**仪器：**\n- **酶标仪**（测定波长570 nm，参考波长630 nm）\n- 二氧化碳培养箱（细胞培养用）\n- 超净工作台（无菌操作）\n- 倒置显微镜（观察细胞状态）\n- 96孔板（细胞培养板）\n- 移液器及无菌吸头\n\n---\n\n### 2. CCK-8法（水溶性四唑盐法，比MTT更灵敏便捷）\n**试剂：**\n- **CCK-8试剂盒**（含WST-8，即水溶性四唑盐）\n- 细胞培养基（含血清，因为CCK-8与血清相容性更好）\n\n**仪器：**\n- 酶标仪（测定波长450 nm，参考波长650 nm）\n- 二氧化碳培养箱\n- 超净工作台\n- 96孔板\n- 移液器及无菌吸头\n\n---\n\n### 3. 台盼蓝排斥法（用于快速计数活细胞）\n**试剂：**\n- **0.4%台盼蓝溶液**（Trypan Blue）\n- PBS缓冲液（用于稀释细胞悬液）\n\n**仪器：**\n- **细胞计数板**（血球计数板）或**自动细胞计数仪**\n- 倒置显微镜\n- 移液器和吸头\n- 离心管、离心机（收集细胞用）\n\n---\n\n### 补充说明\n- 如果检测的是**贴壁细胞**，一般还需要**胰蛋白酶**（消化细胞）和EDTA。\n- 如果实验涉及**增殖曲线**，可能还要用到**细胞增殖检测试剂盒**（如EdU法、BrdU法）的配套试剂。\n- 对于**荧光法**（如Calcein-AM/PI染色），还需要荧光显微镜或荧光酶标仪。\n\n根据你的具体实验目的（如药物毒性评估、增殖测定或细胞存活率统计），可以选择最合适的检测方法。如果有更具体的实验设计，我可以进一步帮你细化方案。",
+        "finish_reason": "stop",
+        "response_ms": 6470.8,
+        "total_tokens": 722,
+        "prompt_tokens": 104,
+        "completion_tokens": 618,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 6470.8,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "CCK-8",
+            "PBS",
+            "DMEM",
+            "酶标仪"
+          ],
+          "missing_groups": [
+            "CO2 培养箱/CO₂培养箱"
+          ]
+        }
+      },
+      {
+        "question_index": 9,
+        "question": "Western Blot 蛋白表达验证使用了哪些试剂？",
+        "category": "实验对象关系型",
+        "ok": true,
+        "answer": "在 Western Blot 蛋白表达验证实验中，所需试剂覆盖从样品制备到最终显影的全流程。以下按实验步骤分类列出常用试剂及其用途：\n\n---\n\n### 1. 蛋白提取与裂解\n- **RIPA 裂解液（或 NP-40、SDS 裂解液）** — 裂解细胞或组织，释放蛋白。\n- **蛋白酶抑制剂（如 PMSF、cocktail）** — 防止蛋白降解。\n- **磷酸酶抑制剂（如 NaF、Na₃VO₄）** — 若检测磷酸化蛋白需添加。\n- **PBS（磷酸盐缓冲液）** — 洗涤细胞。\n- **BCA 或 Bradford 蛋白浓度测定试剂盒** — 用于定量。\n\n---\n\n### 2. SDS-PAGE 电泳\n- **30% 丙烯酰胺/甲叉双丙烯酰胺溶液（29:1）** — 配制分离胶和浓缩胶。\n- **Tris-HCl 缓冲液（pH 6.8 / pH 8.8）** — 浓缩胶与分离胶缓冲液。\n- **10% SDS（十二烷基硫酸钠）** — 变性蛋白，使其带负电荷。\n- **10% APS（过硫酸铵）** — 凝胶聚合引发剂。\n- **TEMED** — 加速聚合。\n- **电泳缓冲液（Tris-Glycine-SDS，常用 1×：25 mM Tris，192 mM Glycine，0.1% SDS）** — 电泳时的缓冲系统。\n- **蛋白上样缓冲液（含 SDS、β-巯基乙醇或 DTT、溴酚蓝、甘油）** — 蛋白变性并便于上样。\n- **蛋白分子量 Marker** — 指示分子量大小。\n\n---\n\n### 3. 转膜\n- **转膜缓冲液（常用配方：25 mM Tris、192 mM Glycine、20% 甲醇）** — 湿转或半干转的离子环境。\n- **PVDF 膜（或 NC 膜）** — 蛋白固相载体。PVDF 膜需先用 **甲醇** 活化。\n- **滤纸** — 转移时用。\n- **预染蛋白 Marker**（用于观察转移效率）。\n\n---\n\n### 4. 封闭\n- **封闭液** — 常用 **5% 脱脂牛奶（溶于 TBST）** 或 **5% BSA（牛血清白蛋白）**。BSA 常用于检测磷酸化蛋白，避免牛奶中磷酸酶干扰。\n- **TBST（Tris 缓冲盐 + 0.1% Tween-20）** — 洗涤和稀释抗体。\n\n---\n\n### 5. 抗体孵育\n- **一抗** — 特异性识别目标蛋白，用 **一抗稀释液**（常用 5% BSA/TBST 或商品化稀释液）稀释。\n- **二抗** — HRP 或荧光标记的抗一抗种属 IgG，用封闭液稀释。\n- **一抗/二抗去除液（Stripping buffer）** — 如需重复杂交，可洗脱抗体。\n\n---\n\n### 6. 洗涤\n- **TBST（Tween-20 浓度 0.1%~0.5%）** — 常规洗涤。\n- **TBS（不含 Tween，用于某些特殊检测）**。\n\n---\n\n### 7. 显色 / 检测\n- **ECL 化学发光底物（如 SuperSignal、Clarity Western ECL）** — 与 HRP 标记二抗反应产生化学发光。\n- **X 光胶片** 或 **化学发光成像仪** — 捕获信号。\n- **显影液、定影液**（若用传统胶片法）。\n- **荧光二抗对应成像系统**（若使用 Licor 等荧光检测，则用荧光标记二抗，无需 ECL）。\n\n---\n\n### 8. 其他常用辅助试剂\n- **甲醇或乙醇** — 膜活化及固定。\n- **BSA** — 封闭与抗体稀释（替代牛奶）。\n- **DTT 或 β-巯基乙醇** — 还原剂，用于上样缓冲液。\n- **Tris、甘氨酸、NaCl、Tween-20、SDS** — 配制各种缓冲液的基础试剂。\n\n---\n\n### 温馨提示：\n- 所有溶液建议使用 **超纯水（Milli-Q）** 配制。\n- 抗体稀释比例需根据说明书优化。\n- 若遇非特异性条带，可尝试提高 Tween-20 浓度或改用 5% BSA 封闭。\n\n如果你需要具体的试剂品牌或配方细节，欢迎进一步提问，我可以提供更详细的指导。",
+        "finish_reason": "stop",
+        "response_ms": 12201.7,
+        "total_tokens": 1262,
+        "prompt_tokens": 105,
+        "completion_tokens": 1157,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 12201.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "RIPA",
+            "BCA",
+            "一抗",
+            "二抗"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 10,
+        "question": "Western Blot 蛋白表达验证使用了哪些仪器？",
+        "category": "实验对象关系型",
+        "ok": true,
+        "answer": "在 Western Blot（免疫印迹）实验中，用于验证蛋白表达的仪器主要涉及以下几个步骤。以下按实验流程列出常用仪器及其用途：\n\n---\n\n### 1. 样品制备与定量\n- **组织/细胞破碎仪**：如匀浆器、超声破碎仪，用于裂解细胞或组织释放蛋白。\n- **低温高速离心机**：分离上清液中的总蛋白。\n- **分光光度计（如 NanoDrop）或酶标仪**：用于 BCA、Bradford 等方法定量蛋白浓度。\n\n### 2. SDS-PAGE 电泳\n- **垂直电泳槽**：装载凝胶并进行蛋白质按分子量分离。\n- **电泳电源（电泳仪）**：提供稳定的电压/电流。\n\n### 3. 转膜\n- **转印槽**（湿转/半干转仪器）：将凝胶中的蛋白转移至 PVDF 或 NC 膜上。\n- **电泳电源**：用于转膜时的恒流/恒压输出。\n\n### 4. 封闭与抗体孵育\n- **脱色摇床/水平摇床**：在封闭、一抗/二抗孵育过程中保持均匀晃动。\n\n### 5. 显色与成像\n- **化学发光成像系统**（如 Bio-Rad ChemiDoc、GE ImageQuant）：通过 ECL 底物发光检测蛋白条带，是当前最常见的仪器。\n- **传统 X 光胶片暗室设备**（或胶片压片盒）用于放射自显影（较少用）。\n- **荧光扫描仪**（若使用荧光标记的二抗则适用）。\n\n### 6. 辅助设备\n- **金属浴/加热块**：用于蛋白样品加热变性（如 95-100°C）。\n- **涡旋振荡器、磁力搅拌器**：样品混匀或配液。\n- **微量移液器及冷链设备**（如冰盒、-20/-80°C 冰箱）用于样品保存和操作。\n\n---\n\n以上仪器是完成 Western Blot 蛋白表达验证的基本配置。不同实验室可能使用自动化一体化系统（如全自动 WB 设备），但核心原理与上述仪器一致。如果您需要更具体的型号或厂商信息，请告知您的实验条件（预算、预算通量等），我可以进一步建议。",
+        "finish_reason": "stop",
+        "response_ms": 9770.2,
+        "total_tokens": 947,
+        "prompt_tokens": 105,
+        "completion_tokens": 842,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 9770.2,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "电泳仪"
+          ],
+          "missing_groups": [
+            "转膜仪",
+            "凝胶成像系统"
+          ]
+        }
+      },
+      {
+        "question_index": 11,
+        "question": "退火温度 58℃ 条带最清晰这一结果来自哪条实验笔记？",
+        "category": "过程追溯型",
+        "ok": true,
+        "answer": "很抱歉，我无法直接访问您的实验笔记或任何私人记录，因此无法知道“退火温度 58℃ 条带最清晰”这一结果具体来自哪一条笔记。\n\n如果您能提供更多信息，比如笔记的日期、实验标题、样本编号，或者这是来自某篇文献/共享数据，我可以帮您进一步分析或推测。日常建议您查阅PCR梯度退火温度优化相关的记录，通常这类结果会标注在“退火温度梯度”或“引物特异性测试”的条目下。",
+        "finish_reason": "stop",
+        "response_ms": 3777.7,
+        "total_tokens": 432,
+        "prompt_tokens": 113,
+        "completion_tokens": 319,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 3777.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "PCR 条件优化实验"
+          ]
+        }
+      },
+      {
+        "question_index": 12,
+        "question": "处理组细胞活力下降约 18% 这一结论来自哪条实验笔记？",
+        "category": "过程追溯型",
+        "ok": true,
+        "answer": "抱歉，我无法定位到具体实验笔记，因为没有提供实验记录的内容或上下文。请提供相关笔记片段或文件，我才能帮您找到“处理组细胞活力下降约 18%”这一结论的来源。",
+        "finish_reason": "stop",
+        "response_ms": 3236.6,
+        "total_tokens": 337,
+        "prompt_tokens": 112,
+        "completion_tokens": 225,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 3236.6,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "细胞活力检测实验"
+          ]
+        }
+      },
+      {
+        "question_index": 13,
+        "question": "处理组目标蛋白表达降低这一结果来自哪条实验笔记？",
+        "category": "过程追溯型",
+        "ok": true,
+        "answer": "我没有找到相关实验笔记。请提供实验笔记的具体内容或编号，我才能帮您定位。",
+        "finish_reason": "stop",
+        "response_ms": 1982.3,
+        "total_tokens": 210,
+        "prompt_tokens": 108,
+        "completion_tokens": 102,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 1982.3,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "Western Blot 蛋白表达验证"
+          ]
+        }
+      },
+      {
+        "question_index": 14,
+        "question": "三条实验笔记分别由谁创建？",
+        "category": "过程追溯型",
+        "ok": true,
+        "answer": "很抱歉，我无法确定这三条实验笔记分别由谁创建，因为没有提供具体内容或相关背景。请补充笔记内容或上下文信息，我才能准确回答。",
+        "finish_reason": "stop",
+        "response_ms": 4443.7,
+        "total_tokens": 440,
+        "prompt_tokens": 102,
+        "completion_tokens": 338,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 4443.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "系统管理员"
+          ]
+        }
+      },
+      {
+        "question_index": 15,
+        "question": "当前项目包含哪些已审核实验笔记？",
+        "category": "过程追溯型",
+        "ok": true,
+        "answer": "抱歉，我无法直接访问当前项目的实验笔记数据。请提供项目名称或具体位置，我将协助查询已审核的实验笔记。",
+        "finish_reason": "stop",
+        "response_ms": 4537.6,
+        "total_tokens": 441,
+        "prompt_tokens": 103,
+        "completion_tokens": 338,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 4537.6,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "PCR 条件优化实验",
+            "细胞活力检测实验",
+            "Western Blot 蛋白表达验证",
+            "qPCR 定量验证实验",
+            "细胞传代与冻存记录",
+            "质粒提取与酶切鉴定",
+            "细胞转染效率优化",
+            "蛋白浓度标准曲线测定",
+            "SDS-PAGE 凝胶配制与电泳",
+            "细胞凋亡检测实验",
+            "RNA 提取与逆转录",
+            "免疫荧光染色实验",
+            "克隆形成实验",
+            "ELISA 检测实验",
+            "质粒测序结果分析"
+          ]
+        }
+      },
+      {
+        "question_index": 16,
+        "question": "2026 年 6 月 3 日至 6 月 5 日项目完成了哪些实验？",
+        "category": "综合总结型",
+        "ok": true,
+        "answer": "很抱歉，我无法直接得知您项目中在2026年6月3日至5日具体完成了哪些实验。请提供项目名称、实验记录或相关文档，以便我协助查询和总结。",
+        "finish_reason": "stop",
+        "response_ms": 4147.4,
+        "total_tokens": 435,
+        "prompt_tokens": 119,
+        "completion_tokens": 316,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 4147.4,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "PCR 条件优化实验",
+            "细胞活力检测实验",
+            "Western Blot 蛋白表达验证"
+          ]
+        }
+      },
+      {
+        "question_index": 17,
+        "question": "这三项实验分别产生了哪些主要结果？",
+        "category": "综合总结型",
+        "ok": true,
+        "answer": "由于您没有具体说明是哪三项实验，我无法确定您所指的内容。能否请您提供实验名称或相关背景信息？这样我才能准确为您总结各自的主要结果。",
+        "finish_reason": "stop",
+        "response_ms": 3969.7,
+        "total_tokens": 379,
+        "prompt_tokens": 103,
+        "completion_tokens": 276,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 3969.7,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [],
+          "missing_groups": [
+            "58℃/58°C",
+            "18%",
+            "目标蛋白/蛋白表达降低"
+          ]
+        }
+      },
+      {
+        "question_index": 18,
+        "question": "项目中涉及的主要试剂可以按实验类型如何归纳？",
+        "category": "综合总结型",
+        "ok": true,
+        "answer": "由于您未提供具体项目细节，以下按常见实验类型给出主要试剂归纳框架。请结合实际情况调整：\n\n---\n\n### 一、分子生物学实验\n| 实验类型 | 主要试剂 |\n|---------|---------|\n| **核酸提取** | 裂解液、蛋白酶K、RNA酶、异丙醇/乙醇、氯仿、吸附柱/磁珠 |\n| **PCR/qPCR** | Taq酶、dNTPs、引物、模板DNA/cDNA、SYBR Green / 探针、Mg²⁺缓冲液 |\n| **逆转录** | 逆转录酶、随机引物/Oligo(dT)、RNase抑制剂 |\n| **电泳** | 琼脂糖/聚丙烯酰胺、TAE/TBE缓冲液、核酸染料、DNA Marker |\n| **克隆/酶切** | 限制性内切酶、连接酶、载体、感受态细胞、抗生素 |\n\n---\n\n### 二、蛋白质实验\n| 实验类型 | 主要试剂 |\n|---------|---------|\n| **蛋白提取/裂解** | RIPA裂解液、PMSF/蛋白酶抑制剂、磷酸酶抑制剂 |\n| **蛋白定量** | BCA试剂盒 / Bradford染料、BSA标准品 |\n| **SDS-PAGE** | 丙烯酰胺/甲叉双丙烯酰胺、SDS、Tris-Gly缓冲液、APS、TEMED、蛋白Marker |\n| **Western Blot** | 转膜缓冲液、PVDF/NC膜、封闭液（BSA/脱脂奶粉）、一抗/二抗、ECL显影液 |\n| **免疫共沉淀/纯化** | IP裂解液、Protein A/G磁珠、特异性抗体、洗脱液 |\n\n---\n\n### 三、细胞实验\n| 实验类型 | 主要试剂 |\n|---------|---------|\n| **细胞培养** | DMEM/RPMI 1640培养基、胎牛血清（FBS）、青霉素-链霉素、胰酶-EDTA、PBS |\n| **细胞活力/增殖** | CCK-8 / MTT / MTS试剂 |\n| **凋亡/周期** | Annexin V-FITC/PI试剂盒、PI/RNase染色液 |\n| **转染** | 转染试剂（Lipo3000 / PEI等）、Opti-MEM、质粒/siRNA |\n| **细胞染色** | DAPI、Hoechst、免疫荧光一/二抗 |\n\n---\n\n### 四、免疫学实验\n| 实验类型 | 主要试剂 |\n|---------|---------|\n| **ELISA** | 包被抗体、检测抗体、酶标二抗、TMB底物、终止液、标准品 |\n| **流式细胞术** | 荧光标记抗体、FACS缓冲液、固定/破膜液 |\n| **免疫组化/免疫荧光** | 抗原修复液、通透液、封闭液、一/二抗、DAB/DAPI |\n\n---\n\n### 五、动物/组织实验\n| 实验类型 | 主要试剂 |\n|---------|---------|\n| **组织固定/切片** | 4%多聚甲醛、石蜡、二甲苯、梯度乙醇、HE染色试剂 |\n| **组织裂解/匀浆** | 组织裂解液、蛋白酶抑制剂 |\n| **给药处理** | 药物溶剂（DMSO、生理盐水等）、麻醉剂（戊巴比妥等） |\n\n---\n\n### 六、化学/生化分析\n| 实验类型 | 主要试剂 |\n|---------|---------|\n| **代谢/酶活检测** | 对应底物、辅酶、显色剂、标准曲线用标准品 |\n| **HPLC/GC** | 流动相（乙腈、甲醇、缓冲盐）、衍生化试剂、内标物 |\n| **氧化应激检测** | ROS荧光探针（DCFH-DA）、MDA/SOD/CAT检测试剂盒 |\n\n---\n\n**建议：**  \n由于不同项目差异较大，建议您提供具体研究内容（如基因、蛋白、细胞类型等），我可以帮您进一步细化和精准归纳。",
+        "finish_reason": "stop",
+        "response_ms": 9797.5,
+        "total_tokens": 1015,
+        "prompt_tokens": 105,
+        "completion_tokens": 910,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 9797.5,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "PCR",
+            "SYBR Green",
+            "细胞培养",
+            "CCK-8",
+            "Western Blot",
+            "RIPA",
+            "质粒"
+          ],
+          "missing_groups": [
+            "Lipofectamine/EcoRI/HindIII"
+          ]
+        }
+      },
+      {
+        "question_index": 19,
+        "question": "项目中涉及的主要仪器可以按实验类型如何归纳？",
+        "category": "综合总结型",
+        "ok": true,
+        "answer": "由于您未提供具体项目信息，以下按常见实验类型归纳主要仪器，您可根据实际项目进行调整：\n\n## 1. 分子生物学实验\n- **PCR仪**（基因扩增）\n- **凝胶电泳仪**（DNA/RNA分离）\n- **离心机**（核酸提取）\n- **紫外分光光度计/核酸定量仪**（浓度测定）\n- **凝胶成像系统**（结果分析）\n\n## 2. 细胞生物学实验\n- **生物安全柜**（无菌操作）\n- **CO₂培养箱**（细胞培养）\n- **倒置显微镜**（细胞观察）\n- **流式细胞仪**（细胞分选/分析）\n- **酶标仪**（细胞活力/ELISA）\n\n## 3. 蛋白生化实验\n- **SDS-PAGE电泳系统**（蛋白分离）\n- **Western blot系统**（转膜/显影）\n- **层析系统**（蛋白纯化）\n- **超微量分光光度计**（蛋白定量）\n- **质谱仪**（蛋白鉴定）\n\n## 4. 化学合成与分析\n- **旋转蒸发仪**（溶剂去除）\n- **磁力搅拌器/加热套**\n- **高效液相色谱（HPLC）**\n- **气相色谱-质谱联用（GC-MS）**\n- **核磁共振波谱仪（NMR）**\n\n## 5. 材料表征\n- **扫描电子显微镜（SEM）**\n- **透射电子显微镜（TEM）**\n- **X射线衍射仪（XRD）**\n- **傅里叶红外光谱仪（FTIR）**\n- **热重分析仪（TGA）**\n\n## 6. 动物实验\n- **动物饲养笼具（IVC系统）**\n- **麻醉机**\n- **小动物活体成像系统**\n- **脑立体定位仪**\n- **代谢笼**\n\n如果需要更精准的归纳，请提供项目的具体研究方向和主要实验内容，我可以进一步细化。",
+        "finish_reason": "stop",
+        "response_ms": 4615.5,
+        "total_tokens": 555,
+        "prompt_tokens": 105,
+        "completion_tokens": 450,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 4615.5,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "酶标仪",
+            "电泳仪",
+            "凝胶成像系统",
+            "离心机"
+          ],
+          "missing_groups": [
+            "PCR Thermal Cycler/荧光定量 PCR 仪",
+            "转膜仪"
+          ]
+        }
+      },
+      {
+        "question_index": 20,
+        "question": "根据当前实验记录，项目下一步可以重点复核哪些结果？",
+        "category": "开放式建议",
+        "ok": true,
+        "answer": "由于当前没有提供具体的实验记录内容，我无法直接指出哪些结果需要重点复核。请将相关实验记录（如数据表、图表、原始数据或实验描述）发给我，我可以帮您梳理下一步的复核重点。\n\n如果需要通用建议，通常可以优先复核以下方面：\n1. **关键实验重复性**：核心结果是否重复过多次，统计检验是否稳健。\n2. **异常值与离群点**：是否存在不合理的数据点，是否因操作误差或仪器问题导致。\n3. **对照与排除条件**：阳性/阴性对照是否正常，是否排除了可能的干扰因素。\n4. **仪器校准与数据处理**：标曲、归一化、基线扣除等步骤是否正确。\n5. **结论依赖的核心图表**：支撑主要结论的图/表是否经得起推敲，原始数据与展示是否一致。\n\n请补充具体记录，我会给出更有针对性的建议。",
+        "finish_reason": "stop",
+        "response_ms": 4961.0,
+        "total_tokens": 478,
+        "prompt_tokens": 107,
+        "completion_tokens": 371,
+        "model": "deepseek-v4-flash",
+        "attempts": [
+          {
+            "attempt": 1,
+            "ok": true,
+            "response_ms": 4961.0,
+            "error": null
+          }
+        ],
+        "is_traceable": false,
+        "traceability_note": "裸 LLM 臂按构造无检索来源，无可引用出处。",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "复核"
+          ],
+          "missing_groups": [
+            "99.8%/320 pg/mL/8%/A260/280"
+          ]
+        }
+      }
+    ]
+  },
+  "arm_b_sql_baseline": {
+    "config": {
+      "database": "docker 容器 eln-db-1 内 PostgreSQL 库 eln",
+      "project_id": 1,
+      "scope": "Q06–Q15 结构化可查；Q16–Q19 可聚合亦纳入；Q01–Q05 与 Q20 标记 N/A"
+    },
+    "summary": {
+      "total_cases": 20,
+      "applicable_cases": 14,
+      "na_cases": 6,
+      "task_completed_all20": 11,
+      "task_completion_rate_all20": 55.0,
+      "task_completed_in_scope": 11,
+      "task_completion_rate_in_scope": 78.6,
+      "traceable_count": 14,
+      "avg_response_ms": 43.9,
+      "median_response_ms": 36.0
+    },
+    "results": [
+      {
+        "question_index": 1,
+        "question": "PCR 条件优化实验的退火温度优化依据是什么？",
+        "category": "资料事实型",
+        "applicable": false,
+        "na_reason": "资料事实型：答案（58℃ 依据、条带观察等细节）位于上传文档的正文文本中，结构化表（experiment_notes/kg_*）不存储该文档级事实，无法用忠实于题意的 SQL 查询获得。",
+        "sql_rationale": null,
+        "sql_statements": null,
+        "response_ms": null,
+        "error": null,
+        "is_traceable": null,
+        "traceability_note": "N/A：不适用 SQL 基线，无可判定查询。",
+        "evaluation": {
+          "completed": null,
+          "matched_groups": [],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 2,
+        "question": "PCR 体系配置和循环条件主要来自哪份资料？",
+        "category": "资料事实型",
+        "applicable": false,
+        "na_reason": "资料事实型：答案为资料文件名 PCR_protocol_demo.txt，属文件内容层事实；files 表仅含上传文件元数据，无法建立“体系配置内容→来源文件”的语义映射。",
+        "sql_rationale": null,
+        "sql_statements": null,
+        "response_ms": null,
+        "error": null,
+        "is_traceable": null,
+        "traceability_note": "N/A：不适用 SQL 基线，无可判定查询。",
+        "evaluation": {
+          "completed": null,
+          "matched_groups": [],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 3,
+        "question": "CCK-8 检测步骤和读数要求主要来自哪份资料？",
+        "category": "资料事实型",
+        "applicable": false,
+        "na_reason": "资料事实型：答案为资料文件名 cell_assay_reference_demo.txt，理由同 Q2。",
+        "sql_rationale": null,
+        "sql_statements": null,
+        "response_ms": null,
+        "error": null,
+        "is_traceable": null,
+        "traceability_note": "N/A：不适用 SQL 基线，无可判定查询。",
+        "evaluation": {
+          "completed": null,
+          "matched_groups": [],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 4,
+        "question": "细胞活力检测实验中读数和统计应关注什么？",
+        "category": "资料事实型",
+        "applicable": false,
+        "na_reason": "资料事实型：“读数和统计应关注什么”是文档正文中的操作要点，非结构化字段可查。",
+        "sql_rationale": null,
+        "sql_statements": null,
+        "response_ms": null,
+        "error": null,
+        "is_traceable": null,
+        "traceability_note": "N/A：不适用 SQL 基线，无可判定查询。",
+        "evaluation": {
+          "completed": null,
+          "matched_groups": [],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 5,
+        "question": "项目资料库中哪些资料已经同步到知识库？",
+        "category": "资料事实型",
+        "applicable": false,
+        "na_reason": "资料事实型：题目问的是知识库同步状态的元信息，且实验 4 判定正确行为是拒答（gold 要点为“无法确认/无法回答”）；SQL 直接给出清单会与预期拒答行为相悖，标记 N/A。",
+        "sql_rationale": null,
+        "sql_statements": null,
+        "response_ms": null,
+        "error": null,
+        "is_traceable": null,
+        "traceability_note": "N/A：不适用 SQL 基线，无可判定查询。",
+        "evaluation": {
+          "completed": null,
+          "matched_groups": [],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 6,
+        "question": "PCR 条件优化实验使用了哪些试剂？",
+        "category": "实验对象关系型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "从名为“PCR 条件优化实验”的笔记实体出发，沿 uses_reagent 关系查出全部目标试剂实体名。",
+        "sql_statements": [
+          {
+            "sql": "SELECT te.label AS reagent\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'uses_reagent'\n  AND se.entity_type = 'note' AND se.label = 'PCR 条件优化实验'\nORDER BY reagent;",
+            "ok": true,
+            "stdout": "reagent       \n--------------------\n dNTP\n MgCl2\n Taq DNA Polymerase\n 模板 DNA\n(4 rows)"
+          }
+        ],
+        "response_ms": 145.0,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "Taq DNA Polymerase",
+            "dNTP",
+            "MgCl2",
+            "模板 DNA"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 7,
+        "question": "PCR 条件优化实验使用了哪些样本？",
+        "category": "实验对象关系型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "同上，沿 uses_sample 关系查样本实体名。",
+        "sql_statements": [
+          {
+            "sql": "SELECT te.label AS sample\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'uses_sample'\n  AND se.entity_type = 'note' AND se.label = 'PCR 条件优化实验'\nORDER BY sample;",
+            "ok": true,
+            "stdout": "sample \n--------\n 样本 A\n 样本 B\n(2 rows)"
+          }
+        ],
+        "response_ms": 44.0,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "样本 A",
+            "样本 B"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 8,
+        "question": "细胞活力检测实验使用了哪些试剂和仪器？",
+        "category": "实验对象关系型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "“细胞活力检测实验”的 uses_reagent 与 uses_instrument 两组关系合并查询。",
+        "sql_statements": [
+          {
+            "sql": "SELECT r.relation_type AS relation, te.label AS object\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type IN ('uses_reagent', 'uses_instrument')\n  AND se.entity_type = 'note' AND se.label = '细胞活力检测实验'\nORDER BY relation, object;",
+            "ok": true,
+            "stdout": "relation     |   object    \n-----------------+-------------\n uses_instrument | CO2 培养箱\n uses_instrument | 酶标仪\n uses_reagent    | CCK-8\n uses_reagent    | DMEM 培养基\n uses_reagent    | PBS\n(5 rows)"
+          }
+        ],
+        "response_ms": 40.5,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "CCK-8",
+            "PBS",
+            "DMEM",
+            "酶标仪",
+            "CO2 培养箱"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 9,
+        "question": "Western Blot 蛋白表达验证使用了哪些试剂？",
+        "category": "实验对象关系型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "“Western Blot 蛋白表达验证”的 uses_reagent 关系。",
+        "sql_statements": [
+          {
+            "sql": "SELECT te.label AS reagent\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'uses_reagent'\n  AND se.entity_type = 'note' AND se.label = 'Western Blot 蛋白表达验证'\nORDER BY reagent;",
+            "ok": true,
+            "stdout": "reagent   \n-------------\n BCA 试剂盒\n RIPA 裂解液\n 一抗\n 二抗\n(4 rows)"
+          }
+        ],
+        "response_ms": 36.8,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "RIPA",
+            "BCA",
+            "一抗",
+            "二抗"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 10,
+        "question": "Western Blot 蛋白表达验证使用了哪些仪器？",
+        "category": "实验对象关系型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "“Western Blot 蛋白表达验证”的 uses_instrument 关系。",
+        "sql_statements": [
+          {
+            "sql": "SELECT te.label AS instrument\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'uses_instrument'\n  AND se.entity_type = 'note' AND se.label = 'Western Blot 蛋白表达验证'\nORDER BY instrument;",
+            "ok": true,
+            "stdout": "instrument  \n--------------\n 凝胶成像系统\n 电泳仪\n 转膜仪\n(3 rows)"
+          }
+        ],
+        "response_ms": 37.5,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "电泳仪",
+            "转膜仪",
+            "凝胶成像系统"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 11,
+        "question": "退火温度 58℃ 条带最清晰这一结果来自哪条实验笔记？",
+        "category": "过程追溯型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "反向检索：produces_result 的目标结果实体标签含“退火温度 58”，返回其来源笔记。",
+        "sql_statements": [
+          {
+            "sql": "SELECT DISTINCT se.label AS source_note, te.label AS result\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'produces_result'\n  AND te.label LIKE '%退火温度 58%';",
+            "ok": true,
+            "stdout": "source_note    |                      result                       \n------------------+---------------------------------------------------\n PCR 条件优化实验 | 退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。\n(1 row)"
+          }
+        ],
+        "response_ms": 35.2,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "PCR 条件优化实验"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 12,
+        "question": "处理组细胞活力下降约 18% 这一结论来自哪条实验笔记？",
+        "category": "过程追溯型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "反向检索：produces_result 目标结果含“细胞活力下降约 18”，返回来源笔记。",
+        "sql_statements": [
+          {
+            "sql": "SELECT DISTINCT se.label AS source_note, te.label AS result\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'produces_result'\n  AND te.label LIKE '%细胞活力下降约 18%';",
+            "ok": true,
+            "stdout": "source_note    |        result        \n------------------+----------------------\n 细胞活力检测实验 | 细胞活力下降约 18%。\n(1 row)"
+          }
+        ],
+        "response_ms": 32.2,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "细胞活力检测实验"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 13,
+        "question": "处理组目标蛋白表达降低这一结果来自哪条实验笔记？",
+        "category": "过程追溯型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "反向检索：produces_result 目标结果含“目标蛋白表达降低”，返回来源笔记。",
+        "sql_statements": [
+          {
+            "sql": "SELECT DISTINCT se.label AS source_note, te.label AS result\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'produces_result'\n  AND te.label LIKE '%目标蛋白表达降低%';",
+            "ok": true,
+            "stdout": "source_note        |          result          \n---------------------------+--------------------------\n Western Blot 蛋白表达验证 | 处理组目标蛋白表达降低。\n(1 row)"
+          }
+        ],
+        "response_ms": 37.0,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "Western Blot 蛋白表达验证"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 14,
+        "question": "三条实验笔记分别由谁创建？",
+        "category": "过程追溯型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "三条主实验笔记的创建人：experiment_notes.owner_user_id 连接 users.display_name（与 kg created_by 关系一致）。",
+        "sql_statements": [
+          {
+            "sql": "SELECT n.title AS note, u.display_name AS creator\nFROM experiment_notes n\nJOIN users u ON u.id = n.owner_user_id\nWHERE n.project_id = 1\n  AND n.title IN ('PCR 条件优化实验', '细胞活力检测实验', 'Western Blot 蛋白表达验证')\nORDER BY n.id;",
+            "ok": true,
+            "stdout": "note            |  creator   \n---------------------------+------------\n PCR 条件优化实验          | 系统管理员\n 细胞活力检测实验          | 系统管理员\n Western Blot 蛋白表达验证 | 系统管理员\n(3 rows)"
+          }
+        ],
+        "response_ms": 32.8,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 experiment_notes, users 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "系统管理员"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 15,
+        "question": "当前项目包含哪些已审核实验笔记？",
+        "category": "过程追溯型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "当前项目全部已审核（APPROVED）实验笔记清单。注意：当前库中该项目仅存 4 条已审核笔记，与实验 4 运行时的 15 条相比存在数据漂移，如实记录。",
+        "sql_statements": [
+          {
+            "sql": "SELECT title AS approved_note, experiment_date, status\nFROM experiment_notes\nWHERE project_id = 1 AND status = 'APPROVED'\nORDER BY id;",
+            "ok": true,
+            "stdout": "approved_note       | experiment_date |  status  \n---------------------------+-----------------+----------\n PCR 条件优化实验          | 2026-06-03      | APPROVED\n 细胞活力检测实验          | 2026-06-04      | APPROVED\n Western Blot 蛋白表达验证 | 2026-06-05      | APPROVED\n qPCR 定量验证实验         | 2026-05-28      | APPROVED\n(4 rows)"
+          }
+        ],
+        "response_ms": 32.2,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 experiment_notes, users 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "PCR 条件优化实验",
+            "细胞活力检测实验",
+            "Western Blot 蛋白表达验证",
+            "qPCR 定量验证实验"
+          ],
+          "missing_groups": [
+            "细胞传代与冻存记录",
+            "质粒提取与酶切鉴定",
+            "细胞转染效率优化",
+            "蛋白浓度标准曲线测定",
+            "SDS-PAGE 凝胶配制与电泳",
+            "细胞凋亡检测实验",
+            "RNA 提取与逆转录",
+            "免疫荧光染色实验",
+            "克隆形成实验",
+            "ELISA 检测实验",
+            "质粒测序结果分析"
+          ]
+        }
+      },
+      {
+        "question_index": 16,
+        "question": "2026 年 6 月 3 日至 6 月 5 日项目完成了哪些实验？",
+        "category": "综合总结型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "按 experiment_date 落在 2026-06-03 至 2026-06-05 的已审核笔记聚合。",
+        "sql_statements": [
+          {
+            "sql": "SELECT title AS note, experiment_date, status\nFROM experiment_notes\nWHERE project_id = 1\n  AND status = 'APPROVED'\n  AND experiment_date BETWEEN DATE '2026-06-03' AND DATE '2026-06-05'\nORDER BY experiment_date;",
+            "ok": true,
+            "stdout": "note            | experiment_date |  status  \n---------------------------+-----------------+----------\n PCR 条件优化实验          | 2026-06-03      | APPROVED\n 细胞活力检测实验          | 2026-06-04      | APPROVED\n Western Blot 蛋白表达验证 | 2026-06-05      | APPROVED\n(3 rows)"
+          }
+        ],
+        "response_ms": 31.5,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 experiment_notes, users 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "PCR 条件优化实验",
+            "细胞活力检测实验",
+            "Western Blot 蛋白表达验证"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 17,
+        "question": "这三项实验分别产生了哪些主要结果？",
+        "category": "综合总结型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "对上一题时间窗内的笔记集合，沿 produces_result 关系取各自主要结果。",
+        "sql_statements": [
+          {
+            "sql": "SELECT se.label AS note, te.label AS result\nFROM kg_relations r\nJOIN kg_entities se ON se.id = r.source_entity_id\nJOIN kg_entities te ON te.id = r.target_entity_id\nWHERE r.project_id = 1\n  AND r.relation_type = 'produces_result'\n  AND se.entity_type = 'note'\n  AND se.label IN (\n      SELECT title FROM experiment_notes\n      WHERE project_id = 1 AND status = 'APPROVED'\n        AND experiment_date BETWEEN DATE '2026-06-03' AND DATE '2026-06-05')\nORDER BY note, result;",
+            "ok": true,
+            "stdout": "note            |                       result                       \n---------------------------+----------------------------------------------------\n PCR 条件优化实验          | 58℃ 条件下条带清晰。\n PCR 条件优化实验          | 退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。\n Western Blot 蛋白表达验证 | 处理组目标蛋白表达降低。\n Western Blot 蛋白表达验证 | 目标蛋白在处理组表达降低，内参条带稳定。\n 细胞活力检测实验          | 处理组细胞活力较对照组下降约 18%，重复孔结果稳定。\n 细胞活力检测实验          | 细胞活力下降约 18%。\n(6 rows)"
+          }
+        ],
+        "response_ms": 43.8,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": true,
+          "matched_groups": [
+            "58℃",
+            "18%",
+            "目标蛋白"
+          ],
+          "missing_groups": []
+        }
+      },
+      {
+        "question_index": 18,
+        "question": "项目中涉及的主要试剂可以按实验类型如何归纳？",
+        "category": "综合总结型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "每条笔记经 has_experiment_type 归入实验类型，经 uses_reagent 取试剂，输出“实验类型—试剂”归纳对。",
+        "sql_statements": [
+          {
+            "sql": "SELECT DISTINCT et.label AS experiment_type, rg.label AS reagent\nFROM kg_entities n\nJOIN kg_relations rt ON rt.source_entity_id = n.id AND rt.project_id = n.project_id\nJOIN kg_entities et ON et.id = rt.target_entity_id AND rt.relation_type = 'has_experiment_type'\nJOIN kg_relations rr ON rr.source_entity_id = n.id AND rr.project_id = n.project_id\nJOIN kg_entities rg ON rg.id = rr.target_entity_id AND rr.relation_type = 'uses_reagent'\nWHERE n.project_id = 1 AND n.entity_type = 'note'\nORDER BY experiment_type, reagent;",
+            "ok": true,
+            "stdout": "experiment_type |        reagent        \n-----------------+-----------------------\n PCR             | cDNA 模板\n PCR             | dNTP\n PCR             | MgCl2\n PCR             | SYBR Green Master Mix\n PCR             | Taq DNA Polymerase\n PCR             | 引物对\n PCR             | 无酶水\n PCR             | 模板 DNA\n Western Blot    | BCA 试剂盒\n Western Blot    | RIPA 裂解液\n Western Blot    | 一抗\n Western Blot    | 二抗\n 细胞培养        | CCK-8\n 细胞培养        | DMEM 培养基\n 细胞培养        | PBS\n(15 rows)"
+          }
+        ],
+        "response_ms": 30.7,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "PCR",
+            "Taq DNA Polymerase",
+            "细胞培养",
+            "CCK-8",
+            "Western Blot",
+            "RIPA"
+          ],
+          "missing_groups": [
+            "质粒",
+            "Lipofectamine/EcoRI/HindIII"
+          ]
+        }
+      },
+      {
+        "question_index": 19,
+        "question": "项目中涉及的主要仪器可以按实验类型如何归纳？",
+        "category": "综合总结型",
+        "applicable": true,
+        "na_reason": null,
+        "sql_rationale": "同上，把试剂换成 uses_instrument 仪器。",
+        "sql_statements": [
+          {
+            "sql": "SELECT DISTINCT et.label AS experiment_type, ins.label AS instrument\nFROM kg_entities n\nJOIN kg_relations rt ON rt.source_entity_id = n.id AND rt.project_id = n.project_id\nJOIN kg_entities et ON et.id = rt.target_entity_id AND rt.relation_type = 'has_experiment_type'\nJOIN kg_relations ri ON ri.source_entity_id = n.id AND ri.project_id = n.project_id\nJOIN kg_entities ins ON ins.id = ri.target_entity_id AND ri.relation_type = 'uses_instrument'\nWHERE n.project_id = 1 AND n.entity_type = 'note'\nORDER BY experiment_type, instrument;",
+            "ok": true,
+            "stdout": "experiment_type |     instrument     \n-----------------+--------------------\n PCR             | PCR Thermal Cycler\n PCR             | 微量分光光度计\n PCR             | 荧光定量 PCR 仪\n Western Blot    | 凝胶成像系统\n Western Blot    | 电泳仪\n Western Blot    | 转膜仪\n 细胞培养        | CO2 培养箱\n 细胞培养        | 酶标仪\n(8 rows)"
+          }
+        ],
+        "response_ms": 34.8,
+        "error": null,
+        "is_traceable": true,
+        "traceability_note": "查询直接命中 kg_entities, kg_relations 的具体行（project_id=1）",
+        "evaluation": {
+          "completed": false,
+          "matched_groups": [
+            "PCR Thermal Cycler",
+            "酶标仪",
+            "电泳仪",
+            "转膜仪",
+            "凝胶成像系统"
+          ],
+          "missing_groups": [
+            "离心机"
+          ]
+        }
+      },
+      {
+        "question_index": 20,
+        "question": "根据当前实验记录，项目下一步可以重点复核哪些结果？",
+        "category": "开放式建议",
+        "applicable": false,
+        "na_reason": "开放式建议题：要求基于证据提出下一步复核建议，无唯一结构化查询语义（gold 要点为“复核”加任一异常值），不适合 SQL 基线。",
+        "sql_rationale": null,
+        "sql_statements": null,
+        "response_ms": null,
+        "error": null,
+        "is_traceable": null,
+        "traceability_note": "N/A：不适用 SQL 基线，无可判定查询。",
+        "evaluation": {
+          "completed": null,
+          "matched_groups": [],
+          "missing_groups": []
+        }
+      }
+    ]
+  },
+  "category_summary": {
+    "资料事实型": {
+      "bare_llm": {
+        "cases": 5,
+        "completed": 1,
+        "rate_pct": 20.0
+      },
+      "sql_baseline": {
+        "cases": 5,
+        "applicable": 0,
+        "completed_all20": 0,
+        "rate_all20_pct": 0.0,
+        "completed_in_scope": 0,
+        "rate_in_scope_pct": null
+      }
+    },
+    "实验对象关系型": {
+      "bare_llm": {
+        "cases": 5,
+        "completed": 1,
+        "rate_pct": 20.0
+      },
+      "sql_baseline": {
+        "cases": 5,
+        "applicable": 5,
+        "completed_all20": 5,
+        "rate_all20_pct": 100.0,
+        "completed_in_scope": 5,
+        "rate_in_scope_pct": 100.0
+      }
+    },
+    "过程追溯型": {
+      "bare_llm": {
+        "cases": 5,
+        "completed": 0,
+        "rate_pct": 0.0
+      },
+      "sql_baseline": {
+        "cases": 5,
+        "applicable": 5,
+        "completed_all20": 4,
+        "rate_all20_pct": 80.0,
+        "completed_in_scope": 4,
+        "rate_in_scope_pct": 80.0
+      }
+    },
+    "综合总结型": {
+      "bare_llm": {
+        "cases": 4,
+        "completed": 0,
+        "rate_pct": 0.0
+      },
+      "sql_baseline": {
+        "cases": 4,
+        "applicable": 4,
+        "completed_all20": 2,
+        "rate_all20_pct": 50.0,
+        "completed_in_scope": 2,
+        "rate_in_scope_pct": 50.0
+      }
+    },
+    "开放式建议": {
+      "bare_llm": {
+        "cases": 1,
+        "completed": 0,
+        "rate_pct": 0.0
+      },
+      "sql_baseline": {
+        "cases": 1,
+        "applicable": 0,
+        "completed_all20": 0,
+        "rate_all20_pct": 0.0,
+        "completed_in_scope": 0,
+        "rate_in_scope_pct": null
+      }
+    }
+  }
+}

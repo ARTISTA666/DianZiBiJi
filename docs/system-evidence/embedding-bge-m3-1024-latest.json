@@ -1,0 +1,44 @@
+{
+  "captured_at": "2026-08-21T02:53:55.357846+00:00",
+  "probe_text": "科研电子实验笔记系统 bge-m3 1024 维嵌入运行冒烟",
+  "config": {
+    "embedding_backend": "openai_compatible",
+    "embedding_model": "BAAI/bge-m3",
+    "embedding_dimension": 1024,
+    "embedding_api_url": "http://host.docker.internal:11434/v1/embeddings"
+  },
+  "backend_ready": {
+    "checks": {
+      "database": "ok",
+      "storage": "ok"
+    },
+    "revision": "93790d62ae50acbeba7ce98523e91f7642327e4a",
+    "status": "ready"
+  },
+  "revision": "93790d62ae50acbeba7ce98523e91f7642327e4a",
+  "embedding_probe": {
+    "served_model": "BAAI/bge-m3",
+    "dimension": 1024,
+    "dimension_matches_config": true,
+    "elapsed_ms": 322,
+    "fingerprint": [
+      -0.042416062,
+      0.010284224,
+      -0.040572796,
+      -0.030722657,
+      -0.019901808,
+      -0.015306985,
+      0.00651141,
+      0.04649652,
+      -0.009938731,
+      -0.006434423,
+      -0.024795344,
+      0.000830782,
+      0.019212477,
+      -0.03978313,
+      0.049292434,
+      -0.038501225
+    ]
+  },
+  "passed": true
+}
