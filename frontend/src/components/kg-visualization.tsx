@@ -226,11 +226,11 @@ export function KnowledgeGraphVisualization({
   }
 
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="pb-2">
+    <Card className="overflow-hidden border-border/75 shadow-card bg-card">
+      <CardHeader className="pb-3 border-b border-border/60 bg-muted/20">
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-base">图谱可视化</CardTitle>
+            <CardTitle className="text-base font-semibold">图谱可视化</CardTitle>
             <p className="mt-0.5 text-xs text-muted-foreground">
               {nodes.length} 节点 · {links.length} 边 · 点击节点查看关联
             </p>
@@ -241,28 +241,28 @@ export function KnowledgeGraphVisualization({
               {typeDistribution.slice(0, 6).map(([label, count]) => {
                 const entityType = Object.entries(kgEntityTypeText).find(([, v]) => v === label)?.[0] || label;
                 return (
-                  <Badge key={label} variant="outline" className="gap-1 text-[10px] font-normal">
-                    <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: getEntityColor(entityType) }} />
+                  <Badge key={label} variant="outline" className="gap-1.5 text-[10px] font-normal border-border/60 bg-background/80 py-0.5">
+                    <span className="inline-block h-2 w-2 rounded-full ring-1 ring-black/10 dark:ring-white/10" style={{ backgroundColor: getEntityColor(entityType) }} />
                     {label} ({count})
                   </Badge>
                 );
               })}
             </div>
-            <div className="flex items-center rounded-md border bg-background/90">
-              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="缩小图谱" title="缩小图谱" onClick={() => zoomGraph(0.8)}>
+            <div className="flex items-center rounded-lg border border-border/70 bg-background/90 shadow-subtle p-0.5">
+              <Button variant="ghost" size="icon" className="h-7 w-7 rounded-md" aria-label="缩小图谱" title="缩小图谱" onClick={() => zoomGraph(0.8)}>
                 <ZoomOut className="h-3.5 w-3.5" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="放大图谱" title="放大图谱" onClick={() => zoomGraph(1.25)}>
+              <Button variant="ghost" size="icon" className="h-7 w-7 rounded-md" aria-label="放大图谱" title="放大图谱" onClick={() => zoomGraph(1.25)}>
                 <ZoomIn className="h-3.5 w-3.5" />
               </Button>
-              <Button variant="ghost" size="icon" className="h-7 w-7" aria-label="重置图谱视图" title="重置图谱视图" onClick={() => graphRef.current?.zoomToFit?.(250, 36)}>
+              <Button variant="ghost" size="icon" className="h-7 w-7 rounded-md" aria-label="重置图谱视图" title="重置图谱视图" onClick={() => graphRef.current?.zoomToFit?.(250, 36)}>
                 <Focus className="h-3.5 w-3.5" />
               </Button>
             </div>
           </div>
         </div>
       </CardHeader>
-      <CardContent ref={graphContainerRef} className="relative h-[min(68vh,44rem)] min-h-[32rem] overflow-hidden p-0">
+      <CardContent ref={graphContainerRef} className="relative h-[min(68vh,44rem)] min-h-[32rem] overflow-hidden p-0 bg-dot-grid bg-muted/10">
         {graphSize.width > 0 && <ForceGraph2D
           ref={graphRef as any}
           graphData={graphData}
