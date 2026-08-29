@@ -161,7 +161,7 @@ def build_gse306433() -> None:
     manifest = [
         {"path": f"{p.relative_to(ROOT)}", "sha256": sha256(p)}
         for p in sorted(out_dir.iterdir())
-        if p.is_file() and p.name not in {"GSE306433_family.soft.gz", "GSE306433_series_matrix.txt.gz", "GSE306433_RAW.tar", "filelist.txt"}
+        if p.is_file() and p.name not in {"GSE306433_family.soft.gz", "GSE306433_series_matrix.txt.gz", "GSE306433_RAW.tar", "filelist.txt", "generated_manifest.json"}
     ]
     (out_dir / "generated_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print("built", out_dir)
@@ -302,7 +302,7 @@ def build_gse291942() -> None:
     manifest = [
         {"path": f"{p.relative_to(ROOT)}", "sha256": sha256(p)}
         for p in sorted(out_dir.iterdir())
-        if p.is_file() and p.name not in {"GSE291942_family.soft.gz", "GSE291942_series_matrix.txt.gz", "GSE291942_gene.tpm.matrix.annot.txt.gz"}
+        if p.is_file() and p.name not in {"GSE291942_family.soft.gz", "GSE291942_series_matrix.txt.gz", "GSE291942_gene.tpm.matrix.annot.txt.gz", "generated_manifest.json"}
     ]
     (out_dir / "generated_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print("built", out_dir)
