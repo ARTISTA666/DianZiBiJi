@@ -5,7 +5,7 @@ import { useParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import {
   Breadcrumb,
@@ -180,37 +180,41 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
       </Breadcrumb>
 
       {/* 标题区：项目名为视觉主体；Dropdown 触发器仅作切换入口，chevron 弱化提示 */}
-      <div>
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-1 text-2xl font-bold tracking-tight hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md px-1 -mx-1">
-                {project.name}
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56">
-              {projects
-                .filter((p) => p.id !== projectId)
-                .slice(0, 10)
-                .map((p) => (
-                  <DropdownMenuItem key={p.id} onClick={() => router.push(`/projects/${p.id}`)}>
-                    {p.name}
-                  </DropdownMenuItem>
-                ))}
-              {projects.length > 1 && <DropdownMenuSeparator />}
-              <DropdownMenuItem onClick={() => router.push("/projects")}>
-                查看所有项目...
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="group flex items-center gap-1.5 text-2xl font-bold tracking-tight text-foreground hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-lg px-1.5 py-0.5 -mx-1.5 hover:bg-muted/60">
+                  <span>{project.name}</span>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:text-foreground" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-64 shadow-elevate">
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">切换项目</DropdownMenuLabel>
+                {projects
+                  .filter((p) => p.id !== projectId)
+                  .slice(0, 10)
+                  .map((p) => (
+                    <DropdownMenuItem key={p.id} onClick={() => router.push(`/projects/${p.id}`)} className="cursor-pointer">
+                      <span className="truncate">{p.name}</span>
+                    </DropdownMenuItem>
+                  ))}
+                {projects.length > 1 && <DropdownMenuSeparator />}
+                <DropdownMenuItem onClick={() => router.push("/projects")} className="cursor-pointer text-primary font-medium">
+                  查看所有项目...
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          {project.description && <p className="text-sm text-muted-foreground max-w-3xl leading-relaxed">{project.description}</p>}
         </div>
-        {project.description && <p className="mt-1 text-sm text-muted-foreground">{project.description}</p>}
       </div>
 
       {!evaluationOnly && projectDataErrors.length > 0 && (
-        <div className="rounded-md border border-warning/40 bg-warning/10 px-4 py-3 text-sm text-warning" role="alert">
-          部分项目数据加载失败：{projectDataErrors.join("、")}。请刷新后重试。
+        <div className="rounded-xl border border-warning/30 bg-warning/10 p-4 text-sm text-warning shadow-subtle flex items-center gap-2" role="alert">
+          <span className="font-medium">部分项目数据加载失败：</span>
+          <span>{projectDataErrors.join("、")}。请刷新后重试。</span>
         </div>
       )}
 
@@ -220,13 +224,13 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
           router.push(target);
         });
       }}>
-        {/* GitHub 式下划线风格：仅覆盖视觉 className，role/文案/角标不变 */}
-        <TabsList className="h-auto w-full justify-start overflow-x-auto rounded-none border-b bg-transparent p-0">
+        {/* 精美下划线风格：保持 role/文案/角标 aria-hidden 完全不变 */}
+        <TabsList className="h-auto w-full justify-start overflow-x-auto rounded-none border-b border-border/80 bg-transparent p-0 gap-1 sm:gap-2">
           {tabs.map((t) => (
             <TabsTrigger
               key={t.value}
               value={t.value}
-              className="rounded-none border-b-2 border-transparent bg-transparent px-3 py-2 text-muted-foreground shadow-none data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              className="rounded-none border-b-2 border-transparent bg-transparent px-3.5 py-2.5 text-sm font-medium text-muted-foreground shadow-none transition-all hover:text-foreground hover:border-border/60 data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary data-[state=active]:font-semibold data-[state=active]:shadow-none"
             >
               {t.label}
               {t.value === "approvals" && pendingApprovalCount > 0 && (
@@ -234,7 +238,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
                 <Badge
                   aria-hidden="true"
                   variant="destructive"
-                  className="ml-1.5 h-4 min-w-4 justify-center rounded-full px-1 text-[10px] leading-none"
+                  className="ml-1.5 h-4 min-w-4 justify-center rounded-full px-1.5 text-[10px] leading-none"
                 >
                   {pendingApprovalCount}
                 </Badge>
@@ -244,7 +248,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
         </TabsList>
       </Tabs>
 
-      <div className={`mt-4 transition-opacity duration-200 ${isPending ? "opacity-0" : "opacity-100"}`}>{children}</div>
+      <div className={`mt-6 transition-all duration-200 ${isPending ? "opacity-40 translate-y-1" : "opacity-100 translate-y-0"}`}>{children}</div>
     </div>
   );
 }

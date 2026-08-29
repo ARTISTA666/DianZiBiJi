@@ -79,45 +79,62 @@ export function TopNav() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-14 items-center justify-between px-4 lg:px-6">
+      <header className="sticky top-0 z-50 border-b border-border/70 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/65 transition-colors">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <BookOpen size={18} />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm shadow-primary/20">
+              <BookOpen size={17} className="stroke-[2.25]" />
             </div>
-            <span className="font-semibold text-sm">智能 ELN</span>
+            <div className="flex items-baseline gap-2">
+              <span className="font-semibold text-sm tracking-tight text-foreground">智能电子实验笔记</span>
+              <span className="hidden sm:inline-block text-[10px] uppercase font-semibold tracking-wider px-1.5 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                ELN v2.0
+              </span>
+            </div>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button aria-label="账户菜单" variant="ghost" size="sm" className="gap-2">
-                <Avatar className="h-7 w-7">
-                  <AvatarFallback className="text-xs">{initials}</AvatarFallback>
-                </Avatar>
-                <span className="hidden sm:inline text-sm">{user.display_name}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuLabel>
-                <p className="text-sm font-medium">{user.display_name}</p>
-                <p className="text-xs text-muted-foreground">{roleText[user.role] || user.role}</p>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={toggleDark}>
-                {dark ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
-                {dark ? "切换亮色模式" : "切换暗色模式"}
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setPwOpen(true)}>
-                <KeyRound className="mr-2 h-4 w-4" />
-                修改密码
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem disabled={authBusy} onClick={handleLogout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                {authBusy ? "退出中..." : "退出登录"}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-foreground"
+              onClick={toggleDark}
+              aria-label={dark ? "切换亮色模式" : "切换暗色模式"}
+            >
+              {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button aria-label="账户菜单" variant="ghost" size="sm" className="h-8 gap-2 px-2 hover:bg-muted/80">
+                  <Avatar className="h-6 w-6 border border-border/50">
+                    <AvatarFallback className="text-[11px] font-medium bg-primary/15 text-primary">{initials}</AvatarFallback>
+                  </Avatar>
+                  <span className="hidden sm:inline text-xs font-medium">{user.display_name}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52 shadow-elevate">
+                <DropdownMenuLabel className="pb-2">
+                  <p className="text-sm font-medium text-foreground">{user.display_name}</p>
+                  <p className="text-xs text-muted-foreground font-normal">{roleText[user.role] || user.role}</p>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={toggleDark}>
+                  {dark ? <Sun className="mr-2 h-4 w-4 text-muted-foreground" /> : <Moon className="mr-2 h-4 w-4 text-muted-foreground" />}
+                  {dark ? "切换亮色模式" : "切换暗色模式"}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setPwOpen(true)}>
+                  <KeyRound className="mr-2 h-4 w-4 text-muted-foreground" />
+                  修改密码
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem disabled={authBusy} onClick={handleLogout} className="text-destructive focus:text-destructive focus:bg-destructive/10">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  {authBusy ? "退出中..." : "退出登录"}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </header>
 

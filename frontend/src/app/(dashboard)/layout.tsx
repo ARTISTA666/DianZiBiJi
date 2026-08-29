@@ -9,15 +9,15 @@ import { AgentAssistant } from "@/components/shared/AgentAssistant";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthGuard>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col bg-background bg-dot-grid">
         <TopNav />
-        <div className="border-b bg-background">
-          <div className="mx-auto flex max-w-6xl items-center px-4 py-2 lg:px-6">
+        <div className="border-b border-border/60 bg-background/60 backdrop-blur-sm">
+          <div className="mx-auto flex max-w-7xl items-center px-4 py-2 sm:px-6 lg:px-8">
             <MainNav />
           </div>
         </div>
-        <main className="flex-1 py-6">
-          <div className="mx-auto max-w-6xl px-4 lg:px-6">
+        <main className="flex-1 py-6 sm:py-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <ErrorBoundary>{children}</ErrorBoundary>
           </div>
         </main>

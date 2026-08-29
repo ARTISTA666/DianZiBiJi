@@ -16,20 +16,20 @@ export function MainNav() {
   ];
 
   return (
-    <nav className="flex gap-1">
+    <nav className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/50 border border-border/40 w-fit">
       {links.map(({ href, label, icon: Icon }) => {
         const active = pathname.startsWith(href);
         return (
           <Link
             key={href}
             href={href}
-            className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+            className={`inline-flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all ${
               active
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                ? "bg-card text-foreground shadow-subtle font-semibold"
+                : "text-muted-foreground hover:text-foreground hover:bg-background/60"
             }`}
           >
-            <Icon size={16} />
+            <Icon size={14} className={active ? "text-primary" : "text-muted-foreground"} />
             {label}
           </Link>
         );
