@@ -22,6 +22,8 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        BUILD_REVISION: ${BUILD_REVISION:?BUILD_REVISION must be supplied by scripts/docker-compose-with-revision.sh}
     image: eln-backend-e2e
     environment:
       POSTGRES_DB: eln_e2e

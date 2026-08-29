@@ -47,7 +47,6 @@ def safe_production_values(**overrides: str) -> dict[str, str]:
         "AI_BASE_URL": "https://api.deepseek.com",
         "AI_API_KEY": "production-api-key",
         "AI_MODEL": "deepseek-v4-flash",
-        "APP_REVISION": "release-2026.07.29",
         "TRUSTED_PROXY_IPS": "127.0.0.1,::1",
         "CORS_ORIGINS": "https://eln.example.org",
         "NEXT_PUBLIC_API_BASE_URL": "/api",
@@ -173,3 +172,14 @@ def test_production_accepts_safe_values(tmp_path: Path) -> None:
     assert set(result["checks"]) == MODULE.REQUIRED_PRODUCTION_CHECKS
     assert result["missing_checked_keys"] == []
     assert all(result["checks"].values())
+
+
+def test_legacy_app_revision_is_not_required_for_production_evidence(tmp_path: Path) -> None:
+    env = write_env(tmp_path / ".env", **safe_production_values())
+
+    result = MODULE.check(env)
+
+    assert result["ok"] is True
+    assert "APP_REVISION" not in MODULE.REQUIRED_PRODUCTION_KEYS
+    assert result["checks"]["build_revision_present"] is True
+    assert result["build_revision"] == MODULE.checkout_revision()

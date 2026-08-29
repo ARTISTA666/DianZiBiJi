@@ -25,6 +25,8 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        BUILD_REVISION: ${BUILD_REVISION:?BUILD_REVISION must be supplied by scripts/docker-compose-with-revision.sh}
     env_file:
       - .env
     environment:

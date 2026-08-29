@@ -65,12 +65,11 @@ EMBEDDING_MODEL=BAAI/bge-m3
 EMBEDDING_DIMENSION=1024
 EMBEDDING_API_URL=https://embedding.example.org/v1/embeddings
 EMBEDDING_API_KEY=replace-with-provider-key
-APP_REVISION=0123456789abcdef0123456789abcdef01234567
 ```
 
 DeepSeek 密钥只注入后端容器，不会传给前端。敏感项目默认禁止把笔记、资料和图谱内容发送给外部 AI；只有完成数据治理和供应商审查后，才可通过 `ALLOW_SENSITIVE_EXTERNAL_AI=true` 显式开启。
 
-生产模式会在启动时强制校验上述安全项；仍使用默认签名密钥、默认数据库/管理员密码、空 AI 密钥、未设置发布版本或启用演示数据时，后端拒绝启动。退出、管理员重置密码和用户自助改密都会使旧访问令牌失效。
+生产模式会在启动时强制校验上述安全项；仍使用默认签名密钥、默认数据库/管理员密码、空 AI 密钥、未注入 Git revision 或启用演示数据时，后端拒绝启动。退出、管理员重置密码和用户自助改密都会使旧访问令牌失效。
 
 生产公网入口应放在 TLS 反向代理之后。仓库提供 [deploy/nginx.conf.template](deploy/nginx.conf.template)，包含 HTTP→HTTPS、证书占位符、HSTS、上传体积限制、反代超时、`X-Forwarded-*` 和 `X-Request-ID` 透传。使用前必须替换 `${ELN_DOMAIN}`、`${TLS_CERT_PATH}`、`${TLS_KEY_PATH}`、`${CLIENT_MAX_BODY_SIZE}`、`${BACKEND_PORT}` 和 `${FRONTEND_PORT}`，并运行：
 
@@ -86,7 +85,7 @@ backend/.venv/bin/python scripts/check_secret_rotation_runbook.py \
   --output docs/system-evidence/secret-rotation-latest.json
 ```
 
-`SYSTEM_STORAGE_PATH` 指定上传文件的宿主持久化目录，默认是 `./storage`；容器内后端使用 `STORAGE_ROOT=/storage`，非容器运行和测试可指向独立可写目录。数据库和该目录必须作为同一恢复点管理。正式发布的 `APP_REVISION` 必须是与证据清单一致的 40 或 64 位小写 Git revision。
+`SYSTEM_STORAGE_PATH` 指定上传文件的宿主持久化目录，默认是 `./storage`；容器内后端使用 `STORAGE_ROOT=/storage`，非容器运行和测试可指向独立可写目录。数据库和该目录必须作为同一恢复点管理。正式发布的 revision 由 wrapper 从 Git HEAD 注入，必须是与证据清单一致的 40 或 64 位小写 Git revision。
 
 `UPLOAD_MAX_BYTES` 限制原始上传体积，超限文件和数据库写入失败的文件不会残留在存储目录。`DOCUMENT_TEXT_MAX_CHARS` 控制单个文件返回和入库的最大字符数，超过上限时系统会明确标记截断。`OCR_LANGUAGES` 控制 Tesseract 语言，业务默认值为 `chi_sim+eng`，面向中文和英文实验记录、标签及仪器截图；`OCR_PREPROCESSING` 默认使用 `grayscale_otsu`，`OCR_PAGE_SEGMENTATION_MODE` 默认值为 `3`。识别原文和校对文本分别保存，只有经审核人确认的图片文本才能进入 RAG 知识库。RUKOPYS 实验单独使用 `ukr` 配置，只是乌克兰语连续手写体的跨语种压力测试，不代表中英文部署准确率。
 
@@ -97,7 +96,7 @@ macOS 或 Linux：
 ```bash
 cd /path/to/full-system
 cp .env.example .env
-docker compose up -d --build
+bash scripts/docker-compose-with-revision.sh up -d --build
 ```
 
 Windows PowerShell：
@@ -105,10 +104,12 @@ Windows PowerShell：
 ```powershell
 Set-Location C:\path\to\full-system
 Copy-Item .env.example .env
-docker compose up -d --build
+bash scripts/docker-compose-with-revision.sh up -d --build
 ```
 
 项目使用同一套 Docker 配置，不需要维护 Windows 和 macOS 两套代码。Compose 默认构建生产前端并通过 `next start` 运行，不挂载源代码或使用开发服务器；代码变更后需要重新构建镜像。
+
+`docker-compose-with-revision.sh` 默认拒绝 tracked dirty checkout，确保镜像和证据绑定同一 Git HEAD；本地开发临时调试脏工作区时可显式加 `--allow-dirty`（仅非生产模式）。正式 build、健康/合同证据和发布流程不得使用该选项。
 
 后端构建镜像固定使用 `rust:1.88-slim-bookworm`，仓库中的 `backend/rust-toolchain.toml` 同时把本地工具链固定为 Rust 1.88.0。开发/测试哈希嵌入无需下载模型；生产 embedding endpoint、模型名和维度必须同时固定。
 
@@ -198,7 +199,7 @@ backend/.venv/bin/python scripts/check_local_health.py \
 macOS 或 Linux 本地开发环境：
 
 ```bash
-docker compose build backend
+bash scripts/docker-compose-with-revision.sh build backend
 
 ./scripts/run-rust-db-tests.sh
 
@@ -214,7 +215,7 @@ cd ..
 # 可选：验证仓库中不参与服务运行的离线证据脚本
 backend/.venv/bin/python -m pytest backend/tests -q
 backend/.venv/bin/python -m pytest -q scripts/test_*.py
-docker compose config --quiet
+bash scripts/docker-compose-with-revision.sh config --quiet
 npm --prefix frontend audit --omit=dev --audit-level=low
 ```
 
@@ -337,7 +338,7 @@ backend/.venv/bin/python scripts/release_maturity_gate.py \
   --markdown docs/experiments/main-maturity-gate-latest.md
 ```
 
-证据包 SHA-256 清单写入已被 Git 忽略的 `output/release-evidence/maturity-evidence-manifest.json`；它只允许从 clean checkout 冻结，并绑定当前 Git commit、`backend/Cargo.lock` 与 `frontend/package-lock.json`。门禁会重新校验这些来源信息、证据文件和当前 checkout，随后把同一 `source_revision` 贯穿内部门禁、最终门禁和确认性评审完成门禁；运行时 `/maturity/status` 还会要求该 revision 与 `APP_REVISION` 一致。门禁结果写入 `docs/experiments/main-maturity-gate-latest.json` 和 `docs/experiments/main-maturity-gate-latest.md`。只要门禁失败，就不启动人工评审；优先修复报告中的失败项。即使门禁通过，仍需独立人工评审、外部冻结语料和更长时间 soak 后才能声称最终成熟。
+证据包 SHA-256 清单写入已被 Git 忽略的 `output/release-evidence/maturity-evidence-manifest.json`；它只允许从 clean checkout 冻结，并绑定当前 Git commit、`backend/Cargo.lock` 与 `frontend/package-lock.json`。门禁会重新校验这些来源信息、证据文件和当前 checkout，随后把同一 `source_revision` 贯穿内部门禁、最终门禁和确认性评审完成门禁；运行时 `/maturity/status` 还会要求该 revision 与编译时 `ELN_BUILD_REVISION` 一致。门禁结果写入 `docs/experiments/main-maturity-gate-latest.json` 和 `docs/experiments/main-maturity-gate-latest.md`。只要门禁失败，就不启动人工评审；优先修复报告中的失败项。即使门禁通过，仍需独立人工评审、外部冻结语料和更长时间 soak 后才能声称最终成熟。
 
 最终成熟门禁用于判断是否可以启动论文确认性人工评审；它不是受控试运行的唯一上线门槛。若目标是先收集真实用户反馈，可使用 `scripts/controlled_beta_gate.py`，但生产配置、TLS、备份、运行时健康检查和内部门禁仍必须通过：
 
@@ -392,12 +393,12 @@ cargo +1.88.0 clippy --all-targets -- -D warnings
 cargo +1.88.0 test --all-targets --locked
 
 cd ../
-docker compose exec -T frontend npm run lint
+bash scripts/docker-compose-with-revision.sh exec -T frontend npm run lint
 ```
 
 运行状态：
 
 ```bash
-docker compose ps
+bash scripts/docker-compose-with-revision.sh ps
 docker stats --no-stream
 ```

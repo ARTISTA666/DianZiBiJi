@@ -45,7 +45,6 @@ def production_config(env_sha: str = "a" * 64) -> dict:
             "POSTGRES_PASSWORD",
             "SEED_DEMO_DATA",
             "DEEPSEEK_API_KEY",
-            "APP_REVISION",
         ],
         "checks": {
             "app_env_is_production": True,
@@ -54,7 +53,7 @@ def production_config(env_sha: str = "a" * 64) -> dict:
             "postgres_password_non_default": True,
             "seed_demo_data_disabled": True,
             "deepseek_api_key_present": True,
-            "app_revision_present": True,
+            "build_revision_present": True,
         },
     }
 

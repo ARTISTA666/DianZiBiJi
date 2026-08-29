@@ -6,6 +6,13 @@ umask 077
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
+BUILD_REVISION=$(git rev-parse --verify HEAD^{commit})
+export BUILD_REVISION
+
+compose() {
+  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+}
+
 if [ "$#" -ne 2 ] || [ "$2" != "--confirm-replace" ]; then
   printf 'Usage: %s BACKUP_DIR --confirm-replace\n' "$0" >&2
   printf '[FAIL] restore replaces the current database and uploaded files.\n' >&2
@@ -110,11 +117,11 @@ mkdir "$extracted/storage"
 "$restore_python" "$ROOT/scripts/safe_extract_storage.py" \
   "$backup/storage.tar.gz" "$extracted/storage"
 
-if ! docker compose exec -T db pg_isready -U "$database_user" -d "$database" >/dev/null; then
+if ! compose exec -T db pg_isready -U "$database_user" -d "$database" >/dev/null; then
   printf '[FAIL] PostgreSQL is not ready.\n' >&2
   exit 1
 fi
-if ! docker compose exec -T db pg_restore --list <"$backup/database.dump" >/dev/null; then
+if ! compose exec -T db pg_restore --list <"$backup/database.dump" >/dev/null; then
   printf '[FAIL] database dump cannot be read by pg_restore.\n' >&2
   exit 1
 fi
@@ -125,11 +132,11 @@ scripts/backup-system.sh "$rollback"
 printf '[OK] pre-restore rollback bundle created: %s/%s\n' "$ROOT" "$rollback"
 
 restore_started=1
-docker compose stop frontend backend >/dev/null
+compose stop frontend backend >/dev/null
 
-docker compose exec -T db dropdb --if-exists --force -U "$database_user" "$database"
-docker compose exec -T db createdb -U "$database_user" -O "$database_user" "$database"
-docker compose exec -T db pg_restore \
+compose exec -T db dropdb --if-exists --force -U "$database_user" "$database"
+compose exec -T db createdb -U "$database_user" -O "$database_user" "$database"
+compose exec -T db pg_restore \
   -U "$database_user" \
   -d "$database" \
   --no-owner \
@@ -142,18 +149,18 @@ if [ -e "$storage_path" ]; then
 fi
 mv "$extracted/storage" "$storage_path"
 
-docker compose up -d --no-deps backend >/dev/null
+compose up -d --no-deps backend >/dev/null
 attempts=0
 until curl -fsS "http://127.0.0.1:$backend_port/ready" >/dev/null 2>&1; do
   attempts=$((attempts + 1))
   if [ "$attempts" -ge 90 ]; then
     printf '[FAIL] restored backend did not become ready. Keep services stopped and restore %s to roll back.\n' "$rollback" >&2
-    docker compose stop backend >/dev/null 2>&1 || true
+    compose stop backend >/dev/null 2>&1 || true
     exit 1
   fi
   sleep 2
 done
-docker compose up -d --no-deps frontend >/dev/null
+compose up -d --no-deps frontend >/dev/null
 
 rm -rf "$previous_storage"
 restore_completed=1

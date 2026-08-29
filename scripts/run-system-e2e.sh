@@ -2,7 +2,9 @@
 set -eu
 
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-COMPOSE="docker compose -p eln-e2e -f $ROOT/docker-compose.e2e.yml"
+compose() {
+  bash "$ROOT/scripts/docker-compose-with-revision.sh" -p eln-e2e -f "$ROOT/docker-compose.e2e.yml" "$@"
+}
 OUTPUT="$ROOT/output/playwright"
 
 mkdir -p "$OUTPUT"
@@ -23,11 +25,11 @@ if [ -z "$E2E_PYTHON_BIN" ]; then
 fi
 
 cleanup() {
-  $COMPOSE down -v --remove-orphans >/dev/null 2>&1 || true
+  compose down -v --remove-orphans >/dev/null 2>&1 || true
 }
 trap cleanup EXIT INT TERM
 
-$COMPOSE up -d --build
+compose up -d --build
 
 wait_for_url() {
   url=$1
@@ -36,7 +38,7 @@ wait_for_url() {
   until curl -fsS "$url" >/dev/null 2>&1; do
     attempts=$((attempts + 1))
     if [ "$attempts" -ge 90 ]; then
-      $COMPOSE logs --no-color >"$OUTPUT/compose.log"
+      compose logs --no-color >"$OUTPUT/compose.log"
       echo "$name did not become ready: $url" >&2
       return 1
     fi
@@ -54,7 +56,7 @@ if [ -z "${E2E_BROWSER_CHANNEL:-}" ]; then
   npx playwright install chromium
 fi
 if ! npm run test:e2e; then
-  $COMPOSE logs --no-color >"$OUTPUT/compose.log"
+  compose logs --no-color >"$OUTPUT/compose.log"
   exit 1
 fi
 

@@ -6,6 +6,22 @@ umask 077
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
+build_revision=$(git rev-parse --verify HEAD^{commit})
+case "$build_revision" in
+  ''|*[!0-9a-f]*)
+    printf '[FAIL] checkout HEAD is not a full hexadecimal revision.\n' >&2
+    exit 1
+    ;;
+esac
+if [ "${#build_revision}" -ne 40 ] && [ "${#build_revision}" -ne 64 ]; then
+  printf '[FAIL] checkout HEAD is not a full hexadecimal revision.\n' >&2
+  exit 1
+fi
+
+compose() {
+  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+}
+
 if [ ! -f .env ]; then
   printf '[FAIL] .env is missing; refusing to guess database credentials.\n' >&2
   exit 1
@@ -41,7 +57,7 @@ completed=0
 
 cleanup() {
   if [ -n "$stopped_services" ]; then
-    docker compose start $stopped_services >/dev/null 2>&1 || true
+    compose start $stopped_services >/dev/null 2>&1 || true
   fi
   if [ "$completed" -ne 1 ]; then
     rm -rf "$temporary"
@@ -58,7 +74,6 @@ mkdir -p "$(dirname -- "$output")"
 mkdir -m 700 "$temporary"
 database=$(env_value POSTGRES_DB eln)
 database_user=$(env_value POSTGRES_USER eln_user)
-app_revision=$(env_value APP_REVISION unversioned)
 storage_setting=$(env_value SYSTEM_STORAGE_PATH ./storage)
 case "$storage_setting" in
   /*) storage_path=$storage_setting ;;
@@ -66,12 +81,12 @@ case "$storage_setting" in
 esac
 mkdir -p "$storage_path"
 
-if ! docker compose exec -T db pg_isready -U "$database_user" -d "$database" >/dev/null; then
+if ! compose exec -T db pg_isready -U "$database_user" -d "$database" >/dev/null; then
   printf '[FAIL] PostgreSQL is not ready; no backup was created.\n' >&2
   exit 1
 fi
 
-running_services=$(docker compose ps --status running --services)
+running_services=$(compose ps --status running --services)
 if printf '%s\n' "$running_services" | grep -qx backend; then
   stopped_services=backend
 fi
@@ -81,10 +96,10 @@ fi
 if [ -n "$stopped_services" ]; then
   # This deployment uses one application writer. Briefly stopping it makes the
   # database dump and uploaded-file archive one consistent recovery point.
-  docker compose stop $stopped_services >/dev/null
+  compose stop $stopped_services >/dev/null
 fi
 
-docker compose exec -T db pg_dump \
+compose exec -T db pg_dump \
   -U "$database_user" \
   -d "$database" \
   --format=custom \
@@ -97,7 +112,7 @@ storage_sha256=$(sha256_file "$temporary/storage.tar.gz")
 cat >"$temporary/manifest.txt" <<EOF
 manifest_version=1
 created_at=$timestamp
-app_revision=$app_revision
+build_revision=$build_revision
 database=$database
 database_sha256=$database_sha256
 storage_sha256=$storage_sha256
@@ -105,7 +120,7 @@ EOF
 
 mv "$temporary" "$output"
 if [ -n "$stopped_services" ]; then
-  docker compose start $stopped_services >/dev/null
+  compose start $stopped_services >/dev/null
   stopped_services=
 fi
 completed=1

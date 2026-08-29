@@ -2,6 +2,11 @@ use std::{collections::HashMap, env, net::IpAddr};
 
 use thiserror::Error;
 
+const BUILD_REVISION: &str = match option_env!("ELN_BUILD_REVISION") {
+    Some(value) => value,
+    None => "unversioned",
+};
+
 #[derive(Clone, Debug)]
 pub struct Settings {
     pub app_env: String,
@@ -113,7 +118,7 @@ impl Settings {
                 "CORS_ORIGINS",
                 "http://localhost:3000,http://127.0.0.1:3000",
             ),
-            app_revision: get("APP_REVISION", "unversioned"),
+            app_revision: BUILD_REVISION.to_owned(),
             allow_sensitive_external_ai: parse_bool(values, "ALLOW_SENSITIVE_EXTERNAL_AI", false)?,
             new_agent_enabled: parse_bool(values, "NEW_AGENT_ENABLED", false)?,
             ai_provider: get("AI_PROVIDER", "deepseek"),
@@ -337,7 +342,7 @@ impl Settings {
                 problems.push("AI_API_KEY (or DEEPSEEK_API_KEY) must be configured");
             }
             if self.app_revision.trim().is_empty() || self.app_revision == "unversioned" {
-                problems.push("APP_REVISION must identify the deployed release");
+                problems.push("ELN_BUILD_REVISION must identify the deployed release");
             }
         }
         if problems.is_empty() {
@@ -568,7 +573,19 @@ mod tests {
 
         assert!(error.to_string().contains("SECRET_KEY"));
         assert!(error.to_string().contains("DEEPSEEK_API_KEY"));
-        assert!(error.to_string().contains("APP_REVISION"));
+        assert!(error.to_string().contains("ELN_BUILD_REVISION"));
+    }
+
+    #[test]
+    fn test_app_revision_ignores_runtime_environment_override() {
+        let settings = Settings::from_map(&HashMap::from([(
+            "APP_REVISION".to_owned(),
+            "forged-runtime-revision".to_owned(),
+        )]))
+        .unwrap();
+
+        assert_eq!(settings.app_revision, super::BUILD_REVISION);
+        assert_ne!(settings.app_revision, "forged-runtime-revision");
     }
 
     #[test]

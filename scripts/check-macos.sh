@@ -4,6 +4,10 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
+compose() {
+  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+}
+
 failures=0
 
 ok() { printf '[OK] %s\n' "$1"; }
@@ -19,7 +23,7 @@ env_value() {
 
 project_owns_port() {
   port=$1
-  for container in $(docker compose ps -q 2>/dev/null); do
+  for container in $(compose ps -q 2>/dev/null); do
     if docker port "$container" 2>/dev/null | grep -q ":$port"; then
       return 0
     fi
@@ -53,7 +57,7 @@ else
   ok "Docker daemon is available"
 fi
 
-if docker compose version >/dev/null 2>&1; then
+if compose version >/dev/null 2>&1; then
   ok "Docker Compose is available"
 else
   fail "Docker Compose is unavailable"
@@ -68,7 +72,7 @@ else
   bootstrap_password=$(env_value BOOTSTRAP_ADMIN_PASSWORD admin123)
   postgres_password=$(env_value POSTGRES_PASSWORD eln_password)
   deepseek_api_key=$(env_value DEEPSEEK_API_KEY '')
-  app_revision=$(env_value APP_REVISION unversioned)
+  build_revision=$(git rev-parse --verify HEAD^{commit} 2>/dev/null || true)
   seed_demo_data=$(env_value SEED_DEMO_DATA false)
   if [ "$app_env" = production ]; then
     if [ "$secret_key" = change-me-in-production ] || [ "${#secret_key}" -lt 32 ]; then
@@ -83,8 +87,8 @@ else
     if [ -z "$deepseek_api_key" ]; then
       fail "production DEEPSEEK_API_KEY is empty"
     fi
-    if [ "$app_revision" = unversioned ] || [ -z "$app_revision" ]; then
-      fail "production APP_REVISION must identify the deployed release"
+    if ! printf '%s' "$build_revision" | grep -Eq '^[0-9a-f]{40}([0-9a-f]{24})?$'; then
+      fail "production checkout must identify a full compiled release revision"
     fi
     if [ "$seed_demo_data" != false ]; then
       fail "production SEED_DEMO_DATA must be false"
@@ -101,7 +105,7 @@ else
   fi
 fi
 
-if docker compose config --quiet >/dev/null 2>&1; then
+if compose config --quiet >/dev/null 2>&1; then
   ok "Docker Compose configuration is valid"
 else
   fail "Docker Compose configuration is invalid"

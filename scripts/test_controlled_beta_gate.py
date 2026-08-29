@@ -45,7 +45,7 @@ def test_human_review_is_not_a_controlled_beta_check(tmp_path: Path) -> None:
                         "postgres_password_non_default",
                         "seed_demo_data_disabled",
                         "deepseek_api_key_present",
-                        "app_revision_present",
+                        "build_revision_present",
                     )
                 },
             }

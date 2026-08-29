@@ -82,10 +82,9 @@ def main() -> int:
         record["revision"] = ready.get("revision")
     except Exception as error:  # noqa: BLE001
         record["backend_ready_error"] = repr(error)
-        fallback = os.environ.get("APP_REVISION_FALLBACK", "").strip()
-        if fallback:
-            record["revision"] = fallback
-            record["revision_source"] = "APP_REVISION_FALLBACK env"
+        # A missing live endpoint is a failed probe, never an invitation to
+        # trust a caller-supplied legacy revision value.
+        record["revision"] = None
 
     # 2. Live bge-m3 probe through the configured embedding API.
     start = time.monotonic()

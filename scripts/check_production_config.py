@@ -32,7 +32,6 @@ REQUIRED_PRODUCTION_KEYS = {
     "AI_BASE_URL",
     "AI_API_KEY",
     "AI_MODEL",
-    "APP_REVISION",
     "TRUSTED_PROXY_IPS",
     "EMBEDDING_BACKEND",
     "EMBEDDING_MODEL",
@@ -50,16 +49,28 @@ REQUIRED_PRODUCTION_CHECKS = {
     "frontend_api_is_same_origin",
     "deepseek_api_uses_https",
     "deepseek_api_key_present",
-    "app_revision_present",
+    "build_revision_present",
     "trusted_proxy_ips_configured",
     "embedding_matches_rust_runtime",
     "rust_runtime_settings_accepted",
     "compose_ports_bind_loopback",
 }
+REVISION_PATTERN = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def checkout_revision() -> str | None:
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "rev-parse", "--verify", "HEAD^{commit}"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    revision = result.stdout.strip().lower()
+    return revision if result.returncode == 0 and REVISION_PATTERN.fullmatch(revision) else None
 
 
 def checked_keys(env_file: Path | None) -> list[str]:
@@ -148,6 +159,7 @@ def production_checks(
     settings: Settings,
     env_file: Path | None = None,
     runtime_check: dict[str, object] | None = None,
+    build_revision: str | None = None,
 ) -> dict[str, bool]:
     values = read_env_values(env_file)
     cors_origins = [origin.strip() for origin in values.get("CORS_ORIGINS", "").split(",") if origin.strip()]
@@ -171,7 +183,7 @@ def production_checks(
         "deepseek_api_key_present": bool(
             (values.get("AI_API_KEY") or settings.deepseek_api_key).strip()
         ),
-        "app_revision_present": bool(settings.app_revision.strip()) and settings.app_revision != "unversioned",
+        "build_revision_present": bool(build_revision and REVISION_PATTERN.fullmatch(build_revision)),
         "trusted_proxy_ips_configured": bool(values.get("TRUSTED_PROXY_IPS", "").strip()),
         "embedding_matches_rust_runtime": (
             values.get("EMBEDDING_BACKEND") == "openai_compatible"
@@ -197,11 +209,12 @@ def check(
     compatibility_overrides = {
         key: value for key, value in compatibility_overrides.items() if value is not None
     }
-    settings = (
-        Settings(_env_file=env_file, **compatibility_overrides)
-        if env_file
-        else Settings(**compatibility_overrides)
-    )
+    # APP_REVISION remains accepted by the legacy Python Settings model, but it
+    # is deliberately overridden here: production evidence is bound to the
+    # checkout revision that the Rust image must compile in.
+    build_revision = checkout_revision()
+    settings_kwargs = {**compatibility_overrides, "app_revision": build_revision or "unversioned"}
+    settings = Settings(_env_file=env_file, **settings_kwargs) if env_file else Settings(**settings_kwargs)
     keys = checked_keys(env_file)
     runtime_check = (
         rust_runtime_config_check(values, rust_config_checker)
@@ -219,7 +232,8 @@ def check(
         "env_file_sha256": sha256(env_file) if env_file and env_file.is_file() else None,
         "checked_keys": keys,
         "missing_checked_keys": sorted(REQUIRED_PRODUCTION_KEYS - set(keys)),
-        "checks": production_checks(settings, env_file, runtime_check),
+        "checks": production_checks(settings, env_file, runtime_check, build_revision),
+        "build_revision": build_revision,
         "rust_runtime_check": runtime_check,
     }
     if settings.app_env != "production":

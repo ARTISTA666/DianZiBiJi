@@ -2,6 +2,13 @@ FROM rust:1.88-slim-bookworm AS builder
 
 WORKDIR /build
 
+ARG BUILD_REVISION
+
+RUN if [ -z "$BUILD_REVISION" ] || [ "$BUILD_REVISION" = "unversioned" ]; then \
+        echo "BUILD_REVISION must be a full git revision" >&2; \
+        exit 1; \
+    fi
+
 ENV CARGO_REGISTRIES_CRATES_IO_INDEX=sparse+https://rsproxy.cn/index/ \
     CARGO_HTTP_TIMEOUT=600 \
     CARGO_HTTP_LOW_SPEED_LIMIT=1 \
@@ -18,10 +25,15 @@ RUN mkdir -p src \
 COPY openapi.json ./openapi.json
 COPY sql ./sql
 COPY src ./src
+ENV ELN_BUILD_REVISION=$BUILD_REVISION
 RUN touch src/lib.rs src/main.rs \
     && cargo build --release --locked
 
 FROM rust:1.88-slim-bookworm
+
+ARG BUILD_REVISION
+
+LABEL org.opencontainers.image.revision=$BUILD_REVISION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

@@ -81,7 +81,7 @@ db.close()
 
 def load_sensitivity() -> dict:
     result = subprocess.run(
-        ["docker", "compose", "exec", "-T", "backend", "python", "-"],
+        [str(ROOT / "scripts" / "docker-compose-with-revision.sh"), "exec", "-T", "backend", "python", "-"],
         cwd=ROOT,
         input=CONTAINER_CODE,
         check=True,

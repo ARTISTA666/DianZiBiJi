@@ -68,8 +68,7 @@ EXPECTED: dict[str, dict[str, list[str]]] = {
 
 def query_json(sql: str) -> list[dict]:
     command = [
-        "docker",
-        "compose",
+        str(ROOT / "scripts" / "docker-compose-with-revision.sh"),
         "exec",
         "-T",
         "db",

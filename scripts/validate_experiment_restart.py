@@ -13,6 +13,8 @@ import httpx
 
 
 TERMINAL = {"completed", "completed_with_errors", "failed", "interrupted"}
+ROOT = Path(__file__).resolve().parents[1]
+COMPOSE_WRAPPER = ROOT / "scripts" / "docker-compose-with-revision.sh"
 
 
 def latest_e2e_project(projects: list[dict] | dict) -> dict:
@@ -70,7 +72,7 @@ def main() -> int:
     parser.add_argument("--password", required=True)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    compose = ["docker", "compose", "-p", args.compose_project, "-f", str(args.compose_file)]
+    compose = [str(COMPOSE_WRAPPER), "-p", args.compose_project, "-f", str(args.compose_file)]
 
     with httpx.Client(base_url=args.api_base, timeout=15, trust_env=False) as client:
         login = client.post("/auth/login", json={"username": args.username, "password": args.password})

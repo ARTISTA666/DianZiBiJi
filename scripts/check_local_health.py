@@ -12,6 +12,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
+import subprocess
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -21,6 +23,7 @@ from urllib.parse import urljoin, urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ENV_FILE = ROOT / ".env"
+REVISION_PATTERN = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 
 
 def read_env_file(path: Path | None) -> dict[str, str]:
@@ -59,6 +62,17 @@ def check_result(name: str, passed: bool, detail: str, *, severity: str = "error
     return {"name": name, "passed": passed, "severity": severity, "detail": detail}
 
 
+def checkout_revision() -> str | None:
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "rev-parse", "--verify", "HEAD^{commit}"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    revision = result.stdout.strip().lower()
+    return revision if result.returncode == 0 and REVISION_PATTERN.fullmatch(revision) else None
+
+
 def evaluate_host_consistency(frontend_base: str, configured_api_base: str) -> tuple[bool, str]:
     frontend_host = urlparse(frontend_base).hostname
     api_host = urlparse(configured_api_base).hostname
@@ -80,11 +94,28 @@ def evaluate(
     *,
     frontend_base: str = "http://localhost:3000",
     configured_api_base: str = "http://localhost:8001",
+    expected_revision: str | None = None,
 ) -> dict[str, object]:
     ready = ready_probe.get("payload") if isinstance(ready_probe.get("payload"), dict) else {}
     ready_checks = ready.get("checks") if isinstance(ready.get("checks"), dict) else {}
     metrics = metrics_probe.get("payload") if isinstance(metrics_probe.get("payload"), dict) else {}
     runtime = metrics.get("runtime") if isinstance(metrics.get("runtime"), dict) else {}
+    ready_revision = ready.get("revision")
+    metrics_revision = metrics.get("revision")
+    revisions_match = (
+        isinstance(ready_revision, str)
+        and isinstance(metrics_revision, str)
+        and bool(REVISION_PATTERN.fullmatch(ready_revision.lower()))
+        and ready_revision.lower() == metrics_revision.lower()
+    )
+    checkout_match = (
+        expected_revision is None
+        or (
+            revisions_match
+            and isinstance(ready_revision, str)
+            and ready_revision.lower() == expected_revision.lower()
+        )
+    )
 
     checks = [
         check_result(
@@ -121,13 +152,18 @@ def evaluate(
             runtime.get("api_runtime") == "rust-axum",
             f"api_runtime={runtime.get('api_runtime', 'unknown')}",
         ),
+        check_result(
+            "编译 revision 已绑定",
+            checkout_match,
+            f"ready={ready_revision or 'unknown'} / metrics={metrics_revision or 'unknown'} / checkout={expected_revision or 'not checked'}",
+        ),
     ]
 
     app_env = env.get("APP_ENV") or os.environ.get("APP_ENV", "development")
     production_checks = {
         "APP_ENV=production": app_env == "production",
         "SEED_DEMO_DATA=false": env.get("SEED_DEMO_DATA", "").lower() == "false",
-        "APP_REVISION 已绑定": bool(env.get("APP_REVISION")) and env.get("APP_REVISION") != "unversioned",
+        "endpoint 编译 revision 已绑定": checkout_match,
         "DeepSeek API key 已配置": bool(env.get("DEEPSEEK_API_KEY", "").strip()),
         "生产 embedding=OpenAI-compatible/BAAI/bge-m3/1024": (
             env.get("EMBEDDING_BACKEND") == "openai_compatible"
@@ -147,6 +183,10 @@ def evaluate(
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "local_ready": local_ready,
         "status": "ready" if local_ready else "blocked",
+        "build_revision": expected_revision or None,
+        "app_revision": ready_revision,
+        "runtime_revision": metrics_revision,
+        "secrets_disclosed": False,
         "app_env": app_env,
         "production_readiness": {
             "status": production_status,
@@ -187,6 +227,7 @@ def run(
         configured_api_base=(read_env_file(env_file).get("NEXT_PUBLIC_API_BASE_URL") if env_file else None)
         or os.environ.get("NEXT_PUBLIC_API_BASE_URL")
         or api_base,
+        expected_revision=checkout_revision() or "",
     )
     if output:
         output.parent.mkdir(parents=True, exist_ok=True)

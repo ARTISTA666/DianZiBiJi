@@ -69,7 +69,7 @@ def production_config_passes(path: Path) -> dict[str, Any]:
         "postgres_password_non_default",
         "seed_demo_data_disabled",
         "deepseek_api_key_present",
-        "app_revision_present",
+        "build_revision_present",
     }
     checks = report.get("checks") if report else {}
     checks = checks if isinstance(checks, dict) else {}
@@ -109,7 +109,7 @@ def http_check(url: str, required_header: tuple[str, str] | None = None) -> dict
 def compose_check(root: Path) -> dict[str, Any]:
     try:
         result = subprocess.run(
-            ["docker", "compose", "config", "--quiet"],
+            [str(root / "scripts" / "docker-compose-with-revision.sh"), "config", "--quiet"],
             cwd=root,
             capture_output=True,
             text=True,

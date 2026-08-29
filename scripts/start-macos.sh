@@ -4,13 +4,20 @@ set -eu
 ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$ROOT"
 
+compose() {
+  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+}
+
 if [ ! -f .env ]; then
   cp .env.example .env
   printf '[INFO] Created .env from .env.example.\n'
 fi
 
+BUILD_REVISION=$(git rev-parse --verify HEAD^{commit})
+export BUILD_REVISION
+
 sh scripts/check-macos.sh
-docker compose up -d --build
+compose up -d --build
 
 env_value() {
   key=$1
@@ -26,7 +33,7 @@ wait_for_url() {
   until curl -fsS "$url" >/dev/null 2>&1; do
     attempts=$((attempts + 1))
     if [ "$attempts" -ge 90 ]; then
-      docker compose logs --tail=120 "$name"
+      compose logs --tail=120 "$name"
       printf '[FAIL] %s did not become ready: %s\n' "$name" "$url" >&2
       exit 1
     fi
@@ -43,7 +50,7 @@ wait_for_url "http://127.0.0.1:$frontend_port" frontend
 # 等待后端就绪（Rust 后端内置数据库初始化）
 echo "等待后端服务就绪..."
 for i in $(seq 1 30); do
-  if docker compose exec -T backend curl -fsS http://localhost:8000/ready >/dev/null 2>&1; then
+  if compose exec -T backend curl -fsS http://localhost:8000/ready >/dev/null 2>&1; then
     echo "后端服务已就绪"
     break
   fi
@@ -53,7 +60,7 @@ for i in $(seq 1 30); do
   sleep 1
 done
 
-languages=$(docker compose exec -T backend tesseract --list-langs 2>/dev/null)
+languages=$(compose exec -T backend tesseract --list-langs 2>/dev/null)
 for language in $(env_value OCR_LANGUAGES chi_sim+eng | tr '+' ' '); do
   if ! printf '%s\n' "$languages" | grep -qx "$language"; then
     printf '[FAIL] Tesseract language is missing: %s\n' "$language" >&2

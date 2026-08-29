@@ -245,9 +245,9 @@ fn gate_status_for_revision(
                     .to_owned(),
             );
         } else if !valid_source_revision(runtime_revision) {
-            blockers.push("runtime APP_REVISION is not a release revision".to_owned());
+            blockers.push("runtime ELN_BUILD_REVISION is not a release revision".to_owned());
         } else if source_revision.as_deref() != Some(runtime_revision) {
-            blockers.push("source_revision does not match runtime APP_REVISION".to_owned());
+            blockers.push("source_revision does not match runtime ELN_BUILD_REVISION".to_owned());
         }
         if let Some(blocker) = evidence_blocker(key, payload) {
             blockers.push(blocker);
@@ -671,7 +671,7 @@ mod tests {
         assert_eq!(status["passed"], false);
         assert_eq!(
             status["blockers"],
-            json!(["source_revision does not match runtime APP_REVISION"])
+            json!(["source_revision does not match runtime ELN_BUILD_REVISION"])
         );
         fs::remove_dir_all(root).unwrap();
     }

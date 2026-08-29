@@ -40,7 +40,7 @@ def make_inputs(root: Path, valid: bool = True) -> dict[str, Path]:
     return {
         "contract": write_json(root / "runtime-contract.json", {"app_revision": revision, "runtime_revision": revision, "runtime": {"api_runtime": "rust-axum"}}),
         "config": write_json(root / "runtime-config.json", {"schema": "runtime-config-v1", "app_revision": COMMIT, "runtime_revision": COMMIT}),
-        "image": write_json(root / "container-image.json", {"image_digest": "sha256:" + "b" * 64, "app_revision": COMMIT, "runtime_revision": COMMIT}),
+        "image": write_json(root / "container-image.json", {"image_digest": "sha256:" + "b" * 64, "app_revision": COMMIT, "runtime_revision": COMMIT, "oci_revision": COMMIT, "endpoint_revision": COMMIT, "projection_sha256": "c" * 64}),
         "corpus": write_json(root / "corpus-manifest.json", {
             "dataset_id": "synthetic-test-corpus",
             "provenance": {"source": "unit-test fixture"},
@@ -91,6 +91,23 @@ class G5ARuntimeFreezeTests(unittest.TestCase):
             self.assertEqual(package["status"], "BLOCKED")
             self.assertIn("revision_match", package["blockers"])
             self.assertIn("worktree_clean", package["blockers"])
+
+    def test_container_identity_requires_oci_endpoint_and_projection_binding(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = make_inputs(root)
+            image = json.loads(paths["image"].read_text(encoding="utf-8"))
+            image["oci_revision"] = "d" * 40
+            paths["image"].write_text(json.dumps(image) + "\n", encoding="utf-8")
+            package = MODULE.build_package(
+                root=root,
+                runtime_contract=paths["contract"],
+                runtime_config=paths["config"],
+                container_image=paths["image"],
+                corpus_manifest=paths["corpus"],
+                checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True},
+            )
+            self.assertIn("container_image", package["blockers"])
 
     def test_manifest_detects_tampering(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -33,7 +33,7 @@
 2. 重启后端容器：
 
    ```bash
-   docker compose up -d --no-deps backend
+   bash scripts/docker-compose-with-revision.sh up -d --no-deps backend
    ```
 
 3. 验证 `/ready`、`/metrics` 和登录流程。
@@ -53,7 +53,7 @@
 2. 在数据库内修改业务用户密码：
 
    ```bash
-   docker compose exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
+   bash scripts/docker-compose-with-revision.sh exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
      -c "ALTER USER \"$POSTGRES_USER\" WITH PASSWORD 'NEW_STRONG_PASSWORD';"
    ```
 

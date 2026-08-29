@@ -17,6 +17,7 @@ from urllib.parse import urljoin
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "system-evidence"
+COMPOSE_WRAPPER = str(ROOT / "scripts" / "docker-compose-with-revision.sh")
 
 
 def sha256(path: Path) -> str:
@@ -76,10 +77,9 @@ def runtime_probe_commands(postgres_user: str, postgres_db: str) -> list[list[st
         "END IF; END $$;"
     )
     return [
-        ["docker", "compose", "config", "--quiet"],
+        [COMPOSE_WRAPPER, "config", "--quiet"],
         [
-            "docker",
-            "compose",
+            COMPOSE_WRAPPER,
             "exec",
             "-T",
             "db",
@@ -93,7 +93,7 @@ def runtime_probe_commands(postgres_user: str, postgres_db: str) -> list[list[st
             "-tAc",
             schema_check,
         ],
-        ["docker", "compose", "exec", "-T", "backend", "tesseract", "--list-langs"],
+        [COMPOSE_WRAPPER, "exec", "-T", "backend", "tesseract", "--list-langs"],
     ]
 
 
@@ -298,7 +298,7 @@ def backup_results(path: Path | None, *, verify_dump: bool = False) -> dict:
     dump_error = None
     if verify_dump and checks.get("database.dump"):
         completed = subprocess.run(
-            ["docker", "compose", "exec", "-T", "db", "pg_restore", "--list"],
+            [COMPOSE_WRAPPER, "exec", "-T", "db", "pg_restore", "--list"],
             cwd=ROOT,
             input=(path / "database.dump").read_bytes(),
             capture_output=True,

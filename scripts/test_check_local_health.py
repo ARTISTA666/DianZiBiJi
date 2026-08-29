@@ -16,12 +16,12 @@ def probe(status: int, payload: dict) -> dict:
 
 def healthy_probes() -> tuple[dict, dict, dict]:
     return (
-        probe(200, {"status": "ready", "checks": {"database": "ok", "storage": "ok"}}),
+        probe(200, {"status": "ready", "checks": {"database": "ok", "storage": "ok"}, "revision": "a" * 40}),
         probe(
             200,
             {
                 "status": "ok",
-                "revision": "abc123",
+                "revision": "a" * 40,
                 "runtime": {
                     "api_runtime": "rust-axum",
                     "embedding_backend": "hash",
@@ -73,3 +73,14 @@ def test_evaluate_detects_loopback_host_mismatch_before_browser_login() -> None:
 
     assert result["local_ready"] is False
     assert any(item["name"] == "前端/API host 一致" and not item["passed"] for item in result["checks"])
+
+
+def test_evaluate_rejects_runtime_from_another_checkout() -> None:
+    result = MODULE.evaluate(
+        *healthy_probes(),
+        {"APP_ENV": "development"},
+        expected_revision="b" * 40,
+    )
+
+    assert result["local_ready"] is False
+    assert any(item["name"] == "编译 revision 已绑定" and not item["passed"] for item in result["checks"])

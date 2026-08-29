@@ -268,8 +268,12 @@ def build_package(
                 and IMAGE_DIGEST.fullmatch(payload["image_digest"])
                 and payload.get("app_revision") == app_revision
                 and payload.get("runtime_revision") == runtime_revision
+                and payload.get("oci_revision") == app_revision
+                and payload.get("endpoint_revision") == app_revision
+                and isinstance(payload.get("projection_sha256"), str)
+                and SHA256.fullmatch(payload["projection_sha256"])
             ),
-            "container image evidence requires an immutable digest and both matching revisions",
+            "container image evidence requires immutable digest, OCI/endpoint revisions, and a stable projection hash",
         ),
         "worktree_clean": binding(
             "worktree_clean",
@@ -305,7 +309,16 @@ def build_package(
         if isinstance(evidence, dict) and evidence.get("inside_root") and evidence.get("path") not in seen_paths:
             sources.append(evidence)
             seen_paths.add(evidence["path"])
-    return {
+    runtime_config_payload, _ = read_json(runtime_config) if source(runtime_config, root)["exists"] else (None, None)
+    secrets_disclosed = bool(
+        isinstance(runtime_config_payload, dict) and runtime_config_payload.get("secrets_disclosed") is True
+    )
+    secret_remediation = (
+        runtime_config_payload.get("secret_remediation")
+        if isinstance(runtime_config_payload, dict)
+        else None
+    )
+    package = {
         "schema": SCHEMA,
         "schema_version": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -316,9 +329,13 @@ def build_package(
         "checks": checks,
         "blockers": blockers,
         "source_files": sources,
+        "secrets_disclosed": secrets_disclosed,
         "scope": "Exp5/G5A Rust retrieval-only runtime freeze; no retrieval queries executed",
         "external_authority_policy": "absence or unverifiable authority never upgrades status",
     }
+    if secret_remediation is not None:
+        package["secret_remediation"] = secret_remediation
+    return package
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:

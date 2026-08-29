@@ -38,7 +38,7 @@ REQUIRED_PRODUCTION_CHECKS = {
     "postgres_password_non_default",
     "seed_demo_data_disabled",
     "deepseek_api_key_present",
-    "app_revision_present",
+    "build_revision_present",
 }
 REQUIRED_RELEASE_GATE_GROUPS = {"retrieval", "rag_experiment", "agent", "system", "evidence_manifest"}
 
@@ -170,7 +170,6 @@ def production_config_check(system_evidence: Path, production_config: Path) -> d
         "POSTGRES_PASSWORD",
         "SEED_DEMO_DATA",
         "DEEPSEEK_API_KEY",
-        "APP_REVISION",
     }
     embedded_keys = set(embedded.get("checked_keys") or [])
     standalone_keys = set(standalone.get("checked_keys") or [])

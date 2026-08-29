@@ -14,6 +14,8 @@ import csv
 import hashlib
 import io
 import json
+import re
+import subprocess
 import sys
 import urllib.request
 from datetime import datetime, timezone
@@ -26,6 +28,9 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "system-evidence"
 HTTP_METHODS = ("delete", "get", "head", "options", "patch", "post", "put", "trace")
 CONTRACT_FILES = ("api-list.csv", "openapi.json", "rust-runtime-contract-latest.json")
+RUNTIME_FILES = ("runtime-config-latest.json", "container-image-latest.json")
+REQUIRED_MANIFEST_FILES = CONTRACT_FILES + RUNTIME_FILES
+REVISION_PATTERN = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 
 
 def sha256_bytes(value: bytes | str) -> str:
@@ -49,6 +54,32 @@ def fetch_json(url: str, timeout: float = 10.0) -> dict[str, Any]:
     if not isinstance(payload, dict):
         raise RuntimeError(f"{url} did not return a JSON object")
     return payload
+
+
+def checkout_revision() -> str:
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "rev-parse", "--verify", "HEAD^{commit}"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    revision = result.stdout.strip().lower()
+    if result.returncode or not REVISION_PATTERN.fullmatch(revision):
+        raise RuntimeError("checkout HEAD is not a full hexadecimal revision")
+    return revision
+
+
+def verify_clean_compose_checkout() -> None:
+    runner = ROOT / "scripts" / "docker-compose-with-revision.sh"
+    result = subprocess.run(
+        [str(runner), "config", "--quiet"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode:
+        raise RuntimeError("revision-bound Compose wrapper rejected the evidence checkout")
 
 
 def build_api_rows(document: dict[str, Any]) -> list[dict[str, str]]:
@@ -91,11 +122,24 @@ def render_api_csv(document: dict[str, Any]) -> str:
 
 
 def build_contract_evidence(
-    document: dict[str, Any], metrics: dict[str, Any], backend_url: str
+    document: dict[str, Any],
+    metrics: dict[str, Any],
+    backend_url: str,
+    ready: dict[str, Any] | None = None,
+    expected_revision: str | None = None,
 ) -> dict[str, Any]:
     openapi_text = render_json(document)
     rows = build_api_rows(document)
     runtime = metrics.get("runtime") if isinstance(metrics.get("runtime"), dict) else {}
+    ready = {"status": "ready", "revision": metrics.get("revision")} if ready is None else ready
+    ready_revision = ready.get("revision")
+    metrics_revision = metrics.get("revision")
+    if not isinstance(ready_revision, str) or ready_revision != metrics_revision:
+        raise ValueError("/ready and /metrics revisions must match")
+    if ready.get("status") != "ready" or metrics.get("status") != "ok":
+        raise ValueError("/ready and /metrics must report healthy statuses")
+    if expected_revision is not None and ready_revision.lower() != expected_revision.lower():
+        raise ValueError("runtime revision does not match checkout HEAD")
     return {
         "schema": "full-system.rust-runtime-contract-evidence",
         "schema_version": 1,
@@ -106,7 +150,10 @@ def build_contract_evidence(
             "metrics_url": backend_endpoint(backend_url, "/metrics"),
         },
         "runtime": runtime,
-        "revision": metrics.get("revision"),
+        "revision": metrics_revision,
+        "build_revision": ready_revision,
+        "app_revision": ready_revision,
+        "runtime_revision": ready_revision,
         "status": metrics.get("status"),
         "api": {
             "openapi_version": document.get("openapi"),
@@ -129,6 +176,52 @@ def _file_entry(path: Path) -> dict[str, Any]:
     return {"name": path.name, "bytes": len(payload), "sha256": sha256_bytes(payload)}
 
 
+def _verify_runtime_evidence(output_dir: Path, revision: str) -> None:
+    for name in RUNTIME_FILES:
+        path = output_dir / name
+        if not path.is_file():
+            raise ValueError(f"required runtime evidence is missing: {name}")
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError(f"required runtime evidence is invalid: {name}") from exc
+        if not isinstance(payload, dict) or any(payload.get(field) != revision for field in ("build_revision", "app_revision", "runtime_revision")):
+            raise ValueError(f"runtime evidence revision drift: {name}")
+        if name == "container-image-latest.json" and any(
+            payload.get(field) != revision for field in ("oci_revision", "endpoint_revision")
+        ):
+            raise ValueError(f"container image revision drift: {name}")
+
+
+def _manifest_file_entries(output_dir: Path, existing: list[Any]) -> list[dict[str, Any]]:
+    """Recompute every declared file hash; never carry stale integrity data forward."""
+    entries: list[dict[str, Any]] = []
+    names: set[str] = set()
+    for raw_entry in existing:
+        if not isinstance(raw_entry, dict) or not isinstance(raw_entry.get("name"), str):
+            raise ValueError("manifest files must contain named file objects")
+        name = raw_entry["name"]
+        if not name or Path(name).name != name or name == "manifest.json":
+            raise ValueError(f"manifest file name is unsafe: {name!r}")
+        if name in names:
+            raise ValueError(f"manifest contains duplicate file: {name}")
+        names.add(name)
+        path = output_dir / name
+        if not path.is_file():
+            raise ValueError(f"manifest file is missing: {name}")
+        entry = _file_entry(path)
+        if name in RUNTIME_FILES and raw_entry.get("sha256") != entry["sha256"]:
+            raise ValueError(f"runtime evidence hash drift: {name}")
+        entries.append(entry)
+    for name in REQUIRED_MANIFEST_FILES:
+        if name not in names:
+            path = output_dir / name
+            if not path.is_file():
+                raise ValueError(f"required manifest file is missing: {name}")
+            entries.append(_file_entry(path))
+    return sorted(entries, key=lambda entry: entry["name"])
+
+
 def _update_manifest(output_dir: Path, evidence: dict[str, Any]) -> None:
     manifest_path = output_dir / "manifest.json"
     try:
@@ -140,13 +233,11 @@ def _update_manifest(output_dir: Path, evidence: dict[str, Any]) -> None:
     counts = manifest.get("counts") if isinstance(manifest.get("counts"), dict) else {}
     counts["api_operations"] = evidence["api"]["operation_count"]
     manifest["counts"] = counts
+    _verify_runtime_evidence(output_dir, evidence["app_revision"])
     existing = manifest.get("files") if isinstance(manifest.get("files"), list) else []
-    preserved = [entry for entry in existing if isinstance(entry, dict) and entry.get("name") not in CONTRACT_FILES]
-    manifest["files"] = sorted(
-        preserved + [_file_entry(output_dir / name) for name in CONTRACT_FILES],
-        key=lambda entry: str(entry.get("name", "")),
-    )
+    manifest["files"] = _manifest_file_entries(output_dir, existing)
     manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
+    manifest["app_revision"] = evidence["app_revision"]
     manifest["contract"] = {
         "generator": "export_rust_contract_evidence.py",
         "schema": evidence["schema"],
@@ -157,12 +248,17 @@ def _update_manifest(output_dir: Path, evidence: dict[str, Any]) -> None:
 
 
 def write_evidence(
-    output_dir: Path, document: dict[str, Any], metrics: dict[str, Any], backend_url: str
+    output_dir: Path,
+    document: dict[str, Any],
+    metrics: dict[str, Any],
+    backend_url: str,
+    ready: dict[str, Any] | None = None,
+    expected_revision: str | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     openapi_text = render_json(document)
     api_csv = render_api_csv(document)
-    evidence = build_contract_evidence(document, metrics, backend_url)
+    evidence = build_contract_evidence(document, metrics, backend_url, ready, expected_revision)
     _write_atomic(output_dir / "openapi.json", openapi_text)
     _write_atomic(output_dir / "api-list.csv", api_csv)
     _write_atomic(output_dir / "rust-runtime-contract-latest.json", render_json(evidence))
@@ -183,9 +279,19 @@ def main() -> int:
     args = parser.parse_args()
     backend_url = args.backend_url.rstrip("/")
     try:
+        expected_revision = checkout_revision()
+        verify_clean_compose_checkout()
         document = fetch_json(backend_endpoint(backend_url, "/openapi.json"))
         metrics = fetch_json(backend_endpoint(backend_url, "/metrics"))
-        result = write_evidence(args.output_dir, document, metrics, backend_url)
+        ready = fetch_json(backend_endpoint(backend_url, "/ready"))
+        result = write_evidence(
+            args.output_dir,
+            document,
+            metrics,
+            backend_url,
+            ready,
+            expected_revision,
+        )
     except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as exc:
         print(f"Rust contract evidence export failed: {exc}", file=sys.stderr)
         return 1
