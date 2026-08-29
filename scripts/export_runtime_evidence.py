@@ -19,6 +19,7 @@ from urllib.parse import urljoin
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "system-evidence"
 PROJECTION_SCHEMA = "full-system.rust-runtime-projection-v1"
+COMPOSE_PROJECTION_SCHEMA = "full-system.rust-resolved-compose-projection-v1"
 REVISION_FIELDS = ("org.opencontainers.image.revision", "org.opencontainers.image.source")
 RUNTIME_FIELDS = ("api_runtime", "embedding_backend", "embedding_model", "embedding_dimension")
 READY_CHECK_FIELDS = ("database", "storage")
@@ -176,11 +177,116 @@ def endpoint_observation(ready: dict[str, Any], metrics: dict[str, Any]) -> dict
     }
 
 
+def _repository_relative_path(value: Any) -> str | None:
+    if not isinstance(value, str) or not value:
+        return None
+    path = Path(value)
+    if path.is_absolute():
+        try:
+            path = path.resolve().relative_to(ROOT.resolve())
+        except ValueError:
+            return None
+    normalized = path.as_posix()
+    if normalized == "" or normalized == ".." or normalized.startswith("../"):
+        return None
+    return normalized
+
+
+def _compose_ports(value: Any) -> list[Any]:
+    if not isinstance(value, list):
+        return []
+    ports: list[Any] = []
+    for port in value:
+        if isinstance(port, dict):
+            projected = {
+                key: port[key]
+                for key in ("mode", "target", "published", "protocol", "host_ip")
+                if key in port
+            }
+            if projected:
+                ports.append(projected)
+        elif isinstance(port, str):
+            ports.append(port)
+    return sorted(ports, key=lambda item: canonical_json(item))
+
+
+def _compose_healthcheck(value: Any) -> dict[str, Any] | None:
+    if not isinstance(value, dict):
+        return None
+    projected: dict[str, Any] = {}
+    for key in ("test", "interval", "timeout", "retries", "start_period", "start_interval", "disable"):
+        candidate = value.get(key)
+        if key == "test" and isinstance(candidate, list) and all(isinstance(item, str) for item in candidate):
+            projected[key] = candidate
+        elif key == "disable" and isinstance(candidate, bool):
+            projected[key] = candidate
+        elif key in ("interval", "timeout", "start_period", "start_interval") and isinstance(candidate, str):
+            projected[key] = candidate
+        elif key == "retries" and isinstance(candidate, int):
+            projected[key] = candidate
+    return projected or None
+
+
+def resolved_compose_projection(config: dict[str, Any], expected_revision: str) -> dict[str, Any]:
+    services = config.get("services")
+    if not isinstance(services, dict):
+        raise RuntimeError("resolved Compose config has no services object")
+    projected_services: dict[str, Any] = {}
+    for service_name in sorted(name for name in services if isinstance(name, str)):
+        service = services[service_name]
+        if not isinstance(service, dict):
+            continue
+        projected: dict[str, Any] = {}
+        image = service.get("image")
+        if isinstance(image, str):
+            projected["image"] = image
+        build = service.get("build")
+        if isinstance(build, dict):
+            build_projection: dict[str, Any] = {}
+            context = _repository_relative_path(build.get("context"))
+            dockerfile = _repository_relative_path(build.get("dockerfile"))
+            if build.get("context") is not None and context is None:
+                raise RuntimeError(f"build context for {service_name} is outside the repository")
+            if build.get("dockerfile") is not None and dockerfile is None:
+                raise RuntimeError(f"Dockerfile for {service_name} is outside the repository")
+            if context is not None:
+                build_projection["context"] = context
+            if dockerfile is not None:
+                build_projection["dockerfile"] = dockerfile
+            args = build.get("args")
+            if isinstance(args, dict) and isinstance(args.get("BUILD_REVISION"), str):
+                build_projection["build_revision"] = args["BUILD_REVISION"]
+            if build_projection:
+                projected["build"] = build_projection
+        ports = _compose_ports(service.get("ports"))
+        if ports:
+            projected["ports"] = ports
+        healthcheck = _compose_healthcheck(service.get("healthcheck"))
+        if healthcheck is not None:
+            projected["healthcheck"] = healthcheck
+        projected_services[service_name] = projected
+    if not projected_services:
+        raise RuntimeError("resolved Compose config has no projectable services")
+    return {
+        "schema": COMPOSE_PROJECTION_SCHEMA,
+        "build_revision": expected_revision,
+        "services": projected_services,
+    }
+
+
 def export(
     *, image_name: str, container_name: str, backend_url: str, output_dir: Path
 ) -> dict[str, Any]:
     head = checkout_revision()
     resolved_compose = compose_config(head)
+    try:
+        resolved_compose_payload = json.loads(resolved_compose.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise RuntimeError("revision-bound Compose output is not valid UTF-8 JSON") from exc
+    if not isinstance(resolved_compose_payload, dict):
+        raise RuntimeError("revision-bound Compose output is not a JSON object")
+    resolved_compose_projection_value = resolved_compose_projection(resolved_compose_payload, head)
+    resolved_compose_canonical = canonical_json(resolved_compose_projection_value)
     ready = fetch_json(urljoin(backend_url.rstrip("/") + "/", "ready"))
     metrics = fetch_json(urljoin(backend_url.rstrip("/") + "/", "metrics"))
     endpoint_revision = ready.get("revision")
@@ -215,11 +321,10 @@ def export(
             "sha256": sha256_bytes(compose_path.read_bytes()),
         },
         "resolved_compose": {
-            "bytes": len(resolved_compose),
-            "format": "docker compose config --format json via scripts/docker-compose-with-revision.sh",
-            "raw_path": None,
-            "retained": False,
-            "sha256": sha256_bytes(resolved_compose),
+            "projection_schema": COMPOSE_PROJECTION_SCHEMA,
+            "projection": resolved_compose_projection_value,
+            "canonical_bytes": len(resolved_compose_canonical),
+            "canonical_sha256": sha256_bytes(resolved_compose_canonical),
             "build_revision": head,
         },
     }
