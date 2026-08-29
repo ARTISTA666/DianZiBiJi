@@ -63,6 +63,7 @@ export function NoteListSection({
         <EmptyState
           icon={FileText}
           title={total === 0 ? "暂无笔记" : "没有匹配的笔记"}
+          description={total === 0 ? "点击右上角「新建笔记」开启第一条实验记录" : "尝试调整筛选状态或清空关键词搜索"}
         />
       ) : (
         <div className="space-y-3">
@@ -71,21 +72,30 @@ export function NoteListSection({
               key={note.id}
               role="button"
               tabIndex={0}
-              className="cursor-pointer transition-shadow hover:shadow-sm"
+              className="group cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover border-border/75 hover:border-primary/40 bg-card"
               onClick={() => onSelectNote(note)}
               onKeyDown={(e) =>
                 handleCardKeyDown(e, () => onSelectNote(note))
               }
             >
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="min-w-0 flex-1">
-                    <CardTitle className="text-base">{note.title}</CardTitle>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
-                      {note.experiment_type} · {note.experiment_date || "—"}
-                    </p>
+              <CardHeader className="p-4 sm:p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1 space-y-1.5">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <CardTitle className="text-base font-semibold group-hover:text-primary transition-colors">
+                        {note.title}
+                      </CardTitle>
+                      <Badge variant="outline" className="text-[11px] font-normal py-0 h-5 text-muted-foreground border-border/60">
+                        {note.experiment_type}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span>实验日期: {note.experiment_date || "—"}</span>
+                      <span>·</span>
+                      <span>更新于 {new Date(note.updated_at).toLocaleDateString("zh-CN")}</span>
+                    </div>
                   </div>
-                  <Badge variant={statusBadgeVariant[note.status] || "outline"}>
+                  <Badge variant={statusBadgeVariant[note.status] || "outline"} className="shrink-0">
                     {statusText[note.status] || note.status}
                   </Badge>
                 </div>

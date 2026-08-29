@@ -41,33 +41,36 @@ interface FileApprovalCardProps {
 
 function FileApprovalCard({ file, comment, onCommentChange, onAction }: FileApprovalCardProps) {
   return (
-    <Card data-testid={`approval-file-${file.id}`}>
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between">
-          <CardTitle className="text-base flex items-center gap-2">
-            <FileCheck className="h-4 w-4 text-muted-foreground" />
-            {file.original_filename}
-          </CardTitle>
-          <Badge variant="secondary">待审核资料</Badge>
+    <Card data-testid={`approval-file-${file.id}`} className="border-border/75 shadow-card hover:border-primary/40 transition-all">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <CardTitle className="text-base flex items-center gap-2 font-semibold">
+              <FileCheck className="h-4 w-4 text-primary" />
+              {file.original_filename}
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">
+              知识文档 · {file.mime_type || "未知格式"} · {file.file_size} bytes
+            </p>
+          </div>
+          <Badge variant="secondary" className="shrink-0">待审核资料</Badge>
         </div>
-        <p className="text-xs text-muted-foreground">
-          知识文档 · {file.mime_type || "未知格式"} · {file.file_size} bytes
-        </p>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
           <Textarea
-            placeholder="审核意见"
+            placeholder="填写审核意见（可选）"
             value={comment}
             onChange={(event) => onCommentChange(event.target.value)}
             rows={2}
+            className="text-xs"
           />
           <div className="flex gap-2">
-            <Button size="sm" variant="success" onClick={() => onAction(file.id, "approve")}>
-              <CheckCircle className="mr-1 h-4 w-4" />通过
+            <Button size="sm" variant="success" onClick={() => onAction(file.id, "approve")} className="shadow-subtle">
+              <CheckCircle className="mr-1 h-3.5 w-3.5" />通过
             </Button>
-            <Button size="sm" variant="destructive" onClick={() => onAction(file.id, "reject")}>
-              <XCircle className="mr-1 h-4 w-4" />拒绝
+            <Button size="sm" variant="destructive" onClick={() => onAction(file.id, "reject")} className="shadow-subtle">
+              <XCircle className="mr-1 h-3.5 w-3.5" />拒绝
             </Button>
           </div>
         </div>
@@ -116,56 +119,57 @@ function ApprovalCard({ token, note, members, comment, onCommentChange, onAction
   const shownText = expanded || !needCollapse ? previewText : `${previewText.slice(0, PREVIEW_LIMIT)}…`;
 
   return (
-    <Card data-testid={`approval-note-${note.id}`}>
-      <CardHeader className="pb-2">
-        <div className="flex items-start justify-between">
-          <div>
-            <CardTitle className="text-base flex items-center gap-2">
-              <FileText className="h-4 w-4 text-muted-foreground" />
+    <Card data-testid={`approval-note-${note.id}`} className="border-border/75 shadow-card hover:border-primary/40 transition-all">
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-1">
+            <CardTitle className="text-base flex items-center gap-2 font-semibold">
+              <FileText className="h-4 w-4 text-primary" />
               {note.title}
             </CardTitle>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {note.experiment_type} · {note.experiment_date || "—"}
-            </p>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              提交人：{submitter ? `用户 #${note.owner_user_id}` : `#${note.owner_user_id}`}
-              {" · 提交时间："}
-              {formatTime(submittedAt || note.updated_at)}
-            </p>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+              <Badge variant="outline" className="text-[10px] py-0 h-4">{note.experiment_type}</Badge>
+              <span>{note.experiment_date || "—"}</span>
+              <span>·</span>
+              <span>提交人：{submitter ? `用户 #${note.owner_user_id}` : `#${note.owner_user_id}`}</span>
+              <span>·</span>
+              <span>提交时间：{formatTime(submittedAt || note.updated_at)}</span>
+            </div>
           </div>
-          <Badge variant="secondary">{statusText[note.status] || note.status}</Badge>
+          <Badge variant="secondary" className="shrink-0">{statusText[note.status] || note.status}</Badge>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-3">
-          {previewLoading && <p className="text-sm text-muted-foreground">正在加载笔记内容...</p>}
-          {previewError && <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">{previewError}</p>}
+          {previewLoading && <p className="text-xs text-muted-foreground">正在加载笔记内容...</p>}
+          {previewError && <p className="rounded-lg bg-destructive/10 p-2.5 text-xs text-destructive">{previewError}</p>}
           {previewText && (
-            <div className="rounded-md border bg-muted/30 p-3 text-sm">
+            <div className="rounded-lg border border-border/60 bg-muted/30 p-3.5 text-xs leading-relaxed">
               <p className="whitespace-pre-wrap break-words">{shownText}</p>
               {needCollapse && (
                 <button
                   type="button"
-                  className="mt-1 text-xs text-primary underline underline-offset-2"
+                  className="mt-2 text-xs text-primary font-medium underline underline-offset-2 hover:text-primary/80"
                   onClick={() => setExpanded((v) => !v)}
                 >
-                  {expanded ? "收起" : "展开全文"}
+                  {expanded ? "收起全文" : "展开全文"}
                 </button>
               )}
             </div>
           )}
           <Textarea
-            placeholder="审核意见"
+            placeholder="填写审核意见（退回时建议填写修改指导）"
             value={comment}
             onChange={(e) => onCommentChange(e.target.value)}
             rows={2}
+            className="text-xs"
           />
           <div className="flex gap-2">
-            <Button size="sm" variant="success" disabled={previewLoading || !!previewError} onClick={() => onAction(note.id, "approve")}>
-              <CheckCircle className="mr-1 h-4 w-4" />通过
+            <Button size="sm" variant="success" disabled={previewLoading || !!previewError} onClick={() => onAction(note.id, "approve")} className="shadow-subtle">
+              <CheckCircle className="mr-1 h-3.5 w-3.5" />通过
             </Button>
-            <Button size="sm" variant="destructive" disabled={previewLoading || !!previewError} onClick={() => onAction(note.id, "return")}>
-              <XCircle className="mr-1 h-4 w-4" />退回
+            <Button size="sm" variant="destructive" disabled={previewLoading || !!previewError} onClick={() => onAction(note.id, "return")} className="shadow-subtle">
+              <XCircle className="mr-1 h-3.5 w-3.5" />退回
             </Button>
           </div>
         </div>
