@@ -1,7 +1,11 @@
 {
-  "generated_at": "2026-08-10T13:04:16.996876+00:00",
+  "generated_at": "2026-08-29T11:17:48.447470+00:00",
   "local_ready": true,
   "status": "ready",
+  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "secrets_disclosed": false,
   "app_env": "development",
   "production_readiness": {
     "status": "not_production_mode",
@@ -9,17 +13,17 @@
     "checks": {
       "APP_ENV=production": false,
       "SEED_DEMO_DATA=false": false,
-      "APP_REVISION 已绑定": false,
+      "endpoint 编译 revision 已绑定": true,
       "DeepSeek API key 已配置": true,
-      "生产 embedding=OpenAI-compatible/BAAI/bge-m3/1024": false
+      "生产 embedding=OpenAI-compatible/BAAI/bge-m3/1024": true
     }
   },
   "runtime": {
     "api_runtime": "rust-axum",
-    "revision": "unversioned",
-    "embedding_backend": "hash",
-    "embedding_model": "rust-hash-512-v1",
-    "embedding_dimension": 512
+    "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+    "embedding_backend": "openai_compatible",
+    "embedding_model": "BAAI/bge-m3",
+    "embedding_dimension": 1024
   },
   "checks": [
     {
@@ -47,6 +51,12 @@
       "detail": "HTTP 200"
     },
     {
+      "name": "前端/API host 一致",
+      "passed": true,
+      "severity": "error",
+      "detail": "frontend=localhost / api=localhost"
+    },
+    {
       "name": "运行指标",
       "passed": true,
       "severity": "error",
@@ -57,11 +67,17 @@
       "passed": true,
       "severity": "error",
       "detail": "api_runtime=rust-axum"
+    },
+    {
+      "name": "编译 revision 已绑定",
+      "passed": true,
+      "severity": "error",
+      "detail": "ready=80c8c6f8003505a6741445cc2893d51f8810a7b9 / metrics=80c8c6f8003505a6741445cc2893d51f8810a7b9 / checkout=80c8c6f8003505a6741445cc2893d51f8810a7b9"
     }
   ],
   "sources": {
-    "ready": "http://127.0.0.1:8001/ready",
-    "metrics": "http://127.0.0.1:8001/metrics",
-    "frontend": "http://127.0.0.1:3000/"
+    "ready": "http://localhost:8001/ready",
+    "metrics": "http://localhost:8001/metrics",
+    "frontend": "http://localhost:3000/"
   }
 }

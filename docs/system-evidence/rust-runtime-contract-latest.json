@@ -1,24 +1,27 @@
 {
   "api": {
-    "openapi_sha256": "2c77237b4fec0e8f6c1ad91028b7c338c0f3b8b92abeb1eae433c915a6f02811",
+    "openapi_sha256": "985182b476a200fd80d11c9d7d93eb973f0e75489a2f0156e8ed9367bc196569",
     "openapi_version": "3.1.0",
-    "operation_count": 85,
-    "path_count": 70
+    "operation_count": 103,
+    "path_count": 85
   },
-  "captured_at": "2026-08-10T12:03:26.888612+00:00",
-  "revision": "unversioned",
+  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "captured_at": "2026-08-29T11:17:54.729234+00:00",
+  "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
   "runtime": {
     "api_runtime": "rust-axum",
-    "embedding_backend": "hash",
-    "embedding_dimension": 512,
-    "embedding_model": "rust-hash-512-v1"
+    "embedding_backend": "openai_compatible",
+    "embedding_dimension": 1024,
+    "embedding_model": "BAAI/bge-m3"
   },
+  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
   "schema": "full-system.rust-runtime-contract-evidence",
   "schema_version": 1,
   "source": {
-    "backend_url": "http://127.0.0.1:8001",
-    "metrics_url": "http://127.0.0.1:8001/metrics",
-    "openapi_url": "http://127.0.0.1:8001/openapi.json"
+    "backend_url": "http://localhost:8001",
+    "metrics_url": "http://localhost:8001/metrics",
+    "openapi_url": "http://localhost:8001/openapi.json"
   },
   "status": "ok"
 }

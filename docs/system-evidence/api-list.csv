@@ -1,5 +1,20 @@
 ﻿method,path,tags,summary,operation_id
+POST,/api/agent/pending-actions/{action_id}/approve,agent-runtime,Approve Pending Agent Action,approve_agent_action_api_agent_pending_actions_action_id_approve_post
+POST,/api/agent/pending-actions/{action_id}/reject,agent-runtime,Reject Pending Agent Action,reject_agent_action_api_agent_pending_actions_action_id_reject_post
+POST,/api/agent/sessions,agent-runtime,Create Agent Session,create_agent_session_api_agent_sessions_post
+GET,/api/agent/sessions/{session_id},agent-runtime,Get Agent Session,get_agent_session_api_agent_sessions_session_id_get
+GET,/api/agent/sessions/{session_id}/events,agent-runtime,Stream Agent Session Events,stream_agent_events_api_agent_sessions_session_id_events_get
+POST,/api/agent/sessions/{session_id}/messages,agent-runtime,Run Agent Turn,create_agent_message_api_agent_sessions_session_id_messages_post
+POST,/api/agent/sessions/{session_id}/turns,agent-runtime,Create Agent Turn,create_agent_turn_api_agent_sessions_session_id_turns_post
+POST,/api/agent/sessions/{session_id}/turns/{turn_id}/cancel,agent-runtime,Cancel Agent Turn,cancel_agent_turn_api_agent_sessions_session_id_turns_turn_id_cancel_post
+POST,/api/agent/sessions/{session_id}/turns/{turn_id}/start,agent-runtime,Start Approved Agent Turn,start_agent_turn_api_agent_sessions_session_id_turns_turn_id_start_post
 POST,/api/agents/generate,agents,Generate Agent Output,generate_agent_output_api_agents_generate_post
+DELETE,/api/mcp,mcp,Terminate MCP Session,terminate_mcp_session_api_mcp_delete
+GET,/api/mcp,mcp,Open MCP Streamable HTTP Stream,open_mcp_stream_api_mcp_get
+POST,/api/mcp,mcp,Send MCP JSON-RPC Request,send_mcp_request_api_mcp_post
+GET,/api/mcp/tokens,mcp,List MCP Personal Access Tokens,list_mcp_tokens_api_mcp_tokens_get
+POST,/api/mcp/tokens,mcp,Create MCP Personal Access Token,create_mcp_token_api_mcp_tokens_post
+DELETE,/api/mcp/tokens/{token_id},mcp,Revoke MCP Personal Access Token,revoke_mcp_token_api_mcp_tokens_token_id_delete
 POST,/api/ocr/extract,ocr,Extract Ocr,extract_ocr_api_ocr_extract_post
 GET,/api/ocr/files/{file_id}/latest,ocr,Get Latest Ocr Result,get_latest_ocr_result_api_ocr_files__file_id__latest_get
 POST,/api/ocr/results/{result_id}/confirm,ocr,Confirm Ocr Result,confirm_ocr_result_api_ocr_results__result_id__confirm_post
@@ -69,13 +84,16 @@ POST,/projects/{project_id}/rag/experiments,rag,Run Rag Experiment,run_rag_exper
 POST,/projects/{project_id}/rag/init,rag,Init Project Rag,init_project_rag_projects__project_id__rag_init_post
 POST,/projects/{project_id}/rag/query,rag,Query Project Rag,query_project_rag_projects__project_id__rag_query_post
 GET,/projects/{project_id}/rag/query-logs,rag,List Project Query Logs,list_project_query_logs_projects__project_id__rag_query_logs_get
+POST,/projects/{project_id}/rag/retrieve,rag,Retrieval-only RAG evidence,retrieve_project_rag_projects__project_id__rag_retrieve_post
 GET,/projects/{project_id}/rag/status,rag,Get Project Rag Status,get_project_rag_status_projects__project_id__rag_status_get
 POST,/projects/{project_id}/reviewers,projects,Add Project Reviewer,add_project_reviewer_projects__project_id__reviewers_post
 DELETE,/projects/{project_id}/reviewers/{user_id},projects,Remove Project Reviewer,remove_project_reviewer_projects__project_id__reviewers__user_id__delete
 GET,/rag/experiments/{run_id},rag,Get Rag Experiment,get_rag_experiment_rag_experiments__run_id__get
+GET,/rag/experiments/{run_id}/evidence.json,rag,Export Rag Experiment Evidence,export_rag_experiment_evidence_rag_experiments__run_id__evidence_json_get
 GET,/rag/experiments/{run_id}/export.csv,rag,Export Rag Experiment,export_rag_experiment_rag_experiments__run_id__export_csv_get
 POST,/rag/experiments/{run_id}/resume,rag,Resume Rag Experiment,resume_rag_experiment_rag_experiments__run_id__resume_post
 POST,/rag/query-logs/{log_id}/evaluation,rag,Upsert Query Evaluation,upsert_query_evaluation_rag_query_logs__log_id__evaluation_post
+POST,/rag/query-logs/{log_id}/feedback,rag,Submit Query Feedback,submit_query_feedback_rag_query_logs__log_id__feedback_post
 GET,/ready,,Ready,ready_ready_get
 GET,/templates,templates,List Templates,list_templates_templates_get
 GET,/users,users,List Users,list_users_users_get

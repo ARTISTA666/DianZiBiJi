@@ -401,6 +401,34 @@
         "title": "AIQueryEvaluationRequest",
         "type": "object"
       },
+      "AIQueryFeedbackRequest": {
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "value": {
+            "enum": [
+              "helpful",
+              "not_helpful"
+            ],
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "title": "AIQueryFeedbackRequest",
+        "type": "object"
+      },
       "AIQueryLogRead": {
         "properties": {
           "answer": {
@@ -838,6 +866,105 @@
           "created_at"
         ],
         "title": "AgentGenerationRunRead",
+        "type": "object"
+      },
+      "AgentMessageCreateRequest": {
+        "properties": {
+          "content": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "title": "Content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "title": "AgentMessageCreateRequest",
+        "type": "object"
+      },
+      "AgentSessionCreateRequest": {
+        "properties": {
+          "project_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Project Id"
+          }
+        },
+        "title": "AgentSessionCreateRequest",
+        "type": "object"
+      },
+      "AgentTurnCreateRequest": {
+        "properties": {
+          "approve_plan": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "content": {
+            "maxLength": 8000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "plan_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "profile": {
+            "default": "fast",
+            "enum": [
+              "fast",
+              "deep"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "content"
+        ],
+        "title": "AgentTurnCreateRequest",
+        "type": "object"
+      },
+      "AgentTurnStartRequest": {
+        "properties": {
+          "plan_hash": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_hash"
+        ],
+        "title": "AgentTurnStartRequest",
+        "type": "object"
+      },
+      "ApiErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "detail"
+        ],
+        "title": "ApiErrorResponse",
         "type": "object"
       },
       "ApprovalRequest": {
@@ -1719,6 +1846,36 @@
           "password"
         ],
         "title": "LoginRequest",
+        "type": "object"
+      },
+      "McpPatCreateRequest": {
+        "properties": {
+          "expires_in_days": {
+            "default": 30,
+            "maximum": 365,
+            "minimum": 1,
+            "title": "Expires In Days",
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "scopes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Scopes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "scopes"
+        ],
+        "title": "McpPatCreateRequest",
         "type": "object"
       },
       "NoteApprovalRead": {
@@ -2773,6 +2930,79 @@
         "title": "RagCitationAuditRead",
         "type": "object"
       },
+      "RagCorpusSnapshotRead": {
+        "properties": {
+          "corpus_chunk_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "corpus_snapshot_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dataset_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "embedding_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "graph_entity_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "graph_relation_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "graph_snapshot_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rag_index_version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "corpus_snapshot_hash",
+          "corpus_chunk_count",
+          "rag_index_version",
+          "embedding_model",
+          "graph_snapshot_hash",
+          "graph_entity_count",
+          "graph_relation_count"
+        ],
+        "title": "RagCorpusSnapshotRead",
+        "type": "object"
+      },
       "RagDatasetRead": {
         "properties": {
           "created_at": {
@@ -2838,66 +3068,826 @@
         "title": "RagDatasetRead",
         "type": "object"
       },
-      "RagGraphContextRead": {
+      "RagEvidenceCase": {
+        "additionalProperties": true,
+        "properties": {
+          "answer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "citation_audit": {
+            "additionalProperties": true,
+            "title": "Rag Evidence Citation Audit",
+            "type": "object"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "execution_order": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "failure_code": {
+            "anyOf": [
+              {
+                "enum": [
+                  "query_error"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "failure_scope": {
+            "anyOf": [
+              {
+                "enum": [
+                  "case"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fallback_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "graph_context": {
+            "items": {
+              "$ref": "#/components/schemas/RagEvidenceGraphContext"
+            },
+            "type": "array"
+          },
+          "graph_hit_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "mode": {
+            "enum": [
+              "pure_llm",
+              "bm25_rag",
+              "project_rag",
+              "structured_query",
+              "kg_enhanced_rag"
+            ],
+            "type": "string"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "prompt_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "provider": {
+            "type": "string"
+          },
+          "query_log_id": {
+            "anyOf": [
+              {
+                "minimum": 1,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "question": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          },
+          "question_index": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "repetition_index": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "response_ms": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "retrieval_config": {
+            "$ref": "#/components/schemas/RagEvidenceRetrievalConfig"
+          },
+          "source_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/RagEvidenceSource"
+            },
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "usage": {
+            "additionalProperties": true,
+            "title": "Rag Evidence Usage",
+            "type": "object"
+          }
+        },
+        "required": [
+          "query_log_id",
+          "question_index",
+          "question",
+          "mode",
+          "repetition_index",
+          "execution_order",
+          "status",
+          "failure_scope",
+          "failure_code",
+          "answer",
+          "source_count",
+          "graph_hit_count",
+          "response_ms",
+          "provider",
+          "model",
+          "prompt_version",
+          "fallback_reason",
+          "error",
+          "sources",
+          "graph_context",
+          "retrieval_config",
+          "usage",
+          "citation_audit",
+          "created_at"
+        ],
+        "title": "RagEvidenceCase",
+        "type": "object"
+      },
+      "RagEvidenceExperiment": {
+        "additionalProperties": true,
+        "properties": {
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "completed_cases": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "corpus_snapshot_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_at": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "created_by": {
+            "type": "integer"
+          },
+          "embedding_model": {
+            "type": "string"
+          },
+          "execution_plan_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "failed_cases": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "generation_model": {
+            "type": "string"
+          },
+          "graph_schema_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "type": "integer"
+          },
+          "modes": {
+            "items": {
+              "enum": [
+                "pure_llm",
+                "bm25_rag",
+                "project_rag",
+                "structured_query",
+                "kg_enhanced_rag"
+              ],
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "name": {
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "project_id": {
+            "type": "integer"
+          },
+          "questions": {
+            "items": {
+              "maxLength": 4000,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "questions_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "rag_index_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "random_seed": {
+            "type": "integer"
+          },
+          "randomize_order": {
+            "type": "boolean"
+          },
+          "repetitions": {
+            "maximum": 10,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "interrupted",
+              "completed",
+              "completed_with_errors",
+              "failed"
+            ],
+            "type": "string"
+          },
+          "total_cases": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "created_by",
+          "name",
+          "status",
+          "questions",
+          "modes",
+          "total_cases",
+          "completed_cases",
+          "failed_cases",
+          "created_at",
+          "completed_at",
+          "repetitions",
+          "randomize_order",
+          "random_seed",
+          "execution_plan_hash",
+          "embedding_model",
+          "generation_model",
+          "questions_sha256",
+          "corpus_snapshot_hash",
+          "rag_index_version",
+          "graph_schema_version"
+        ],
+        "title": "RagEvidenceExperiment",
+        "type": "object"
+      },
+      "RagEvidenceGraphContext": {
+        "additionalProperties": true,
         "properties": {
           "confidence": {
-            "title": "Confidence",
             "type": "number"
           },
           "relation_id": {
-            "title": "Relation Id",
+            "minimum": 1,
             "type": "integer"
           },
           "relation_label": {
-            "title": "Relation Label",
             "type": "string"
           },
           "relation_roles": {
             "items": {
               "type": "string"
             },
-            "title": "Relation Roles",
             "type": "array"
           },
           "relation_type": {
-            "title": "Relation Type",
             "type": "string"
           },
           "retrieval_score": {
-            "default": 0,
-            "title": "Retrieval Score",
             "type": "number"
           },
           "source_entity_id": {
-            "title": "Source Entity Id",
+            "minimum": 1,
             "type": "integer"
           },
           "source_entity_type": {
-            "title": "Source Entity Type",
             "type": "string"
           },
           "source_entity_type_label": {
-            "title": "Source Entity Type Label",
             "type": "string"
           },
           "source_label": {
-            "title": "Source Label",
             "type": "string"
           },
           "target_entity_id": {
-            "title": "Target Entity Id",
+            "minimum": 1,
             "type": "integer"
           },
           "target_entity_type": {
-            "title": "Target Entity Type",
             "type": "string"
           },
           "target_entity_type_label": {
-            "title": "Target Entity Type Label",
             "type": "string"
           },
           "target_label": {
-            "title": "Target Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "relation_id",
+          "source_entity_id",
+          "target_entity_id"
+        ],
+        "title": "RagEvidenceGraphContext",
+        "type": "object"
+      },
+      "RagEvidencePackage": {
+        "properties": {
+          "case_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/RagEvidenceCase"
+            },
+            "type": "array"
+          },
+          "config_snapshot": {
+            "additionalProperties": true,
+            "title": "Rag Evidence Config Snapshot",
+            "type": "object"
+          },
+          "experiment": {
+            "$ref": "#/components/schemas/RagEvidenceExperiment"
+          },
+          "schema_version": {
+            "enum": [
+              "rag-evidence-package-v1"
+            ],
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/RagEvidenceSummary"
+          }
+        },
+        "required": [
+          "schema_version",
+          "experiment",
+          "config_snapshot",
+          "summary",
+          "case_count",
+          "cases"
+        ],
+        "title": "RagEvidencePackage",
+        "type": "object"
+      },
+      "RagEvidenceRetrievalConfig": {
+        "additionalProperties": true,
+        "properties": {
+          "chunk_overlap": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "chunk_size": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "citation_audit": {
+            "additionalProperties": true,
+            "title": "Rag Evidence Citation Audit",
+            "type": "object"
+          },
+          "collection_retrieval_top_k": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "effective_graph_top_k": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "effective_retrieval_top_k": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "embedding_model": {
+            "type": "string"
+          },
+          "graph_min_score": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "graph_retrieval_applied": {
+            "type": "boolean"
+          },
+          "graph_schema_version": {
+            "type": "string"
+          },
+          "graph_top_k": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "index_version": {
+            "type": "string"
+          },
+          "retrieval_applied": {
+            "type": "boolean"
+          },
+          "retrieval_min_score": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "retrieval_strategy": {
+            "type": "string"
+          },
+          "retrieval_top_k": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "vector_candidate_k": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "title": "RagEvidenceRetrievalConfig",
+        "type": "object"
+      },
+      "RagEvidenceRunFatalError": {
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "failure_code": {
+            "enum": [
+              "creator_user_missing",
+              "input_binding_drift",
+              "worker_error"
+            ],
+            "type": "string"
+          },
+          "failure_scope": {
+            "enum": [
+              "run"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "error",
+          "failure_scope",
+          "failure_code"
+        ],
+        "title": "RagEvidenceRunFatalError",
+        "type": "object"
+      },
+      "RagEvidenceSource": {
+        "additionalProperties": true,
+        "properties": {
+          "chunk_id": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "dify_document_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "file_id": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "lexical_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retrieval_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "snippet": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "vector_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "chunk_id",
+          "file_id"
+        ],
+        "title": "RagEvidenceSource",
+        "type": "object"
+      },
+      "RagEvidenceSummary": {
+        "additionalProperties": true,
+        "properties": {
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/RagEvidenceSummaryError"
+            },
+            "type": "array"
+          },
+          "execution_plan": {
+            "items": {
+              "additionalProperties": true,
+              "title": "Rag Evidence Plan Case",
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "fatal_error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RagEvidenceRunFatalError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unexecuted_cases": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "fatal_error",
+          "errors",
+          "execution_plan",
+          "unexecuted_cases"
+        ],
+        "title": "RagEvidenceSummary",
+        "type": "object"
+      },
+      "RagEvidenceSummaryError": {
+        "properties": {
+          "case_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "type": "string"
+          },
+          "failure_code": {
+            "enum": [
+              "query_error",
+              "creator_user_missing",
+              "input_binding_drift",
+              "worker_error"
+            ],
+            "type": "string"
+          },
+          "failure_scope": {
+            "enum": [
+              "case",
+              "run"
+            ],
+            "type": "string"
+          },
+          "mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "question_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "repetition_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "error",
+          "failure_scope",
+          "failure_code"
+        ],
+        "title": "RagEvidenceSummaryError",
+        "type": "object"
+      },
+      "RagGraphContextRead": {
+        "properties": {
+          "confidence": {
+            "type": "number"
+          },
+          "relation_id": {
+            "type": "integer"
+          },
+          "relation_label": {
+            "type": "string"
+          },
+          "relation_properties": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "relation_roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "relation_type": {
+            "type": "string"
+          },
+          "retrieval_score": {
+            "type": "number"
+          },
+          "source_entity_id": {
+            "type": "integer"
+          },
+          "source_entity_type": {
+            "type": "string"
+          },
+          "source_entity_type_label": {
+            "type": "string"
+          },
+          "source_label": {
+            "type": "string"
+          },
+          "source_natural_key": {
+            "type": "string"
+          },
+          "source_normalized_label": {
+            "type": "string"
+          },
+          "target_entity_id": {
+            "type": "integer"
+          },
+          "target_entity_type": {
+            "type": "string"
+          },
+          "target_entity_type_label": {
+            "type": "string"
+          },
+          "target_label": {
+            "type": "string"
+          },
+          "target_natural_key": {
+            "type": "string"
+          },
+          "target_normalized_label": {
             "type": "string"
           }
         },
@@ -2907,14 +3897,20 @@
           "relation_label",
           "source_entity_id",
           "source_label",
+          "source_normalized_label",
+          "source_natural_key",
           "source_entity_type",
           "source_entity_type_label",
           "target_entity_id",
           "target_label",
+          "target_normalized_label",
+          "target_natural_key",
           "target_entity_type",
           "target_entity_type_label",
           "confidence",
-          "relation_roles"
+          "retrieval_score",
+          "relation_roles",
+          "relation_properties"
         ],
         "title": "RagGraphContextRead",
         "type": "object"
@@ -3001,6 +3997,15 @@
             ],
             "title": "Conversation Id"
           },
+          "evidence_status": {
+            "enum": [
+              "sufficient",
+              "partial",
+              "none"
+            ],
+            "title": "Evidence Status",
+            "type": "string"
+          },
           "fallback_reason": {
             "anyOf": [
               {
@@ -3062,6 +4067,14 @@
             ],
             "title": "Response Ms"
           },
+          "retrieval_strategy": {
+            "title": "Retrieval Strategy",
+            "type": "string"
+          },
+          "retrieval_trace_id": {
+            "title": "Retrieval Trace Id",
+            "type": "string"
+          },
           "sources": {
             "items": {
               "$ref": "#/components/schemas/RagSourceRead"
@@ -3076,6 +4089,136 @@
         "title": "RagQueryResponse",
         "type": "object"
       },
+      "RagRetrievalRequest": {
+        "properties": {
+          "expected_corpus_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "expected_graph_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "bm25_rag",
+              "project_rag",
+              "kg_enhanced_rag"
+            ],
+            "type": "string"
+          },
+          "query": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "query",
+          "mode",
+          "expected_corpus_snapshot_hash",
+          "expected_graph_snapshot_hash"
+        ],
+        "title": "RagRetrievalRequest",
+        "type": "object"
+      },
+      "RagRetrievalResponse": {
+        "properties": {
+          "actual_corpus_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "actual_graph_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "citation_repair_invoked": {
+            "type": "boolean"
+          },
+          "corpus_chunk_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "corpus_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "effective_retrieval_config": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "generation_invoked": {
+            "type": "boolean"
+          },
+          "graph_context": {
+            "items": {
+              "$ref": "#/components/schemas/RagGraphContextRead"
+            },
+            "type": "array"
+          },
+          "graph_entity_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "graph_relation_count": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "graph_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "llm_query_rewrite_invoked": {
+            "type": "boolean"
+          },
+          "mode": {
+            "enum": [
+              "bm25_rag",
+              "project_rag",
+              "kg_enhanced_rag"
+            ],
+            "type": "string"
+          },
+          "retrieval_only": {
+            "type": "boolean"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/RagSourceRead"
+            },
+            "type": "array"
+          },
+          "used_corpus_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          },
+          "used_graph_snapshot_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "retrieval_only",
+          "generation_invoked",
+          "llm_query_rewrite_invoked",
+          "citation_repair_invoked",
+          "mode",
+          "sources",
+          "graph_context",
+          "effective_retrieval_config",
+          "actual_corpus_snapshot_hash",
+          "actual_graph_snapshot_hash",
+          "used_corpus_snapshot_hash",
+          "used_graph_snapshot_hash",
+          "corpus_snapshot_hash",
+          "graph_snapshot_hash",
+          "corpus_chunk_count",
+          "graph_entity_count",
+          "graph_relation_count"
+        ],
+        "title": "RagRetrievalResponse",
+        "type": "object"
+      },
       "RagSourceRead": {
         "properties": {
           "chunk_id": {
@@ -3086,8 +4229,38 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Chunk Id"
+            ]
+          },
+          "chunk_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "content": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "content_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "dify_document_id": {
             "anyOf": [
@@ -3097,8 +4270,18 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Dify Document Id"
+            ]
+          },
+          "file_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "file_id": {
             "anyOf": [
@@ -3108,8 +4291,7 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "File Id"
+            ]
           },
           "filename": {
             "anyOf": [
@@ -3119,8 +4301,7 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Filename"
+            ]
           },
           "lexical_score": {
             "anyOf": [
@@ -3130,8 +4311,7 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Lexical Score"
+            ]
           },
           "retrieval_score": {
             "anyOf": [
@@ -3141,8 +4321,7 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Retrieval Score"
+            ]
           },
           "snippet": {
             "anyOf": [
@@ -3152,8 +4331,7 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Snippet"
+            ]
           },
           "vector_score": {
             "anyOf": [
@@ -3163,8 +4341,7 @@
               {
                 "type": "null"
               }
-            ],
-            "title": "Vector Score"
+            ]
           }
         },
         "title": "RagSourceRead",
@@ -3172,6 +4349,9 @@
       },
       "RagStatusRead": {
         "properties": {
+          "corpus_snapshot": {
+            "$ref": "#/components/schemas/RagCorpusSnapshotRead"
+          },
           "dataset": {
             "anyOf": [
               {
@@ -3204,7 +4384,8 @@
           "dataset",
           "pending_sync_count",
           "failed_sync_count",
-          "synced_count"
+          "synced_count",
+          "corpus_snapshot"
         ],
         "title": "RagStatusRead",
         "type": "object"
@@ -3573,6 +4754,394 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/agent/pending-actions/{action_id}/approve": {
+      "post": {
+        "operationId": "approve_agent_action_api_agent_pending_actions_action_id_approve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "action_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Executed action result"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Approve Pending Agent Action",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/pending-actions/{action_id}/reject": {
+      "post": {
+        "operationId": "reject_agent_action_api_agent_pending_actions_action_id_reject_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "action_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Rejected action state"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reject Pending Agent Action",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions": {
+      "post": {
+        "operationId": "create_agent_session_api_agent_sessions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentSessionCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Agent session state"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Agent Session",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions/{session_id}": {
+      "get": {
+        "operationId": "get_agent_session_api_agent_sessions_session_id_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Session, messages, steps, and pending actions"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Agent Session",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions/{session_id}/events": {
+      "get": {
+        "operationId": "stream_agent_events_api_agent_sessions_session_id_events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Agent server-sent events"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Stream Agent Session Events",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions/{session_id}/messages": {
+      "post": {
+        "operationId": "create_agent_message_api_agent_sessions_session_id_messages_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentMessageCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Completed or confirmation-pending turn"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run Agent Turn",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions/{session_id}/turns": {
+      "post": {
+        "operationId": "create_agent_turn_api_agent_sessions_session_id_turns_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentTurnCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Fast execution result or deep plan preview"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Agent Turn",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions/{session_id}/turns/{turn_id}/cancel": {
+      "post": {
+        "operationId": "cancel_agent_turn_api_agent_sessions_session_id_turns_turn_id_cancel_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "turn_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Cancelled Agent turn"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel Agent Turn",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
+    "/api/agent/sessions/{session_id}/turns/{turn_id}/start": {
+      "post": {
+        "operationId": "start_agent_turn_api_agent_sessions_session_id_turns_turn_id_start_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "turn_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentTurnStartRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Started deep Agent turn result"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Start Approved Agent Turn",
+        "tags": [
+          "agent-runtime"
+        ]
+      }
+    },
     "/api/agents/generate": {
       "post": {
         "operationId": "generate_agent_output_api_agents_generate_post",
@@ -3616,6 +5185,208 @@
         "summary": "Generate Agent Output",
         "tags": [
           "agents"
+        ]
+      }
+    },
+    "/api/mcp": {
+      "delete": {
+        "operationId": "terminate_mcp_session_api_mcp_delete",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Mcp-Session-Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Session terminated"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Terminate MCP Session",
+        "tags": [
+          "mcp"
+        ]
+      },
+      "get": {
+        "operationId": "open_mcp_stream_api_mcp_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Mcp-Session-Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "MCP server-sent event stream"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Open MCP Streamable HTTP Stream",
+        "tags": [
+          "mcp"
+        ]
+      },
+      "post": {
+        "operationId": "send_mcp_request_api_mcp_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "JSON-RPC response"
+          },
+          "202": {
+            "description": "Notification accepted"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Send MCP JSON-RPC Request",
+        "tags": [
+          "mcp"
+        ]
+      }
+    },
+    "/api/mcp/tokens": {
+      "get": {
+        "operationId": "list_mcp_tokens_api_mcp_tokens_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Token metadata; never includes token secrets"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List MCP Personal Access Tokens",
+        "tags": [
+          "mcp"
+        ]
+      },
+      "post": {
+        "operationId": "create_mcp_token_api_mcp_tokens_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/McpPatCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "New token; plaintext is returned once"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create MCP Personal Access Token",
+        "tags": [
+          "mcp"
+        ]
+      }
+    },
+    "/api/mcp/tokens/{token_id}": {
+      "delete": {
+        "operationId": "revoke_mcp_token_api_mcp_tokens_token_id_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Token revoked"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Revoke MCP Personal Access Token",
+        "tags": [
+          "mcp"
         ]
       }
     },
@@ -7372,6 +9143,72 @@
         ]
       }
     },
+    "/projects/{project_id}/rag/retrieve": {
+      "post": {
+        "operationId": "retrieve_project_rag_projects__project_id__rag_retrieve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RagRetrievalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RagRetrievalResponse"
+                }
+              }
+            },
+            "description": "Retrieval evidence without generation"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Snapshot identity drift"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Invalid retrieval-only request"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Retrieval-only RAG evidence",
+        "tags": [
+          "rag"
+        ]
+      }
+    },
     "/projects/{project_id}/rag/status": {
       "get": {
         "operationId": "get_project_rag_status_projects__project_id__rag_status_get",
@@ -7581,6 +9418,73 @@
         ]
       }
     },
+    "/rag/experiments/{run_id}/evidence.json": {
+      "get": {
+        "operationId": "export_rag_experiment_evidence_rag_experiments__run_id__evidence_json_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RagEvidencePackage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Independent reviewers cannot access unblinded evidence exports"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Evidence export unavailable until the run reaches a supported terminal state"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export Rag Experiment Evidence",
+        "tags": [
+          "rag"
+        ]
+      }
+    },
     "/rag/experiments/{run_id}/export.csv": {
       "get": {
         "operationId": "export_rag_experiment_rag_experiments__run_id__export_csv_get",
@@ -7725,6 +9629,65 @@
           }
         ],
         "summary": "Upsert Query Evaluation",
+        "tags": [
+          "rag"
+        ]
+      }
+    },
+    "/rag/query-logs/{log_id}/feedback": {
+      "post": {
+        "operationId": "submit_query_feedback_rag_query_logs__log_id__feedback_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "log_id",
+            "required": true,
+            "schema": {
+              "title": "Log Id",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AIQueryFeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Submit Query Feedback",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit Query Feedback",
         "tags": [
           "rag"
         ]

@@ -1,0 +1,126 @@
+{
+  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "captured_at": "2026-08-29T11:16:49.375555+00:00",
+  "config_sources": {
+    "compose_file": {
+      "bytes": 2147,
+      "path": "docker-compose.yml",
+      "sha256": "7749bc7ffce50f5126918d44d4741910efaeefe4a043372dab6fb2c0587d9b73"
+    },
+    "resolved_compose": {
+      "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "canonical_bytes": 855,
+      "canonical_sha256": "68a2e1e3c47528a5b15db3fd0ebbfcd4277ea8819d1ddebbf4e3d46b51776dad",
+      "projection": {
+        "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+        "schema": "full-system.rust-resolved-compose-projection-v1",
+        "services": {
+          "backend": {
+            "build": {
+              "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+              "context": "backend",
+              "dockerfile": "Dockerfile"
+            },
+            "healthcheck": {
+              "interval": "10s",
+              "retries": 12,
+              "start_period": "10s",
+              "test": [
+                "CMD",
+                "curl",
+                "--fail",
+                "--silent",
+                "--show-error",
+                "http://127.0.0.1:8000/ready"
+              ],
+              "timeout": "5s"
+            },
+            "ports": [
+              {
+                "host_ip": "127.0.0.1",
+                "mode": "ingress",
+                "protocol": "tcp",
+                "published": "8001",
+                "target": 8000
+              }
+            ]
+          },
+          "db": {
+            "healthcheck": {
+              "interval": "10s",
+              "retries": 5,
+              "test": [
+                "CMD-SHELL",
+                "pg_isready -U eln_user -d eln"
+              ],
+              "timeout": "5s"
+            },
+            "image": "pgvector/pgvector:pg16"
+          },
+          "frontend": {
+            "build": {
+              "context": "frontend",
+              "dockerfile": "Dockerfile"
+            },
+            "ports": [
+              {
+                "host_ip": "127.0.0.1",
+                "mode": "ingress",
+                "protocol": "tcp",
+                "published": "3000",
+                "target": 3000
+              }
+            ]
+          }
+        }
+      },
+      "projection_schema": "full-system.rust-resolved-compose-projection-v1"
+    }
+  },
+  "container_inspect_projection": {
+    "projection": {
+      "Args": [],
+      "Cmd": null,
+      "Compose": {
+        "com.docker.compose.project": "eln",
+        "com.docker.compose.service": "backend"
+      },
+      "Entrypoint": [
+        "/usr/local/bin/eln-backend"
+      ],
+      "Image": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051",
+      "Path": "/usr/local/bin/eln-backend"
+    },
+    "projection_sha256": "d087d9eeb33ea947deebebd925ed0540dee0c8ae6c81b7a726c97be1c5d30942",
+    "schema": "full-system.rust-runtime-projection-v1"
+  },
+  "endpoint_observation": {
+    "metrics": {
+      "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "runtime": {
+        "api_runtime": "rust-axum",
+        "embedding_backend": "openai_compatible",
+        "embedding_dimension": 1024,
+        "embedding_model": "BAAI/bge-m3"
+      },
+      "status": "ok"
+    },
+    "ready": {
+      "checks": {
+        "database": "ok",
+        "storage": "ok"
+      },
+      "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "status": "ready"
+    }
+  },
+  "runtime": "rust-axum",
+  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "schema": "full-system.rust-runtime-config-evidence",
+  "schema_version": 1,
+  "secrets_disclosed": false,
+  "source": {
+    "dockerfile_sha256": "bbf085b30c7c02901ce8901a5e91f5c18d437f0344162309599eead44371cc85"
+  }
+}
