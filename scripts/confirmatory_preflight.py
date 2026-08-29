@@ -1,0 +1,380 @@
+"""Fail-closed preflight for confirmatory five-mode runs.
+
+This module is the tracked verification boundary.  The runner must call
+``confirmatory_preflight`` again at its API creation boundary; no caller-owned
+token or binding is accepted as authorization.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+import shutil
+import subprocess
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any
+
+
+MODES = ("pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag")
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
+REVISION = re.compile(r"^[0-9a-f]{40,64}$")
+IMAGE_DIGEST = re.compile(r"^sha256:[0-9a-f]{64}$")
+AUTHORITY_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
+FORMAL_STATUSES = frozenset({"AUTHORIZED", "EXTERNALLY_SIGNED", "FROZEN", "FROZEN_EXTERNAL_SETTER"})
+AUTHORITY_NAMESPACE = "full-system.confirmatory.v1"
+TRUST_ROOT_SCHEMA = "full-system.confirmatory-trust-root-v1"
+
+
+class PreflightError(RuntimeError):
+    """A local confirmation gate failure; no experiment POST may follow."""
+
+
+@dataclass(frozen=True)
+class PreflightResult:
+    head: str
+    snapshots: dict[str, dict[str, str]]
+    question_files: dict[str, Path]
+    question_shas: dict[str, str]
+    runs_dir: Path
+
+
+def _read_json(path: Path) -> dict[str, Any]:
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise PreflightError(f"cannot read freeze input {path}: {exc}") from exc
+    if not isinstance(value, dict):
+        raise PreflightError(f"freeze input is not an object: {path}")
+    return value
+
+
+def _sha256_bytes(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+def _sha256(path: Path) -> str:
+    return _sha256_bytes(path.read_bytes())
+
+
+def _require(errors: list[str], condition: bool, message: str) -> None:
+    if not condition:
+        errors.append(message)
+
+
+def _path(root: Path, value: Any) -> Path | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    candidate = (root / value).resolve()
+    return candidate if candidate.is_relative_to(root) else None
+
+
+def _valid_utc_timestamp(value: Any) -> bool:
+    if not isinstance(value, str) or not value.strip():
+        return False
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None
+
+
+def _tracked_worktree_clean(root: Path) -> bool:
+    try:
+        for args in (("git", "diff", "--quiet"), ("git", "diff", "--cached", "--quiet")):
+            subprocess.run(list(args), cwd=root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True, timeout=10)
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return False
+    return True
+
+
+def _tracked_policy_file(root: Path, path: Path) -> bool:
+    try:
+        relative = path.relative_to(root).as_posix()
+        result = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", "--", relative],
+            cwd=root,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return result.returncode == 0
+
+
+def _validate_questions(errors: list[str], payload: dict[str, Any], key: str, expected_count: Any = None) -> list[str]:
+    questions = payload.get("questions")
+    _require(errors, isinstance(questions, list) and bool(questions), f"question source questions must be a non-empty list for {key}")
+    if not isinstance(questions, list):
+        return []
+    ids: set[str] = set()
+    texts: list[str] = []
+    for index, question in enumerate(questions, start=1):
+        valid = (
+            isinstance(question, dict)
+            and isinstance(question.get("question_id"), str)
+            and bool(question["question_id"].strip())
+            and isinstance(question.get("project_id"), str)
+            and question["project_id"] == key
+            and isinstance(question.get("question"), str)
+            and bool(question["question"].strip())
+        )
+        _require(errors, valid, f"malformed or unbound question {key}#{index}")
+        if not valid:
+            continue
+        question_id = question["question_id"]
+        _require(errors, question_id not in ids, f"duplicate question id for {key}: {question_id}")
+        ids.add(question_id)
+        texts.append(question["question"])
+    if isinstance(expected_count, int) and not isinstance(expected_count, bool):
+        _require(errors, len(questions) == expected_count, f"question count mismatch for {key}")
+    return texts
+
+
+def _verify_external_authority(root: Path, provenance: dict[str, Any], errors: list[str]) -> None:
+    artifact_path = _path(root, provenance.get("external_authority_artifact"))
+    signature_path = _path(root, provenance.get("external_authority_signature"))
+    allowed_path = _path(root, provenance.get("allowed_signers"))
+    trust_path = _path(root, provenance.get("trust_root_policy"))
+    for label, path in (
+        ("external authority artifact", artifact_path),
+        ("external authority signature", signature_path),
+        ("approved allowed_signers", allowed_path),
+        ("trust-root policy", trust_path),
+    ):
+        _require(errors, path is not None and path.is_file(), f"{label} is missing/outside root")
+    if not all(path is not None and path.is_file() for path in (artifact_path, signature_path, allowed_path, trust_path)):
+        return
+    assert artifact_path is not None and signature_path is not None and allowed_path is not None and trust_path is not None
+
+    allowed_sha = _sha256(allowed_path)
+    trust_sha = _sha256(trust_path)
+    artifact_sha = _sha256(artifact_path)
+    signature_sha = _sha256(signature_path)
+    for field, actual, label in (
+        ("allowed_signers_sha256", allowed_sha, "allowed_signers"),
+        ("trust_root_policy_sha256", trust_sha, "trust-root policy"),
+        ("external_authority_sha256", artifact_sha, "authority artifact"),
+        ("external_authority_signature_sha256", signature_sha, "authority signature"),
+    ):
+        expected = provenance.get(field)
+        _require(errors, isinstance(expected, str) and SHA256.fullmatch(expected) is not None and expected == actual, f"{label} SHA is not bound")
+    _require(errors, _tracked_policy_file(root, allowed_path), "allowed_signers is not repo-tracked")
+    _require(errors, _tracked_policy_file(root, trust_path), "trust-root policy is not repo-tracked")
+
+    authority = _read_json(artifact_path)
+    trust_root = _read_json(trust_path)
+    authority_id = authority.get("authority_id")
+    _require(errors, isinstance(authority_id, str) and AUTHORITY_ID.fullmatch(authority_id) is not None, "signed authority id is invalid")
+    _require(errors, authority_id == provenance.get("external_setter_authority"), "signed authority id is not bound")
+    _require(errors, authority.get("setter_id") == provenance.get("external_setter_id"), "signed setter id is not bound")
+    _require(errors, authority.get("signed_at_utc") == provenance.get("external_setter_signed_at_utc") and _valid_utc_timestamp(authority.get("signed_at_utc")), "signed timestamp is not bound")
+    _require(errors, authority.get("namespace") == AUTHORITY_NAMESPACE, "authority namespace is not fixed")
+    _require(errors, authority.get("allowed_signers_sha256") == allowed_sha, "signed allowed_signers is not bound")
+    _require(errors, authority.get("trust_root_policy_sha256") == trust_sha, "signed trust-root policy is not bound")
+    _require(errors, trust_root.get("schema") == TRUST_ROOT_SCHEMA, "trust-root policy schema is invalid")
+    _require(errors, trust_root.get("namespace") == AUTHORITY_NAMESPACE, "trust-root policy namespace is invalid")
+    _require(errors, trust_root.get("allowed_signers_sha256") == allowed_sha, "trust-root policy key set is not bound")
+    approved = trust_root.get("approved_authorities")
+    _require(errors, isinstance(approved, list) and authority.get("authority_id") in approved, "authority is not approved by trust-root policy")
+    _require(errors, shutil.which("ssh-keygen") is not None, "ssh-keygen is unavailable")
+    if shutil.which("ssh-keygen") is None:
+        return
+    try:
+        verified = subprocess.run(
+            ["ssh-keygen", "-Y", "verify", "-f", str(allowed_path), "-I", str(authority.get("authority_id")), "-n", AUTHORITY_NAMESPACE, "-s", str(signature_path)],
+            input=artifact_path.read_text(encoding="utf-8"),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            check=False,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        _require(errors, False, f"authority signature verification failed: {exc}")
+    else:
+        _require(errors, verified.returncode == 0, "authority signature verification failed")
+
+
+def confirmatory_preflight(
+    project_keys: list[str],
+    *,
+    root: Path,
+    freeze_manifest_path: Path,
+    runs_dir: Path,
+    current_revision: str | None = None,
+    summary_path: Path | None = None,
+    reserved_output: Path | None = None,
+) -> PreflightResult:
+    """Recompute all local bindings; result is data, never an authorization token."""
+    root = root.resolve()
+    freeze_manifest_path = freeze_manifest_path.resolve()
+    errors: list[str] = []
+    _require(errors, freeze_manifest_path.is_relative_to(root), "freeze manifest is outside repository root")
+    freeze_manifest = _read_json(freeze_manifest_path)
+    freeze_dir = freeze_manifest_path.parent.resolve()
+    question_manifest = _read_json(freeze_dir / "question-set-manifest.json")
+    gold_facts = _read_json(freeze_dir / "gold-facts.json")
+    corpus_manifest = _read_json(freeze_dir / "corpus-manifest.json")
+    for label, payload in (("freeze manifest", freeze_manifest), ("question-set manifest", question_manifest), ("gold-facts manifest", gold_facts), ("corpus manifest", corpus_manifest)):
+        _require(errors, payload.get("formal_use_allowed") is True, f"{label} formal_use_allowed is not true")
+        status = str(payload.get("status") or payload.get("freeze_status") or "").upper()
+        _require(errors, status in FORMAL_STATUSES, f"{label} status is not an approved formal status: {status or '<missing>'}")
+
+    provenance = freeze_manifest.get("provenance") if isinstance(freeze_manifest.get("provenance"), dict) else {}
+    external_setter_id = provenance.get("external_setter_id")
+    external_authority = provenance.get("external_setter_authority")
+    _require(errors, isinstance(external_setter_id, str) and bool(external_setter_id.strip()), "external setter id is missing")
+    _require(errors, isinstance(external_authority, str) and bool(external_authority.strip()), "external setter authority is missing")
+    _require(errors, not (isinstance(external_setter_id, str) and external_setter_id.upper().startswith("AGENT_DRAFT")), "external setter id is AGENT_DRAFT")
+    _require(errors, not (isinstance(external_authority, str) and external_authority.upper().startswith("AGENT_DRAFT")), "external setter authority is AGENT_DRAFT")
+    _require(errors, _valid_utc_timestamp(provenance.get("external_setter_signed_at_utc")), "external setter signature timestamp is invalid")
+    _require(errors, not str(provenance.get("setter_id") or "").upper().startswith("AGENT_DRAFT"), "setter_id is AGENT_DRAFT")
+    for label, payload in (("question-set", question_manifest), ("gold-facts", gold_facts), ("corpus", corpus_manifest)):
+        setter = payload.get("external_setter")
+        _require(errors, isinstance(setter, dict), f"{label} external setter binding is missing")
+        if isinstance(setter, dict):
+            _require(errors, setter.get("setter_id") == provenance.get("external_setter_id"), f"{label} setter id is not bound")
+            _require(errors, setter.get("authority") == provenance.get("external_setter_authority"), f"{label} setter authority is not bound")
+            _require(errors, setter.get("signed_at_utc") == provenance.get("external_setter_signed_at_utc"), f"{label} setter timestamp is not bound")
+    _verify_external_authority(root, provenance, errors)
+
+    try:
+        actual_head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True, timeout=10).strip()
+    except (OSError, subprocess.SubprocessError, subprocess.TimeoutExpired) as exc:
+        raise PreflightError(f"cannot resolve current Git HEAD: {exc}") from exc
+    head = current_revision or actual_head
+    _require(errors, head == actual_head, "current revision override does not equal Git HEAD")
+    _require(errors, _tracked_worktree_clean(root), "tracked worktree is dirty")
+    runtime_binding = freeze_manifest.get("runtime_binding") if isinstance(freeze_manifest.get("runtime_binding"), dict) else {}
+    for field in ("app_revision", "runtime_revision"):
+        value = runtime_binding.get(field)
+        _require(errors, isinstance(value, str) and REVISION.fullmatch(value.lower()) is not None and value == head, f"freeze runtime_binding.{field} is missing, invalid, or stale")
+    image_digest = runtime_binding.get("image_digest")
+    _require(errors, isinstance(image_digest, str) and IMAGE_DIGEST.fullmatch(image_digest) is not None, "freeze runtime image digest is missing or mutable")
+    image_path = root / "docs" / "system-evidence" / "container-image-latest.json"
+    if image_path.is_file():
+        image = _read_json(image_path)
+        _require(errors, image.get("image_digest") == image_digest, "freeze image digest does not match container image evidence")
+        _require(errors, image.get("app_revision") == runtime_binding.get("app_revision") and image.get("runtime_revision") == runtime_binding.get("runtime_revision"), "container image revisions are not bound")
+        nested = image.get("image", {}).get("image_id") if isinstance(image.get("image"), dict) else None
+        _require(errors, nested in (None, image_digest), "container image id does not match image digest")
+    else:
+        errors.append(f"container image evidence is missing: {image_path}")
+    contract_path = root / "docs" / "system-evidence" / "rust-runtime-contract-latest.json"
+    if contract_path.is_file():
+        contract = _read_json(contract_path)
+        for field in ("revision", "app_revision", "runtime_revision"):
+            _require(errors, contract.get(field) == head, f"runtime contract {field} is missing or stale")
+    else:
+        errors.append(f"runtime contract is missing: {contract_path}")
+
+    question_sets = question_manifest.get("question_sets")
+    _require(errors, isinstance(question_sets, list) and bool(question_sets), "question-set manifest has no question sets")
+    _require(errors, len(project_keys) == len(set(project_keys)), "duplicate project key requested")
+    design = freeze_manifest.get("design") if isinstance(freeze_manifest.get("design"), dict) else {}
+    frozen_projects = set(design.get("projects") or [])
+    _require(errors, design.get("modes") == list(MODES), "freeze design modes do not match the five-mode runner")
+    _require(errors, design.get("repetitions") == 1, "freeze design repetitions do not match the runner")
+    corpus_projects = corpus_manifest.get("projects") if isinstance(corpus_manifest.get("projects"), dict) else {}
+    question_set_sha256 = freeze_manifest.get("question_set_sha256") if isinstance(freeze_manifest.get("question_set_sha256"), dict) else {}
+    _require(errors, isinstance(freeze_manifest.get("question_set_sha256"), dict), "freeze question_set_sha256 binding is missing")
+    snapshots: dict[str, dict[str, str]] = {}
+    question_files: dict[str, Path] = {}
+    question_shas: dict[str, str] = {}
+    for key in project_keys:
+        _require(errors, key in frozen_projects, f"project is not in the current freeze: {key}")
+        matching = [item for item in question_sets if isinstance(item, dict) and item.get("project_id") == key]
+        _require(errors, len(matching) == 1, f"question-set manifest must contain exactly one set for {key}")
+        if matching:
+            item = matching[0]
+            path = _path(root, item.get("path"))
+            _require(errors, path is not None and path.is_file(), f"question source is missing/outside root for {key}")
+            expected = item.get("sha256")
+            _require(errors, isinstance(expected, str) and SHA256.fullmatch(expected) is not None, f"question SHA is missing/invalid for {key}")
+            bound = question_set_sha256.get(key)
+            _require(errors, bound == expected and isinstance(bound, str) and SHA256.fullmatch(bound) is not None, f"freeze question SHA is not bound for {key}")
+            expected_count = item.get("question_count")
+            _require(errors, isinstance(expected_count, int) and not isinstance(expected_count, bool) and expected_count > 0, f"question count is missing/invalid for {key}")
+            if path is not None and path.is_file() and isinstance(expected, str):
+                _require(errors, _sha256(path) == expected, f"question source SHA mismatch for {key}")
+                question_files[key] = path
+                question_shas[key] = expected
+                source = _read_json(path)
+                source_status = str(source.get("document_status") or source.get("status") or "").upper()
+                _require(errors, source.get("formal_use_allowed") is True and source_status in FORMAL_STATUSES, f"question source is not formal for {key}")
+                _validate_questions(errors, source, key, expected_count)
+        project = corpus_projects.get(key)
+        _require(errors, isinstance(project, dict), f"corpus manifest has no project entry for {key}")
+        if isinstance(project, dict):
+            corpus_hash = project.get("formal_corpus_snapshot_hash")
+            graph_hash = project.get("formal_graph_snapshot_hash")
+            _require(errors, isinstance(corpus_hash, str) and SHA256.fullmatch(corpus_hash) is not None, f"formal corpus snapshot is missing/invalid for {key}")
+            _require(errors, isinstance(graph_hash, str) and SHA256.fullmatch(graph_hash) is not None, f"formal graph snapshot is missing/invalid for {key}")
+            snapshots[key] = {"corpus_snapshot_hash": corpus_hash, "graph_snapshot_hash": graph_hash}
+        output = (runs_dir / key).resolve()
+        if reserved_output is not None and output == reserved_output.resolve():
+            _require(errors, output.is_dir() and not any(output.iterdir()), f"reserved result directory is not empty for {key}")
+        else:
+            _require(errors, not output.exists(), f"result directory already exists for {key}: {output}")
+
+    run_root = runs_dir.resolve()
+    _require(errors, run_root == (root / "agent-work" / "runs").resolve(), "result directory root is not the approved runner output path")
+    if summary_path is not None:
+        _require(errors, summary_path.resolve().is_relative_to(run_root), "summary output is outside the approved result path")
+        _require(errors, not summary_path.exists(), f"summary output already exists: {summary_path}")
+    for key, project in corpus_projects.items():
+        if not isinstance(project, dict):
+            continue
+        records = project.get("files")
+        _require(errors, isinstance(records, list), f"corpus source file list is invalid: {key}")
+        for record in records if isinstance(records, list) else []:
+            relative = record.get("path") if isinstance(record, dict) else None
+            expected = record.get("sha256") if isinstance(record, dict) else None
+            candidate = _path(root, relative)
+            _require(errors, candidate is not None and candidate.is_file(), f"corpus source is missing/outside root: {key}/{relative}")
+            _require(errors, isinstance(expected, str) and SHA256.fullmatch(expected) is not None, f"corpus source SHA is invalid: {key}/{relative}")
+            if candidate is not None and candidate.is_file() and isinstance(expected, str):
+                _require(errors, _sha256(candidate) == expected, f"corpus source SHA mismatch: {key}/{relative}")
+    file_sha256 = freeze_manifest.get("file_sha256") if isinstance(freeze_manifest.get("file_sha256"), dict) else {}
+    for name, expected in file_sha256.items():
+        if expected is None:
+            continue
+        path = _path(root, name) if "/" in str(name) else (freeze_dir / str(name)).resolve()
+        _require(errors, path is not None and path.is_file(), f"freeze input is missing/outside root: {name}")
+        _require(errors, isinstance(expected, str) and SHA256.fullmatch(expected) is not None, f"freeze input SHA is invalid: {name}")
+        if path is not None and path.is_file() and isinstance(expected, str):
+            _require(errors, _sha256(path) == expected, f"freeze input SHA mismatch: {name}")
+    for name in ("gold-facts.json", "questions.json", "run-config.json", "analysis-config.json"):
+        expected = file_sha256.get(name)
+        path = freeze_dir / name
+        _require(errors, isinstance(expected, str) and SHA256.fullmatch(expected) is not None and path.is_file() and _sha256(path) == expected, f"{name} SHA is not bound to freeze manifest")
+        if path.is_file():
+            payload = _read_json(path)
+            status = str(payload.get("status") or payload.get("freeze_status") or "").upper()
+            _require(errors, payload.get("formal_use_allowed") is True and status in FORMAL_STATUSES, f"{name} is not formal")
+    if errors:
+        raise PreflightError("confirmatory preflight blocked:\n- " + "\n- ".join(errors))
+    return PreflightResult(head=head, snapshots=snapshots, question_files=question_files, question_shas=question_shas, runs_dir=run_root)
+
+
+def load_verified_questions(result: PreflightResult, key: str) -> list[str]:
+    """Hash the exact bytes parsed for the POST payload; do not reread later."""
+    path = result.question_files[key]
+    raw = path.read_bytes()
+    if _sha256_bytes(raw) != result.question_shas[key]:
+        raise PreflightError(f"question source changed after preflight for {key}")
+    try:
+        payload = json.loads(raw.decode("utf-8"))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise PreflightError(f"question source changed or became invalid for {key}: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise PreflightError(f"question source is not an object for {key}")
+    errors: list[str] = []
+    questions = _validate_questions(errors, payload, key)
+    if errors:
+        raise PreflightError("confirmatory question validation blocked:\n- " + "\n- ".join(errors))
+    return questions
