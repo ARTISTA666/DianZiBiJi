@@ -918,6 +918,8 @@ export function runRagExperiment(
     repetitions?: number;
     randomize_order?: boolean;
     random_seed?: number | null;
+    expected_corpus_snapshot_hash?: string | null;
+    expected_graph_snapshot_hash?: string | null;
   },
 ) {
   return post<AIExperimentRun>(`/projects/${projectId}/rag/experiments`, token, payload);

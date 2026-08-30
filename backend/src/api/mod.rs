@@ -625,6 +625,25 @@ mod tests {
                 "graph_relation_count"
             ])
         );
+        let experiment = &body["paths"]["/projects/{project_id}/rag/experiments"]["post"];
+        assert_eq!(
+            experiment["responses"]["409"]["content"]["application/json"]["schema"]["$ref"],
+            "#/components/schemas/ApiErrorResponse"
+        );
+        let experiment_request = &body["components"]["schemas"]["AIExperimentRunRequest"];
+        for field in [
+            "expected_corpus_snapshot_hash",
+            "expected_graph_snapshot_hash",
+        ] {
+            assert_eq!(
+                experiment_request["properties"][field]["anyOf"][1]["type"],
+                "null"
+            );
+            assert_eq!(
+                experiment_request["properties"][field]["anyOf"][0]["pattern"],
+                "^[0-9a-f]{64}$"
+            );
+        }
     }
 
     #[tokio::test]

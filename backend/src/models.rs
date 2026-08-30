@@ -781,6 +781,10 @@ pub struct AIExperimentRunRequest {
     #[serde(default = "default_true")]
     pub randomize_order: bool,
     pub random_seed: Option<i32>,
+    #[serde(default)]
+    pub expected_corpus_snapshot_hash: Option<String>,
+    #[serde(default)]
+    pub expected_graph_snapshot_hash: Option<String>,
 }
 
 fn default_experiment_modes() -> Vec<String> {

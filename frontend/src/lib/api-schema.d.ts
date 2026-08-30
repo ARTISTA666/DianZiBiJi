@@ -1538,6 +1538,16 @@ export interface components {
             randomize_order: boolean;
             /** Random Seed */
             random_seed?: number | null;
+            /**
+             * Expected Corpus Snapshot Hash
+             * @description Required for bm25_rag, project_rag, or kg_enhanced_rag; omit for pure_llm and structured_query.
+             */
+            expected_corpus_snapshot_hash?: string | null;
+            /**
+             * Expected Graph Snapshot Hash
+             * @description Required for structured_query or kg_enhanced_rag; omit for pure_llm, bm25_rag, and project_rag.
+             */
+            expected_graph_snapshot_hash?: string | null;
         };
         /** AIQueryAgreementMetric */
         AIQueryAgreementMetric: {
@@ -2916,6 +2926,7 @@ export interface components {
             generation_model: string;
             questions_sha256: string;
             corpus_snapshot_hash: string | null;
+            graph_snapshot_hash: string | null;
             rag_index_version: string | null;
             graph_schema_version: string | null;
         } & {
@@ -5357,6 +5368,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AIExperimentRunRead"];
+                };
+            };
+            /** @description Experiment snapshot drift */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponse"];
                 };
             };
             /** @description Validation Error */

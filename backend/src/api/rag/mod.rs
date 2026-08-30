@@ -1837,7 +1837,7 @@ async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead
             corpus_chunk_count: active_corpus.chunk_count,
             rag_index_version: state.settings.rag_index_version.clone(),
             embedding_model,
-            graph_snapshot_hash: dataset_id.map(|_| active_graph.hash),
+            graph_snapshot_hash: Some(active_graph.hash),
             graph_entity_count: active_graph.entity_count,
             graph_relation_count: active_graph.relation_count,
         },
