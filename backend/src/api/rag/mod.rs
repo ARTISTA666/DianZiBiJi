@@ -82,7 +82,7 @@ impl Drop for RetrievalTestPauseGuard {
         if let Some(pause) = RETRIEVAL_TEST_PAUSE.get() {
             if let Ok(mut pause) = pause.lock() {
                 if let Some(active) = pause.take() {
-                    active.release.notify_waiters();
+                    active.release.notify_one();
                 }
             }
         }
@@ -3845,7 +3845,7 @@ mod tests {
         .execute(&state.pool)
         .await
         .unwrap();
-        a_release.notify_waiters();
+        a_release.notify_one();
         let (a_status, a_run) = a_post.await.unwrap();
         assert_eq!(a_status, StatusCode::ACCEPTED);
         assert_eq!(
@@ -3940,7 +3940,7 @@ mod tests {
         .execute(&state.pool)
         .await
         .unwrap();
-        b_release.notify_waiters();
+        b_release.notify_one();
         let (b_status, _) = b_post.await.unwrap();
         assert_eq!(b_status, StatusCode::CONFLICT);
         let runs_after_b: i64 =
@@ -4004,7 +4004,7 @@ mod tests {
         .execute(&state.pool)
         .await
         .unwrap();
-        c_release.notify_waiters();
+        c_release.notify_one();
         let (c_status, c_run) = c_post.await.unwrap();
         assert_eq!(c_status, StatusCode::ACCEPTED);
         let c_run_id = c_run["id"].as_i64().unwrap();
@@ -4430,7 +4430,13 @@ mod tests {
         )
         .await;
         assert_eq!(batches_status, StatusCode::OK);
-        assert_eq!(batches[0]["total_items"], 1);
+        let batch = batches
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|batch| batch["total_items"] == 1)
+            .expect("single blind-review batch");
+        assert_eq!(batch["total_items"], 1);
         let (items_status, items) = json_call(
             &app,
             "GET",
@@ -4442,8 +4448,17 @@ mod tests {
         assert_eq!(items_status, StatusCode::OK);
         assert_eq!(items.as_array().unwrap().len(), 5);
         assert!(!items.to_string().contains("protocol.txt"));
-        let blind_id = items[0]["blind_id"].as_str().unwrap();
-        assert!(items[0]["answer"].as_str().unwrap().contains("[E1]"));
+        let blind_item = items
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|item| {
+                item["answer"]
+                    .as_str()
+                    .is_some_and(|answer| answer.contains("[E1]"))
+            })
+            .expect("blind-review item with the protocol evidence marker");
+        let blind_id = blind_item["blind_id"].as_str().unwrap();
         let (blind_evaluation_status, _) = json_call(
             &app,
             "POST",

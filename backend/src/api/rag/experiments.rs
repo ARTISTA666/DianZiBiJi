@@ -80,7 +80,7 @@ impl Drop for ExperimentTestPauseGuard {
         if let Some(pause) = EXPERIMENT_TEST_PAUSE.get() {
             if let Ok(mut pause) = pause.lock() {
                 if let Some(active) = pause.take() {
-                    active.release.notify_waiters();
+                    active.release.notify_one();
                 }
             }
         }
@@ -1643,6 +1643,23 @@ mod tests {
     use serde_json::json;
 
     use super::*;
+
+    #[tokio::test]
+    async fn test_experiment_pause_release_before_wait_does_not_hang() {
+        let _test_lock = super::super::RETRIEVAL_TEST_LOCK
+            .get_or_init(|| tokio::sync::Mutex::new(()))
+            .lock()
+            .await;
+        let (_started, release, guard) = arm_experiment_test_pause(ExperimentTestPausePoint::Set);
+        release.notify_one();
+        tokio::time::timeout(
+            std::time::Duration::from_millis(100),
+            wait_experiment_test_pause(ExperimentTestPausePoint::Set),
+        )
+        .await
+        .expect("a Notify permit released before waiting must not be lost");
+        drop(guard);
+    }
 
     #[test]
     fn test_experiment_export_includes_unlogged_failures() {
