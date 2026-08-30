@@ -16,6 +16,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from evidence_paths import strict_repo_relative_path
+
 
 MODES = ("pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
@@ -91,10 +93,7 @@ def _require(errors: list[str], condition: bool, message: str) -> None:
 
 
 def _path(root: Path, value: Any) -> Path | None:
-    if not isinstance(value, str) or not value.strip():
-        return None
-    candidate = (root / value).resolve()
-    return candidate if candidate.is_relative_to(root) else None
+    return strict_repo_relative_path(root, value)
 
 
 def _valid_utc_timestamp(value: Any) -> bool:
@@ -202,20 +201,8 @@ def _relative_path(root: Path, path: Path) -> str | None:
 
 def _canonical_provenance_path(root: Path, value: Any) -> str | None:
     """Return a provenance path only when it is already canonical POSIX."""
-    if not isinstance(value, str) or not value or value.startswith("/") or "\\" in value:
-        return None
-    parts = value.split("/")
-    if any(part in {"", ".", ".."} for part in parts):
-        return None
-    candidate = root.joinpath(*parts)
-    try:
-        resolved = candidate.resolve()
-    except OSError:
-        return None
-    if not resolved.is_relative_to(root):
-        return None
-    canonical = resolved.relative_to(root).as_posix()
-    return canonical if canonical == value else None
+    candidate = strict_repo_relative_path(root, value)
+    return candidate.relative_to(root.resolve()).as_posix() if candidate is not None else None
 
 
 def _authority_commitment(
@@ -243,28 +230,17 @@ def _authority_commitment(
     excluded_paths = set()
     for key in AUTHORITY_PATH_KEYS:
         canonical = _canonical_provenance_path(root, provenance.get(key))
-        if canonical is not None:
-            excluded_paths.add(canonical)
+        if canonical is None:
+            raise PreflightError(f"noncanonical authority provenance path: {key}")
+        excluded_paths.add(canonical)
     file_sha256 = core_manifest.get("file_sha256")
     if isinstance(file_sha256, dict):
         def canonical_file_sha_path(key: Any) -> str | None:
-            if not isinstance(key, str) or not key or key.startswith("/") or "\\" in key:
-                return None
-            parts = key.split("/")
-            if any(part in {"", ".", ".."} for part in parts):
-                return None
-            candidate = root / key if "/" in key else freeze_dir / key
-            try:
-                resolved = candidate.resolve()
-            except OSError:
-                return None
-            if not resolved.is_relative_to(root):
-                return None
-            canonical = resolved.relative_to(root).as_posix()
-            # A slash-bearing manifest key is root-relative and must already
-            # be canonical.  A bare key is the documented freeze-relative
-            # spelling used by the authority artifact entries.
-            return canonical if "/" not in key or canonical == key else None
+            candidate = strict_repo_relative_path(root, key, base=freeze_dir if isinstance(key, str) and "/" not in key else root)
+            return candidate.relative_to(root).as_posix() if candidate is not None else None
+
+        if any(canonical_file_sha_path(key) is None for key in file_sha256):
+            raise PreflightError("noncanonical freeze file_sha256 path")
 
         core_manifest["file_sha256"] = {
             key: value
@@ -295,7 +271,9 @@ def _authority_commitment(
         if not isinstance(item, dict) or not isinstance(item.get("path"), str):
             question_sources.append({"path": item.get("path") if isinstance(item, dict) else None, "sha256": None})
             continue
-        path = (root / item["path"]).resolve()
+        path = _path(root, item["path"])
+        if path is None:
+            raise PreflightError("noncanonical question manifest path")
         question_sources.append({"path": _relative_path(root, path) or item["path"], "sha256": _sha256(path) if path.is_file() else None})
     corpus_sources: list[dict[str, Any]] = []
     projects = corpus_manifest.get("projects") if isinstance(corpus_manifest.get("projects"), dict) else {}
@@ -304,7 +282,9 @@ def _authority_commitment(
         records = project.get("files") if isinstance(project, dict) and isinstance(project.get("files"), list) else []
         for record in records:
             relative = record.get("path") if isinstance(record, dict) else None
-            path = (root / relative).resolve() if isinstance(relative, str) else root / "<invalid>"
+            path = _path(root, relative)
+            if path is None:
+                raise PreflightError("noncanonical corpus manifest path")
             corpus_sources.append({"project": project_id, "path": _relative_path(root, path) or relative, "sha256": _sha256(path) if path.is_file() else None})
     content = {
         "schema": "full-system.confirmatory-freeze-content-v1",
@@ -367,6 +347,7 @@ def _verify_external_authority(
         ("approved allowed_signers", allowed_path),
         ("trust-root policy", trust_path),
     ):
+        _require(errors, path is not None, f"{label} path is noncanonical")
         _require(errors, path is not None and path.is_file(), f"{label} is missing/outside root")
     if not all(path is not None and path.is_file() for path in (artifact_path, signature_path, allowed_path, trust_path)):
         return

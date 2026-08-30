@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from confirmatory_preflight import _authority_commitment
+from confirmatory_preflight import _authority_commitment, _path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -184,6 +184,49 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
             result = self.call_preflight(paths)
             self.assertEqual(result.head, paths["head"])
             self.assertNotEqual(result.runtime_source_revision, result.experiment_tooling_revision)
+
+    def test_strict_repo_paths_reject_lexical_and_symlink_aliases(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            target = root / "agent-work/question-sets/p.json"
+            target.parent.mkdir(parents=True)
+            target.write_text("{}\n", encoding="utf-8")
+            (root / "file-alias.json").symlink_to(target)
+            (root / "dir-alias").symlink_to(target.parent, target_is_directory=True)
+            rejected = (
+                str(target),
+                "agent-work/question-sets/./p.json",
+                "agent-work/question-sets/../question-sets/p.json",
+                r"agent-work\question-sets\p.json",
+                "file-alias.json",
+                "dir-alias/p.json",
+            )
+            self.assertEqual(_path(root, "agent-work/question-sets/p.json"), target.resolve())
+            for value in rejected:
+                with self.subTest(value=value):
+                    self.assertIsNone(_path(root, value))
+
+    def test_noncanonical_authority_and_question_paths_block_explicitly(self) -> None:
+        mutations = (
+            ("provenance", "external_authority_artifact", "agent-work/freeze/batch/./authority.json"),
+            ("question", "path", "agent-work/question-sets/./p.json"),
+        )
+        for kind, field, value in mutations:
+            with self.subTest(kind=kind), tempfile.TemporaryDirectory() as directory:
+                paths = fixture(Path(directory))
+                freeze_path = Path(paths["freeze"])
+                freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+                if kind == "provenance":
+                    freeze[kind][field] = value
+                else:
+                    question_path = freeze_path.parent / "question-set-manifest.json"
+                    question = json.loads(question_path.read_text(encoding="utf-8"))
+                    question["question_sets"][0][field] = value
+                    write_json(question_path, question)
+                    freeze["file_sha256"]["question-set-manifest.json"] = digest(question_path)
+                write_json(freeze_path, freeze)
+                with self.assertRaisesRegex(MODULE.PreflightError, "noncanonical"):
+                    self.call_preflight(paths)
 
     def test_signed_authority_commitment_cannot_replay_changed_freeze_inputs(self) -> None:
         attacks = ("status", "question", "gold", "runtime", "tooling")
