@@ -123,7 +123,25 @@ export const createAiSlice: StateCreator<ProjectStoreState, [], [], AiSlice> = (
 
   runExperiment: async (token, projectId, data) => {
     const requestEpoch = epochs.projectData;
-    await runRagExperiment(token, projectId, data);
+    const modes = data.modes ?? ["project_rag", "kg_enhanced_rag"];
+    const corpusRequired = modes.some((mode) =>
+      ["bm25_rag", "project_rag", "kg_enhanced_rag"].includes(mode),
+    );
+    const graphRequired = modes.some((mode) =>
+      ["structured_query", "kg_enhanced_rag"].includes(mode),
+    );
+    const ragStatus = corpusRequired || graphRequired
+      ? await getProjectRagStatus(token, projectId)
+      : null;
+    await runRagExperiment(token, projectId, {
+      ...data,
+      expected_corpus_snapshot_hash: corpusRequired
+        ? ragStatus?.corpus_snapshot.corpus_snapshot_hash
+        : undefined,
+      expected_graph_snapshot_hash: graphRequired
+        ? ragStatus?.corpus_snapshot.graph_snapshot_hash
+        : undefined,
+    });
     const experimentRuns = await getRagExperiments(token, projectId);
     if (isCurrentProjectRequest(get, projectId, requestEpoch)) set({ experimentRuns });
   },

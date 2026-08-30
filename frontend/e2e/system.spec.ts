@@ -199,14 +199,17 @@ test("图片 OCR、人工校对、入库、问答和五方法实验形成闭环"
 
   // 盲评题目来自实验运行。实验控制台已从主项目移出，测试直接调用原系统
   // 的实验 API 准备最小题集，避免把旧页面重新耦合进主系统验收。
+  const ragStatus = await checkedJson(await adminApi.get(`/projects/${projectId}/rag/status`));
   const experiment = await checkedJson(await adminApi.post(`/projects/${projectId}/rag/experiments`, {
     data: {
       name: "E2E 盲评题集准备",
       questions: [OCR_QUESTION],
-        modes: ["pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag"],
+      modes: ["pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag"],
       repetitions: 1,
       randomize_order: false,
       random_seed: 20260713,
+      expected_corpus_snapshot_hash: ragStatus.corpus_snapshot.corpus_snapshot_hash,
+      expected_graph_snapshot_hash: ragStatus.corpus_snapshot.graph_snapshot_hash,
     },
   }));
   await expect.poll(async () => {

@@ -631,14 +631,20 @@ async fn validate_current_experiment_input_bindings(
                 run.project_id,
                 &state.settings.rag_index_version,
             )
-            .await?
+            .await
+            .map_err(snapshot_binding_error)?
             .hash,
         )
     } else {
         None
     };
     let current_graph_hash = if modes.iter().copied().any(mode_requires_graph) {
-        Some(graph_snapshot(&state.pool, run.project_id).await?.hash)
+        Some(
+            graph_snapshot(&state.pool, run.project_id)
+                .await
+                .map_err(snapshot_binding_error)?
+                .hash,
+        )
     } else {
         None
     };
@@ -662,6 +668,13 @@ async fn validate_current_experiment_input_bindings(
             format!("Experiment input binding drift detected: {detail}"),
         )
     })
+}
+
+fn snapshot_binding_error(error: ApiError) -> ApiError {
+    ApiError::new(
+        error.status,
+        format!("Experiment input binding drift detected: {}", error.detail),
+    )
 }
 
 #[cfg(test)]

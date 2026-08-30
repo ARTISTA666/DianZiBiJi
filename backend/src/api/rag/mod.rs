@@ -2364,7 +2364,7 @@ mod tests {
 
     use super::experiments::{
         claim_experiment, questions_sha256, renew_experiment_lease, schedule_queued_experiments,
-        snapshot_sha256, transition_interrupted_to_queued,
+        transition_interrupted_to_queued,
     };
     use super::{
         build_citation_repair_prompt, build_prompts, enforce_required_citations,
@@ -3328,6 +3328,58 @@ mod tests {
         (status, body)
     }
 
+    async fn run_experiment_and_wait(
+        app: &Router,
+        project_id: i64,
+        admin: &str,
+        name: &str,
+        modes: &[&str],
+        corpus_snapshot_hash: Option<&str>,
+        graph_snapshot_hash: Option<&str>,
+    ) -> Value {
+        let mut payload = json!({
+            "name": name,
+            "questions": ["What does the PCR protocol use?"],
+            "modes": modes,
+            "repetitions": 1,
+            "randomize_order": false,
+        });
+        if let Some(hash) = corpus_snapshot_hash {
+            payload["expected_corpus_snapshot_hash"] = json!(hash);
+        }
+        if let Some(hash) = graph_snapshot_hash {
+            payload["expected_graph_snapshot_hash"] = json!(hash);
+        }
+        let (status, created) = json_call(
+            app,
+            "POST",
+            &format!("/projects/{project_id}/rag/experiments"),
+            Some(admin),
+            Some(payload),
+        )
+        .await;
+        assert_eq!(status, StatusCode::ACCEPTED);
+        let run_id = created["id"].as_i64().unwrap();
+        for _ in 0..40 {
+            let (_, run) = json_call(
+                app,
+                "GET",
+                &format!("/rag/experiments/{run_id}"),
+                Some(admin),
+                None,
+            )
+            .await;
+            if matches!(
+                run["status"].as_str(),
+                Some("completed" | "completed_with_errors" | "failed")
+            ) {
+                return run;
+            }
+            tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+        }
+        panic!("experiment {run_id} did not reach a terminal state");
+    }
+
     #[tokio::test]
     async fn test_sensitive_project_blocks_external_rag_and_agent_calls_by_default() {
         let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
@@ -3704,13 +3756,33 @@ mod tests {
         assert_eq!(analytics["total_queries"], 1);
         assert_eq!(analytics["avg_score"], 5.0);
 
-        let (experiment_status, experiment) = json_call(
+        let (_, rag_status) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/status"),
+            Some(admin),
+            None,
+        )
+        .await;
+        let expected_corpus_snapshot_hash = rag_status["corpus_snapshot"]["corpus_snapshot_hash"]
+            .as_str()
+            .unwrap();
+        let expected_graph_snapshot_hash = rag_status["corpus_snapshot"]["graph_snapshot_hash"]
+            .as_str()
+            .unwrap();
+        let runs_before_rejection: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
+                .bind(project_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        let (missing_hash_status, _) = json_call(
             &app,
             "POST",
             &format!("/projects/{project_id}/rag/experiments"),
             Some(admin),
             Some(json!({
-                "name": "single-mode verification",
+                "name": "missing snapshot rejection",
                 "questions": ["What does the PCR protocol use?"],
                 "modes": ["project_rag"],
                 "repetitions": 1,
@@ -3718,27 +3790,163 @@ mod tests {
             })),
         )
         .await;
-        assert_eq!(experiment_status, StatusCode::ACCEPTED);
-        let run_id = experiment["id"].as_i64().unwrap();
-        let mut completed = Value::Null;
-        for _ in 0..40 {
-            let (_, run) = json_call(
-                &app,
-                "GET",
-                &format!("/rag/experiments/{run_id}"),
-                Some(admin),
-                None,
-            )
-            .await;
-            if matches!(
-                run["status"].as_str(),
-                Some("completed" | "completed_with_errors" | "failed")
-            ) {
-                completed = run;
-                break;
-            }
-            tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+        assert_eq!(missing_hash_status, StatusCode::UNPROCESSABLE_ENTITY);
+        let (stale_hash_status, stale_hash_body) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/experiments"),
+            Some(admin),
+            Some(json!({
+                "name": "stale snapshot rejection",
+                "questions": ["What does the PCR protocol use?"],
+                "modes": ["project_rag"],
+                "repetitions": 1,
+                "randomize_order": false,
+                "expected_corpus_snapshot_hash": "0".repeat(64)
+            })),
+        )
+        .await;
+        assert_eq!(stale_hash_status, StatusCode::CONFLICT);
+        let stale_detail: Value =
+            serde_json::from_str(stale_hash_body["detail"].as_str().unwrap()).unwrap();
+        assert_eq!(
+            stale_detail["actual_corpus_snapshot_hash"],
+            expected_corpus_snapshot_hash
+        );
+        assert_eq!(stale_detail["actual_graph_snapshot_hash"], Value::Null);
+        let (stale_graph_status, stale_graph_body) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/experiments"),
+            Some(admin),
+            Some(json!({
+                "name": "stale graph snapshot rejection",
+                "questions": ["What does the PCR protocol use?"],
+                "modes": ["structured_query"],
+                "repetitions": 1,
+                "randomize_order": false,
+                "expected_graph_snapshot_hash": "0".repeat(64)
+            })),
+        )
+        .await;
+        assert_eq!(stale_graph_status, StatusCode::CONFLICT);
+        let stale_graph_detail: Value =
+            serde_json::from_str(stale_graph_body["detail"].as_str().unwrap()).unwrap();
+        assert_eq!(
+            stale_graph_detail["actual_corpus_snapshot_hash"],
+            Value::Null
+        );
+        assert_eq!(
+            stale_graph_detail["actual_graph_snapshot_hash"],
+            expected_graph_snapshot_hash
+        );
+        let runs_after_rejection: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
+                .bind(project_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        assert_eq!(runs_after_rejection, runs_before_rejection);
+
+        let project_rag = run_experiment_and_wait(
+            &app,
+            project_id,
+            admin,
+            "project rag verification",
+            &["project_rag"],
+            Some(expected_corpus_snapshot_hash),
+            None,
+        )
+        .await;
+        assert_eq!(
+            project_rag["config_snapshot_json"]["corpus_snapshot_hash"],
+            expected_corpus_snapshot_hash
+        );
+        assert_eq!(
+            project_rag["config_snapshot_json"]["graph_snapshot_hash"],
+            Value::Null
+        );
+
+        let pure_llm = run_experiment_and_wait(
+            &app,
+            project_id,
+            admin,
+            "pure llm verification",
+            &["pure_llm"],
+            None,
+            None,
+        )
+        .await;
+        let bm25 = run_experiment_and_wait(
+            &app,
+            project_id,
+            admin,
+            "bm25 verification",
+            &["bm25_rag"],
+            Some(expected_corpus_snapshot_hash),
+            None,
+        )
+        .await;
+        let structured = run_experiment_and_wait(
+            &app,
+            project_id,
+            admin,
+            "structured verification",
+            &["structured_query"],
+            None,
+            Some(expected_graph_snapshot_hash),
+        )
+        .await;
+        let kg = run_experiment_and_wait(
+            &app,
+            project_id,
+            admin,
+            "kg verification",
+            &["kg_enhanced_rag"],
+            Some(expected_corpus_snapshot_hash),
+            Some(expected_graph_snapshot_hash),
+        )
+        .await;
+        for run in [&pure_llm, &bm25, &structured, &kg] {
+            assert_eq!(run["status"], "completed");
+            assert_eq!(run["completed_cases"], 1);
         }
+        assert_eq!(
+            pure_llm["config_snapshot_json"]["corpus_snapshot_hash"],
+            Value::Null
+        );
+        assert_eq!(
+            pure_llm["config_snapshot_json"]["graph_snapshot_hash"],
+            Value::Null
+        );
+        assert_eq!(
+            bm25["config_snapshot_json"]["corpus_snapshot_hash"],
+            expected_corpus_snapshot_hash
+        );
+        assert_eq!(
+            bm25["config_snapshot_json"]["graph_snapshot_hash"],
+            Value::Null
+        );
+        assert_eq!(
+            structured["config_snapshot_json"]["corpus_snapshot_hash"],
+            Value::Null
+        );
+        assert_eq!(
+            structured["config_snapshot_json"]["graph_snapshot_hash"],
+            expected_graph_snapshot_hash
+        );
+        assert_eq!(
+            kg["config_snapshot_json"]["corpus_snapshot_hash"],
+            expected_corpus_snapshot_hash
+        );
+        assert_eq!(
+            kg["config_snapshot_json"]["graph_snapshot_hash"],
+            expected_graph_snapshot_hash
+        );
+
+        let experiment = project_rag;
+        let run_id = experiment["id"].as_i64().unwrap();
+        let completed = experiment;
         assert_eq!(completed["status"], "completed");
         assert_eq!(completed["completed_cases"], 1);
 
@@ -3776,27 +3984,16 @@ mod tests {
             evidence["experiment"]["questions_sha256"],
             questions_sha256(&["What does the PCR protocol use?".to_owned()])
         );
-        let corpus_rows: Vec<(i32, i32, String)> = sqlx::query_as(
-            r#"
-            SELECT c.file_id, c.chunk_index, c.content_hash
-            FROM rag_document_chunks c
-            JOIN files f ON f.id = c.file_id
-            WHERE c.project_id = $1
-              AND f.status = 'APPROVED'::filestatus
-              AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
-              AND f.knowledge_sync_status = 'synced'
-              AND c.index_version = $2
-            ORDER BY c.file_id, c.chunk_index
-            "#,
-        )
-        .bind(project_id as i32)
-        .bind(&state.settings.rag_index_version)
-        .fetch_all(&state.pool)
-        .await
-        .unwrap();
         assert_eq!(
             evidence["experiment"]["corpus_snapshot_hash"],
-            snapshot_sha256(&state.settings.rag_index_version, &corpus_rows)
+            crate::rag::document_snapshot(
+                &state.pool,
+                project_id as i32,
+                &state.settings.rag_index_version,
+            )
+            .await
+            .unwrap()
+            .hash
         );
         assert_eq!(evidence["case_count"], 1);
         assert_eq!(evidence["cases"].as_array().unwrap().len(), 1);
@@ -3947,7 +4144,7 @@ mod tests {
         )
         .await;
         assert_eq!(items_status, StatusCode::OK);
-        assert_eq!(items.as_array().unwrap().len(), 1);
+        assert_eq!(items.as_array().unwrap().len(), 5);
         assert!(!items.to_string().contains("protocol.txt"));
         let blind_id = items[0]["blind_id"].as_str().unwrap();
         assert!(items[0]["answer"].as_str().unwrap().contains("[E1]"));
@@ -4073,10 +4270,14 @@ mod tests {
             "embedding_model": state.settings.embedding_model,
             "generation_model": state.ai_provider.model(),
             "questions_sha256": questions_sha256(&drift_questions),
-            "corpus_snapshot_hash": snapshot_sha256(
+            "corpus_snapshot_hash": crate::rag::document_snapshot(
+                &state.pool,
+                project_id as i32,
                 &state.settings.rag_index_version,
-                &corpus_rows
-            ),
+            )
+            .await
+            .unwrap()
+            .hash,
             "rag_index_version": state.settings.rag_index_version
         }))
         .bind(json!({"execution_plan": drift_plan, "errors": []}))
