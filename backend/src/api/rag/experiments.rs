@@ -2,6 +2,9 @@
 
 use std::{collections::HashSet, panic::AssertUnwindSafe, time::Duration};
 
+#[cfg(test)]
+use std::sync::{Arc, Mutex, OnceLock};
+
 use futures_util::FutureExt;
 
 use axum::{
@@ -13,6 +16,9 @@ use axum::{
 };
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+
+#[cfg(test)]
+use tokio::sync::Notify;
 
 use super::{
     mode_requires_dataset, mode_uses_embeddings, query_project_rag_inner,
@@ -45,6 +51,75 @@ const EXPERIMENT_CSV_HEADER: &str = concat!(
     "retrieval_strategy,retrieval_top_k,collection_retrieval_top_k,vector_candidate_k,graph_top_k,",
     "chunk_size,chunk_overlap,graph_min_score,retrieval_min_score\r\n"
 );
+
+#[cfg(test)]
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub(super) enum ExperimentTestPausePoint {
+    Set,
+    Corpus,
+    Claim,
+}
+
+#[cfg(test)]
+#[derive(Clone)]
+struct ExperimentTestPause {
+    point: ExperimentTestPausePoint,
+    started: Arc<Notify>,
+    release: Arc<Notify>,
+}
+
+#[cfg(test)]
+static EXPERIMENT_TEST_PAUSE: OnceLock<Mutex<Option<ExperimentTestPause>>> = OnceLock::new();
+
+#[cfg(test)]
+pub(super) struct ExperimentTestPauseGuard;
+
+#[cfg(test)]
+impl Drop for ExperimentTestPauseGuard {
+    fn drop(&mut self) {
+        if let Some(pause) = EXPERIMENT_TEST_PAUSE.get() {
+            if let Ok(mut pause) = pause.lock() {
+                if let Some(active) = pause.take() {
+                    active.release.notify_waiters();
+                }
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+pub(super) fn arm_experiment_test_pause(
+    point: ExperimentTestPausePoint,
+) -> (Arc<Notify>, Arc<Notify>, ExperimentTestPauseGuard) {
+    let started = Arc::new(Notify::new());
+    let release = Arc::new(Notify::new());
+    EXPERIMENT_TEST_PAUSE
+        .get_or_init(|| Mutex::new(None))
+        .lock()
+        .expect("experiment test pause mutex is not poisoned")
+        .replace(ExperimentTestPause {
+            point,
+            started: started.clone(),
+            release: release.clone(),
+        });
+    (started, release, ExperimentTestPauseGuard)
+}
+
+#[cfg(test)]
+async fn wait_experiment_test_pause(point: ExperimentTestPausePoint) {
+    let pause = EXPERIMENT_TEST_PAUSE.get().and_then(|pause| {
+        let mut pause = pause.lock().ok()?;
+        if pause.as_ref().is_some_and(|active| active.point == point) {
+            pause.take()
+        } else {
+            None
+        }
+    });
+    if let Some(pause) = pause {
+        pause.started.notify_one();
+        pause.release.notified().await;
+    }
+}
 
 pub(super) async fn run_experiment(
     State(state): State<AppState>,
@@ -146,6 +221,8 @@ pub(super) async fn run_experiment(
     sqlx::query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
         .execute(&mut *transaction)
         .await?;
+    #[cfg(test)]
+    wait_experiment_test_pause(ExperimentTestPausePoint::Set).await;
     lock_experiment_project(&mut transaction, project_id).await?;
     ensure_no_active_experiment(&mut transaction, project_id).await?;
     let dataset = if corpus_required {
@@ -185,6 +262,8 @@ pub(super) async fn run_experiment(
     } else {
         None
     };
+    #[cfg(test)]
+    wait_experiment_test_pause(ExperimentTestPausePoint::Corpus).await;
     let graph_snapshot_hash = if graph_required {
         Some(
             graph_snapshot_in_transaction(&mut transaction, project_id)
@@ -1121,6 +1200,8 @@ async fn execute_experiment(
     if !claim_experiment(&state, run_id).await? {
         return Ok(());
     }
+    #[cfg(test)]
+    wait_experiment_test_pause(ExperimentTestPausePoint::Claim).await;
     let mut run = fetch_experiment(&state, run_id).await?;
     validate_current_experiment_input_bindings(&state, &run).await?;
     let plan = run

@@ -2363,8 +2363,8 @@ mod tests {
     use uuid::Uuid;
 
     use super::experiments::{
-        claim_experiment, questions_sha256, renew_experiment_lease, schedule_queued_experiments,
-        transition_interrupted_to_queued,
+        arm_experiment_test_pause, claim_experiment, questions_sha256, renew_experiment_lease,
+        schedule_queued_experiments, transition_interrupted_to_queued, ExperimentTestPausePoint,
     };
     use super::{
         build_citation_repair_prompt, build_prompts, enforce_required_citations,
@@ -3639,6 +3639,10 @@ mod tests {
             ),
         ]))
         .unwrap();
+        let _experiment_test_lock = RETRIEVAL_TEST_LOCK
+            .get_or_init(|| tokio::sync::Mutex::new(()))
+            .lock()
+            .await;
         let pool = connect_database(&settings).await.unwrap();
         initialize_database(&pool, &settings).await.unwrap();
         let state = AppState::new(pool, settings).unwrap();
@@ -3705,6 +3709,13 @@ mod tests {
         .await;
         assert_eq!(sync_status, StatusCode::OK);
         assert_eq!(synced["synced_count"], 1);
+        let original_chunk: (String, String) = sqlx::query_as(
+            "SELECT content, content_hash FROM rag_document_chunks WHERE file_id = $1",
+        )
+        .bind(file_id)
+        .fetch_one(&state.pool)
+        .await
+        .unwrap();
         let (query_status, response) = json_call(
             &app,
             "POST",
@@ -3770,6 +3781,291 @@ mod tests {
         let expected_graph_snapshot_hash = rag_status["corpus_snapshot"]["graph_snapshot_hash"]
             .as_str()
             .unwrap();
+
+        let (a_started, a_release, _a_pause_guard) =
+            arm_experiment_test_pause(ExperimentTestPausePoint::Corpus);
+        let a_app = app.clone();
+        let a_admin = admin.to_owned();
+        let a_corpus = expected_corpus_snapshot_hash.to_owned();
+        let a_graph = expected_graph_snapshot_hash.to_owned();
+        let a_post = tokio::spawn(async move {
+            json_call(
+                &a_app,
+                "POST",
+                &format!("/projects/{project_id}/rag/experiments"),
+                Some(&a_admin),
+                Some(json!({
+                    "name": "repeatable read graph boundary",
+                    "questions": ["What does the PCR protocol use?"],
+                    "modes": ["kg_enhanced_rag"],
+                    "repetitions": 1,
+                    "randomize_order": false,
+                    "expected_corpus_snapshot_hash": a_corpus,
+                    "expected_graph_snapshot_hash": a_graph
+                })),
+            )
+            .await
+        });
+        a_started.notified().await;
+        let a_source_id: i32 = sqlx::query_scalar(
+            r#"INSERT INTO kg_entities (
+                project_id, entity_type, label, normalized_label, natural_key,
+                source_type, source_id, properties
+            ) VALUES ($1, 'marker', $2, $2, $3, 'manual', NULL, '{}'::json)
+            RETURNING id"#,
+        )
+        .bind(project_id)
+        .bind(format!("rr-boundary-source-{suffix}"))
+        .bind(format!("rr-boundary-source-{suffix}"))
+        .fetch_one(&state.pool)
+        .await
+        .unwrap();
+        let a_target_id: i32 = sqlx::query_scalar(
+            r#"INSERT INTO kg_entities (
+                project_id, entity_type, label, normalized_label, natural_key,
+                source_type, source_id, properties
+            ) VALUES ($1, 'marker', $2, $2, $3, 'manual', NULL, '{}'::json)
+            RETURNING id"#,
+        )
+        .bind(project_id)
+        .bind(format!("rr-boundary-target-{suffix}"))
+        .bind(format!("rr-boundary-target-{suffix}"))
+        .fetch_one(&state.pool)
+        .await
+        .unwrap();
+        sqlx::query(
+            r#"INSERT INTO kg_relations (
+                project_id, source_entity_id, target_entity_id, relation_type,
+                source_type, source_id, confidence, properties
+            ) VALUES ($1, $2, $3, 'uses', 'manual', NULL, 1.0, '{}'::json)"#,
+        )
+        .bind(project_id)
+        .bind(a_source_id)
+        .bind(a_target_id)
+        .execute(&state.pool)
+        .await
+        .unwrap();
+        a_release.notify_waiters();
+        let (a_status, a_run) = a_post.await.unwrap();
+        assert_eq!(a_status, StatusCode::ACCEPTED);
+        assert_eq!(
+            a_run["config_snapshot_json"]["corpus_snapshot_hash"],
+            expected_corpus_snapshot_hash
+        );
+        assert_eq!(
+            a_run["config_snapshot_json"]["graph_snapshot_hash"],
+            expected_graph_snapshot_hash
+        );
+        let a_run_id = a_run["id"].as_i64().unwrap();
+        let mut a_terminal = false;
+        for _ in 0..40 {
+            let (_, current) = json_call(
+                &app,
+                "GET",
+                &format!("/rag/experiments/{a_run_id}"),
+                Some(admin),
+                None,
+            )
+            .await;
+            if matches!(
+                current["status"].as_str(),
+                Some("completed" | "completed_with_errors" | "failed")
+            ) {
+                a_terminal = true;
+                break;
+            }
+            tokio::time::sleep(std::time::Duration::from_millis(25)).await;
+        }
+        assert!(a_terminal, "experiment A must reach a terminal state");
+        let (_, after_a_status) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/status"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_ne!(
+            after_a_status["corpus_snapshot"]["graph_snapshot_hash"],
+            expected_graph_snapshot_hash
+        );
+        drop(_a_pause_guard);
+
+        let b_corpus = after_a_status["corpus_snapshot"]["corpus_snapshot_hash"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let (b_started, b_release, _b_pause_guard) =
+            arm_experiment_test_pause(ExperimentTestPausePoint::Set);
+        let runs_before_b: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
+                .bind(project_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        let logs_before_b: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_query_logs WHERE project_id = $1")
+                .bind(project_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        let b_app = app.clone();
+        let b_admin = admin.to_owned();
+        let b_post = tokio::spawn(async move {
+            json_call(
+                &b_app,
+                "POST",
+                &format!("/projects/{project_id}/rag/experiments"),
+                Some(&b_admin),
+                Some(json!({
+                    "name": "repeatable read first snapshot boundary",
+                    "questions": ["What does the PCR protocol use?"],
+                    "modes": ["project_rag"],
+                    "repetitions": 1,
+                    "randomize_order": false,
+                    "expected_corpus_snapshot_hash": b_corpus
+                })),
+            )
+            .await
+        });
+        b_started.notified().await;
+        let b_content = format!("b-boundary-content-{suffix}");
+        let b_content_hash = format!("{:x}", Sha256::digest(b_content.as_bytes()));
+        sqlx::query(
+            "UPDATE rag_document_chunks SET content = $2, content_hash = $3 WHERE file_id = $1",
+        )
+        .bind(file_id)
+        .bind(b_content)
+        .bind(b_content_hash)
+        .execute(&state.pool)
+        .await
+        .unwrap();
+        b_release.notify_waiters();
+        let (b_status, _) = b_post.await.unwrap();
+        assert_eq!(b_status, StatusCode::CONFLICT);
+        let runs_after_b: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
+                .bind(project_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        let logs_after_b: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_query_logs WHERE project_id = $1")
+                .bind(project_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        assert_eq!(runs_after_b, runs_before_b);
+        assert_eq!(logs_after_b, logs_before_b);
+        drop(_b_pause_guard);
+
+        let (_, current_status) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/status"),
+            Some(admin),
+            None,
+        )
+        .await;
+        let c_corpus = current_status["corpus_snapshot"]["corpus_snapshot_hash"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let (c_started, c_release, _c_pause_guard) =
+            arm_experiment_test_pause(ExperimentTestPausePoint::Claim);
+        let c_app = app.clone();
+        let c_admin = admin.to_owned();
+        let c_post = tokio::spawn(async move {
+            json_call(
+                &c_app,
+                "POST",
+                &format!("/projects/{project_id}/rag/experiments"),
+                Some(&c_admin),
+                Some(json!({
+                    "name": "worker drift boundary",
+                    "questions": ["What does the PCR protocol use?"],
+                    "modes": ["project_rag"],
+                    "repetitions": 1,
+                    "randomize_order": false,
+                    "expected_corpus_snapshot_hash": c_corpus
+                })),
+            )
+            .await
+        });
+        c_started.notified().await;
+        let c_content = format!("c-boundary-content-{suffix}");
+        let c_content_hash = format!("{:x}", Sha256::digest(c_content.as_bytes()));
+        sqlx::query(
+            "UPDATE rag_document_chunks SET content = $2, content_hash = $3 WHERE file_id = $1",
+        )
+        .bind(file_id)
+        .bind(c_content)
+        .bind(c_content_hash)
+        .execute(&state.pool)
+        .await
+        .unwrap();
+        c_release.notify_waiters();
+        let (c_status, c_run) = c_post.await.unwrap();
+        assert_eq!(c_status, StatusCode::ACCEPTED);
+        let c_run_id = c_run["id"].as_i64().unwrap();
+        let mut c_terminal = None;
+        for _ in 0..40 {
+            let (_, current) = json_call(
+                &app,
+                "GET",
+                &format!("/rag/experiments/{c_run_id}"),
+                Some(admin),
+                None,
+            )
+            .await;
+            if matches!(
+                current["status"].as_str(),
+                Some("completed" | "completed_with_errors" | "failed")
+            ) {
+                c_terminal = Some(current);
+                break;
+            }
+            tokio::time::sleep(std::time::Duration::from_millis(25)).await;
+        }
+        let c_terminal = c_terminal.expect("worker must reach a terminal state");
+        assert_eq!(c_terminal["status"], "failed");
+        assert_eq!(
+            c_terminal["summary_json"]["fatal_error"]["failure_code"],
+            "input_binding_drift"
+        );
+        let c_logs: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_query_logs WHERE experiment_run_id = $1")
+                .bind(c_run_id)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        assert_eq!(c_logs, 0);
+        drop(_c_pause_guard);
+
+        sqlx::query(
+            "UPDATE rag_document_chunks SET content = $2, content_hash = $3 WHERE file_id = $1",
+        )
+        .bind(file_id)
+        .bind(&original_chunk.0)
+        .bind(&original_chunk.1)
+        .execute(&state.pool)
+        .await
+        .unwrap();
+        sqlx::query(
+            "DELETE FROM kg_relations WHERE source_entity_id = $1 AND target_entity_id = $2",
+        )
+        .bind(a_source_id)
+        .bind(a_target_id)
+        .execute(&state.pool)
+        .await
+        .unwrap();
+        sqlx::query("DELETE FROM kg_entities WHERE id IN ($1, $2)")
+            .bind(a_source_id)
+            .bind(a_target_id)
+            .execute(&state.pool)
+            .await
+            .unwrap();
+
         let runs_before_rejection: i64 =
             sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
                 .bind(project_id)
