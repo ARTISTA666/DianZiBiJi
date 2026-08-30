@@ -11,6 +11,21 @@
 运行遥测和引用审计字段显式存在（即使值为 `null` 或空对象）。这与 Rust 导出器对已落库
 案例/系统补入失败案例的稳定输出一致，也与离线检查器的必需字段边界一致；字段缺失会在
 OpenAPI 客户端校验或归档检查阶段暴露，而不会被解释为“没有失败”或“没有证据”。
+
+### 运行版本契约
+
+证据包及其运行时配套证据使用拆分的版本身份：`R=runtime_source_revision` 必须由
+`/ready`/`/metrics` endpoint、OCI image、runtime config 和 Rust runtime contract 一致指向；
+endpoint 的 `revision` 字段语义也是 R。`T=experiment_tooling_revision` 仅表示生成/执行证据时
+的 clean Git `HEAD`，并绑定 runner、preflight、协议和 evaluator 的内容 SHA，不能写入 endpoint
+revision 或冒充部署运行时版本。冻结 preregistration 的 `E=evidence_revision` 是按
+`path+sha256+R+T` 稳定排序生成的内容摘要，排除 manifest 自身；任何输入或 E 篡改都必须被
+复算拒绝。旧的单一 revision 包没有可验证的 R/T 契约，必须 fail-closed 并显式标记为
+`legacy blocked`，不得升级为 v1 确认性证据。
+外部 authority 的 SSH 签名消息是绑定该 canonical freeze-content commitment 的固定摘要；
+authority artifact 必须同时给出 `freeze_content_sha256` 与 `commitment_sha256`，任何 status、
+题集/gold/config/corpus/graph、文件 SHA 或 R/T 变化都会使旧签名失效。
+
 题集与方法数组的数量约束也在 OpenAPI 中显式声明：`questions` 必须包含 1–50 个唯一题目，
 每题长度为 1–4000 个字符；`modes` 必须包含 1–5 个唯一方法，且方法值来自生产五方法集合。
 这些约束与 Rust 创建端点的归一化规则、离线归档检查器和论文题集—方法绑定边界一致。

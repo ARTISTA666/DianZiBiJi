@@ -234,3 +234,35 @@ def test_export_embeds_recomputable_resolved_compose_projection(tmp_path: Path, 
     assert "sha256" not in resolved
     assert "raw_path" not in resolved
     assert "retained" not in resolved
+
+
+def test_export_keeps_runtime_source_r_separate_from_tooling_t(tmp_path: Path, monkeypatch) -> None:
+    tooling = "a" * 40
+    runtime_source = "b" * 40
+    image = image_fixture()
+    image["Config"]["Labels"]["org.opencontainers.image.revision"] = runtime_source
+    output_dir = tmp_path / "system-evidence"
+
+    monkeypatch.setattr(MODULE, "checkout_revision", lambda: tooling)
+    monkeypatch.setattr(MODULE, "compose_config", lambda _head: json.dumps(compose_fixture(tooling)).encode("utf-8"))
+    monkeypatch.setattr(
+        MODULE,
+        "fetch_json",
+        lambda url: {"status": "ready", "revision": runtime_source}
+        if url.endswith("/ready")
+        else {"status": "ok", "revision": runtime_source, "runtime": {"api_runtime": "rust-axum"}},
+    )
+    monkeypatch.setattr(MODULE, "docker_json", lambda args: image if args[:2] == ["image", "inspect"] else container_fixture())
+
+    result = MODULE.export(
+        image_name="eln-backend:latest",
+        container_name="eln-backend-1",
+        backend_url="http://backend",
+        output_dir=output_dir,
+    )
+
+    assert result["runtime_source_revision"] == runtime_source
+    assert result["experiment_tooling_revision"] == tooling
+    payload = json.loads((output_dir / "runtime-config-latest.json").read_text(encoding="utf-8"))
+    assert payload["runtime_source_revision"] == runtime_source
+    assert payload["experiment_tooling_revision"] == tooling
