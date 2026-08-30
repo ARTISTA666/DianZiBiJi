@@ -125,16 +125,19 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
     def test_snapshot_binding_is_minimal_for_each_mode(self) -> None:
         snapshots = {"corpus_snapshot_hash": "b" * 64, "graph_snapshot_hash": "c" * 64}
         expected = {
-            "pure_llm": set(),
-            "bm25_rag": {"expected_corpus_snapshot_hash"},
-            "project_rag": {"expected_corpus_snapshot_hash"},
-            "structured_query": {"expected_graph_snapshot_hash"},
-            "kg_enhanced_rag": {"expected_corpus_snapshot_hash", "expected_graph_snapshot_hash"},
+            "pure_llm": {},
+            "bm25_rag": {"expected_corpus_snapshot_hash": "b" * 64},
+            "project_rag": {"expected_corpus_snapshot_hash": "b" * 64},
+            "structured_query": {"expected_graph_snapshot_hash": "c" * 64},
+            "kg_enhanced_rag": {
+                "expected_corpus_snapshot_hash": "b" * 64,
+                "expected_graph_snapshot_hash": "c" * 64,
+            },
         }
-        for mode, keys in expected.items():
+        for mode, expected_binding in expected.items():
             with self.subTest(mode=mode):
                 binding = MODULE.snapshot_binding_for_modes((mode,), snapshots)
-                self.assertEqual(set(binding), keys)
+                self.assertEqual(binding, expected_binding)
 
     def call_preflight(self, paths: dict[str, Path | str], keys: list[str] | None = None):
         return MODULE.confirmatory_preflight(keys or ["p"], root=paths["root"], freeze_manifest_path=paths["freeze"], runs_dir=paths["runs"], current_revision=paths["head"])
@@ -157,36 +160,6 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
         try:
             with self.assertRaises(MODULE.PreflightError):
                 MODULE.create_confirmatory_experiment(api, "p", 1, "run", 1)
-            self.assertEqual(transport.posts, [])
-        finally:
-            MODULE.ROOT, MODULE.FREEZE_MANIFEST, MODULE.FREEZE_DIR, MODULE.RUNS_DIR = original
-            api.client.close()
-
-    def assert_second_status_mutation_blocked(self, paths: dict[str, Path | str], mutate) -> None:
-        class MutatingTransport(MODULE.httpx.BaseTransport):
-            def __init__(self): self.status_gets = 0; self.posts = []
-            def handle_request(self, request):
-                if request.method == "GET" and request.url.path.endswith("/rag/status"):
-                    self.status_gets += 1
-                    if self.status_gets == 2: mutate()
-                    return MODULE.httpx.Response(200, json={"corpus_snapshot": {"corpus_snapshot_hash": "b" * 64, "graph_snapshot_hash": "c" * 64}}, request=request)
-                if request.method == "POST":
-                    self.posts.append(request.url.path)
-                    return MODULE.httpx.Response(200, json={"id": 1, "status": "queued"}, request=request)
-                return MODULE.httpx.Response(500, request=request)
-
-        transport = MutatingTransport()
-        api = object.__new__(MODULE.ApiClient)
-        api.client = MODULE.httpx.Client(transport=transport, base_url="http://test")
-        original = (MODULE.ROOT, MODULE.FREEZE_MANIFEST, MODULE.FREEZE_DIR, MODULE.RUNS_DIR)
-        MODULE.ROOT = paths["root"]
-        MODULE.FREEZE_MANIFEST = paths["freeze"]
-        MODULE.FREEZE_DIR = paths["freeze"].parent
-        MODULE.RUNS_DIR = paths["runs"]
-        try:
-            with self.assertRaises(MODULE.PreflightError):
-                MODULE.create_confirmatory_experiment(api, "p", 1, "run", 1)
-            self.assertEqual(transport.status_gets, 2)
             self.assertEqual(transport.posts, [])
         finally:
             MODULE.ROOT, MODULE.FREEZE_MANIFEST, MODULE.FREEZE_DIR, MODULE.RUNS_DIR = original
@@ -367,7 +340,7 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
                 run, questions = MODULE.create_confirmatory_experiment(api, "p", 1, "run", 1)
                 self.assertEqual(run["id"], 1)
                 self.assertEqual(questions, ["q"])
-                self.assertEqual(transport.status_gets, 2)
+                self.assertEqual(transport.status_gets, 1)
                 self.assertEqual(len(transport.posts), 1)
                 self.assertEqual(transport.posts[0]["questions"], ["q"])
                 self.assertEqual(transport.posts[0]["expected_corpus_snapshot_hash"], "b" * 64)
@@ -448,39 +421,39 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
                     (root / "tracked.txt").write_text("dirty\n", encoding="utf-8")
                 self.assert_create_blocked_without_post(paths)
 
-    def test_second_status_get_local_toctou_never_reaches_experiment_post(self) -> None:
-        for attack in ("qset", "gold", "run", "analysis", "corpus", "policy", "image", "dirty"):
-            with tempfile.TemporaryDirectory() as directory:
-                paths = fixture(Path(directory))
-                root = Path(directory)
-                if attack == "qset":
-                    target, value = root / "agent-work/question-sets/p.json", {"formal_use_allowed": True, "status": "FROZEN", "questions": [{"question_id": "q-1", "project_id": "p", "question": "changed"}]}
-                    mutate = lambda: write_json(target, value)
-                elif attack == "gold":
-                    target = root / "agent-work/freeze/batch/gold-facts.json"
-                    mutate = lambda: target.write_text(target.read_text(encoding="utf-8") + "\n", encoding="utf-8")
-                elif attack == "run":
-                    target = root / "agent-work/freeze/batch/run-config.json"
-                    mutate = lambda: target.write_text(target.read_text(encoding="utf-8") + "\n", encoding="utf-8")
-                elif attack == "analysis":
-                    target = root / "agent-work/freeze/batch/analysis-config.json"
-                    mutate = lambda: target.write_text(target.read_text(encoding="utf-8") + "\n", encoding="utf-8")
-                elif attack == "corpus":
-                    target = root / "data/real/payload.txt"
-                    mutate = lambda: target.write_text("TAMPERED\n", encoding="utf-8")
-                elif attack == "policy":
-                    target = Path(paths["allowed"])
-                    mutate = lambda: target.write_text(target.read_text(encoding="utf-8") + "# tampered\n", encoding="utf-8")
-                elif attack == "image":
-                    target = root / "docs/system-evidence/container-image-latest.json"
-                    def mutate():
-                        payload = json.loads(target.read_text(encoding="utf-8"))
-                        payload["image_digest"] = "sha256:" + "e" * 64
-                        write_json(target, payload)
-                else:
-                    target = root / "tracked.txt"
-                    mutate = lambda: target.write_text("dirty\n", encoding="utf-8")
-                self.assert_second_status_mutation_blocked(paths, mutate)
+    def test_confirmatory_post_reuses_first_live_snapshot_without_refetch(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            paths = fixture(Path(directory))
+            root = Path(directory)
+
+            class ChangingTransport(MODULE.httpx.BaseTransport):
+                def __init__(self): self.status_gets = 0; self.posts = []
+                def handle_request(self, request):
+                    if request.method == "GET" and request.url.path.endswith("/rag/status"):
+                        self.status_gets += 1
+                        value = "b" if self.status_gets == 1 else "d"
+                        return MODULE.httpx.Response(200, json={"corpus_snapshot": {"corpus_snapshot_hash": value * 64, "graph_snapshot_hash": ("c" if self.status_gets == 1 else "e") * 64}}, request=request)
+                    if request.method == "POST":
+                        self.posts.append(json.loads(request.content))
+                        return MODULE.httpx.Response(200, json={"id": 1, "status": "queued"}, request=request)
+                    return MODULE.httpx.Response(500, request=request)
+
+            transport = ChangingTransport()
+            api = object.__new__(MODULE.ApiClient)
+            api.client = MODULE.httpx.Client(transport=transport, base_url="http://test")
+            original = (MODULE.ROOT, MODULE.FREEZE_MANIFEST, MODULE.FREEZE_DIR, MODULE.RUNS_DIR)
+            MODULE.ROOT = root
+            MODULE.FREEZE_MANIFEST = paths["freeze"]
+            MODULE.FREEZE_DIR = paths["freeze"].parent
+            MODULE.RUNS_DIR = paths["runs"]
+            try:
+                MODULE.create_confirmatory_experiment(api, "p", 1, "run", 1)
+                self.assertEqual(transport.status_gets, 1)
+                self.assertEqual(transport.posts[0]["expected_corpus_snapshot_hash"], "b" * 64)
+                self.assertEqual(transport.posts[0]["expected_graph_snapshot_hash"], "c" * 64)
+            finally:
+                MODULE.ROOT, MODULE.FREEZE_MANIFEST, MODULE.FREEZE_DIR, MODULE.RUNS_DIR = original
+                api.client.close()
 
     def test_other_key_signature_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

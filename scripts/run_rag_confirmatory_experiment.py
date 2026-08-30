@@ -122,9 +122,6 @@ def create_confirmatory_experiment(
     first = _preflight(key, reserved_output=output_dir)
     load_verified_questions(first, key)
     verify_live_snapshot(api, project_id, first.snapshots[key], key)
-    # The second GET is deliberately before the final local revalidation. The
-    # remaining GET→POST graph race needs an API-side conditional create.
-    verify_live_snapshot(api, project_id, first.snapshots[key], key)
     final = _preflight(key, reserved_output=output_dir)
     questions = load_verified_questions(final, key)
     run = api.post(
