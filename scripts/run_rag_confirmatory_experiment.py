@@ -31,10 +31,8 @@ PASSWORD_ENV = "FULL_SYSTEM_API_PASSWORD"
 
 PROJECTS = {
     "gse111619": {"project_name": "GSE111619 真实数据验证项目", "seed": 2026081501, "question_file": "gse111619_questions_v2_draft.json"},
-    "gse111619_raw": {"project_name": "GSE111619 KG-RAG 原始语料盲测项目", "seed": 2026081502, "question_file": "gse111619_raw_questions_v2_draft.json"},
-    "smithsonian_joseph_henry": {"project_name": "Smithsonian Joseph Henry 实验笔记本语料项目", "seed": 2026081503, "question_file": "smithsonian_joseph_henry_questions_v2_draft.json"},
-    "gse306433_colitis": {"project_name": "GSE306433 小鼠结肠炎基质细胞 RNA-seq 验证项目", "seed": 2026081601, "question_file": "gse306433_colitis_questions_v2_draft.json"},
     "gse291942_arabidopsis_heat": {"project_name": "GSE291942 拟南芥高温胁迫 RNA-seq 验证项目", "seed": 2026081602, "question_file": "gse291942_arabidopsis_heat_questions_v2_draft.json"},
+    "smithsonian_joseph_henry": {"project_name": "Smithsonian Joseph Henry 实验笔记本语料项目", "seed": 2026081503, "question_file": "smithsonian_joseph_henry_questions_v2_draft.json"},
 }
 
 

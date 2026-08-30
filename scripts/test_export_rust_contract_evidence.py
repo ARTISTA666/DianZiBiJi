@@ -229,6 +229,95 @@ def test_build_contract_evidence_rejects_checkout_drift() -> None:
     try:
         MODULE.build_contract_evidence(document, metrics, "http://backend", ready, "b" * 40)
     except ValueError as error:
-        assert "checkout HEAD" in str(error)
+        assert "expected R" in str(error)
     else:
-        raise AssertionError("runtime evidence must match checkout HEAD")
+        raise AssertionError("runtime evidence must match expected R")
+
+
+def test_build_contract_evidence_separates_runtime_source_r_and_tooling_t() -> None:
+    document = {"openapi": "3.0.3", "paths": {}}
+    runtime_source = "a" * 40
+    tooling = "b" * 40
+    metrics = {"status": "ok", "revision": runtime_source, "runtime": {"api_runtime": "rust-axum"}}
+    ready = {"status": "ready", "revision": runtime_source}
+
+    evidence = MODULE.build_contract_evidence(
+        document,
+        metrics,
+        "http://backend",
+        ready,
+        expected_tooling_revision=tooling,
+    )
+
+    assert evidence["runtime_source_revision"] == runtime_source
+    assert evidence["revision"] == runtime_source
+    assert evidence["experiment_tooling_revision"] == tooling
+
+
+def test_build_contract_evidence_checks_expected_r_even_when_t_is_supplied() -> None:
+    document = {"openapi": "3.0.3", "paths": {}}
+    runtime_source = "a" * 40
+    tooling = "b" * 40
+    metrics = {"status": "ok", "revision": runtime_source, "runtime": {"api_runtime": "rust-axum"}}
+    ready = {"status": "ready", "revision": runtime_source}
+
+    try:
+        MODULE.build_contract_evidence(
+            document,
+            metrics,
+            "http://backend",
+            ready,
+            expected_revision="c" * 40,
+            expected_tooling_revision=tooling,
+        )
+    except ValueError as error:
+        assert "expected R" in str(error)
+    else:
+        raise AssertionError("expected R must remain enforced when T is supplied")
+
+
+def test_write_evidence_rejects_missing_runtime_r_or_t_fields(tmp_path: Path) -> None:
+    runtime_source = "a" * 40
+    tooling = "b" * 40
+    document = {"openapi": "3.0.3", "paths": {}}
+    metrics = {"status": "ok", "revision": runtime_source, "runtime": {"api_runtime": "rust-axum"}}
+    ready = {"status": "ready", "revision": runtime_source}
+    for filename, field in (
+        ("runtime-config-latest.json", "runtime_source_revision"),
+        ("runtime-config-latest.json", "experiment_tooling_revision"),
+        ("container-image-latest.json", "runtime_source_revision"),
+        ("container-image-latest.json", "experiment_tooling_revision"),
+    ):
+        output_dir = tmp_path / f"{filename}-{field}"
+        output_dir.mkdir()
+        config = {
+            "runtime_source_revision": runtime_source,
+            "build_revision": runtime_source,
+            "app_revision": runtime_source,
+            "runtime_revision": runtime_source,
+            "experiment_tooling_revision": tooling,
+        }
+        image = {
+            **config,
+            "oci_revision": runtime_source,
+            "endpoint_revision": runtime_source,
+        }
+        payload = config if filename.startswith("runtime-config") else image
+        payload.pop(field)
+        (output_dir / filename).write_text(json.dumps(payload), encoding="utf-8")
+        other = "container-image-latest.json" if filename.startswith("runtime-config") else "runtime-config-latest.json"
+        (output_dir / other).write_text(json.dumps(image if other.startswith("container-image") else config), encoding="utf-8")
+        try:
+            MODULE.write_evidence(
+                output_dir,
+                document,
+                metrics,
+                "http://backend",
+                ready,
+                expected_revision=runtime_source,
+                expected_tooling_revision=tooling,
+            )
+        except ValueError as error:
+            assert "revision" in str(error)
+        else:
+            raise AssertionError(f"missing {field} in {filename} must fail closed")

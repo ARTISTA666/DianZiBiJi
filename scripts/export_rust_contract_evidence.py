@@ -127,6 +127,7 @@ def build_contract_evidence(
     backend_url: str,
     ready: dict[str, Any] | None = None,
     expected_revision: str | None = None,
+    expected_tooling_revision: str | None = None,
 ) -> dict[str, Any]:
     openapi_text = render_json(document)
     rows = build_api_rows(document)
@@ -138,8 +139,15 @@ def build_contract_evidence(
         raise ValueError("/ready and /metrics revisions must match")
     if ready.get("status") != "ready" or metrics.get("status") != "ok":
         raise ValueError("/ready and /metrics must report healthy statuses")
+    # The endpoint revision identifies R (the deployed runtime source).  T is
+    # the revision of the exporter/tooling checkout and must never be written
+    # into endpoint/app/runtime revision fields.
+    if expected_tooling_revision is not None and (not isinstance(expected_tooling_revision, str) or not REVISION_PATTERN.fullmatch(expected_tooling_revision)):
+        raise ValueError("experiment tooling revision is invalid")
+    if expected_revision is not None and (not isinstance(expected_revision, str) or not REVISION_PATTERN.fullmatch(expected_revision)):
+        raise ValueError("runtime source revision is invalid")
     if expected_revision is not None and ready_revision.lower() != expected_revision.lower():
-        raise ValueError("runtime revision does not match checkout HEAD")
+        raise ValueError("runtime source revision does not match expected R")
     return {
         "schema": "full-system.rust-runtime-contract-evidence",
         "schema_version": 1,
@@ -151,9 +159,12 @@ def build_contract_evidence(
         },
         "runtime": runtime,
         "revision": metrics_revision,
+        "endpoint_revision": ready_revision,
+        "runtime_source_revision": ready_revision,
         "build_revision": ready_revision,
         "app_revision": ready_revision,
         "runtime_revision": ready_revision,
+        "experiment_tooling_revision": expected_tooling_revision,
         "status": metrics.get("status"),
         "api": {
             "openapi_version": document.get("openapi"),
@@ -176,7 +187,20 @@ def _file_entry(path: Path) -> dict[str, Any]:
     return {"name": path.name, "bytes": len(payload), "sha256": sha256_bytes(payload)}
 
 
-def _verify_runtime_evidence(output_dir: Path, revision: str) -> None:
+def _verify_runtime_evidence(
+    output_dir: Path,
+    revision: str,
+    tooling_revision: str | None = None,
+    *,
+    require_all: bool = False,
+) -> None:
+    strict_binding = require_all or tooling_revision is not None
+    if strict_binding and (not isinstance(revision, str) or not REVISION_PATTERN.fullmatch(revision)):
+        raise ValueError("runtime source revision is missing or invalid")
+    required_runtime_fields = {
+        "runtime-config-latest.json": ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision"),
+        "container-image-latest.json": ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision", "oci_revision", "endpoint_revision"),
+    }
     for name in RUNTIME_FILES:
         path = output_dir / name
         if not path.is_file():
@@ -185,10 +209,30 @@ def _verify_runtime_evidence(output_dir: Path, revision: str) -> None:
             payload = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as exc:
             raise ValueError(f"required runtime evidence is invalid: {name}") from exc
-        if not isinstance(payload, dict) or any(payload.get(field) != revision for field in ("build_revision", "app_revision", "runtime_revision")):
+        if not isinstance(payload, dict):
             raise ValueError(f"runtime evidence revision drift: {name}")
-        if name == "container-image-latest.json" and any(
-            payload.get(field) != revision for field in ("oci_revision", "endpoint_revision")
+        if strict_binding:
+            fields = required_runtime_fields[name]
+            if any(
+                not isinstance(payload.get(field), str)
+                or not REVISION_PATTERN.fullmatch(payload[field])
+                or payload[field] != revision
+                for field in fields
+            ):
+                raise ValueError(f"runtime evidence revision drift: {name}")
+        elif any(
+            payload.get(field) not in (None, revision)
+            for field in ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision")
+        ):
+            raise ValueError(f"runtime evidence revision drift: {name}")
+        if tooling_revision is not None and (
+            not isinstance(payload.get("experiment_tooling_revision"), str)
+            or not REVISION_PATTERN.fullmatch(payload["experiment_tooling_revision"])
+            or payload["experiment_tooling_revision"] != tooling_revision
+        ):
+            raise ValueError(f"runtime evidence tooling revision drift: {name}")
+        if not strict_binding and name == "container-image-latest.json" and any(
+            payload.get(field) not in (None, revision) for field in ("oci_revision", "endpoint_revision")
         ):
             raise ValueError(f"container image revision drift: {name}")
 
@@ -222,7 +266,7 @@ def _manifest_file_entries(output_dir: Path, existing: list[Any]) -> list[dict[s
     return sorted(entries, key=lambda entry: entry["name"])
 
 
-def _update_manifest(output_dir: Path, evidence: dict[str, Any]) -> None:
+def _update_manifest(output_dir: Path, evidence: dict[str, Any], *, require_all: bool = False) -> None:
     manifest_path = output_dir / "manifest.json"
     try:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -233,11 +277,18 @@ def _update_manifest(output_dir: Path, evidence: dict[str, Any]) -> None:
     counts = manifest.get("counts") if isinstance(manifest.get("counts"), dict) else {}
     counts["api_operations"] = evidence["api"]["operation_count"]
     manifest["counts"] = counts
-    _verify_runtime_evidence(output_dir, evidence["app_revision"])
+    _verify_runtime_evidence(
+        output_dir,
+        evidence["runtime_source_revision"],
+        evidence["experiment_tooling_revision"],
+        require_all=require_all,
+    )
     existing = manifest.get("files") if isinstance(manifest.get("files"), list) else []
     manifest["files"] = _manifest_file_entries(output_dir, existing)
     manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
     manifest["app_revision"] = evidence["app_revision"]
+    manifest["runtime_source_revision"] = evidence["runtime_source_revision"]
+    manifest["experiment_tooling_revision"] = evidence["experiment_tooling_revision"]
     manifest["contract"] = {
         "generator": "export_rust_contract_evidence.py",
         "schema": evidence["schema"],
@@ -254,15 +305,20 @@ def write_evidence(
     backend_url: str,
     ready: dict[str, Any] | None = None,
     expected_revision: str | None = None,
+    expected_tooling_revision: str | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     openapi_text = render_json(document)
     api_csv = render_api_csv(document)
-    evidence = build_contract_evidence(document, metrics, backend_url, ready, expected_revision)
+    evidence = build_contract_evidence(document, metrics, backend_url, ready, expected_revision, expected_tooling_revision)
     _write_atomic(output_dir / "openapi.json", openapi_text)
     _write_atomic(output_dir / "api-list.csv", api_csv)
     _write_atomic(output_dir / "rust-runtime-contract-latest.json", render_json(evidence))
-    _update_manifest(output_dir, evidence)
+    _update_manifest(
+        output_dir,
+        evidence,
+        require_all=expected_revision is not None or expected_tooling_revision is not None,
+    )
     return {
         "output_dir": str(output_dir),
         "api_operations": evidence["api"]["operation_count"],
@@ -290,7 +346,7 @@ def main() -> int:
             metrics,
             backend_url,
             ready,
-            expected_revision,
+            expected_tooling_revision=expected_revision,
         )
     except (OSError, RuntimeError, ValueError, json.JSONDecodeError) as exc:
         print(f"Rust contract evidence export failed: {exc}", file=sys.stderr)

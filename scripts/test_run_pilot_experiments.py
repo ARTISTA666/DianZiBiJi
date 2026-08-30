@@ -9,6 +9,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from confirmatory_preflight import _authority_commitment
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "run_rag_confirmatory_experiment.py"
@@ -31,7 +33,9 @@ def digest(path: Path) -> str:
 def fixture(root: Path) -> dict[str, Path | str]:
     subprocess.run(["git", "init", "-q"], cwd=root, check=True)
     policy_dir = root / "scripts" / "confirmatory-policy"
-    key = root / "authority-key"
+    # Signing material is external to the repository; an untracked private
+    # key inside the worktree must never be accepted as a freeze input.
+    key = root.parent / f"{root.name}-authority-key"
     subprocess.run(["ssh-keygen", "-q", "-t", "ed25519", "-N", "", "-f", str(key)], check=True)
     allowed = policy_dir / "allowed_signers"
     allowed.parent.mkdir(parents=True, exist_ok=True)
@@ -41,8 +45,20 @@ def fixture(root: Path) -> dict[str, Path | str]:
     tracked = root / "tracked.txt"
     tracked.write_text("clean\n", encoding="utf-8")
     subprocess.run(["git", "add", "scripts/confirmatory-policy", "tracked.txt"], cwd=root, check=True)
-    subprocess.run(["git", "-c", "user.email=test@example.invalid", "-c", "user.name=test", "commit", "-qm", "fixture"], cwd=root, check=True)
+    tooling = {
+        "scripts/run_rag_confirmatory_experiment.py": "runner fixture\n",
+        "scripts/confirmatory_preflight.py": "preflight fixture\n",
+        "docs/experiments/rag-evidence-package-protocol-v1.md": "protocol fixture\n",
+        "scripts/evaluate_rust_retrieval.py": "evaluator fixture\n",
+    }
+    for name, content in tooling.items():
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+    subprocess.run(["git", "add", *tooling], cwd=root, check=True)
+    subprocess.run(["git", "-c", "user.email=test@example.invalid", "-c", "user.name=test", "commit", "-qm", "fixture tooling"], cwd=root, check=True)
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    runtime_revision = "b" * 40
 
     source = root / "agent-work" / "question-sets" / "p.json"
     write_json(source, {"document_status": "FROZEN", "formal_use_allowed": True, "questions": [{"question_id": "q-1", "project_id": "p", "question": "q"}]})
@@ -58,6 +74,9 @@ def fixture(root: Path) -> dict[str, Path | str]:
     analysis_config = freeze / "analysis-config.json"
     authority = freeze / "authority.json"
     signature = freeze / "authority.json.sig"
+    nested_authority = freeze / "nested" / "authority.json"
+    nested_authority.parent.mkdir(parents=True, exist_ok=True)
+    nested_authority.write_text("nested authority input\n", encoding="utf-8")
     setter = {"setter_id": "setter-1", "authority": "authority-1", "signed_at_utc": "2026-08-29T00:00:00Z"}
     write_json(question_manifest, {"status": "FROZEN", "formal_use_allowed": True, "external_setter": setter, "question_sets": [{"project_id": "p", "path": "agent-work/question-sets/p.json", "sha256": digest(source), "question_count": 1}]})
     write_json(gold, {"status": "FROZEN", "formal_use_allowed": True, "external_setter": setter, "gold_facts": []})
@@ -66,13 +85,39 @@ def fixture(root: Path) -> dict[str, Path | str]:
     write_json(run_config, {"status": "FROZEN", "formal_use_allowed": True})
     write_json(analysis_config, {"status": "FROZEN", "formal_use_allowed": True})
     runtime_contract = root / "docs" / "system-evidence" / "rust-runtime-contract-latest.json"
-    write_json(runtime_contract, {"revision": head, "app_revision": head, "runtime_revision": head, "runtime": {"api_runtime": "rust-axum"}})
+    write_json(runtime_contract, {"revision": runtime_revision, "runtime_source_revision": runtime_revision, "endpoint_revision": runtime_revision, "build_revision": runtime_revision, "app_revision": runtime_revision, "runtime_revision": runtime_revision, "experiment_tooling_revision": head, "runtime": {"api_runtime": "rust-axum"}})
     image_digest = "sha256:" + "d" * 64
-    write_json(root / "docs" / "system-evidence" / "container-image-latest.json", {"app_revision": head, "runtime_revision": head, "image_digest": image_digest, "image": {"image_id": image_digest}})
-    write_json(authority, {"authority_id": "authority-1", "setter_id": "setter-1", "signed_at_utc": setter["signed_at_utc"], "namespace": "full-system.confirmatory.v1", "allowed_signers_sha256": digest(allowed), "trust_root_policy_sha256": digest(trust)})
-    subprocess.run(["ssh-keygen", "-q", "-Y", "sign", "-f", str(key), "-n", "full-system.confirmatory.v1", str(authority)], check=True)
+    write_json(root / "docs" / "system-evidence" / "container-image-latest.json", {"build_revision": runtime_revision, "runtime_source_revision": runtime_revision, "app_revision": runtime_revision, "runtime_revision": runtime_revision, "experiment_tooling_revision": head, "oci_revision": runtime_revision, "endpoint_revision": runtime_revision, "image_digest": image_digest, "image": {"image_id": image_digest}})
+    write_json(root / "docs" / "system-evidence" / "runtime-config-latest.json", {"build_revision": runtime_revision, "runtime_source_revision": runtime_revision, "app_revision": runtime_revision, "runtime_revision": runtime_revision, "experiment_tooling_revision": head})
+    subprocess.run(["git", "add", "docs/system-evidence"], cwd=root, check=True)
+    subprocess.run(["git", "-c", "user.email=test@example.invalid", "-c", "user.name=test", "commit", "-qm", "fixture runtime"], cwd=root, check=True)
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    # Runtime evidence is refreshed after the tooling commit and is treated as
+    # an externally produced artifact in this isolated fixture.  Keep the
+    # index clean so preflight reaches the network gate; the tests still
+    # mutate these files to exercise their content bindings.
+    for evidence_name in ("rust-runtime-contract-latest.json", "container-image-latest.json", "runtime-config-latest.json"):
+        evidence_path = root / "docs" / "system-evidence" / evidence_name
+        evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+        evidence["experiment_tooling_revision"] = head
+        write_json(evidence_path, evidence)
+    subprocess.run(["git", "update-index", "--assume-unchanged", "--", "docs/system-evidence/rust-runtime-contract-latest.json", "docs/system-evidence/container-image-latest.json", "docs/system-evidence/runtime-config-latest.json"], cwd=root, check=True)
+    authority_base = {"authority_id": "authority-1", "setter_id": "setter-1", "signed_at_utc": setter["signed_at_utc"], "namespace": "full-system.confirmatory.v1", "allowed_signers_sha256": digest(allowed), "trust_root_policy_sha256": digest(trust)}
+    write_json(authority, {**authority_base, "freeze_content_sha256": "0" * 64, "commitment_sha256": "0" * 64})
     freeze_manifest = freeze / "freeze-manifest.json"
-    write_json(freeze_manifest, {"status": "FROZEN_EXTERNAL_SETTER", "formal_use_allowed": True, "provenance": {**setter, "external_setter_id": setter["setter_id"], "external_setter_authority": setter["authority"], "external_setter_signed_at_utc": setter["signed_at_utc"], "external_authority_artifact": "agent-work/freeze/batch/authority.json", "external_authority_sha256": digest(authority), "external_authority_signature": "agent-work/freeze/batch/authority.json.sig", "external_authority_signature_sha256": digest(signature), "allowed_signers": "scripts/confirmatory-policy/allowed_signers", "allowed_signers_sha256": digest(allowed), "trust_root_policy": "scripts/confirmatory-policy/trust-root-policy.json", "trust_root_policy_sha256": digest(trust)}, "design": {"projects": ["p"], "modes": list(MODULE.MODES), "repetitions": 1}, "runtime_binding": {"app_revision": head, "runtime_revision": head, "image_digest": image_digest}, "question_set_sha256": {"p": digest(source)}, "file_sha256": {"question-set-manifest.json": digest(question_manifest), "gold-facts.json": digest(gold), "corpus-manifest.json": digest(corpus), "questions.json": digest(questions), "run-config.json": digest(run_config), "analysis-config.json": digest(analysis_config), "authority.json": digest(authority), "authority.json.sig": digest(signature), "scripts/confirmatory-policy/allowed_signers": digest(allowed), "scripts/confirmatory-policy/trust-root-policy.json": digest(trust)}})
+    freeze_payload = {"status": "FROZEN_EXTERNAL_SETTER", "formal_use_allowed": True, "provenance": {**setter, "external_setter_id": setter["setter_id"], "external_setter_authority": setter["authority"], "external_setter_signed_at_utc": setter["signed_at_utc"], "external_authority_artifact": "agent-work/freeze/batch/authority.json", "external_authority_sha256": digest(authority), "external_authority_signature": "agent-work/freeze/batch/authority.json.sig", "external_authority_signature_sha256": "0" * 64, "allowed_signers": "scripts/confirmatory-policy/allowed_signers", "allowed_signers_sha256": digest(allowed), "trust_root_policy": "scripts/confirmatory-policy/trust-root-policy.json", "trust_root_policy_sha256": digest(trust)}, "design": {"projects": ["p"], "modes": list(MODULE.MODES), "repetitions": 1}, "runtime_binding": {"runtime_source_revision": runtime_revision, "image_digest": image_digest}, "tooling_binding": {"experiment_tooling_revision": head, "files": [{"path": name, "sha256": hashlib.sha256(content.encode()).hexdigest()} for name, content in tooling.items()]}, "question_set_sha256": {"p": digest(source)}, "file_sha256": {"question-set-manifest.json": digest(question_manifest), "gold-facts.json": digest(gold), "corpus-manifest.json": digest(corpus), "questions.json": digest(questions), "run-config.json": digest(run_config), "analysis-config.json": digest(analysis_config), "authority.json": digest(authority), "authority.json.sig": "0" * 64, "agent-work/freeze/batch/nested/authority.json": digest(nested_authority), "scripts/confirmatory-policy/allowed_signers": digest(allowed), "scripts/confirmatory-policy/trust-root-policy.json": digest(trust)}}
+    write_json(freeze_manifest, freeze_payload)
+    commitment, content_hash, commitment_hash = _authority_commitment(root, freeze_manifest, freeze_payload, json.loads(question_manifest.read_text()), json.loads(gold.read_text()), json.loads(corpus.read_text()))
+    write_json(authority, {**authority_base, "freeze_content_sha256": content_hash, "commitment_sha256": commitment_hash})
+    message = root.parent / f"{root.name}-authority-commitment"
+    message.write_bytes(commitment)
+    subprocess.run(["ssh-keygen", "-q", "-Y", "sign", "-f", str(key), "-n", "full-system.confirmatory.v1", str(message)], check=True)
+    signature.write_bytes(Path(str(message) + ".sig").read_bytes())
+    freeze_payload["provenance"]["external_authority_sha256"] = digest(authority)
+    freeze_payload["provenance"]["external_authority_signature_sha256"] = digest(signature)
+    freeze_payload["file_sha256"]["authority.json"] = digest(authority)
+    freeze_payload["file_sha256"]["authority.json.sig"] = digest(signature)
+    write_json(freeze_manifest, freeze_payload)
     return {"root": root, "freeze": freeze_manifest, "runs": root / "agent-work" / "runs", "head": head, "authority_key": key, "signature": signature, "allowed": allowed}
 
 
@@ -138,6 +183,105 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
             paths = fixture(Path(directory))
             result = self.call_preflight(paths)
             self.assertEqual(result.head, paths["head"])
+            self.assertNotEqual(result.runtime_source_revision, result.experiment_tooling_revision)
+
+    def test_signed_authority_commitment_cannot_replay_changed_freeze_inputs(self) -> None:
+        attacks = ("status", "question", "gold", "runtime", "tooling")
+        for attack in attacks:
+            with tempfile.TemporaryDirectory() as directory:
+                paths = fixture(Path(directory))
+                root = Path(directory)
+                freeze_path = Path(paths["freeze"])
+                freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+                if attack == "status":
+                    freeze["status"] = "AUTHORIZED"
+                    write_json(freeze_path, freeze)
+                elif attack == "question":
+                    question_path = root / "agent-work/question-sets/p.json"
+                    question = json.loads(question_path.read_text(encoding="utf-8"))
+                    question["questions"][0]["question"] = "replayed text"
+                    write_json(question_path, question)
+                elif attack == "gold":
+                    gold_path = root / "agent-work/freeze/batch/gold-facts.json"
+                    gold = json.loads(gold_path.read_text(encoding="utf-8"))
+                    gold["gold_facts"] = [{"fact": "tampered"}]
+                    write_json(gold_path, gold)
+                elif attack == "runtime":
+                    freeze["runtime_binding"]["runtime_source_revision"] = "c" * 40
+                    write_json(freeze_path, freeze)
+                else:
+                    freeze["tooling_binding"]["experiment_tooling_revision"] = "d" * 40
+                    write_json(freeze_path, freeze)
+                self.assert_create_blocked_without_post(paths)
+
+    def test_nested_same_basename_file_remains_in_authority_commitment(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            paths = fixture(Path(directory))
+            root = Path(directory)
+            nested = root / "agent-work/freeze/batch/nested/authority.json"
+            nested.write_text("changed nested authority input\n", encoding="utf-8")
+            freeze_path = Path(paths["freeze"])
+            freeze = json.loads(freeze_path.read_text(encoding="utf-8"))
+            freeze["file_sha256"]["agent-work/freeze/batch/nested/authority.json"] = digest(nested)
+            write_json(freeze_path, freeze)
+            self.assert_create_blocked_without_post(paths)
+
+    def test_runtime_evidence_requires_explicit_r_and_t_fields(self) -> None:
+        for filename, field in (
+            ("runtime-config-latest.json", "runtime_source_revision"),
+            ("runtime-config-latest.json", "experiment_tooling_revision"),
+            ("container-image-latest.json", "runtime_source_revision"),
+            ("container-image-latest.json", "experiment_tooling_revision"),
+        ):
+            with tempfile.TemporaryDirectory() as directory:
+                paths = fixture(Path(directory))
+                target = Path(directory) / "docs/system-evidence" / filename
+                payload = json.loads(target.read_text(encoding="utf-8"))
+                payload.pop(field)
+                write_json(target, payload)
+                self.assert_create_blocked_without_post(paths)
+
+    def test_stale_runtime_or_tooling_binding_is_rejected(self) -> None:
+        for binding, value in (("runtime_binding", "a" * 40), ("tooling_binding", "c" * 40)):
+            with tempfile.TemporaryDirectory() as directory:
+                paths = fixture(Path(directory))
+                manifest_path = Path(paths["freeze"])
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                if binding == "runtime_binding":
+                    manifest[binding]["runtime_source_revision"] = value
+                else:
+                    manifest[binding]["experiment_tooling_revision"] = value
+                write_json(manifest_path, manifest)
+                with self.assertRaises(MODULE.PreflightError):
+                    self.call_preflight(paths)
+
+    def test_legacy_single_revision_freeze_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            paths = fixture(Path(directory))
+            manifest_path = Path(paths["freeze"])
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["runtime_binding"].pop("runtime_source_revision")
+            manifest.pop("tooling_binding")
+            write_json(manifest_path, manifest)
+            with self.assertRaisesRegex(MODULE.PreflightError, "runtime_binding.runtime_source_revision|tooling_binding"):
+                self.call_preflight(paths)
+
+    def test_untracked_script_is_rejected_but_r_differs_from_t(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            paths = fixture(Path(directory))
+            rogue = Path(directory) / "scripts" / "untracked-config.json"
+            rogue.write_text("{}\n", encoding="utf-8")
+            with self.assertRaisesRegex(MODULE.PreflightError, "untracked files"):
+                self.call_preflight(paths)
+
+    def test_ignored_script_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            paths = fixture(Path(directory))
+            root = Path(directory)
+            (root / ".git/info/exclude").write_text("scripts/ignored-override.py\n", encoding="utf-8")
+            (root / "scripts/ignored-override.py").write_text("# untrusted override\n", encoding="utf-8")
+            with self.assertRaisesRegex(MODULE.PreflightError, "untracked files"):
+                self.call_preflight(paths)
 
     def test_valid_create_posts_verified_payload_once(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -381,6 +525,32 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
                 sys.argv = old_argv
         finally:
             for name, value in original.items(): setattr(MODULE, name, value)
+        self.assertEqual(calls, [])
+
+    def test_five_project_legacy_selection_is_rejected_before_client(self) -> None:
+        original = {name: getattr(MODULE, name) for name in ("ApiClient",)}
+        calls = []
+
+        class ForbiddenApiClient:
+            def __init__(self): calls.append("client")
+
+        try:
+            MODULE.ApiClient = ForbiddenApiClient
+            old_argv = sys.argv
+            sys.argv = [
+                str(SCRIPT),
+                "gse111619",
+                "gse111619_raw",
+                "gse291942_arabidopsis_heat",
+                "gse306433_colitis",
+                "smithsonian_joseph_henry",
+            ]
+            try:
+                self.assertEqual(MODULE.main(), 2)
+            finally:
+                sys.argv = old_argv
+        finally:
+            MODULE.ApiClient = original["ApiClient"]
         self.assertEqual(calls, [])
 
 
