@@ -120,6 +120,7 @@ def test_update_document_exposes_contract_without_dropping_existing_schemas() ->
         "generation_model",
         "questions_sha256",
         "corpus_snapshot_hash",
+        "graph_snapshot_hash",
         "rag_index_version",
         "graph_schema_version",
     ]
@@ -319,3 +320,39 @@ def test_update_document_is_idempotent() -> None:
     assert json.dumps(twice, ensure_ascii=False, separators=(",", ":")) == json.dumps(
         once, ensure_ascii=False, separators=(",", ":")
     )
+
+
+def test_update_document_adds_atomic_experiment_snapshot_contract() -> None:
+    base = document()
+    base["paths"][MODULE.EXPERIMENT_PATH] = {
+        "post": {
+            "responses": {
+                "202": {"description": "accepted"},
+                "409": {"description": "stale overlay"},
+            }
+        }
+    }
+    base["components"]["schemas"]["AIExperimentRunRequest"] = {
+        "type": "object",
+        "properties": {"name": {"type": "string"}},
+    }
+
+    updated = MODULE.update_document(copy.deepcopy(base))
+
+    request = updated["components"]["schemas"]["AIExperimentRunRequest"]
+    hash_schema = {
+        "anyOf": [
+            {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            {"type": "null"},
+        ]
+    }
+    assert request["properties"]["expected_corpus_snapshot_hash"] == hash_schema
+    assert request["properties"]["expected_graph_snapshot_hash"] == hash_schema
+    assert updated["paths"][MODULE.EXPERIMENT_PATH]["post"]["responses"]["409"] == {
+        "description": "Experiment snapshot drift",
+        "content": {
+            "application/json": {
+                "schema": {"$ref": "#/components/schemas/ApiErrorResponse"}
+            }
+        },
+    }

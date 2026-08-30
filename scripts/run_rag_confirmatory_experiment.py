@@ -35,6 +35,22 @@ PROJECTS = {
     "smithsonian_joseph_henry": {"project_name": "Smithsonian Joseph Henry 实验笔记本语料项目", "seed": 2026081503, "question_file": "smithsonian_joseph_henry_questions_v2_draft.json"},
 }
 
+CORPUS_MODES = frozenset({"bm25_rag", "project_rag", "kg_enhanced_rag"})
+GRAPH_MODES = frozenset({"structured_query", "kg_enhanced_rag"})
+
+
+def snapshot_binding_for_modes(modes: tuple[str, ...] | list[str], snapshots: dict[str, str]) -> dict[str, str]:
+    """Return only the snapshot preconditions required by the selected modes."""
+    if set(snapshots) != {"corpus_snapshot_hash", "graph_snapshot_hash"}:
+        raise PreflightError("snapshot binding is incomplete")
+    selected = set(modes)
+    binding: dict[str, str] = {}
+    if selected & CORPUS_MODES:
+        binding["expected_corpus_snapshot_hash"] = snapshots["corpus_snapshot_hash"]
+    if selected & GRAPH_MODES:
+        binding["expected_graph_snapshot_hash"] = snapshots["graph_snapshot_hash"]
+    return binding
+
 
 def _preflight(key: str, *, summary_path: Path | None = None, reserved_output: Path | None = None) -> PreflightResult:
     return confirmatory_preflight(
@@ -120,6 +136,7 @@ def create_confirmatory_experiment(
             "repetitions": 1,
             "randomize_order": True,
             "random_seed": seed,
+            **snapshot_binding_for_modes(MODES, first.snapshots[key]),
         },
     )
     return run, questions

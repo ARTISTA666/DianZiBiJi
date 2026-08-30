@@ -10,6 +10,7 @@ Rust route/DTO contract tests remain authoritative for the complete API.
 
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 
@@ -17,6 +18,7 @@ from pathlib import Path
 OPENAPI_PATH = Path(__file__).resolve().parents[1] / "backend" / "openapi.json"
 EVIDENCE_PATH = "/rag/experiments/{run_id}/evidence.json"
 RUST_RETRIEVAL_PATH = "/projects/{project_id}/rag/retrieve"
+EXPERIMENT_PATH = "/projects/{project_id}/rag/experiments"
 
 
 def nullable_string_enum(values: list[str]) -> dict[str, object]:
@@ -101,6 +103,7 @@ def evidence_schemas() -> dict[str, dict[str, object]]:
                 "generation_model",
                 "questions_sha256",
                 "corpus_snapshot_hash",
+                "graph_snapshot_hash",
                 "rag_index_version",
                 "graph_schema_version",
             ],
@@ -161,6 +164,12 @@ def evidence_schemas() -> dict[str, dict[str, object]]:
                 "generation_model": {"type": "string"},
                 "questions_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
                 "corpus_snapshot_hash": {
+                    "anyOf": [
+                        {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                        {"type": "null"},
+                    ]
+                },
+                "graph_snapshot_hash": {
                     "anyOf": [
                         {"type": "string", "pattern": "^[0-9a-f]{64}$"},
                         {"type": "null"},
@@ -580,6 +589,40 @@ def rust_retrieval_operation() -> dict[str, object]:
     }
 
 
+def update_experiment_contract(document: dict) -> None:
+    schemas = document.setdefault("components", {}).setdefault("schemas", {})
+    request = schemas.get("AIExperimentRunRequest")
+    operation = document.get("paths", {}).get(EXPERIMENT_PATH, {}).get("post")
+    # Keep this overlay composable with minimal OpenAPI fixtures and callers
+    # that have not loaded the experiment contract yet.
+    if request is None or operation is None:
+        return
+    hash_schema = {
+        "anyOf": [
+            {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+            {"type": "null"},
+        ]
+    }
+    properties = request.setdefault("properties", {})
+    for name in ("expected_corpus_snapshot_hash", "expected_graph_snapshot_hash"):
+        existing = properties.get(name)
+        if isinstance(existing, dict):
+            # Preserve generated titles/descriptions so rerunning this
+            # evidence overlay is byte-for-byte stable on the checked-in
+            # Rust contract.
+            existing["anyOf"] = copy.deepcopy(hash_schema["anyOf"])
+        else:
+            properties[name] = copy.deepcopy(hash_schema)
+    operation.setdefault("responses", {})["409"] = {
+        "description": "Experiment snapshot drift",
+        "content": {
+            "application/json": {
+                "schema": {"$ref": "#/components/schemas/ApiErrorResponse"}
+            }
+        },
+    }
+
+
 def update_document(document: dict) -> dict:
     operation = document["paths"][EVIDENCE_PATH]["get"]
     operation["responses"]["200"]["content"]["application/json"]["schema"] = {
@@ -605,6 +648,7 @@ def update_document(document: dict) -> dict:
     schemas.update(evidence_schemas())
     document.setdefault("paths", {})[RUST_RETRIEVAL_PATH] = rust_retrieval_operation()
     schemas.update(rust_retrieval_schemas())
+    update_experiment_contract(document)
     return document
 
 

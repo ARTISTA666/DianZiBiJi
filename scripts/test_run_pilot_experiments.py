@@ -122,6 +122,20 @@ def fixture(root: Path) -> dict[str, Path | str]:
 
 
 class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
+    def test_snapshot_binding_is_minimal_for_each_mode(self) -> None:
+        snapshots = {"corpus_snapshot_hash": "b" * 64, "graph_snapshot_hash": "c" * 64}
+        expected = {
+            "pure_llm": set(),
+            "bm25_rag": {"expected_corpus_snapshot_hash"},
+            "project_rag": {"expected_corpus_snapshot_hash"},
+            "structured_query": {"expected_graph_snapshot_hash"},
+            "kg_enhanced_rag": {"expected_corpus_snapshot_hash", "expected_graph_snapshot_hash"},
+        }
+        for mode, keys in expected.items():
+            with self.subTest(mode=mode):
+                binding = MODULE.snapshot_binding_for_modes((mode,), snapshots)
+                self.assertEqual(set(binding), keys)
+
     def call_preflight(self, paths: dict[str, Path | str], keys: list[str] | None = None):
         return MODULE.confirmatory_preflight(keys or ["p"], root=paths["root"], freeze_manifest_path=paths["freeze"], runs_dir=paths["runs"], current_revision=paths["head"])
 
@@ -356,6 +370,8 @@ class ConfirmatoryRunnerPreflightTests(unittest.TestCase):
                 self.assertEqual(transport.status_gets, 2)
                 self.assertEqual(len(transport.posts), 1)
                 self.assertEqual(transport.posts[0]["questions"], ["q"])
+                self.assertEqual(transport.posts[0]["expected_corpus_snapshot_hash"], "b" * 64)
+                self.assertEqual(transport.posts[0]["expected_graph_snapshot_hash"], "c" * 64)
             finally:
                 MODULE.ROOT, MODULE.FREEZE_MANIFEST, MODULE.FREEZE_DIR, MODULE.RUNS_DIR = original
                 api.client.close()
