@@ -63,6 +63,54 @@ def make_package(root: Path, valid: bool = True) -> dict:
 
 
 class G5ARuntimeFreezeTests(unittest.TestCase):
+    def test_corpus_symlink_alias_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = make_inputs(root)
+            (root / "corpus-alias.txt").symlink_to(root / "corpus-data.txt")
+            corpus = json.loads(paths["corpus"].read_text(encoding="utf-8"))
+            corpus["files"][0]["path"] = "corpus-alias.txt"
+            paths["corpus"].write_text(json.dumps(corpus) + "\n", encoding="utf-8")
+            package = MODULE.build_package(
+                root=root,
+                runtime_contract=paths["contract"],
+                runtime_config=paths["config"],
+                container_image=paths["image"],
+                corpus_manifest=paths["corpus"],
+                checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True},
+            )
+            self.assertEqual(package["status"], "BLOCKED")
+            self.assertIn("corpus_manifest", package["blockers"])
+
+    def test_noncanonical_and_duplicate_corpus_paths_are_blocked(self) -> None:
+        for spelling in ("absolute", "dot", "dotdot", "backslash"):
+            with self.subTest(spelling=spelling), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                paths = make_inputs(root)
+                value = {
+                    "absolute": str(root / "corpus-data.txt"),
+                    "dot": "./corpus-data.txt",
+                    "dotdot": "nested/../corpus-data.txt",
+                    "backslash": r"corpus\data.txt",
+                }[spelling]
+                corpus = json.loads(paths["corpus"].read_text(encoding="utf-8"))
+                corpus["files"][0]["path"] = value
+                paths["corpus"].write_text(json.dumps(corpus) + "\n", encoding="utf-8")
+                package = MODULE.build_package(root=root, runtime_contract=paths["contract"], runtime_config=paths["config"], container_image=paths["image"], corpus_manifest=paths["corpus"], checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True})
+                self.assertEqual(package["status"], "BLOCKED")
+                self.assertIn("corpus_manifest", package["blockers"])
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = make_inputs(root)
+            corpus = json.loads(paths["corpus"].read_text(encoding="utf-8"))
+            corpus["files"].append(dict(corpus["files"][0]))
+            corpus["snapshot_sha256"] = snapshot_sha256([(item["path"], item["sha256"]) for item in corpus["files"]])
+            paths["corpus"].write_text(json.dumps(corpus) + "\n", encoding="utf-8")
+            package = MODULE.build_package(root=root, runtime_contract=paths["contract"], runtime_config=paths["config"], container_image=paths["image"], corpus_manifest=paths["corpus"], checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True})
+            self.assertEqual(package["status"], "BLOCKED")
+            self.assertIn("corpus_manifest", package["blockers"])
+
     def test_complete_bindings_wait_for_external_authority(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             package = make_package(Path(directory))

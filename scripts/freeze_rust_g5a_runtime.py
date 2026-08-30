@@ -13,6 +13,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
+from evidence_paths import strict_repo_relative_path
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = "full-system.rust-g5a-runtime-freeze"
@@ -154,8 +156,15 @@ def corpus_binding(path: Path, root: Path) -> tuple[dict[str, Any], list[dict[st
         for record in records:
             relative = record.get("path") if isinstance(record, dict) else None
             expected = record.get("sha256") if isinstance(record, dict) else None
-            candidate = root / relative if isinstance(relative, str) and not Path(relative).is_absolute() else root / "<invalid>"
-            file_source = source(candidate, root)
+            candidate = strict_repo_relative_path(root, relative)
+            file_source = source(candidate, root) if candidate is not None else {
+                "path": relative,
+                "inside_root": False,
+                "exists": False,
+                "sha256": None,
+                "status": "BLOCKED",
+                "reason": "path must be canonical repository-relative POSIX without symlink aliases",
+            }
             actual = file_source.get("sha256")
             normalized = file_source.get("path") if file_source.get("inside_root") else None
             record_valid = (
@@ -447,9 +456,9 @@ def verify_package(package_path: Path, manifest_path: Path, root: Path) -> dict[
     for record in manifest_files or []:
         relative = record.get("path") if isinstance(record, dict) else None
         expected = record.get("sha256") if isinstance(record, dict) else None
-        path = (root / relative).resolve() if isinstance(relative, str) and not Path(relative).is_absolute() else root / "<invalid>"
-        inside = path.is_relative_to(root.resolve())
-        actual = sha256_file(path) if inside else None
+        path = strict_repo_relative_path(root, relative)
+        inside = path is not None
+        actual = sha256_file(path) if path is not None else None
         recorded_missing = isinstance(record, dict) and record.get("status") == "BLOCKED" and expected is None and actual is None
         valid_hash = isinstance(expected, str) and bool(SHA256.fullmatch(expected))
         file_checks.append({"path": relative, "inside_root": inside, "sha256_matches": bool(inside and ((valid_hash and actual == expected) or recorded_missing))})
