@@ -1,13 +1,13 @@
 {
-  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "app_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "contract": {
     "generator": "export_rust_contract_evidence.py",
-    "openapi_sha256": "985182b476a200fd80d11c9d7d93eb973f0e75489a2f0156e8ed9367bc196569",
+    "openapi_sha256": "30cb8c5cfc7bbfa6761161605a8c94af5a90f2c02f842d7f6497a1e2d857ce8d",
     "runtime": {
       "api_runtime": "rust-axum",
-      "embedding_backend": "openai_compatible",
-      "embedding_dimension": 1024,
-      "embedding_model": "BAAI/bge-m3"
+      "embedding_backend": "hash",
+      "embedding_dimension": 512,
+      "embedding_model": "rust-hash-512-v1"
     },
     "schema": "full-system.rust-runtime-contract-evidence"
   },
@@ -18,6 +18,7 @@
     "sample_graph_relations": 50
   },
   "database_dialect": "postgresql",
+  "experiment_tooling_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "files": [
     {
       "bytes": 10891,
@@ -30,9 +31,9 @@
       "sha256": "3d466b27119bcf15a161fd9be8796c3c97b027ff0c6bae7dfe48cf5e1a7cd959"
     },
     {
-      "bytes": 3114,
+      "bytes": 3350,
       "name": "container-image-latest.json",
-      "sha256": "0b5b619f4fd12023b11ea4499a3727c4924c6e7a8f2d117b8e5530d4f3a992f6"
+      "sha256": "2a5046c82f4de44573242b58414f6cfda142cc41fb126ff58010de1aa64ff27d"
     },
     {
       "bytes": 84089,
@@ -55,9 +56,9 @@
       "sha256": "99b00682fac887e629cfbdeb6a72cdc647c80f72022701d54ef350ea89f16623"
     },
     {
-      "bytes": 247851,
+      "bytes": 249330,
       "name": "openapi.json",
-      "sha256": "985182b476a200fd80d11c9d7d93eb973f0e75489a2f0156e8ed9367bc196569"
+      "sha256": "30cb8c5cfc7bbfa6761161605a8c94af5a90f2c02f842d7f6497a1e2d857ce8d"
     },
     {
       "bytes": 21096,
@@ -65,14 +66,14 @@
       "sha256": "6fd4d8e4107c9f17f525150b70061230efec4c0d8699da3db7a23c869ef38b95"
     },
     {
-      "bytes": 3880,
+      "bytes": 4123,
       "name": "runtime-config-latest.json",
-      "sha256": "0d37fcc4d8aba2b9be550c71493d764bd756b89dea37803db6ce5757c1c016f9"
+      "sha256": "7e73cbefc9dec5e3ce6d26f153bab56e5942d3455cd328cd6067d9bf32609157"
     },
     {
-      "bytes": 931,
+      "bytes": 1142,
       "name": "rust-runtime-contract-latest.json",
-      "sha256": "7de2a2a68d0003646261be64675c62719350a92448cf89ca80548fe21fca1e83"
+      "sha256": "bc1407a0170e394350c563d6858224b20ee0e045ba975b29ae2c617a2ae27029"
     },
     {
       "bytes": 43774,
@@ -85,10 +86,11 @@
       "sha256": "afc9ae06838d9a94f387847771e2a04753e89ed1f091692768ac9b7ac310df16"
     }
   ],
-  "generated_at": "2026-08-29T11:17:54.732749+00:00",
+  "generated_at": "2026-08-30T04:06:02.031830+00:00",
   "project": {
     "description": "NCBI GEO GSE111619 公开 RNA-seq 数据验证项目；仅以原始 GEO 文档作为向量语料，用冻结题集验证知识图谱关系补证。",
     "id": 3,
     "name": "GSE111619 KG-RAG 原始语料盲测项目"
-  }
+  },
+  "runtime_source_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977"
 }

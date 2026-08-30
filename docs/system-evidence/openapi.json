@@ -94,6 +94,32 @@
       },
       "AIExperimentRunRequest": {
         "properties": {
+          "expected_corpus_snapshot_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Required for bm25_rag, project_rag, or kg_enhanced_rag; omit for pure_llm and structured_query.",
+            "title": "Expected Corpus Snapshot Hash"
+          },
+          "expected_graph_snapshot_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Required for structured_query or kg_enhanced_rag; omit for pure_llm, bm25_rag, and project_rag.",
+            "title": "Expected Graph Snapshot Hash"
+          },
           "modes": {
             "items": {
               "type": "string"
@@ -3332,6 +3358,17 @@
               }
             ]
           },
+          "graph_snapshot_hash": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "id": {
             "type": "integer"
           },
@@ -3432,6 +3469,7 @@
           "generation_model",
           "questions_sha256",
           "corpus_snapshot_hash",
+          "graph_snapshot_hash",
           "rag_index_version",
           "graph_schema_version"
         ],
@@ -8965,6 +9003,16 @@
               }
             },
             "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            },
+            "description": "Experiment snapshot drift"
           },
           "422": {
             "content": {

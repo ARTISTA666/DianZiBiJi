@@ -1,20 +1,20 @@
 {
-  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-  "captured_at": "2026-08-29T11:16:49.375867+00:00",
+  "app_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "build_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "captured_at": "2026-08-30T04:04:31.726671+00:00",
   "container": {
-    "image_id_observed": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051"
+    "image_id_observed": "sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05"
   },
-  "container_projection_sha256": "d087d9eeb33ea947deebebd925ed0540dee0c8ae6c81b7a726c97be1c5d30942",
+  "container_projection_sha256": "1c66a18c3fb63ae72af91b048a17cb8fbd572f9188fbe29642b63db768ac563a",
   "digest_scope": "local_image_content_id",
   "endpoint_observation": {
     "metrics": {
-      "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
       "runtime": {
         "api_runtime": "rust-axum",
-        "embedding_backend": "openai_compatible",
-        "embedding_dimension": 1024,
-        "embedding_model": "BAAI/bge-m3"
+        "embedding_backend": "hash",
+        "embedding_dimension": 512,
+        "embedding_model": "rust-hash-512-v1"
       },
       "status": "ok"
     },
@@ -23,22 +23,23 @@
         "database": "ok",
         "storage": "ok"
       },
-      "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
       "status": "ready"
     }
   },
-  "endpoint_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "endpoint_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "experiment_tooling_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "image": {
-    "image_digest": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051",
-    "image_id": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051",
-    "name": "eln-backend:latest",
+    "image_digest": "sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05",
+    "image_id": "sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05",
+    "name": "eln-evidence-atomicity-backend:latest",
     "registry_repo_digest": null,
     "repo_digests": [
-      "eln-backend@sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051"
+      "eln-evidence-atomicity-backend@sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05"
     ]
   },
-  "image_digest": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051",
-  "oci_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "image_digest": "sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05",
+  "oci_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "projection": {
     "Architecture": "arm64",
     "Config": {
@@ -49,34 +50,35 @@
       "User": "eln",
       "WorkingDir": "/app"
     },
-    "Id": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051",
+    "Id": "sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05",
     "Labels": {
-      "org.opencontainers.image.revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "org.opencontainers.image.revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
       "org.opencontainers.image.source": "https://github.com/rust-lang/docker-rust"
     },
     "Os": "linux",
     "RepoDigests": [
-      "eln-backend@sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051"
+      "eln-evidence-atomicity-backend@sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05"
     ],
     "RootFS": {
       "Layers": [
         "sha256:dd97e58b4e812b247f3cd261fa7eac247b7c5896b8e34d9474762678cae7774d",
         "sha256:f0617f8a7f8051c232128df38e1593c709b813a2a2aadeb90e366f23eb5fac0a",
-        "sha256:05fd37edb06c62deebc88f8bc58e6ad0687cc5aef944da6bd0c5524df4471eeb",
-        "sha256:c337aae2cb6cf3800fbaef1e1b845b872b89797ae7dc7dd92ad7de010db34e15"
+        "sha256:8fa6bffdfa41b6021c6e90c9d92041ce54f4ae8ebfe2fd5f7687aa28b9f53063",
+        "sha256:3928f3d251e55cb19e36949f5a967921034e7fba93eb97f4ae9ae70bbb7521b8"
       ]
     }
   },
   "projection_schema": "full-system.rust-runtime-projection-v1",
-  "projection_sha256": "221195629d79f29b3ed1612afeec0f5f27637e25a4811aaf6d0ae7ffbb7ecd6c",
+  "projection_sha256": "c315ffe91c2fa0e480717493ee98c92d1e4169834b8190bfcf1e592c38fca91a",
   "registry_repo_digest": null,
   "runtime": "rust-axum",
-  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "runtime_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "runtime_source_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "schema": "full-system.rust-container-image-evidence",
   "schema_version": 2,
   "secrets_disclosed": false,
   "source": {
-    "container_inspect": "docker inspect eln-backend-1",
-    "image_inspect": "docker image inspect eln-backend:latest"
+    "container_inspect": "docker inspect eln-evidence-atomicity-backend-1",
+    "image_inspect": "docker image inspect eln-evidence-atomicity-backend:latest"
   }
 }

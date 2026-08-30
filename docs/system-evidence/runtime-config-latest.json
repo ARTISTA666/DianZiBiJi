@@ -1,7 +1,7 @@
 {
-  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-  "captured_at": "2026-08-29T11:16:49.375555+00:00",
+  "app_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "build_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "captured_at": "2026-08-30T04:04:31.726009+00:00",
   "config_sources": {
     "compose_file": {
       "bytes": 2147,
@@ -9,16 +9,17 @@
       "sha256": "7749bc7ffce50f5126918d44d4741910efaeefe4a043372dab6fb2c0587d9b73"
     },
     "resolved_compose": {
-      "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-      "canonical_bytes": 855,
-      "canonical_sha256": "68a2e1e3c47528a5b15db3fd0ebbfcd4277ea8819d1ddebbf4e3d46b51776dad",
+      "build_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+      "canonical_bytes": 857,
+      "canonical_sha256": "428afbefddd54edd35f84fa6e4a40b6dc463bf708352d15b43d3cc2c0966c7d2",
+      "experiment_tooling_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
       "projection": {
-        "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+        "build_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
         "schema": "full-system.rust-resolved-compose-projection-v1",
         "services": {
           "backend": {
             "build": {
-              "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+              "build_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
               "context": "backend",
               "dockerfile": "Dockerfile"
             },
@@ -41,7 +42,7 @@
                 "host_ip": "127.0.0.1",
                 "mode": "ingress",
                 "protocol": "tcp",
-                "published": "8001",
+                "published": "18001",
                 "target": 8000
               }
             ]
@@ -68,7 +69,7 @@
                 "host_ip": "127.0.0.1",
                 "mode": "ingress",
                 "protocol": "tcp",
-                "published": "3000",
+                "published": "13000",
                 "target": 3000
               }
             ]
@@ -83,26 +84,26 @@
       "Args": [],
       "Cmd": null,
       "Compose": {
-        "com.docker.compose.project": "eln",
+        "com.docker.compose.project": "eln-evidence-atomicity",
         "com.docker.compose.service": "backend"
       },
       "Entrypoint": [
         "/usr/local/bin/eln-backend"
       ],
-      "Image": "sha256:3487864e0d9b91787935c3bb30f8e0998e03f61821289053edebb32560e51051",
+      "Image": "sha256:ff74aa12d1eb3712c793860a25fc4bf4e050119cedb7d02798b690f9b48cef05",
       "Path": "/usr/local/bin/eln-backend"
     },
-    "projection_sha256": "d087d9eeb33ea947deebebd925ed0540dee0c8ae6c81b7a726c97be1c5d30942",
+    "projection_sha256": "1c66a18c3fb63ae72af91b048a17cb8fbd572f9188fbe29642b63db768ac563a",
     "schema": "full-system.rust-runtime-projection-v1"
   },
   "endpoint_observation": {
     "metrics": {
-      "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
       "runtime": {
         "api_runtime": "rust-axum",
-        "embedding_backend": "openai_compatible",
-        "embedding_dimension": 1024,
-        "embedding_model": "BAAI/bge-m3"
+        "embedding_backend": "hash",
+        "embedding_dimension": 512,
+        "embedding_model": "rust-hash-512-v1"
       },
       "status": "ok"
     },
@@ -111,12 +112,14 @@
         "database": "ok",
         "storage": "ok"
       },
-      "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+      "revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
       "status": "ready"
     }
   },
+  "experiment_tooling_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "runtime": "rust-axum",
-  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "runtime_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "runtime_source_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "schema": "full-system.rust-runtime-config-evidence",
   "schema_version": 1,
   "secrets_disclosed": false,

@@ -1,27 +1,30 @@
 {
   "api": {
-    "openapi_sha256": "985182b476a200fd80d11c9d7d93eb973f0e75489a2f0156e8ed9367bc196569",
+    "openapi_sha256": "30cb8c5cfc7bbfa6761161605a8c94af5a90f2c02f842d7f6497a1e2d857ce8d",
     "openapi_version": "3.1.0",
     "operation_count": 103,
     "path_count": 85
   },
-  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
-  "captured_at": "2026-08-29T11:17:54.729234+00:00",
-  "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "app_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "build_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "captured_at": "2026-08-30T04:06:02.028009+00:00",
+  "endpoint_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "experiment_tooling_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "runtime": {
     "api_runtime": "rust-axum",
-    "embedding_backend": "openai_compatible",
-    "embedding_dimension": 1024,
-    "embedding_model": "BAAI/bge-m3"
+    "embedding_backend": "hash",
+    "embedding_dimension": 512,
+    "embedding_model": "rust-hash-512-v1"
   },
-  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "runtime_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
+  "runtime_source_revision": "7d21e670a3ee915fb107ecf03d2cf0a2fa9b0977",
   "schema": "full-system.rust-runtime-contract-evidence",
   "schema_version": 1,
   "source": {
-    "backend_url": "http://localhost:8001",
-    "metrics_url": "http://localhost:8001/metrics",
-    "openapi_url": "http://localhost:8001/openapi.json"
+    "backend_url": "http://127.0.0.1:18001",
+    "metrics_url": "http://127.0.0.1:18001/metrics",
+    "openapi_url": "http://127.0.0.1:18001/openapi.json"
   },
   "status": "ok"
 }
