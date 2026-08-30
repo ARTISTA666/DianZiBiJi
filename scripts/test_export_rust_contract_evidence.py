@@ -185,6 +185,35 @@ def test_write_evidence_rejects_runtime_manifest_hash_omission(tmp_path: Path) -
         raise AssertionError("runtime evidence without an integrity hash must fail closed")
 
 
+def test_write_evidence_rejects_revision_bearing_manifest_json_from_old_runtime(tmp_path: Path) -> None:
+    output_dir = tmp_path / "system-evidence"
+    output_dir.mkdir()
+    for name, extra in (
+        ("runtime-config-latest.json", {}),
+        ("container-image-latest.json", {"oci_revision": "abc", "endpoint_revision": "abc"}),
+    ):
+        (output_dir / name).write_text(
+            json.dumps({"build_revision": "abc", "app_revision": "abc", "runtime_revision": "abc", **extra}),
+            encoding="utf-8",
+        )
+    (output_dir / "local-health-latest.json").write_text(
+        json.dumps({"build_revision": "old", "app_revision": "old", "runtime_revision": "old"}), encoding="utf-8"
+    )
+    (output_dir / "manifest.json").write_text(
+        json.dumps({"files": [{"name": "local-health-latest.json"}]}), encoding="utf-8"
+    )
+    document = {"openapi": "3.0.3", "paths": {}}
+    metrics = {"status": "ok", "revision": "abc", "runtime": {"api_runtime": "rust-axum"}}
+    ready = {"status": "ready", "revision": "abc"}
+
+    try:
+        MODULE.write_evidence(output_dir, document, metrics, "http://backend", ready)
+    except ValueError as error:
+        assert "manifest runtime revision drift" in str(error)
+    else:
+        raise AssertionError("revision-bearing manifest JSON from another runtime must fail closed")
+
+
 def test_write_evidence_rejects_runtime_revision_drift(tmp_path: Path) -> None:
     output_dir = tmp_path / "system-evidence"
     output_dir.mkdir()

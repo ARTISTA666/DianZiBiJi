@@ -84,3 +84,17 @@ def test_evaluate_rejects_runtime_from_another_checkout() -> None:
 
     assert result["local_ready"] is False
     assert any(item["name"] == "编译 revision 已绑定" and not item["passed"] for item in result["checks"])
+
+
+def test_run_records_separate_runtime_and_tooling_revisions(monkeypatch) -> None:
+    ready, metrics, frontend = healthy_probes()
+    probes = iter((ready, metrics, frontend))
+    monkeypatch.setattr(MODULE, "fetch", lambda *_: next(probes))
+    result = MODULE.run(
+        "http://example.test",
+        "http://example.test",
+        expected_runtime_revision="a" * 40,
+        tooling_revision="b" * 40,
+    )
+    assert result["runtime_source_revision"] == "a" * 40
+    assert result["experiment_tooling_revision"] == "b" * 40

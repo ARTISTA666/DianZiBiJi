@@ -383,6 +383,7 @@ def build_package(
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "lifecycle": "PRE_RUN",
         "status": "BLOCKED" if blockers else "STRUCTURE_VALID_AWAITING_AUTHORITY",
+        "formal_use_allowed": False,
         "checkout": checkout,
         "runtime_source_revision": runtime_source_revision,
         "experiment_tooling_revision": head,
@@ -433,6 +434,7 @@ def verify_package(package_path: Path, manifest_path: Path, root: Path) -> dict[
         {"name": "package_hash", "passed": bool(isinstance(recorded_package_hash, str) and SHA256.fullmatch(recorded_package_hash) and package_hash == recorded_package_hash)},
         {"name": "package_schema", "passed": bool(package and package.get("schema") == SCHEMA and package.get("schema_version") == 1)},
         {"name": "manifest_schema", "passed": bool(manifest and manifest.get("schema") == MANIFEST_SCHEMA and manifest.get("schema_version") == 1)},
+        {"name": "formal_use_prohibited", "passed": bool(package and package.get("formal_use_allowed") is False)},
     ]
     package_files = package.get("source_files") if package and isinstance(package.get("source_files"), list) else None
     manifest_files = manifest.get("files") if manifest and isinstance(manifest.get("files"), list) else None

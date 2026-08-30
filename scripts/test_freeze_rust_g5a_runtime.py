@@ -346,6 +346,25 @@ class G5ARuntimeFreezeTests(unittest.TestCase):
             self.assertTrue(output["integrity_ok"])
             self.assertFalse(output["freeze_ready"])
 
+    def test_formal_use_is_explicitly_prohibited_and_legacy_package_fails_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            package = make_package(root)
+            self.assertIs(package["formal_use_allowed"], False)
+            package_path, manifest_path = root / "package.json", root / "manifest.json"
+            MODULE.write_package(package, package_path, manifest_path, root)
+            self.assertTrue(MODULE.verify_package(package_path, manifest_path, root)["integrity_ok"])
+
+            legacy = json.loads(package_path.read_text(encoding="utf-8"))
+            legacy.pop("formal_use_allowed")
+            MODULE.write_json(package_path, legacy)
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["package_sha256"] = MODULE.sha256_file(package_path)
+            MODULE.write_json(manifest_path, manifest)
+            report = MODULE.verify_package(package_path, manifest_path, root)
+            self.assertFalse(report["integrity_ok"])
+            self.assertFalse(report["freeze_ready"])
+
     def test_blocked_cli_returns_nonzero_and_writes_package(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

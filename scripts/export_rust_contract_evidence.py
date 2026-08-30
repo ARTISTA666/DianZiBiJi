@@ -266,6 +266,28 @@ def _manifest_file_entries(output_dir: Path, existing: list[Any]) -> list[dict[s
     return sorted(entries, key=lambda entry: entry["name"])
 
 
+def _verify_manifest_revision_bindings(
+    output_dir: Path, entries: list[dict[str, Any]], runtime_revision: str, tooling_revision: str
+) -> None:
+    """Reject top-level runtime evidence from another R/T evidence set."""
+    runtime_fields = ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision", "revision", "endpoint_revision", "oci_revision")
+    for entry in entries:
+        name = entry["name"]
+        if not name.endswith(".json"):
+            continue
+        try:
+            payload = json.loads((output_dir / name).read_text(encoding="utf-8"))
+        except json.JSONDecodeError as error:
+            raise ValueError(f"manifest JSON is invalid: {name}") from error
+        if not isinstance(payload, dict):
+            continue
+        present_runtime = [field for field in runtime_fields if field in payload]
+        if present_runtime and any(payload[field] != runtime_revision for field in present_runtime):
+            raise ValueError(f"manifest runtime revision drift: {name}")
+        if "experiment_tooling_revision" in payload and payload["experiment_tooling_revision"] != tooling_revision:
+            raise ValueError(f"manifest tooling revision drift: {name}")
+
+
 def _update_manifest(output_dir: Path, evidence: dict[str, Any], *, require_all: bool = False) -> None:
     manifest_path = output_dir / "manifest.json"
     try:
@@ -285,6 +307,12 @@ def _update_manifest(output_dir: Path, evidence: dict[str, Any], *, require_all:
     )
     existing = manifest.get("files") if isinstance(manifest.get("files"), list) else []
     manifest["files"] = _manifest_file_entries(output_dir, existing)
+    _verify_manifest_revision_bindings(
+        output_dir,
+        manifest["files"],
+        evidence["runtime_source_revision"],
+        evidence["experiment_tooling_revision"],
+    )
     manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
     manifest["app_revision"] = evidence["app_revision"]
     manifest["runtime_source_revision"] = evidence["runtime_source_revision"]

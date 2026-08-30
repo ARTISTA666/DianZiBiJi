@@ -215,6 +215,8 @@ def run(
     env_file: Path | None = None,
     timeout: float = 5,
     output: Path | None = None,
+    expected_runtime_revision: str | None = None,
+    tooling_revision: str | None = None,
 ) -> dict[str, object]:
     api_root = api_base.rstrip("/") + "/"
     frontend_root = frontend_base.rstrip("/") + "/"
@@ -227,8 +229,10 @@ def run(
         configured_api_base=(read_env_file(env_file).get("NEXT_PUBLIC_API_BASE_URL") if env_file else None)
         or os.environ.get("NEXT_PUBLIC_API_BASE_URL")
         or api_base,
-        expected_revision=checkout_revision() or "",
+        expected_revision=expected_runtime_revision or checkout_revision() or "",
     )
+    result["runtime_source_revision"] = expected_runtime_revision or result["app_revision"]
+    result["experiment_tooling_revision"] = tooling_revision or checkout_revision()
     if output:
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -258,10 +262,20 @@ def main() -> int:
     parser.add_argument("--env-file", type=Path, default=DEFAULT_ENV_FILE if DEFAULT_ENV_FILE.is_file() else None)
     parser.add_argument("--timeout", type=float, default=5)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--expected-runtime-revision")
+    parser.add_argument("--tooling-revision")
     parser.add_argument("--json", action="store_true", dest="json_output")
     parser.add_argument("--require-production", action="store_true")
     args = parser.parse_args()
-    result = run(args.api_base, args.frontend_base, args.env_file, args.timeout, args.output)
+    result = run(
+        args.api_base,
+        args.frontend_base,
+        args.env_file,
+        args.timeout,
+        args.output,
+        args.expected_runtime_revision,
+        args.tooling_revision,
+    )
     print(json.dumps(result, ensure_ascii=False, indent=2) if args.json_output else render_human(result))
     if not result["local_ready"]:
         return 1
