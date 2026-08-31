@@ -37,6 +37,7 @@ def guard(s: str) -> str:
     s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}",
                r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}", s, flags=re.M)
     s = s.replace("\\\\[S]", "\\\\{}[S]").replace("\\\\[G]", "\\\\{}[G]")
+    s = s.replace("℃", "°C").replace("‐", "-")
     out = []
     for ln in s.split("\n"):
         if re.match(r"^(Read\(u, p\)|Write\(u, p\)|Review\(u, p\)|Manage\(u, p\)|conf\(r\) =|P = TP|F1 = 2PR|C = \(1/N\)|Src_avg|T_avg)", ln):
