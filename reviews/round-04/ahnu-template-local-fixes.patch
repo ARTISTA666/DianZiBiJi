@@ -1,0 +1,28 @@
+diff --git a/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex b/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex
+index 7b916b7..1534e73 100644
+--- a/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex
++++ b/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex
+@@ -1,6 +1,7 @@
+ \ProvidesFile{bthesis-style-thesis-ahnu-master.tex}
+   [2026/04/18 v1.0.0 Thesis style: thesis-ahnu-master]
+ 
++\RequirePackage{calc}
+ \RequirePackage{geometry}
+ \RequirePackage{setspace}
+ \RequirePackage{fontspec}
+@@ -11,6 +12,7 @@
+ \RequirePackage{booktabs}
+ \RequirePackage{longtable}
+ \RequirePackage{caption}
++\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{3pt}}
+ \RequirePackage{titlesec}
+ \RequirePackage{titletoc}
+ \RequirePackage{enumitem}
+@@ -20,6 +22,7 @@
+ \RequirePackage{xcolor}
+ \RequirePackage{etoolbox}
+ \RequirePackage{tikz}
++\usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric,fit}
+ 
+ \geometry{
+   a4paper,
