@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""v3: \texttt 与 longtable 单元格断行点;跳过列宽定义行与数字内部"""
+"""v4: \texttt/单元格断行点 + pandoc 列宽表达式 → 原生 dimexpr(消除 calc/\real 依赖)"""
 import io, re
 from pathlib import Path
 
@@ -18,7 +18,6 @@ def fix_tt(m):
     return BS + "texttt{" + inner + "}"
 
 def fix_line(ln: str) -> str:
-    # 列宽定义/尺寸表达式行一律不动
     if ("\real{" in ln) or ("tabcolsep" in ln) or ("p{" in ln) \
        or ln.lstrip().startswith(">") or ("\\linewidth" in ln):
         return ln
@@ -27,7 +26,6 @@ def fix_line(ln: str) -> str:
         prev = ln[i-1] if i > 0 else ""
         nxt = ln[i+1] if i+1 < len(ln) else ""
         if ch in "/-._=":
-            # 数字内部(0.2000、2026-08)不插点;小数点前是数字不插点
             if prev.isdigit() and nxt.isdigit():
                 out.append(ch); continue
             if ch == "." and prev.isdigit():
@@ -53,12 +51,25 @@ def fix_plain(seg: str) -> str:
 
 lt = re.compile(re.escape(BS + "begin{longtable}") + r"[\s\S]*?" + re.escape(BS + "end{longtable}"))
 
+# pandoc 列宽: p{(\linewidth - N\tabcolsep) * \real{W}} → p{\dimexpr(...)*NUM/10000\relax}
+width_pat = re.compile(
+    re.escape("p{(" + BS + "linewidth - ") + r"(\d+)" + re.escape(BS + "tabcolsep) * "
+              + BS + "real{") + r"([0-9.]+)" + re.escape("}}"))
+
+def fix_width(m):
+    ncol = m.group(1)
+    num = int(round(float(m.group(2)) * 10000))
+    return ("p{" + BS + "dimexpr(" + BS + "linewidth - " + ncol + BS + "tabcolsep)*"
+            + str(num) + "/10000" + BS + "relax}")
+
 changed = 0
 for f in PROJ.glob("extraTex/**/*.tex"):
     t = f.read_text(encoding="utf-8")
     t = t.replace(BS + "allowbreak", "")   # 清除旧断点(含粘连坏词)
     t = tt.sub(fix_tt, t)
     t = lt.sub(lambda m: fix_plain(m.group(0)), t)
+    t = width_pat.sub(fix_width, t)
+    t = t.replace("@{}}", "}")   # 去掉 longtable 可选参数尾部的 @{}(规避 no counter 冲突)
     f.write_text(t, encoding="utf-8")
     changed += 1
 print("files rewritten:", changed)

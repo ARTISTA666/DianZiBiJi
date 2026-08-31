@@ -48,7 +48,7 @@ def guard(s: str) -> str:
 def to_tex(fragment: str, name: str) -> str:
     frag = Path(f"/tmp/crlt/frag_{name}.md")
     frag.write_text(guard(fragment), encoding="utf-8")
-    r = subprocess.run(["pandoc", str(frag), "-f", "markdown", "-t", "latex",
+    r = subprocess.run(["pandoc", str(frag), "-f", "markdown+smart", "-t", "latex",
                         "--top-level-division=chapter", "--shift-heading-level-by=-1",
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
     if r.returncode:

@@ -1,16 +1,17 @@
 diff --git a/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex b/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex
-index 7b916b7..1534e73 100644
+index 7b916b7..9289f9c 100644
 --- a/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex
 +++ b/packages/bensz-thesis/styles/bthesis-style-thesis-ahnu-master.tex
-@@ -1,6 +1,7 @@
+@@ -1,6 +1,8 @@
  \ProvidesFile{bthesis-style-thesis-ahnu-master.tex}
    [2026/04/18 v1.0.0 Thesis style: thesis-ahnu-master]
  
 +\RequirePackage{calc}
++\RequirePackage{amsmath}
  \RequirePackage{geometry}
  \RequirePackage{setspace}
  \RequirePackage{fontspec}
-@@ -11,6 +12,7 @@
+@@ -11,6 +13,7 @@
  \RequirePackage{booktabs}
  \RequirePackage{longtable}
  \RequirePackage{caption}
@@ -18,7 +19,7 @@ index 7b916b7..1534e73 100644
  \RequirePackage{titlesec}
  \RequirePackage{titletoc}
  \RequirePackage{enumitem}
-@@ -20,6 +22,7 @@
+@@ -20,6 +23,7 @@
  \RequirePackage{xcolor}
  \RequirePackage{etoolbox}
  \RequirePackage{tikz}
