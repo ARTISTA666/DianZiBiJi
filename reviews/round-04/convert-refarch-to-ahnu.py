@@ -36,8 +36,12 @@ print("segments:", list(segs.keys()))
 # ---------- 片段清洗 ----------
 def guard(s: str) -> str:
     s = re.sub(r"^```latex$", "```{=latex}", s, flags=re.M)
-    s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}",
-               r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}", s, flags=re.M)
+    # 参考架构版允许真实插图:assets/screenshots 下的 png 直接放行,其余 includegraphics 仍替换为占位框
+    def _img(m):
+        path = m.group(0)
+        return path if "assets/screenshots/" in path else (
+            r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}")
+    s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}", _img, s)
     s = s.replace("\\\\[S]", "\\\\{}[S]").replace("\\\\[G]", "\\\\{}[G]")
     s = s.replace("℃", "°C").replace("‐", "-")
     out = []
@@ -133,4 +137,15 @@ print("main.tex updated to 6 chapters")
 \\def\\ahnuKeywordsEn{Electronic Laboratory Notebook; Knowledge Graph; Retrieval-Augmented Generation; Project Permission Isolation; Fixed-Task Intelligent Generation}
 """, encoding="utf-8")
 print("meta written")
+
+# ---------- MERGE TABLE CAPTIONS: 独立表题注行并入 longtable 首行 caption(防题注/表体跨页分离) ----------
+import re as _re
+for _f in sorted(PROJ.glob("extraTex/body/chapter-0*.tex")):
+    _t = _f.read_text()
+    _pat = _re.compile(
+        r"\\textbf\{(表 \d-\d [^\n}]*)\}\s*\n\s*\n(\{\\def\\LTcaptype\{none\} % do not increment counter\s*\n\\begin\{longtable\}\[\]\{@\{\}\n)")
+    _t2 = _pat.sub(lambda m: m.group(2) + "\\caption*{" + m.group(1) + "}\\\\\n", _t)
+    if _t2 != _t:
+        _f.write_text(_t2)
+print("table captions merged into longtable")
 print("MIGRATION DONE (reference-architecture edition)")
