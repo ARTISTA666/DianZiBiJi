@@ -126,9 +126,9 @@ print("main.tex updated to 6 chapters")
 \\def\\ahnuTitleZh{面向科研实验记录的智能电子实验笔记系统设计与实现}
 \\def\\ahnuTitleEn{Design and Implementation of an Intelligent Electronic\\\\Laboratory Notebook System for Scientific Experiment Records}
 \\def\\ahnuMajor{电子信息}
-\\def\\ahnuResearchDirection{待填}
-\\def\\ahnuAuthor{待填}
-\\def\\ahnuSupervisor{待填}
+\\def\\ahnuResearchDirection{}
+\\def\\ahnuAuthor{}
+\\def\\ahnuSupervisor{}
 \\def\\ahnuSubmitDate{2026 年 9 月 1 日}
 \\def\\ahnuDegreeDate{2026 年 9 月}
 \\def\\ahnuBottomLine{安徽师范大学硕士学位论文}
