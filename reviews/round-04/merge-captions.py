@@ -13,11 +13,11 @@ B = chr(92)  # 单个反斜杠(LaTeX 命令前缀)
 
 # 题注行字面形如:B + "textbf{表 3-1 系统角色分析表}"
 prefix = re.escape(B + "textbf{表 ")
-rest = r"(\d+)-(\d+)\s([^}]*)\}$"
+rest = r"([A-Z]\d*|\d+)-(\d+)\s+([^}]*)\}$"
 line_re = re.compile(prefix + rest)
 
 total = 0
-for f in sorted(PROJ.glob("extraTex/body/chapter-0*.tex")):
+for f in sorted(list(PROJ.glob("extraTex/body/chapter-0*.tex")) + list(PROJ.glob("extraTex/body/appendix.tex"))):
     lines = f.read_text().split("\n")
     out, i, merged = [], 0, 0
     while i < len(lines):

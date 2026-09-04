@@ -32,10 +32,94 @@ segs = dict(segs)
 print("segments:", list(segs.keys()))
 
 # ---------- 片段清洗 ----------
+TABLE_NAMES = {
+    "1-1": "代表性路线对照",
+    "3-1": "系统角色与权限需求",
+    "3-2": "关键痛点与需求约束对应",
+    "3-3": "垂类场景与系统落点对应",
+    "4-1": "用户类型与能力矩阵",
+    "4-2": "功能模块输入输出",
+    "4-3": "核心业务链路与验证材料对应",
+    "5-1": "图谱构建处理环节与追溯字段",
+    "5-2": "实体类型定义",
+    "5-3": "关系类型定义",
+    "5-4": "四类固定任务设计约束",
+    "5-5": "受控工具安全属性登记",
+    "6-1": "核心已审核笔记结构化字段",
+    "6-2": "真实抽取关系金标准核验",
+    "6-3": "三类 DeepSeek 调用接入方式",
+    "6-4": "界面截图与素材文件对应",
+    "7-1": "legacy 批次与当前系统口径对照",
+    "7-2": "功能闭环与安全边界测试项",
+    "7-3": "性能测试指标与判定方式",
+    "7-4": "实验数据处理阶段与产出",
+    "7-5": "实验记录样例的结构化结果",
+    "7-6": "三项目语料规模统计",
+    "7-7": "关系核验原始与修复后批次",
+    "7-8": "20 题成对实验总体结果",
+    "7-9": "分题型任务完成率",
+    "7-10": "图谱最低得分阈值敏感性",
+    "7-11": "四臂扩展消融结果",
+    "7-12": "实验 5 单项目五方法描述性结果",
+    "7-13": "固定任务生成验证明细",
+    "7-14": "交付系统复现批次结果",
+    "A-1": "RAG 对照实验问题清单",
+    "B-1": "核心数据表域映射",
+    "B-2": "主要数据表字段与主外键",
+    "B-3": "运行时扩展域数据表",
+    "C-1": "MCP 工具完整安全规格",
+    "C-2": "固定任务模板注册表",
+    "D-1": "GSE111619 数据文件完整性清单",
+}
+
+CAPTION_OVERRIDES = {
+    "| 工具 | 风险 | 需确认 | 强制幂等键 | 权限范围 | 审计动作 |": "C-1",
+}
+
+def add_table_captions(s: str) -> str:
+    """给每张 markdown 管道表注入题注行(供 merge-captions.py 并入 longtable)。
+    编号取表前 6 行内最近一次出现的"表 X-Y"或"表 X-Y";6 行内没有编号的表按
+    CAPTION_OVERRIDES 的行号内容键补录(附录表等前文远离表体的情形)。"""
+    lines = s.split("\n")
+    out = []
+    pending_caption = None
+    for i, ln in enumerate(lines):
+        if ln.startswith("|") and i + 1 < len(lines) and re.match(r"^\|[\s:|-]+\|?$", lines[i + 1]):
+            # 找近前文编号
+            cap = None
+            for back in range(1, 7):
+                seg = "\n".join(lines[max(0, i - back):i])
+                m = re.findall(r"表 ([A-Z]-\d+|\d+-\d+)[^\dA-Z]", seg + " ")
+                if m:
+                    cap = m[-1]
+                    break
+            if ln in CAPTION_OVERRIDES:
+                cap = CAPTION_OVERRIDES[ln]
+            elif cap is None and pending_caption:
+                cap = pending_caption
+                pending_caption = None
+            if cap:
+                # 题注文本:用编号 + 通用名(从表首格内容生成简短名)
+                cap_name = TABLE_NAMES.get(cap)
+                if cap_name is None:
+                    first_cell = ln.strip("|").split("|")[0].strip()
+                    cap_name = first_cell
+                cap_line = "\\textbf{表 %s  %s}" % (cap, cap_name)
+                out.append("")
+                out.append(cap_line)
+                out.append("")
+        elif pending_caption is None:
+            pass
+        out.append(ln)
+    return "\n".join(out)
+
 def guard(s: str) -> str:
     s = re.sub(r"^```latex$", "```{=latex}", s, flags=re.M)
-    s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}",
-               r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}", s, flags=re.M)
+    def _img(m):
+        path = m.group(0)
+        return path if "assets/screenshots/" in path else (
+            r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}")
+    s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}", _img, s)
     s = s.replace("\\\\[S]", "\\\\{}[S]").replace("\\\\[G]", "\\\\{}[G]")
     s = s.replace("℃", "°C").replace("‐", "-")
     out = []
@@ -47,7 +131,7 @@ def guard(s: str) -> str:
 
 def to_tex(fragment: str, name: str) -> str:
     frag = Path(f"/tmp/crlt/frag_{name}.md")
-    frag.write_text(guard(fragment), encoding="utf-8")
+    frag.write_text(guard(add_table_captions(fragment)), encoding="utf-8")
     r = subprocess.run(["pandoc", str(frag), "-f", "markdown+smart", "-t", "latex",
                         "--top-level-division=chapter", "--shift-heading-level-by=-1",
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
