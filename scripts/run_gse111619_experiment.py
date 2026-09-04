@@ -455,19 +455,31 @@ def run_experiment(
     repetitions: int = DEFAULT_REPETITIONS,
     random_seed: int = DEFAULT_RANDOM_SEED,
 ) -> tuple[dict[str, Any], str]:
-    project = next((item for item in api.get("/projects") if item["name"] == project_name), None)
+    projects_payload = api.get("/projects", params={"limit": 100})
+    if isinstance(projects_payload, dict) and isinstance(projects_payload.get("items"), list):
+        projects_payload = projects_payload["items"]
+    project = next((item for item in projects_payload if item["name"] == project_name), None)
     if project is None:
         raise ValueError(f"Project not found: {project_name}; run the import script first")
+    status = api.get(f"/projects/{project['id']}/rag/status")
+    corpus_snapshot = status.get("corpus_snapshot") or {}
+    payload: dict[str, Any] = {
+        "name": name,
+        "questions": [case["question"] for case in cases],
+        "modes": list(modes),
+        "repetitions": repetitions,
+        "randomize_order": True,
+        "random_seed": random_seed,
+    }
+    needs_corpus = any(mode in {"bm25_rag", "project_rag", "kg_enhanced_rag"} for mode in modes)
+    needs_graph = any(mode in {"structured_query", "kg_enhanced_rag"} for mode in modes)
+    if needs_corpus:
+        payload["expected_corpus_snapshot_hash"] = corpus_snapshot["corpus_snapshot_hash"]
+    if needs_graph:
+        payload["expected_graph_snapshot_hash"] = corpus_snapshot["graph_snapshot_hash"]
     run = api.post(
         f"/projects/{project['id']}/rag/experiments",
-        json={
-            "name": name,
-            "questions": [case["question"] for case in cases],
-            "modes": list(modes),
-            "repetitions": repetitions,
-            "randomize_order": True,
-            "random_seed": random_seed,
-        },
+        json=payload,
     )
     deadline = time.monotonic() + int(os.environ.get("EXPERIMENT_TIMEOUT_SECONDS", "86400"))
     while run["status"] in {"queued", "running"}:

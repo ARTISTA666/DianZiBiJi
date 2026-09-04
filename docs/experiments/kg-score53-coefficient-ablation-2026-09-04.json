@@ -1,0 +1,928 @@
+{
+ "meta": {
+  "input": "docs/experiments/rag-experiment-4.csv kg_enhanced_rag graph_context_json (20 题 x 实验四真实 top-10 候选池)",
+  "method": "对每题候选池按档位系数重打分重排;比较与实验4原始分序的一致性与阈值1.0幸存集",
+  "roles_source": "当前库 project1 kg_relations.properties 按关系类型聚合(实验4 CSV 不含 roles;运行时项目1 roles 实际全空)",
+  "variants": [
+   "baseline",
+   "role=2.0",
+   "role=1.0",
+   "role=0.0",
+   "exact=2.0",
+   "partial=2.0",
+   "hint=1.0",
+   "bonuses=0"
+  ]
+ },
+ "per_question": [
+  {
+   "question_index": 1,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1928,
+    1966,
+    2082,
+    1933,
+    1971,
+    1937,
+    1936,
+    1935,
+    1934,
+    1932
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 2,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1966,
+    1928,
+    2082,
+    1971,
+    1933,
+    2090,
+    1978,
+    1977,
+    1976,
+    1975
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 3,
+   "n_cand": 1,
+   "baseline_survivors": 1,
+   "baseline_top": [
+    1941
+   ],
+   "role=2.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 1,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 4,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1949,
+    1948,
+    1947,
+    1946,
+    1945,
+    1944,
+    1943,
+    1942,
+    1941,
+    1940
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 6,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1928,
+    1932,
+    1931,
+    1930,
+    1929,
+    1966,
+    1970,
+    1969,
+    1968,
+    1967
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 7,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1928,
+    1935,
+    1934,
+    1966,
+    1976,
+    1975,
+    1974,
+    1973,
+    2082,
+    2160
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 8,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1945,
+    1944,
+    1943,
+    1942,
+    1941,
+    2158,
+    2157,
+    2156,
+    2155,
+    2154
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 9,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1956,
+    1955,
+    1954,
+    1953,
+    1952,
+    2156,
+    2155,
+    2154,
+    2140,
+    2139
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 10,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1959,
+    1958,
+    1957,
+    1952,
+    2158,
+    2157,
+    2144,
+    2143,
+    2142,
+    2141
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": true
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 11,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1936,
+    1937,
+    2162,
+    2161,
+    2150,
+    2149,
+    2132,
+    2131,
+    2115,
+    2114
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 12,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    1949,
+    1948,
+    2162,
+    2161,
+    2150,
+    2149,
+    2132,
+    2131,
+    2115,
+    2114
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 13,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2162,
+    2161,
+    2150,
+    2149,
+    2132,
+    2131,
+    2115,
+    2114,
+    2098,
+    2097
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 14,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2152,
+    2134,
+    2117,
+    2100,
+    2081,
+    2067,
+    2049,
+    2034,
+    2019,
+    1998
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 15,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2151,
+    2133,
+    2116,
+    2099,
+    2080,
+    2066,
+    2048,
+    2033,
+    2018,
+    1997
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 16,
+   "n_cand": 1,
+   "baseline_survivors": 1,
+   "baseline_top": [
+    1976
+   ],
+   "role=2.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 1,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 1,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 17,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2162,
+    2161,
+    2150,
+    2149,
+    2132,
+    2131,
+    2115,
+    2114,
+    2098,
+    2097
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 18,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2153,
+    2135,
+    2118,
+    2101,
+    2082,
+    2068,
+    2050,
+    2035,
+    2020,
+    1999
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 19,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2153,
+    2135,
+    2118,
+    2101,
+    2082,
+    2068,
+    2050,
+    2035,
+    2020,
+    1999
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  },
+  {
+   "question_index": 20,
+   "n_cand": 10,
+   "baseline_survivors": 10,
+   "baseline_top": [
+    2162,
+    2161,
+    2150,
+    2149,
+    2132,
+    2131,
+    2115,
+    2114,
+    2098,
+    2097
+   ],
+   "role=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "role=0.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "exact=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "partial=2.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "hint=1.0": {
+    "survivors": 10,
+    "top_changed": false
+   },
+   "bonuses=0": {
+    "survivors": 10,
+    "top_changed": false
+   }
+  }
+ ],
+ "summary": {
+  "role=2.0": {
+   "kendall_tau_consistency": 1.0,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.0,
+   "citation_refs_total": 58
+  },
+  "role=1.0": {
+   "kendall_tau_consistency": 1.0,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.0,
+   "citation_refs_total": 58
+  },
+  "role=0.0": {
+   "kendall_tau_consistency": 1.0,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.0,
+   "citation_refs_total": 58
+  },
+  "exact=2.0": {
+   "kendall_tau_consistency": 1.0,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.0,
+   "citation_refs_total": 58
+  },
+  "partial=2.0": {
+   "kendall_tau_consistency": 0.9895,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.14,
+   "citation_refs_total": 58
+  },
+  "hint=1.0": {
+   "kendall_tau_consistency": 0.9752,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.26,
+   "citation_refs_total": 58
+  },
+  "bonuses=0": {
+   "kendall_tau_consistency": 1.0,
+   "survivors_min_score>=1.0": {
+    "baseline": 172,
+    "variant": 172
+   },
+   "mean_top10_set_overlap": 0.9053,
+   "citation_position_shift_mean": 0.0,
+   "citation_refs_total": 58
+  }
+ }
+}

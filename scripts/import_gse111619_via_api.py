@@ -180,8 +180,8 @@ class ApiClient:
             raise RuntimeError(f"{method} {path} failed ({response.status_code}): {detail}")
         return response.json()
 
-    def get(self, path: str) -> Any:
-        return self.request("GET", path)
+    def get(self, path: str, **kwargs: Any) -> Any:
+        return self.request("GET", path, **kwargs)
 
     def post(self, path: str, **kwargs: Any) -> Any:
         return self.request("POST", path, **kwargs)

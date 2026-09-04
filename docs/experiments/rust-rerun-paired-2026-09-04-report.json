@@ -1,0 +1,2342 @@
+{
+  "generated_at": "2026-09-04T08:58:00.469005+00:00",
+  "artifact_scope": "formal full-system API paired experiment using the persisted project corpus",
+  "dataset": "NCBI GEO GSE111619",
+  "question_set": "data/real/GSE111619/gse111619_questions.json",
+  "question_set_freeze": null,
+  "knowledge_graph_schema_version": "kg-v3-numbered-list-expansion",
+  "selected_case_ids": [
+    "Q01",
+    "Q02",
+    "Q03",
+    "Q04",
+    "Q05",
+    "Q06",
+    "Q07",
+    "Q08",
+    "Q09",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "Q14",
+    "Q15",
+    "Q16",
+    "Q17",
+    "Q18",
+    "Q19",
+    "Q20"
+  ],
+  "methods": [
+    "project_rag",
+    "kg_enhanced_rag"
+  ],
+  "repetitions": 1,
+  "random_seed": 20260713,
+  "evaluation_scope": "internally frozen paired development evaluation",
+  "evidence_level": "internal development evidence; not an independent blind evaluation",
+  "experiment_run": {
+    "id": 24,
+    "project_id": 2,
+    "created_by": 1,
+    "name": "Rust重跑-20题成对对照-20260904-v2",
+    "status": "completed",
+    "questions_json": [
+      "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+      "哪些样本属于 p63 敲低组？",
+      "哪些样本属于非靶向 shRNA 对照组？",
+      "HTSeq 计数矩阵的四个样本列名分别是什么？",
+      "GSE111619 的分组设计和生物学重复数量是什么？",
+      "该研究使用了什么细胞系和细胞类型？",
+      "样本接受了什么处理，并在什么培养条件下培养多久？",
+      "RNA 提取和文库构建使用了哪些主要试剂盒？",
+      "该实验记录中使用了哪些主要仪器或检测芯片？",
+      "测序分子类型和文库策略分别是什么？",
+      "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+      "元数据记录的完整处理软件链包括哪些工具？",
+      "RNA 质量记录中的 RIN 要求是什么？",
+      "两个非靶向对照样本的总基因计数分别是多少？",
+      "两个 p63 敲低样本的总基因计数分别是多少？",
+      "四个样本各自检测到的非零基因行数是多少？",
+      "HTSeq 计数矩阵共有多少个基因条目？",
+      "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+      "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+      "哪个样本检测到的非零基因行数最高，数值是多少？"
+    ],
+    "modes_json": [
+      "project_rag",
+      "kg_enhanced_rag"
+    ],
+    "config_snapshot_json": {
+      "corpus_snapshot_hash": "ebd165f8b610f70a55002303acee2a15c597fb9e12e339e818e0298af70bf73f",
+      "embedding_model": "BAAI/bge-m3",
+      "experiment_protocol": {
+        "execution_plan_hash": "28a9255378b9c7ab0317f36821b75ffc3280e1912ec71f27ecdc68f718271145",
+        "random_seed": 20260713,
+        "randomize_order": true,
+        "repetitions": 1
+      },
+      "generation_model": "deepseek-v4-flash",
+      "graph_schema_version": "kg-v3-numbered-list-expansion",
+      "graph_snapshot_hash": "ac10068fa8252c0d406ce8787cd419b96debf9e56a150a6ecc885c00de4b143e",
+      "questions_sha256": "6e8fe9371a688a4ba8715049f4fb54cf65a87b984db9b5fe8e8981e2a6d6c15a",
+      "rag_index_version": "structured-v1"
+    },
+    "summary_json": {
+      "errors": [],
+      "execution_plan": [
+        {
+          "execution_order": 1,
+          "mode": "project_rag",
+          "question": "HTSeq 计数矩阵的四个样本列名分别是什么？",
+          "question_index": 4,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 2,
+          "mode": "kg_enhanced_rag",
+          "question": "该研究使用了什么细胞系和细胞类型？",
+          "question_index": 6,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 3,
+          "mode": "project_rag",
+          "question": "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+          "question_index": 18,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 4,
+          "mode": "project_rag",
+          "question": "HTSeq 计数矩阵共有多少个基因条目？",
+          "question_index": 17,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 5,
+          "mode": "project_rag",
+          "question": "两个非靶向对照样本的总基因计数分别是多少？",
+          "question_index": 14,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 6,
+          "mode": "project_rag",
+          "question": "哪个样本检测到的非零基因行数最高，数值是多少？",
+          "question_index": 20,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 7,
+          "mode": "kg_enhanced_rag",
+          "question": "哪些样本属于 p63 敲低组？",
+          "question_index": 2,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 8,
+          "mode": "kg_enhanced_rag",
+          "question": "四个样本各自检测到的非零基因行数是多少？",
+          "question_index": 16,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 9,
+          "mode": "project_rag",
+          "question": "RNA 提取和文库构建使用了哪些主要试剂盒？",
+          "question_index": 8,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 10,
+          "mode": "kg_enhanced_rag",
+          "question": "RNA 提取和文库构建使用了哪些主要试剂盒？",
+          "question_index": 8,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 11,
+          "mode": "kg_enhanced_rag",
+          "question": "RNA 质量记录中的 RIN 要求是什么？",
+          "question_index": 13,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 12,
+          "mode": "kg_enhanced_rag",
+          "question": "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+          "question_index": 18,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 13,
+          "mode": "project_rag",
+          "question": "两个 p63 敲低样本的总基因计数分别是多少？",
+          "question_index": 15,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 14,
+          "mode": "kg_enhanced_rag",
+          "question": "GSE111619 的分组设计和生物学重复数量是什么？",
+          "question_index": 5,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 15,
+          "mode": "project_rag",
+          "question": "样本接受了什么处理，并在什么培养条件下培养多久？",
+          "question_index": 7,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 16,
+          "mode": "project_rag",
+          "question": "GSE111619 的分组设计和生物学重复数量是什么？",
+          "question_index": 5,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 17,
+          "mode": "kg_enhanced_rag",
+          "question": "两个非靶向对照样本的总基因计数分别是多少？",
+          "question_index": 14,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 18,
+          "mode": "kg_enhanced_rag",
+          "question": "哪个样本检测到的非零基因行数最高，数值是多少？",
+          "question_index": 20,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 19,
+          "mode": "project_rag",
+          "question": "元数据记录的完整处理软件链包括哪些工具？",
+          "question_index": 12,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 20,
+          "mode": "project_rag",
+          "question": "哪些样本属于非靶向 shRNA 对照组？",
+          "question_index": 3,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 21,
+          "mode": "kg_enhanced_rag",
+          "question": "HTSeq 计数矩阵的四个样本列名分别是什么？",
+          "question_index": 4,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 22,
+          "mode": "project_rag",
+          "question": "该实验记录中使用了哪些主要仪器或检测芯片？",
+          "question_index": 9,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 23,
+          "mode": "kg_enhanced_rag",
+          "question": "样本接受了什么处理，并在什么培养条件下培养多久？",
+          "question_index": 7,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 24,
+          "mode": "project_rag",
+          "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+          "question_index": 19,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 25,
+          "mode": "kg_enhanced_rag",
+          "question": "该实验记录中使用了哪些主要仪器或检测芯片？",
+          "question_index": 9,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 26,
+          "mode": "project_rag",
+          "question": "该研究使用了什么细胞系和细胞类型？",
+          "question_index": 6,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 27,
+          "mode": "project_rag",
+          "question": "测序分子类型和文库策略分别是什么？",
+          "question_index": 10,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 28,
+          "mode": "project_rag",
+          "question": "哪些样本属于 p63 敲低组？",
+          "question_index": 2,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 29,
+          "mode": "project_rag",
+          "question": "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+          "question_index": 1,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 30,
+          "mode": "kg_enhanced_rag",
+          "question": "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+          "question_index": 1,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 31,
+          "mode": "kg_enhanced_rag",
+          "question": "测序分子类型和文库策略分别是什么？",
+          "question_index": 10,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 32,
+          "mode": "kg_enhanced_rag",
+          "question": "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+          "question_index": 11,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 33,
+          "mode": "kg_enhanced_rag",
+          "question": "两个 p63 敲低样本的总基因计数分别是多少？",
+          "question_index": 15,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 34,
+          "mode": "project_rag",
+          "question": "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+          "question_index": 11,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 35,
+          "mode": "kg_enhanced_rag",
+          "question": "HTSeq 计数矩阵共有多少个基因条目？",
+          "question_index": 17,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 36,
+          "mode": "kg_enhanced_rag",
+          "question": "哪些样本属于非靶向 shRNA 对照组？",
+          "question_index": 3,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 37,
+          "mode": "kg_enhanced_rag",
+          "question": "元数据记录的完整处理软件链包括哪些工具？",
+          "question_index": 12,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 38,
+          "mode": "kg_enhanced_rag",
+          "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+          "question_index": 19,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 39,
+          "mode": "project_rag",
+          "question": "RNA 质量记录中的 RIN 要求是什么？",
+          "question_index": 13,
+          "repetition_index": 1
+        },
+        {
+          "execution_order": 40,
+          "mode": "project_rag",
+          "question": "四个样本各自检测到的非零基因行数是多少？",
+          "question_index": 16,
+          "repetition_index": 1
+        }
+      ],
+      "fatal_error": null,
+      "unexecuted_cases": 0
+    },
+    "total_cases": 40,
+    "completed_cases": 40,
+    "failed_cases": 0,
+    "created_at": "2026-09-04T08:52:27.641255Z",
+    "completed_at": "2026-09-04T08:57:59.922042Z"
+  },
+  "objective_evaluation": {
+    "metric": "deterministic alias-based gold-fact coverage",
+    "exact_case_metric": "all required facts present and no predefined forbidden fact present",
+    "mode_summary": [
+      {
+        "mode": "project_rag",
+        "completed": 20,
+        "failed": 0,
+        "hit_facts": 52,
+        "total_facts": 56,
+        "micro_fact_coverage": 0.9286,
+        "macro_fact_coverage": 0.9333,
+        "forbidden_fact_hits": 0,
+        "closed_set_fact_precision": 1.0,
+        "closed_set_fact_f1": 0.963,
+        "closed_set_exact_correct_cases": 17,
+        "closed_set_exact_case_accuracy": 0.85,
+        "avg_source_count": 6.0,
+        "avg_graph_hit_count": 0.0,
+        "mean_response_ms": 7100.4,
+        "p95_response_ms": 16843,
+        "prompt_tokens": 66832,
+        "completion_tokens": 13223,
+        "total_tokens": 80055
+      },
+      {
+        "mode": "kg_enhanced_rag",
+        "completed": 20,
+        "failed": 0,
+        "hit_facts": 55,
+        "total_facts": 56,
+        "micro_fact_coverage": 0.9821,
+        "macro_fact_coverage": 0.9833,
+        "forbidden_fact_hits": 0,
+        "closed_set_fact_precision": 1.0,
+        "closed_set_fact_f1": 0.991,
+        "closed_set_exact_correct_cases": 19,
+        "closed_set_exact_case_accuracy": 0.95,
+        "avg_source_count": 6.0,
+        "avg_graph_hit_count": 21.0,
+        "mean_response_ms": 9688.1,
+        "p95_response_ms": 23542,
+        "prompt_tokens": 114637,
+        "completion_tokens": 19129,
+        "total_tokens": 133766
+      }
+    ],
+    "case_results": [
+      {
+        "case_id": "Q04",
+        "category": "sample_mapping",
+        "question": "HTSeq 计数矩阵的四个样本列名分别是什么？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 1,
+        "status": "completed",
+        "query_log_id": 1890,
+        "hit_facts": [
+          "NonTargeting_rep1",
+          "NonTargeting_rep2",
+          "p63KD_rep1",
+          "p63KD_rep2"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 16548,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 2093,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1063
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2048,
+          "prompt_cache_miss_tokens": 2423,
+          "prompt_tokens": 4471,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "f40b131a97b649c1b95f546496f2014f",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 6564,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q06",
+        "category": "biological_source",
+        "question": "该研究使用了什么细胞系和细胞类型？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 2,
+        "status": "completed",
+        "query_log_id": 1891,
+        "hit_facts": [
+          "H226",
+          "lung squamous cell carcinoma"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 10,
+        "response_ms": 2313,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 211,
+          "completion_tokens_details": {
+            "reasoning_tokens": 173
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2279,
+          "prompt_tokens": 2279,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "c7daef2f71ad4ae3996809e45ce6c80a",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 2490,
+          "truncation_reason": "result_limit"
+        }
+      },
+      {
+        "case_id": "Q18",
+        "category": "external_identifier",
+        "question": "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 3,
+        "status": "completed",
+        "query_log_id": 1892,
+        "hit_facts": [
+          "SRX3777456",
+          "SRX3777457",
+          "SRX3777458",
+          "SRX3777459"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 5537,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 750,
+          "completion_tokens_details": {
+            "reasoning_tokens": 468
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2048,
+          "prompt_cache_miss_tokens": 2316,
+          "prompt_tokens": 4364,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "6862c672ad704dc8a0d7617b8bde90cf",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 5114,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q17",
+        "category": "numeric_result",
+        "question": "HTSeq 计数矩阵共有多少个基因条目？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 4,
+        "status": "completed",
+        "query_log_id": 1893,
+        "hit_facts": [
+          "25369"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 1039,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 66,
+          "completion_tokens_details": {
+            "reasoning_tokens": 47
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1774,
+          "prompt_tokens": 1774,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "b6d4295fadbc4f06a5a609b3fac41d47",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 1840,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q14",
+        "category": "numeric_result",
+        "question": "两个非靶向对照样本的总基因计数分别是多少？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 5,
+        "status": "completed",
+        "query_log_id": 1894,
+        "hit_facts": [
+          "53924761",
+          "52016366"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 6695,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 950,
+          "completion_tokens_details": {
+            "reasoning_tokens": 661
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2304,
+          "prompt_cache_miss_tokens": 1604,
+          "prompt_tokens": 3908,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "d73cc84627b94917bf1872736c519f7f",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4858,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q20",
+        "category": "numeric_reasoning",
+        "question": "哪个样本检测到的非零基因行数最高，数值是多少？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 6,
+        "status": "completed",
+        "query_log_id": 1895,
+        "hit_facts": [
+          "GSM3035187",
+          "18137"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 16843,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 504,
+          "completion_tokens_details": {
+            "reasoning_tokens": 464
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 1664,
+          "prompt_cache_miss_tokens": 9,
+          "prompt_tokens": 1673,
+          "prompt_tokens_details": {
+            "cached_tokens": 1664
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "15d0e7978fcb4539b6d182642d9dad46",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 2177,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q02",
+        "category": "sample_group",
+        "question": "哪些样本属于 p63 敲低组？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 7,
+        "status": "completed",
+        "query_log_id": 1896,
+        "hit_facts": [
+          "GSM3035187",
+          "GSM3035188"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 16,
+        "response_ms": 8376,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1024,
+          "completion_tokens_details": {
+            "reasoning_tokens": 321
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2560,
+          "prompt_cache_miss_tokens": 2937,
+          "prompt_tokens": 5497,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "75f07db9dbd0450b94e472dd76a9b641",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 6521,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q16",
+        "category": "numeric_result",
+        "question": "四个样本各自检测到的非零基因行数是多少？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 8,
+        "status": "completed",
+        "query_log_id": 1897,
+        "hit_facts": [
+          "17926",
+          "17953",
+          "18137",
+          "18092"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 15690,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 2146,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1689
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 3200,
+          "prompt_cache_miss_tokens": 3663,
+          "prompt_tokens": 6863,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "9b208408b8314bf18f629446cb991bdb",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 9009,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q08",
+        "category": "library_material",
+        "question": "RNA 提取和文库构建使用了哪些主要试剂盒？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 9,
+        "status": "completed",
+        "query_log_id": 1898,
+        "hit_facts": [
+          "PureLink RNA Mini kit",
+          "TruSeq Stranded mRNA Library Prep Kit"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 2057,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 204,
+          "completion_tokens_details": {
+            "reasoning_tokens": 163
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2081,
+          "prompt_tokens": 2081,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "7bc550dbaee44d15a64f383db624e0f4",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 2285,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q08",
+        "category": "library_material",
+        "question": "RNA 提取和文库构建使用了哪些主要试剂盒？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 10,
+        "status": "completed",
+        "query_log_id": 1899,
+        "hit_facts": [
+          "PureLink RNA Mini kit",
+          "TruSeq Stranded mRNA Library Prep Kit"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 12,
+        "response_ms": 7332,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 952,
+          "completion_tokens_details": {
+            "reasoning_tokens": 526
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 4480,
+          "prompt_cache_miss_tokens": 852,
+          "prompt_tokens": 5332,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "d0d115b849f246009ba747896f0f452a",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 6284,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q13",
+        "category": "quality_control",
+        "question": "RNA 质量记录中的 RIN 要求是什么？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 11,
+        "status": "completed",
+        "query_log_id": 1900,
+        "hit_facts": [
+          "RIN > 9"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 4,
+        "response_ms": 6190,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 635,
+          "completion_tokens_details": {
+            "reasoning_tokens": 186
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 1920,
+          "prompt_cache_miss_tokens": 2289,
+          "prompt_tokens": 4209,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "3e290ab00ada4763bc16fbb87aa985bf",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4844,
+          "truncation_reason": "result_limit"
+        }
+      },
+      {
+        "case_id": "Q18",
+        "category": "external_identifier",
+        "question": "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 12,
+        "status": "completed",
+        "query_log_id": 1901,
+        "hit_facts": [
+          "SRX3777456",
+          "SRX3777457",
+          "SRX3777458",
+          "SRX3777459"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 16,
+        "response_ms": 6507,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 817,
+          "completion_tokens_details": {
+            "reasoning_tokens": 529
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 3584,
+          "prompt_cache_miss_tokens": 2278,
+          "prompt_tokens": 5862,
+          "prompt_tokens_details": {
+            "cached_tokens": 896
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "228a30410853431a8215b7a63de28e6e",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 6679,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q15",
+        "category": "numeric_result",
+        "question": "两个 p63 敲低样本的总基因计数分别是多少？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 13,
+        "status": "completed",
+        "query_log_id": 1902,
+        "hit_facts": [
+          "53416511",
+          "51926832"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 8970,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1340,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1240
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1777,
+          "prompt_tokens": 1777,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "2a5e48d84e1642ea9433ee67554ea050",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 3117,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q05",
+        "category": "study_design",
+        "question": "GSE111619 的分组设计和生物学重复数量是什么？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 14,
+        "status": "completed",
+        "query_log_id": 1903,
+        "hit_facts": [
+          "p63 靶向 shRNA",
+          "每组两个生物学重复"
+        ],
+        "missed_facts": [
+          "非靶向 shRNA 对照"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.6667,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 20,
+        "response_ms": 7809,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 988,
+          "completion_tokens_details": {
+            "reasoning_tokens": 556
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2944,
+          "prompt_cache_miss_tokens": 2920,
+          "prompt_tokens": 5864,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "efaf7bdf452549a291a4b80d8be60c91",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 6852,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q07",
+        "category": "culture_condition",
+        "question": "样本接受了什么处理，并在什么培养条件下培养多久？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 15,
+        "status": "completed",
+        "query_log_id": 1904,
+        "hit_facts": [
+          "1 µg/mL doxycycline",
+          "37°C",
+          "5% CO2",
+          "6 days"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 3755,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 368,
+          "completion_tokens_details": {
+            "reasoning_tokens": 100
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2560,
+          "prompt_cache_miss_tokens": 1724,
+          "prompt_tokens": 4284,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "edf0b6ec29db49fa8312a05878771c48",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4652,
+          "truncation_reason": "result_limit"
+        }
+      },
+      {
+        "case_id": "Q05",
+        "category": "study_design",
+        "question": "GSE111619 的分组设计和生物学重复数量是什么？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 16,
+        "status": "completed",
+        "query_log_id": 1905,
+        "hit_facts": [
+          "p63 靶向 shRNA"
+        ],
+        "missed_facts": [
+          "非靶向 shRNA 对照",
+          "每组两个生物学重复"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.3333,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 7758,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1215,
+          "completion_tokens_details": {
+            "reasoning_tokens": 513
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2176,
+          "prompt_cache_miss_tokens": 2010,
+          "prompt_tokens": 4186,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "4661c2e634a744b8bb64afe46eba3775",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 5401,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q14",
+        "category": "numeric_result",
+        "question": "两个非靶向对照样本的总基因计数分别是多少？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 17,
+        "status": "completed",
+        "query_log_id": 1906,
+        "hit_facts": [
+          "53924761",
+          "52016366"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 4394,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 532,
+          "completion_tokens_details": {
+            "reasoning_tokens": 156
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 4992,
+          "prompt_cache_miss_tokens": 1758,
+          "prompt_tokens": 6750,
+          "prompt_tokens_details": {
+            "cached_tokens": 1792
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "03aeea6aa48f4d1a9ac17947ab0587b1",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7282,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q20",
+        "category": "numeric_reasoning",
+        "question": "哪个样本检测到的非零基因行数最高，数值是多少？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 18,
+        "status": "completed",
+        "query_log_id": 1907,
+        "hit_facts": [
+          "GSM3035187",
+          "18137"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 7866,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1063,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1021
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 640,
+          "prompt_cache_miss_tokens": 2607,
+          "prompt_tokens": 3247,
+          "prompt_tokens_details": {
+            "cached_tokens": 640
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "0a21bc82c86a4b75944cefc60db17fb8",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4310,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q12",
+        "category": "processing_pipeline",
+        "question": "元数据记录的完整处理软件链包括哪些工具？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 19,
+        "status": "completed",
+        "query_log_id": 1908,
+        "hit_facts": [
+          "bcl2fastq",
+          "FASTQC",
+          "TopHat2",
+          "SAMtools",
+          "Picard",
+          "RSeQC",
+          "HTSeq"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 4007,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 473,
+          "completion_tokens_details": {
+            "reasoning_tokens": 217
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2560,
+          "prompt_cache_miss_tokens": 1842,
+          "prompt_tokens": 4402,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "b51cf5d938434dc281eec88a9d2355bb",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4875,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q03",
+        "category": "sample_group",
+        "question": "哪些样本属于非靶向 shRNA 对照组？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 20,
+        "status": "completed",
+        "query_log_id": 1909,
+        "hit_facts": [
+          "GSM3035185",
+          "GSM3035186"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 3910,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 413,
+          "completion_tokens_details": {
+            "reasoning_tokens": 181
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2176,
+          "prompt_cache_miss_tokens": 1844,
+          "prompt_tokens": 4020,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "f339bd57f9ee4a278e97651bdf98ac9b",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4433,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q04",
+        "category": "sample_mapping",
+        "question": "HTSeq 计数矩阵的四个样本列名分别是什么？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 21,
+        "status": "completed",
+        "query_log_id": 1910,
+        "hit_facts": [
+          "NonTargeting_rep1",
+          "NonTargeting_rep2",
+          "p63KD_rep1",
+          "p63KD_rep2"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 19711,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 2873,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1104
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 4352,
+          "prompt_cache_miss_tokens": 3046,
+          "prompt_tokens": 7398,
+          "prompt_tokens_details": {
+            "cached_tokens": 896
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "9eb143b586064054a225424c3bf15171",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 10271,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q09",
+        "category": "instrument",
+        "question": "该实验记录中使用了哪些主要仪器或检测芯片？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 22,
+        "status": "completed",
+        "query_log_id": 1911,
+        "hit_facts": [
+          "Illumina HiSeq 2500",
+          "Bioanalyzer RNA Pico chips"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 5324,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 529,
+          "completion_tokens_details": {
+            "reasoning_tokens": 198
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2560,
+          "prompt_cache_miss_tokens": 1779,
+          "prompt_tokens": 4339,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "93ac84654f2c47ca9c7aaa4cc6bcd40c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4868,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q07",
+        "category": "culture_condition",
+        "question": "样本接受了什么处理，并在什么培养条件下培养多久？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 23,
+        "status": "completed",
+        "query_log_id": 1912,
+        "hit_facts": [
+          "1 µg/mL doxycycline",
+          "37°C",
+          "5% CO2",
+          "6 days"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 10,
+        "response_ms": 7658,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 930,
+          "completion_tokens_details": {
+            "reasoning_tokens": 309
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2944,
+          "prompt_cache_miss_tokens": 2290,
+          "prompt_tokens": 5234,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "0ae2ebc3dd174dfa92d2ccc06aaef93f",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 6164,
+          "truncation_reason": "result_limit"
+        }
+      },
+      {
+        "case_id": "Q19",
+        "category": "data_boundary",
+        "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 24,
+        "status": "completed",
+        "query_log_id": 1913,
+        "hit_facts": [
+          "不是原始 FASTQ",
+          "不进行差异表达显著性推断"
+        ],
+        "missed_facts": [
+          "基因级 HTSeq 计数矩阵"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.6667,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 5931,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 709,
+          "completion_tokens_details": {
+            "reasoning_tokens": 313
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2176,
+          "prompt_cache_miss_tokens": 1894,
+          "prompt_tokens": 4070,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "d980fcfb4f3743bba53dab3cf4111c62",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4779,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q09",
+        "category": "instrument",
+        "question": "该实验记录中使用了哪些主要仪器或检测芯片？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 25,
+        "status": "completed",
+        "query_log_id": 1914,
+        "hit_facts": [
+          "Illumina HiSeq 2500",
+          "Bioanalyzer RNA Pico chips"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 16,
+        "response_ms": 14083,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1656,
+          "completion_tokens_details": {
+            "reasoning_tokens": 133
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 3072,
+          "prompt_cache_miss_tokens": 2517,
+          "prompt_tokens": 5589,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "40c6f4b8e65742389fae876bf2d605c7",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7245,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q06",
+        "category": "biological_source",
+        "question": "该研究使用了什么细胞系和细胞类型？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 26,
+        "status": "completed",
+        "query_log_id": 1915,
+        "hit_facts": [
+          "H226",
+          "lung squamous cell carcinoma"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 2747,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 239,
+          "completion_tokens_details": {
+            "reasoning_tokens": 93
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2176,
+          "prompt_cache_miss_tokens": 1746,
+          "prompt_tokens": 3922,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "f75366cfe9ff4383950b9a56bf960dc3",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4161,
+          "truncation_reason": "result_limit"
+        }
+      },
+      {
+        "case_id": "Q10",
+        "category": "library_strategy",
+        "question": "测序分子类型和文库策略分别是什么？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 27,
+        "status": "completed",
+        "query_log_id": 1916,
+        "hit_facts": [
+          "polyA RNA",
+          "RNA-Seq"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 1471,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 153,
+          "completion_tokens_details": {
+            "reasoning_tokens": 127
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1821,
+          "prompt_tokens": 1821,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "ec884009d3fc4d15acec9c0e233740b9",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 1974,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q02",
+        "category": "sample_group",
+        "question": "哪些样本属于 p63 敲低组？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 28,
+        "status": "completed",
+        "query_log_id": 1917,
+        "hit_facts": [
+          "GSM3035187",
+          "GSM3035188"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 3968,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 422,
+          "completion_tokens_details": {
+            "reasoning_tokens": 31
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2048,
+          "prompt_cache_miss_tokens": 2073,
+          "prompt_tokens": 4121,
+          "prompt_tokens_details": {
+            "cached_tokens": 256
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "f2a7fd026e774ae4b6329152a5fc5d8c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4543,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q01",
+        "category": "sample_set",
+        "question": "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 29,
+        "status": "completed",
+        "query_log_id": 1918,
+        "hit_facts": [
+          "GSM3035185",
+          "GSM3035186",
+          "GSM3035187",
+          "GSM3035188"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 5288,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 613,
+          "completion_tokens_details": {
+            "reasoning_tokens": 210
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 2176,
+          "prompt_cache_miss_tokens": 1903,
+          "prompt_tokens": 4079,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "ff6db3677f874e7c8c44fbd1f717f719",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 4692,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q01",
+        "category": "sample_set",
+        "question": "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 30,
+        "status": "completed",
+        "query_log_id": 1919,
+        "hit_facts": [
+          "GSM3035185",
+          "GSM3035186",
+          "GSM3035187",
+          "GSM3035188"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 12,
+        "response_ms": 3344,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 434,
+          "completion_tokens_details": {
+            "reasoning_tokens": 88
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 4224,
+          "prompt_cache_miss_tokens": 1065,
+          "prompt_tokens": 5289,
+          "prompt_tokens_details": {
+            "cached_tokens": 1792
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "ebf899a33ea343e2bb0ed40b47cdd714",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 5723,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q10",
+        "category": "library_strategy",
+        "question": "测序分子类型和文库策略分别是什么？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 31,
+        "status": "completed",
+        "query_log_id": 1920,
+        "hit_facts": [
+          "polyA RNA",
+          "RNA-Seq"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 12,
+        "response_ms": 4052,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 334,
+          "completion_tokens_details": {
+            "reasoning_tokens": 108
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 3968,
+          "prompt_cache_miss_tokens": 794,
+          "prompt_tokens": 4762,
+          "prompt_tokens_details": {
+            "cached_tokens": 1792
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "fc2a0b742a2249a98723b9b999bf4345",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 5096,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q11",
+        "category": "processing_pipeline",
+        "question": "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 32,
+        "status": "completed",
+        "query_log_id": 1921,
+        "hit_facts": [
+          "TopHat2",
+          "GRCh37/hg19",
+          "HTSeq v0.6.1"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 8421,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1114,
+          "completion_tokens_details": {
+            "reasoning_tokens": 328
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 3712,
+          "prompt_cache_miss_tokens": 3265,
+          "prompt_tokens": 6977,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "bdfae12a133b428282ffef1b36b6cdf7",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 8091,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q15",
+        "category": "numeric_result",
+        "question": "两个 p63 敲低样本的总基因计数分别是多少？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 33,
+        "status": "completed",
+        "query_log_id": 1922,
+        "hit_facts": [
+          "53416511",
+          "51926832"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 32609,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 891,
+          "completion_tokens_details": {
+            "reasoning_tokens": 670
+          },
+          "generation_attempts": 4,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 6400,
+          "prompt_cache_miss_tokens": 295,
+          "prompt_tokens": 6695,
+          "prompt_tokens_details": {
+            "cached_tokens": 3200
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "cddf662112384a889e9f384403f5342b",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7586,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q11",
+        "category": "processing_pipeline",
+        "question": "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 34,
+        "status": "completed",
+        "query_log_id": 1923,
+        "hit_facts": [
+          "TopHat2",
+          "GRCh37/hg19"
+        ],
+        "missed_facts": [
+          "HTSeq v0.6.1"
+        ],
+        "forbidden_facts_found": [],
+        "fact_coverage": 0.6667,
+        "closed_set_exact_correct": false,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 2584,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 346,
+          "completion_tokens_details": {
+            "reasoning_tokens": 226
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 384,
+          "prompt_cache_miss_tokens": 1553,
+          "prompt_tokens": 1937,
+          "prompt_tokens_details": {
+            "cached_tokens": 384
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "7759e34a30f242c6bb18023992aa3b3d",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 2283,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q17",
+        "category": "numeric_result",
+        "question": "HTSeq 计数矩阵共有多少个基因条目？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 35,
+        "status": "completed",
+        "query_log_id": 1924,
+        "hit_facts": [
+          "25369"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 4019,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 399,
+          "completion_tokens_details": {
+            "reasoning_tokens": 86
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 4864,
+          "prompt_cache_miss_tokens": 1832,
+          "prompt_tokens": 6696,
+          "prompt_tokens_details": {
+            "cached_tokens": 1664
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "302d644be9264bbebee83ccf588b6d9c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7095,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q03",
+        "category": "sample_group",
+        "question": "哪些样本属于非靶向 shRNA 对照组？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 36,
+        "status": "completed",
+        "query_log_id": 1925,
+        "hit_facts": [
+          "GSM3035185",
+          "GSM3035186"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 30,
+        "response_ms": 4791,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 618,
+          "completion_tokens_details": {
+            "reasoning_tokens": 205
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 4992,
+          "prompt_cache_miss_tokens": 1818,
+          "prompt_tokens": 6810,
+          "prompt_tokens_details": {
+            "cached_tokens": 1792
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "7f3d060222dd4db3b32d96a7a9367073",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7428,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q12",
+        "category": "processing_pipeline",
+        "question": "元数据记录的完整处理软件链包括哪些工具？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 37,
+        "status": "completed",
+        "query_log_id": 1926,
+        "hit_facts": [
+          "bcl2fastq",
+          "FASTQC",
+          "TopHat2",
+          "SAMtools",
+          "Picard",
+          "RSeQC",
+          "HTSeq"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 28,
+        "response_ms": 5055,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 658,
+          "completion_tokens_details": {
+            "reasoning_tokens": 244
+          },
+          "generation_attempts": 2,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 5248,
+          "prompt_cache_miss_tokens": 1555,
+          "prompt_tokens": 6803,
+          "prompt_tokens_details": {
+            "cached_tokens": 2048
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "8dde0dabe11c462ea40f6772f2782c0c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7461,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q19",
+        "category": "data_boundary",
+        "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+        "mode": "kg_enhanced_rag",
+        "repetition_index": 1,
+        "execution_order": 38,
+        "status": "completed",
+        "query_log_id": 1927,
+        "hit_facts": [
+          "基因级 HTSeq 计数矩阵",
+          "不是原始 FASTQ",
+          "不进行差异表达显著性推断"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 24,
+        "response_ms": 23542,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 854,
+          "completion_tokens_details": {
+            "reasoning_tokens": 256
+          },
+          "generation_attempts": 3,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 6144,
+          "prompt_cache_miss_tokens": 337,
+          "prompt_tokens": 6481,
+          "prompt_tokens_details": {
+            "cached_tokens": 3072
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "b89140caa85240a3bf8cba1dab6cf18c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 7335,
+          "truncation_reason": null
+        }
+      },
+      {
+        "case_id": "Q13",
+        "category": "quality_control",
+        "question": "RNA 质量记录中的 RIN 要求是什么？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 39,
+        "status": "completed",
+        "query_log_id": 1928,
+        "hit_facts": [
+          "RIN > 9"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 2060,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 157,
+          "completion_tokens_details": {
+            "reasoning_tokens": 122
+          },
+          "generation_attempts": 1,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 512,
+          "prompt_cache_miss_tokens": 1330,
+          "prompt_tokens": 1842,
+          "prompt_tokens_details": {
+            "cached_tokens": 512
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "fe34c7ca4d064ae0a2248efc0486459c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 1999,
+          "truncation_reason": "result_limit"
+        }
+      },
+      {
+        "case_id": "Q16",
+        "category": "numeric_result",
+        "question": "四个样本各自检测到的非零基因行数是多少？",
+        "mode": "project_rag",
+        "repetition_index": 1,
+        "execution_order": 40,
+        "status": "completed",
+        "query_log_id": 1929,
+        "hit_facts": [
+          "17926",
+          "17953",
+          "18137",
+          "18092"
+        ],
+        "missed_facts": [],
+        "forbidden_facts_found": [],
+        "fact_coverage": 1.0,
+        "closed_set_exact_correct": true,
+        "source_count": 6,
+        "graph_hit_count": 0,
+        "response_ms": 35516,
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "prompt_version": "rag-v9-source-and-graph-citations",
+        "usage": {
+          "completion_tokens": 1679,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1239
+          },
+          "generation_attempts": 4,
+          "index_version": "structured-v1",
+          "prompt_cache_hit_tokens": 3328,
+          "prompt_cache_miss_tokens": 433,
+          "prompt_tokens": 3761,
+          "prompt_tokens_details": {
+            "cached_tokens": 1664
+          },
+          "query_rewritten": false,
+          "retrieval_strategy": "rrf-v1",
+          "retrieval_trace_id": "9b6006d92b354f5ca343dd48688fdc4c",
+          "selected_source_count": 6,
+          "supplementary_query_count": 0,
+          "total_tokens": 5440,
+          "truncation_reason": null
+        }
+      }
+    ],
+    "citation_marker_audit": {
+      "completed_answer_count": 40,
+      "answers_with_source_marker": 40,
+      "answers_with_any_evidence_marker": 40,
+      "kg_answers_with_graph_context": 20,
+      "kg_answers_with_graph_marker": 20,
+      "invalid_source_marker_rows": [],
+      "invalid_graph_marker_rows": [],
+      "source_marker_answer_rate": 1.0,
+      "evidence_marker_answer_rate": 1.0,
+      "kg_graph_marker_rate_when_context_available": 1.0,
+      "all_citation_indices_in_range": true,
+      "by_mode": {
+        "project_rag": {
+          "completed": 20,
+          "with_source_marker": 20,
+          "with_graph_marker": 0,
+          "with_any_evidence_marker": 20,
+          "invalid_source_marker_rows": 0,
+          "invalid_graph_marker_rows": 0,
+          "source_marker_answer_rate": 1.0,
+          "graph_marker_answer_rate": 0.0,
+          "evidence_marker_answer_rate": 1.0
+        },
+        "kg_enhanced_rag": {
+          "completed": 20,
+          "with_source_marker": 20,
+          "with_graph_marker": 20,
+          "with_any_evidence_marker": 20,
+          "invalid_source_marker_rows": 0,
+          "invalid_graph_marker_rows": 0,
+          "source_marker_answer_rate": 1.0,
+          "graph_marker_answer_rate": 1.0,
+          "evidence_marker_answer_rate": 1.0
+        }
+      }
+    },
+    "paired_comparison": {
+      "paired_case_count": 20,
+      "mean_fact_coverage_delta": 0.05,
+      "improved_cases": 3,
+      "tied_cases": 17,
+      "worse_cases": 0,
+      "coverage_sign_test_two_sided_p": 0.25,
+      "comparison_exact_only_cases": 2,
+      "project_exact_only_cases": 0,
+      "mcnemar_exact_two_sided_p": 0.5,
+      "mean_response_time_delta_ms": 2587.7,
+      "kg_improved_cases": 3,
+      "kg_worse_cases": 0,
+      "kg_exact_only_cases": 2,
+      "plain_exact_only_cases": 0
+    },
+    "comparisons_vs_project_rag": {
+      "kg_enhanced_rag": {
+        "paired_case_count": 20,
+        "mean_fact_coverage_delta": 0.05,
+        "improved_cases": 3,
+        "tied_cases": 17,
+        "worse_cases": 0,
+        "coverage_sign_test_two_sided_p": 0.25,
+        "comparison_exact_only_cases": 2,
+        "project_exact_only_cases": 0,
+        "mcnemar_exact_two_sided_p": 0.5,
+        "mean_response_time_delta_ms": 2587.7
+      }
+    },
+    "methods": [
+      "project_rag",
+      "kg_enhanced_rag"
+    ],
+    "repetitions": 1,
+    "limitations": [
+      "Fact coverage checks whether predefined aliases appear in the answer; it does not prove factual correctness.",
+      "Association, negation, reasoning quality and citation validity still require independent human review.",
+      "Closed-set exact accuracy only checks predefined required and forbidden facts; comparison details can be penalized even when the final conclusion is correct.",
+      "The questions belong to one public GEO project and do not establish cross-project generalization."
+    ]
+  }
+}
