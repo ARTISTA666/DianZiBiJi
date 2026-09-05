@@ -16,7 +16,7 @@
 | 图谱 | graph_top_k=10,graph_min_score=1.0,schema kg-v3-numbered-list-expansion |
 | 语料绑定 | corpus_snapshot_hash `ebd165f8…acee2a15`(12 块,2 份已审核资料:bge-m3 重新入库) |
 | 图谱绑定 | graph_snapshot_hash `ac10068f…b143e`(39 实体/100 关系) |
-| 题集 | `data/real/GSE111619/gse111619_questions.json`(20 题,与 legacy 实验 4 分析所用同源题集;评分规则同 `run_gse111619_experiment.py` 的 alias-based fact coverage 与 closed-set exact) |
+| 题集 | `data/real/GSE111619/gse111619_questions.json`(20 题 GSE111619 开发题集,与实验 4 的项目一题集不同;评价协议同型——`run_gse111619_experiment.py` 的 alias-based fact coverage 与 closed-set exact) |
 | 口径 | **内部开发证据,非独立盲评**——题集为开发期题目、评价为 alias 自动匹配,不构成确认性结论;本次重跑的目的是把"核心对照由交付系统产生"这一脱钩闭合 |
 
 ## 结果(20 题 × 2 模式 × 1 重复)
