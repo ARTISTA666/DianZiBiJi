@@ -420,15 +420,50 @@ pub(crate) async fn submit_note_action(
             "Note cannot be submitted",
         ));
     }
+    // 提审必须落在版本快照上：绕过 create/update 路径产生的无版本草稿
+    // （如脚本直接灌库的数据）在这里补建空快照，否则审批与作废将因
+    // "Note has no current version" 永远无法执行。
+    let locked_version_id = match locked.current_version_id {
+        Some(version_id) => version_id,
+        None => {
+            let version_number: i32 = sqlx::query_scalar(
+                "SELECT COALESCE(max(version_number), 0)::int + 1 FROM note_versions WHERE note_id = $1",
+            )
+            .bind(note_id)
+            .fetch_one(&mut *transaction)
+            .await?;
+            let created_version_id: i32 = sqlx::query_scalar(
+                r#"
+                INSERT INTO note_versions (
+                    note_id, version_number, fixed_fields_json, content_json,
+                    created_by, change_summary, is_locked, created_at
+                )
+                VALUES ($1, $2, $3, $4, $5, 'Initial draft', false, now())
+                RETURNING id
+                "#,
+            )
+            .bind(note_id)
+            .bind(version_number)
+            .bind(preserve_json(&json!({})))
+            .bind(preserve_json(&json!({})))
+            .bind(user.id)
+            .fetch_one(&mut *transaction)
+            .await?;
+            sqlx::query("UPDATE experiment_notes SET current_version_id = $2 WHERE id = $1")
+                .bind(note_id)
+                .bind(created_version_id)
+                .execute(&mut *transaction)
+                .await?;
+            created_version_id
+        }
+    };
     let status = if project.approval_enabled {
         "SUBMITTED"
     } else {
-        if let Some(version_id) = locked.current_version_id {
-            sqlx::query("UPDATE note_versions SET is_locked = true WHERE id = $1")
-                .bind(version_id)
-                .execute(&mut *transaction)
-                .await?;
-        }
+        sqlx::query("UPDATE note_versions SET is_locked = true WHERE id = $1")
+            .bind(locked_version_id)
+            .execute(&mut *transaction)
+            .await?;
         "APPROVED"
     };
     sqlx::query(
@@ -1606,6 +1641,155 @@ mod tests {
         .await;
         assert_eq!(immutable, StatusCode::CONFLICT);
         assert_eq!(body["detail"], "Only draft or returned notes can be edited");
+    }
+
+    #[tokio::test]
+    async fn test_submit_note_without_version_snapshot_creates_one() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = &Uuid::new_v4().simple().to_string()[..8];
+        let admin_username = format!("orphan_note_admin_{suffix}");
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "rust-integration-secret".to_owned(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_USERNAME".to_owned(),
+                admin_username.clone(),
+            ),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool.clone(), settings).unwrap());
+        let admin_token = login(&app, &admin_username, "RustAdmin123!").await;
+
+        let writer_name = format!("orphan_note_writer_{suffix}");
+        let reviewer_name = format!("orphan_note_reviewer_{suffix}");
+        let (_, writer) = call(
+            &app,
+            "POST",
+            "/users",
+            Some(&admin_token),
+            Some(json!({
+                "username": writer_name,
+                "password": "WriterPass123!",
+                "display_name": "Writer"
+            })),
+        )
+        .await;
+        let (_, reviewer) = call(
+            &app,
+            "POST",
+            "/users",
+            Some(&admin_token),
+            Some(json!({
+                "username": reviewer_name,
+                "password": "ReviewerPass123!",
+                "display_name": "Reviewer"
+            })),
+        )
+        .await;
+        let writer_id = writer["id"].as_i64().unwrap();
+        let reviewer_id = reviewer["id"].as_i64().unwrap();
+        let (_, project) = call(
+            &app,
+            "POST",
+            "/projects",
+            Some(&admin_token),
+            Some(json!({
+                "name": format!("Orphan Note Project {suffix}"),
+                "approval_enabled": true
+            })),
+        )
+        .await;
+        let project_id = project["id"].as_i64().unwrap();
+        call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/members"),
+            Some(&admin_token),
+            Some(json!({
+                "user_id": writer_id,
+                "project_role": "member",
+                "can_read": true,
+                "can_write": true
+            })),
+        )
+        .await;
+        call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/members"),
+            Some(&admin_token),
+            Some(json!({
+                "user_id": reviewer_id,
+                "project_role": "reviewer",
+                "can_read": true,
+                "can_write": false,
+                "can_review": true
+            })),
+        )
+        .await;
+        let writer_token = login(&app, &writer_name, "WriterPass123!").await;
+        let reviewer_token = login(&app, &reviewer_name, "ReviewerPass123!").await;
+
+        // 绕过 create/update 路径直接灌库，构造无版本快照的草稿。
+        let note_id: i32 = sqlx::query_scalar(
+            r#"
+            INSERT INTO experiment_notes (project_id, title, experiment_type, owner_user_id, status)
+            VALUES ($1, 'Orphan draft note', 'PCR', $2, 'DRAFT'::notestatus)
+            RETURNING id
+            "#,
+        )
+        .bind(project_id as i32)
+        .bind(writer_id as i32)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+
+        let (submitted, body) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/submit"),
+            Some(&writer_token),
+            None,
+        )
+        .await;
+        assert_eq!(submitted, StatusCode::OK);
+        assert_eq!(body["status"], "submitted");
+        assert!(body["current_version_id"].as_i64().is_some());
+
+        let (versions_status, versions) = call(
+            &app,
+            "GET",
+            &format!("/notes/{note_id}/versions"),
+            Some(&writer_token),
+            None,
+        )
+        .await;
+        assert_eq!(versions_status, StatusCode::OK);
+        let versions = versions.as_array().unwrap();
+        assert_eq!(versions.len(), 1);
+        assert_eq!(versions[0]["version_number"], 1);
+
+        let (approved, body) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/approve"),
+            Some(&reviewer_token),
+            Some(json!({"comment": "empty snapshot approved"})),
+        )
+        .await;
+        assert_eq!(approved, StatusCode::OK);
+        assert_eq!(body["status"], "approved");
     }
 
     #[tokio::test]
