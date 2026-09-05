@@ -1,0 +1,17 @@
+\usepackage{bensz-thesis}
+\BenszThesisSetup{template=thesis-ahnu-master}
+
+\graphicspath{{assets/}{assets/screenshots/}}
+
+% 图表题注统一居中、紧凑间距
+\usepackage{caption}
+\captionsetup{justification=centering,singlelinecheck=true,skip=6pt}
+\captionsetup[table]{position=above}
+
+% longtable LTcaptype=none 时 hyperref 需要 none 计数器,预定义之
+\makeatletter
+\@ifundefined{c@none}{\newcounter{none}}{}
+\makeatother
+
+% 容忍松散行:让断行器优先取合法断点而非产生 overfull(盲审格式修复 2026-09-05)
+\emergencystretch=3em\relax
