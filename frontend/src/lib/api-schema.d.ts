@@ -1518,7 +1518,10 @@ export interface components {
             /** Completed At */
             completed_at: string | null;
         };
-        /** AIExperimentRunRequest */
+        /**
+         * AIExperimentRunRequest
+         * @description Snapshot hashes are conditionally required by the selected modes.
+         */
         AIExperimentRunRequest: {
             /** Name */
             name: string;
@@ -1538,6 +1541,8 @@ export interface components {
             randomize_order: boolean;
             /** Random Seed */
             random_seed?: number | null;
+            expected_corpus_snapshot_hash?: string | null;
+            expected_graph_snapshot_hash?: string | null;
         };
         /** AIQueryAgreementMetric */
         AIQueryAgreementMetric: {
@@ -2916,6 +2921,7 @@ export interface components {
             generation_model: string;
             questions_sha256: string;
             corpus_snapshot_hash: string | null;
+            graph_snapshot_hash: string | null;
             rag_index_version: string | null;
             graph_schema_version: string | null;
         } & {
@@ -5357,6 +5363,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AIExperimentRunRead"];
+                };
+            };
+            /** @description Expected corpus or graph snapshot drift */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiErrorResponse"];
                 };
             };
             /** @description Validation Error */

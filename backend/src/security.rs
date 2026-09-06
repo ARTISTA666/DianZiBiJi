@@ -182,6 +182,26 @@ fn sign_hs256(input: &[u8], secret: &str) -> Result<Vec<u8>, SecurityError> {
     Ok(mac.finalize().into_bytes().to_vec())
 }
 
+/// Async wrapper around [`hash_password`] that runs the CPU-bound bcrypt
+/// computation on a blocking thread pool, keeping the async executor free.
+pub async fn hash_password_async(password: String) -> Result<String, SecurityError> {
+    tokio::task::spawn_blocking(move || hash_password(&password))
+        .await
+        .map_err(|_| {
+            SecurityError::Password(bcrypt::BcryptError::InvalidHash(
+                "spawn_blocking panicked".into(),
+            ))
+        })?
+}
+
+/// Async wrapper around [`verify_password`] that runs the CPU-bound bcrypt
+/// verification on a blocking thread pool, keeping the async executor free.
+pub async fn verify_password_async(password: String, password_hash: String) -> bool {
+    tokio::task::spawn_blocking(move || verify_password(&password, &password_hash))
+        .await
+        .unwrap_or(false)
+}
+
 #[cfg(test)]
 mod tests {
     use base64::{engine::general_purpose::URL_SAFE_NO_PAD, Engine};

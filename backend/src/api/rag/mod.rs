@@ -1,9 +1,9 @@
 // RAG API 模块根：路由、查询/检索/日志、状态与提示词构建，并保留需要数据库/模拟 HTTP 服务的集成测试。
 
-use std::{collections::HashSet, time::Instant};
+use std::{collections::HashSet, sync::OnceLock, time::Instant};
 
 #[cfg(test)]
-use std::sync::{Arc, OnceLock};
+use std::sync::Arc;
 
 use axum::{
     extract::{Path, State},
@@ -45,7 +45,7 @@ pub use experiments::schedule_queued_experiments;
 
 use blind::{
     evaluate_blind_item, export_blind_batch, is_independent_evaluator, list_blind_batches,
-    list_blind_items,
+    list_blind_items, lock_blind_batch,
 };
 use experiments::{
     export_experiment, export_experiment_evidence, get_experiment, list_experiments,
@@ -166,6 +166,10 @@ pub fn router() -> Router<AppState> {
             "/projects/{project_id}/rag/blind-review/batches/{batch_id}/export.csv",
             get(export_blind_batch),
         )
+        .route(
+            "/projects/{project_id}/rag/blind-review/batches/{batch_id}/lock",
+            post(lock_blind_batch),
+        )
 }
 
 #[derive(Clone, Debug, sqlx::FromRow)]
@@ -194,12 +198,6 @@ pub(super) struct QueryLogRow {
     experiment_repetition_index: Option<i32>,
     experiment_execution_order: Option<i32>,
     created_at: chrono::DateTime<chrono::Utc>,
-}
-
-#[allow(dead_code)]
-pub(super) struct ActiveCorpusSnapshot {
-    hash: String,
-    chunk_count: i64,
 }
 
 pub(super) const EXPERIMENT_COLUMNS: &str = r#"
@@ -1837,7 +1835,9 @@ async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead
             corpus_chunk_count: active_corpus.chunk_count,
             rag_index_version: state.settings.rag_index_version.clone(),
             embedding_model,
-            graph_snapshot_hash: dataset_id.map(|_| active_graph.hash),
+            // Graph evidence is independently applicable to structured-query
+            // runs, including projects without a document dataset.
+            graph_snapshot_hash: Some(active_graph.hash),
             graph_entity_count: active_graph.entity_count,
             graph_relation_count: active_graph.relation_count,
         },
@@ -2209,9 +2209,13 @@ fn retrieval_config(
 }
 
 fn has_marker(answer: &str, kind: char) -> bool {
-    Regex::new(&format!(r"(?i)\[{kind}\d+\]"))
-        .unwrap()
-        .is_match(answer)
+    static S_MARKER: OnceLock<Regex> = OnceLock::new();
+    static G_MARKER: OnceLock<Regex> = OnceLock::new();
+    let regex = match kind {
+        'S' | 's' => S_MARKER.get_or_init(|| Regex::new(r"(?i)\[S\d+\]").unwrap()),
+        _ => G_MARKER.get_or_init(|| Regex::new(r"(?i)\[G\d+\]").unwrap()),
+    };
+    regex.is_match(answer)
 }
 
 fn enforce_required_citations(
@@ -2364,7 +2368,7 @@ mod tests {
 
     use super::experiments::{
         claim_experiment, questions_sha256, renew_experiment_lease, schedule_queued_experiments,
-        snapshot_sha256, transition_interrupted_to_queued,
+        transition_interrupted_to_queued,
     };
     use super::{
         build_citation_repair_prompt, build_prompts, enforce_required_citations,
@@ -3704,6 +3708,51 @@ mod tests {
         assert_eq!(analytics["total_queries"], 1);
         assert_eq!(analytics["avg_score"], 5.0);
 
+        let (_, snapshot_status) = json_call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/rag/status"),
+            Some(admin),
+            None,
+        )
+        .await;
+        let expected_corpus_snapshot_hash = snapshot_status["corpus_snapshot"]
+            ["corpus_snapshot_hash"]
+            .as_str()
+            .unwrap();
+        let runs_before_drift: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
+                .bind(project_id as i32)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        let (stale_experiment_status, stale_experiment) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/rag/experiments"),
+            Some(admin),
+            Some(json!({
+                "name": "stale snapshot must not create",
+                "questions": ["What does the PCR protocol use?"],
+                "modes": ["project_rag"],
+                "repetitions": 1,
+                "randomize_order": false,
+                "expected_corpus_snapshot_hash": "0".repeat(64)
+            })),
+        )
+        .await;
+        assert_eq!(stale_experiment_status, StatusCode::CONFLICT);
+        let stale_detail: Value =
+            serde_json::from_str(stale_experiment["detail"].as_str().unwrap()).unwrap();
+        assert_eq!(stale_detail["error"], "experiment_snapshot_drift");
+        let runs_after_drift: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM ai_experiment_runs WHERE project_id = $1")
+                .bind(project_id as i32)
+                .fetch_one(&state.pool)
+                .await
+                .unwrap();
+        assert_eq!(runs_after_drift, runs_before_drift);
+
         let (experiment_status, experiment) = json_call(
             &app,
             "POST",
@@ -3714,7 +3763,9 @@ mod tests {
                 "questions": ["What does the PCR protocol use?"],
                 "modes": ["project_rag"],
                 "repetitions": 1,
-                "randomize_order": false
+                "randomize_order": false,
+                "expected_corpus_snapshot_hash": expected_corpus_snapshot_hash,
+                "expected_graph_snapshot_hash": null
             })),
         )
         .await;
@@ -3776,27 +3827,17 @@ mod tests {
             evidence["experiment"]["questions_sha256"],
             questions_sha256(&["What does the PCR protocol use?".to_owned()])
         );
-        let corpus_rows: Vec<(i32, i32, String)> = sqlx::query_as(
-            r#"
-            SELECT c.file_id, c.chunk_index, c.content_hash
-            FROM rag_document_chunks c
-            JOIN files f ON f.id = c.file_id
-            WHERE c.project_id = $1
-              AND f.status = 'APPROVED'::filestatus
-              AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
-              AND f.knowledge_sync_status = 'synced'
-              AND c.index_version = $2
-            ORDER BY c.file_id, c.chunk_index
-            "#,
+        let canonical_corpus_hash = crate::rag::document_snapshot(
+            &state.pool,
+            project_id as i32,
+            &state.settings.rag_index_version,
         )
-        .bind(project_id as i32)
-        .bind(&state.settings.rag_index_version)
-        .fetch_all(&state.pool)
         .await
-        .unwrap();
+        .unwrap()
+        .hash;
         assert_eq!(
             evidence["experiment"]["corpus_snapshot_hash"],
-            snapshot_sha256(&state.settings.rag_index_version, &corpus_rows)
+            canonical_corpus_hash
         );
         assert_eq!(evidence["case_count"], 1);
         assert_eq!(evidence["cases"].as_array().unwrap().len(), 1);
@@ -4073,10 +4114,14 @@ mod tests {
             "embedding_model": state.settings.embedding_model,
             "generation_model": state.ai_provider.model(),
             "questions_sha256": questions_sha256(&drift_questions),
-            "corpus_snapshot_hash": snapshot_sha256(
+            "corpus_snapshot_hash": crate::rag::document_snapshot(
+                &state.pool,
+                project_id as i32,
                 &state.settings.rag_index_version,
-                &corpus_rows
-            ),
+            )
+            .await
+            .unwrap()
+            .hash,
             "rag_index_version": state.settings.rag_index_version
         }))
         .bind(json!({"execution_plan": drift_plan, "errors": []}))

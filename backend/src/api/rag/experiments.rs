@@ -15,9 +15,9 @@ use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 
 use super::{
-    fetch_dataset, mode_requires_dataset, mode_uses_embeddings, query_project_rag_inner,
-    require_compatible_embedding, require_manager, require_unblinded_access, ActiveCorpusSnapshot,
-    ExperimentLogContext, QueryLogRow, EXPERIMENT_COLUMNS, MAX_RAG_QUERY_CHARS,
+    mode_requires_dataset, mode_uses_embeddings, query_project_rag_inner,
+    require_compatible_embedding, require_manager, require_unblinded_access, ExperimentLogContext,
+    QueryLogRow, EXPERIMENT_COLUMNS, MAX_RAG_QUERY_CHARS,
 };
 use crate::{
     api::auth::CurrentUser,
@@ -25,8 +25,11 @@ use crate::{
     audit::{write_audit, AuditEvent},
     db::{EXPERIMENT_HEARTBEAT_INTERVAL_SECONDS, EXPERIMENT_LEASE_SECONDS},
     error::ApiError,
-    models::{AIExperimentRunRead, AIExperimentRunRequest, RagQueryRequest, UserRecord},
+    models::{
+        AIExperimentRunRead, AIExperimentRunRequest, RagDatasetRead, RagQueryRequest, UserRecord,
+    },
     permissions::{require_external_ai, require_project_access},
+    rag::{document_snapshot_in_transaction, graph_snapshot_in_transaction},
     AppState,
 };
 
@@ -91,20 +94,11 @@ pub(super) async fn run_experiment(
             "Repetitions must be between 1 and 10",
         ));
     }
-    let corpus_snapshot_hash = if modes.iter().any(|mode| mode_requires_dataset(mode)) {
-        let dataset = fetch_dataset(&state, project_id).await?.ok_or_else(|| {
-            ApiError::new(
-                StatusCode::CONFLICT,
-                "RAG 资料库尚未初始化，请先在数据页完成资料入库",
-            )
-        })?;
-        if modes.iter().any(|mode| mode_uses_embeddings(mode)) {
-            require_compatible_embedding(&state, &dataset)?;
-        }
-        Some(fetch_active_corpus_snapshot_hash(&state, project_id).await?)
-    } else {
-        None
-    };
+    validate_expected_snapshot_bindings(
+        &modes,
+        payload.expected_corpus_snapshot_hash.as_deref(),
+        payload.expected_graph_snapshot_hash.as_deref(),
+    )?;
     let questions_hash = questions_sha256(&questions);
     let seed = payload.random_seed.unwrap_or_else(|| {
         let digest = Sha256::digest(uuid::Uuid::new_v4().as_bytes());
@@ -144,8 +138,63 @@ pub(super) async fn run_experiment(
         Sha256::digest(serde_json::to_vec(&plan).map_err(ApiError::internal)?)
     );
     let mut transaction = state.pool.begin().await?;
+    sqlx::query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
+        .execute(&mut *transaction)
+        .await?;
     lock_experiment_project(&mut transaction, project_id).await?;
     ensure_no_active_experiment(&mut transaction, project_id).await?;
+    let dataset = if modes.iter().any(|mode| mode_requires_dataset(mode)) {
+        let dataset = sqlx::query_as::<_, RagDatasetRead>(&format!(
+            "SELECT {} FROM project_rag_datasets WHERE project_id = $1",
+            super::DATASET_COLUMNS
+        ))
+        .bind(project_id)
+        .fetch_optional(&mut *transaction)
+        .await?
+        .ok_or_else(|| {
+            ApiError::new(
+                StatusCode::CONFLICT,
+                "RAG 资料库尚未初始化，请先在数据页完成资料入库",
+            )
+        })?;
+        if modes.iter().any(|mode| mode_uses_embeddings(mode)) {
+            require_compatible_embedding(&state, &dataset)?;
+        }
+        Some(dataset)
+    } else {
+        None
+    };
+    let active_corpus = if dataset.is_some() {
+        Some(
+            document_snapshot_in_transaction(
+                &mut transaction,
+                project_id,
+                &state.settings.rag_index_version,
+            )
+            .await?,
+        )
+    } else {
+        None
+    };
+    let active_graph = if modes
+        .iter()
+        .any(|mode| matches!(mode.as_str(), "structured_query" | "kg_enhanced_rag"))
+    {
+        Some(graph_snapshot_in_transaction(&mut transaction, project_id).await?)
+    } else {
+        None
+    };
+    if let Some(detail) = compare_experiment_snapshots(
+        &modes,
+        payload.expected_corpus_snapshot_hash.as_deref(),
+        payload.expected_graph_snapshot_hash.as_deref(),
+        active_corpus
+            .as_ref()
+            .map(|snapshot| snapshot.hash.as_str()),
+        active_graph.as_ref().map(|snapshot| snapshot.hash.as_str()),
+    ) {
+        return Err(ApiError::new(StatusCode::CONFLICT, detail.to_string()));
+    }
     let run_id: i32 = sqlx::query_scalar(
         r#"
         INSERT INTO ai_experiment_runs (
@@ -166,7 +215,8 @@ pub(super) async fn run_experiment(
         "embedding_model": state.settings.embedding_model,
         "generation_model": state.ai_provider.model(),
         "questions_sha256": questions_hash,
-        "corpus_snapshot_hash": corpus_snapshot_hash,
+        "corpus_snapshot_hash": active_corpus.as_ref().map(|snapshot| &snapshot.hash),
+        "graph_snapshot_hash": active_graph.as_ref().map(|snapshot| &snapshot.hash),
         "rag_index_version": state.settings.rag_index_version,
         "graph_schema_version": crate::rag::GRAPH_SCHEMA_VERSION,
         "experiment_protocol": {
@@ -406,6 +456,7 @@ pub(super) fn questions_sha256(questions: &[String]) -> String {
 
 struct ExperimentRuntimeBindings<'a> {
     corpus_snapshot_hash: Option<&'a str>,
+    graph_snapshot_hash: Option<&'a str>,
     index_version: &'a str,
     embedding_model: &'a str,
     generation_model: &'a str,
@@ -475,7 +526,95 @@ fn validate_experiment_input_bindings(
     } else if expected_corpus_hash.is_some_and(|hash| !hash.is_null()) {
         return Err("non-dataset experiments must not carry a corpus_snapshot_hash".to_owned());
     }
+    let graph_backed = modes
+        .as_array()
+        .ok_or_else(|| "modes_json must be an array".to_owned())?
+        .iter()
+        .filter_map(Value::as_str)
+        .any(|mode| matches!(mode, "structured_query" | "kg_enhanced_rag"));
+    let expected_graph_hash = config.get("graph_snapshot_hash");
+    if graph_backed {
+        let expected_graph_hash = expected_graph_hash
+            .and_then(Value::as_str)
+            .ok_or_else(|| "config_snapshot.graph_snapshot_hash is missing".to_owned())?;
+        if runtime.graph_snapshot_hash != Some(expected_graph_hash) {
+            return Err(
+                "config_snapshot.graph_snapshot_hash does not match the active graph".to_owned(),
+            );
+        }
+    } else if expected_graph_hash.is_some_and(|hash| !hash.is_null()) {
+        return Err("non-graph experiments must not carry a graph_snapshot_hash".to_owned());
+    }
     Ok(())
+}
+
+fn validate_expected_snapshot_bindings(
+    modes: &[String],
+    expected_corpus_hash: Option<&str>,
+    expected_graph_hash: Option<&str>,
+) -> Result<(), ApiError> {
+    let corpus_required = modes.iter().any(|mode| mode_requires_dataset(mode));
+    let graph_required = modes
+        .iter()
+        .any(|mode| matches!(mode.as_str(), "structured_query" | "kg_enhanced_rag"));
+    if corpus_required != expected_corpus_hash.is_some() {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            if corpus_required {
+                "Dataset-backed experiments must provide expected_corpus_snapshot_hash"
+            } else {
+                "Non-dataset experiments must not provide expected_corpus_snapshot_hash"
+            },
+        ));
+    }
+    if graph_required != expected_graph_hash.is_some() {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            if graph_required {
+                "Graph-backed experiments must provide expected_graph_snapshot_hash"
+            } else {
+                "Non-graph experiments must not provide expected_graph_snapshot_hash"
+            },
+        ));
+    }
+    for (name, value) in [
+        ("expected_corpus_snapshot_hash", expected_corpus_hash),
+        ("expected_graph_snapshot_hash", expected_graph_hash),
+    ] {
+        if let Some(value) = value {
+            if !super::valid_snapshot_hash(value) {
+                return Err(ApiError::new(
+                    StatusCode::UNPROCESSABLE_ENTITY,
+                    format!("{name} must be a lowercase SHA-256 hash"),
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
+fn compare_experiment_snapshots(
+    modes: &[String],
+    expected_corpus_hash: Option<&str>,
+    expected_graph_hash: Option<&str>,
+    actual_corpus_hash: Option<&str>,
+    actual_graph_hash: Option<&str>,
+) -> Option<Value> {
+    let corpus_mismatch = modes.iter().any(|mode| mode_requires_dataset(mode))
+        && expected_corpus_hash != actual_corpus_hash;
+    let graph_mismatch = modes
+        .iter()
+        .any(|mode| matches!(mode.as_str(), "structured_query" | "kg_enhanced_rag"))
+        && expected_graph_hash != actual_graph_hash;
+    (corpus_mismatch || graph_mismatch).then(|| {
+        json!({
+            "error": "experiment_snapshot_drift",
+            "expected_corpus_snapshot_hash": expected_corpus_hash,
+            "actual_corpus_snapshot_hash": actual_corpus_hash,
+            "expected_graph_snapshot_hash": expected_graph_hash,
+            "actual_graph_snapshot_hash": actual_graph_hash,
+        })
+    })
 }
 
 async fn validate_current_experiment_input_bindings(
@@ -493,7 +632,37 @@ async fn validate_current_experiment_input_bindings(
         .filter_map(Value::as_str)
         .any(mode_requires_dataset)
     {
-        Some(fetch_active_corpus_snapshot_hash(state, run.project_id).await?)
+        Some(
+            crate::rag::document_snapshot(
+                &state.pool,
+                run.project_id,
+                &state.settings.rag_index_version,
+            )
+            .await
+            .map_err(|error| {
+                ApiError::new(
+                    StatusCode::CONFLICT,
+                    format!("Experiment input binding drift detected: {}", error.detail),
+                )
+            })?
+            .hash,
+        )
+    } else {
+        None
+    };
+    let current_graph_hash = if run
+        .modes_json
+        .as_array()
+        .into_iter()
+        .flatten()
+        .filter_map(Value::as_str)
+        .any(|mode| matches!(mode, "structured_query" | "kg_enhanced_rag"))
+    {
+        Some(
+            crate::rag::graph_snapshot(&state.pool, run.project_id)
+                .await?
+                .hash,
+        )
     } else {
         None
     };
@@ -504,6 +673,7 @@ async fn validate_current_experiment_input_bindings(
         &run.modes_json,
         ExperimentRuntimeBindings {
             corpus_snapshot_hash: current_corpus_hash.as_deref(),
+            graph_snapshot_hash: current_graph_hash.as_deref(),
             index_version: &state.settings.rag_index_version,
             embedding_model: &state.settings.embedding_model,
             generation_model,
@@ -516,62 +686,6 @@ async fn validate_current_experiment_input_bindings(
             format!("Experiment input binding drift detected: {detail}"),
         )
     })
-}
-
-pub(super) fn snapshot_sha256(index_version: &str, rows: &[(i32, i32, String)]) -> String {
-    let mut rows = rows.to_vec();
-    rows.sort_by(|left, right| {
-        left.0
-            .cmp(&right.0)
-            .then(left.1.cmp(&right.1))
-            .then(left.2.cmp(&right.2))
-    });
-    let material = json!({
-        "index_version": index_version,
-        "chunks": rows.into_iter().map(|(file_id, chunk_index, content_hash)| {
-            json!({
-                "file_id": file_id,
-                "chunk_index": chunk_index,
-                "content_hash": content_hash,
-            })
-        }).collect::<Vec<_>>(),
-    });
-    let bytes = serde_json::to_vec(&material).expect("corpus snapshot is JSON serializable");
-    format!("{:x}", Sha256::digest(bytes))
-}
-
-async fn fetch_active_corpus_snapshot(
-    state: &AppState,
-    project_id: i32,
-) -> Result<ActiveCorpusSnapshot, ApiError> {
-    let rows: Vec<(i32, i32, String)> = sqlx::query_as(
-        r#"
-        SELECT c.file_id, c.chunk_index, c.content_hash
-        FROM rag_document_chunks c
-        JOIN files f ON f.id = c.file_id
-        WHERE c.project_id = $1
-          AND f.status = 'APPROVED'::filestatus
-          AND f.file_category = 'KNOWLEDGE_DOCUMENT'::filecategory
-          AND f.knowledge_sync_status = 'synced'
-          AND c.index_version = $2
-        ORDER BY c.file_id, c.chunk_index
-        "#,
-    )
-    .bind(project_id)
-    .bind(&state.settings.rag_index_version)
-    .fetch_all(&state.pool)
-    .await?;
-    Ok(ActiveCorpusSnapshot {
-        hash: snapshot_sha256(&state.settings.rag_index_version, &rows),
-        chunk_count: rows.len() as i64,
-    })
-}
-
-async fn fetch_active_corpus_snapshot_hash(
-    state: &AppState,
-    project_id: i32,
-) -> Result<String, ApiError> {
-    Ok(fetch_active_corpus_snapshot(state, project_id).await?.hash)
 }
 
 fn build_experiment_evidence_package(run: &Value, mut cases: Vec<Value>) -> Value {
@@ -657,6 +771,7 @@ fn build_experiment_evidence_package(run: &Value, mut cases: Vec<Value>) -> Valu
             "generation_model": config["generation_model"],
             "questions_sha256": config["questions_sha256"],
             "corpus_snapshot_hash": config["corpus_snapshot_hash"],
+            "graph_snapshot_hash": config["graph_snapshot_hash"],
             "rag_index_version": config["rag_index_version"],
             "graph_schema_version": config["graph_schema_version"],
         },
@@ -697,6 +812,7 @@ mod evidence_package_tests {
                     "embedding_model": "hash-v1",
                     "questions_sha256": "questions-sha",
                     "corpus_snapshot_hash": "corpus-sha",
+                    "graph_snapshot_hash": "graph-sha",
                     "rag_index_version": "structured-v1",
                     "graph_schema_version": "kg-v3-numbered-list-expansion",
                     "experiment_protocol": {
@@ -729,6 +845,7 @@ mod evidence_package_tests {
         assert_eq!(package["experiment"]["execution_plan_hash"], "plan-sha");
         assert_eq!(package["experiment"]["questions_sha256"], "questions-sha");
         assert_eq!(package["experiment"]["corpus_snapshot_hash"], "corpus-sha");
+        assert_eq!(package["experiment"]["graph_snapshot_hash"], "graph-sha");
         assert_eq!(package["experiment"]["rag_index_version"], "structured-v1");
         assert_eq!(
             package["experiment"]["graph_schema_version"],
@@ -1523,21 +1640,10 @@ mod tests {
     fn test_input_hashes_are_stable_and_bound_to_inputs() {
         let questions = vec!["问题一".to_owned(), "Question two".to_owned()];
         let reordered_questions = vec!["Question two".to_owned(), "问题一".to_owned()];
-        let rows = vec![(2, 1, "chunk-b".to_owned()), (1, 0, "chunk-a".to_owned())];
-        let reordered_rows = vec![rows[1].clone(), rows[0].clone()];
-
         let question_hash = questions_sha256(&questions);
         assert_eq!(question_hash, questions_sha256(&questions));
         assert_ne!(question_hash, questions_sha256(&reordered_questions));
         assert_eq!(question_hash.len(), 64);
-
-        let snapshot_hash = snapshot_sha256("structured-v1", &rows);
-        assert_eq!(
-            snapshot_hash,
-            snapshot_sha256("structured-v1", &reordered_rows)
-        );
-        assert_ne!(snapshot_hash, snapshot_sha256("next-index", &rows));
-        assert_eq!(snapshot_hash.len(), 64);
     }
 
     #[test]
@@ -1549,6 +1655,7 @@ mod tests {
             "generation_model": "generate-v1",
             "questions_sha256": questions_sha256(&questions),
             "corpus_snapshot_hash": corpus_hash,
+            "graph_snapshot_hash": null,
             "rag_index_version": "structured-v1",
             "graph_schema_version": "kg-v3-numbered-list-expansion"
         });
@@ -1560,6 +1667,7 @@ mod tests {
             &modes,
             ExperimentRuntimeBindings {
                 corpus_snapshot_hash: Some(&corpus_hash),
+                graph_snapshot_hash: Some(&"g".repeat(64)),
                 index_version: "structured-v1",
                 embedding_model: "embed-v1",
                 generation_model: "generate-v1",
@@ -1574,6 +1682,7 @@ mod tests {
             &modes,
             ExperimentRuntimeBindings {
                 corpus_snapshot_hash: Some(&"d".repeat(64)),
+                graph_snapshot_hash: Some(&"g".repeat(64)),
                 index_version: "structured-v1",
                 embedding_model: "embed-v1",
                 generation_model: "generate-v1",
@@ -1589,6 +1698,7 @@ mod tests {
             &modes,
             ExperimentRuntimeBindings {
                 corpus_snapshot_hash: Some(&corpus_hash),
+                graph_snapshot_hash: Some(&"g".repeat(64)),
                 index_version: "structured-v1",
                 embedding_model: "embed-v1",
                 generation_model: "generate-v1",
@@ -1604,6 +1714,7 @@ mod tests {
             &modes,
             ExperimentRuntimeBindings {
                 corpus_snapshot_hash: Some(&corpus_hash),
+                graph_snapshot_hash: Some(&"g".repeat(64)),
                 index_version: "structured-v1",
                 embedding_model: "embed-v2",
                 generation_model: "generate-v1",
@@ -1619,6 +1730,7 @@ mod tests {
             &modes,
             ExperimentRuntimeBindings {
                 corpus_snapshot_hash: Some(&corpus_hash),
+                graph_snapshot_hash: Some(&"g".repeat(64)),
                 index_version: "structured-v1",
                 embedding_model: "embed-v1",
                 generation_model: "generate-v1",
@@ -1627,6 +1739,89 @@ mod tests {
         )
         .unwrap_err();
         assert!(graph_error.contains("graph_schema_version"));
+
+        let graph_config = json!({
+            "embedding_model": "embed-v1",
+            "generation_model": "generate-v1",
+            "questions_sha256": questions_sha256(&questions),
+            "corpus_snapshot_hash": corpus_hash,
+            "graph_snapshot_hash": "g".repeat(64),
+            "rag_index_version": "structured-v1",
+            "graph_schema_version": "kg-v3-numbered-list-expansion"
+        });
+        let graph_modes = json!(["kg_enhanced_rag"]);
+        let graph_hash_error = validate_experiment_input_bindings(
+            &graph_config,
+            &json!(questions),
+            &graph_modes,
+            ExperimentRuntimeBindings {
+                corpus_snapshot_hash: Some(&corpus_hash),
+                graph_snapshot_hash: Some(&"h".repeat(64)),
+                index_version: "structured-v1",
+                embedding_model: "embed-v1",
+                generation_model: "generate-v1",
+                graph_schema_version: "kg-v3-numbered-list-expansion",
+            },
+        )
+        .unwrap_err();
+        assert!(graph_hash_error.contains("graph_snapshot_hash"));
+    }
+
+    #[test]
+    fn test_experiment_snapshot_mismatch_rejects_before_persistence_gate() {
+        let modes = vec!["project_rag".to_owned(), "kg_enhanced_rag".to_owned()];
+        let detail = compare_experiment_snapshots(
+            &modes,
+            Some("a".repeat(64).as_str()),
+            Some("b".repeat(64).as_str()),
+            Some("c".repeat(64).as_str()),
+            Some("d".repeat(64).as_str()),
+        )
+        .unwrap();
+        assert_eq!(detail["error"], "experiment_snapshot_drift");
+        assert_eq!(detail["expected_corpus_snapshot_hash"], "a".repeat(64));
+        assert_eq!(detail["actual_corpus_snapshot_hash"], "c".repeat(64));
+        assert_eq!(detail["expected_graph_snapshot_hash"], "b".repeat(64));
+        assert_eq!(detail["actual_graph_snapshot_hash"], "d".repeat(64));
+    }
+
+    #[test]
+    fn test_expected_snapshot_bindings_follow_mode_requirements() {
+        let corpus = "a".repeat(64);
+        let graph = "b".repeat(64);
+        assert!(validate_expected_snapshot_bindings(&["pure_llm".to_owned()], None, None,).is_ok());
+        assert!(validate_expected_snapshot_bindings(
+            &["structured_query".to_owned()],
+            None,
+            Some(&graph),
+        )
+        .is_ok());
+        assert!(validate_expected_snapshot_bindings(
+            &["project_rag".to_owned()],
+            Some(&corpus),
+            None,
+        )
+        .is_ok());
+        assert_eq!(
+            validate_expected_snapshot_bindings(
+                &["project_rag".to_owned()],
+                Some(&corpus),
+                Some(&graph),
+            )
+            .unwrap_err()
+            .status,
+            StatusCode::UNPROCESSABLE_ENTITY
+        );
+        assert_eq!(
+            validate_expected_snapshot_bindings(
+                &["kg_enhanced_rag".to_owned()],
+                Some("A"),
+                Some(&graph),
+            )
+            .unwrap_err()
+            .status,
+            StatusCode::UNPROCESSABLE_ENTITY
+        );
     }
 
     #[test]

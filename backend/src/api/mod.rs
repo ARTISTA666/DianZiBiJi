@@ -625,6 +625,20 @@ mod tests {
                 "graph_relation_count"
             ])
         );
+        let experiment = &body["paths"]["/projects/{project_id}/rag/experiments"]["post"];
+        assert_eq!(
+            experiment["responses"]["409"]["content"]["application/json"]["schema"]["$ref"],
+            "#/components/schemas/ApiErrorResponse"
+        );
+        for field in [
+            "expected_corpus_snapshot_hash",
+            "expected_graph_snapshot_hash",
+        ] {
+            assert!(
+                body["components"]["schemas"]["AIExperimentRunRequest"]["properties"][field]
+                    .is_object()
+            );
+        }
     }
 
     #[tokio::test]

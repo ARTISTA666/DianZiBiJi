@@ -161,6 +161,15 @@ def test_legacy_database_keeps_rows_and_receives_runtime_columns(tmp_path: Path)
         "project_members": {"can_evaluate"},
         "project_rag_datasets": {"provider", "embedding_model", "generation_model"},
         "rag_file_syncs": {"chunk_count", "content_hash"},
+        "ai_blind_review_batches": {
+            "project_id",
+            "experiment_run_id",
+            "freeze_manifest_sha256",
+            "reviewer_a_user_id",
+            "reviewer_b_user_id",
+            "status",
+            "created_by",
+        },
         "ai_query_logs": {
             "provider",
             "model_name",

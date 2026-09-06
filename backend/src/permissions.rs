@@ -155,6 +155,34 @@ pub async fn require_project_manager(
     }
 }
 
+/// Require that the user has write access to the project.
+/// Returns `FORBIDDEN` if the user cannot write to the project.
+pub async fn require_project_write(
+    pool: &PgPool,
+    user: &UserRecord,
+    project_id: i32,
+) -> Result<(), ApiError> {
+    if can_write_project(pool, user, project_id).await? {
+        Ok(())
+    } else {
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要写入权限"))
+    }
+}
+
+/// Require that the user has review access to the project.
+/// Returns `FORBIDDEN` if the user cannot review the project.
+pub async fn require_project_review(
+    pool: &PgPool,
+    user: &UserRecord,
+    project_id: i32,
+) -> Result<(), ApiError> {
+    if can_review_project(pool, user, project_id).await? {
+        Ok(())
+    } else {
+        Err(ApiError::new(StatusCode::FORBIDDEN, "需要审核权限"))
+    }
+}
+
 pub async fn can_review_project(
     pool: &PgPool,
     user: &UserRecord,

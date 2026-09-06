@@ -220,47 +220,29 @@ async fn update_project(
         payload.owner_user_id,
     )
     .await?;
-    if let Some(name) = payload.name {
-        sqlx::query("UPDATE projects SET name = $2, updated_at = now() WHERE id = $1")
-            .bind(project_id)
-            .bind(name)
-            .execute(&mut *transaction)
-            .await?;
-    }
-    if let Some(description) = payload.description {
-        sqlx::query("UPDATE projects SET description = $2, updated_at = now() WHERE id = $1")
-            .bind(project_id)
-            .bind(description)
-            .execute(&mut *transaction)
-            .await?;
-    }
-    if let Some(is_sensitive) = payload.is_sensitive {
-        sqlx::query("UPDATE projects SET is_sensitive = $2, updated_at = now() WHERE id = $1")
-            .bind(project_id)
-            .bind(is_sensitive)
-            .execute(&mut *transaction)
-            .await?;
-    }
-    if let Some(status) = payload.status {
-        sqlx::query("UPDATE projects SET status = upper($2)::projectstatus, updated_at = now() WHERE id = $1")
-            .bind(project_id)
-            .bind(status)
-            .execute(&mut *transaction)
-            .await?;
-    }
-    if let Some(approval_enabled) = payload.approval_enabled {
-        sqlx::query("UPDATE projects SET approval_enabled = $2, updated_at = now() WHERE id = $1")
-            .bind(project_id)
-            .bind(approval_enabled)
-            .execute(&mut *transaction)
-            .await?;
-    }
+    sqlx::query(
+        r#"
+        UPDATE projects SET
+            name             = COALESCE($2, name),
+            description      = COALESCE($3, description),
+            is_sensitive     = COALESCE($4, is_sensitive),
+            status           = COALESCE(upper($5)::projectstatus, status),
+            approval_enabled = COALESCE($6, approval_enabled),
+            owner_user_id    = COALESCE($7, owner_user_id),
+            updated_at       = now()
+        WHERE id = $1
+        "#,
+    )
+    .bind(project_id)
+    .bind(payload.name)
+    .bind(payload.description)
+    .bind(payload.is_sensitive)
+    .bind(payload.status)
+    .bind(payload.approval_enabled)
+    .bind(payload.owner_user_id)
+    .execute(&mut *transaction)
+    .await?;
     if let Some(owner_user_id) = payload.owner_user_id {
-        sqlx::query("UPDATE projects SET owner_user_id = $2, updated_at = now() WHERE id = $1")
-            .bind(project_id)
-            .bind(owner_user_id)
-            .execute(&mut *transaction)
-            .await?;
         ensure_owner_membership(&mut transaction, project_id, owner_user_id).await?;
     }
     audit_project(
@@ -451,29 +433,28 @@ pub(crate) async fn update_project_member_action(
             "Cannot remove your own project manage access",
         ));
     }
-    if let Some(role) = payload.project_role {
-        sqlx::query("UPDATE project_members SET project_role = upper($3)::projectrole WHERE project_id = $1 AND user_id = $2")
-            .bind(project_id).bind(user_id).bind(role).execute(&mut *transaction).await?;
-    }
-    for (column, value) in [
-        ("can_read", payload.can_read),
-        ("can_write", payload.can_write),
-        ("can_review", payload.can_review),
-        ("can_evaluate", payload.can_evaluate),
-        ("can_manage", payload.can_manage),
-    ] {
-        if let Some(value) = value {
-            let query = format!(
-                "UPDATE project_members SET {column} = $3 WHERE project_id = $1 AND user_id = $2"
-            );
-            sqlx::query(&query)
-                .bind(project_id)
-                .bind(user_id)
-                .bind(value)
-                .execute(&mut *transaction)
-                .await?;
-        }
-    }
+    sqlx::query(
+        r#"
+        UPDATE project_members SET
+            project_role = COALESCE(upper($3)::projectrole, project_role),
+            can_read     = COALESCE($4, can_read),
+            can_write    = COALESCE($5, can_write),
+            can_review   = COALESCE($6, can_review),
+            can_evaluate = COALESCE($7, can_evaluate),
+            can_manage   = COALESCE($8, can_manage)
+        WHERE project_id = $1 AND user_id = $2
+        "#,
+    )
+    .bind(project_id)
+    .bind(user_id)
+    .bind(payload.project_role)
+    .bind(payload.can_read)
+    .bind(payload.can_write)
+    .bind(payload.can_review)
+    .bind(payload.can_evaluate)
+    .bind(payload.can_manage)
+    .execute(&mut *transaction)
+    .await?;
     let updated = fetch_membership_in_transaction(&mut transaction, project_id, user_id).await?;
     audit_project(
         &mut transaction,

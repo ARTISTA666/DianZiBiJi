@@ -1,4 +1,4 @@
-use std::{collections::HashMap, convert::Infallible, time::Duration};
+use std::{convert::Infallible, sync::OnceLock, time::Duration};
 
 use axum::{
     extract::{Path, State},
@@ -766,7 +766,7 @@ async fn run_turn(
         json!({"role":"assistant","content":answer,"turn_id":turn_id}),
     )
     .await?;
-    let usage = merge_usage(&usage_values);
+    let usage = crate::rag::merge_usage(&usage_values);
     let status = if awaiting_confirmation {
         "awaiting_confirmation"
     } else {
@@ -813,20 +813,6 @@ fn generation_api_error(error: crate::ai_provider::GenerationError) -> ApiError 
             ApiError::new(axum::http::StatusCode::BAD_GATEWAY, message)
         }
     }
-}
-
-fn merge_usage(values: &[Value]) -> Value {
-    let mut totals = HashMap::<String, u64>::new();
-    for value in values {
-        if let Some(fields) = value.as_object() {
-            for (key, value) in fields {
-                if let Some(number) = value.as_u64() {
-                    *totals.entry(key.clone()).or_default() += number;
-                }
-            }
-        }
-    }
-    json!(totals)
 }
 
 async fn session_events(
@@ -1300,7 +1286,9 @@ async fn execute_confirmed_tool(
 }
 
 fn redact_trace_text(value: &str) -> String {
-    let secret = Regex::new(r"(?i)(password|api[_-]?key|token)\s*[:=]\s*\S+").unwrap();
+    static SECRET: OnceLock<Regex> = OnceLock::new();
+    let secret = SECRET
+        .get_or_init(|| Regex::new(r"(?i)(password|api[_-]?key|token)\s*[:=]\s*\S+").unwrap());
     let redacted = secret.replace_all(value, "$1=[REDACTED]");
     redacted.chars().take(8_000).collect()
 }

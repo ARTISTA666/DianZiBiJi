@@ -21,8 +21,8 @@ use crate::{
     audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{
-        AIExperimentRunRead, AIQueryEvaluationRead, AIQueryEvaluationRequest, BlindReviewQuery,
-        UserRecord,
+        AIExperimentRunRead, AIQueryEvaluationRead, AIQueryEvaluationRequest,
+        BlindReviewBatchLockRequest, BlindReviewQuery, UserRecord,
     },
     permissions::{
         can_access_project, can_evaluate_project, can_manage_project, fetch_project,
@@ -30,6 +30,16 @@ use crate::{
     },
     AppState,
 };
+
+#[derive(Clone, Debug, sqlx::FromRow)]
+struct FormalBlindReviewBatchRow {
+    experiment_run_id: i32,
+    #[allow(dead_code)]
+    freeze_manifest_sha256: String,
+    reviewer_a_user_id: i32,
+    reviewer_b_user_id: i32,
+    status: String,
+}
 
 pub(super) async fn list_blind_batches(
     State(state): State<AppState>,
@@ -52,8 +62,18 @@ pub(super) async fn list_blind_batches(
         .bind(project_id)
         .fetch_all(&state.pool)
         .await?;
+    let formal_batches =
+        fetch_formal_batches_for_runs(&state, &runs.iter().map(|run| run.id).collect::<Vec<_>>())
+            .await?;
     let mut batches = Vec::new();
     for run in runs {
+        if !manager
+            && formal_batches
+                .get(&run.id)
+                .is_some_and(|batch| !is_assigned_reviewer(batch, user.id))
+        {
+            continue;
+        }
         let log_ids: Vec<i32> = sqlx::query_scalar(
             "SELECT id FROM ai_query_logs WHERE experiment_run_id = $1 AND error_message IS NULL",
         )
@@ -101,10 +121,36 @@ pub(super) async fn list_blind_items(
         None
     };
     let logs = fetch_blind_logs(&state, project_id, run_id).await?;
+    let formal_batches = fetch_formal_batches_for_runs(
+        &state,
+        &logs
+            .iter()
+            .filter_map(|log| log.experiment_run_id)
+            .collect::<Vec<_>>(),
+    )
+    .await?;
+    if let Some(run_id) = run_id {
+        if formal_batches
+            .get(&run_id)
+            .is_some_and(|batch| !is_assigned_reviewer(batch, user.id))
+        {
+            return Err(ApiError::new(
+                StatusCode::FORBIDDEN,
+                "This formal blind-review batch is assigned to different reviewers",
+            ));
+        }
+    }
     let log_ids: Vec<i32> = logs.iter().map(|log| log.id).collect();
     let evaluations = fetch_evaluations(&state, &log_ids).await?;
     let mut items = Vec::new();
     for log in logs {
+        if log
+            .experiment_run_id
+            .and_then(|run_id| formal_batches.get(&run_id))
+            .is_some_and(|batch| !is_assigned_reviewer(batch, user.id))
+        {
+            continue;
+        }
         let evaluation = evaluations
             .iter()
             .find(|evaluation| {
@@ -145,7 +191,43 @@ pub(super) async fn evaluate_blind_item(
         .into_iter()
         .find(|log| blind_item_id(&state, project_id, log.id) == normalized)
         .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "Blind-review item not found"))?;
+    if let Some(run_id) = log.experiment_run_id {
+        if let Some(batch) = fetch_formal_batch_for_run(&state, run_id).await? {
+            if !is_assigned_reviewer(&batch, user.id) {
+                return Err(ApiError::new(
+                    StatusCode::FORBIDDEN,
+                    "This formal blind-review batch is assigned to different reviewers",
+                ));
+            }
+        }
+    }
     let mut transaction = state.pool.begin().await?;
+    // Serialize first-rating with formal locking on the experiment run itself.
+    // The authorization/read checks above are intentionally repeated by the
+    // locked batch query below so a concurrent lock cannot be bypassed.
+    if let Some(run_id) = log.experiment_run_id {
+        sqlx::query("SELECT id FROM ai_experiment_runs WHERE id = $1 FOR UPDATE")
+            .bind(run_id)
+            .fetch_one(&mut *transaction)
+            .await?;
+        let formal_batch: Option<FormalBlindReviewBatchRow> = sqlx::query_as(
+            r#"SELECT experiment_run_id, freeze_manifest_sha256,
+                      reviewer_a_user_id, reviewer_b_user_id, status
+               FROM ai_blind_review_batches
+               WHERE experiment_run_id = $1"#,
+        )
+        .bind(run_id)
+        .fetch_optional(&mut *transaction)
+        .await?;
+        if let Some(batch) = formal_batch {
+            if !is_assigned_reviewer(&batch, user.id) {
+                return Err(ApiError::new(
+                    StatusCode::FORBIDDEN,
+                    "This formal blind-review batch is assigned to different reviewers",
+                ));
+            }
+        }
+    }
     let evaluation = sqlx::query_as::<_, AIQueryEvaluationRead>(
         r#"
         INSERT INTO ai_query_evaluations (
@@ -200,6 +282,158 @@ pub(super) async fn evaluate_blind_item(
         "comment": evaluation.comment,
         "updated_at": evaluation.updated_at
     })))
+}
+
+pub(super) async fn lock_blind_batch(
+    State(state): State<AppState>,
+    client: ClientInfo,
+    CurrentUser(user): CurrentUser,
+    Path((project_id, batch_id)): Path<(i32, String)>,
+    Json(payload): Json<BlindReviewBatchLockRequest>,
+) -> Result<(StatusCode, Json<Value>), ApiError> {
+    require_project_access(&state.pool, &user, project_id).await?;
+    require_manager(&state, &user, project_id).await?;
+    let run = find_run_by_batch(&state, project_id, &batch_id)
+        .await?
+        .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "Review batch not found"))?;
+    if run.status != "completed" || run.failed_cases != 0 || run.completed_cases < run.total_cases {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "Only cleanly completed experiment batches can be locked for formal blind review",
+        ));
+    }
+    let mut reviewer_user_ids = payload.reviewer_user_ids;
+    reviewer_user_ids.sort_unstable();
+    reviewer_user_ids.dedup();
+    if reviewer_user_ids.len() != 2 {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "Formal blind review requires exactly two distinct reviewer_user_ids",
+        ));
+    }
+    let freeze_manifest_sha256 = payload.freeze_manifest_sha256.trim().to_ascii_lowercase();
+    if !Regex::new(r"^[a-f0-9]{64}$")
+        .unwrap()
+        .is_match(&freeze_manifest_sha256)
+    {
+        return Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "freeze_manifest_sha256 must be a lowercase SHA-256 digest",
+        ));
+    }
+    let log_ids: Vec<i32> = sqlx::query_scalar(
+        "SELECT id FROM ai_query_logs WHERE experiment_run_id = $1 AND error_message IS NULL",
+    )
+    .bind(run.id)
+    .fetch_all(&state.pool)
+    .await?;
+    if log_ids.is_empty() {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "Cannot lock an empty blind-review batch",
+        ));
+    }
+    let mut transaction = state.pool.begin().await?;
+    sqlx::query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ")
+        .execute(&mut *transaction)
+        .await?;
+    lock_formal_batch_project(&mut transaction, project_id).await?;
+    let locked_run: AIExperimentRunRead = sqlx::query_as(&format!(
+        "SELECT {EXPERIMENT_COLUMNS} FROM ai_experiment_runs WHERE id = $1 AND project_id = $2 FOR UPDATE"
+    ))
+    .bind(run.id)
+    .bind(project_id)
+    .fetch_optional(&mut *transaction)
+    .await?
+    .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "Review batch not found"))?;
+    if locked_run.status != "completed"
+        || locked_run.failed_cases != 0
+        || locked_run.completed_cases < locked_run.total_cases
+    {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "Only cleanly completed experiment batches can be locked for formal blind review",
+        ));
+    }
+    let existing: Option<i32> = sqlx::query_scalar(
+        "SELECT id FROM ai_blind_review_batches WHERE experiment_run_id = $1 FOR UPDATE",
+    )
+    .bind(run.id)
+    .fetch_optional(&mut *transaction)
+    .await?;
+    if existing.is_some() {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "This blind-review batch has already been locked",
+        ));
+    }
+    let masked_count: i64 = sqlx::query_scalar(
+        "SELECT count(*) FROM ai_query_evaluations WHERE query_log_id = ANY($1) AND review_protocol = 'method_masked'",
+    )
+    .bind(&log_ids)
+    .fetch_one(&mut *transaction)
+    .await?;
+    if masked_count > 0 {
+        return Err(ApiError::new(
+            StatusCode::CONFLICT,
+            "Cannot lock a blind-review batch after method-masked ratings have started",
+        ));
+    }
+    for reviewer_user_id in &reviewer_user_ids {
+        if !formal_batch_reviewer_eligible(&mut transaction, project_id, *reviewer_user_id).await? {
+            return Err(ApiError::new(
+                StatusCode::CONFLICT,
+                format!("User {reviewer_user_id} is not an eligible independent reviewer for this project"),
+            ));
+        }
+    }
+    sqlx::query(
+        r#"
+        INSERT INTO ai_blind_review_batches (
+            project_id, experiment_run_id, freeze_manifest_sha256,
+            reviewer_a_user_id, reviewer_b_user_id, status, created_by, created_at
+        )
+        VALUES ($1, $2, $3, $4, $5, 'LOCKED', $6, now())
+        "#,
+    )
+    .bind(project_id)
+    .bind(run.id)
+    .bind(&freeze_manifest_sha256)
+    .bind(reviewer_user_ids[0])
+    .bind(reviewer_user_ids[1])
+    .bind(user.id)
+    .execute(&mut *transaction)
+    .await?;
+    write_audit(
+        &mut *transaction,
+        AuditEvent {
+            actor_user_id: Some(user.id),
+            project_id: Some(project_id),
+            action: "lock_blind_review_batch",
+            target_type: Some("ai_experiment_run"),
+            target_id: Some(run.id),
+            detail: json!({
+                "batch_id": batch_id.to_uppercase(),
+                "status": "LOCKED",
+                "reviewer_user_ids": reviewer_user_ids,
+                "freeze_manifest_sha256": freeze_manifest_sha256
+            }),
+            ip_address: client.ip_opt().map(str::to_owned),
+            user_agent: client.ua_opt().map(str::to_owned),
+        },
+    )
+    .await?;
+    transaction.commit().await?;
+    Ok((
+        StatusCode::CREATED,
+        Json(json!({
+            "batch_id": batch_id.to_uppercase(),
+            "status": "LOCKED",
+            "reviewer_user_ids": reviewer_user_ids,
+            "freeze_manifest_sha256": freeze_manifest_sha256,
+            "total_items": log_ids.len()
+        })),
+    ))
 }
 
 pub(super) async fn export_blind_batch(
@@ -257,6 +491,22 @@ pub(super) async fn export_blind_batch(
             StatusCode::CONFLICT,
             "Blind-review batch uses inconsistent reviewer sets",
         ));
+    }
+    if let Some(batch) = fetch_formal_batch_for_run(&state, run.id).await? {
+        let expected = assigned_reviewer_ids(&batch);
+        let actual = reviewer_sets.first().cloned().unwrap_or_default();
+        if batch.status != "LOCKED" {
+            return Err(ApiError::new(
+                StatusCode::CONFLICT,
+                "Only LOCKED formal blind-review batches can be exported",
+            ));
+        }
+        if actual != expected {
+            return Err(ApiError::new(
+                StatusCode::CONFLICT,
+                "Blind-review batch ratings do not match the locked reviewer assignment",
+            ));
+        }
     }
     write_audit(
         &state.pool,
@@ -555,6 +805,108 @@ async fn completed_masked_items(
         }
     }
     Ok((completed, sets))
+}
+
+async fn fetch_formal_batch_for_run(
+    state: &AppState,
+    run_id: i32,
+) -> Result<Option<FormalBlindReviewBatchRow>, ApiError> {
+    Ok(sqlx::query_as::<_, FormalBlindReviewBatchRow>(
+        r#"
+        SELECT experiment_run_id, freeze_manifest_sha256,
+               reviewer_a_user_id, reviewer_b_user_id, status
+        FROM ai_blind_review_batches
+        WHERE experiment_run_id = $1
+        "#,
+    )
+    .bind(run_id)
+    .fetch_optional(&state.pool)
+    .await?)
+}
+
+async fn fetch_formal_batches_for_runs(
+    state: &AppState,
+    run_ids: &[i32],
+) -> Result<std::collections::HashMap<i32, FormalBlindReviewBatchRow>, ApiError> {
+    if run_ids.is_empty() {
+        return Ok(std::collections::HashMap::new());
+    }
+    let rows = sqlx::query_as::<_, FormalBlindReviewBatchRow>(
+        r#"
+        SELECT experiment_run_id, freeze_manifest_sha256,
+               reviewer_a_user_id, reviewer_b_user_id, status
+        FROM ai_blind_review_batches
+        WHERE experiment_run_id = ANY($1)
+        "#,
+    )
+    .bind(run_ids)
+    .fetch_all(&state.pool)
+    .await?;
+    Ok(rows
+        .into_iter()
+        .map(|row| (row.experiment_run_id, row))
+        .collect())
+}
+
+fn assigned_reviewer_ids(batch: &FormalBlindReviewBatchRow) -> Vec<i32> {
+    let mut reviewers = vec![batch.reviewer_a_user_id, batch.reviewer_b_user_id];
+    reviewers.sort_unstable();
+    reviewers
+}
+
+fn is_assigned_reviewer(batch: &FormalBlindReviewBatchRow, user_id: i32) -> bool {
+    assigned_reviewer_ids(batch).contains(&user_id)
+}
+
+async fn lock_formal_batch_project(
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    project_id: i32,
+) -> Result<(), ApiError> {
+    sqlx::query("SELECT pg_advisory_xact_lock($1, $2)")
+        .bind(8742_i64)
+        .bind(project_id)
+        .fetch_one(&mut **transaction)
+        .await?;
+    Ok(())
+}
+
+async fn formal_batch_reviewer_eligible(
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    project_id: i32,
+    user_id: i32,
+) -> Result<bool, ApiError> {
+    let exists: Option<i32> = sqlx::query_scalar(
+        "SELECT id FROM users WHERE id = $1 FOR NO KEY UPDATE /* blind_batch_reviewer_lock */",
+    )
+    .bind(user_id)
+    .fetch_optional(&mut **transaction)
+    .await?;
+    if exists.is_none() {
+        return Err(ApiError::new(StatusCode::NOT_FOUND, "User not found"));
+    }
+    Ok(sqlx::query_scalar(
+        r#"
+        SELECT EXISTS(
+            SELECT 1
+            FROM project_members pm
+            JOIN project_reviewers pr
+              ON pr.project_id = pm.project_id
+             AND pr.user_id = pm.user_id
+            WHERE pm.project_id = $1
+              AND pm.user_id = $2
+              AND pm.project_role = 'REVIEWER'::projectrole
+              AND pm.can_read = false
+              AND pm.can_write = false
+              AND pm.can_review = false
+              AND pm.can_evaluate = true
+              AND pm.can_manage = false
+        )
+        "#,
+    )
+    .bind(project_id)
+    .bind(user_id)
+    .fetch_one(&mut **transaction)
+    .await?)
 }
 
 async fn final_maturity_gate_hash() -> Option<String> {

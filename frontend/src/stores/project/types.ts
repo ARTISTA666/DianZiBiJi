@@ -26,7 +26,7 @@ export type ProjectUpdatePayload = { name?: string; description?: string | null;
 export type MemberAddPayload = { user_id: number; project_role: string; can_read: boolean; can_write: boolean; can_review: boolean; can_evaluate: boolean; can_manage: boolean };
 export type MemberUpdatePayload = { project_role?: string; can_read?: boolean; can_write?: boolean; can_review?: boolean; can_evaluate?: boolean; can_manage?: boolean };
 
-export type ExperimentPayload = { name: string; questions: string[]; modes?: string[]; repetitions?: number; randomize_order?: boolean; random_seed?: number | null };
+export type ExperimentPayload = { name: string; questions: string[]; modes?: string[]; repetitions?: number; randomize_order?: boolean; random_seed?: number | null; expected_corpus_snapshot_hash?: string | null; expected_graph_snapshot_hash?: string | null };
 export type AgentPayload = { task_type: string; date_from?: string | null; date_to?: string | null };
 
 export type BlindReviewEvalPayload = { score: number; is_accurate: boolean; is_traceable: boolean; comment?: string | null };
