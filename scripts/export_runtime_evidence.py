@@ -304,8 +304,11 @@ def export(
     registry_digest = registry_repo_digest(repo_digests)
     image_digest = image_id
     oci_revision = image_projection_value["Labels"].get("org.opencontainers.image.revision")
-    if not isinstance(oci_revision, str) or oci_revision != head or endpoint_revision != head:
-        raise RuntimeError("checkout HEAD, OCI revision label, and endpoint revision must match")
+    # R identifies the deployed runtime source (endpoint + OCI image).  T is
+    # only the clean checkout used to resolve the experiment tooling/Compose
+    # input and is intentionally allowed to differ from R.
+    if not isinstance(oci_revision, str) or oci_revision != endpoint_revision:
+        raise RuntimeError("OCI revision label and endpoint runtime source revision must match")
     if container.get("Image") != image_id:
         raise RuntimeError("container image ID does not match inspected image ID")
     runtime = runtime_projection(metrics)
@@ -326,6 +329,7 @@ def export(
             "canonical_bytes": len(resolved_compose_canonical),
             "canonical_sha256": sha256_bytes(resolved_compose_canonical),
             "build_revision": head,
+            "experiment_tooling_revision": head,
         },
     }
     runtime_config = {
@@ -333,9 +337,11 @@ def export(
         "schema": "full-system.rust-runtime-config-evidence",
         "schema_version": 1,
         "captured_at": datetime.now(timezone.utc).isoformat(),
-        "build_revision": head,
-        "app_revision": head,
-        "runtime_revision": head,
+        "build_revision": endpoint_revision,
+        "runtime_source_revision": endpoint_revision,
+        "app_revision": endpoint_revision,
+        "runtime_revision": endpoint_revision,
+        "experiment_tooling_revision": head,
         "runtime": "rust-axum",
         "secrets_disclosed": False,
         "container_inspect_projection": {
@@ -352,9 +358,11 @@ def export(
         "schema": "full-system.rust-container-image-evidence",
         "schema_version": 2,
         "captured_at": datetime.now(timezone.utc).isoformat(),
-        "build_revision": head,
-        "app_revision": head,
-        "runtime_revision": head,
+        "build_revision": endpoint_revision,
+        "runtime_source_revision": endpoint_revision,
+        "app_revision": endpoint_revision,
+        "runtime_revision": endpoint_revision,
+        "experiment_tooling_revision": head,
         "runtime": "rust-axum",
         "secrets_disclosed": False,
         "image_digest": image_digest,
@@ -382,9 +390,11 @@ def export(
     atomic_write(config_path, runtime_config)
     atomic_write(output_dir / "container-image-latest.json", container_image)
     return {
-        "app_revision": head,
-        "build_revision": head,
-        "runtime_revision": head,
+        "runtime_source_revision": endpoint_revision,
+        "app_revision": endpoint_revision,
+        "build_revision": endpoint_revision,
+        "runtime_revision": endpoint_revision,
+        "experiment_tooling_revision": head,
         "oci_revision": oci_revision,
         "endpoint_revision": endpoint_revision,
         "image_digest": image_digest,

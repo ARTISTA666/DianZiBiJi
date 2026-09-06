@@ -120,6 +120,7 @@ def test_update_document_exposes_contract_without_dropping_existing_schemas() ->
         "generation_model",
         "questions_sha256",
         "corpus_snapshot_hash",
+        "graph_snapshot_hash",
         "rag_index_version",
         "graph_schema_version",
     ]

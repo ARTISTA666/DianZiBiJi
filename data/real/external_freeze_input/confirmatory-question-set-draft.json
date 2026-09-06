@@ -1,0 +1,1216 @@
+{
+  "freeze_protocol": "confirmatory_human_review_v1",
+  "version": "draft-corpus-2026-08-21",
+  "status_note": "DRAFT corpus only. reviewers array intentionally empty — blocked on the same external blocker as the human blind review (two independent evaluators with can_evaluate=true). Corpus fields (projects, questions, methods, model, prompt_version, random_seed, files) are complete and ready to freeze once reviewers are assigned.",
+  "projects": [
+    {
+      "project_id": "GSE291942",
+      "name": "拟南芥 PRMT5 高温胁迫 RNA-seq",
+      "species": "Arabidopsis thaliana",
+      "sample_count": 18,
+      "corpus": "data/real/GSE291942_arabidopsis_heat/GSE291942_knowledge_document.txt"
+    },
+    {
+      "project_id": "GSE306433",
+      "name": "小鼠结肠炎基质细胞 RNA-seq",
+      "species": "Mus musculus",
+      "sample_count": 6,
+      "corpus": "data/real/GSE306433_colitis/GSE306433_knowledge_document.txt"
+    },
+    {
+      "project_id": "GSE111619",
+      "name": "人肺癌细胞系 p63 敲低 RNA-seq（历史题集沿用）",
+      "species": "Homo sapiens",
+      "sample_count": 4,
+      "corpus": "data/real/GSE111619/gse111619_questions.json"
+    }
+  ],
+  "methods": [
+    "pure_llm",
+    "bm25_rag",
+    "project_rag",
+    "structured_query",
+    "kg_enhanced_rag"
+  ],
+  "model": "deepseek-v4-flash",
+  "ai_base_url": "https://api.deepseek.com",
+  "embedding_model": "BAAI/bge-m3",
+  "embedding_dimension": 1024,
+  "prompt_version": "rag-v9-source-and-graph-citations",
+  "random_seed": 20260821,
+  "reviewers": [],
+  "files": [
+    {
+      "path": "data/real/GSE291942_arabidopsis_heat/GSE291942_knowledge_document.txt",
+      "sha256": "7d896d3ae1ee696fb8da40a1e243bf8ccc26b05ea725d4cc4f79efb8d02ad0c0"
+    },
+    {
+      "path": "data/real/GSE291942_arabidopsis_heat/GSE291942_samples.csv",
+      "sha256": "8a6e06b044a7c196d5daa7d688617251071e57a5f19430dbe7e3404e889a113e"
+    },
+    {
+      "path": "data/real/GSE291942_arabidopsis_heat/GSE291942_expression_summary.txt",
+      "sha256": "ea26d91195b00ac43be008ef392d07c902fe0db15f3adfbb263fbbc09aac2280"
+    },
+    {
+      "path": "data/real/GSE306433_colitis/GSE306433_knowledge_document.txt",
+      "sha256": "50df50844934eef33958e848b74ed964543782f16df3c98edebd3e0f33b45f0d"
+    },
+    {
+      "path": "data/real/GSE306433_colitis/GSE306433_samples.csv",
+      "sha256": "b78f496445ed3cfb2a68014310ac4a610fca1663428dd7bb23586bf8c542898b"
+    },
+    {
+      "path": "data/real/GSE111619/gse111619_questions.json",
+      "sha256": "f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a"
+    }
+  ],
+  "questions": [
+    {
+      "project_id": "GSE291942",
+      "question_index": 1,
+      "question_id": "A291-01",
+      "category": "study_identity",
+      "question": "GSE291942 的研究标题是什么？",
+      "gold_facts": [
+        {
+          "label": "Transcriptome analysis of PRMT5 in Arabidopsis thaliana group to regulate high temperature stress response"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 2,
+      "question_id": "A291-02",
+      "category": "study_identity",
+      "question": "GSE291942 研究的物种是什么？",
+      "gold_facts": [
+        {
+          "label": "Arabidopsis thaliana"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 3,
+      "question_id": "A291-03",
+      "category": "study_identity",
+      "question": "GSE291942 的数据来源 URL 是哪一个？",
+      "gold_facts": [
+        {
+          "label": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE291942"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 4,
+      "question_id": "A291-04",
+      "category": "platform",
+      "question": "GSE291942 使用了哪个测序平台？",
+      "gold_facts": [
+        {
+          "label": "Illumina NovaSeq 6000"
+        },
+        {
+          "label": "GPL26208"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 5,
+      "question_id": "A291-05",
+      "category": "platform",
+      "question": "GSE291942 的提交机构是哪个？",
+      "gold_facts": [
+        {
+          "label": "Yunnan University"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 6,
+      "question_id": "A291-06",
+      "category": "sample_set",
+      "question": "GSE291942 一共包含多少个样本？",
+      "gold_facts": [
+        {
+          "label": "18",
+          "aliases": [
+            "18 个样本"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 7,
+      "question_id": "A291-07",
+      "category": "sample_set",
+      "question": "请列出 GSE291942 中 22℃ 对照组 WT 的三个 GEO 样本登录号。",
+      "gold_facts": [
+        {
+          "label": "GSM8844827"
+        },
+        {
+          "label": "GSM8844828"
+        },
+        {
+          "label": "GSM8844829"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 8,
+      "question_id": "A291-08",
+      "category": "sample_set",
+      "question": "请列出 GSE291942 中 PRMT5 T-insert 突变体 37℃ 处理组的三个 GEO 样本登录号。",
+      "gold_facts": [
+        {
+          "label": "GSM8844836"
+        },
+        {
+          "label": "GSM8844837"
+        },
+        {
+          "label": "GSM8844838"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 9,
+      "question_id": "A291-09",
+      "category": "design",
+      "question": "GSE291942 的实验设计包含哪两种基因型？",
+      "gold_facts": [
+        {
+          "label": "WT"
+        },
+        {
+          "label": "PRMT5 T-insert",
+          "aliases": [
+            "PRMT5 T-insert 突变体"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 10,
+      "question_id": "A291-10",
+      "category": "design",
+      "question": "GSE291942 研究了哪三种温度/恢复条件？",
+      "gold_facts": [
+        {
+          "label": "22℃ 对照 CO"
+        },
+        {
+          "label": "37℃ 处理 3 天 RH"
+        },
+        {
+          "label": "37℃ 处理 3 天后恢复 24 小时 R24"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 11,
+      "question_id": "A291-11",
+      "category": "design",
+      "question": "GSE291942 每个条件下有几个生物学重复？",
+      "gold_facts": [
+        {
+          "label": "3",
+          "aliases": [
+            "每组 3 个生物学重复"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 12,
+      "question_id": "A291-12",
+      "category": "matrix_column",
+      "question": "GSM8844830 对应的 TPM 矩阵列名是什么？",
+      "gold_facts": [
+        {
+          "label": "WT_RH_1"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 13,
+      "question_id": "A291-13",
+      "category": "matrix_column",
+      "question": "PR_CO_2 这个矩阵列对应哪个 GEO 样本登录号？",
+      "gold_facts": [
+        {
+          "label": "GSM8844834"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 14,
+      "question_id": "A291-14",
+      "category": "numeric_summary",
+      "question": "GSE291942 TPM 矩阵中全矩阵最高表达的单基因是什么？其最高 TPM 是多少？",
+      "gold_facts": [
+        {
+          "label": "AT1G67090"
+        },
+        {
+          "label": "max_tpm=21125.30"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 15,
+      "question_id": "A291-15",
+      "category": "numeric_summary",
+      "question": "GSE291942 的 TPM 矩阵共包含多少个基因？",
+      "gold_facts": [
+        {
+          "label": "37916"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 16,
+      "question_id": "A291-16",
+      "category": "numeric_summary",
+      "question": "GSE291942 中 WT 在 37℃ 3 天（WT_RH）条件下的平均总 TPM 大约是多少？",
+      "gold_facts": [
+        {
+          "label": "mean_total_tpm=1000000.5"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 17,
+      "question_id": "A291-17",
+      "category": "processing",
+      "question": "GSE291942 的表达定量使用什么方法？参考基因组/注释是什么？",
+      "gold_facts": [
+        {
+          "label": "RSEM"
+        },
+        {
+          "label": "TAIR10.1"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 18,
+      "question_id": "A291-18",
+      "category": "processing",
+      "question": "GSE291942 的建库方法（建库试剂盒）是什么？",
+      "gold_facts": [
+        {
+          "label": "Illumina TruSeq RNA sample prep Kit"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 19,
+      "question_id": "A291-19",
+      "category": "data_boundary",
+      "question": "GSE291942 语料的数据边界是什么？",
+      "gold_facts": [
+        {
+          "label": "NCBI GEO 公开的 RNA-seq 元数据与 TPM 表达矩阵，不是本地实验室原始笔记，也不是原始 FASTQ 读段"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE291942",
+      "question_index": 20,
+      "question_id": "A291-20",
+      "category": "summary",
+      "question": "用一句话概括 GSE291942 研究了什么？",
+      "gold_facts": [
+        {
+          "label": "研究 WT 与 PRMT5 T-insert 突变体拟南芥幼苗在高温胁迫及恢复条件下的转录组差异表达"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 21,
+      "question_id": "A306-01",
+      "category": "study_identity",
+      "question": "GSE306433 的研究标题是什么？",
+      "gold_facts": [
+        {
+          "label": "The IL-10/IL-10Ra axis in fibroblasts limits large intestinal pathology by suppressing type I interferon signaling [RNA-Seq]"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 22,
+      "question_id": "A306-02",
+      "category": "study_identity",
+      "question": "GSE306433 研究的物种是什么？",
+      "gold_facts": [
+        {
+          "label": "Mus musculus",
+          "aliases": [
+            "小鼠"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 23,
+      "question_id": "A306-03",
+      "category": "study_identity",
+      "question": "GSE306433 关联的 BioProject 是哪一个？",
+      "gold_facts": [
+        {
+          "label": "PRJNA1310619"
+        },
+        {
+          "label": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1310619"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 24,
+      "question_id": "A306-04",
+      "category": "platform",
+      "question": "GSE306433 使用了哪个测序平台？",
+      "gold_facts": [
+        {
+          "label": "Illumina NovaSeq 6000"
+        },
+        {
+          "label": "GPL24247"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 25,
+      "question_id": "A306-05",
+      "category": "platform",
+      "question": "GSE306433 的提交机构是哪个？",
+      "gold_facts": [
+        {
+          "label": "Osaka University",
+          "aliases": [
+            "NGS core facility, Research Institute for Microbial Diseases, Osaka University"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 26,
+      "question_id": "A306-06",
+      "category": "sample_set",
+      "question": "GSE306433 一共包含多少个样本？",
+      "gold_facts": [
+        {
+          "label": "6"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 27,
+      "question_id": "A306-07",
+      "category": "sample_set",
+      "question": "请列出 GSE306433 中对照组（Il10ra flox/flox）的三个 GEO 样本登录号。",
+      "gold_facts": [
+        {
+          "label": "GSM9199594"
+        },
+        {
+          "label": "GSM9199595"
+        },
+        {
+          "label": "GSM9199596"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 28,
+      "question_id": "A306-08",
+      "category": "sample_set",
+      "question": "请列出 GSE306433 中成纤维细胞特异性 Il10ra 敲除组（Pdgfra cre; Il10ra flox/flox）的三个 GEO 样本登录号。",
+      "gold_facts": [
+        {
+          "label": "GSM9199597"
+        },
+        {
+          "label": "GSM9199598"
+        },
+        {
+          "label": "GSM9199599"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 29,
+      "question_id": "A306-09",
+      "category": "design",
+      "question": "GSE306433 的实验包含哪两组基因型？",
+      "gold_facts": [
+        {
+          "label": "Il10ra flox/flox（对照）"
+        },
+        {
+          "label": "Pdgfra cre; Il10ra flox/flox（成纤维细胞特异性 Il10ra 敲除 cKO）"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 30,
+      "question_id": "A306-10",
+      "category": "design",
+      "question": "GSE306433 实验的组织来源和细胞类型是什么？",
+      "gold_facts": [
+        {
+          "label": "大肠组织（Large intestine）"
+        },
+        {
+          "label": "FACS 分选的活基质细胞（Stromal cell）"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 31,
+      "question_id": "A306-11",
+      "category": "design",
+      "question": "GSE306433 用什么标志物组合通过 FACS 分选活基质细胞？",
+      "gold_facts": [
+        {
+          "label": "Podoplanin+ CD45- CD31- EpCAM- 7AAD-"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 32,
+      "question_id": "A306-12",
+      "category": "design",
+      "question": "GSE306433 是如何诱导结肠炎的？",
+      "gold_facts": [
+        {
+          "label": "1% DSS 诱导结肠炎"
+        },
+        {
+          "label": "12 周龄小鼠"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 33,
+      "question_id": "A306-13",
+      "category": "numeric_summary",
+      "question": "GSE306433 中 GSM9199594 的总检测基因数和非零基因行数分别是多少？",
+      "gold_facts": [
+        {
+          "label": "gene_count=24346"
+        },
+        {
+          "label": "nonzero_gene_rows=14621"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 34,
+      "question_id": "A306-14",
+      "category": "numeric_summary",
+      "question": "GSE306433 中 GSM9199597（cKO13）的最高 FPKM 基因是什么？最高 FPKM 是多少？",
+      "gold_facts": [
+        {
+          "label": "Gsn"
+        },
+        {
+          "label": "max_fpkm=10744.20"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 35,
+      "question_id": "A306-15",
+      "category": "numeric_summary",
+      "question": "GSE306433 中 GSM9199598（cKO23）表达前 5 的基因有哪些？",
+      "gold_facts": [
+        {
+          "label": "Gsn:11339.40"
+        },
+        {
+          "label": "Dcn:11260.80"
+        },
+        {
+          "label": "Fth1:7649.57"
+        },
+        {
+          "label": "B2m:6530.91"
+        },
+        {
+          "label": "Ifitm3:6450.30"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 36,
+      "question_id": "A306-16",
+      "category": "processing",
+      "question": "GSE306433 的 RNA 提取和 cDNA 制备分别使用什么试剂盒？",
+      "gold_facts": [
+        {
+          "label": "miRNeasy Micro Kit（Qiagen）用于 RNA 提取"
+        },
+        {
+          "label": "SMART-Seq HT Kit（Takara Bio）用于 cDNA 制备"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 37,
+      "question_id": "A306-17",
+      "category": "processing",
+      "question": "GSE306433 的比对和表达定量使用了哪些工具和参考基因组？",
+      "gold_facts": [
+        {
+          "label": "TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18"
+        },
+        {
+          "label": "Cuffdiff 2.2.1 计算 FPKM"
+        },
+        {
+          "label": "mm10 参考基因组"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 38,
+      "question_id": "A306-18",
+      "category": "identifier_relation",
+      "question": "GSE306433 中 GSM9199594 对应的 BioSample 登录号和 SRA 实验号分别是什么？",
+      "gold_facts": [
+        {
+          "label": "SAMN50779860"
+        },
+        {
+          "label": "SRX30236945"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 39,
+      "question_id": "A306-19",
+      "category": "data_boundary",
+      "question": "GSE306433 语料的数据边界是什么？",
+      "gold_facts": [
+        {
+          "label": "NCBI GEO 公开的 RNA-seq 元数据与 FPKM 表达矩阵，不是本地实验室原始笔记，也不是原始 FASTQ 读段"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE306433",
+      "question_index": 40,
+      "question_id": "A306-20",
+      "category": "summary",
+      "question": "用一句话概括 GSE306433 研究了什么？",
+      "gold_facts": [
+        {
+          "label": "研究成纤维细胞中 IL-10/IL-10Ra 轴通过抑制 I 型干扰素信号限制大肠炎症的机制，并用 RNA-seq 比较对照与成纤维细胞特异性 Il10ra 敲除小鼠的基质细胞"
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 41,
+      "question_id": "Q01",
+      "category": "sample_set",
+      "question": "GSE111619 包含哪些样本？请列出全部 GEO 样本登录号。",
+      "gold_facts": [
+        {
+          "label": "GSM3035185",
+          "aliases": [
+            "GSM3035185"
+          ]
+        },
+        {
+          "label": "GSM3035186",
+          "aliases": [
+            "GSM3035186"
+          ]
+        },
+        {
+          "label": "GSM3035187",
+          "aliases": [
+            "GSM3035187"
+          ]
+        },
+        {
+          "label": "GSM3035188",
+          "aliases": [
+            "GSM3035188"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 42,
+      "question_id": "Q02",
+      "category": "sample_group",
+      "question": "哪些样本属于 p63 敲低组？",
+      "gold_facts": [
+        {
+          "label": "GSM3035187",
+          "aliases": [
+            "GSM3035187"
+          ]
+        },
+        {
+          "label": "GSM3035188",
+          "aliases": [
+            "GSM3035188"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 43,
+      "question_id": "Q03",
+      "category": "sample_group",
+      "question": "哪些样本属于非靶向 shRNA 对照组？",
+      "gold_facts": [
+        {
+          "label": "GSM3035185",
+          "aliases": [
+            "GSM3035185"
+          ]
+        },
+        {
+          "label": "GSM3035186",
+          "aliases": [
+            "GSM3035186"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 44,
+      "question_id": "Q04",
+      "category": "sample_mapping",
+      "question": "HTSeq 计数矩阵的四个样本列名分别是什么？",
+      "gold_facts": [
+        {
+          "label": "NonTargeting_rep1",
+          "aliases": [
+            "NonTargeting_rep1"
+          ]
+        },
+        {
+          "label": "NonTargeting_rep2",
+          "aliases": [
+            "NonTargeting_rep2"
+          ]
+        },
+        {
+          "label": "p63KD_rep1",
+          "aliases": [
+            "p63KD_rep1"
+          ]
+        },
+        {
+          "label": "p63KD_rep2",
+          "aliases": [
+            "p63KD_rep2"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 45,
+      "question_id": "Q05",
+      "category": "study_design",
+      "question": "GSE111619 的分组设计和生物学重复数量是什么？",
+      "gold_facts": [
+        {
+          "label": "非靶向 shRNA 对照",
+          "aliases": [
+            "非靶向 shRNA 对照",
+            "non-targeting shRNA control",
+            "对照组（Control）",
+            "对照组 (Control)"
+          ]
+        },
+        {
+          "label": "p63 靶向 shRNA",
+          "aliases": [
+            "p63 靶向 shRNA",
+            "p63-targeting shRNA",
+            "p63 敲低组",
+            "p63_knockdown"
+          ]
+        },
+        {
+          "label": "每组两个生物学重复",
+          "aliases": [
+            "每组两个生物学重复",
+            "每组 2 个生物学重复",
+            "每组包含两个生物学重复",
+            "每组包含 2 个生物学重复",
+            "two biological replicates per group"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 46,
+      "question_id": "Q06",
+      "category": "biological_source",
+      "question": "该研究使用了什么细胞系和细胞类型？",
+      "gold_facts": [
+        {
+          "label": "H226",
+          "aliases": [
+            "H226"
+          ]
+        },
+        {
+          "label": "lung squamous cell carcinoma",
+          "aliases": [
+            "lung squamous cell carcinoma",
+            "肺鳞状细胞癌"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 47,
+      "question_id": "Q07",
+      "category": "culture_condition",
+      "question": "样本接受了什么处理，并在什么培养条件下培养多久？",
+      "gold_facts": [
+        {
+          "label": "1 µg/mL doxycycline",
+          "aliases": [
+            "1 µg/mL doxycycline",
+            "1 μg/mL doxycycline",
+            "1 microgram per mL doxycycline"
+          ]
+        },
+        {
+          "label": "37°C",
+          "aliases": [
+            "37°C",
+            "37 °C"
+          ]
+        },
+        {
+          "label": "5% CO2",
+          "aliases": [
+            "5% CO2",
+            "5% CO₂"
+          ]
+        },
+        {
+          "label": "6 days",
+          "aliases": [
+            "6 days",
+            "6 天"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 48,
+      "question_id": "Q08",
+      "category": "library_material",
+      "question": "RNA 提取和文库构建使用了哪些主要试剂盒？",
+      "gold_facts": [
+        {
+          "label": "PureLink RNA Mini kit",
+          "aliases": [
+            "PureLink RNA Mini kit"
+          ]
+        },
+        {
+          "label": "TruSeq Stranded mRNA Library Prep Kit",
+          "aliases": [
+            "TruSeq Stranded mRNA Library Prep Kit"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 49,
+      "question_id": "Q09",
+      "category": "instrument",
+      "question": "该实验记录中使用了哪些主要仪器或检测芯片？",
+      "gold_facts": [
+        {
+          "label": "Illumina HiSeq 2500",
+          "aliases": [
+            "Illumina HiSeq 2500",
+            "HiSeq 2500"
+          ]
+        },
+        {
+          "label": "Bioanalyzer RNA Pico chips",
+          "aliases": [
+            "Bioanalyzer RNA Pico chips",
+            "RNA Pico chips"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 50,
+      "question_id": "Q10",
+      "category": "library_strategy",
+      "question": "测序分子类型和文库策略分别是什么？",
+      "gold_facts": [
+        {
+          "label": "polyA RNA",
+          "aliases": [
+            "polyA RNA",
+            "Poly(A)+ RNA",
+            "poly(A) RNA"
+          ]
+        },
+        {
+          "label": "RNA-Seq",
+          "aliases": [
+            "RNA-Seq",
+            "RNA seq"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 51,
+      "question_id": "Q11",
+      "category": "processing_pipeline",
+      "question": "序列比对、参考基因组和基因计数分别使用了什么工具或版本？",
+      "gold_facts": [
+        {
+          "label": "TopHat2",
+          "aliases": [
+            "TopHat2",
+            "TopHat 2"
+          ]
+        },
+        {
+          "label": "GRCh37/hg19",
+          "aliases": [
+            "GRCh37/hg19",
+            "GRCh37",
+            "hg19"
+          ]
+        },
+        {
+          "label": "HTSeq v0.6.1",
+          "aliases": [
+            "HTSeq v0.6.1",
+            "HTSeq 0.6.1"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 52,
+      "question_id": "Q12",
+      "category": "processing_pipeline",
+      "question": "元数据记录的完整处理软件链包括哪些工具？",
+      "gold_facts": [
+        {
+          "label": "bcl2fastq",
+          "aliases": [
+            "bcl2fastq"
+          ]
+        },
+        {
+          "label": "FASTQC",
+          "aliases": [
+            "FASTQC",
+            "FastQC"
+          ]
+        },
+        {
+          "label": "TopHat2",
+          "aliases": [
+            "TopHat2",
+            "TopHat 2"
+          ]
+        },
+        {
+          "label": "SAMtools",
+          "aliases": [
+            "SAMtools"
+          ]
+        },
+        {
+          "label": "Picard",
+          "aliases": [
+            "Picard"
+          ]
+        },
+        {
+          "label": "RSeQC",
+          "aliases": [
+            "RSeQC"
+          ]
+        },
+        {
+          "label": "HTSeq",
+          "aliases": [
+            "HTSeq"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 53,
+      "question_id": "Q13",
+      "category": "quality_control",
+      "question": "RNA 质量记录中的 RIN 要求是什么？",
+      "gold_facts": [
+        {
+          "label": "RIN > 9",
+          "aliases": [
+            "RIN > 9",
+            "RIN>9",
+            "RIN 大于 9"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 54,
+      "question_id": "Q14",
+      "category": "numeric_result",
+      "question": "两个非靶向对照样本的总基因计数分别是多少？",
+      "gold_facts": [
+        {
+          "label": "53924761",
+          "aliases": [
+            "53924761",
+            "53,924,761"
+          ]
+        },
+        {
+          "label": "52016366",
+          "aliases": [
+            "52016366",
+            "52,016,366"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 55,
+      "question_id": "Q15",
+      "category": "numeric_result",
+      "question": "两个 p63 敲低样本的总基因计数分别是多少？",
+      "gold_facts": [
+        {
+          "label": "53416511",
+          "aliases": [
+            "53416511",
+            "53,416,511"
+          ]
+        },
+        {
+          "label": "51926832",
+          "aliases": [
+            "51926832",
+            "51,926,832"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 56,
+      "question_id": "Q16",
+      "category": "numeric_result",
+      "question": "四个样本各自检测到的非零基因行数是多少？",
+      "gold_facts": [
+        {
+          "label": "17926",
+          "aliases": [
+            "17926",
+            "17,926"
+          ]
+        },
+        {
+          "label": "17953",
+          "aliases": [
+            "17953",
+            "17,953"
+          ]
+        },
+        {
+          "label": "18137",
+          "aliases": [
+            "18137",
+            "18,137"
+          ]
+        },
+        {
+          "label": "18092",
+          "aliases": [
+            "18092",
+            "18,092"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 57,
+      "question_id": "Q17",
+      "category": "numeric_result",
+      "question": "HTSeq 计数矩阵共有多少个基因条目？",
+      "gold_facts": [
+        {
+          "label": "25369",
+          "aliases": [
+            "25369",
+            "25,369"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 58,
+      "question_id": "Q18",
+      "category": "external_identifier",
+      "question": "四个 GEO 样本分别对应哪些 SRA 实验登录号？",
+      "gold_facts": [
+        {
+          "label": "SRX3777456",
+          "aliases": [
+            "SRX3777456"
+          ]
+        },
+        {
+          "label": "SRX3777457",
+          "aliases": [
+            "SRX3777457"
+          ]
+        },
+        {
+          "label": "SRX3777458",
+          "aliases": [
+            "SRX3777458"
+          ]
+        },
+        {
+          "label": "SRX3777459",
+          "aliases": [
+            "SRX3777459"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 59,
+      "question_id": "Q19",
+      "category": "data_boundary",
+      "question": "本系统导入的 GSE111619 数据是什么层级的数据，哪些分析结论不能据此声称？",
+      "gold_facts": [
+        {
+          "label": "基因级 HTSeq 计数矩阵",
+          "aliases": [
+            "基因级 HTSeq 计数矩阵",
+            "基因级（gene-level）的 HTSeq 计数矩阵",
+            "基因级 (gene-level) 的 HTSeq 计数矩阵",
+            "gene-level HTSeq count matrix"
+          ]
+        },
+        {
+          "label": "不是原始 FASTQ",
+          "aliases": [
+            "不是原始 FASTQ",
+            "非原始 FASTQ",
+            "not raw FASTQ"
+          ]
+        },
+        {
+          "label": "不进行差异表达显著性推断",
+          "aliases": [
+            "不进行差异表达显著性推断",
+            "不据此进行差异表达显著性推断",
+            "不能据此进行差异表达显著性推断",
+            "不能进行差异表达显著性推断",
+            "no differential expression significance inference"
+          ]
+        }
+      ]
+    },
+    {
+      "project_id": "GSE111619",
+      "question_index": 60,
+      "question_id": "Q20",
+      "category": "numeric_reasoning",
+      "question": "哪个样本检测到的非零基因行数最高，数值是多少？",
+      "gold_facts": [
+        {
+          "label": "GSM3035187",
+          "aliases": [
+            "GSM3035187"
+          ]
+        },
+        {
+          "label": "18137",
+          "aliases": [
+            "18137",
+            "18,137"
+          ]
+        }
+      ]
+    }
+  ]
+}

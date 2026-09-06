@@ -110,6 +110,24 @@ def artifact_binding(
     return binding(name, value(payload) if payload else None, evidence, passed, None if passed else error or missing_reason)
 
 
+def revision_is_valid(value: Any) -> bool:
+    return isinstance(value, str) and REVISION.fullmatch(value.lower()) is not None
+
+
+def revisions_are_bound(
+    payload: dict[str, Any] | None,
+    runtime_source_revision: Any,
+    tooling_revision: Any,
+    runtime_fields: tuple[str, ...],
+) -> bool:
+    if not isinstance(payload, dict) or not revision_is_valid(runtime_source_revision) or not revision_is_valid(tooling_revision):
+        return False
+    return (
+        all(revision_is_valid(payload.get(field)) and payload[field] == runtime_source_revision for field in runtime_fields)
+        and payload.get("experiment_tooling_revision") == tooling_revision
+    )
+
+
 def corpus_binding(path: Path, root: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     evidence = source(path, root)
     payload, error = read_json(path) if evidence["exists"] else (None, evidence.get("reason"))
@@ -207,12 +225,23 @@ def build_package(
     checkout = checkout or checkout_state(root)
     contract_source = source(runtime_contract, root)
     contract, contract_error = read_json(runtime_contract) if contract_source["exists"] else (None, contract_source.get("reason"))
+    # R is the deployed Rust/runtime source revision; T is checkout HEAD.
+    # They are deliberately independent so tooling can evolve without
+    # relabeling the runtime evidence.
+    # A runtime-freeze package is structurally valid only when it explicitly
+    # carries the split R field. Legacy single-revision packages are blocked.
+    runtime_source_revision = contract.get("runtime_source_revision") if contract else None
     app_revision = contract.get("app_revision") if contract else None
     runtime_revision = contract.get("runtime_revision") if contract else None
     head = checkout.get("head_revision")
+    contract_runtime_fields = ("runtime_source_revision", "revision", "endpoint_revision", "build_revision", "app_revision", "runtime_revision")
+    contract_revisions = [contract.get(field) for field in contract_runtime_fields] if contract else []
+    contract_tooling_revision = contract.get("experiment_tooling_revision") if contract else None
     revisions_match = (
-        all(isinstance(value, str) and REVISION.fullmatch(value.lower()) for value in (app_revision, runtime_revision, head))
-        and app_revision.lower() == runtime_revision.lower() == head.lower()
+        revision_is_valid(runtime_source_revision)
+        and revision_is_valid(head)
+        and all(revision_is_valid(value) and value == runtime_source_revision for value in contract_revisions)
+        and contract_tooling_revision == head
     )
     checks: dict[str, dict[str, Any]] = {
         "runtime_contract": binding(
@@ -227,21 +256,35 @@ def build_package(
             app_revision if isinstance(app_revision, str) and REVISION.fullmatch(app_revision.lower()) else None,
             contract_source,
             revisions_match,
-            "runtime contract must explicitly export app_revision equal to runtime_revision and checkout HEAD",
+            "runtime contract app_revision must be absent or equal to R",
         ),
         "runtime_revision": binding(
             "runtime_revision",
             runtime_revision if isinstance(runtime_revision, str) and REVISION.fullmatch(runtime_revision.lower()) else None,
             contract_source,
             revisions_match,
-            "runtime contract must explicitly export runtime_revision equal to app_revision and checkout HEAD",
+            "runtime contract runtime_revision must be absent or equal to R",
+        ),
+        "runtime_source_revision": binding(
+            "runtime_source_revision",
+            runtime_source_revision if isinstance(runtime_source_revision, str) and REVISION.fullmatch(runtime_source_revision.lower()) else None,
+            contract_source,
+            revisions_match,
+            "runtime contract must explicitly identify a valid runtime source revision R",
         ),
         "revision_match": binding(
             "revision_match",
-            {"checkout_head": head, "app_revision": app_revision, "runtime_revision": runtime_revision},
+            {"experiment_tooling_revision": head, "runtime_source_revision": runtime_source_revision, "app_revision": app_revision, "runtime_revision": runtime_revision},
             contract_source,
             revisions_match,
-            "the three revision identities do not match",
+            "runtime source revision R is invalid or runtime contract fields disagree",
+        ),
+        "experiment_tooling_revision": binding(
+            "experiment_tooling_revision",
+            head,
+            {"path": ".git", "status": "PASS" if isinstance(head, str) and REVISION.fullmatch(head) else "BLOCKED"},
+            isinstance(head, str) and REVISION.fullmatch(head) is not None,
+            "checkout HEAD must identify experiment tooling revision T",
         ),
         "runtime": binding(
             "runtime",
@@ -254,9 +297,14 @@ def build_package(
             "runtime_config",
             runtime_config,
             root,
-            lambda payload: {"sha256": sha256_file(runtime_config), "app_revision": payload.get("app_revision"), "runtime_revision": payload.get("runtime_revision")},
-            lambda payload: all(payload.get(key) == expected for key, expected in (("app_revision", app_revision), ("runtime_revision", runtime_revision))),
-            "runtime config must explicitly bind both revisions",
+            lambda payload: {"sha256": sha256_file(runtime_config), "runtime_source_revision": payload.get("runtime_source_revision")},
+            lambda payload: revisions_are_bound(
+                payload,
+                runtime_source_revision,
+                head,
+                ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision"),
+            ),
+            "runtime config must explicitly bind all runtime fields to R and tooling to T",
         ),
         "container_image": artifact_binding(
             "container_image",
@@ -266,14 +314,16 @@ def build_package(
             lambda payload: bool(
                 isinstance(payload.get("image_digest"), str)
                 and IMAGE_DIGEST.fullmatch(payload["image_digest"])
-                and payload.get("app_revision") == app_revision
-                and payload.get("runtime_revision") == runtime_revision
-                and payload.get("oci_revision") == app_revision
-                and payload.get("endpoint_revision") == app_revision
+                and revisions_are_bound(
+                    payload,
+                    runtime_source_revision,
+                    head,
+                    ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision", "oci_revision", "endpoint_revision"),
+                )
                 and isinstance(payload.get("projection_sha256"), str)
                 and SHA256.fullmatch(payload["projection_sha256"])
             ),
-            "container image evidence requires immutable digest, OCI/endpoint revisions, and a stable projection hash",
+            "container image evidence requires immutable digest, all runtime fields bound to R, and tooling bound to T",
         ),
         "worktree_clean": binding(
             "worktree_clean",
@@ -325,6 +375,8 @@ def build_package(
         "lifecycle": "PRE_RUN",
         "status": "BLOCKED" if blockers else "STRUCTURE_VALID_AWAITING_AUTHORITY",
         "checkout": checkout,
+        "runtime_source_revision": runtime_source_revision,
+        "experiment_tooling_revision": head,
         "bindings": {name: checks[name] for name in ("app_revision", "runtime_revision", "runtime_config", "container_image")},
         "checks": checks,
         "blockers": blockers,

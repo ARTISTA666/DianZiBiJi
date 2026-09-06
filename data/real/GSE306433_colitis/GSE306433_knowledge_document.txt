@@ -1,0 +1,69 @@
+GEO series GSE306433 structured validation document
+研究标题：The IL-10/IL-10Ra axis in fibroblasts limits large intestinal pathology by suppressing type I interferon signaling [RNA-Seq]
+研究摘要：In the intestines, stromal cells are essential for epithelial homeostasis, supplying both stem cell niche signals and differentiation factors. Recent studies have shown that they play crucial roles not only in epithelial maintenance, but also in the immune system. However, the molecular mechanisms that control inflammatory response by stromal cells are poorly understood. We showed that stromal cells from Rag2 knock out (KO) mice highly express inflammatory cytokines and chemokines, and the IL10-IL10R axis is a key suppressor for those inflammatory mediators in fibroblasts. Fibroblast-specific Il10ra KO mice developed spontaneous colitis in aged mice. We performed (sc)RNA-seq on stromal cells from these mice and 16s rDNA-seq on the feces from those mice.
+总体设计：Following 1% DSS administration, Il10ra ff (n=3, 12 weeks old) and Il10ra ff; Pdgfra-cre mice (n=3, 12 weeks old) were sacrificed. The whole colons were resected and alive stromal cells (Podoplanin+ CD45- CD31- EpCAM- 7AAD-) were isolated by Fluorescence-activated cell sorting (FACS) for RNA-seq
+数据边界：本语料为 NCBI GEO 公开的 RNA-seq 元数据与 FPKM 表达矩阵，不是本地实验室原始笔记，也不是原始 FASTQ 读段。
+来源：https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE306433
+平台：GPL24247（Illumina NovaSeq 6000，Mus musculus）
+联系机构：NGS core facility, Research Institute for Microbial Diseases, Osaka University，Japan
+关联项目：BioProject: https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1310619
+
+GSM9199594 RNA-seq record
+数据来源：NCBI GEO GSE306433，样本登录号 GSM9199594。
+样本信息为 WT8 [Large intestine | Stromal cell | genotype=Il10ra flox/flox]。
+处理：1% DSS 诱导结肠炎；12 周龄小鼠；取大肠组织，FACS 分选活基质细胞（Podoplanin+ CD45- CD31- EpCAM- 7AAD-）。
+RNA 提取使用 miRNeasy Micro Kit（Qiagen）；cDNA 制备使用 SMART-Seq HT Kit（Takara Bio）；文库构建使用 NexteraXT DNA Library Preparation Kit（Illumina）。
+测序：Illumina NovaSeq 6000，101-base single-end；比对到 mm10 参考基因组；比对工具为 TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18。
+表达定量：Cuffdiff 2.2.1 计算 FPKM（参数 -max-bundle-frags 50000000）；base calling 使用 Illumina RTA v3.4.4。
+FPKM 统计为 GSM9199594: gene_count=24346, nonzero_gene_rows=14621, max_fpkm_gene=Gsn, max_fpkm=9625.22；top5=Gsn:9625.22, Dcn:9149.10, Ftl1:5580.67, Fth1:4884.26, Fos:3484.02。
+结构化样本字段：GSM9199594 [WT8 | group=control | tissue=Large intestine | cell_type=Stromal cell | genotype=Il10ra flox/flox]。
+
+GSM9199595 RNA-seq record
+数据来源：NCBI GEO GSE306433，样本登录号 GSM9199595。
+样本信息为 WT9 [Large intestine | Stromal cell | genotype=Il10ra flox/flox]。
+处理：1% DSS 诱导结肠炎；12 周龄小鼠；取大肠组织，FACS 分选活基质细胞（Podoplanin+ CD45- CD31- EpCAM- 7AAD-）。
+RNA 提取使用 miRNeasy Micro Kit（Qiagen）；cDNA 制备使用 SMART-Seq HT Kit（Takara Bio）；文库构建使用 NexteraXT DNA Library Preparation Kit（Illumina）。
+测序：Illumina NovaSeq 6000，101-base single-end；比对到 mm10 参考基因组；比对工具为 TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18。
+表达定量：Cuffdiff 2.2.1 计算 FPKM（参数 -max-bundle-frags 50000000）；base calling 使用 Illumina RTA v3.4.4。
+FPKM 统计为 GSM9199595: gene_count=24346, nonzero_gene_rows=14701, max_fpkm_gene=Dcn, max_fpkm=8747.03；top5=Dcn:8747.03, Gsn:7520.38, Ftl1:5845.08, Fth1:5807.58, Col3a1:5391.07。
+结构化样本字段：GSM9199595 [WT9 | group=control | tissue=Large intestine | cell_type=Stromal cell | genotype=Il10ra flox/flox]。
+
+GSM9199596 RNA-seq record
+数据来源：NCBI GEO GSE306433，样本登录号 GSM9199596。
+样本信息为 WT43 [Large intestine | Stromal cell | genotype=Il10ra flox/flox]。
+处理：1% DSS 诱导结肠炎；12 周龄小鼠；取大肠组织，FACS 分选活基质细胞（Podoplanin+ CD45- CD31- EpCAM- 7AAD-）。
+RNA 提取使用 miRNeasy Micro Kit（Qiagen）；cDNA 制备使用 SMART-Seq HT Kit（Takara Bio）；文库构建使用 NexteraXT DNA Library Preparation Kit（Illumina）。
+测序：Illumina NovaSeq 6000，101-base single-end；比对到 mm10 参考基因组；比对工具为 TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18。
+表达定量：Cuffdiff 2.2.1 计算 FPKM（参数 -max-bundle-frags 50000000）；base calling 使用 Illumina RTA v3.4.4。
+FPKM 统计为 GSM9199596: gene_count=24346, nonzero_gene_rows=14259, max_fpkm_gene=Gsn, max_fpkm=10134.80；top5=Gsn:10134.80, Dcn:8626.08, Ftl1:5118.17, Fth1:4066.99, Fos:3400.50。
+结构化样本字段：GSM9199596 [WT43 | group=control | tissue=Large intestine | cell_type=Stromal cell | genotype=Il10ra flox/flox]。
+
+GSM9199597 RNA-seq record
+数据来源：NCBI GEO GSE306433，样本登录号 GSM9199597。
+样本信息为 cKO13 [Large intestine | Stromal cell | genotype=Pdgfra cre; Il10ra flox/flox]。
+处理：1% DSS 诱导结肠炎；12 周龄小鼠；取大肠组织，FACS 分选活基质细胞（Podoplanin+ CD45- CD31- EpCAM- 7AAD-）。
+RNA 提取使用 miRNeasy Micro Kit（Qiagen）；cDNA 制备使用 SMART-Seq HT Kit（Takara Bio）；文库构建使用 NexteraXT DNA Library Preparation Kit（Illumina）。
+测序：Illumina NovaSeq 6000，101-base single-end；比对到 mm10 参考基因组；比对工具为 TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18。
+表达定量：Cuffdiff 2.2.1 计算 FPKM（参数 -max-bundle-frags 50000000）；base calling 使用 Illumina RTA v3.4.4。
+FPKM 统计为 GSM9199597: gene_count=24346, nonzero_gene_rows=14332, max_fpkm_gene=Gsn, max_fpkm=10744.20；top5=Gsn:10744.20, Dcn:9773.82, Ftl1:6108.83, Fth1:5767.58, Col3a1:4622.69。
+结构化样本字段：GSM9199597 [cKO13 | group=fibroblast_Il10ra_cKO | tissue=Large intestine | cell_type=Stromal cell | genotype=Pdgfra cre; Il10ra flox/flox]。
+
+GSM9199598 RNA-seq record
+数据来源：NCBI GEO GSE306433，样本登录号 GSM9199598。
+样本信息为 cKO23 [Large intestine | Stromal cell | genotype=Pdgfra cre; Il10ra flox/flox]。
+处理：1% DSS 诱导结肠炎；12 周龄小鼠；取大肠组织，FACS 分选活基质细胞（Podoplanin+ CD45- CD31- EpCAM- 7AAD-）。
+RNA 提取使用 miRNeasy Micro Kit（Qiagen）；cDNA 制备使用 SMART-Seq HT Kit（Takara Bio）；文库构建使用 NexteraXT DNA Library Preparation Kit（Illumina）。
+测序：Illumina NovaSeq 6000，101-base single-end；比对到 mm10 参考基因组；比对工具为 TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18。
+表达定量：Cuffdiff 2.2.1 计算 FPKM（参数 -max-bundle-frags 50000000）；base calling 使用 Illumina RTA v3.4.4。
+FPKM 统计为 GSM9199598: gene_count=24346, nonzero_gene_rows=14068, max_fpkm_gene=Gsn, max_fpkm=11339.40；top5=Gsn:11339.40, Dcn:11260.80, Fth1:7649.57, B2m:6530.91, Ifitm3:6450.30。
+结构化样本字段：GSM9199598 [cKO23 | group=fibroblast_Il10ra_cKO | tissue=Large intestine | cell_type=Stromal cell | genotype=Pdgfra cre; Il10ra flox/flox]。
+
+GSM9199599 RNA-seq record
+数据来源：NCBI GEO GSE306433，样本登录号 GSM9199599。
+样本信息为 cKO25 [Large intestine | Stromal cell | genotype=Pdgfra cre; Il10ra flox/flox]。
+处理：1% DSS 诱导结肠炎；12 周龄小鼠；取大肠组织，FACS 分选活基质细胞（Podoplanin+ CD45- CD31- EpCAM- 7AAD-）。
+RNA 提取使用 miRNeasy Micro Kit（Qiagen）；cDNA 制备使用 SMART-Seq HT Kit（Takara Bio）；文库构建使用 NexteraXT DNA Library Preparation Kit（Illumina）。
+测序：Illumina NovaSeq 6000，101-base single-end；比对到 mm10 参考基因组；比对工具为 TopHat v2.1.1 + Bowtie2 v2.2.8 + SAMtools v0.1.18。
+表达定量：Cuffdiff 2.2.1 计算 FPKM（参数 -max-bundle-frags 50000000）；base calling 使用 Illumina RTA v3.4.4。
+FPKM 统计为 GSM9199599: gene_count=24346, nonzero_gene_rows=14955, max_fpkm_gene=Gsn, max_fpkm=11627.70；top5=Gsn:11627.70, Dcn:9697.06, Ftl1:5587.40, Fth1:4996.72, Col3a1:4601.31。
+结构化样本字段：GSM9199599 [cKO25 | group=fibroblast_Il10ra_cKO | tissue=Large intestine | cell_type=Stromal cell | genotype=Pdgfra cre; Il10ra flox/flox]。

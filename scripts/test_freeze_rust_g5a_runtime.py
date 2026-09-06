@@ -38,9 +38,9 @@ def make_inputs(root: Path, valid: bool = True) -> dict[str, Path]:
     corpus_data.write_text("immutable corpus bytes\n", encoding="utf-8")
     corpus_entries = [(corpus_data.name, MODULE.sha256_file(corpus_data))]
     return {
-        "contract": write_json(root / "runtime-contract.json", {"app_revision": revision, "runtime_revision": revision, "runtime": {"api_runtime": "rust-axum"}}),
-        "config": write_json(root / "runtime-config.json", {"schema": "runtime-config-v1", "app_revision": COMMIT, "runtime_revision": COMMIT}),
-        "image": write_json(root / "container-image.json", {"image_digest": "sha256:" + "b" * 64, "app_revision": COMMIT, "runtime_revision": COMMIT, "oci_revision": COMMIT, "endpoint_revision": COMMIT, "projection_sha256": "c" * 64}),
+        "contract": write_json(root / "runtime-contract.json", {"runtime_source_revision": revision, "revision": revision, "endpoint_revision": revision, "build_revision": revision, "app_revision": revision, "runtime_revision": revision, "experiment_tooling_revision": COMMIT, "runtime": {"api_runtime": "rust-axum"}}),
+        "config": write_json(root / "runtime-config.json", {"schema": "runtime-config-v1", "runtime_source_revision": COMMIT, "build_revision": COMMIT, "app_revision": COMMIT, "runtime_revision": COMMIT, "experiment_tooling_revision": COMMIT}),
+        "image": write_json(root / "container-image.json", {"image_digest": "sha256:" + "b" * 64, "runtime_source_revision": COMMIT, "build_revision": COMMIT, "app_revision": COMMIT, "runtime_revision": COMMIT, "oci_revision": COMMIT, "endpoint_revision": COMMIT, "experiment_tooling_revision": COMMIT, "projection_sha256": "c" * 64}),
         "corpus": write_json(root / "corpus-manifest.json", {
             "dataset_id": "synthetic-test-corpus",
             "provenance": {"source": "unit-test fixture"},
@@ -87,10 +87,92 @@ class G5ARuntimeFreezeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = make_inputs(root)
-            package = MODULE.build_package(root=root, runtime_contract=paths["contract"], runtime_config=paths["config"], container_image=paths["image"], corpus_manifest=paths["corpus"], checkout={"head_revision": "d" * 40, "tracked_worktree_clean": True, "worktree_clean": False})
+            package = MODULE.build_package(root=root, runtime_contract=paths["contract"], runtime_config=paths["config"], container_image=paths["image"], corpus_manifest=paths["corpus"], checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": False})
             self.assertEqual(package["status"], "BLOCKED")
-            self.assertIn("revision_match", package["blockers"])
             self.assertIn("worktree_clean", package["blockers"])
+
+    def test_runtime_source_revision_can_differ_from_tooling_head(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = make_inputs(root)
+            runtime = "b" * 40
+            for path in (paths["contract"], paths["config"], paths["image"]):
+                payload = json.loads(path.read_text(encoding="utf-8"))
+                for field in ("revision", "runtime_source_revision", "build_revision", "app_revision", "runtime_revision", "oci_revision", "endpoint_revision"):
+                    if field in payload:
+                        payload[field] = runtime
+                path.write_text(json.dumps(payload) + "\n", encoding="utf-8")
+            package = MODULE.build_package(root=root, runtime_contract=paths["contract"], runtime_config=paths["config"], container_image=paths["image"], corpus_manifest=paths["corpus"], checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True})
+            self.assertEqual(package["status"], "STRUCTURE_VALID_AWAITING_AUTHORITY")
+            self.assertEqual(package["runtime_source_revision"], runtime)
+            self.assertEqual(package["experiment_tooling_revision"], COMMIT)
+
+    def test_legacy_single_revision_contract_is_blocked(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = make_inputs(root)
+            contract = json.loads(paths["contract"].read_text(encoding="utf-8"))
+            contract.pop("runtime_source_revision")
+            paths["contract"].write_text(json.dumps(contract) + "\n", encoding="utf-8")
+            package = MODULE.build_package(
+                root=root,
+                runtime_contract=paths["contract"],
+                runtime_config=paths["config"],
+                container_image=paths["image"],
+                corpus_manifest=paths["corpus"],
+                checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True},
+            )
+            self.assertEqual(package["status"], "BLOCKED")
+            self.assertIn("runtime_source_revision", package["blockers"])
+
+    def test_legacy_single_revision_runtime_evidence_is_blocked(self) -> None:
+        for artifact in ("config", "image"):
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                paths = make_inputs(root)
+                payload = json.loads(paths[artifact].read_text(encoding="utf-8"))
+                payload.pop("runtime_source_revision")
+                paths[artifact].write_text(json.dumps(payload) + "\n", encoding="utf-8")
+                package = MODULE.build_package(
+                    root=root,
+                    runtime_contract=paths["contract"],
+                    runtime_config=paths["config"],
+                    container_image=paths["image"],
+                    corpus_manifest=paths["corpus"],
+                    checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True},
+                )
+                self.assertEqual(package["status"], "BLOCKED")
+                self.assertIn("runtime_config" if artifact == "config" else "container_image", package["blockers"])
+
+    def test_every_runtime_layer_requires_explicit_r_and_t_fields(self) -> None:
+        field_matrix = {
+            "contract": ("runtime_source_revision", "revision", "endpoint_revision", "build_revision", "app_revision", "runtime_revision", "experiment_tooling_revision"),
+            "config": ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision", "experiment_tooling_revision"),
+            "image": ("runtime_source_revision", "build_revision", "app_revision", "runtime_revision", "oci_revision", "endpoint_revision", "experiment_tooling_revision"),
+        }
+        for artifact, fields in field_matrix.items():
+            for field in fields:
+                for invalid in ("__missing__", None, "", "legacy-single-revision"):
+                    with tempfile.TemporaryDirectory() as directory:
+                        root = Path(directory)
+                        paths = make_inputs(root)
+                        payload = json.loads(paths[artifact].read_text(encoding="utf-8"))
+                        if invalid == "__missing__":
+                            payload.pop(field)
+                        else:
+                            payload[field] = invalid
+                        paths[artifact].write_text(json.dumps(payload) + "\n", encoding="utf-8")
+                        package = MODULE.build_package(
+                            root=root,
+                            runtime_contract=paths["contract"],
+                            runtime_config=paths["config"],
+                            container_image=paths["image"],
+                            corpus_manifest=paths["corpus"],
+                            checkout={"head_revision": COMMIT, "tracked_worktree_clean": True, "worktree_clean": True},
+                        )
+                        self.assertEqual(package["status"], "BLOCKED", f"{artifact}.{field}={invalid!r} must block")
+                        expected_blocker = {"contract": "revision_match", "config": "runtime_config", "image": "container_image"}[artifact]
+                        self.assertIn(expected_blocker, package["blockers"])
 
     def test_container_identity_requires_oci_endpoint_and_projection_binding(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

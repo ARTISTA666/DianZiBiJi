@@ -1,0 +1,151 @@
+实验设计：拟南芥幼苗，比较 WT 与 PRMT5 T-insert 突变体在三个条件下的转录组：
+- 22℃ 对照（CO），每组 3 个生物学重复；
+- 37℃ 处理 3 天（RH），每组 3 个生物学重复；
+- 37℃ 处理 3 天后再恢复 24 小时（R24），每组 3 个生物学重复；
+共 2 种基因型 × 3 种条件 × 3 个重复 = 18 个样本；TPM 矩阵包含 37916 个基因。
+数据处理：RSEM 定量，参考基因组/注释为 TAIR10.1；测序平台为 Illumina NovaSeq 6000。
+
+各条件平均总 TPM（按 3 个重复计算）：
+- PR_CO（PRMT5 T-insert, 22℃）: mean_total_tpm=999999.4
+- PR_R24（PRMT5 T-insert, 37℃ 3d 后恢复 24h）: mean_total_tpm=999999.7
+- PR_RH（PRMT5 T-insert, 37℃ 3d）: mean_total_tpm=1000000.4
+- WT_CO（WT, 22℃）: mean_total_tpm=999999.9
+- WT_R24（WT, 37℃ 3d 后恢复 24h）: mean_total_tpm=1000000.1
+- WT_RH（WT, 37℃ 3d）: mean_total_tpm=1000000.5
+全矩阵最高表达的前 10 个基因（按单样本最高 TPM）：
+- AT1G67090: max_tpm=21125.30
+- AT3G41979: max_tpm=10779.76
+- AT2G01020: max_tpm=10618.87
+- ATMG00020: max_tpm=10017.11
+- AT5G02380: max_tpm=9293.32
+- ATMG01390: max_tpm=9101.61
+- AT2G07671: max_tpm=8102.48
+- AT2G21660: max_tpm=7769.89
+- AT3G22121: max_tpm=7668.96
+- ATMG01380: max_tpm=6419.25
+
+GSM8844827 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844827。
+样本信息为 WT, temperature, 22℃，rep1 [seedling | genotype=WT | treatment=22℃ | replicate=1]。
+TPM 矩阵列为 WT_CO_1。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844827 [WT, temperature, 22℃，rep1 | tissue=seedling | genotype=WT | treatment=22℃ | replicate=1 | matrix_column=WT_CO_1]。
+
+GSM8844828 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844828。
+样本信息为 WT, temperature, 22℃，rep2 [seedling | genotype=WT | treatment=22℃ | replicate=2]。
+TPM 矩阵列为 WT_CO_2。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844828 [WT, temperature, 22℃，rep2 | tissue=seedling | genotype=WT | treatment=22℃ | replicate=2 | matrix_column=WT_CO_2]。
+
+GSM8844829 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844829。
+样本信息为 WT, temperature, 22℃，rep3 [seedling | genotype=WT | treatment=22℃ | replicate=3]。
+TPM 矩阵列为 WT_CO_3。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844829 [WT, temperature, 22℃，rep3 | tissue=seedling | genotype=WT | treatment=22℃ | replicate=3 | matrix_column=WT_CO_3]。
+
+GSM8844830 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844830。
+样本信息为 WT, temperature, 37℃，rep1 [seedling | genotype=WT | treatment=37℃ 3d | replicate=1]。
+TPM 矩阵列为 WT_RH_1。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844830 [WT, temperature, 37℃，rep1 | tissue=seedling | genotype=WT | treatment=37℃ 3d | replicate=1 | matrix_column=WT_RH_1]。
+
+GSM8844831 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844831。
+样本信息为 WT, temperature, 37℃，rep2 [seedling | genotype=WT | treatment=37℃ 3d | replicate=2]。
+TPM 矩阵列为 WT_RH_2。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844831 [WT, temperature, 37℃，rep2 | tissue=seedling | genotype=WT | treatment=37℃ 3d | replicate=2 | matrix_column=WT_RH_2]。
+
+GSM8844832 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844832。
+样本信息为 WT, temperature, 37℃，rep3 [seedling | genotype=WT | treatment=37℃ 3d | replicate=3]。
+TPM 矩阵列为 WT_RH_3。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844832 [WT, temperature, 37℃，rep3 | tissue=seedling | genotype=WT | treatment=37℃ 3d | replicate=3 | matrix_column=WT_RH_3]。
+
+GSM8844833 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844833。
+样本信息为 PR, temperature, 22℃，rep1 [seedling | genotype=PRMT5 T-insert | treatment=22℃ | replicate=1]。
+TPM 矩阵列为 PR_CO_1。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844833 [PR, temperature, 22℃，rep1 | tissue=seedling | genotype=PRMT5 T-insert | treatment=22℃ | replicate=1 | matrix_column=PR_CO_1]。
+
+GSM8844834 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844834。
+样本信息为 PR, temperature, 22℃，rep2 [seedling | genotype=PRMT5 T-insert | treatment=22℃ | replicate=2]。
+TPM 矩阵列为 PR_CO_2。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844834 [PR, temperature, 22℃，rep2 | tissue=seedling | genotype=PRMT5 T-insert | treatment=22℃ | replicate=2 | matrix_column=PR_CO_2]。
+
+GSM8844835 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844835。
+样本信息为 PR, temperature, 22℃，rep3 [seedling | genotype=PRMT5 T-insert | treatment=22℃ | replicate=3]。
+TPM 矩阵列为 PR_CO_3。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844835 [PR, temperature, 22℃，rep3 | tissue=seedling | genotype=PRMT5 T-insert | treatment=22℃ | replicate=3 | matrix_column=PR_CO_3]。
+
+GSM8844836 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844836。
+样本信息为 PR, temperature, 37℃，rep1 [seedling | genotype=PRMT5 T-insert | treatment=37℃ 3d | replicate=1]。
+TPM 矩阵列为 PR_RH_1。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844836 [PR, temperature, 37℃，rep1 | tissue=seedling | genotype=PRMT5 T-insert | treatment=37℃ 3d | replicate=1 | matrix_column=PR_RH_1]。
+
+GSM8844837 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844837。
+样本信息为 PR, temperature, 37℃，rep2 [seedling | genotype=PRMT5 T-insert | treatment=37℃ 3d | replicate=2]。
+TPM 矩阵列为 PR_RH_2。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844837 [PR, temperature, 37℃，rep2 | tissue=seedling | genotype=PRMT5 T-insert | treatment=37℃ 3d | replicate=2 | matrix_column=PR_RH_2]。
+
+GSM8844838 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844838。
+样本信息为 PR, temperature, 37℃，rep3 [seedling | genotype=PRMT5 T-insert | treatment=37℃ 3d | replicate=3]。
+TPM 矩阵列为 PR_RH_3。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844838 [PR, temperature, 37℃，rep3 | tissue=seedling | genotype=PRMT5 T-insert | treatment=37℃ 3d | replicate=3 | matrix_column=PR_RH_3]。
+
+GSM8844839 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844839。
+样本信息为 WT, temperature 24 hours of recovery after treatment at 37°C，rep1 [seedling | genotype=WT | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=1]。
+TPM 矩阵列为 WT_R24_1。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844839 [WT, temperature 24 hours of recovery after treatment at 37°C，rep1 | tissue=seedling | genotype=WT | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=1 | matrix_column=WT_R24_1]。
+
+GSM8844840 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844840。
+样本信息为 WT, temperature 24 hours of recovery after treatment at 37°C，rep2 [seedling | genotype=WT | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=2]。
+TPM 矩阵列为 WT_R24_2。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844840 [WT, temperature 24 hours of recovery after treatment at 37°C，rep2 | tissue=seedling | genotype=WT | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=2 | matrix_column=WT_R24_2]。
+
+GSM8844841 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844841。
+样本信息为 WT, temperature 24 hours of recovery after treatment at 37°C，rep3 [seedling | genotype=WT | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=3]。
+TPM 矩阵列为 WT_R24_3。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844841 [WT, temperature 24 hours of recovery after treatment at 37°C，rep3 | tissue=seedling | genotype=WT | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=3 | matrix_column=WT_R24_3]。
+
+GSM8844842 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844842。
+样本信息为 PR, temperature 24 hours of recovery after treatment at 37°C，rep1 [seedling | genotype=PRMT5 T-insert | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=1]。
+TPM 矩阵列为 PR_R24_1。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844842 [PR, temperature 24 hours of recovery after treatment at 37°C，rep1 | tissue=seedling | genotype=PRMT5 T-insert | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=1 | matrix_column=PR_R24_1]。
+
+GSM8844843 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844843。
+样本信息为 PR, temperature 24 hours of recovery after treatment at 37°C，rep2 [seedling | genotype=PRMT5 T-insert | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=2]。
+TPM 矩阵列为 PR_R24_2。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844843 [PR, temperature 24 hours of recovery after treatment at 37°C，rep2 | tissue=seedling | genotype=PRMT5 T-insert | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=2 | matrix_column=PR_R24_2]。
+
+GSM8844844 RNA-seq record
+数据来源：NCBI GEO GSE291942，样本登录号 GSM8844844。
+样本信息为 PR, temperature 24 hours of recovery after treatment at 37°C，rep3 [seedling | genotype=PRMT5 T-insert | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=3]。
+TPM 矩阵列为 PR_R24_3。
+测序：Illumina NovaSeq 6000，RNA-Seq；表达定量使用 RSEM，参考基因组/注释为 TAIR10.1。
+结构化样本字段：GSM8844844 [PR, temperature 24 hours of recovery after treatment at 37°C，rep3 | tissue=seedling | genotype=PRMT5 T-insert | treatment=24 hours of recovery after 3 days of treatment at 37°C | replicate=3 | matrix_column=PR_R24_3]。
