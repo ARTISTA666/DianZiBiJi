@@ -20,6 +20,13 @@
 
 方法仍为 `pure_llm`、`bm25_rag`、`project_rag`、`structured_query`、`kg_enhanced_rag`；每项目一次重复、随机化顺序；主估计为 `kg_enhanced_rag - project_rag` 的题目级配对准确率差，项目分层且项目等权 bootstrap。技术失败继续按 v2 protocol 7.2 进入规定分母。
 
+## R/T 版本契约（机械门禁）
+
+本 amendment 的运行版本拆为两个独立身份：`R=runtime_source_revision` 是 `/ready`、`/metrics`、OCI image label、runtime config 与 Rust runtime contract 共同指向的已部署运行时源版本；`T=experiment_tooling_revision` 是确认性执行时的 clean Git `HEAD`，并绑定 runner、preflight、协议和 evaluator 的逐文件 SHA-256。R 不要求等于 T，但 endpoint/runtime 字段不得把 T 冒充为 R。冻结清单另含可复算的 `E=evidence_revision`，由排序后的 path+SHA 与 R/T 摘要生成，并排除 manifest 自身以避免数学自引用。
+
+工作区保持 tracked clean；untracked 输入只有明确冻结的题集、corpus 和 results 范围可用，脚本、配置和 runtime evidence 的 untracked 文件一律拒绝。SSH authority、输入 SHA、TOCTOU 双读与 snapshot 检查仍是 fail-closed 门禁；外部 setter、人工 gold 和独立盲评字段缺失时，本 amendment 继续保持 `BLOCKED`。
+SSH authority 签名所验证的是包含 status、formal-use、题集/gold/config/corpus/graph、文件 SHA 及 R/T 的 canonical freeze-content commitment；authority artifact 必须公开 `freeze_content_sha256` 和 `commitment_sha256`，因此冻结内容或版本任一变化都会使签名失效。
+
 ## GSE291942 真实材料绑定
 
 真实输入路径和当前 SHA-256 见 `agent-work/freeze/rag-experiment-5-rust-v2-gse291942-3projects-2026-08-29/corpus-manifest.json`。该 manifest 明确记录：
