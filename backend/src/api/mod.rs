@@ -4,6 +4,7 @@ mod audit;
 mod auth;
 mod files;
 mod groups;
+mod kg_blueprint;
 mod knowledge_graph;
 mod maturity;
 mod mcp;
@@ -122,6 +123,7 @@ pub fn build_app(state: AppState) -> Router {
         .merge(projects::router())
         .merge(rag::router())
         .merge(groups::router())
+        .merge(kg_blueprint::router())
         .merge(knowledge_graph::router())
         .merge(maturity::router())
         .merge(templates::router())

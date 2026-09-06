@@ -3,6 +3,7 @@
 
 mod agent;
 mod file;
+mod kg_blueprint;
 mod knowledge_graph;
 mod note;
 mod pagination;
@@ -14,6 +15,7 @@ mod validation;
 
 pub use agent::*;
 pub use file::*;
+pub use kg_blueprint::*;
 pub use knowledge_graph::*;
 pub use note::*;
 pub use pagination::*;

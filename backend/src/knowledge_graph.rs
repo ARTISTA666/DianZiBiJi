@@ -37,11 +37,11 @@ struct RelationCandidate {
 }
 
 #[derive(Clone, Debug)]
-struct ExtractedTerm {
-    entity_type: &'static str,
-    relation_type: &'static str,
-    label: String,
-    roles: HashSet<String>,
+pub(crate) struct ExtractedTerm {
+    pub(crate) entity_type: &'static str,
+    pub(crate) relation_type: &'static str,
+    pub(crate) label: String,
+    pub(crate) roles: HashSet<String>,
 }
 
 pub async fn extract_note(
@@ -603,7 +603,7 @@ async fn upsert_relation(
     .await?)
 }
 
-fn extract_terms(fixed_fields: &Value, content: &Value) -> Vec<ExtractedTerm> {
+pub(crate) fn extract_terms(fixed_fields: &Value, content: &Value) -> Vec<ExtractedTerm> {
     let mut terms = Vec::new();
     collect_structured(fixed_fields, &mut terms);
     collect_structured(content, &mut terms);
@@ -947,7 +947,7 @@ fn clean_label(label: &str) -> String {
     label.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
-fn normalize_entity_label(label: &str) -> String {
+pub(crate) fn normalize_entity_label(label: &str) -> String {
     let mut normalized = String::new();
     for character in clean_label(label).chars() {
         let character = match character as u32 {

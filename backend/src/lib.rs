@@ -7,6 +7,7 @@ pub mod config;
 pub mod db;
 pub mod embedding;
 pub mod error;
+pub mod kg_blueprint;
 pub mod knowledge_graph;
 pub mod models;
 pub mod ocr;

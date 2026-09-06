@@ -84,7 +84,7 @@ def test_empty_database_upgrades_to_current_schema(tmp_path: Path) -> None:
     assert build_report(inspector, "sqlite")["ok"] is True
     with engine.connect() as connection:
         # Rust 运行时以自身 ensure 路径为权威；alembic 链仅作 legacy/开发路径镜像，head 随最新迁移前进。
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0014_formal_blind_review_batches"
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0015_kg_blueprint"
 
 
 def test_one_active_experiment_per_project_is_database_enforced(tmp_path: Path) -> None:
@@ -170,6 +170,28 @@ def test_legacy_database_keeps_rows_and_receives_runtime_columns(tmp_path: Path)
             "reviewer_b_user_id",
             "status",
             "created_by",
+        },
+        "kg_blueprint_nodes": {
+            "project_id",
+            "entity_type",
+            "normalized_label",
+            "status",
+            "source_kind",
+            "priority",
+        },
+        "kg_blueprint_edges": {
+            "project_id",
+            "source_node_id",
+            "target_node_id",
+            "relation_type",
+            "priority",
+        },
+        "kg_blueprint_documents": {
+            "project_id",
+            "source_kind",
+            "parse_mode",
+            "node_count",
+            "edge_count",
         },
         "ai_query_logs": {
             "provider",

@@ -1476,6 +1476,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/kg/blueprint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Project Knowledge Blueprint */
+        get: operations["get_project_knowledge_blueprint_projects__project_id__kg_blueprint_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/kg/blueprint/parse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Parse Project Knowledge Blueprint */
+        post: operations["parse_project_knowledge_blueprint_projects__project_id__kg_blueprint_parse_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/kg/blueprint/nodes/{node_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Patch Project Knowledge Blueprint Node */
+        patch: operations["patch_project_knowledge_blueprint_node_projects__project_id__kg_blueprint_nodes__node_id__patch"];
+        trace?: never;
+    };
+    "/projects/{project_id}/kg/blueprint/edges/{edge_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Patch Project Knowledge Blueprint Edge */
+        patch: operations["patch_project_knowledge_blueprint_edge_projects__project_id__kg_blueprint_edges__edge_id__patch"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3097,6 +3165,154 @@ export interface components {
             corpus_chunk_count: number;
             graph_entity_count: number;
             graph_relation_count: number;
+        };
+        /** BlueprintParseRequest */
+        BlueprintParseRequest: {
+            /** Title */
+            title: string;
+            /** Source Kind */
+            source_kind: string;
+            /** Priority */
+            priority?: number | null;
+            /** Text */
+            text?: string | null;
+            /** File Id */
+            file_id?: number | null;
+            /** Note Id */
+            note_id?: number | null;
+        };
+        /** BlueprintParseResponse */
+        BlueprintParseResponse: {
+            /** Document Id */
+            document_id?: number;
+            /** Parse Mode */
+            parse_mode?: string;
+            /** Nodes Added */
+            nodes_added?: number;
+            /** Nodes Updated */
+            nodes_updated?: number;
+            /** Edges Added */
+            edges_added?: number;
+            /** Edges Dropped */
+            edges_dropped?: number;
+            /** Message */
+            message?: string;
+        };
+        /** BlueprintEvidence */
+        BlueprintEvidence: {
+            /** Entity Ids */
+            entity_ids?: number[];
+            /** Entity Count */
+            entity_count?: number;
+            /** Last Evidence At */
+            last_evidence_at?: string | null;
+        };
+        /** BlueprintNodeRead */
+        BlueprintNodeRead: {
+            /** Id */
+            id?: number;
+            /** Entity Type */
+            entity_type?: string;
+            /** Label */
+            label?: string;
+            /** Description */
+            description?: string;
+            /** Status */
+            status?: string;
+            /** Source Kind */
+            source_kind?: string;
+            /** Source Label */
+            source_label?: string;
+            /** Priority */
+            priority?: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at?: string;
+            evidence?: components["schemas"]["BlueprintEvidence"];
+        };
+        /** BlueprintEdgeRead */
+        BlueprintEdgeRead: {
+            /** Id */
+            id?: number;
+            /** Source Node Id */
+            source_node_id?: number;
+            /** Target Node Id */
+            target_node_id?: number;
+            /** Relation Type */
+            relation_type?: string;
+            /** Status */
+            status?: string;
+            /** Priority */
+            priority?: number;
+        };
+        /** BlueprintDocumentRead */
+        BlueprintDocumentRead: {
+            /** Id */
+            id?: number;
+            /** Title */
+            title?: string;
+            /** Source Kind */
+            source_kind?: string;
+            /** Parse Mode */
+            parse_mode?: string;
+            /** Node Count */
+            node_count?: number;
+            /** Edge Count */
+            edge_count?: number;
+            /** Message */
+            message?: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+        };
+        /** BlueprintCoverage */
+        BlueprintCoverage: {
+            /** Total Nodes */
+            total_nodes?: number;
+            /** Covered Nodes */
+            covered_nodes?: number;
+            /** Completion */
+            completion?: number;
+        };
+        /** KnowledgeBlueprintRead */
+        KnowledgeBlueprintRead: {
+            /** Project Id */
+            project_id?: number;
+            coverage?: components["schemas"]["BlueprintCoverage"];
+            /** Nodes */
+            nodes?: components["schemas"]["BlueprintNodeRead"][];
+            /** Edges */
+            edges?: components["schemas"]["BlueprintEdgeRead"][];
+            /** Documents */
+            documents?: components["schemas"]["BlueprintDocumentRead"][];
+        };
+        /** BlueprintNodePatchRequest */
+        BlueprintNodePatchRequest: {
+            /** Status */
+            status?: string | null;
+            /** Description */
+            description?: string | null;
+        };
+        /** BlueprintEdgePatchRequest */
+        BlueprintEdgePatchRequest: {
+            /** Status */
+            status?: string | null;
+        };
+        /** BlueprintMutationResponse */
+        BlueprintMutationResponse: {
+            /** Updated */
+            updated?: boolean;
+            /** Id */
+            id?: number;
         };
     };
     responses: never;
@@ -6326,6 +6542,144 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiErrorResponse"];
+                };
+            };
+        };
+    };
+    get_project_knowledge_blueprint_projects__project_id__kg_blueprint_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["KnowledgeBlueprintRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    parse_project_knowledge_blueprint_projects__project_id__kg_blueprint_parse_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BlueprintParseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlueprintParseResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    patch_project_knowledge_blueprint_node_projects__project_id__kg_blueprint_nodes__node_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+                node_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BlueprintNodePatchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlueprintMutationResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    patch_project_knowledge_blueprint_edge_projects__project_id__kg_blueprint_edges__edge_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+                edge_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BlueprintEdgePatchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BlueprintMutationResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
