@@ -83,7 +83,8 @@ def test_empty_database_upgrades_to_current_schema(tmp_path: Path) -> None:
     assert set(Base.metadata.tables) <= set(inspector.get_table_names())
     assert build_report(inspector, "sqlite")["ok"] is True
     with engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0013"
+        # Rust 运行时以自身 ensure 路径为权威；alembic 链仅作 legacy/开发路径镜像，head 随最新迁移前进。
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "0014_formal_blind_review_batches"
 
 
 def test_one_active_experiment_per_project_is_database_enforced(tmp_path: Path) -> None:

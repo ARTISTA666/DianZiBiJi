@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 revision = "0014_formal_blind_review_batches"
-down_revision = "0013_rust_retrieval_identity"
+down_revision = "0013"
 branch_labels = None
 depends_on = None
 
@@ -36,7 +36,7 @@ def upgrade() -> None:
             server_default="LOCKED",
         ),
         sa.Column("created_by", sa.Integer(), sa.ForeignKey("users.id"), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False, server_default=sa.text("now()")),
+        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False, server_default=sa.func.now()),
         sa.Column("unblinded_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("unblinded_by_user_id", sa.Integer(), sa.ForeignKey("users.id"), nullable=True),
         sa.UniqueConstraint("experiment_run_id", name="uq_ai_blind_review_batches_experiment_run"),
