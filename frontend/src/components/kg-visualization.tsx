@@ -55,7 +55,7 @@ interface GraphLink {
   color: string;
 }
 
-type NodeShape = "circle" | "square" | "diamond" | "hexagon" | "triangle";
+export type NodeShape = "circle" | "square" | "diamond" | "hexagon" | "triangle";
 
 // 实体类型 → 颜色映射（颜色通道 = 实体类型）
 const ENTITY_COLORS: Record<string, string> = {
@@ -79,12 +79,12 @@ const ENTITY_COLORS: Record<string, string> = {
   experiment_type: "#0284c7",
 };
 
-function getEntityColor(entityType: string): string {
+export function getEntityColor(entityType: string): string {
   return ENTITY_COLORS[entityType] || "#94a3b8";
 }
 
 // 形状通道 = 实体角色：研究对象(圆)/记录与组织(方)/材料与工具(菱)/方法与过程(六边)/产出(三角)
-const ENTITY_SHAPES: Record<string, NodeShape> = {
+export const ENTITY_SHAPES: Record<string, NodeShape> = {
   project: "square",
   note: "square",
   file: "square",
@@ -105,7 +105,7 @@ const ENTITY_SHAPES: Record<string, NodeShape> = {
   result: "triangle",
 };
 
-const SHAPE_LABELS: Array<{ shape: NodeShape; label: string }> = [
+export const SHAPE_LABELS: Array<{ shape: NodeShape; label: string }> = [
   { shape: "circle", label: "研究对象" },
   { shape: "square", label: "记录/组织" },
   { shape: "diamond", label: "材料/工具" },
@@ -114,7 +114,7 @@ const SHAPE_LABELS: Array<{ shape: NodeShape; label: string }> = [
 ];
 
 // 边颜色通道 = 关系语义组：结构(蓝)/使用(琥珀)/产出(绿)
-const RELATION_GROUPS: Record<string, { color: string; label: string }> = {
+export const RELATION_GROUPS: Record<string, { color: string; label: string }> = {
   has_note: { color: "#3b82f6", label: "结构关系" },
   has_attachment: { color: "#3b82f6", label: "结构关系" },
   created_by: { color: "#3b82f6", label: "结构关系" },
@@ -125,17 +125,17 @@ const RELATION_GROUPS: Record<string, { color: string; label: string }> = {
   produces_result: { color: "#059669", label: "产出关系" },
 };
 
-const RELATION_GROUP_LEGEND = [
+export const RELATION_GROUP_LEGEND = [
   { color: "#3b82f6", label: "结构关系" },
   { color: "#d97706", label: "使用关系" },
   { color: "#059669", label: "产出关系" },
 ];
 
-function getRelationColor(relationType: string): string {
+export function getRelationColor(relationType: string): string {
   return RELATION_GROUPS[relationType]?.color || "#94a3b8";
 }
 
-function hexToRgba(hex: string, alpha: number): string {
+export function hexToRgba(hex: string, alpha: number): string {
   const value = hex.replace("#", "");
   const r = parseInt(value.slice(0, 2), 16);
   const g = parseInt(value.slice(2, 4), 16);
@@ -144,7 +144,7 @@ function hexToRgba(hex: string, alpha: number): string {
 }
 
 // 按角色画形状路径（以 x,y 为中心、r 为外接半径）
-function traceShapePath(ctx: CanvasRenderingContext2D, shape: NodeShape, x: number, y: number, r: number) {
+export function traceShapePath(ctx: CanvasRenderingContext2D, shape: NodeShape, x: number, y: number, r: number) {
   ctx.beginPath();
   switch (shape) {
     case "circle":

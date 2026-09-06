@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { RotateCw, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthStore, useProjectStore } from "@/stores";
 import { getErrorMessage } from "@/lib/utils";
 import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
@@ -12,6 +13,7 @@ import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { KnowledgeGraphVisualization } from "@/components/kg-visualization";
+import { KnowledgeBlueprintView } from "@/components/kg-blueprint";
 import { ErrorBanner } from "@/components/shared/error-banner";
 
 export default function KGPage() {
@@ -102,44 +104,57 @@ export default function KGPage() {
     <div className="space-y-3">
       {error && <ErrorBanner message={error} />}
 
-      <div className="flex justify-end">
-        {canWrite && <Button size="sm" variant="outline" onClick={handleRebuild} disabled={rebuilding}>
-          <RotateCw className={`mr-2 h-4 w-4 ${rebuilding ? "animate-spin" : ""}`} />重建图谱
-        </Button>}
-      </div>
+      <Tabs defaultValue="evidence">
+        <TabsList className="h-9">
+          <TabsTrigger value="evidence" className="text-xs">实证图谱</TabsTrigger>
+          <TabsTrigger value="blueprint" className="text-xs">知识蓝图（计划 vs 实证）</TabsTrigger>
+        </TabsList>
 
-      {/* 过滤器 */}
-      <div className="flex flex-wrap items-center gap-2">
-        <Select value={entityFilter || "all"} onValueChange={(value) => setEntityFilter(value === "all" ? "" : value)}>
-          <SelectTrigger aria-label="实体类型筛选" className="h-9 w-44"><SelectValue placeholder="筛选实体类型" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">全部实体类型</SelectItem>
-            {entityTypes.map((t) => (<SelectItem key={t} value={t}>{kgEntityTypeText[t] || t}</SelectItem>))}
-          </SelectContent>
-        </Select>
-        <Select value={relationFilter || "all"} onValueChange={(value) => setRelationFilter(value === "all" ? "" : value)}>
-          <SelectTrigger aria-label="关系类型筛选" className="h-9 w-44"><SelectValue placeholder="筛选关系类型" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">全部关系类型</SelectItem>
-            {relationTypes.map((t) => (<SelectItem key={t} value={t}>{kgRelationTypeText[t] || t}</SelectItem>))}
-          </SelectContent>
-        </Select>
-        <div className="relative min-w-56 flex-1">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-          <Input aria-label="搜索实体" value={entityKeyword} onChange={(e) => setEntityKeyword(e.target.value)}
-            placeholder="" className="h-9 border-slate-400 pl-9" />
-        </div>
-      </div>
+        <TabsContent value="evidence" className="space-y-3">
+          <div className="flex justify-end">
+            {canWrite && <Button size="sm" variant="outline" onClick={handleRebuild} disabled={rebuilding}>
+              <RotateCw className={`mr-2 h-4 w-4 ${rebuilding ? "animate-spin" : ""}`} />重建图谱
+            </Button>}
+          </div>
 
-      {/* 图谱可视化 */}
-      {kgGraph && kgGraph.entities.length > 0 && (
-        <KnowledgeGraphVisualization
-          entities={graphEntities}
-          relations={graphRelations}
-          selectedEntityId={selectedEntityId}
-          onEntitySelect={setSelectedEntityId}
-        />
-      )}
+          {/* 过滤器 */}
+          <div className="flex flex-wrap items-center gap-2">
+            <Select value={entityFilter || "all"} onValueChange={(value) => setEntityFilter(value === "all" ? "" : value)}>
+              <SelectTrigger aria-label="实体类型筛选" className="h-9 w-44"><SelectValue placeholder="筛选实体类型" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">全部实体类型</SelectItem>
+                {entityTypes.map((t) => (<SelectItem key={t} value={t}>{kgEntityTypeText[t] || t}</SelectItem>))}
+              </SelectContent>
+            </Select>
+            <Select value={relationFilter || "all"} onValueChange={(value) => setRelationFilter(value === "all" ? "" : value)}>
+              <SelectTrigger aria-label="关系类型筛选" className="h-9 w-44"><SelectValue placeholder="筛选关系类型" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">全部关系类型</SelectItem>
+                {relationTypes.map((t) => (<SelectItem key={t} value={t}>{kgRelationTypeText[t] || t}</SelectItem>))}
+              </SelectContent>
+            </Select>
+            <div className="relative min-w-56 flex-1">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+              <Input aria-label="搜索实体" value={entityKeyword} onChange={(e) => setEntityKeyword(e.target.value)}
+                placeholder="" className="h-9 border-slate-400 pl-9" />
+            </div>
+          </div>
+
+          {/* 图谱可视化 */}
+          {kgGraph && kgGraph.entities.length > 0 && (
+            <KnowledgeGraphVisualization
+              entities={graphEntities}
+              relations={graphRelations}
+              selectedEntityId={selectedEntityId}
+              onEntitySelect={setSelectedEntityId}
+            />
+          )}
+        </TabsContent>
+
+        <TabsContent value="blueprint">
+          {token && <KnowledgeBlueprintView projectId={projectId} token={token} canWrite={canWrite} />}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

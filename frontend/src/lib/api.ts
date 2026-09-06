@@ -1019,6 +1019,96 @@ export function rebuildProjectKnowledgeGraph(token: string, projectId: number) {
   return post<KnowledgeExtractionRun[]>(`/projects/${projectId}/kg/rebuild`, token);
 }
 
+// ── 知识蓝图（计划态图谱） ─────────────────────────────────
+
+export type BlueprintEvidence = {
+  entity_ids: number[];
+  entity_count: number;
+  last_evidence_at: string | null;
+};
+
+export type BlueprintNode = {
+  id: number;
+  entity_type: string;
+  label: string;
+  description: string;
+  status: string;
+  source_kind: string;
+  source_label: string;
+  priority: number;
+  created_at: string;
+  updated_at: string;
+  evidence: BlueprintEvidence;
+};
+
+export type BlueprintEdge = {
+  id: number;
+  source_node_id: number;
+  target_node_id: number;
+  relation_type: string;
+  status: string;
+  priority: number;
+};
+
+export type BlueprintDocument = {
+  id: number;
+  title: string;
+  source_kind: string;
+  parse_mode: string;
+  node_count: number;
+  edge_count: number;
+  message: string;
+  created_at: string;
+};
+
+export type KnowledgeBlueprint = {
+  project_id: number;
+  coverage: { total_nodes: number; covered_nodes: number; completion: number };
+  nodes: BlueprintNode[];
+  edges: BlueprintEdge[];
+  documents: BlueprintDocument[];
+};
+
+export function getProjectKnowledgeBlueprint(token: string, projectId: number) {
+  return apiFetch<KnowledgeBlueprint>(`/projects/${projectId}/kg/blueprint`, token);
+}
+
+export function parseProjectKnowledgeBlueprint(
+  token: string,
+  projectId: number,
+  payload: {
+    title: string;
+    source_kind: string;
+    priority?: number;
+    text?: string;
+    file_id?: number;
+    note_id?: number;
+  },
+) {
+  return post<{
+    document_id: number;
+    parse_mode: string;
+    nodes_added: number;
+    nodes_updated: number;
+    edges_added: number;
+    edges_dropped: number;
+    message: string;
+  }>(`/projects/${projectId}/kg/blueprint/parse`, token, payload);
+}
+
+export function patchProjectKnowledgeBlueprintNode(
+  token: string,
+  projectId: number,
+  nodeId: number,
+  payload: { status?: string; description?: string },
+) {
+  return patch<{ updated: boolean; id: number }>(
+    `/projects/${projectId}/kg/blueprint/nodes/${nodeId}`,
+    token,
+    payload,
+  );
+}
+
 export function fileDownloadUrl(fileId: number) {
   return `${API_BASE_URL}/files/${fileId}/download`;
 }
