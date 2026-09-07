@@ -20,6 +20,8 @@ import {
   Clock,
   Network,
   ChevronDown,
+  BookOpen,
+  Eye,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,16 +36,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { kgEntityTypeText, kgRelationTypeText, kgEntityShortText } from "@/components/constants";
 // @ts-expect-error d3 is untyped
-import { forceCollide } from "d3";
+import { forceCollide, forceX, forceY } from "d3";
 
 // react-force-graph-2d 不支持 SSR，需动态导入
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d").then((mod) => mod.default), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[32rem] items-center justify-center text-sm text-muted-foreground">
+    <div className="flex h-[34rem] items-center justify-center text-sm text-muted-foreground">
       <div className="flex flex-col items-center gap-2">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-        <span>加载科研图谱渲染引擎...</span>
+        <span>加载科研星系图谱渲染引擎...</span>
       </div>
     </div>
   ),
@@ -77,6 +79,7 @@ interface GraphNode {
   freshness: number;
   updatedAt?: string;
   radius: number;
+  isNote: boolean;
   x?: number;
   y?: number;
   fx?: number;
@@ -256,23 +259,24 @@ export function KnowledgeGraphVisualization({
   const fitOnEngineStopRef = useRef(true);
 
   const [graphSize, setGraphSize] = useState({ width: 0, height: 600 });
-  // 图例默认折叠成底部轻量徽章，避免占据 1/3 屏幕遮挡节点
   const [legendOpen, setLegendOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoveredNodeId, setHoveredNodeId] = useState<number | null>(null);
   const [spotlightType, setSpotlightType] = useState<string | null>(null);
 
-  // 显示控制选项：默认智能聚焦模式（仅枢纽、悬停与选中显标签，彻底消除 86 个黑色药丸堆积）
+  // 核心实验重心导航：选中特定实验笔记时，全图聚焦该实验星系
+  const [activeExperimentId, setActiveExperimentId] = useState<number | null>(null);
+
+  // 显示控制选项：默认智能聚焦模式（仅枢纽、悬停与选中显标签）
   const [labelMode, setLabelMode] = useState<"smart" | "all" | "none">("smart");
   const [showLinkLabels, setShowLinkLabels] = useState(false);
   const [subgraphOnly, setSubgraphOnly] = useState(false);
 
   // 构建图数据与紧凑节点半径
-  const { nodes, links, entityMap } = useMemo(() => {
+  const { nodes, links, entityMap, noteEntities, entityToNoteMap } = useMemo(() => {
     const map = new Map<number, KgEntity>();
     entities.forEach((e) => map.set(e.id, e));
 
-    // 只展示有关系的实体
     const relatedIds = new Set<number>();
     relations.forEach((r) => {
       relatedIds.add(r.source_entity_id);
@@ -281,13 +285,30 @@ export function KnowledgeGraphVisualization({
 
     const visibleEntities = entities.filter((e) => relatedIds.has(e.id));
 
-    // 水波通道 = 证据新鲜度：updated_at 在全图内归一化（最新=满波，最旧=0.15 底波）
+    // 水波通道 = 证据新鲜度：updated_at 在全图内归一化
     const times = visibleEntities
       .map((e) => (e.updated_at ? new Date(e.updated_at).getTime() : Number.NaN))
       .filter((t) => Number.isFinite(t));
     const minT = times.length ? Math.min(...times) : 0;
     const maxT = times.length ? Math.max(...times) : 0;
     const span = maxT - minT || 1;
+
+    // 实体与实验笔记的从属映射（将节点归类到对应的实验星系中心）
+    const entToNotes = new Map<number, number[]>();
+    relations.forEach((r) => {
+      const src = map.get(r.source_entity_id);
+      const tgt = map.get(r.target_entity_id);
+      if (src?.entity_type === "note") {
+        const list = entToNotes.get(r.target_entity_id) || [];
+        list.push(r.source_entity_id);
+        entToNotes.set(r.target_entity_id, list);
+      }
+      if (tgt?.entity_type === "note") {
+        const list = entToNotes.get(r.source_entity_id) || [];
+        list.push(r.target_entity_id);
+        entToNotes.set(r.source_entity_id, list);
+      }
+    });
 
     const graphNodes: GraphNode[] = visibleEntities.map((e) => {
       const degree = relations.filter(
@@ -296,11 +317,11 @@ export function KnowledgeGraphVisualization({
       const t = e.updated_at ? new Date(e.updated_at).getTime() : Number.NaN;
       const freshness = Number.isFinite(t) ? 0.15 + 0.85 * ((t - minT) / span) : 0.5;
 
-      // 精致紧凑宝石尺寸：普通节点 11~14px，枢纽大节点 18~22px
-      const isHub = degree >= 6 || e.entity_type === "project" || e.entity_type === "note";
-      const radius = isHub
-        ? Math.min(22, 16 + Math.sqrt(degree) * 1.5)
-        : Math.max(11, Math.min(15, 10 + Math.sqrt(degree) * 1.2));
+      const isNote = e.entity_type === "note" || e.entity_type === "project";
+      // 实验笔记作为【视觉重心与引力核心】：半径扩大至 20~22px；普通节点紧凑精炼 11~14px
+      const radius = isNote
+        ? 21
+        : Math.max(11, Math.min(14, 10 + Math.sqrt(degree) * 1.0));
 
       return {
         id: e.id,
@@ -308,11 +329,12 @@ export function KnowledgeGraphVisualization({
         entityType: e.entity_type,
         val: radius,
         degree,
-        color: getEntityColor(e.entity_type),
-        shape: ENTITY_SHAPES[e.entity_type] || "circle",
+        color: isNote ? "#6366f1" : getEntityColor(e.entity_type),
+        shape: isNote ? "square" : (ENTITY_SHAPES[e.entity_type] || "circle"),
         freshness,
         updatedAt: e.updated_at,
         radius,
+        isNote,
       };
     });
 
@@ -327,7 +349,15 @@ export function KnowledgeGraphVisualization({
         color: getRelationColor(r.relation_type),
       }));
 
-    return { nodes: graphNodes, links: graphLinks, entityMap: map };
+    const notes = graphNodes.filter((n) => n.isNote);
+
+    return {
+      nodes: graphNodes,
+      links: graphLinks,
+      entityMap: map,
+      noteEntities: notes,
+      entityToNoteMap: entToNotes,
+    };
   }, [entities, relations]);
 
   // 保持引用稳定
@@ -335,7 +365,6 @@ export function KnowledgeGraphVisualization({
     if (!subgraphOnly || selectedEntityId === null) {
       return { nodes, links };
     }
-    // 仅查看一跳子图
     const activeIds = new Set<number>([selectedEntityId]);
     relations.forEach((r) => {
       if (r.source_entity_id === selectedEntityId) activeIds.add(r.target_entity_id);
@@ -351,17 +380,19 @@ export function KnowledgeGraphVisualization({
     };
   }, [nodes, links, subgraphOnly, selectedEntityId, relations]);
 
-  // 计算当前高亮节点网络（选中的节点或悬停的节点）
-  const focusEntityId = hoveredNodeId ?? selectedEntityId;
+  // 计算当前聚焦的核心实体（优先级：鼠标悬停 > 顶部选中的实验重心 > 点击选中的实体）
+  const primaryFocusId = hoveredNodeId ?? activeExperimentId ?? selectedEntityId;
+
+  // 计算一跳关联的高亮网络
   const highlightedIds = useMemo(() => {
-    if (focusEntityId === null) return new Set<number>();
-    const ids = new Set<number>([focusEntityId]);
+    if (primaryFocusId === null) return new Set<number>();
+    const ids = new Set<number>([primaryFocusId]);
     relations.forEach((r) => {
-      if (r.source_entity_id === focusEntityId) ids.add(r.target_entity_id);
-      if (r.target_entity_id === focusEntityId) ids.add(r.source_entity_id);
+      if (r.source_entity_id === primaryFocusId) ids.add(r.target_entity_id);
+      if (r.target_entity_id === primaryFocusId) ids.add(r.source_entity_id);
     });
     return ids;
-  }, [focusEntityId, relations]);
+  }, [primaryFocusId, relations]);
 
   // 选中的实体详情与关联明细
   const selectedDetails = useMemo(() => {
@@ -397,29 +428,82 @@ export function KnowledgeGraphVisualization({
     };
   }, [selectedEntityId, nodes, relations, entityMap]);
 
-  // 配置强力排斥、大间距与严格防碰撞的物理力导引
+  // 科学实验星系聚类物理引擎：以「实验笔记」为星系重心，实体围绕对应实验笔记环绕聚集！
   const configureGraph = useCallback(() => {
     const graph = graphRef.current;
     if (!graph) return;
 
-    // 1. 强力排斥力场：增大负排斥力，扩大距离上限，让 86 个节点在大画布中充分舒展开
-    graph.d3Force("charge")?.strength(-580).distanceMax(800);
-    // 2. 增大连线弹性距离：从原先的 95px 扩大到 140px，避免节点相互拥挤
-    graph.d3Force("link")?.distance(140);
-    // 3. 大幅调低中心聚拢引力：从 0.65 降至 0.12，杜绝将所有节点强制吸成中心球
-    graph.d3Force("center")?.strength(0.12);
+    const notes = noteEntities;
+    const count = notes.length || 1;
+    const w = graphSize.width || 900;
+    const h = graphSize.height || 600;
 
-    // 4. 真实注入 d3.forceCollide 防碰撞机制，节点之间保留至少 24px 呼吸间距！
+    // 分配各实验笔记在星系中的初始大环形锚点（半径约 240~360px）
+    const rx = Math.max(220, Math.min(360, w * 0.35));
+    const ry = Math.max(160, Math.min(260, h * 0.32));
+    const noteAnchorMap = new Map<number, { x: number; y: number }>();
+
+    notes.forEach((n, idx) => {
+      const angle = (idx * 2 * Math.PI) / count - Math.PI / 2;
+      noteAnchorMap.set(n.id, {
+        x: Math.cos(angle) * rx,
+        y: Math.sin(angle) * ry,
+      });
+    });
+
+    // 1. 星系引力 X：实验笔记飞向环状锚点，试剂/仪器/结果飞向所从属的实验笔记！
+    if (forceX) {
+      graph.d3Force(
+        "galaxyX",
+        forceX((node: any) => {
+          if (node.isNote) {
+            return noteAnchorMap.get(node.id)?.x ?? 0;
+          }
+          const parentNotes = entityToNoteMap.get(node.id);
+          if (parentNotes && parentNotes.length > 0) {
+            const sumX = parentNotes.reduce((acc, id) => acc + (noteAnchorMap.get(id)?.x ?? 0), 0);
+            return sumX / parentNotes.length;
+          }
+          return 0;
+        }).strength(0.24)
+      );
+    }
+
+    // 2. 星系引力 Y
+    if (forceY) {
+      graph.d3Force(
+        "galaxyY",
+        forceY((node: any) => {
+          if (node.isNote) {
+            return noteAnchorMap.get(node.id)?.y ?? 0;
+          }
+          const parentNotes = entityToNoteMap.get(node.id);
+          if (parentNotes && parentNotes.length > 0) {
+            const sumY = parentNotes.reduce((acc, id) => acc + (noteAnchorMap.get(id)?.y ?? 0), 0);
+            return sumY / parentNotes.length;
+          }
+          return 0;
+        }).strength(0.24)
+      );
+    }
+
+    // 3. 排斥力：适度排斥，防止星系内部拥挤
+    graph.d3Force("charge")?.strength(-320).distanceMax(500);
+    // 4. 连线距离：同实验紧凑（75px），自然聚拢
+    graph.d3Force("link")?.distance(75);
+    // 5. 取消强制中心吸附（由星系引力维持平衡）
+    graph.d3Force("center")?.strength(0.04);
+
+    // 6. 防碰撞力
     if (forceCollide) {
       graph.d3Force(
         "collide",
         forceCollide((n: any) => {
-          const r = n.radius || 13;
-          return r + 24;
-        }).iterations(3)
+          return (n.radius || 12) + 16;
+        }).iterations(2)
       );
     }
-  }, []);
+  }, [noteEntities, entityToNoteMap, graphSize.width, graphSize.height]);
 
   const fitGraph = useCallback((duration = 400) => {
     graphRef.current?.zoomToFit?.(duration, 56);
@@ -445,9 +529,21 @@ export function KnowledgeGraphVisualization({
     const y = targetNode.y;
     if (Number.isFinite(x) && Number.isFinite(y)) {
       graphRef.current.centerAt(x, y, 600);
-      graphRef.current.zoom(1.5, 600);
+      graphRef.current.zoom(1.6, 600);
     }
   }, [nodes]);
+
+  const handleSelectExperiment = useCallback(
+    (noteId: number | null) => {
+      setActiveExperimentId(noteId);
+      if (noteId === null) {
+        fitGraph(400);
+      } else {
+        focusOnNode(noteId);
+      }
+    },
+    [fitGraph, focusOnNode]
+  );
 
   const toggleFullscreen = useCallback(() => {
     setIsFullscreen((v) => !v);
@@ -456,7 +552,6 @@ export function KnowledgeGraphVisualization({
     }, 150);
   }, [fitGraph]);
 
-  // 容器尺寸响应
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -481,63 +576,66 @@ export function KnowledgeGraphVisualization({
     fitOnEngineStopRef.current = true;
   }, [graphData]);
 
-  // 键盘 Esc 退出全屏或取消选中
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (isFullscreen) setIsFullscreen(false);
         else if (selectedEntityId !== null) onEntitySelect(null);
+        else if (activeExperimentId !== null) setActiveExperimentId(null);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isFullscreen, selectedEntityId, onEntitySelect]);
+  }, [isFullscreen, selectedEntityId, activeExperimentId, onEntitySelect]);
 
-  // 高保真精简 Canvas 节点绘制（彻底消除标签重叠混乱）
+  // 高保真【极致聚焦聚光灯】Canvas 节点绘制
   const paintNode = useCallback(
     (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
       const x = node.x;
       const y = node.y;
       if (!Number.isFinite(x) || !Number.isFinite(y)) return;
 
-      const r = node.radius || 13;
-      const isSelected = node.id === selectedEntityId;
-      const isHovered = node.id === hoveredNodeId;
+      const r = node.radius || 12;
       const isInSpotlight = !spotlightType || node.entityType === spotlightType;
-      const hasFocus = focusEntityId !== null;
+
+      const hasActiveFocus = primaryFocusId !== null;
       const isInFocusNetwork = highlightedIds.has(node.id);
 
-      const dimmed = (!isInSpotlight) || (hasFocus && !isInFocusNetwork);
+      // 【核心体验解法：深度虚化降噪】
+      // 一旦有节点被悬停或选定重心，其余无关节点全部骤降至 0.04 极低透明度，只留淡淡剪影！
+      const dimmed = (!isInSpotlight) || (hasActiveFocus && !isInFocusNetwork);
       const baseColor = dimmed ? "#64748b" : node.color;
+      const isFocusCenter = node.id === primaryFocusId;
 
-      // 1. 选中或悬停时的光晕扩散环
-      if (isSelected) {
-        ctx.save();
-        traceShapePath(ctx, node.shape, x, y, r + 6 / globalScale);
-        ctx.fillStyle = hexToRgba("#4f46e5", 0.25);
+      ctx.save();
+      ctx.globalAlpha = dimmed ? 0.06 : 1.0;
+
+      // 1. 重心焦点外环：耀眼发光霓虹环
+      if (isFocusCenter) {
+        traceShapePath(ctx, node.shape, x, y, r + 7 / globalScale);
+        ctx.fillStyle = hexToRgba("#6366f1", 0.35);
         ctx.fill();
-        traceShapePath(ctx, node.shape, x, y, r + 3 / globalScale);
-        ctx.strokeStyle = "#4f46e5";
-        ctx.lineWidth = 2.2 / globalScale;
-        ctx.stroke();
-        ctx.restore();
-      } else if (isHovered) {
-        ctx.save();
         traceShapePath(ctx, node.shape, x, y, r + 3.5 / globalScale);
-        ctx.strokeStyle = hexToRgba(baseColor, 0.7);
-        ctx.lineWidth = 1.8 / globalScale;
+        ctx.strokeStyle = "#818cf8";
+        ctx.lineWidth = 2.4 / globalScale;
         ctx.stroke();
-        ctx.restore();
+      } else if (isInFocusNetwork && hasActiveFocus) {
+        traceShapePath(ctx, node.shape, x, y, r + 2.5 / globalScale);
+        ctx.strokeStyle = hexToRgba(baseColor, 0.85);
+        ctx.lineWidth = 1.6 / globalScale;
+        ctx.stroke();
       }
 
-      // 2. 节点底层玻璃微球（Vessel Background）
+      // 2. 节点底层玻璃器皿
       traceShapePath(ctx, node.shape, x, y, r);
       ctx.fillStyle = dimmed
-        ? "rgba(241, 245, 249, 0.25)"
-        : hexToRgba(baseColor, 0.14);
+        ? "rgba(241, 245, 249, 0.15)"
+        : node.isNote
+        ? "rgba(49, 46, 129, 0.45)"
+        : hexToRgba(baseColor, 0.15);
       ctx.fill();
 
-      // 3. 柔和水波填充（弯月面波峰）
+      // 3. 水波填充（弯月面起伏）
       ctx.save();
       traceShapePath(ctx, node.shape, x, y, r);
       ctx.clip();
@@ -552,10 +650,9 @@ export function KnowledgeGraphVisualization({
       const cp1Y = waterLevel - Math.sin(phase) * waveAmp;
       const cp2Y = waterLevel + Math.sin(phase) * waveAmp;
 
-      // 垂直渐变液体
       const grad = ctx.createLinearGradient(x, waterLevel, x, y + r * 1.15);
-      grad.addColorStop(0, hexToRgba(baseColor, dimmed ? 0.3 : 0.8));
-      grad.addColorStop(1, hexToRgba(baseColor, dimmed ? 0.45 : 0.96));
+      grad.addColorStop(0, hexToRgba(baseColor, dimmed ? 0.3 : 0.82));
+      grad.addColorStop(1, hexToRgba(baseColor, dimmed ? 0.45 : 0.98));
 
       ctx.beginPath();
       ctx.moveTo(startX, y + r * 1.3);
@@ -567,115 +664,111 @@ export function KnowledgeGraphVisualization({
       ctx.fillStyle = grad;
       ctx.fill();
 
-      // 弯月面高光波纹（Meniscus Highlight）
       if (!dimmed && freshness > 0.12) {
         ctx.beginPath();
         ctx.moveTo(startX, waterLevel);
         ctx.quadraticCurveTo(startX + (midX - startX) / 2, cp1Y, midX, waterLevel);
         ctx.quadraticCurveTo(midX + (endX - midX) / 2, cp2Y, endX, waterLevel);
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
         ctx.lineWidth = Math.max(0.8, 1.1 / globalScale);
         ctx.stroke();
       }
       ctx.restore();
 
-      // 4. 外边框（Rim）
+      // 4. 外边框（实验笔记采用特别加粗与金色高亮，构成显著重心）
       traceShapePath(ctx, node.shape, x, y, r);
-      ctx.strokeStyle = isSelected
-        ? "#4f46e5"
+      ctx.strokeStyle = node.isNote
+        ? "#eab308"
+        : isFocusCenter
+        ? "#818cf8"
         : dimmed
-        ? "#475569"
+        ? "#334155"
         : hexToRgba(baseColor, 0.9);
-      ctx.lineWidth = (isSelected ? 2.4 : isHovered ? 2.0 : 1.2) / Math.max(globalScale, 0.6);
+      ctx.lineWidth = (node.isNote ? 2.5 : isFocusCenter ? 2.2 : 1.2) / Math.max(globalScale, 0.6);
       ctx.stroke();
 
-      // 5. 节点中心直观汉字简标（「样」「试」「果」「笔」——极其整洁直观）
-      const shortGlyph = EXTENDED_SHORT_TEXT[node.entityType] || node.entityType.slice(0, 1).toUpperCase();
-      const glyphSize = Math.max(8, Math.min(11, r * 0.7));
-      ctx.font = `600 ${glyphSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+      // 5. 节点中心图标
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
+      if (node.isNote) {
+        // 实验笔记使用醒目的 📝 图标与大字号，一眼识别为实验核心！
+        ctx.font = `${Math.max(10, r * 0.75)}px sans-serif`;
+        ctx.fillText("📝", x, y);
+      } else {
+        const shortGlyph = EXTENDED_SHORT_TEXT[node.entityType] || node.entityType.slice(0, 1).toUpperCase();
+        const glyphSize = Math.max(8, Math.min(10.5, r * 0.7));
+        ctx.font = `600 ${glyphSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
 
-      const liquidIsHigh = freshness >= 0.45;
-      ctx.fillStyle = dimmed
-        ? "#94a3b8"
-        : liquidIsHigh
-        ? "#ffffff"
-        : hexToRgba(baseColor, 0.95);
-
-      if (liquidIsHigh && !dimmed) {
-        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-        ctx.shadowBlur = 2.5;
+        const liquidIsHigh = freshness >= 0.45;
+        ctx.fillStyle = dimmed ? "#64748b" : liquidIsHigh ? "#ffffff" : hexToRgba(baseColor, 0.95);
+        if (liquidIsHigh && !dimmed) {
+          ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+          ctx.shadowBlur = 2.5;
+        }
+        ctx.fillText(shortGlyph, x, y);
+        ctx.shadowBlur = 0;
       }
-      ctx.fillText(shortGlyph, x, y);
-      ctx.shadowBlur = 0;
 
-      // 6. 智能标签策略（核心解法！彻底告别 86 个黑药丸堆叠）
-      // 仅在以下情况显示标签文字：
-      // - 用户开启了「常显全部」
-      // - 或者是被选中节点 / 正在悬停节点
-      // - 或者是悬停/选中节点的一跳邻接节点（聚焦展开）
-      // - 或者是全图核心枢纽（度数 >= 7 且在智能模式下）
-      const isHub = node.degree >= 7 || node.entityType === "project";
+      // 6. 标签绘制规则（绝不全局平铺黑药丸）：
+      // - 实验笔记（核心重心）在智能模式下常显标题
+      // - 悬停 / 选中的节点以及与它们直接相连的一跳邻接节点，展开标签
       const shouldDrawLabel =
         labelMode === "all" ||
-        isSelected ||
-        isHovered ||
-        (isInFocusNetwork && focusEntityId !== null) ||
-        (labelMode === "smart" && (isHub || globalScale >= 1.6));
+        node.isNote ||
+        isFocusCenter ||
+        (hasActiveFocus && isInFocusNetwork) ||
+        (labelMode === "smart" && globalScale >= 1.7);
 
-      if (shouldDrawLabel && (!dimmed || isSelected || isHovered || isInFocusNetwork)) {
+      if (shouldDrawLabel && !dimmed) {
         const rawName = node.name || "";
-        const isHighlightNode = isSelected || isHovered;
-        const maxLen = isHighlightNode ? 24 : 11;
+        const maxLen = isFocusCenter || node.isNote ? 26 : 11;
         const displayName = rawName.length > maxLen ? `${rawName.slice(0, maxLen)}…` : rawName;
 
-        const fontSize = Math.max(8.5, Math.min(11, 10 / Math.sqrt(Math.max(globalScale, 0.65))));
-        ctx.font = `500 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+        const fontSize = Math.max(
+          8.5,
+          Math.min(11, (node.isNote ? 11 : 9.5) / Math.sqrt(Math.max(globalScale, 0.65)))
+        );
+        ctx.font = `${node.isNote ? "600" : "500"} ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
         const textMetrics = ctx.measureText(displayName);
         const textWidth = textMetrics.width;
 
         const pillHeight = fontSize + 5;
-        const pillWidth = textWidth + 10;
+        const pillWidth = textWidth + (node.isNote ? 14 : 10);
         const pillY = y + r + 2.5 / globalScale;
 
-        // 细腻半透明药丸胶囊
-        ctx.save();
-        ctx.fillStyle = isSelected
-          ? "rgba(30, 27, 75, 0.95)"
-          : isHovered
-          ? "rgba(15, 23, 42, 0.92)"
-          : "rgba(15, 23, 42, 0.72)";
+        // 标签药丸
+        ctx.fillStyle = node.isNote
+          ? "rgba(30, 27, 75, 0.96)"
+          : isFocusCenter
+          ? "rgba(15, 23, 42, 0.95)"
+          : "rgba(15, 23, 42, 0.78)";
         ctx.beginPath();
         ctx.roundRect(x - pillWidth / 2, pillY, pillWidth, pillHeight, 3.5);
         ctx.fill();
 
-        ctx.strokeStyle = isSelected
+        ctx.strokeStyle = node.isNote
+          ? "#eab308"
+          : isFocusCenter
           ? "#818cf8"
-          : isHovered
-          ? hexToRgba(baseColor, 0.85)
-          : "rgba(255, 255, 255, 0.14)";
-        ctx.lineWidth = 0.8 / globalScale;
+          : "rgba(255, 255, 255, 0.16)";
+        ctx.lineWidth = (node.isNote ? 1.2 : 0.8) / globalScale;
         ctx.stroke();
 
-        ctx.fillStyle = isSelected || isHovered ? "#ffffff" : "#e2e8f0";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+        ctx.fillStyle = node.isNote ? "#fef08a" : isFocusCenter ? "#ffffff" : "#e2e8f0";
         ctx.fillText(displayName, x, pillY + pillHeight / 2);
-        ctx.restore();
       }
+
+      ctx.restore();
     },
     [
-      selectedEntityId,
-      hoveredNodeId,
       spotlightType,
-      focusEntityId,
+      primaryFocusId,
       highlightedIds,
       labelMode,
     ]
   );
 
-  // 连线中点语义药丸标签（仅在选中/悬停连线路径时呈现，保持默认背景整洁）
+  // 连线中点语义药丸标签（仅在聚焦路径上浮现）
   const paintLinkCanvas = useCallback(
     (link: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
       const source = link.source;
@@ -683,8 +776,8 @@ export function KnowledgeGraphVisualization({
       if (!source || !target || !Number.isFinite(source.x) || !Number.isFinite(target.x)) return;
 
       const isFocused =
-        (selectedEntityId !== null && (source.id === selectedEntityId || target.id === selectedEntityId)) ||
-        (hoveredNodeId !== null && (source.id === hoveredNodeId || target.id === hoveredNodeId));
+        primaryFocusId !== null &&
+        (source.id === primaryFocusId || target.id === primaryFocusId);
 
       if (!showLinkLabels && !isFocused) return;
 
@@ -699,7 +792,7 @@ export function KnowledgeGraphVisualization({
       const ph = fontSize + 4;
 
       ctx.save();
-      ctx.fillStyle = isFocused ? "rgba(15, 23, 42, 0.92)" : "rgba(15, 23, 42, 0.75)";
+      ctx.fillStyle = isFocused ? "rgba(15, 23, 42, 0.94)" : "rgba(15, 23, 42, 0.75)";
       ctx.beginPath();
       ctx.roundRect(mx - pw / 2, my - ph / 2, pw, ph, 3);
       ctx.fill();
@@ -714,7 +807,7 @@ export function KnowledgeGraphVisualization({
       ctx.fillText(label, mx, my);
       ctx.restore();
     },
-    [selectedEntityId, hoveredNodeId, showLinkLabels]
+    [primaryFocusId, showLinkLabels]
   );
 
   // 统计类型分布
@@ -755,7 +848,7 @@ export function KnowledgeGraphVisualization({
             <div className="flex items-center gap-2">
               <CardTitle className="text-sm font-semibold sm:text-base">实证图谱可视化</CardTitle>
               <Badge variant="secondary" className="text-[11px] font-normal">
-                {nodes.length} 实体 · {links.length} 关系
+                {noteEntities.length} 核心实验星系 · {nodes.length} 实体 · {links.length} 关系
               </Badge>
               {spotlightType && (
                 <Badge
@@ -804,7 +897,7 @@ export function KnowledgeGraphVisualization({
                     <Layers className="h-3.5 w-3.5" />
                     <span>
                       {labelMode === "smart"
-                        ? "智能标签"
+                        ? "智能聚焦"
                         : labelMode === "all"
                         ? "全显标签"
                         : "精简无字"}
@@ -820,7 +913,7 @@ export function KnowledgeGraphVisualization({
                     className="text-xs"
                   >
                     <Sparkles className="mr-2 h-3.5 w-3.5 text-primary" />
-                    智能聚焦（推荐 · 悬停/枢纽才显）
+                    智能聚焦（悬停/核心才显）
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "all"}
@@ -835,8 +928,8 @@ export function KnowledgeGraphVisualization({
                     onCheckedChange={() => setLabelMode("none")}
                     className="text-xs"
                   >
-                    <Layers className="mr-2 h-3.5 w-3.5" />
-                    纯净几何（仅悬停显标签）
+                    <Eye className="mr-2 h-3.5 w-3.5" />
+                    极简几何（仅悬停显标签）
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuCheckboxItem
@@ -885,9 +978,12 @@ export function KnowledgeGraphVisualization({
                 variant="outline"
                 size="sm"
                 className="h-8 w-8 p-0"
-                onClick={() => fitGraph(300)}
-                title="重置视图居中"
-                aria-label="居中"
+                onClick={() => {
+                  setActiveExperimentId(null);
+                  fitGraph(300);
+                }}
+                title="重置星系全景视图"
+                aria-label="全景居中"
               >
                 <Focus className="h-3.5 w-3.5" />
               </Button>
@@ -899,7 +995,7 @@ export function KnowledgeGraphVisualization({
                   configureGraph();
                   graphRef.current?.d3ReheatSimulation?.();
                 }}
-                title="重新释放力导引布局"
+                title="重新释放星系聚类力场"
                 aria-label="重新布局"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
@@ -922,6 +1018,49 @@ export function KnowledgeGraphVisualization({
             </div>
           </div>
         </CardHeader>
+
+        {/* 🌟 核心创新体验：实验星系重心导航带（点击任意实验，一键聚光灯平滑飞越） */}
+        {noteEntities.length > 0 && (
+          <div className="flex items-center gap-1.5 overflow-x-auto border-b border-border/60 bg-muted/40 px-3 py-1.5 scrollbar-none">
+            <span className="flex-none text-[11px] font-semibold text-muted-foreground flex items-center gap-1">
+              <BookOpen className="h-3.5 w-3.5 text-primary" />
+              实验重心导航:
+            </span>
+
+            <button
+              type="button"
+              onClick={() => handleSelectExperiment(null)}
+              className={`flex-none rounded-md px-2.5 py-1 text-xs transition-colors ${
+                activeExperimentId === null
+                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                  : "bg-background/80 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/60"
+              }`}
+            >
+              🌐 全景总览
+            </button>
+
+            {noteEntities.map((note, idx) => {
+              const isActive = activeExperimentId === note.id;
+              return (
+                <button
+                  key={note.id}
+                  type="button"
+                  onClick={() => handleSelectExperiment(isActive ? null : note.id)}
+                  onMouseEnter={() => setHoveredNodeId(note.id)}
+                  onMouseLeave={() => setHoveredNodeId(null)}
+                  title={note.name}
+                  className={`flex-none truncate max-w-56 rounded-md px-2.5 py-1 text-xs transition-all ${
+                    isActive
+                      ? "bg-indigo-600 text-white font-medium shadow-sm ring-2 ring-indigo-400/40"
+                      : "bg-background/80 text-foreground/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border border-border/70"
+                  }`}
+                >
+                  📝 实验 #{idx + 1}: {note.name.split("：")[0] || note.name}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* 画布核心区域 */}
         <CardContent
@@ -952,27 +1091,26 @@ export function KnowledgeGraphVisualization({
                 const sourceId = typeof link.source === "object" ? link.source.id : link.source;
                 const targetId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  focusEntityId !== null && (sourceId === focusEntityId || targetId === focusEntityId);
+                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
 
-                if (focusEntityId !== null) {
-                  return isLinkedToFocus ? link.color : "rgba(148, 163, 184, 0.12)";
+                if (primaryFocusId !== null) {
+                  return isLinkedToFocus ? link.color : "rgba(148, 163, 184, 0.04)";
                 }
-                // 平常为清透柔和的半透明语义连线，杜绝粗黑线交织成网
-                return hexToRgba(link.color, 0.45);
+                return hexToRgba(link.color, 0.35);
               }}
               linkWidth={(link: any) => {
                 const sourceId = typeof link.source === "object" ? link.source.id : link.source;
                 const targetId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  focusEntityId !== null && (sourceId === focusEntityId || targetId === focusEntityId);
-                return isLinkedToFocus ? 2.2 : 0.8;
+                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
+                return isLinkedToFocus ? 2.6 : 0.8;
               }}
               linkDirectionalArrowLength={(link: any) => {
                 const sourceId = typeof link.source === "object" ? link.source.id : link.source;
                 const targetId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  focusEntityId !== null && (sourceId === focusEntityId || targetId === focusEntityId);
-                return isLinkedToFocus ? 6 : 4;
+                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
+                return isLinkedToFocus ? 6.5 : 4;
               }}
               linkDirectionalArrowRelPos={0.88}
               linkDirectionalArrowColor={(link: any) => link.color}
@@ -984,6 +1122,7 @@ export function KnowledgeGraphVisualization({
               onBackgroundClick={() => {
                 onEntitySelect(null);
                 setSpotlightType(null);
+                setActiveExperimentId(null);
               }}
               enableZoomInteraction={true}
               enablePanInteraction={true}
@@ -1000,7 +1139,7 @@ export function KnowledgeGraphVisualization({
             />
           )}
 
-          {/* 底部折叠式「五通道语义映射图例」小胶囊——不再遮挡图谱 */}
+          {/* 底部折叠式「五通道语义映射图例」小胶囊 */}
           <div className="absolute bottom-3 left-3 z-10">
             {!legendOpen ? (
               <button
@@ -1108,10 +1247,7 @@ export function KnowledgeGraphVisualization({
                       {kgEntityTypeText[selectedDetails.node.entityType] || selectedDetails.node.entityType}
                     </Badge>
                     <span className="text-[10px] text-muted-foreground">
-                      {ENTITY_SHAPES[selectedDetails.node.entityType]
-                        ? SHAPE_LABELS.find((s) => s.shape === ENTITY_SHAPES[selectedDetails.node.entityType])
-                            ?.label
-                        : "实体"}
+                      {selectedDetails.node.isNote ? "核心实验星系" : "研究实体"}
                     </span>
                   </div>
                   <h3 className="mt-1.5 truncate text-sm font-semibold text-foreground" title={selectedDetails.node.name}>
