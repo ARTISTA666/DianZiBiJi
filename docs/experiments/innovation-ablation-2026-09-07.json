@@ -1,0 +1,452 @@
+{
+ "run_at": "2026-09-07T12:39:56.888859+00:00",
+ "project_id": 10,
+ "revision_note": "运行库=full-system-stable@97ffd43;指标口径见脚本 docstring",
+ "experiment_A_blueprint_suggestion": {
+  "blueprint_total_nodes": 15,
+  "covered_nodes": 1,
+  "uncovered_nodes": 14,
+  "arm_rule_based": {
+   "suggestions": [
+    {
+     "title": "覆盖知识点「乳腺癌患者血浆样本」",
+     "rationale": "蓝图计划项（来源：plan_document，优先级 50）尚无实证记录：处理该样本并留存制备记录",
+     "related_labels": [
+      "乳腺癌患者血浆样本"
+     ]
+    },
+    {
+     "title": "覆盖知识点「健康对照血浆样本」",
+     "rationale": "蓝图计划项（来源：plan_document，优先级 50）尚无实证记录：处理该样本并留存制备记录",
+     "related_labels": [
+      "健康对照血浆样本"
+     ]
+    },
+    {
+     "title": "覆盖知识点「外泌体」",
+     "rationale": "蓝图计划项（来源：plan_document，优先级 50）尚无实证记录：处理该样本并留存制备记录",
+     "related_labels": [
+      "外泌体"
+     ]
+    }
+   ],
+   "metrics": {
+    "actionable_refs": 3,
+    "hit_uncovered": 3,
+    "fabricated_refs": 0
+   }
+  },
+  "arm_generic_baseline": {
+   "suggestions": [
+    {
+     "title": "及时记录实验",
+     "rationale": "保持实验记录的连续性",
+     "related_labels": []
+    },
+    {
+     "title": "整理实验数据",
+     "rationale": "定期归档数据文件",
+     "related_labels": []
+    },
+    {
+     "title": "与导师沟通",
+     "rationale": "汇报近期进展",
+     "related_labels": []
+    }
+   ],
+   "metrics": {
+    "actionable_refs": 0,
+    "hit_uncovered": 0,
+    "fabricated_refs": 0
+   }
+  },
+  "conclusion_hint": "蓝图臂每条建议绑定具体待实证知识点(可执行、可核验、零编造);通用臂 actionable_refs=0"
+ },
+ "experiment_B2_synthetic_discriminative": {
+  "note": "演示语料判别信号稀薄(biosample 无候选),注入计划态合成候选检验机制可区分性;counterfactual 给两位学生不同熟手/新手画像检验排序分化",
+  "per_user": [
+   {
+    "user": 33,
+    "rows": [
+     {
+      "query": "q1_试剂",
+      "kendall_tau": 1.0,
+      "top10_jaccard": 0.8182,
+      "synthetic_in_base_top10": [],
+      "synthetic_in_profile_top10": [
+       2503
+      ]
+     },
+     {
+      "query": "q2_仪器",
+      "kendall_tau": 1.0,
+      "top10_jaccard": 0.6667,
+      "synthetic_in_base_top10": [],
+      "synthetic_in_profile_top10": [
+       2501,
+       2502
+      ]
+     }
+    ]
+   },
+   {
+    "user": 34,
+    "rows": [
+     {
+      "query": "q1_试剂",
+      "kendall_tau": 1.0,
+      "top10_jaccard": 0.8182,
+      "synthetic_in_base_top10": [],
+      "synthetic_in_profile_top10": [
+       2503
+      ]
+     },
+     {
+      "query": "q2_仪器",
+      "kendall_tau": 1.0,
+      "top10_jaccard": 0.6667,
+      "synthetic_in_base_top10": [],
+      "synthetic_in_profile_top10": [
+       2501,
+       2502
+      ]
+     }
+    ]
+   }
+  ],
+  "counterfactual": [
+   {
+    "user": 33,
+    "seen_override": [
+     "biosample",
+     "experiment_type",
+     "instrument",
+     "reagent",
+     "result",
+     "sample"
+    ],
+    "rows": [
+     {
+      "query": "q1_试剂",
+      "profile_top10_synth": [],
+      "profile_top10_real_count": 10,
+      "synth_scores": {
+       "2498": {
+        "label": "乳腺癌患者血浆样本",
+        "final_score": 2.4
+       },
+       "2499": {
+        "label": "健康对照血浆样本",
+        "final_score": 2.4
+       },
+       "2500": {
+        "label": "外泌体",
+        "final_score": 2.4
+       },
+       "2501": {
+        "label": "透射电子显微镜",
+        "final_score": 2.4
+       },
+       "2502": {
+        "label": "纳米颗粒追踪分析",
+        "final_score": 2.4
+       },
+       "2503": {
+        "label": "TRIzol 试剂",
+        "final_score": 4.8
+       }
+      }
+     },
+     {
+      "query": "q2_仪器",
+      "profile_top10_synth": [],
+      "profile_top10_real_count": 10,
+      "synth_scores": {
+       "2498": {
+        "label": "乳腺癌患者血浆样本",
+        "final_score": 2.4
+       },
+       "2499": {
+        "label": "健康对照血浆样本",
+        "final_score": 2.4
+       },
+       "2500": {
+        "label": "外泌体",
+        "final_score": 2.4
+       },
+       "2501": {
+        "label": "透射电子显微镜",
+        "final_score": 4.8
+       },
+       "2502": {
+        "label": "纳米颗粒追踪分析",
+        "final_score": 4.8
+       },
+       "2503": {
+        "label": "TRIzol 试剂",
+        "final_score": 2.4
+       }
+      }
+     }
+    ]
+   },
+   {
+    "user": 34,
+    "seen_override": [
+     "experiment_type",
+     "reagent",
+     "result",
+     "sample"
+    ],
+    "rows": [
+     {
+      "query": "q1_试剂",
+      "profile_top10_synth": [],
+      "profile_top10_real_count": 10,
+      "synth_scores": {
+       "2498": {
+        "label": "乳腺癌患者血浆样本",
+        "final_score": 3.45
+       },
+       "2499": {
+        "label": "健康对照血浆样本",
+        "final_score": 3.45
+       },
+       "2500": {
+        "label": "外泌体",
+        "final_score": 2.55
+       },
+       "2501": {
+        "label": "透射电子显微镜",
+        "final_score": 3.45
+       },
+       "2502": {
+        "label": "纳米颗粒追踪分析",
+        "final_score": 3.45
+       },
+       "2503": {
+        "label": "TRIzol 试剂",
+        "final_score": 5.1
+       }
+      }
+     },
+     {
+      "query": "q2_仪器",
+      "profile_top10_synth": [],
+      "profile_top10_real_count": 10,
+      "synth_scores": {
+       "2498": {
+        "label": "乳腺癌患者血浆样本",
+        "final_score": 3.45
+       },
+       "2499": {
+        "label": "健康对照血浆样本",
+        "final_score": 3.45
+       },
+       "2500": {
+        "label": "外泌体",
+        "final_score": 2.55
+       },
+       "2501": {
+        "label": "透射电子显微镜",
+        "final_score": 6.9
+       },
+       "2502": {
+        "label": "纳米颗粒追踪分析",
+        "final_score": 6.9
+       },
+       "2503": {
+        "label": "TRIzol 试剂",
+        "final_score": 2.55
+       }
+      }
+     }
+    ]
+   }
+  ],
+  "counterfactual_orders_differ": true
+ },
+ "experiment_B_profile_rerank": {
+  "lambda2": 1.0,
+  "profiles": {
+   "33": {
+    "completion_speed": 0.667,
+    "quality_score": 1.0,
+    "skill_breadth": 5,
+    "blueprint_alignment": 0.0
+   },
+   "34": {
+    "completion_speed": 1.333,
+    "quality_score": 1.0,
+    "skill_breadth": 5,
+    "blueprint_alignment": 0.067
+   }
+  },
+  "project_uncovered_labels": [
+   "Agilent 2100 生物分析仪",
+   "CD63",
+   "Illumina 平台",
+   "ROC 曲线",
+   "TRIzol 试剂",
+   "TSG101",
+   "miRNA 测序",
+   "qRT-PCR",
+   "乳腺癌患者血浆样本",
+   "健康对照血浆样本",
+   "外泌体",
+   "差异表达 miRNA",
+   "纳米颗粒追踪分析",
+   "透射电子显微镜"
+  ],
+  "user_uncovered_labels": {
+   "33": [
+    "Agilent 2100 生物分析仪",
+    "CD63",
+    "Illumina 平台",
+    "ROC 曲线",
+    "TRIzol 试剂",
+    "TSG101",
+    "Western Blot",
+    "miRNA 测序",
+    "qRT-PCR",
+    "乳腺癌患者血浆样本",
+    "健康对照血浆样本",
+    "外泌体",
+    "差异表达 miRNA",
+    "纳米颗粒追踪分析",
+    "透射电子显微镜"
+   ],
+   "34": [
+    "Agilent 2100 生物分析仪",
+    "CD63",
+    "Illumina 平台",
+    "ROC 曲线",
+    "TRIzol 试剂",
+    "TSG101",
+    "miRNA 测序",
+    "qRT-PCR",
+    "乳腺癌患者血浆样本",
+    "健康对照血浆样本",
+    "外泌体",
+    "差异表达 miRNA",
+    "纳米颗粒追踪分析",
+    "透射电子显微镜"
+   ]
+  },
+  "per_user": {
+   "33": [
+    {
+     "query": "q1_试剂",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    },
+    {
+     "query": "q2_仪器",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    },
+    {
+     "query": "q3_结果",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    },
+    {
+     "query": "q4_实验类型",
+     "candidates_scored": 86,
+     "kendall_tau": 0.9555555555555556,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    }
+   ],
+   "34": [
+    {
+     "query": "q1_试剂",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    },
+    {
+     "query": "q2_仪器",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    },
+    {
+     "query": "q3_结果",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    },
+    {
+     "query": "q4_实验类型",
+     "candidates_scored": 86,
+     "kendall_tau": 1.0,
+     "top10_jaccard": 1.0,
+     "profile_promoted": [],
+     "promoted_labels": []
+    }
+   ]
+  }
+ },
+ "experiment_C_visual_ablation_proxy": {
+  "questions": [
+   {
+    "task": "找出项目里所有试剂类节点",
+    "with_mapping_channels": [
+     "颜色"
+    ],
+    "without_mapping_channels": [
+     "逐节点点开查看标签"
+    ],
+    "channel_cost": 1
+   },
+   {
+    "task": "找出连接最多的枢纽节点",
+    "with_mapping_channels": [
+     "大小"
+    ],
+    "without_mapping_channels": [
+     "逐节点统计度数"
+    ],
+    "channel_cost": 1
+   },
+   {
+    "task": "判断哪些知识久未佐证需复核",
+    "with_mapping_channels": [
+     "水波"
+    ],
+    "without_mapping_channels": [
+     "逐节点查看更新时间"
+    ],
+    "channel_cost": 1
+   }
+  ],
+  "node_type_distribution": {
+   "project": 9,
+   "note": 86,
+   "user": 9,
+   "experiment_type": 9,
+   "instrument": 13,
+   "reagent": 21,
+   "result": 18,
+   "sample": 16
+  },
+  "conclusion_hint": "全通道映射下三类识读任务均单通道可答(成本=1);单色默认视图需逐节点遍历(成本=O(N),N=86)。人工反应时实验留待用户测试补齐,此处为机制层可复核代理"
+ }
+}
