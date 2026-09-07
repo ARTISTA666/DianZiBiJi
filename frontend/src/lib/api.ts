@@ -1096,6 +1096,85 @@ export function parseProjectKnowledgeBlueprint(
   }>(`/projects/${projectId}/kg/blueprint/parse`, token, payload);
 }
 
+// ── 项目预警（创新点四：预警与人工审核闭环） ────────────────
+
+export type AlertMetricSnapshot = {
+  metric: string;
+  value: number;
+  level: string;
+};
+
+export type AlertThreshold = {
+  id: number;
+  project_id: number;
+  metric: string;
+  warn_threshold: number;
+  critical_threshold: number;
+  enabled: boolean;
+  updated_by: number;
+  updated_at: string;
+};
+
+export type ProjectAlert = {
+  id: number;
+  project_id: number;
+  metric: string;
+  metric_value: number;
+  level: string;
+  status: string;
+  detail: string;
+  acknowledged_by: number | null;
+  acknowledged_at: string | null;
+  created_at: string;
+};
+
+export type ProjectAlertInbox = {
+  alerts: ProjectAlert[];
+  thresholds: AlertThreshold[];
+};
+
+export type AlertEvaluationSummary = {
+  evaluated_at: string;
+  metrics: AlertMetricSnapshot[];
+};
+
+export const ALERT_METRIC_TEXT: Record<string, string> = {
+  review_stall_hours: "审批停滞",
+  return_rate: "退回率",
+  blueprint_stagnant_days: "蓝图停滞",
+  progress_deviation: "进展偏差",
+};
+
+export function listProjectAlerts(token: string, projectId: number) {
+  return apiFetch<ProjectAlertInbox>(`/projects/${projectId}/alerts`, token);
+}
+
+export function evaluateProjectAlerts(token: string, projectId: number) {
+  return post<AlertEvaluationSummary>(`/projects/${projectId}/alerts/evaluate`, token);
+}
+
+export function acknowledgeProjectAlert(
+  token: string,
+  projectId: number,
+  alertId: number,
+  payload: { note?: string } = {},
+) {
+  return post<null>(`/projects/${projectId}/alerts/${alertId}/acknowledge`, token, payload);
+}
+
+export function upsertProjectAlertThreshold(
+  token: string,
+  projectId: number,
+  payload: {
+    metric: string;
+    warn_threshold: number;
+    critical_threshold: number;
+    enabled: boolean;
+  },
+) {
+  return post<AlertThreshold>(`/projects/${projectId}/alerts/thresholds`, token, payload);
+}
+
 export function patchProjectKnowledgeBlueprintNode(
   token: string,
   projectId: number,

@@ -21,6 +21,7 @@ import { ProjectDetailSkeleton } from "@/components/skeletons";
 const regularTabs = [
   { value: "notes", label: "笔记" },
   { value: "approvals", label: "审批" },
+  { value: "alerts", label: "预警" },
   { value: "data", label: "资料" },
   { value: "ai", label: "AI 问答" },
   { value: "kg", label: "图谱" },
@@ -68,7 +69,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
   const visibleRegularTabs = useMemo(
     () => regularTabs.filter((t) => {
       if (t.value === "settings") return canManage;
-      if (t.value === "approvals") return canReview;
+      if (t.value === "approvals" || t.value === "alerts") return canReview;
       return true;
     }),
     [canManage, canReview],
