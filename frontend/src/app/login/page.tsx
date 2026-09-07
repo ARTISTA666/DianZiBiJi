@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { BookOpen, ShieldCheck, Network, Sparkles, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -22,9 +22,44 @@ export default function LoginPage() {
   const [sessionExpired, setSessionExpired] = useState(false);
   const [busy, setBusy] = useState(false);
 
+  const getRedirectUrl = useCallback(() => {
+    if (typeof window === "undefined") return "/projects";
+    const params = new URLSearchParams(window.location.search);
+    return params.get("redirect") || "/projects";
+  }, []);
+
+  const handleQuickDemoLogin = useCallback(async () => {
+    setUsername("admin");
+    setPassword("admin123");
+    setError("");
+    setBusy(true);
+    try {
+      await login("admin", "admin123");
+      const target = getRedirectUrl();
+      router.push(target);
+    } catch (err) {
+      setError(getErrorMessage(err, "快速登录失败"));
+    } finally {
+      setBusy(false);
+    }
+  }, [login, getRedirectUrl, router]);
+
   useEffect(() => {
-    if (hydrated && token) router.replace("/projects");
-  }, [hydrated, token, router]);
+    if (hydrated && token) {
+      const target = getRedirectUrl();
+      router.replace(target);
+    }
+  }, [hydrated, token, router, getRedirectUrl]);
+
+  // 支持 URL 参数直达自动登录（?demo=true / ?autologin=true）
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("demo") === "true" || params.get("autologin") === "true") {
+        void handleQuickDemoLogin();
+      }
+    }
+  }, [handleQuickDemoLogin]);
 
   // 会话过期被踢回登录页时展示一次性提示，读后即清除。
   useEffect(() => {
@@ -45,7 +80,8 @@ export default function LoginPage() {
     setBusy(true);
     try {
       await login(username, password);
-      router.push("/projects");
+      const target = getRedirectUrl();
+      router.push(target);
     } catch (err) {
       setError(getErrorMessage(err, "登录失败"));
     } finally {
@@ -115,7 +151,7 @@ export default function LoginPage() {
             <CardHeader className="space-y-1 pb-4">
               <CardTitle className="text-xl font-bold">用户登录</CardTitle>
               <CardDescription className="text-xs">
-                输入您的账号和密码进入工作台
+                输入您的账号密码，或使用快速免密体验
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -134,7 +170,7 @@ export default function LoginPage() {
                     autoComplete="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    placeholder="请输入账号"
+                    placeholder="请输入账号 (默认: admin)"
                     className="h-10 text-sm"
                   />
                 </div>
@@ -147,7 +183,7 @@ export default function LoginPage() {
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="请输入密码"
+                    placeholder="请输入密码 (默认: admin123)"
                     className="h-10 text-sm"
                   />
                 </div>
@@ -158,6 +194,26 @@ export default function LoginPage() {
                 )}
                 <Button type="submit" className="w-full h-10 font-semibold shadow-sm" disabled={busy} isLoading={busy}>
                   {busy ? "登录中..." : "登录"}
+                </Button>
+
+                <div className="relative my-2">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-border/60" />
+                  </div>
+                  <div className="relative flex justify-center text-[10px] uppercase">
+                    <span className="bg-card px-2 text-muted-foreground">快速通道</span>
+                  </div>
+                </div>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full h-10 border-primary/40 bg-primary/5 hover:bg-primary/10 text-primary font-medium text-xs gap-1.5"
+                  onClick={handleQuickDemoLogin}
+                  disabled={busy}
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  🚀 一键免密快速进入（系统管理员）
                 </Button>
               </form>
             </CardContent>
