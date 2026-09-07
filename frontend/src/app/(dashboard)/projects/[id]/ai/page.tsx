@@ -15,7 +15,7 @@ import { useActionFeedback } from "@/hooks/use-action-feedback";
 import { ErrorBanner } from "@/components/shared/error-banner";
 import { CitationRichText, RagAnswerBlock, ragModeText } from "@/lib/citations";
 import { exportConversation, suggestFollowUps } from "@/lib/ai-conversation";
-import { submitQueryLogFeedback } from "@/lib/api";
+import { submitQueryLogFeedback, requestNextStepSuggestion, type NextStepSuggestion } from "@/lib/api";
 
 const modes = [
   { value: "auto", label: "自动选择", desc: "系统根据问题类型自动选择最佳检索策略" },
@@ -70,6 +70,24 @@ export default function AIPage() {
     const last = ragConversation[ragConversation.length - 1];
     return suggestFollowUps(last.question, last.result.sources, last.result.graph_context);
   }, [ragConversation]);
+
+  // AI 导师助手：主动建议（从知识蓝图未覆盖知识点推导）
+  const [suggestion, setSuggestion] = useState<NextStepSuggestion | null>(null);
+  const [suggestionBusy, setSuggestionBusy] = useState(false);
+  const loadSuggestion = useCallback(async () => {
+    if (!token) return;
+    setSuggestionBusy(true);
+    try {
+      setSuggestion(await requestNextStepSuggestion(token, projectId));
+    } catch {
+      setSuggestion(null);
+    } finally {
+      setSuggestionBusy(false);
+    }
+  }, [token, projectId]);
+  useEffect(() => {
+    void loadSuggestion();
+  }, [loadSuggestion]);
 
   // Cmd+K / Ctrl+K 聚焦输入框
   useEffect(() => {
@@ -167,6 +185,53 @@ export default function AIPage() {
           <span>{error}</span>
           <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={() => { setError(""); }}>关闭</Button>
         </ErrorBanner>
+      )}
+
+      {/* AI 导师助手：下一步主动建议 */}
+      {suggestion && suggestion.mode !== "empty" && (
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-sm font-semibold">
+              <Sparkles className="h-4 w-4 text-primary" />
+              AI 导师助手 · 下一步建议
+              <span className="ml-auto text-[11px] font-normal text-muted-foreground">
+                蓝图覆盖 {Math.round((suggestion.coverage ?? 0) * 100)}%（{suggestion.uncovered_count}/{suggestion.total_nodes} 待实证）
+              </span>
+            </CardTitle>
+            {suggestion.summary && (
+              <CardDescription className="text-xs">{suggestion.summary}</CardDescription>
+            )}
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {(suggestion.suggestions || []).map((item, index) => (
+              <div key={index} className="rounded-lg border border-border/60 bg-muted/10 p-2.5">
+                <p className="text-xs font-medium">{index + 1}. {item.title}</p>
+                {item.rationale && <p className="mt-0.5 text-[11px] text-muted-foreground">{item.rationale}</p>}
+                {item.related_labels?.length > 0 && (
+                  <p className="mt-1 flex flex-wrap gap-1">
+                    {item.related_labels.map((label) => (
+                      <Link key={label} href={`/projects/${projectId}/kg`} className="rounded-full border bg-background px-2 py-0.5 text-[10px] text-muted-foreground hover:border-primary/40 hover:text-primary">
+                        {label}
+                      </Link>
+                    ))}
+                  </p>
+                )}
+              </div>
+            ))}
+            {suggestion.guidance && (
+              <p className="text-[11px] text-muted-foreground">执行提示：{suggestion.guidance}</p>
+            )}
+            <div className="flex items-center justify-between">
+              <p className="text-[10px] text-muted-foreground">
+                {suggestion.mode === "llm" ? "由 AI 基于知识蓝图生成" : "按蓝图优先级规则生成"} · 点击知识点可跳转图谱
+              </p>
+              <Button size="sm" variant="outline" className="h-7 text-xs" onClick={loadSuggestion} disabled={suggestionBusy}>
+                {suggestionBusy ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : <Sparkles className="mr-1 h-3 w-3" />}
+                刷新建议
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* 资料库状态卡片 */}

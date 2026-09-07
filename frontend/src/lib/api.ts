@@ -1153,6 +1153,28 @@ export function evaluateProjectAlerts(token: string, projectId: number) {
   return post<AlertEvaluationSummary>(`/projects/${projectId}/alerts/evaluate`, token);
 }
 
+export type NextStepSuggestion = {
+  mode: string;
+  message?: string;
+  summary?: string;
+  suggestions: Array<{
+    title: string;
+    rationale: string;
+    related_labels: string[];
+  }>;
+  guidance?: string;
+  uncovered_count: number;
+  total_nodes: number;
+  coverage: number;
+};
+
+export function requestNextStepSuggestion(token: string, projectId: number) {
+  return post<NextStepSuggestion>(
+    `/projects/${projectId}/agent/next-step-suggestion`,
+    token,
+  );
+}
+
 export function acknowledgeProjectAlert(
   token: string,
   projectId: number,

@@ -12,6 +12,9 @@ import {
   Send,
   Users,
   X,
+  BrainCircuit,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -81,6 +84,8 @@ export function AgentAssistant() {
   const [pendingPlan, setPendingPlan] = useState<PendingPlan | null>(null);
   const [agentProfile, setAgentProfile] = useState<AgentProfile>("fast");
   const [liveAgentStatus, setLiveAgentStatus] = useState<string | null>(null);
+  const [chainOfThought, setChainOfThought] = useState<Array<{ step: string; detail: string; status: string }>>([]);
+  const [showChain, setShowChain] = useState(false);
   const [uploading, setUploading] = useState(false);
   const messageId = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -120,6 +125,7 @@ export function AgentAssistant() {
     setPendingPlan(null);
     setAgentProfile("fast");
     setLiveAgentStatus(null);
+    setChainOfThought([]);
     eventStreamCleanup.current?.();
     eventStreamCleanup.current = null;
     serverSessionId.current = null;
@@ -290,11 +296,25 @@ export function AgentAssistant() {
           eventStreamCleanup.current?.();
           eventStreamCleanup.current = subscribeAgentSessionEvents(token, sessionId, (event) => {
             const tool = typeof event.data.tool === "string" ? event.data.tool : "工具";
-            if (event.event === "tool.started") setLiveAgentStatus(`正在执行：${tool}`);
-            else if (event.event === "confirmation.required") setLiveAgentStatus("等待确认高风险操作");
-            else if (event.event === "tool.completed") setLiveAgentStatus(`已完成：${tool}`);
-            else if (event.event === "turn.completed" || event.event === "turn.cancelled") setLiveAgentStatus(null);
-            else if (event.event === "error") setLiveAgentStatus("服务端 Agent 发生错误");
+            if (event.event === "plan.preview") {
+              const planText = (event.data as { plan?: { text?: unknown } }).plan?.text ?? "";
+              const planTextString = typeof planText === "string" ? planText : "";
+              setChainOfThought((current) => [...current, { step: "生成研究计划", detail: planTextString.slice(0, 240), status: "done" }]);
+            } else if (event.event === "tool.started") {
+              setLiveAgentStatus(`正在执行：${tool}`);
+              setChainOfThought((current) => [...current, { step: `调用 ${tool}`, detail: String(event.data.arguments_summary ?? ""), status: "running" }]);
+            } else if (event.event === "confirmation.required") {
+              setLiveAgentStatus("等待确认高风险操作");
+              setChainOfThought((current) => [...current, { step: `高风险操作 ${tool} 等待确认`, detail: "", status: "waiting" }]);
+            } else if (event.event === "tool.completed") {
+              setLiveAgentStatus(`已完成：${tool}`);
+              setChainOfThought((current) => current.map((entry, index) => index === current.length - 1 && entry.status === "running" ? { ...entry, status: "done" } : entry));
+            } else if (event.event === "turn.completed" || event.event === "turn.cancelled") {
+              setLiveAgentStatus(null);
+              setChainOfThought((current) => current.map((entry) => entry.status === "running" ? { ...entry, status: "done" } : entry));
+            } else if (event.event === "error") {
+              setLiveAgentStatus("服务端 Agent 发生错误");
+            }
           }, () => setLiveAgentStatus("事件连接中断，当前操作不会自动重试"));
         }
         const response = await createAgentTurn(token, sessionId, text, agentProfile);
@@ -395,6 +415,26 @@ export function AgentAssistant() {
                 </div>
               </div>
             ))}
+            {chainOfThought.length > 0 && (
+              <div className="rounded-xl border bg-background p-2.5 text-sm shadow-sm">
+                <button type="button" className="flex w-full items-center gap-1.5 text-xs font-medium text-muted-foreground" onClick={() => setShowChain((v) => !v)}>
+                  {showChain ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
+                  <BrainCircuit className="h-3.5 w-3.5" />
+                  思维链（{chainOfThought.length} 步）
+                </button>
+                {showChain && (
+                  <ol className="mt-2 space-y-1.5 border-l border-border/60 pl-3 text-xs">
+                    {chainOfThought.map((entry, index) => (
+                      <li key={index} className="relative">
+                        <span className={`absolute -left-[13px] top-1 h-1.5 w-1.5 rounded-full ${entry.status === "done" ? "bg-emerald-500" : entry.status === "running" ? "animate-pulse bg-primary" : "bg-amber-400"}`} />
+                        <p className="font-medium">{entry.step}</p>
+                        {entry.detail && <p className="whitespace-pre-wrap text-[11px] text-muted-foreground">{entry.detail}</p>}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
+            )}
             {pendingPlan && (
               <div className="space-y-2 rounded-xl border border-amber-300/70 bg-amber-50/80 p-3 text-sm dark:bg-amber-950/20">
                 <div className="font-medium text-amber-950 dark:text-amber-100">深度计划待确认</div>

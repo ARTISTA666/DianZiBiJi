@@ -1,4 +1,5 @@
 mod agent_runtime;
+mod agent_suggestion;
 mod agents;
 mod audit;
 mod auth;
@@ -126,6 +127,7 @@ pub fn build_app(state: AppState) -> Router {
         .merge(groups::router())
         .merge(kg_blueprint::router())
         .merge(project_alert::router())
+        .merge(agent_suggestion::router())
         .merge(knowledge_graph::router())
         .merge(maturity::router())
         .merge(templates::router())
@@ -553,7 +555,7 @@ mod tests {
             .filter_map(Value::as_object)
             .map(|path| path.len())
             .sum::<usize>();
-        assert_eq!(operations, 112);
+        assert_eq!(operations, 113);
         assert!(body["paths"]["/api/mcp"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions/{session_id}/turns"]["post"].is_object());

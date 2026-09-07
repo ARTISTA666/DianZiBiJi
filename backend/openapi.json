@@ -5813,6 +5813,46 @@
           }
         }
       }
+    },
+    "/projects/{project_id}/agent/next-step-suggestion": {
+      "post": {
+        "tags": [
+          "agent"
+        ],
+        "summary": "Next Step Suggestion",
+        "operationId": "next_step_suggestion_projects__project_id__agent_next_step_suggestion_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "project_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Project Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
