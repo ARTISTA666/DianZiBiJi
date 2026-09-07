@@ -98,8 +98,8 @@ pub struct BlueprintDocumentRead {
     pub title: String,
     pub source_kind: String,
     pub parse_mode: String,
-    pub node_count: i64,
-    pub edge_count: i64,
+    pub node_count: i32,
+    pub edge_count: i32,
     pub message: String,
     pub created_at: DateTime<Utc>,
 }

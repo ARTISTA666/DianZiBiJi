@@ -507,6 +507,7 @@ mod tests {
         )
         .await;
         assert_eq!(second_status, StatusCode::OK);
+        eprintln!("DEBUG first={first} second={second} total={total}");
         assert_eq!(second["nodes_added"], 0);
         assert!(second["nodes_updated"].as_i64().unwrap() >= 0);
         assert_eq!(first["nodes_added"], total);

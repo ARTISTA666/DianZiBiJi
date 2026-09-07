@@ -80,14 +80,20 @@ pub struct BlueprintNodeInput<'a> {
     pub created_by: i32,
 }
 
+/// 蓝图节点写入结果：新增 / 高优先级来源覆盖既有 / 命中既有保持不变。
+pub enum BlueprintNodeUpsert {
+    Added(i32),
+    Updated(i32),
+    Kept(i32),
+}
+
 /// 写入/更新一个蓝图节点。冲突规则：同 (项目, 类型, 规范名) 的活跃节点唯一，
 /// 新来源 priority 更小（更高）时覆盖描述与来源信息，否则保留现状。
-/// 返回 (节点 id, 是否更新了既有节点)。
 pub async fn upsert_blueprint_node(
     transaction: &mut Transaction<'_, Postgres>,
     project_id: i32,
     input: &BlueprintNodeInput<'_>,
-) -> Result<(i32, bool), ApiError> {
+) -> Result<BlueprintNodeUpsert, ApiError> {
     let BlueprintNodeInput {
         entity_type,
         label,
@@ -99,7 +105,7 @@ pub async fn upsert_blueprint_node(
     } = input;
     let normalized_label = normalize_entity_label(label);
     if normalized_label.is_empty() {
-        return Ok((0, false));
+        return Ok(BlueprintNodeUpsert::Kept(0));
     }
     let existing: Option<(i32, i32)> = sqlx::query_as(
         r#"
@@ -129,9 +135,9 @@ pub async fn upsert_blueprint_node(
             .bind(*priority)
             .execute(&mut **transaction)
             .await?;
-            return Ok((node_id, true));
+            return Ok(BlueprintNodeUpsert::Updated(node_id));
         }
-        return Ok((node_id, false));
+        return Ok(BlueprintNodeUpsert::Kept(node_id));
     }
     let node_id: i32 = sqlx::query_scalar(
         r#"
@@ -152,7 +158,7 @@ pub async fn upsert_blueprint_node(
     .bind(*created_by)
     .fetch_one(&mut **transaction)
     .await?;
-    Ok((node_id, false))
+    Ok(BlueprintNodeUpsert::Added(node_id))
 }
 
 /// 写入一条蓝图边（同端点同关系类型唯一）。返回是否新增。
@@ -290,7 +296,7 @@ pub async fn parse_blueprint_document(
             .collect::<String>();
         batch.push((entity_type.clone(), normalized, description.clone()));
         let source_label = title.to_owned();
-        let (node_id, updated) = upsert_blueprint_node(
+        match upsert_blueprint_node(
             transaction,
             project_id,
             &BlueprintNodeInput {
@@ -303,14 +309,16 @@ pub async fn parse_blueprint_document(
                 created_by,
             },
         )
-        .await?;
-        if node_id == 0 {
-            nodes_dropped += 1;
-            batch.pop();
-        } else if updated {
-            nodes_updated += 1;
-        } else {
-            nodes_added += 1;
+        .await?
+        {
+            BlueprintNodeUpsert::Added(_) => nodes_added += 1,
+            BlueprintNodeUpsert::Updated(_) => nodes_updated += 1,
+            BlueprintNodeUpsert::Kept(node_id) => {
+                if node_id == 0 {
+                    nodes_dropped += 1;
+                    batch.pop();
+                }
+            }
         }
     }
 
@@ -362,8 +370,8 @@ pub async fn parse_blueprint_document(
     .bind(title)
     .bind(&request.source_kind)
     .bind(&parse_mode)
-    .bind(nodes_added + nodes_updated)
-    .bind(edges_added)
+    .bind((nodes_added + nodes_updated) as i32)
+    .bind(edges_added as i32)
     .bind(&message)
     .bind(created_by)
     .fetch_one(&mut **transaction)
