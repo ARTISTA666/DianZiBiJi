@@ -70,6 +70,8 @@ export interface KgRelation {
 interface GraphNode {
   id: number;
   name: string;
+  displayName: string;
+  labelWithSummary: string;
   entityType: string;
   val: number;
   degree: number;
@@ -220,6 +222,7 @@ export function KnowledgeGraphVisualization({
   const [legendOpen, setLegendOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoveredNodeId, setHoveredNodeId] = useState<number | null>(null);
+  const hoverTimerRef = useRef<number | null>(null);
 
   // 图内即时搜索
   const [inGraphSearch, setInGraphSearch] = useState("");
@@ -233,13 +236,8 @@ export function KnowledgeGraphVisualization({
     const map = new Map<number, KgEntity>();
     entities.forEach((e) => map.set(e.id, e));
 
-    const relatedIds = new Set<number>();
-    relations.forEach((r) => {
-      relatedIds.add(r.source_entity_id);
-      relatedIds.add(r.target_entity_id);
-    });
-
-    const visibleEntities = entities.filter((e) => relatedIds.has(e.id));
+    // 所有外部传入的有效实体均予以渲染，杜绝因关系过滤产生孤立实体导致整图被吞白屏
+    const visibleEntities = entities;
 
     const times = visibleEntities
       .map((e) => (e.updated_at ? new Date(e.updated_at).getTime() : Number.NaN))
@@ -277,9 +275,16 @@ export function KnowledgeGraphVisualization({
         ? 18
         : Math.max(9.5, Math.min(13.5, 9 + Math.sqrt(degree) * 0.9));
 
+      const typeText = kgEntityTypeText[e.entity_type] || e.entity_type;
+      const displayName = e.label.length > 14 ? `${e.label.slice(0, 14)}…` : e.label;
+      const longName = e.label.length > 26 ? `${e.label.slice(0, 26)}…` : e.label;
+      const labelWithSummary = `${longName} · ${typeText}`;
+
       return {
         id: e.id,
         name: e.label,
+        displayName,
+        labelWithSummary,
         entityType: e.entity_type,
         val: radius,
         degree,
@@ -293,7 +298,7 @@ export function KnowledgeGraphVisualization({
     });
 
     const graphLinks: GraphLink[] = relations
-      .filter((r) => relatedIds.has(r.source_entity_id) && relatedIds.has(r.target_entity_id))
+      .filter((r) => map.has(r.source_entity_id) && map.has(r.target_entity_id))
       .map((r) => ({
         source: r.source_entity_id,
         target: r.target_entity_id,
@@ -313,6 +318,18 @@ export function KnowledgeGraphVisualization({
       entityToNoteMap: entToNotes,
     };
   }, [entities, relations]);
+
+  // 关键稳定性保障：严格单向引用图数据，避免 Hover 触发父组件重绘时因传参新对象导致 D3 物理力场频繁重热（Reheat）剧烈乱动
+  const graphData = useMemo(() => ({ nodes, links }), [nodes, links]);
+
+  // 组件卸载时销毁未决的 hover 防抖定时器
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) {
+        window.clearTimeout(hoverTimerRef.current);
+      }
+    };
+  }, []);
 
   // 计算当前聚焦的核心实体（优先级：鼠标悬停 > 选中锁定的实体）
   const primaryFocusId = hoveredNodeId ?? selectedEntityId;
@@ -572,7 +589,7 @@ export function KnowledgeGraphVisualization({
         ? "#f59e0b"
         : node.isNote
         ? "#c7d2fe"
-        : "rgba(255, 255, 255, 0.45)";
+        : "rgba(255, 255, 255, 0.55)";
       ctx.lineWidth = (node.pinned ? 2 : node.isNote ? 1.5 : 1) / globalScale;
       ctx.stroke();
 
@@ -582,20 +599,17 @@ export function KnowledgeGraphVisualization({
       const shouldDrawLabel =
         hasActiveFocus
           ? isInFocusNetwork
-          : (labelMode === "all" || (labelMode === "smart" && (node.isNote || globalScale >= 1.8)));
+          : (labelMode === "all" || (labelMode === "smart" && (node.isNote || globalScale >= 1.7)));
 
       if (shouldDrawLabel) {
-        const rawName = node.name || "";
-        const maxLen = isFocusCenter || node.isNote ? 26 : 14;
-        const displayName = rawName.length > maxLen ? `${rawName.slice(0, maxLen)}…` : rawName;
-        const typeText = kgEntityTypeText[node.entityType] || node.entityType;
-        const labelText = isFocusCenter || node.isNote ? `${displayName} · ${typeText}` : displayName;
+        const displayName = node.displayName || node.name || "";
+        const labelText = isFocusCenter || node.isNote ? node.labelWithSummary || displayName : displayName;
 
         const fontSize = Math.max(
           8.5,
           Math.min(11, (node.isNote ? 11 : 9.5) / Math.sqrt(Math.max(globalScale, 0.65)))
         );
-        ctx.font = `${node.isNote || isFocusCenter ? "600" : "500"} ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+        ctx.font = `${node.isNote || isFocusCenter ? "600" : "500"} ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
         const textMetrics = ctx.measureText(labelText);
         const textWidth = textMetrics.width;
 
@@ -610,7 +624,11 @@ export function KnowledgeGraphVisualization({
           ? "rgba(30, 27, 75, 0.92)"
           : "rgba(15, 23, 42, 0.82)";
         ctx.beginPath();
-        ctx.roundRect(x - pillWidth / 2, pillY, pillWidth, pillHeight, 3);
+        if (typeof (ctx as any).roundRect === "function") {
+          (ctx as any).roundRect(x - pillWidth / 2, pillY, pillWidth, pillHeight, 3);
+        } else {
+          ctx.rect(x - pillWidth / 2, pillY, pillWidth, pillHeight);
+        }
         ctx.fill();
 
         ctx.fillStyle = isFocusCenter ? "#ffffff" : node.isNote ? "#e0e7ff" : "#f1f5f9";
@@ -622,6 +640,21 @@ export function KnowledgeGraphVisualization({
       ctx.restore();
     },
     [primaryFocusId, highlightedIds, labelMode]
+  );
+
+  // 关键稳定性保障：专用于射线拾取判定（Shadow Canvas），稳定提供拾取色块，杜绝 Hover 碰撞震颤循环
+  const paintNodePointerArea = useCallback(
+    (node: any, color: string, ctx: CanvasRenderingContext2D) => {
+      const x = node.x;
+      const y = node.y;
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      const r = (node.radius || 11) + 3;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    },
+    []
   );
 
   // 连线中点语义药丸标签
@@ -644,7 +677,7 @@ export function KnowledgeGraphVisualization({
 
       const label = link.label;
       const fontSize = Math.max(7.5, Math.min(10, 9 / Math.sqrt(Math.max(globalScale, 0.65))));
-      ctx.font = `500 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+      ctx.font = `500 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
       const tw = ctx.measureText(label).width;
       const pw = tw + 8;
       const ph = fontSize + 4;
@@ -652,11 +685,15 @@ export function KnowledgeGraphVisualization({
       ctx.save();
       ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
       ctx.beginPath();
-      ctx.roundRect(mx - pw / 2, my - ph / 2, pw, ph, 3);
+      if (typeof (ctx as any).roundRect === "function") {
+        (ctx as any).roundRect(mx - pw / 2, my - ph / 2, pw, ph, 3);
+      } else {
+        ctx.rect(mx - pw / 2, my - ph / 2, pw, ph);
+      }
       ctx.fill();
 
-      ctx.strokeStyle = hexToRgba(link.color, 0.8);
-      ctx.lineWidth = 0.8 / globalScale;
+      ctx.strokeStyle = hexToRgba(link.color, 0.85);
+      ctx.lineWidth = 0.9 / globalScale;
       ctx.stroke();
 
       ctx.fillStyle = "#ffffff";
@@ -667,6 +704,141 @@ export function KnowledgeGraphVisualization({
     },
     [primaryFocusId, showLinkLabels]
   );
+
+  // 防抖的悬停处理器：离开节点时给予 70ms 缓冲，防止跨节点或经过节点缝隙时界面剧烈闪烁抖动
+  const handleNodeHover = useCallback((node: any) => {
+    if (hoverTimerRef.current) {
+      window.clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+
+    if (node) {
+      setHoveredNodeId(node.id);
+    } else {
+      hoverTimerRef.current = window.setTimeout(() => {
+        setHoveredNodeId(null);
+        hoverTimerRef.current = null;
+      }, 70);
+    }
+  }, []);
+
+  const isNodeVisible = useCallback(
+    (node: any) => {
+      if (primaryFocusId === null) return true;
+      return highlightedIds.has(node.id);
+    },
+    [primaryFocusId, highlightedIds]
+  );
+
+  const isLinkVisible = useCallback(
+    (link: any) => {
+      if (primaryFocusId === null) return true;
+      const sId = typeof link.source === "object" ? link.source.id : link.source;
+      const tId = typeof link.target === "object" ? link.target.id : link.target;
+      return sId === primaryFocusId || tId === primaryFocusId;
+    },
+    [primaryFocusId]
+  );
+
+  const nodeLabelAccessor = useCallback(
+    (node: any) =>
+      `${kgEntityTypeText[node.entityType] || node.entityType}: ${node.name} · 关联度 ${node.degree}`,
+    []
+  );
+
+  const nodeValAccessor = useCallback((node: any) => node.val, []);
+
+  const linkCanvasObjectModeAccessor = useCallback(() => "after", []);
+
+  const linkLabelAccessor = useCallback(
+    (link: any) => `${link.label}（置信度 ${(link.confidence || 0).toFixed(2)}）`,
+    []
+  );
+
+  const linkColorAccessor = useCallback(
+    (link: any) => {
+      const sId = typeof link.source === "object" ? link.source.id : link.source;
+      const tId = typeof link.target === "object" ? link.target.id : link.target;
+      const isLinkedToFocus =
+        primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+
+      if (primaryFocusId !== null) {
+        return isLinkedToFocus ? link.color : "transparent";
+      }
+      return hexToRgba(link.color, 0.28);
+    },
+    [primaryFocusId]
+  );
+
+  const linkWidthAccessor = useCallback(
+    (link: any) => {
+      const sId = typeof link.source === "object" ? link.source.id : link.source;
+      const tId = typeof link.target === "object" ? link.target.id : link.target;
+      const isLinkedToFocus =
+        primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+
+      if (primaryFocusId !== null) {
+        return isLinkedToFocus ? 2.2 : 0;
+      }
+      return 0.75;
+    },
+    [primaryFocusId]
+  );
+
+  const linkArrowLengthAccessor = useCallback(
+    (link: any) => {
+      const sId = typeof link.source === "object" ? link.source.id : link.source;
+      const tId = typeof link.target === "object" ? link.target.id : link.target;
+      const isLinkedToFocus =
+        primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+
+      if (primaryFocusId !== null) {
+        return isLinkedToFocus ? 6.5 : 0;
+      }
+      return 3.5;
+    },
+    [primaryFocusId]
+  );
+
+  const linkArrowColorAccessor = useCallback((link: any) => link.color, []);
+
+  const handleNodeClick = useCallback(
+    (node: any) => {
+      const now = Date.now();
+      if (
+        lastClickRef.current &&
+        lastClickRef.current.id === node.id &&
+        now - lastClickRef.current.time < 350
+      ) {
+        delete node.fx;
+        delete node.fy;
+        node.pinned = false;
+        graphRef.current?.d3ReheatSimulation?.();
+        lastClickRef.current = null;
+        return;
+      }
+      lastClickRef.current = { id: node.id, time: now };
+      onEntitySelect(node.id === selectedEntityId ? null : node.id);
+    },
+    [selectedEntityId, onEntitySelect]
+  );
+
+  const handleNodeRightClick = useCallback((node: any) => {
+    delete node.fx;
+    delete node.fy;
+    node.pinned = false;
+    graphRef.current?.d3ReheatSimulation?.();
+  }, []);
+
+  const handleNodeDragEnd = useCallback((node: any) => {
+    node.fx = node.x;
+    node.fy = node.y;
+    node.pinned = true;
+  }, []);
+
+  const handleBackgroundClick = useCallback(() => {
+    onEntitySelect(null);
+  }, [onEntitySelect]);
 
   const focusedNode = useMemo(() => {
     if (primaryFocusId === null) return null;
@@ -874,99 +1046,41 @@ export function KnowledgeGraphVisualization({
           {graphSize.width > 0 && (
             <ForceGraph2D
               ref={graphRef as any}
-              graphData={{ nodes, links }}
+              graphData={graphData}
               width={graphSize.width}
               height={graphSize.height}
-              nodeLabel={(node: any) =>
-                `${kgEntityTypeText[node.entityType] || node.entityType}: ${node.name} · 关联度 ${node.degree}`
-              }
-              nodeVal={(node: any) => node.val}
+              nodeVisibility={isNodeVisible}
+              linkVisibility={isLinkVisible}
+              nodeLabel={nodeLabelAccessor}
+              nodeVal={nodeValAccessor}
               nodeCanvasObject={paintNode}
-              linkCanvasObjectMode={() => "after"}
+              nodePointerAreaPaint={paintNodePointerArea}
+              linkCanvasObjectMode={linkCanvasObjectModeAccessor}
               linkCanvasObject={paintLinkCanvas}
-              linkLabel={(link: any) =>
-                `${link.label}（置信度 ${(link.confidence || 0).toFixed(2)}）`
-              }
-              linkColor={(link: any) => {
-                const sId = typeof link.source === "object" ? link.source.id : link.source;
-                const tId = typeof link.target === "object" ? link.target.id : link.target;
-                const isLinkedToFocus =
-                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
-
-                // 🌟 用户需求 1：hover 聚焦时，非相关连线完全不显示！
-                if (primaryFocusId !== null) {
-                  return isLinkedToFocus ? link.color : "transparent";
-                }
-                return hexToRgba(link.color, 0.25);
-              }}
-              linkWidth={(link: any) => {
-                const sId = typeof link.source === "object" ? link.source.id : link.source;
-                const tId = typeof link.target === "object" ? link.target.id : link.target;
-                const isLinkedToFocus =
-                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
-
-                if (primaryFocusId !== null) {
-                  return isLinkedToFocus ? 2.2 : 0;
-                }
-                return 0.75;
-              }}
-              linkDirectionalArrowLength={(link: any) => {
-                const sId = typeof link.source === "object" ? link.source.id : link.source;
-                const tId = typeof link.target === "object" ? link.target.id : link.target;
-                const isLinkedToFocus =
-                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
-
-                if (primaryFocusId !== null) {
-                  return isLinkedToFocus ? 6.5 : 0;
-                }
-                return 3.5;
-              }}
+              linkLabel={linkLabelAccessor}
+              linkColor={linkColorAccessor}
+              linkWidth={linkWidthAccessor}
+              linkDirectionalArrowLength={linkArrowLengthAccessor}
               linkDirectionalArrowRelPos={0.88}
-              linkDirectionalArrowColor={(link: any) => link.color}
+              linkDirectionalArrowColor={linkArrowColorAccessor}
               linkCurvature={0.06}
-              onNodeHover={(node: any) => setHoveredNodeId(node ? node.id : null)}
-              onNodeClick={(node: any) => {
-                const now = Date.now();
-                if (
-                  lastClickRef.current &&
-                  lastClickRef.current.id === node.id &&
-                  now - lastClickRef.current.time < 350
-                ) {
-                  delete node.fx;
-                  delete node.fy;
-                  node.pinned = false;
-                  graphRef.current?.d3ReheatSimulation?.();
-                  lastClickRef.current = null;
-                  return;
-                }
-                lastClickRef.current = { id: node.id, time: now };
-                onEntitySelect(node.id === selectedEntityId ? null : node.id);
-              }}
-              onNodeRightClick={(node: any) => {
-                delete node.fx;
-                delete node.fy;
-                node.pinned = false;
-                graphRef.current?.d3ReheatSimulation?.();
-              }}
-              onNodeDragEnd={(node: any) => {
-                node.fx = node.x;
-                node.fy = node.y;
-                node.pinned = true;
-              }}
-              onBackgroundClick={() => {
-                onEntitySelect(null);
-              }}
+              onNodeHover={handleNodeHover}
+              onNodeClick={handleNodeClick}
+              onNodeRightClick={handleNodeRightClick}
+              onNodeDragEnd={handleNodeDragEnd}
+              onBackgroundClick={handleBackgroundClick}
               enableZoomInteraction={true}
               enablePanInteraction={true}
               enablePointerInteraction={true}
               onEngineStop={handleEngineStop}
               minZoom={0.15}
               maxZoom={3.5}
-              cooldownTicks={150}
-              cooldownTime={2000}
-              d3AlphaDecay={0.04}
-              d3VelocityDecay={0.35}
-              warmupTicks={60}
+              cooldownTicks={120}
+              cooldownTime={1800}
+              d3AlphaDecay={0.05}
+              d3VelocityDecay={0.45}
+              warmupTicks={80}
+              autoPauseRedraw={false}
             />
           )}
 

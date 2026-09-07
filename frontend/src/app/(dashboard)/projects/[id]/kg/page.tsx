@@ -46,7 +46,7 @@ export default function KGPage() {
   const membership = members.find((member) => member.user_id === user?.id);
   const canWrite = user?.role === "super_admin" || membership?.can_write === true;
 
-  const [expandNeighbors, setExpandNeighbors] = useState(false);
+  const [expandNeighbors, setExpandNeighbors] = useState(true);
 
   useEffect(() => {
     if (token) loadKGTabData(token, projectId);
