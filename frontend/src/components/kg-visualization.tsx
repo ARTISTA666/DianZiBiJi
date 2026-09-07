@@ -20,12 +20,21 @@ import {
   Clock,
   Network,
   ChevronDown,
+  ChevronRight,
   BookOpen,
   Eye,
+  Workflow,
+  Pin,
+  PinOff,
+  Search,
+  Compass,
+  Boxes,
+  FlaskConical,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -45,7 +54,7 @@ const ForceGraph2D = dynamic(() => import("react-force-graph-2d").then((mod) => 
     <div className="flex h-[34rem] items-center justify-center text-sm text-muted-foreground">
       <div className="flex flex-col items-center gap-2">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-        <span>加载科研星系图谱渲染引擎...</span>
+        <span>加载科研图谱渲染引擎...</span>
       </div>
     </div>
   ),
@@ -84,6 +93,7 @@ interface GraphNode {
   y?: number;
   fx?: number;
   fy?: number;
+  pinned?: boolean;
 }
 
 interface GraphLink {
@@ -257,22 +267,29 @@ export function KnowledgeGraphVisualization({
   const graphRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const fitOnEngineStopRef = useRef(true);
+  const lastClickRef = useRef<{ id: number | string; time: number } | null>(null);
 
-  const [graphSize, setGraphSize] = useState({ width: 0, height: 600 });
+  const [graphSize, setGraphSize] = useState({ width: 0, height: 620 });
   const [legendOpen, setLegendOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoveredNodeId, setHoveredNodeId] = useState<number | null>(null);
   const [spotlightType, setSpotlightType] = useState<string | null>(null);
 
-  // 核心实验重心导航：选中特定实验笔记时，全图聚焦该实验星系
-  const [activeExperimentId, setActiveExperimentId] = useState<number | null>(null);
+  // 🌟 核心革新体验：双模视图架构 (Single Experiment Subgraph vs Global Multi-Galaxy Panorama)
+  const [viewScope, setViewScope] = useState<"single" | "global">("single");
+  const [selectedExperimentId, setSelectedExperimentId] = useState<number | null>(null);
 
-  // 显示控制选项：默认智能聚焦模式（仅枢纽、悬停与选中显标签）
+  // 单实验精读模式下的专业布局算法：
+  const [subgraphLayout, setSubgraphLayout] = useState<"pipeline" | "force" | "radial">("pipeline");
+
+  // 图内即时搜索
+  const [inGraphSearch, setInGraphSearch] = useState("");
+
+  // 显示控制选项
   const [labelMode, setLabelMode] = useState<"smart" | "all" | "none">("smart");
   const [showLinkLabels, setShowLinkLabels] = useState(false);
-  const [subgraphOnly, setSubgraphOnly] = useState(false);
 
-  // 构建图数据与紧凑节点半径
+  // 构建基础图拓扑数据
   const { nodes, links, entityMap, noteEntities, entityToNoteMap } = useMemo(() => {
     const map = new Map<number, KgEntity>();
     entities.forEach((e) => map.set(e.id, e));
@@ -285,7 +302,7 @@ export function KnowledgeGraphVisualization({
 
     const visibleEntities = entities.filter((e) => relatedIds.has(e.id));
 
-    // 水波通道 = 证据新鲜度：updated_at 在全图内归一化
+    // 水波通道 = 证据新鲜度
     const times = visibleEntities
       .map((e) => (e.updated_at ? new Date(e.updated_at).getTime() : Number.NaN))
       .filter((t) => Number.isFinite(t));
@@ -293,7 +310,7 @@ export function KnowledgeGraphVisualization({
     const maxT = times.length ? Math.max(...times) : 0;
     const span = maxT - minT || 1;
 
-    // 实体与实验笔记的从属映射（将节点归类到对应的实验星系中心）
+    // 实体与实验笔记从属映射
     const entToNotes = new Map<number, number[]>();
     relations.forEach((r) => {
       const src = map.get(r.source_entity_id);
@@ -318,10 +335,9 @@ export function KnowledgeGraphVisualization({
       const freshness = Number.isFinite(t) ? 0.15 + 0.85 * ((t - minT) / span) : 0.5;
 
       const isNote = e.entity_type === "note" || e.entity_type === "project";
-      // 实验笔记作为【视觉重心与引力核心】：半径扩大至 20~22px；普通节点紧凑精炼 11~14px
       const radius = isNote
-        ? 21
-        : Math.max(11, Math.min(14, 10 + Math.sqrt(degree) * 1.0));
+        ? 22
+        : Math.max(12, Math.min(15, 11 + Math.sqrt(degree) * 1.0));
 
       return {
         id: e.id,
@@ -360,30 +376,126 @@ export function KnowledgeGraphVisualization({
     };
   }, [entities, relations]);
 
-  // 保持引用稳定
-  const graphData = useMemo(() => {
-    if (!subgraphOnly || selectedEntityId === null) {
+  // 默认选定第一个实验笔记
+  useEffect(() => {
+    if (selectedExperimentId === null && noteEntities.length > 0) {
+      setSelectedExperimentId(noteEntities[0].id);
+    }
+  }, [noteEntities, selectedExperimentId]);
+
+  // 🌟 当前生效的图数据：根据【单实验子图模式】或【全局星系总览】动态提取
+  const activeGraphData = useMemo(() => {
+    // 1. 全局全景模式：渲染全量 86 个节点
+    if (viewScope === "global") {
+      const gNodes = nodes.map((n) => ({ ...n, fx: undefined, fy: undefined }));
+      return { nodes: gNodes, links };
+    }
+
+    // 2. 单实验子图模式：只提取当前选定实验及其 1-hop 关联实体（通常仅 10~14 个实体）
+    const expId = selectedExperimentId ?? noteEntities[0]?.id;
+    if (!expId) {
       return { nodes, links };
     }
-    const activeIds = new Set<number>([selectedEntityId]);
+
+    const subEntityIds = new Set<number>([expId]);
     relations.forEach((r) => {
-      if (r.source_entity_id === selectedEntityId) activeIds.add(r.target_entity_id);
-      if (r.target_entity_id === selectedEntityId) activeIds.add(r.source_entity_id);
+      if (r.source_entity_id === expId) subEntityIds.add(r.target_entity_id);
+      if (r.target_entity_id === expId) subEntityIds.add(r.source_entity_id);
     });
-    return {
-      nodes: nodes.filter((n) => activeIds.has(n.id)),
-      links: links.filter(
-        (l) =>
-          activeIds.has(typeof l.source === "object" ? l.source.id : l.source) &&
-          activeIds.has(typeof l.target === "object" ? l.target.id : l.target)
-      ),
-    };
-  }, [nodes, links, subgraphOnly, selectedEntityId, relations]);
 
-  // 计算当前聚焦的核心实体（优先级：鼠标悬停 > 顶部选中的实验重心 > 点击选中的实体）
-  const primaryFocusId = hoveredNodeId ?? activeExperimentId ?? selectedEntityId;
+    const subNodes = nodes
+      .filter((n) => subEntityIds.has(n.id))
+      .map((n) => ({ ...n }));
 
-  // 计算一跳关联的高亮网络
+    const subLinks = links.filter((l) => {
+      const sId = typeof l.source === "object" ? l.source.id : l.source;
+      const tId = typeof l.target === "object" ? l.target.id : l.target;
+      return subEntityIds.has(sId) && subEntityIds.has(tId);
+    });
+
+    const w = graphSize.width || 900;
+    const h = graphSize.height || 600;
+
+    // A. 📐 科学反应分层流向链路 (Reaction Pipeline Flow)
+    if (subgraphLayout === "pipeline") {
+      const stageReagents: GraphNode[] = [];
+      const stageConditions: GraphNode[] = [];
+      const stageCore: GraphNode[] = [];
+      const stageOutputs: GraphNode[] = [];
+
+      subNodes.forEach((n) => {
+        if (n.id === expId) {
+          stageCore.unshift(n); // 核心实验笔记置于中心顶部
+          return;
+        }
+        const t = n.entityType.toLowerCase();
+        if (t.includes("reagent") || t.includes("chemical") || t.includes("compound")) {
+          stageReagents.push(n);
+        } else if (t.includes("condition") || t.includes("treatment") || t.includes("perturbation") || t.includes("culture")) {
+          stageConditions.push(n);
+        } else if (t.includes("instrument") || t.includes("software")) {
+          stageCore.push(n);
+        } else {
+          stageOutputs.push(n);
+        }
+      });
+
+      const colSpacing = Math.min(230, Math.max(160, w * 0.22));
+      const stages = [
+        { list: stageReagents, x: -1.5 * colSpacing },
+        { list: stageConditions, x: -0.5 * colSpacing },
+        { list: stageCore, x: 0.5 * colSpacing },
+        { list: stageOutputs, x: 1.5 * colSpacing },
+      ];
+
+      stages.forEach(({ list, x }) => {
+        const count = list.length;
+        if (count === 0) return;
+        const rowSpacing = Math.min(76, Math.max(48, (h * 0.72) / Math.max(count, 1)));
+        list.forEach((node, idx) => {
+          const y = (idx - (count - 1) / 2) * rowSpacing;
+          node.fx = x;
+          node.fy = y;
+          node.x = x;
+          node.y = y;
+        });
+      });
+    } else if (subgraphLayout === "radial") {
+      // B. 🎯 同心圆辐射布局 (Radial Ego-Network)
+      const centerNode = subNodes.find((n) => n.id === expId);
+      if (centerNode) {
+        centerNode.fx = 0;
+        centerNode.fy = 0;
+        centerNode.x = 0;
+        centerNode.y = 0;
+      }
+      const others = subNodes.filter((n) => n.id !== expId);
+      const rx = Math.min(280, Math.max(180, w * 0.28));
+      const ry = Math.min(210, Math.max(140, h * 0.26));
+      others.forEach((n, idx) => {
+        const angle = (idx * 2 * Math.PI) / Math.max(others.length, 1) - Math.PI / 2;
+        const x = Math.cos(angle) * rx;
+        const y = Math.sin(angle) * ry;
+        n.fx = x;
+        n.fy = y;
+        n.x = x;
+        n.y = y;
+      });
+    } else {
+      // C. 🌌 微观星系引力排布 (Force Simulation)
+      subNodes.forEach((n) => {
+        n.fx = undefined;
+        n.fy = undefined;
+      });
+    }
+
+    return { nodes: subNodes, links: subLinks };
+  }, [viewScope, selectedExperimentId, noteEntities, nodes, links, relations, subgraphLayout, graphSize.width, graphSize.height]);
+
+  // 当前聚焦目标（优先级：鼠标悬停 > 选中实体）
+  const primaryFocusId = hoveredNodeId ?? selectedEntityId;
+
+  // 一跳关联子网络
   const highlightedIds = useMemo(() => {
     if (primaryFocusId === null) return new Set<number>();
     const ids = new Set<number>([primaryFocusId]);
@@ -394,7 +506,7 @@ export function KnowledgeGraphVisualization({
     return ids;
   }, [primaryFocusId, relations]);
 
-  // 选中的实体详情与关联明细
+  // 选中的实体详情
   const selectedDetails = useMemo(() => {
     if (selectedEntityId === null) return null;
     const node = nodes.find((n) => n.id === selectedEntityId);
@@ -422,23 +534,41 @@ export function KnowledgeGraphVisualization({
         };
       });
 
+    // 查找该实体从属的实验笔记
+    const parentNoteIds = entityToNoteMap.get(selectedEntityId) || [];
+    const parentNotes = parentNoteIds
+      .map((id) => entityMap.get(id))
+      .filter((n): n is KgEntity => Boolean(n));
+
     return {
       node,
       connected,
+      parentNotes,
     };
-  }, [selectedEntityId, nodes, relations, entityMap]);
+  }, [selectedEntityId, nodes, relations, entityMap, entityToNoteMap]);
 
-  // 科学实验星系聚类物理引擎：以「实验笔记」为星系重心，实体围绕对应实验笔记环绕聚集！
+  // 配置全局模式力导引引擎
   const configureGraph = useCallback(() => {
     const graph = graphRef.current;
     if (!graph) return;
 
+    if (viewScope === "single") {
+      // 单实验微力导引：低斥力、紧凑连线，秒级收敛
+      graph.d3Force("charge")?.strength(-180).distanceMax(400);
+      graph.d3Force("link")?.distance(65);
+      graph.d3Force("center")?.strength(0.08);
+      if (forceCollide) {
+        graph.d3Force("collide", forceCollide((n: any) => (n.radius || 12) + 20).iterations(2));
+      }
+      return;
+    }
+
+    // 全局全景模式：以 9 个实验笔记为星系重心
     const notes = noteEntities;
     const count = notes.length || 1;
     const w = graphSize.width || 900;
     const h = graphSize.height || 600;
 
-    // 分配各实验笔记在星系中的初始大环形锚点（半径约 240~360px）
     const rx = Math.max(220, Math.min(360, w * 0.35));
     const ry = Math.max(160, Math.min(260, h * 0.32));
     const noteAnchorMap = new Map<number, { x: number; y: number }>();
@@ -451,14 +581,11 @@ export function KnowledgeGraphVisualization({
       });
     });
 
-    // 1. 星系引力 X：实验笔记飞向环状锚点，试剂/仪器/结果飞向所从属的实验笔记！
     if (forceX) {
       graph.d3Force(
         "galaxyX",
         forceX((node: any) => {
-          if (node.isNote) {
-            return noteAnchorMap.get(node.id)?.x ?? 0;
-          }
+          if (node.isNote) return noteAnchorMap.get(node.id)?.x ?? 0;
           const parentNotes = entityToNoteMap.get(node.id);
           if (parentNotes && parentNotes.length > 0) {
             const sumX = parentNotes.reduce((acc, id) => acc + (noteAnchorMap.get(id)?.x ?? 0), 0);
@@ -469,14 +596,11 @@ export function KnowledgeGraphVisualization({
       );
     }
 
-    // 2. 星系引力 Y
     if (forceY) {
       graph.d3Force(
         "galaxyY",
         forceY((node: any) => {
-          if (node.isNote) {
-            return noteAnchorMap.get(node.id)?.y ?? 0;
-          }
+          if (node.isNote) return noteAnchorMap.get(node.id)?.y ?? 0;
           const parentNotes = entityToNoteMap.get(node.id);
           if (parentNotes && parentNotes.length > 0) {
             const sumY = parentNotes.reduce((acc, id) => acc + (noteAnchorMap.get(id)?.y ?? 0), 0);
@@ -487,23 +611,14 @@ export function KnowledgeGraphVisualization({
       );
     }
 
-    // 3. 排斥力：适度排斥，防止星系内部拥挤
     graph.d3Force("charge")?.strength(-320).distanceMax(500);
-    // 4. 连线距离：同实验紧凑（75px），自然聚拢
     graph.d3Force("link")?.distance(75);
-    // 5. 取消强制中心吸附（由星系引力维持平衡）
     graph.d3Force("center")?.strength(0.04);
 
-    // 6. 防碰撞力
     if (forceCollide) {
-      graph.d3Force(
-        "collide",
-        forceCollide((n: any) => {
-          return (n.radius || 12) + 16;
-        }).iterations(2)
-      );
+      graph.d3Force("collide", forceCollide((n: any) => (n.radius || 12) + 16).iterations(2));
     }
-  }, [noteEntities, entityToNoteMap, graphSize.width, graphSize.height]);
+  }, [viewScope, noteEntities, entityToNoteMap, graphSize.width, graphSize.height]);
 
   const fitGraph = useCallback((duration = 400) => {
     graphRef.current?.zoomToFit?.(duration, 56);
@@ -523,7 +638,7 @@ export function KnowledgeGraphVisualization({
   }, []);
 
   const focusOnNode = useCallback((nodeId: number) => {
-    const targetNode = nodes.find((n) => n.id === nodeId);
+    const targetNode = activeGraphData.nodes.find((n) => n.id === nodeId);
     if (!targetNode || !graphRef.current) return;
     const x = targetNode.x;
     const y = targetNode.y;
@@ -531,26 +646,61 @@ export function KnowledgeGraphVisualization({
       graphRef.current.centerAt(x, y, 600);
       graphRef.current.zoom(1.6, 600);
     }
-  }, [nodes]);
+  }, [activeGraphData.nodes]);
 
-  const handleSelectExperiment = useCallback(
-    (noteId: number | null) => {
-      setActiveExperimentId(noteId);
-      if (noteId === null) {
-        fitGraph(400);
+  const toggleNodePin = useCallback((nodeId: number, pin: boolean) => {
+    const graphData = graphRef.current?.graphData?.();
+    const target = graphData?.nodes?.find((n: any) => n.id === nodeId);
+    if (target) {
+      if (pin) {
+        target.fx = target.x;
+        target.fy = target.y;
+        target.pinned = true;
       } else {
-        focusOnNode(noteId);
+        delete target.fx;
+        delete target.fy;
+        target.pinned = false;
+        graphRef.current?.d3ReheatSimulation?.();
       }
+    }
+  }, []);
+
+  // 切换实验时自动对焦
+  const handleSwitchExperiment = useCallback(
+    (noteId: number) => {
+      setSelectedExperimentId(noteId);
+      setViewScope("single");
+      onEntitySelect(noteId);
+      setTimeout(() => fitGraph(350), 80);
     },
-    [fitGraph, focusOnNode]
+    [fitGraph, onEntitySelect]
   );
 
   const toggleFullscreen = useCallback(() => {
     setIsFullscreen((v) => !v);
-    setTimeout(() => {
-      fitGraph(200);
-    }, 150);
+    setTimeout(() => fitGraph(200), 150);
   }, [fitGraph]);
+
+  // 释放所有固定钉住的节点
+  const handleUnpinAll = useCallback(() => {
+    activeGraphData.nodes.forEach((n: any) => {
+      delete n.fx;
+      delete n.fy;
+      n.pinned = false;
+    });
+    graphRef.current?.d3ReheatSimulation?.();
+  }, [activeGraphData.nodes]);
+
+  // 图内搜索执行定位
+  const handleInGraphSearch = useCallback(() => {
+    const q = inGraphSearch.trim().toLowerCase();
+    if (!q) return;
+    const matched = activeGraphData.nodes.find((n) => n.name.toLowerCase().includes(q));
+    if (matched) {
+      onEntitySelect(matched.id);
+      focusOnNode(matched.id);
+    }
+  }, [inGraphSearch, activeGraphData.nodes, onEntitySelect, focusOnNode]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -568,27 +718,27 @@ export function KnowledgeGraphVisualization({
   }, [isFullscreen]);
 
   useEffect(() => {
-    const timer = window.setTimeout(configureGraph, 100);
+    const timer = window.setTimeout(configureGraph, 80);
     return () => window.clearTimeout(timer);
-  }, [configureGraph, graphSize.width, graphSize.height, nodes.length, links.length]);
+  }, [configureGraph, graphSize.width, graphSize.height, activeGraphData.nodes.length]);
 
   useEffect(() => {
     fitOnEngineStopRef.current = true;
-  }, [graphData]);
+  }, [activeGraphData]);
 
+  // 键盘快捷操作
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (isFullscreen) setIsFullscreen(false);
         else if (selectedEntityId !== null) onEntitySelect(null);
-        else if (activeExperimentId !== null) setActiveExperimentId(null);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isFullscreen, selectedEntityId, activeExperimentId, onEntitySelect]);
+  }, [isFullscreen, selectedEntityId, onEntitySelect]);
 
-  // 高保真【极致聚焦聚光灯】Canvas 节点绘制
+  // 高保真聚光灯 Canvas 节点绘制
   const paintNode = useCallback(
     (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
       const x = node.x;
@@ -601,16 +751,15 @@ export function KnowledgeGraphVisualization({
       const hasActiveFocus = primaryFocusId !== null;
       const isInFocusNetwork = highlightedIds.has(node.id);
 
-      // 【核心体验解法：深度虚化降噪】
-      // 一旦有节点被悬停或选定重心，其余无关节点全部骤降至 0.04 极低透明度，只留淡淡剪影！
-      const dimmed = (!isInSpotlight) || (hasActiveFocus && !isInFocusNetwork);
+      const isSingleMode = viewScope === "single";
+      const dimmed = !isSingleMode && ((!isInSpotlight) || (hasActiveFocus && !isInFocusNetwork));
       const baseColor = dimmed ? "#64748b" : node.color;
       const isFocusCenter = node.id === primaryFocusId;
 
       ctx.save();
-      ctx.globalAlpha = dimmed ? 0.06 : 1.0;
+      ctx.globalAlpha = dimmed ? 0.05 : 1.0;
 
-      // 1. 重心焦点外环：耀眼发光霓虹环
+      // 1. 焦点发光外环
       if (isFocusCenter) {
         traceShapePath(ctx, node.shape, x, y, r + 7 / globalScale);
         ctx.fillStyle = hexToRgba("#6366f1", 0.35);
@@ -619,14 +768,14 @@ export function KnowledgeGraphVisualization({
         ctx.strokeStyle = "#818cf8";
         ctx.lineWidth = 2.4 / globalScale;
         ctx.stroke();
-      } else if (isInFocusNetwork && hasActiveFocus) {
+      } else if (isInFocusNetwork && hasActiveFocus && !isSingleMode) {
         traceShapePath(ctx, node.shape, x, y, r + 2.5 / globalScale);
         ctx.strokeStyle = hexToRgba(baseColor, 0.85);
         ctx.lineWidth = 1.6 / globalScale;
         ctx.stroke();
       }
 
-      // 2. 节点底层玻璃器皿
+      // 2. 底层器皿背景
       traceShapePath(ctx, node.shape, x, y, r);
       ctx.fillStyle = dimmed
         ? "rgba(241, 245, 249, 0.15)"
@@ -635,7 +784,7 @@ export function KnowledgeGraphVisualization({
         : hexToRgba(baseColor, 0.15);
       ctx.fill();
 
-      // 3. 水波填充（弯月面起伏）
+      // 3. 水波纹起伏填充
       ctx.save();
       traceShapePath(ctx, node.shape, x, y, r);
       ctx.clip();
@@ -675,7 +824,7 @@ export function KnowledgeGraphVisualization({
       }
       ctx.restore();
 
-      // 4. 外边框（实验笔记采用特别加粗与金色高亮，构成显著重心）
+      // 4. 外边框
       traceShapePath(ctx, node.shape, x, y, r);
       ctx.strokeStyle = node.isNote
         ? "#eab308"
@@ -687,11 +836,18 @@ export function KnowledgeGraphVisualization({
       ctx.lineWidth = (node.isNote ? 2.5 : isFocusCenter ? 2.2 : 1.2) / Math.max(globalScale, 0.6);
       ctx.stroke();
 
-      // 5. 节点中心图标
+      // 5. 钉住微标记（如果被用户拖拽固定）
+      if (node.fx !== undefined && !isSingleMode) {
+        ctx.beginPath();
+        ctx.arc(x + r * 0.7, y - r * 0.7, 3.5 / globalScale, 0, Math.PI * 2);
+        ctx.fillStyle = "#f59e0b";
+        ctx.fill();
+      }
+
+      // 6. 节点中心图标
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       if (node.isNote) {
-        // 实验笔记使用醒目的 📝 图标与大字号，一眼识别为实验核心！
         ctx.font = `${Math.max(10, r * 0.75)}px sans-serif`;
         ctx.fillText("📝", x, y);
       } else {
@@ -709,19 +865,18 @@ export function KnowledgeGraphVisualization({
         ctx.shadowBlur = 0;
       }
 
-      // 6. 标签绘制规则（绝不全局平铺黑药丸）：
-      // - 实验笔记（核心重心）在智能模式下常显标题
-      // - 悬停 / 选中的节点以及与它们直接相连的一跳邻接节点，展开标签
+      // 7. 标签绘制：单实验精读模式下全显标签，清爽可读；全局模式下智能按需呈现
       const shouldDrawLabel =
+        isSingleMode ||
         labelMode === "all" ||
         node.isNote ||
         isFocusCenter ||
         (hasActiveFocus && isInFocusNetwork) ||
-        (labelMode === "smart" && globalScale >= 1.7);
+        (labelMode === "smart" && globalScale >= 1.6);
 
       if (shouldDrawLabel && !dimmed) {
         const rawName = node.name || "";
-        const maxLen = isFocusCenter || node.isNote ? 26 : 11;
+        const maxLen = isSingleMode ? 28 : (isFocusCenter || node.isNote ? 26 : 11);
         const displayName = rawName.length > maxLen ? `${rawName.slice(0, maxLen)}…` : rawName;
 
         const fontSize = Math.max(
@@ -750,51 +905,48 @@ export function KnowledgeGraphVisualization({
           ? "#eab308"
           : isFocusCenter
           ? "#818cf8"
-          : "rgba(255, 255, 255, 0.16)";
-        ctx.lineWidth = (node.isNote ? 1.2 : 0.8) / globalScale;
+          : hexToRgba(baseColor, 0.5);
+        ctx.lineWidth = 1 / Math.max(globalScale, 0.8);
         ctx.stroke();
 
-        ctx.fillStyle = node.isNote ? "#fef08a" : isFocusCenter ? "#ffffff" : "#e2e8f0";
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
         ctx.fillText(displayName, x, pillY + pillHeight / 2);
       }
 
       ctx.restore();
     },
-    [
-      spotlightType,
-      primaryFocusId,
-      highlightedIds,
-      labelMode,
-    ]
+    [primaryFocusId, highlightedIds, spotlightType, labelMode, viewScope]
   );
 
-  // 连线中点语义药丸标签（仅在聚焦路径上浮现）
+  // 连线绘制
   const paintLinkCanvas = useCallback(
     (link: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
-      const source = link.source;
-      const target = link.target;
-      if (!source || !target || !Number.isFinite(source.x) || !Number.isFinite(target.x)) return;
+      if (!showLinkLabels) return;
+      const s = link.source;
+      const t = link.target;
+      if (!s || !t || !Number.isFinite(s.x) || !Number.isFinite(t.x)) return;
 
       const isFocused =
         primaryFocusId !== null &&
-        (source.id === primaryFocusId || target.id === primaryFocusId);
+        (s.id === primaryFocusId || t.id === primaryFocusId);
 
-      if (!showLinkLabels && !isFocused) return;
+      if (!isFocused && globalScale < 1.4) return;
 
-      const mx = (source.x + target.x) / 2;
-      const my = (source.y + target.y) / 2;
-
-      const label = link.label;
-      const fontSize = Math.max(7.5, Math.min(10, 9 / Math.sqrt(Math.max(globalScale, 0.65))));
-      ctx.font = `500 ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
-      const tw = ctx.measureText(label).width;
-      const pw = tw + 8;
-      const ph = fontSize + 4;
+      const mx = (s.x + t.x) / 2;
+      const my = (s.y + t.y) / 2;
+      const label = link.label || link.relationType;
 
       ctx.save();
-      ctx.fillStyle = isFocused ? "rgba(15, 23, 42, 0.94)" : "rgba(15, 23, 42, 0.75)";
+      const fontSize = Math.max(7.5, Math.min(10, 8.5 / globalScale));
+      ctx.font = `${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+      const w = ctx.measureText(label).width + 6;
+      const h = fontSize + 4;
+
+      ctx.fillStyle = isFocused ? "rgba(15, 23, 42, 0.92)" : "rgba(30, 41, 59, 0.7)";
       ctx.beginPath();
-      ctx.roundRect(mx - pw / 2, my - ph / 2, pw, ph, 3);
+      ctx.roundRect(mx - w / 2, my - h / 2, w, h, 2);
       ctx.fill();
 
       ctx.strokeStyle = isFocused ? hexToRgba(link.color, 0.9) : "rgba(255, 255, 255, 0.14)";
@@ -810,14 +962,9 @@ export function KnowledgeGraphVisualization({
     [primaryFocusId, showLinkLabels]
   );
 
-  // 统计类型分布
-  const typeDistribution = useMemo(() => {
-    const counts: Record<string, number> = {};
-    nodes.forEach((n) => {
-      counts[n.entityType] = (counts[n.entityType] || 0) + 1;
-    });
-    return Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  }, [nodes]);
+  const activeExpNode = useMemo(() => {
+    return noteEntities.find((n) => n.id === selectedExperimentId) || noteEntities[0] || null;
+  }, [noteEntities, selectedExperimentId]);
 
   if (nodes.length === 0) {
     return (
@@ -842,70 +989,140 @@ export function KnowledgeGraphVisualization({
       }`}
     >
       <Card className="flex flex-1 flex-col overflow-hidden border-border/75 shadow-card bg-card">
-        {/* 图谱顶部状态控制栏 */}
-        <CardHeader className="flex-none border-b border-border/60 bg-muted/20 py-2 px-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+        {/* 🌟 核心升级 1：工作区模式切换与顶栏工具 */}
+        <CardHeader className="flex-none border-b border-border/60 bg-muted/20 py-2.5 px-4">
+          <div className="flex flex-wrap items-center justify-between gap-2.5">
+            {/* 左侧：视图模式切换（单实验精读 vs 全景星系） */}
             <div className="flex items-center gap-2">
-              <CardTitle className="text-sm font-semibold sm:text-base">实证图谱可视化</CardTitle>
-              <Badge variant="secondary" className="text-[11px] font-normal">
-                {noteEntities.length} 核心实验星系 · {nodes.length} 实体 · {links.length} 关系
-              </Badge>
-              {spotlightType && (
-                <Badge
-                  variant="outline"
-                  className="cursor-pointer gap-1 border-primary/40 bg-primary/10 text-primary text-[11px]"
-                  onClick={() => setSpotlightType(null)}
+              <div className="flex items-center rounded-lg border border-border/80 bg-background/80 p-0.5 shadow-xs">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewScope("single");
+                    if (selectedExperimentId === null && noteEntities.length > 0) {
+                      setSelectedExperimentId(noteEntities[0].id);
+                    }
+                    setTimeout(() => fitGraph(300), 100);
+                  }}
+                  className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+                    viewScope === "single"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
                 >
-                  聚光灯: {kgEntityTypeText[spotlightType] || spotlightType}
+                  <FlaskConical className="h-3.5 w-3.5" />
+                  <span>单实验精读流程图</span>
+                  <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 border-white/20">
+                    推荐
+                  </Badge>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewScope("global");
+                    setTimeout(() => fitGraph(300), 100);
+                  }}
+                  className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
+                    viewScope === "global"
+                      ? "bg-primary text-primary-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <Compass className="h-3.5 w-3.5" />
+                  <span>全课题星系总览</span>
+                  <span className="text-[10px] opacity-75 tabular-nums">({nodes.length})</span>
+                </button>
+              </div>
+
+              {/* 当前模式状态说明徽标 */}
+              <Badge variant="secondary" className="hidden sm:inline-flex text-[11px] font-normal">
+                {viewScope === "single"
+                  ? `${activeGraphData.nodes.length} 个当前实验实体 · 纯净零干扰`
+                  : `${noteEntities.length} 实验星系 · ${nodes.length} 实体 · ${links.length} 关系`}
+              </Badge>
+            </div>
+
+            {/* 中间：图内即时搜索框 */}
+            <div className="relative hidden md:flex items-center w-48 lg:w-56">
+              <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                value={inGraphSearch}
+                onChange={(e) => setInGraphSearch(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleInGraphSearch();
+                }}
+                placeholder="图内定位实体..."
+                className="h-8 pl-8 pr-7 text-xs bg-background/90"
+              />
+              {inGraphSearch && (
+                <button
+                  type="button"
+                  onClick={() => setInGraphSearch("")}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
                   <X className="h-3 w-3" />
-                </Badge>
+                </button>
               )}
             </div>
 
-            {/* 快捷实体类型聚光灯胶囊 */}
-            <div className="hidden min-w-0 flex-1 items-center justify-end gap-1.5 lg:flex">
-              {typeDistribution.slice(0, 5).map(([type, count]) => {
-                const isCurrent = spotlightType === type;
-                return (
+            {/* 右侧：单实验布局切换与画布控制 */}
+            <div className="flex items-center gap-1.5">
+              {viewScope === "single" && (
+                <div className="flex items-center rounded-lg border border-border/70 bg-background/80 p-0.5">
                   <button
-                    key={type}
                     type="button"
-                    onClick={() => setSpotlightType(isCurrent ? null : type)}
-                    className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] transition-colors ${
-                      isCurrent
-                        ? "border-primary bg-primary text-primary-foreground font-medium shadow-xs"
-                        : "border-border/70 bg-background/80 text-muted-foreground hover:bg-muted"
+                    onClick={() => setSubgraphLayout("pipeline")}
+                    title="反应链路分层流向排布 (推荐)"
+                    className={`flex items-center gap-1 rounded px-2 py-0.5 text-xs transition-colors ${
+                      subgraphLayout === "pipeline"
+                        ? "bg-muted text-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground"
                     }`}
                   >
-                    <span
-                      className="h-2 w-2 rounded-full"
-                      style={{ backgroundColor: getEntityColor(type) }}
-                    />
-                    {kgEntityTypeText[type] || type}
-                    <span className="opacity-70">({count})</span>
+                    <Workflow className="h-3 w-3 text-primary" />
+                    <span>反应流向</span>
                   </button>
-                );
-              })}
-            </div>
+                  <button
+                    type="button"
+                    onClick={() => setSubgraphLayout("force")}
+                    title="微观引力场排布"
+                    className={`flex items-center gap-1 rounded px-2 py-0.5 text-xs transition-colors ${
+                      subgraphLayout === "force"
+                        ? "bg-muted text-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Boxes className="h-3 w-3 text-indigo-500" />
+                    <span>星系微力</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSubgraphLayout("radial")}
+                    title="同心圆辐射排布"
+                    className={`flex items-center gap-1 rounded px-2 py-0.5 text-xs transition-colors ${
+                      subgraphLayout === "radial"
+                        ? "bg-muted text-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <Compass className="h-3 w-3 text-emerald-500" />
+                    <span>同心圆</span>
+                  </button>
+                </div>
+              )}
 
-            {/* 核心操作控制组 */}
-            <div className="flex items-center gap-1">
-              {/* 标签与图层显示模式 */}
+              {/* 标签策略菜单 */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="h-8 gap-1 px-2.5 text-xs">
                     <Layers className="h-3.5 w-3.5" />
-                    <span>
-                      {labelMode === "smart"
-                        ? "智能聚焦"
-                        : labelMode === "all"
-                        ? "全显标签"
-                        : "精简无字"}
+                    <span className="hidden sm:inline">
+                      {labelMode === "smart" ? "智能标签" : labelMode === "all" ? "全显标签" : "极简几何"}
                     </span>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52">
-                  <DropdownMenuLabel className="text-xs">标签显示策略</DropdownMenuLabel>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuLabel className="text-xs">标签展示策略</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "smart"}
@@ -913,7 +1130,7 @@ export function KnowledgeGraphVisualization({
                     className="text-xs"
                   >
                     <Sparkles className="mr-2 h-3.5 w-3.5 text-primary" />
-                    智能聚焦（悬停/核心才显）
+                    智能聚焦（推荐）
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "all"}
@@ -921,7 +1138,7 @@ export function KnowledgeGraphVisualization({
                     className="text-xs"
                   >
                     <Tag className="mr-2 h-3.5 w-3.5" />
-                    常显所有实体标签
+                    常显全部标签
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "none"}
@@ -929,7 +1146,7 @@ export function KnowledgeGraphVisualization({
                     className="text-xs"
                   >
                     <Eye className="mr-2 h-3.5 w-3.5" />
-                    极简几何（仅悬停显标签）
+                    极简几何（仅悬停显）
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuCheckboxItem
@@ -940,19 +1157,10 @@ export function KnowledgeGraphVisualization({
                     <ArrowRight className="mr-2 h-3.5 w-3.5" />
                     常显连线关系名称
                   </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem
-                    checked={subgraphOnly}
-                    onCheckedChange={setSubgraphOnly}
-                    disabled={selectedEntityId === null}
-                    className="text-xs"
-                  >
-                    <Network className="mr-2 h-3.5 w-3.5" />
-                    仅查看选中节点子网
-                  </DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
               </DropdownMenu>
 
-              <div className="mx-1 h-4 w-px bg-border/80" />
+              <div className="h-4 w-px bg-border/80" />
 
               <Button
                 variant="outline"
@@ -978,12 +1186,9 @@ export function KnowledgeGraphVisualization({
                 variant="outline"
                 size="sm"
                 className="h-8 w-8 p-0"
-                onClick={() => {
-                  setActiveExperimentId(null);
-                  fitGraph(300);
-                }}
-                title="重置星系全景视图"
-                aria-label="全景居中"
+                onClick={() => fitGraph(300)}
+                title="复位并居中"
+                aria-label="复位居中"
               >
                 <Focus className="h-3.5 w-3.5" />
               </Button>
@@ -992,15 +1197,15 @@ export function KnowledgeGraphVisualization({
                 size="sm"
                 className="h-8 w-8 p-0"
                 onClick={() => {
+                  handleUnpinAll();
                   configureGraph();
                   graphRef.current?.d3ReheatSimulation?.();
                 }}
-                title="重新释放星系聚类力场"
+                title="释放所有固定位置并重新布局"
                 aria-label="重新布局"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
               </Button>
-
               <Button
                 variant="outline"
                 size="sm"
@@ -1009,47 +1214,31 @@ export function KnowledgeGraphVisualization({
                 title={isFullscreen ? "退出全屏 (Esc)" : "全屏沉浸探索"}
                 aria-label="全屏切换"
               >
-                {isFullscreen ? (
-                  <Minimize2 className="h-3.5 w-3.5" />
-                ) : (
-                  <Maximize2 className="h-3.5 w-3.5" />
-                )}
+                {isFullscreen ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
               </Button>
             </div>
           </div>
         </CardHeader>
 
-        {/* 🌟 核心创新体验：实验星系重心导航带（点击任意实验，一键聚光灯平滑飞越） */}
+        {/* 🌟 核心升级 2：实验快速导航带（在单实验精读模式下高亮切换实验；全局模式下点击一键钻取） */}
         {noteEntities.length > 0 && (
-          <div className="flex items-center gap-1.5 overflow-x-auto border-b border-border/60 bg-muted/40 px-3 py-1.5 scrollbar-none">
+          <div className="flex items-center gap-1.5 overflow-x-auto border-b border-border/60 bg-muted/30 px-3 py-1.5 scrollbar-none">
             <span className="flex-none text-[11px] font-semibold text-muted-foreground flex items-center gap-1">
               <BookOpen className="h-3.5 w-3.5 text-primary" />
-              实验重心导航:
+              {viewScope === "single" ? "当前实验精读:" : "实验导航钻取:"}
             </span>
 
-            <button
-              type="button"
-              onClick={() => handleSelectExperiment(null)}
-              className={`flex-none rounded-md px-2.5 py-1 text-xs transition-colors ${
-                activeExperimentId === null
-                  ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                  : "bg-background/80 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/60"
-              }`}
-            >
-              🌐 全景总览
-            </button>
-
             {noteEntities.map((note, idx) => {
-              const isActive = activeExperimentId === note.id;
+              const isActive = (viewScope === "single" && selectedExperimentId === note.id) || (viewScope === "global" && selectedEntityId === note.id);
               return (
                 <button
                   key={note.id}
                   type="button"
-                  onClick={() => handleSelectExperiment(isActive ? null : note.id)}
+                  onClick={() => handleSwitchExperiment(note.id)}
                   onMouseEnter={() => setHoveredNodeId(note.id)}
                   onMouseLeave={() => setHoveredNodeId(null)}
                   title={note.name}
-                  className={`flex-none truncate max-w-56 rounded-md px-2.5 py-1 text-xs transition-all ${
+                  className={`flex-none truncate max-w-64 rounded-md px-2.5 py-1 text-xs transition-all ${
                     isActive
                       ? "bg-indigo-600 text-white font-medium shadow-sm ring-2 ring-indigo-400/40"
                       : "bg-background/80 text-foreground/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border border-border/70"
@@ -1062,21 +1251,21 @@ export function KnowledgeGraphVisualization({
           </div>
         )}
 
-        {/* 画布核心区域 */}
+        {/* 画布主内容区域 */}
         <CardContent
           ref={containerRef}
-          className={`relative overflow-hidden p-0 bg-dot-grid bg-muted/10 ${
-            isFullscreen ? "flex-1 h-full" : "h-[min(76vh,50rem)] min-h-[36rem]"
-          }`}
+          className="relative flex-1 p-0 overflow-hidden bg-dot-grid"
+          style={{ minHeight: graphSize.height }}
         >
           {graphSize.width > 0 && (
             <ForceGraph2D
-              ref={graphRef as any}
-              graphData={graphData}
+              ref={graphRef}
               width={graphSize.width}
               height={graphSize.height}
+              graphData={activeGraphData}
+              nodeId="id"
               nodeLabel={(node: any) =>
-                `${kgEntityTypeText[node.entityType] || node.entityType}: ${node.name} · 证据新鲜度 ${(
+                `${node.name}（${kgEntityTypeText[node.entityType] || node.entityType}）· 置信度 ${(
                   node.freshness * 100
                 ).toFixed(0)}% · 关联度 ${node.degree}`
               }
@@ -1084,45 +1273,67 @@ export function KnowledgeGraphVisualization({
               nodeCanvasObject={paintNode}
               linkCanvasObjectMode={() => "after"}
               linkCanvasObject={paintLinkCanvas}
-              linkLabel={(link: any) =>
-                `${link.label}（置信度 ${(link.confidence || 0).toFixed(2)}）`
-              }
+              linkLabel={(link: any) => `${link.label}（置信度 ${(link.confidence || 0).toFixed(2)}）`}
               linkColor={(link: any) => {
-                const sourceId = typeof link.source === "object" ? link.source.id : link.source;
-                const targetId = typeof link.target === "object" ? link.target.id : link.target;
+                const sId = typeof link.source === "object" ? link.source.id : link.source;
+                const tId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
+                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
 
-                if (primaryFocusId !== null) {
+                if (viewScope === "global" && primaryFocusId !== null) {
                   return isLinkedToFocus ? link.color : "rgba(148, 163, 184, 0.04)";
                 }
-                return hexToRgba(link.color, 0.35);
+                return hexToRgba(link.color, viewScope === "single" ? 0.65 : 0.35);
               }}
               linkWidth={(link: any) => {
-                const sourceId = typeof link.source === "object" ? link.source.id : link.source;
-                const targetId = typeof link.target === "object" ? link.target.id : link.target;
+                const sId = typeof link.source === "object" ? link.source.id : link.source;
+                const tId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
-                return isLinkedToFocus ? 2.6 : 0.8;
+                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+                return isLinkedToFocus ? 2.6 : viewScope === "single" ? 1.6 : 0.8;
               }}
               linkDirectionalArrowLength={(link: any) => {
-                const sourceId = typeof link.source === "object" ? link.source.id : link.source;
-                const targetId = typeof link.target === "object" ? link.target.id : link.target;
+                const sId = typeof link.source === "object" ? link.source.id : link.source;
+                const tId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
-                return isLinkedToFocus ? 6.5 : 4;
+                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+                return isLinkedToFocus ? 7 : 5;
               }}
               linkDirectionalArrowRelPos={0.88}
               linkDirectionalArrowColor={(link: any) => link.color}
-              linkCurvature={0.08}
+              linkCurvature={viewScope === "single" && subgraphLayout === "pipeline" ? 0.0 : 0.08}
               onNodeHover={(node: any) => setHoveredNodeId(node ? node.id : null)}
               onNodeClick={(node: any) => {
+                const now = Date.now();
+                if (
+                  lastClickRef.current &&
+                  lastClickRef.current.id === node.id &&
+                  now - lastClickRef.current.time < 350
+                ) {
+                  delete node.fx;
+                  delete node.fy;
+                  node.pinned = false;
+                  graphRef.current?.d3ReheatSimulation?.();
+                  lastClickRef.current = null;
+                  return;
+                }
+                lastClickRef.current = { id: node.id, time: now };
                 onEntitySelect(node.id === selectedEntityId ? null : node.id);
+              }}
+              onNodeRightClick={(node: any) => {
+                delete node.fx;
+                delete node.fy;
+                node.pinned = false;
+                graphRef.current?.d3ReheatSimulation?.();
+              }}
+              onNodeDragEnd={(node: any) => {
+                node.fx = node.x;
+                node.fy = node.y;
+                node.pinned = true;
               }}
               onBackgroundClick={() => {
                 onEntitySelect(null);
                 setSpotlightType(null);
-                setActiveExperimentId(null);
               }}
               enableZoomInteraction={true}
               enablePanInteraction={true}
@@ -1130,13 +1341,34 @@ export function KnowledgeGraphVisualization({
               onEngineStop={handleEngineStop}
               minZoom={0.15}
               maxZoom={3.5}
-              cooldownTicks={160}
-              cooldownTime={2500}
-              d3AlphaDecay={0.04}
-              d3VelocityDecay={0.35}
-              warmupTicks={60}
+              cooldownTicks={140}
+              cooldownTime={2000}
+              d3AlphaDecay={0.06}
+              d3VelocityDecay={0.42}
+              warmupTicks={70}
               autoPauseRedraw
             />
+          )}
+
+          {/* 🌟 核心升级 3：单实验反应流向布局 Stage 提示指示器 */}
+          {viewScope === "single" && subgraphLayout === "pipeline" && activeExpNode && (
+            <div className="pointer-events-none absolute top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-4 rounded-full border border-border/70 bg-background/85 px-4 py-1 shadow-subtle backdrop-blur-md">
+              <span className="text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                ① 试剂原料
+              </span>
+              <span className="text-[10px] text-muted-foreground">➔</span>
+              <span className="text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+                ② 反应条件
+              </span>
+              <span className="text-[10px] text-muted-foreground">➔</span>
+              <span className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">
+                ③ 实验核心 & 仪器
+              </span>
+              <span className="text-[10px] text-muted-foreground">➔</span>
+              <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                ④ 产物与表征
+              </span>
+            </div>
           )}
 
           {/* 底部折叠式「五通道语义映射图例」小胶囊 */}
@@ -1232,13 +1464,13 @@ export function KnowledgeGraphVisualization({
             )}
           </div>
 
-          {/* 右侧滑出式「实体详情检视抽屉」(Entity Inspector Drawer) */}
+          {/* 🌟 核心升级 4：右侧滑出式「全息实体详情检视抽屉」(Side Holographic Inspector Drawer) */}
           {selectedDetails && (
-            <div className="absolute top-3 right-3 bottom-3 z-20 flex w-80 flex-col overflow-hidden rounded-xl border border-border/80 bg-background/95 shadow-xl backdrop-blur-md transition-all">
+            <div className="absolute top-3 right-3 bottom-3 z-20 flex w-80 sm:w-96 flex-col overflow-hidden rounded-2xl border border-border/80 bg-background/95 shadow-elevate backdrop-blur-md animate-in slide-in-from-right-4 duration-200">
               {/* 抽屉头部 */}
-              <div className="flex items-start justify-between border-b border-border/60 bg-muted/30 p-3.5">
+              <div className="flex items-start justify-between border-b border-border/60 bg-muted/20 p-4">
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <span
                       className="h-2.5 w-2.5 flex-none rounded-full ring-2 ring-black/10"
                       style={{ backgroundColor: selectedDetails.node.color }}
@@ -1246,11 +1478,11 @@ export function KnowledgeGraphVisualization({
                     <Badge variant="outline" className="text-[10px] py-0 px-1.5">
                       {kgEntityTypeText[selectedDetails.node.entityType] || selectedDetails.node.entityType}
                     </Badge>
-                    <span className="text-[10px] text-muted-foreground">
-                      {selectedDetails.node.isNote ? "核心实验星系" : "研究实体"}
+                    <span className="text-[11px] text-muted-foreground">
+                      {selectedDetails.node.isNote ? "核心实验记录" : "科研实体"}
                     </span>
                   </div>
-                  <h3 className="mt-1.5 truncate text-sm font-semibold text-foreground" title={selectedDetails.node.name}>
+                  <h3 className="mt-2 text-sm font-bold text-foreground break-words leading-tight" title={selectedDetails.node.name}>
                     {selectedDetails.node.name}
                   </h3>
                 </div>
@@ -1258,73 +1490,70 @@ export function KnowledgeGraphVisualization({
                   type="button"
                   aria-label="关闭详情抽屉"
                   onClick={() => onEntitySelect(null)}
-                  className="rounded-md p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  className="rounded-lg p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
                 >
                   <X className="h-4 w-4" />
                 </button>
               </div>
 
               {/* 抽屉主体属性与证据 */}
-              <div className="flex-1 space-y-3 overflow-y-auto p-3.5 text-xs">
-                {/* 证据时效度量 */}
-                <div className="rounded-lg border border-border/70 bg-muted/20 p-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="flex items-center gap-1 text-[11px] font-medium text-foreground">
-                      <Clock className="h-3.5 w-3.5 text-primary" />
+              <div className="flex-1 space-y-3.5 overflow-y-auto p-4 text-xs">
+                {/* 关键度量双卡片 */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="rounded-xl border border-border/60 bg-muted/25 p-2.5">
+                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <Network className="h-3 w-3 text-primary" />
+                      关联度数
+                    </span>
+                    <p className="mt-1 text-base font-bold tabular-nums text-foreground">
+                      {selectedDetails.node.degree} 处连接
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-border/60 bg-muted/25 p-2.5">
+                    <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
+                      <Clock className="h-3 w-3 text-emerald-500" />
                       证据新鲜度
                     </span>
-                    <Badge
-                      variant={
-                        selectedDetails.node.freshness > 0.7
-                          ? "default"
-                          : selectedDetails.node.freshness > 0.3
-                          ? "secondary"
-                          : "outline"
-                      }
-                      className="text-[10px] py-0"
-                    >
-                      {(selectedDetails.node.freshness * 100).toFixed(0)}%
-                      {selectedDetails.node.freshness > 0.7
-                        ? " · 活跃"
-                        : selectedDetails.node.freshness > 0.3
-                        ? " · 稳定"
-                        : " · 久未佐证"}
-                    </Badge>
-                  </div>
-                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{
-                        width: `${Math.round(selectedDetails.node.freshness * 100)}%`,
-                        backgroundColor: selectedDetails.node.color,
-                      }}
-                    />
-                  </div>
-                  {selectedDetails.node.updatedAt && (
-                    <p className="mt-1.5 text-[10px] text-muted-foreground">
-                      最近实证时间：{new Date(selectedDetails.node.updatedAt).toLocaleString()}
+                    <p className="mt-1 text-base font-bold tabular-nums text-foreground">
+                      {Math.round(selectedDetails.node.freshness * 100)}%
                     </p>
-                  )}
-                </div>
-
-                {/* 拓扑关联度统计 */}
-                <div className="flex items-center justify-between rounded-lg border border-border/70 bg-muted/20 p-2.5">
-                  <div className="flex items-center gap-1.5">
-                    <Network className="h-3.5 w-3.5 text-muted-foreground" />
-                    <span className="font-medium text-foreground">关联度</span>
                   </div>
-                  <span className="font-semibold tabular-nums text-foreground">
-                    {selectedDetails.node.degree} 处关联
-                  </span>
                 </div>
 
-                {/* 关联网络明细（可点击跳转） */}
-                <div className="space-y-1.5">
-                  <p className="font-medium text-foreground">关联实体清单 ({selectedDetails.connected.length})</p>
+                {/* 所属实验课题（针对实体显示其归属的实验） */}
+                {selectedDetails.parentNotes && selectedDetails.parentNotes.length > 0 && (
+                  <div className="space-y-1.5">
+                    <p className="font-semibold text-foreground flex items-center gap-1 text-[11px]">
+                      <BookOpen className="h-3.5 w-3.5 text-primary" /> 所属实验记录
+                    </p>
+                    <div className="space-y-1">
+                      {selectedDetails.parentNotes.map((note) => (
+                        <div
+                          key={note.id}
+                          onClick={() => handleSwitchExperiment(note.id)}
+                          className="group flex cursor-pointer items-center justify-between rounded-lg border border-border/60 bg-background/80 p-2 text-xs transition-colors hover:border-primary/40 hover:bg-primary/5"
+                        >
+                          <span className="truncate font-medium text-foreground group-hover:text-primary">
+                            📝 {note.label}
+                          </span>
+                          <span className="flex items-center text-[10px] text-primary group-hover:underline">
+                            精读 <ChevronRight className="h-3 w-3" />
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 关联网络明细（可点击跳转对焦） */}
+                <div className="space-y-2">
+                  <p className="font-semibold text-foreground text-[11px]">
+                    一跳关联实体清单 ({selectedDetails.connected.length})
+                  </p>
                   {selectedDetails.connected.length === 0 ? (
-                    <p className="text-[11px] text-muted-foreground">暂无一跳关联节点</p>
+                    <p className="text-muted-foreground">暂无一跳关联节点</p>
                   ) : (
-                    <div className="max-h-56 space-y-1 overflow-y-auto pr-1">
+                    <div className="max-h-56 space-y-1.5 overflow-y-auto pr-1">
                       {selectedDetails.connected.map((item) => (
                         <div
                           key={item.id}
@@ -1332,7 +1561,7 @@ export function KnowledgeGraphVisualization({
                             onEntitySelect(item.neighborId);
                             focusOnNode(item.neighborId);
                           }}
-                          className="group flex cursor-pointer items-center justify-between rounded-md border border-border/60 bg-background/80 p-2 text-[11px] transition-colors hover:border-primary/50 hover:bg-primary/5"
+                          className="group flex cursor-pointer items-center justify-between rounded-lg border border-border/60 bg-background/80 p-2 text-xs transition-colors hover:border-primary/50 hover:bg-primary/5"
                         >
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-1">
@@ -1344,11 +1573,11 @@ export function KnowledgeGraphVisualization({
                                 {item.relationLabel}
                               </span>
                             </div>
-                            <p className="truncate font-medium text-foreground group-hover:text-primary">
+                            <p className="truncate font-medium text-foreground group-hover:text-primary mt-0.5">
                               {item.neighborLabel}
                             </p>
                           </div>
-                          <Badge variant="outline" className="text-[9px] py-0 px-1 ml-1 flex-none">
+                          <Badge variant="outline" className="text-[9px] py-0 px-1.5 ml-1 flex-none">
                             {kgEntityTypeText[item.neighborType] || item.neighborType}
                           </Badge>
                         </div>
@@ -1359,25 +1588,47 @@ export function KnowledgeGraphVisualization({
               </div>
 
               {/* 抽屉底部快捷操作 */}
-              <div className="flex items-center gap-2 border-t border-border/60 bg-muted/30 p-2.5">
+              <div className="flex items-center gap-2 border-t border-border/60 bg-muted/30 p-3">
+                {selectedDetails.node.isNote && viewScope === "global" && (
+                  <Button
+                    size="sm"
+                    className="flex-1 text-xs h-8"
+                    onClick={() => handleSwitchExperiment(selectedDetails.node.id)}
+                  >
+                    <FlaskConical className="mr-1.5 h-3.5 w-3.5" />
+                    进入此实验精读
+                  </Button>
+                )}
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-7 flex-1 text-xs"
+                  className="flex-1 text-xs h-8"
                   onClick={() => focusOnNode(selectedDetails.node.id)}
                 >
-                  <Focus className="mr-1.5 h-3 w-3" />
-                  定位中心
+                  <Focus className="mr-1.5 h-3.5 w-3.5" />
+                  对焦居中
                 </Button>
-                <Button
-                  size="sm"
-                  variant={subgraphOnly ? "default" : "outline"}
-                  className="h-7 flex-1 text-xs"
-                  onClick={() => setSubgraphOnly((v) => !v)}
-                >
-                  <Network className="mr-1.5 h-3 w-3" />
-                  {subgraphOnly ? "显示全图" : "隔离子图"}
-                </Button>
+                {selectedDetails.node.pinned ? (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="text-xs h-8 px-2"
+                    title="释放该节点固定位置"
+                    onClick={() => toggleNodePin(selectedDetails.node.id, false)}
+                  >
+                    <PinOff className="h-3.5 w-3.5 text-amber-500" />
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="text-xs h-8 px-2"
+                    title="钉住该节点位置"
+                    onClick={() => toggleNodePin(selectedDetails.node.id, true)}
+                  >
+                    <Pin className="h-3.5 w-3.5" />
+                  </Button>
+                )}
               </div>
             </div>
           )}

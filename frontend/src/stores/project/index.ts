@@ -87,12 +87,17 @@ const singleTabLoader = <Data>(config: {
 }) => {
   return async (token: string, projectId: number) => {
     const state = useProjectStore.getState();
-    if (state.selectedProjectId !== projectId) return;
+    // 兼容直达页面或刷新时 selectedProjectId 初始为 null 的场景：自动关联当前项目，避免请求被误丢弃
+    if (state.selectedProjectId === null) {
+      useProjectStore.getState().selectProject(projectId);
+    } else if (state.selectedProjectId !== projectId) {
+      return;
+    }
     const sessionEpoch = epochs.session;
-    if (Date.now() - state[config.cacheKey] < CACHE_TTL_MS) return;
+    if (Date.now() - useProjectStore.getState()[config.cacheKey] < CACHE_TTL_MS) return;
     const result = await Promise.allSettled([config.fetcher(token, projectId)]);
     const current = useProjectStore.getState();
-    if (!isCurrentSessionRequest(sessionEpoch) || current.selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || (current.selectedProjectId !== projectId && current.selectedProjectId !== null)) return;
     useProjectStore.setState({
       ...(result[0].status === "fulfilled" ? config.apply(result[0].value) : {}),
       projectDataErrors: mergeProjectDataErrors(current.projectDataErrors, [config.label], result),
@@ -206,7 +211,11 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
   // ── Per-tab loaders with cache ────────────────────────────────────────
 
   loadAITabData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
+    if (get().selectedProjectId === null) {
+      get().selectProject(projectId);
+    } else if (get().selectedProjectId !== projectId) {
+      return;
+    }
     const sessionEpoch = epochs.session;
     if (Date.now() - get().aiTabLastFetchedAt < CACHE_TTL_MS) return;
     const results = await Promise.allSettled([
@@ -215,7 +224,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       getProjectQueryAnalytics(token, projectId),
       getRagExperiments(token, projectId),
     ]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || (get().selectedProjectId !== projectId && get().selectedProjectId !== null)) return;
     const labels = ["AI/RAG状态", "AI/查询日志", "AI/查询统计", "AI/实验记录"] as const;
     set({
       ...(results[0].status === "fulfilled" ? { ragStatus: results[0].value } : {}),
@@ -256,14 +265,18 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
   }),
 
   loadSettingsTabData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
+    if (get().selectedProjectId === null) {
+      get().selectProject(projectId);
+    } else if (get().selectedProjectId !== projectId) {
+      return;
+    }
     const sessionEpoch = epochs.session;
     if (Date.now() - get().settingsTabLastFetchedAt < CACHE_TTL_MS) return;
     const results = await Promise.allSettled([
       getTemplates(token),
       getMaturityStatus(token),
     ]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || (get().selectedProjectId !== projectId && get().selectedProjectId !== null)) return;
     set({
       ...(results[0].status === "fulfilled" ? { templates: results[0].value } : {}),
       ...(results[1].status === "fulfilled" ? { maturityStatus: results[1].value } : {}),
@@ -288,7 +301,11 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
   },
 
   loadTabProjectData: async (token, projectId) => {
-    if (get().selectedProjectId !== projectId) return;
+    if (get().selectedProjectId === null) {
+      get().selectProject(projectId);
+    } else if (get().selectedProjectId !== projectId) {
+      return;
+    }
     const sessionEpoch = epochs.session;
     const results = await Promise.allSettled([
       getTemplates(token),
@@ -301,7 +318,7 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       getBlindReviewBatches(token, projectId),
       getMaturityStatus(token),
     ]);
-    if (!isCurrentSessionRequest(sessionEpoch) || get().selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || (get().selectedProjectId !== projectId && get().selectedProjectId !== null)) return;
 
     const now = Date.now();
     const labels = [

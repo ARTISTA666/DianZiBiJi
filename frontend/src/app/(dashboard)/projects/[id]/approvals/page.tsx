@@ -131,7 +131,7 @@ function ApprovalCard({ token, note, members, comment, onCommentChange, onAction
               <Badge variant="outline" className="text-[10px] py-0 h-4">{note.experiment_type}</Badge>
               <span>{note.experiment_date || "—"}</span>
               <span>·</span>
-              <span>提交人：{submitter ? `用户 #${note.owner_user_id}` : `#${note.owner_user_id}`}</span>
+              <span>提交人：{submitter?.display_name || (submitter ? `用户 #${note.owner_user_id}` : `#${note.owner_user_id}`)}</span>
               <span>·</span>
               <span>提交时间：{formatTime(submittedAt || note.updated_at)}</span>
             </div>
