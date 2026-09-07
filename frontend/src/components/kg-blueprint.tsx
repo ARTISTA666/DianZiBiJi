@@ -38,6 +38,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getErrorMessage } from "@/lib/utils";
 import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
+// @ts-expect-error d3 is untyped
+import { forceCollide } from "d3";
 import {
   getEntityColor,
   getRelationColor,
@@ -118,7 +120,7 @@ export function KnowledgeBlueprintView({
   const [selectedNodeId, setSelectedNodeId] = useState<number | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [showLabels, setShowLabels] = useState(true);
+  const [showLabels, setShowLabels] = useState(false);
   const [showLinkLabels, setShowLinkLabels] = useState(false);
   const [graphSize, setGraphSize] = useState({ width: 0, height: 480 });
 
@@ -195,22 +197,21 @@ export function KnowledgeBlueprintView({
     [blueprint, selectedNodeId]
   );
 
-  // 力导引配置
+  // 力导引配置：舒展空间与防重叠
   const configureGraph = useCallback(() => {
     const graph = graphRef.current;
     if (!graph) return;
-    graph.d3Force("charge")?.strength(-240);
-    graph.d3Force("link")?.distance(90);
-    graph.d3Force("center")?.strength(0.7);
+    graph.d3Force("charge")?.strength(-520).distanceMax(750);
+    graph.d3Force("link")?.distance(135);
+    graph.d3Force("center")?.strength(0.14);
 
-    const d3 = (window as any).d3;
-    if (d3?.forceCollide) {
+    if (forceCollide) {
       graph.d3Force(
         "collide",
-        d3.forceCollide((n: any) => {
-          const r = Math.sqrt(Math.max(n.val || 4, 1)) * 4.4;
-          return r + 14;
-        })
+        forceCollide((n: any) => {
+          const r = Math.max(12, Math.min(22, 10 + Math.sqrt(Math.max(n.val || 4, 1)) * 3.2));
+          return r + 22;
+        }).iterations(3)
       );
     }
   }, []);
@@ -356,8 +357,8 @@ export function KnowledgeBlueprintView({
         ctx.fillText("✦", x, y);
       }
 
-      // 3. 自适应文字药丸标签
-      if (showLabels || isSelected || isHovered || globalScale >= 0.75) {
+      // 3. 自适应文字药丸标签（默认不遮挡，悬停或选中才显现）
+      if (showLabels || isSelected || isHovered || globalScale >= 1.6) {
         const rawName = node.name || "";
         const maxLen = isSelected || isHovered ? 24 : 13;
         const displayName = rawName.length > maxLen ? `${rawName.slice(0, maxLen)}…` : rawName;
