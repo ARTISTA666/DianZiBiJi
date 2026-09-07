@@ -989,7 +989,7 @@ async fn call_list_project_members(
         .ok_or((-32602, "project_id is required".to_owned()))? as i32;
     verify_project_access(pool, user, project_id).await?;
     let rows: Vec<(i32, String, String, bool)> = sqlx::query_as(
-        r#"SELECT u.id,u.display_name,lower(pm.role::text),pm.can_evaluate
+        r#"SELECT u.id,u.display_name,lower(pm.project_role::text),pm.can_evaluate
            FROM project_members pm JOIN users u ON u.id=pm.user_id
            WHERE pm.project_id=$1 ORDER BY u.id"#,
     )

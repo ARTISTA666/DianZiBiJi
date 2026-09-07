@@ -159,6 +159,10 @@ impl OpenAiCompatibleProvider {
             ],
             "temperature": request.temperature,
             "max_tokens": request.max_tokens,
+            // 思考型模型（如 deepseek-v4-flash）默认先产出 reasoning_content，
+            // 会把 max_tokens 预算耗尽导致 content 为空；后端用途均为结构化
+            // 抽取/问答，直接请求关闭思考。非思考模型会忽略该字段。
+            "thinking": {"type": "disabled"},
             "stream": false
         });
         if !request.tools.is_empty() {
@@ -559,7 +563,7 @@ mod tests {
         assert_eq!(payload["tools"][0]["type"], "function");
         assert_eq!(payload["tools"][0]["function"]["name"], "search_notes");
         assert_eq!(payload["tool_choice"], "auto");
-        assert!(payload.get("thinking").is_none());
+        assert_eq!(payload["thinking"]["type"], "disabled");
     }
 
     #[test]
