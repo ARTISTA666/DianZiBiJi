@@ -46,23 +46,12 @@ export default function KGPage() {
   const membership = members.find((member) => member.user_id === user?.id);
   const canWrite = user?.role === "super_admin" || membership?.can_write === true;
 
-  const [expandNeighbors, setExpandNeighbors] = useState(false);
-
-  const selectedProjectId = useProjectStore((s) => s.selectedProjectId);
   useEffect(() => {
     if (token) loadKGTabData(token, projectId);
-  }, [token, projectId, selectedProjectId, loadKGTabData]);
+  }, [token, projectId, loadKGTabData]);
 
   const totalEntities = kgGraph?.entities?.length || 0;
   const totalRelations = kgGraph?.relations?.length || 0;
-
-  const entityTypeCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    (kgGraph?.entities || []).forEach((e) => {
-      counts[e.entity_type] = (counts[e.entity_type] || 0) + 1;
-    });
-    return counts;
-  }, [kgGraph]);
 
   const entityTypes = useMemo(
     () => Array.from(new Set((kgGraph?.entities || []).map((e) => e.entity_type))).sort(),
@@ -77,18 +66,17 @@ export default function KGPage() {
   const graphEntities = useMemo(() => {
     if (!kgGraph) return [];
     const keyword = entityKeyword.trim().toLowerCase();
-    const matched = kgGraph.entities.filter(
-      (entity) =>
-        (!entityFilter || entity.entity_type === entityFilter) &&
-        (!keyword || entity.label.toLowerCase().includes(keyword))
+    const matchedIds = new Set(
+      kgGraph.entities
+        .filter(
+          (entity) =>
+            (!entityFilter || entity.entity_type === entityFilter) &&
+            (!keyword || entity.label.toLowerCase().includes(keyword))
+        )
+        .map((entity) => entity.id)
     );
-    const matchedIds = new Set(matched.map((e) => e.id));
 
-    // 未勾选“包含一度关联”时，严格只保留匹配条件的节点，彻底解决 86 节点全显过滤击穿 Bug
-    if (!expandNeighbors || (!entityFilter && !keyword)) {
-      return matched;
-    }
-
+    // 筛选时保留一跳关联实体，避免图谱只剩孤立节点
     const visibleIds = new Set(matchedIds);
     kgGraph.relations.forEach((relation) => {
       if (relationFilter && relation.relation_type !== relationFilter) return;
@@ -98,7 +86,7 @@ export default function KGPage() {
       }
     });
     return kgGraph.entities.filter((entity) => visibleIds.has(entity.id));
-  }, [kgGraph, entityFilter, relationFilter, entityKeyword, expandNeighbors]);
+  }, [kgGraph, entityFilter, relationFilter, entityKeyword]);
 
   const graphEntityIds = useMemo(
     () => new Set(graphEntities.map((entity) => entity.id)),
@@ -121,13 +109,12 @@ export default function KGPage() {
     return ((totalRelations * 2) / totalEntities).toFixed(1);
   }, [totalEntities, totalRelations]);
 
-  const isFiltered = entityFilter !== "" || relationFilter !== "" || entityKeyword.trim() !== "" || expandNeighbors;
+  const isFiltered = entityFilter !== "" || relationFilter !== "" || entityKeyword.trim() !== "";
 
   const handleResetFilters = () => {
     setEntityFilter("");
     setRelationFilter("");
     setEntityKeyword("");
-    setExpandNeighbors(false);
   };
 
   const handleRebuild = async () => {
@@ -310,53 +297,6 @@ export default function KGPage() {
                 </Button>
               </div>
             )}
-
-            {/* 实体类别快捷过滤胶囊栏 */}
-            <div className="flex flex-wrap items-center gap-1.5 w-full pt-2 border-t border-border/40">
-              <span className="text-[11px] font-medium text-muted-foreground mr-1">类别过滤:</span>
-              <button
-                type="button"
-                onClick={() => setEntityFilter("")}
-                className={`rounded-full px-2.5 py-0.5 text-xs transition-colors ${
-                  !entityFilter
-                    ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                    : "bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground"
-                }`}
-              >
-                全部 ({totalEntities})
-              </button>
-              {entityTypes.map((t) => {
-                const count = entityTypeCounts[t] || 0;
-                const isSelected = entityFilter === t;
-                return (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setEntityFilter(isSelected ? "" : t)}
-                    className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs transition-colors ${
-                      isSelected
-                        ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                        : "bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50"
-                    }`}
-                  >
-                    <span>{kgEntityTypeText[t] || t}</span>
-                    <span className="opacity-75 tabular-nums">({count})</span>
-                  </button>
-                );
-              })}
-
-              <div className="ml-auto flex items-center gap-2">
-                <label className="flex items-center gap-1.5 text-xs text-muted-foreground cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    checked={expandNeighbors}
-                    onChange={(e) => setExpandNeighbors(e.target.checked)}
-                    className="rounded border-border"
-                  />
-                  <span>包含一度关联</span>
-                </label>
-              </div>
-            </div>
           </div>
 
           {/* 图谱主可视化组件 */}
