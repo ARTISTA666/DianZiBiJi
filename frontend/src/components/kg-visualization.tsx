@@ -18,8 +18,7 @@ import {
   Pin,
   PinOff,
   Search,
-  Compass,
-  FlaskConical,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -33,7 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { kgEntityTypeText, kgRelationTypeText, kgEntityShortText } from "@/components/constants";
+import { kgEntityTypeText, kgRelationTypeText } from "@/components/constants";
 // @ts-expect-error d3 is untyped
 import { forceCollide, forceX, forceY } from "d3";
 
@@ -98,30 +97,25 @@ interface GraphLink {
 
 export type NodeShape = "circle" | "square" | "diamond" | "hexagon" | "triangle";
 
-// 实体类型 → 颜色映射
+// 实体类型 → 极简现代科研语义色板
 const ENTITY_COLORS: Record<string, string> = {
-  note: "#6366f1",
-  project: "#3b82f6",
-  user: "#8b5cf6",
-  file: "#06b6d4",
-  cell_line: "#ec4899",
-  gene: "#10b981",
-  protein: "#14b8a6",
-  chemical: "#f59e0b",
-  reagent: "#f97316",
-  disease: "#ef4444",
-  method: "#84cc16",
-  instrument: "#64748b",
-  result: "#0ea5e9",
-  tissue: "#a855f7",
-  species: "#10b981",
-  biosample: "#06b6d4",
-  perturbation: "#f43f5e",
-  treatment: "#eab308",
-  culture: "#84cc16",
-  group: "#6366f1",
-  geo_accession: "#0284c7",
-  software: "#475569",
+  note: "#6366f1",         // 实验笔记：靛蓝（核心枢纽）
+  project: "#3b82f6",      // 课题：蓝色
+  reagent: "#f97316",      // 试剂：橙色
+  chemical: "#f59e0b",     // 化学品：琥珀橙
+  instrument: "#64748b",   // 仪器：板岩灰
+  software: "#475569",     // 软件：深灰
+  result: "#0ea5e9",       // 产物/结果：天蓝
+  biosample: "#14b8a6",    // 生物样本：蓝绿
+  gene: "#10b981",         // 基因/靶标：翡翠绿
+  protein: "#059669",      // 蛋白：深绿
+  disease: "#ef4444",      // 疾病：红色
+  cell_line: "#ec4899",    // 细胞系：粉红
+  treatment: "#eab308",    // 处理条件：黄色
+  culture: "#84cc16",      // 培养条件：嫩绿
+  perturbation: "#f43f5e", // 扰动：玫红
+  user: "#8b5cf6",         // 人员：紫色
+  file: "#06b6d4",         // 文件：青色
 };
 
 // 关系类型 → 边颜色映射
@@ -138,7 +132,7 @@ const RELATION_COLORS: Record<string, string> = {
   regulates: "#ef4444",
   interacts_with: "#ec4899",
   treats: "#eab308",
-  has_sample: "#06b6d4",
+  has_sample: "#14b8a6",
   has_perturbation: "#f43f5e",
   derived_from: "#14b8a6",
   measured_by: "#64748b",
@@ -148,60 +142,32 @@ const RELATION_COLORS: Record<string, string> = {
   references: "#6366f1",
   has_note: "#6366f1",
   has_experiment_type: "#6366f1",
-  uses_sample: "#06b6d4",
+  uses_sample: "#14b8a6",
 };
 
-// 实体类型 → 几何外形映射
 export const ENTITY_SHAPES: Record<string, NodeShape> = {
-  note: "square",
-  project: "square",
+  note: "circle",
+  project: "circle",
   user: "circle",
   file: "circle",
-  cell_line: "hexagon",
-  gene: "diamond",
-  protein: "diamond",
+  cell_line: "circle",
+  gene: "circle",
+  protein: "circle",
   chemical: "circle",
   reagent: "circle",
-  disease: "triangle",
-  method: "hexagon",
-  instrument: "square",
-  result: "triangle",
-  tissue: "hexagon",
+  disease: "circle",
+  method: "circle",
+  instrument: "circle",
+  result: "circle",
+  tissue: "circle",
   species: "circle",
-  biosample: "hexagon",
-  perturbation: "triangle",
-  treatment: "diamond",
-  culture: "hexagon",
-  group: "square",
-  geo_accession: "diamond",
-  software: "square",
-};
-
-// 关系类型归类
-const RELATION_GROUPS: Record<string, { color: string; label: string }> = {
-  uses_reagent: { color: "#f97316", label: "试剂物料" },
-  uses_instrument: { color: "#64748b", label: "仪器设备" },
-  targets_gene: { color: "#10b981", label: "生物靶标" },
-  operates_on: { color: "#84cc16", label: "实验操作" },
-  produces_result: { color: "#0ea5e9", label: "产物结果" },
-  created_by: { color: "#8b5cf6", label: "人员归属" },
-  associated_with: { color: "#94a3b8", label: "关联推断" },
-  part_of: { color: "#3b82f6", label: "课题架构" },
-  observed_in: { color: "#a855f7", label: "组织样本" },
-  regulates: { color: "#ef4444", label: "调控网络" },
-  interacts_with: { color: "#ec4899", label: "分子互作" },
-  treats: { color: "#eab308", label: "处理条件" },
-  has_sample: { color: "#06b6d4", label: "生物样品" },
-  has_perturbation: { color: "#f43f5e", label: "扰动处理" },
-  derived_from: { color: "#14b8a6", label: "样本衍生" },
-  measured_by: { color: "#64748b", label: "测定仪器" },
-  controls: { color: "#0ea5e9", label: "质控内参" },
-  expressed_in: { color: "#a855f7", label: "组织表达" },
-  analyzed_by: { color: "#475569", label: "分析软件" },
-  references: { color: "#6366f1", label: "引用参考" },
-  has_note: { color: "#6366f1", label: "实验笔记" },
-  has_experiment_type: { color: "#6366f1", label: "实验类型" },
-  uses_sample: { color: "#06b6d4", label: "使用样品" },
+  biosample: "circle",
+  perturbation: "circle",
+  treatment: "circle",
+  culture: "circle",
+  group: "circle",
+  geo_accession: "circle",
+  software: "circle",
 };
 
 export function hexToRgba(hex: string, alpha: number): string {
@@ -229,50 +195,9 @@ export function getRelationColor(type: string): string {
   return RELATION_COLORS[type] || "#94a3b8";
 }
 
-export function traceShapePath(ctx: CanvasRenderingContext2D, shape: NodeShape, x: number, y: number, r: number) {
+export function traceShapePath(ctx: CanvasRenderingContext2D, _shape: NodeShape, x: number, y: number, r: number) {
   ctx.beginPath();
-  switch (shape) {
-    case "circle":
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      break;
-    case "square": {
-      const k = r * 0.92;
-      const corner = Math.min(5, r * 0.28);
-      ctx.roundRect(x - k, y - k, k * 2, k * 2, corner);
-      break;
-    }
-    case "diamond": {
-      const hr = r * 1.15;
-      const wr = r * 1.12;
-      ctx.moveTo(x, y - hr);
-      ctx.lineTo(x + wr, y);
-      ctx.lineTo(x, y + hr);
-      ctx.lineTo(x - wr, y);
-      ctx.closePath();
-      break;
-    }
-    case "triangle": {
-      const top = y - r * 1.18;
-      const bottom = y + r * 0.82;
-      const wr = r * 1.12;
-      ctx.moveTo(x, top);
-      ctx.lineTo(x + wr, bottom);
-      ctx.lineTo(x - wr, bottom);
-      ctx.closePath();
-      break;
-    }
-    case "hexagon": {
-      for (let i = 0; i < 6; i += 1) {
-        const angle = Math.PI / 6 + (i * Math.PI) / 3;
-        const px = x + r * Math.cos(angle);
-        const py = y + r * Math.sin(angle);
-        if (i === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
-      break;
-    }
-  }
+  ctx.arc(x, y, r, 0, Math.PI * 2);
 }
 
 export function KnowledgeGraphVisualization({
@@ -295,11 +220,6 @@ export function KnowledgeGraphVisualization({
   const [legendOpen, setLegendOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoveredNodeId, setHoveredNodeId] = useState<number | null>(null);
-  const [spotlightType, setSpotlightType] = useState<string | null>(null);
-
-  // 核心视觉重心模式：单实验聚焦 vs 全课题星系总览
-  const [viewMode, setViewMode] = useState<"focus" | "all">("focus");
-  const [activeExperimentId, setActiveExperimentId] = useState<number | null>(null);
 
   // 图内即时搜索
   const [inGraphSearch, setInGraphSearch] = useState("");
@@ -352,9 +272,10 @@ export function KnowledgeGraphVisualization({
       const freshness = Number.isFinite(t) ? 0.15 + 0.85 * ((t - minT) / span) : 0.5;
 
       const isNote = e.entity_type === "note" || e.entity_type === "project";
+      // 节点尺寸平滑映射：实验笔记枢纽 18px，普通实体依据关联度 10~13px
       const radius = isNote
-        ? 21
-        : Math.max(11, Math.min(14, 10 + Math.sqrt(degree) * 1.0));
+        ? 18
+        : Math.max(9.5, Math.min(13.5, 9 + Math.sqrt(degree) * 0.9));
 
       return {
         id: e.id,
@@ -363,7 +284,7 @@ export function KnowledgeGraphVisualization({
         val: radius,
         degree,
         color: isNote ? "#6366f1" : getEntityColor(e.entity_type),
-        shape: isNote ? "square" : (ENTITY_SHAPES[e.entity_type] || "circle"),
+        shape: "circle",
         freshness,
         updatedAt: e.updated_at,
         radius,
@@ -393,27 +314,7 @@ export function KnowledgeGraphVisualization({
     };
   }, [entities, relations]);
 
-  // 默认自动选定第一个实验笔记
-  useEffect(() => {
-    if (activeExperimentId === null && noteEntities.length > 0) {
-      setActiveExperimentId(noteEntities[0].id);
-    }
-  }, [noteEntities, activeExperimentId]);
-
-  // 处于【单实验精读】模式时，精确计算当前实验及其直接关联实体集合
-  const focusEntityIds = useMemo(() => {
-    if (viewMode === "all" || activeExperimentId === null) {
-      return new Set<number>(nodes.map((n) => n.id));
-    }
-    const set = new Set<number>([activeExperimentId]);
-    relations.forEach((r) => {
-      if (r.source_entity_id === activeExperimentId) set.add(r.target_entity_id);
-      if (r.target_entity_id === activeExperimentId) set.add(r.source_entity_id);
-    });
-    return set;
-  }, [viewMode, activeExperimentId, nodes, relations]);
-
-  // 计算当前聚焦的核心实体（优先级：鼠标悬停 > 选中实体）
+  // 计算当前聚焦的核心实体（优先级：鼠标悬停 > 选中锁定的实体）
   const primaryFocusId = hoveredNodeId ?? selectedEntityId;
 
   // 计算一跳关联的高亮网络
@@ -439,7 +340,6 @@ export function KnowledgeGraphVisualization({
         const isOutgoing = r.source_entity_id === selectedEntityId;
         const neighborId = isOutgoing ? r.target_entity_id : r.source_entity_id;
         const neighbor = entityMap.get(neighborId);
-        const group = RELATION_GROUPS[r.relation_type] || { color: "#94a3b8", label: "其它" };
         return {
           id: r.id,
           relationType: r.relation_type,
@@ -450,24 +350,16 @@ export function KnowledgeGraphVisualization({
           neighborLabel: neighbor?.label || `实体 #${neighborId}`,
           neighborType: neighbor?.entity_type || "unknown",
           neighborColor: getEntityColor(neighbor?.entity_type || ""),
-          groupColor: group.color,
-          groupLabel: group.label,
         };
       });
-
-    const parentNoteIds = entityToNoteMap.get(selectedEntityId) || [];
-    const parentNotes = parentNoteIds
-      .map((id) => entityMap.get(id))
-      .filter(Boolean) as KgEntity[];
 
     return {
       node,
       connected,
-      parentNotes,
     };
-  }, [selectedEntityId, nodes, relations, entityMap, entityToNoteMap]);
+  }, [selectedEntityId, nodes, relations, entityMap]);
 
-  // 科学实验星系聚类物理引擎：实验围绕各自笔记聚簇，形成清晰引力场
+  // 科学实验星系聚类力场
   const configureGraph = useCallback(() => {
     const graph = graphRef.current;
     if (!graph) return;
@@ -519,25 +411,18 @@ export function KnowledgeGraphVisualization({
       );
     }
 
-    graph.d3Force("charge")?.strength(-320).distanceMax(500);
-    graph.d3Force("link")?.distance(75);
+    graph.d3Force("charge")?.strength(-300).distanceMax(480);
+    graph.d3Force("link")?.distance(72);
     graph.d3Force("center")?.strength(0.04);
 
     if (forceCollide) {
-      graph.d3Force("collide", forceCollide((n: any) => (n.radius || 12) + 16).iterations(2));
+      graph.d3Force("collide", forceCollide((n: any) => (n.radius || 11) + 14).iterations(2));
     }
   }, [noteEntities, entityToNoteMap, graphSize.width, graphSize.height]);
 
-  const fitGraph = useCallback(
-    (duration = 400) => {
-      if (viewMode === "focus" && activeExperimentId !== null) {
-        graphRef.current?.zoomToFit?.(duration, 70, (node: any) => focusEntityIds.has(node.id));
-      } else {
-        graphRef.current?.zoomToFit?.(duration, 56);
-      }
-    },
-    [viewMode, activeExperimentId, focusEntityIds]
-  );
+  const fitGraph = useCallback((duration = 400) => {
+    graphRef.current?.zoomToFit?.(duration, 56);
+  }, []);
 
   const handleEngineStop = useCallback(() => {
     if (!fitOnEngineStopRef.current) return;
@@ -626,10 +511,6 @@ export function KnowledgeGraphVisualization({
   }, [configureGraph, graphSize.width, graphSize.height, nodes.length, links.length]);
 
   useEffect(() => {
-    fitOnEngineStopRef.current = true;
-  }, [viewMode, activeExperimentId]);
-
-  useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (isFullscreen) setIsFullscreen(false);
@@ -640,172 +521,107 @@ export function KnowledgeGraphVisualization({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen, selectedEntityId, onEntitySelect]);
 
-  // 高保真聚光灯 Canvas 节点绘制
+  // 🌟 极简高雅 Canvas 节点绘制（借鉴 Obsidian / Neo4j 工业级设计）
   const paintNode = useCallback(
     (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
       const x = node.x;
       const y = node.y;
       if (!Number.isFinite(x) || !Number.isFinite(y)) return;
 
-      const r = node.radius || 12;
-      const isInSpotlight = !spotlightType || node.entityType === spotlightType;
-
       const hasActiveFocus = primaryFocusId !== null;
       const isInFocusNetwork = highlightedIds.has(node.id);
 
-      // 在聚焦单实验模式下，所有显示的实体均为焦点实体；
-      // 在全景星系模式下，悬停或选定时非关联网状实体骤降至 0.08 极低透明度
-      const dimmed = viewMode === "all" && ((!isInSpotlight) || (hasActiveFocus && !isInFocusNetwork));
-      const baseColor = dimmed ? "#64748b" : node.color;
+      // 🌟 用户核心优化需求 1：hover 聚焦时，只显示相关的，其他都不显示！
+      if (hasActiveFocus && !isInFocusNetwork) {
+        return;
+      }
+
+      const r = node.radius || 11;
       const isFocusCenter = node.id === primaryFocusId;
 
       ctx.save();
-      ctx.globalAlpha = dimmed ? 0.08 : 1.0;
 
-      // 1. 重心焦点外环：耀眼发光霓虹环
+      // 1. 焦点光晕环
       if (isFocusCenter) {
-        traceShapePath(ctx, node.shape, x, y, r + 7 / globalScale);
-        ctx.fillStyle = hexToRgba("#6366f1", 0.35);
+        ctx.beginPath();
+        ctx.arc(x, y, r + 5.5 / globalScale, 0, Math.PI * 2);
+        ctx.fillStyle = hexToRgba("#6366f1", 0.3);
         ctx.fill();
-        traceShapePath(ctx, node.shape, x, y, r + 3.5 / globalScale);
+
+        ctx.beginPath();
+        ctx.arc(x, y, r + 2.5 / globalScale, 0, Math.PI * 2);
         ctx.strokeStyle = "#818cf8";
-        ctx.lineWidth = 2.4 / globalScale;
+        ctx.lineWidth = 2.2 / globalScale;
         ctx.stroke();
-      } else if (isInFocusNetwork && hasActiveFocus && viewMode === "all") {
-        traceShapePath(ctx, node.shape, x, y, r + 2.5 / globalScale);
-        ctx.strokeStyle = hexToRgba(baseColor, 0.85);
+      } else if (hasActiveFocus && isInFocusNetwork) {
+        ctx.beginPath();
+        ctx.arc(x, y, r + 2 / globalScale, 0, Math.PI * 2);
+        ctx.strokeStyle = hexToRgba(node.color, 0.75);
         ctx.lineWidth = 1.6 / globalScale;
         ctx.stroke();
-      } else if (node.pinned) {
-        traceShapePath(ctx, node.shape, x, y, r + 2 / globalScale);
-        ctx.strokeStyle = "#f59e0b";
-        ctx.lineWidth = 1.5 / globalScale;
-        ctx.stroke();
       }
 
-      // 2. 节点底层玻璃器皿
-      traceShapePath(ctx, node.shape, x, y, r);
-      ctx.fillStyle = dimmed
-        ? "rgba(241, 245, 249, 0.15)"
-        : node.isNote
-        ? "rgba(49, 46, 129, 0.45)"
-        : hexToRgba(baseColor, 0.15);
-      ctx.fill();
-
-      // 3. 水波填充（弯月面起伏）
-      ctx.save();
-      traceShapePath(ctx, node.shape, x, y, r);
-      ctx.clip();
-
-      const freshness = Math.min(1, Math.max(0.08, node.freshness));
-      const waterLevel = y + r - 2 * r * freshness;
-      const waveAmp = Math.min(2.5, r * 0.1);
-      const phase = node.id * 1.7;
-      const startX = x - r * 1.25;
-      const endX = x + r * 1.25;
-      const midX = (startX + endX) / 2;
-      const cp1Y = waterLevel - Math.sin(phase) * waveAmp;
-      const cp2Y = waterLevel + Math.sin(phase) * waveAmp;
-
-      const grad = ctx.createLinearGradient(x, waterLevel, x, y + r * 1.15);
-      grad.addColorStop(0, hexToRgba(baseColor, dimmed ? 0.3 : 0.82));
-      grad.addColorStop(1, hexToRgba(baseColor, dimmed ? 0.45 : 0.98));
-
+      // 2. 🌟 用户核心优化需求 2：图标精简，纯粹干净的圆形几何节点，不塞杂乱文字/emoji
       ctx.beginPath();
-      ctx.moveTo(startX, y + r * 1.3);
-      ctx.lineTo(startX, waterLevel);
-      ctx.quadraticCurveTo(startX + (midX - startX) / 2, cp1Y, midX, waterLevel);
-      ctx.quadraticCurveTo(midX + (endX - midX) / 2, cp2Y, endX, waterLevel);
-      ctx.lineTo(endX, y + r * 1.3);
-      ctx.closePath();
-      ctx.fillStyle = grad;
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = node.color;
       ctx.fill();
 
-      if (!dimmed && freshness > 0.12) {
-        ctx.beginPath();
-        ctx.moveTo(startX, waterLevel);
-        ctx.quadraticCurveTo(startX + (midX - startX) / 2, cp1Y, midX, waterLevel);
-        ctx.quadraticCurveTo(midX + (endX - midX) / 2, cp2Y, endX, waterLevel);
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
-        ctx.lineWidth = Math.max(0.8, 1.1 / globalScale);
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      // 4. 外边框（实验笔记采用特别加粗与金色高亮，构成显著重心）
-      traceShapePath(ctx, node.shape, x, y, r);
-      ctx.strokeStyle = node.isNote
-        ? "#eab308"
-        : isFocusCenter
-        ? "#6366f1"
-        : node.pinned
+      // 节点边框
+      ctx.strokeStyle = node.pinned
         ? "#f59e0b"
-        : hexToRgba(baseColor, dimmed ? 0.25 : 0.92);
-      ctx.lineWidth = Math.max(1, (node.isNote ? 2.5 : isFocusCenter ? 2.0 : 1.3) / globalScale);
+        : node.isNote
+        ? "#c7d2fe"
+        : "rgba(255, 255, 255, 0.45)";
+      ctx.lineWidth = (node.pinned ? 2 : node.isNote ? 1.5 : 1) / globalScale;
       ctx.stroke();
 
-      // 5. 内部简写标志
-      ctx.font = `600 ${Math.max(7, Math.min(10, r * 0.72))}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
-      ctx.fillStyle = dimmed
-        ? "rgba(148, 163, 184, 0.4)"
-        : node.isNote
-        ? "#fef08a"
-        : "#ffffff";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      const badgeText = node.isNote ? "📝" : (kgEntityShortText[node.entityType] || node.name.slice(0, 1));
-      ctx.fillText(badgeText, x, y);
-
-      // 6. 语义标签：在单实验精读模式下始终清晰显示；在全景模式下智能聚焦
+      // 3. 语义标签展示：
+      // - 聚焦时：焦点节点与其相邻邻居均展示清晰标签
+      // - 全景态时：仅实验笔记展示标签，保持极简呼吸感
       const shouldDrawLabel =
-        labelMode === "all" ||
-        (labelMode === "smart" && (viewMode === "focus" || node.isNote || isFocusCenter || isInFocusNetwork)) ||
-        (labelMode === "smart" && globalScale >= 1.7);
+        hasActiveFocus
+          ? isInFocusNetwork
+          : (labelMode === "all" || (labelMode === "smart" && (node.isNote || globalScale >= 1.8)));
 
-      if (shouldDrawLabel && !dimmed) {
+      if (shouldDrawLabel) {
         const rawName = node.name || "";
-        const maxLen = isFocusCenter || node.isNote ? 28 : 13;
+        const maxLen = isFocusCenter || node.isNote ? 26 : 14;
         const displayName = rawName.length > maxLen ? `${rawName.slice(0, maxLen)}…` : rawName;
-        const typePrefix = node.isNote ? "📝 " : `[${kgEntityTypeText[node.entityType] || node.entityType}] `;
-        const fullLabel = `${typePrefix}${displayName}`;
+        const typeText = kgEntityTypeText[node.entityType] || node.entityType;
+        const labelText = isFocusCenter || node.isNote ? `${displayName} · ${typeText}` : displayName;
 
         const fontSize = Math.max(
           8.5,
           Math.min(11, (node.isNote ? 11 : 9.5) / Math.sqrt(Math.max(globalScale, 0.65)))
         );
-        ctx.font = `${node.isNote ? "600" : "500"} ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
-        const textMetrics = ctx.measureText(fullLabel);
+        ctx.font = `${node.isNote || isFocusCenter ? "600" : "500"} ${fontSize}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+        const textMetrics = ctx.measureText(labelText);
         const textWidth = textMetrics.width;
 
-        const pillHeight = fontSize + 5;
-        const pillWidth = textWidth + (node.isNote ? 14 : 10);
-        const pillY = y + r + 2.5 / globalScale;
+        const pillHeight = fontSize + 4;
+        const pillWidth = textWidth + 8;
+        const pillY = y + r + 3 / globalScale;
 
-        // 标签背景药丸
-        ctx.fillStyle = node.isNote
-          ? "rgba(30, 27, 75, 0.96)"
-          : isFocusCenter
+        // 半透明深色磨砂药丸
+        ctx.fillStyle = isFocusCenter
           ? "rgba(15, 23, 42, 0.95)"
+          : node.isNote
+          ? "rgba(30, 27, 75, 0.92)"
           : "rgba(15, 23, 42, 0.82)";
         ctx.beginPath();
-        ctx.roundRect(x - pillWidth / 2, pillY, pillWidth, pillHeight, 3.5);
+        ctx.roundRect(x - pillWidth / 2, pillY, pillWidth, pillHeight, 3);
         ctx.fill();
 
-        ctx.strokeStyle = node.isNote
-          ? "#eab308"
-          : isFocusCenter
-          ? "#818cf8"
-          : "rgba(255, 255, 255, 0.18)";
-        ctx.lineWidth = (node.isNote ? 1.2 : 0.8) / globalScale;
-        ctx.stroke();
-
-        ctx.fillStyle = node.isNote ? "#fef08a" : isFocusCenter ? "#ffffff" : "#e2e8f0";
-        ctx.fillText(fullLabel, x, pillY + pillHeight / 2);
+        ctx.fillStyle = isFocusCenter ? "#ffffff" : node.isNote ? "#e0e7ff" : "#f1f5f9";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(labelText, x, pillY + pillHeight / 2);
       }
 
       ctx.restore();
     },
-    [spotlightType, primaryFocusId, highlightedIds, labelMode, viewMode]
+    [primaryFocusId, highlightedIds, labelMode]
   );
 
   // 连线中点语义药丸标签
@@ -815,11 +631,13 @@ export function KnowledgeGraphVisualization({
       const target = link.target;
       if (!source || !target || !Number.isFinite(source.x) || !Number.isFinite(target.x)) return;
 
-      const isFocused =
-        primaryFocusId !== null &&
-        (source.id === primaryFocusId || target.id === primaryFocusId);
+      const sId = typeof source === "object" ? source.id : source;
+      const tId = typeof target === "object" ? target.id : target;
+      const isFocused = primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
 
-      if (!showLinkLabels && !isFocused && viewMode !== "focus") return;
+      // hover 聚焦时，仅在相连边上显示标签
+      if (primaryFocusId !== null && !isFocused) return;
+      if (!showLinkLabels && !isFocused) return;
 
       const mx = (source.x + target.x) / 2;
       const my = (source.y + target.y) / 2;
@@ -832,23 +650,28 @@ export function KnowledgeGraphVisualization({
       const ph = fontSize + 4;
 
       ctx.save();
-      ctx.fillStyle = isFocused ? "rgba(15, 23, 42, 0.94)" : "rgba(15, 23, 42, 0.75)";
+      ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
       ctx.beginPath();
       ctx.roundRect(mx - pw / 2, my - ph / 2, pw, ph, 3);
       ctx.fill();
 
-      ctx.strokeStyle = isFocused ? hexToRgba(link.color, 0.9) : "rgba(255, 255, 255, 0.14)";
+      ctx.strokeStyle = hexToRgba(link.color, 0.8);
       ctx.lineWidth = 0.8 / globalScale;
       ctx.stroke();
 
-      ctx.fillStyle = isFocused ? "#ffffff" : "#cbd5e1";
+      ctx.fillStyle = "#ffffff";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(label, mx, my);
       ctx.restore();
     },
-    [primaryFocusId, showLinkLabels, viewMode]
+    [primaryFocusId, showLinkLabels]
   );
+
+  const focusedNode = useMemo(() => {
+    if (primaryFocusId === null) return null;
+    return nodes.find((n) => n.id === primaryFocusId);
+  }, [primaryFocusId, nodes]);
 
   return (
     <div
@@ -859,59 +682,45 @@ export function KnowledgeGraphVisualization({
       }`}
     >
       <Card className="flex flex-1 flex-col overflow-hidden border-border/75 shadow-card bg-card">
-        {/* 顶栏模式切换与工具集 */}
-        <CardHeader className="flex-none border-b border-border/60 bg-muted/20 py-2.5 px-4">
-          <div className="flex flex-wrap items-center justify-between gap-2.5">
-            {/* 左侧：视图模式切换 */}
+        {/* 顶栏控制台 */}
+        <CardHeader className="flex-none border-b border-border/60 bg-muted/20 py-2 px-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            {/* 左侧：状态指示 */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center rounded-lg border border-border/80 bg-background/80 p-0.5 shadow-xs">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setViewMode("focus");
-                    if (activeExperimentId === null && noteEntities.length > 0) {
-                      setActiveExperimentId(noteEntities[0].id);
-                    }
-                    setTimeout(() => fitGraph(350), 100);
-                  }}
-                  className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
-                    viewMode === "focus"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  <FlaskConical className="h-3.5 w-3.5" />
-                  <span>单实验精读</span>
-                  <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 border-white/20">
-                    推荐
-                  </Badge>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setViewMode("all");
-                    setTimeout(() => fitGraph(350), 100);
-                  }}
-                  className={`flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
-                    viewMode === "all"
-                      ? "bg-primary text-primary-foreground shadow-xs"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  <Compass className="h-3.5 w-3.5" />
-                  <span>全课题星系</span>
-                  <span className="text-[10px] opacity-75 tabular-nums">({nodes.length})</span>
-                </button>
+              <div className="flex items-center gap-1.5 rounded-lg border border-border/70 bg-background/80 px-2.5 py-1 text-xs">
+                {focusedNode ? (
+                  <>
+                    <Sparkles className="h-3.5 w-3.5 text-indigo-500 animate-pulse" />
+                    <span className="font-medium text-foreground truncate max-w-48">
+                      已聚焦: {focusedNode.name}
+                    </span>
+                    <Badge variant="secondary" className="text-[10px] py-0 px-1 font-normal">
+                      {highlightedIds.size - 1} 个关联实体
+                    </Badge>
+                  </>
+                ) : (
+                  <>
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="text-muted-foreground">全景图谱 ({nodes.length} 实体)</span>
+                    <span className="text-[10px] text-muted-foreground/80">· 鼠标悬停聚焦</span>
+                  </>
+                )}
               </div>
 
-              <Badge variant="secondary" className="hidden sm:inline-flex text-[11px] font-normal">
-                {viewMode === "focus"
-                  ? `聚焦当前实验 · ${focusEntityIds.size} 个关键实体`
-                  : `全课题总览 · ${nodes.length} 个实体 · 鼠标悬停聚焦`}
-              </Badge>
+              {selectedEntityId !== null && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => onEntitySelect(null)}
+                  className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                >
+                  <X className="mr-1 h-3 w-3" />
+                  释放锁定
+                </Button>
+              )}
             </div>
 
-            {/* 中间：图内即时搜索框 */}
+            {/* 中间：图内即时搜索 */}
             <div className="flex items-center gap-1.5 max-w-xs flex-1">
               <div className="relative w-full">
                 <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
@@ -921,7 +730,7 @@ export function KnowledgeGraphVisualization({
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleInGraphSearch();
                   }}
-                  placeholder="图内快速定位实体..."
+                  placeholder="搜索实体快速定位..."
                   className="h-7 pl-8 pr-7 text-xs bg-background/90"
                 />
                 {inGraphSearch && (
@@ -958,7 +767,7 @@ export function KnowledgeGraphVisualization({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="text-xs">
-                  <DropdownMenuLabel>实体标签显示</DropdownMenuLabel>
+                  <DropdownMenuLabel>实体标签策略</DropdownMenuLabel>
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "smart"}
                     onCheckedChange={() => setLabelMode("smart")}
@@ -969,13 +778,13 @@ export function KnowledgeGraphVisualization({
                     checked={labelMode === "all"}
                     onCheckedChange={() => setLabelMode("all")}
                   >
-                    始终显示全部
+                    全景常显全部
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "none"}
                     onCheckedChange={() => setLabelMode("none")}
                   >
-                    极简无标签
+                    极简仅悬停显
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuCheckboxItem
@@ -990,11 +799,14 @@ export function KnowledgeGraphVisualization({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => fitGraph(400)}
+                onClick={() => {
+                  onEntitySelect(null);
+                  fitGraph(400);
+                }}
                 className="h-7 px-2 text-xs"
-                title="重置相机视角"
+                title="重置全景视角"
               >
-                <Focus className="h-3.5 w-3.5" />
+                <RotateCcw className="h-3.5 w-3.5" />
               </Button>
 
               <Button
@@ -1010,30 +822,42 @@ export function KnowledgeGraphVisualization({
           </div>
         </CardHeader>
 
-        {/* 单实验选择带 */}
+        {/* 顶部实验快捷穿梭胶囊 */}
         {noteEntities.length > 0 && (
-          <div className="flex items-center gap-1.5 overflow-x-auto border-b border-border/50 bg-muted/10 px-4 py-2 text-xs no-scrollbar">
-            <span className="flex-none text-[11px] font-medium text-muted-foreground mr-1">实验选择:</span>
+          <div className="flex items-center gap-1.5 overflow-x-auto border-b border-border/50 bg-muted/10 px-4 py-1.5 text-xs no-scrollbar">
+            <span className="flex-none text-[11px] font-medium text-muted-foreground mr-1">实验直达:</span>
+            <button
+              type="button"
+              onClick={() => {
+                onEntitySelect(null);
+                fitGraph(350);
+              }}
+              className={`flex-none rounded-md px-2.5 py-0.5 text-xs transition-colors ${
+                selectedEntityId === null
+                  ? "bg-primary text-primary-foreground font-medium shadow-xs"
+                  : "bg-background/80 text-muted-foreground hover:text-foreground border border-border/70"
+              }`}
+            >
+              全部总览 ({nodes.length})
+            </button>
             {noteEntities.map((note, idx) => {
-              const isActive = viewMode === "focus" && activeExperimentId === note.id;
+              const isSelected = selectedEntityId === note.id;
               return (
                 <button
                   key={note.id}
                   type="button"
                   onClick={() => {
-                    setViewMode("focus");
-                    setActiveExperimentId(note.id);
                     onEntitySelect(note.id);
-                    setTimeout(() => fitGraph(350), 100);
+                    focusOnNode(note.id);
                   }}
                   title={note.name}
-                  className={`flex-none truncate max-w-64 rounded-md px-2.5 py-1 text-xs transition-all ${
-                    isActive
-                      ? "bg-primary text-primary-foreground font-medium shadow-xs ring-2 ring-primary/30"
-                      : "bg-background/80 text-foreground/80 hover:bg-primary/10 border border-border/70"
+                  className={`flex-none truncate max-w-56 rounded-md px-2.5 py-0.5 text-xs transition-colors ${
+                    isSelected
+                      ? "bg-indigo-600 text-white font-medium shadow-xs"
+                      : "bg-background/80 text-foreground/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border border-border/70"
                   }`}
                 >
-                  📝 实验 #{idx + 1}: {note.name.split("：")[0] || note.name}
+                  实验 #{idx + 1}: {note.name.split("：")[0] || note.name}
                 </button>
               );
             })}
@@ -1053,16 +877,8 @@ export function KnowledgeGraphVisualization({
               graphData={{ nodes, links }}
               width={graphSize.width}
               height={graphSize.height}
-              nodeVisibility={(node: any) => focusEntityIds.has(node.id)}
-              linkVisibility={(link: any) => {
-                const sId = typeof link.source === "object" ? link.source.id : link.source;
-                const tId = typeof link.target === "object" ? link.target.id : link.target;
-                return focusEntityIds.has(sId) && focusEntityIds.has(tId);
-              }}
               nodeLabel={(node: any) =>
-                `${kgEntityTypeText[node.entityType] || node.entityType}: ${node.name} · 置信度 ${(
-                  node.freshness * 100
-                ).toFixed(0)}% · 关联度 ${node.degree}`
+                `${kgEntityTypeText[node.entityType] || node.entityType}: ${node.name} · 关联度 ${node.degree}`
               }
               nodeVal={(node: any) => node.val}
               nodeCanvasObject={paintNode}
@@ -1072,33 +888,42 @@ export function KnowledgeGraphVisualization({
                 `${link.label}（置信度 ${(link.confidence || 0).toFixed(2)}）`
               }
               linkColor={(link: any) => {
-                const sourceId = typeof link.source === "object" ? link.source.id : link.source;
-                const targetId = typeof link.target === "object" ? link.target.id : link.target;
+                const sId = typeof link.source === "object" ? link.source.id : link.source;
+                const tId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
+                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
 
-                if (viewMode === "all" && primaryFocusId !== null) {
-                  return isLinkedToFocus ? link.color : "rgba(148, 163, 184, 0.04)";
+                // 🌟 用户需求 1：hover 聚焦时，非相关连线完全不显示！
+                if (primaryFocusId !== null) {
+                  return isLinkedToFocus ? link.color : "transparent";
                 }
-                return hexToRgba(link.color, isLinkedToFocus ? 0.9 : 0.45);
+                return hexToRgba(link.color, 0.25);
               }}
               linkWidth={(link: any) => {
-                const sourceId = typeof link.source === "object" ? link.source.id : link.source;
-                const targetId = typeof link.target === "object" ? link.target.id : link.target;
+                const sId = typeof link.source === "object" ? link.source.id : link.source;
+                const tId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
-                return isLinkedToFocus ? 2.6 : 1.0;
+                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+
+                if (primaryFocusId !== null) {
+                  return isLinkedToFocus ? 2.2 : 0;
+                }
+                return 0.75;
               }}
               linkDirectionalArrowLength={(link: any) => {
-                const sourceId = typeof link.source === "object" ? link.source.id : link.source;
-                const targetId = typeof link.target === "object" ? link.target.id : link.target;
+                const sId = typeof link.source === "object" ? link.source.id : link.source;
+                const tId = typeof link.target === "object" ? link.target.id : link.target;
                 const isLinkedToFocus =
-                  primaryFocusId !== null && (sourceId === primaryFocusId || targetId === primaryFocusId);
-                return isLinkedToFocus ? 6.5 : 4.5;
+                  primaryFocusId !== null && (sId === primaryFocusId || tId === primaryFocusId);
+
+                if (primaryFocusId !== null) {
+                  return isLinkedToFocus ? 6.5 : 0;
+                }
+                return 3.5;
               }}
               linkDirectionalArrowRelPos={0.88}
               linkDirectionalArrowColor={(link: any) => link.color}
-              linkCurvature={0.08}
+              linkCurvature={0.06}
               onNodeHover={(node: any) => setHoveredNodeId(node ? node.id : null)}
               onNodeClick={(node: any) => {
                 const now = Date.now();
@@ -1130,7 +955,6 @@ export function KnowledgeGraphVisualization({
               }}
               onBackgroundClick={() => {
                 onEntitySelect(null);
-                setSpotlightType(null);
               }}
               enableZoomInteraction={true}
               enablePanInteraction={true}
@@ -1138,8 +962,8 @@ export function KnowledgeGraphVisualization({
               onEngineStop={handleEngineStop}
               minZoom={0.15}
               maxZoom={3.5}
-              cooldownTicks={160}
-              cooldownTime={2500}
+              cooldownTicks={150}
+              cooldownTime={2000}
               d3AlphaDecay={0.04}
               d3VelocityDecay={0.35}
               warmupTicks={60}
@@ -1149,7 +973,6 @@ export function KnowledgeGraphVisualization({
           {/* 右侧毛玻璃全息实体检视抽屉 */}
           {selectedDetails && (
             <div className="absolute top-3 right-3 bottom-3 w-80 z-20 flex flex-col rounded-xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-md transition-all animate-in fade-in slide-in-from-right-4 duration-200">
-              {/* 头部 */}
               <div className="flex items-start justify-between gap-2 border-b border-border/60 pb-3">
                 <div className="min-w-0">
                   <Badge
@@ -1177,7 +1000,6 @@ export function KnowledgeGraphVisualization({
                 </Button>
               </div>
 
-              {/* 核心指标 */}
               <div className="grid grid-cols-2 gap-2 py-3 border-b border-border/50 text-xs">
                 <div className="rounded-md bg-muted/40 p-2">
                   <p className="text-[10px] text-muted-foreground">拓扑关联度</p>
@@ -1186,14 +1008,13 @@ export function KnowledgeGraphVisualization({
                   </p>
                 </div>
                 <div className="rounded-md bg-muted/40 p-2">
-                  <p className="text-[10px] text-muted-foreground">证据新鲜度</p>
+                  <p className="text-[10px] text-muted-foreground">置信度</p>
                   <p className="text-base font-bold text-foreground">
                     {(selectedDetails.node.freshness * 100).toFixed(0)}%
                   </p>
                 </div>
               </div>
 
-              {/* 关联实体清单 */}
               <div className="flex-1 overflow-y-auto py-2 space-y-1.5 min-h-0">
                 <p className="text-[11px] font-medium text-muted-foreground">
                   直接关联实体 ({selectedDetails.connected.length})
@@ -1221,7 +1042,6 @@ export function KnowledgeGraphVisualization({
                 ))}
               </div>
 
-              {/* 操作按钮区 */}
               <div className="pt-3 border-t border-border/60 flex items-center gap-2">
                 <Button
                   size="sm"
@@ -1257,7 +1077,7 @@ export function KnowledgeGraphVisualization({
             </div>
           )}
 
-          {/* 底部折叠式「五通道语义映射图例」小胶囊 */}
+          {/* 底部折叠式「图例说明」 */}
           <div className="absolute bottom-3 left-3 z-10">
             {!legendOpen ? (
               <button
@@ -1266,14 +1086,14 @@ export function KnowledgeGraphVisualization({
                 className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-background/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-subtle backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
               >
                 <MapIcon className="h-3.5 w-3.5 text-primary" />
-                <span>五通道图例</span>
+                <span>实体色板图例</span>
               </button>
             ) : (
-              <div className="w-80 rounded-xl border border-border/80 bg-background/95 p-3.5 shadow-card backdrop-blur-md transition-all">
+              <div className="w-72 rounded-xl border border-border/80 bg-background/95 p-3.5 shadow-card backdrop-blur-md transition-all">
                 <div className="mb-2 flex items-center justify-between border-b border-border/50 pb-2">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
                     <Layers className="h-4 w-4 text-primary" />
-                    <span>五通道科学可视化映射体系</span>
+                    <span>科研知识图谱图例</span>
                   </div>
                   <button
                     type="button"
@@ -1284,60 +1104,19 @@ export function KnowledgeGraphVisualization({
                   </button>
                 </div>
 
-                <div className="space-y-2 text-[11px] text-muted-foreground">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">1. 颜色通道</span>
-                    <span>实体类别（试剂橙、仪器灰、靶标绿）</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">2. 尺寸通道</span>
-                    <span>拓扑关联度（连接数越大半径越舒展）</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">3. 几何通道</span>
-                    <span>实体角色（方块笔记、菱形分子、六边生物）</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">4. 水波通道</span>
-                    <span>证据时效（液面高度与起伏反映更新时间）</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-foreground">5. 动态通道</span>
-                    <span>箭头指向与定向脉冲粒子流动</span>
-                  </div>
-                </div>
-
-                {/* 类别聚光灯快速过滤器 */}
-                <div className="mt-3 border-t border-border/50 pt-2">
-                  <div className="mb-1 text-[10px] text-muted-foreground">类别高亮隔离（点击聚焦）:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {Object.keys(ENTITY_COLORS)
-                      .slice(0, 8)
-                      .map((t) => (
-                        <button
-                          key={t}
-                          type="button"
-                          onClick={() => setSpotlightType(spotlightType === t ? null : t)}
-                          className={`inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] transition-colors ${
-                            spotlightType === t
-                              ? "bg-primary text-primary-foreground font-semibold"
-                              : "bg-muted text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
-                          <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{ backgroundColor: ENTITY_COLORS[t] }}
-                          />
-                          <span>{kgEntityTypeText[t] || t}</span>
-                        </button>
-                      ))}
-                  </div>
+                <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                  {Object.entries(ENTITY_COLORS).slice(0, 10).map(([type, color]) => (
+                    <div key={type} className="flex items-center gap-1.5">
+                      <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                      <span className="text-muted-foreground truncate">{kgEntityTypeText[type] || type}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
 
-          {/* 画布悬浮控制器 */}
+          {/* 画布悬浮缩放控制器 */}
           <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1 rounded-lg border border-border/80 bg-background/90 p-1 shadow-subtle backdrop-blur-md">
             <Button
               variant="ghost"
@@ -1361,8 +1140,11 @@ export function KnowledgeGraphVisualization({
               variant="ghost"
               size="icon"
               className="h-7 w-7"
-              onClick={() => fitGraph(400)}
-              title="适应画布"
+              onClick={() => {
+                onEntitySelect(null);
+                fitGraph(400);
+              }}
+              title="重置全景"
             >
               <RotateCcw className="h-3.5 w-3.5" />
             </Button>
