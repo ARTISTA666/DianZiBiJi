@@ -1544,6 +1544,75 @@ export interface paths {
         patch: operations["patch_project_knowledge_blueprint_edge_projects__project_id__kg_blueprint_edges__edge_id__patch"];
         trace?: never;
     };
+    "/projects/{project_id}/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Project Alerts */
+        get: operations["list_project_alerts_projects__project_id__alerts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/alerts/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Evaluate Project Alerts */
+        post: operations["evaluate_project_alerts_projects__project_id__alerts_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/alerts/{alert_id}/acknowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Acknowledge Project Alert */
+        post: operations["acknowledge_project_alert_projects__project_id__alerts__alert_id__acknowledge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/alerts/thresholds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Alert Thresholds */
+        get: operations["get_project_alert_thresholds_projects__project_id__alerts_thresholds_get"];
+        put?: never;
+        /** Upsert Alert Threshold */
+        post: operations["upsert_project_alert_threshold_projects__project_id__alerts_thresholds_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3313,6 +3382,93 @@ export interface components {
             updated?: boolean;
             /** Id */
             id?: number;
+        };
+        /** AlertThresholdRead */
+        AlertThresholdRead: {
+            /** Id */
+            id?: number;
+            /** Project Id */
+            project_id?: number;
+            /** Metric */
+            metric?: string;
+            /** Warn Threshold */
+            warn_threshold?: number;
+            /** Critical Threshold */
+            critical_threshold?: number;
+            /** Enabled */
+            enabled?: boolean;
+            /** Updated By */
+            updated_by?: number;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at?: string;
+        };
+        /** AlertThresholdUpsertRequest */
+        AlertThresholdUpsertRequest: {
+            /** Metric */
+            metric: string;
+            /** Warn Threshold */
+            warn_threshold: number;
+            /** Critical Threshold */
+            critical_threshold: number;
+            /** Enabled */
+            enabled: boolean;
+        };
+        /** AlertMetricSnapshot */
+        AlertMetricSnapshot: {
+            /** Metric */
+            metric?: string;
+            /** Value */
+            value?: number;
+            /** Level */
+            level?: string;
+        };
+        /** AlertEvaluationSummary */
+        AlertEvaluationSummary: {
+            /**
+             * Evaluated At
+             * Format: date-time
+             */
+            evaluated_at?: string;
+            /** Metrics */
+            metrics?: components["schemas"]["AlertMetricSnapshot"][];
+        };
+        /** ProjectAlertRead */
+        ProjectAlertRead: {
+            /** Id */
+            id?: number;
+            /** Project Id */
+            project_id?: number;
+            /** Metric */
+            metric?: string;
+            /** Metric Value */
+            metric_value?: number;
+            /** Level */
+            level?: string;
+            /** Status */
+            status?: string;
+            /** Detail */
+            detail?: string;
+            acknowledged_by?: number | null;
+            acknowledged_at?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at?: string;
+        };
+        /** ProjectAlertInbox */
+        ProjectAlertInbox: {
+            /** Alerts */
+            alerts?: components["schemas"]["ProjectAlertRead"][];
+            /** Thresholds */
+            thresholds?: components["schemas"]["AlertThresholdRead"][];
+        };
+        /** AlertAcknowledgeRequest */
+        AlertAcknowledgeRequest: {
+            note?: string | null;
         };
     };
     responses: never;
@@ -6671,6 +6827,168 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BlueprintMutationResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_project_alerts_projects__project_id__alerts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProjectAlertInbox"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_project_alerts_projects__project_id__alerts_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlertEvaluationSummary"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    acknowledge_project_alert_projects__project_id__alerts__alert_id__acknowledge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+                alert_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AlertAcknowledgeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_project_alert_thresholds_projects__project_id__alerts_thresholds_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlertThresholdRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upsert_project_alert_threshold_projects__project_id__alerts_thresholds_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlertThresholdUpsertRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlertThresholdRead"];
                 };
             };
             /** @description Validation Error */

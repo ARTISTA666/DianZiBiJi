@@ -10,6 +10,7 @@ mod maturity;
 mod mcp;
 mod notes;
 mod ocr;
+mod project_alert;
 mod projects;
 mod rag;
 mod search;
@@ -124,6 +125,7 @@ pub fn build_app(state: AppState) -> Router {
         .merge(rag::router())
         .merge(groups::router())
         .merge(kg_blueprint::router())
+        .merge(project_alert::router())
         .merge(knowledge_graph::router())
         .merge(maturity::router())
         .merge(templates::router())
@@ -551,7 +553,7 @@ mod tests {
             .filter_map(Value::as_object)
             .map(|path| path.len())
             .sum::<usize>();
-        assert_eq!(operations, 103);
+        assert_eq!(operations, 112);
         assert!(body["paths"]["/api/mcp"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions/{session_id}/turns"]["post"].is_object());
