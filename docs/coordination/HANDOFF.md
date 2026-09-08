@@ -58,3 +58,11 @@
 | DS-01.md | DeepSeek | 已提交，待验收 |
 | DS-02（agent-work/research/DS-02） | DeepSeek | 进行中，勿打扰 |
 | README.md 索引 | ZCode | 随 ZC-03 同步更新，待验收 |
+
+## 7. 目录重构补记（2026-09-08；本节由 DeepSeek Harness 代记，第 1-6 节仍为 ZCode 原文）
+
+- 用户授权文档整理轮：仓库目录已重构 —— `scripts/` 按功能域分 7 子目录（gates/freeze/experiments/data/render/ops/audit），`backend/app` 重命名为 `backend/legacy/app`。
+- 第 2 节提到的 `scripts/run_innovation_ablation.py` 现位于 `scripts/experiments/`（内容 0 改动，纯 rename）；2026-09-08 前的旧扁平路径一律按 `docs/README.md` 第三节《路径迁移对照表》解析。
+- 原顶层 `CONVERSATION_MIGRATIONS/` 已移至本目录 `handoff/` 子目录。
+- 任务历史与后续任务登记统一走 `docs/任务台账.md`（T-020/T-021/T-022 已记录本轮）。
+

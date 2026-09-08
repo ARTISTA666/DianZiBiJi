@@ -70,6 +70,14 @@ scripts/ops/run-system-e2e.sh
 
 CI（`.github/workflows/ci.yml`）以相同分组运行 backend-python、backend-rust、frontend、system-e2e 四个 job；本地至少跑通与改动对应的分组再提交。
 
+## 文档沉淀与任务编排约定（2026-09-08 起）
+
+- **导航唯一入口**：`docs/README.md`。新增或移动 `docs/` 下任何 md，必须在该文档登记；未登记视为未完成。
+- **状态头**：新建文档首行加 `> status: current|superseded|draft|historical|frozen-evidence` 与 `> owner:`；被取代的文档保留原文并加 `superseded-by:` 指针，不删除。
+- **任务台账**：`docs/任务台账.md`。开工先登记（ID/执行方/任务/范围），收工必更新证据链接；跨 Agent 产物"完成 ≠ 验收"，验收状态单独标。
+- **命名**：一次性运行结果带日期（`<主题>-YYYY-MM-DD.md`）；长期协议用版本号（`*-protocol-v1.md`）；同一主题只允许一篇 `current`。
+- **协议与结果分离**：`docs/experiments/` 中协议文档可改（新版本另起 `v2`），带日期运行结果与 `*-latest.json` 是当时快照，不得因代码重构回改；旧路径解析见 `docs/README.md` 第三节对照表。
+- **阶段收口即归档**：每个 round / 每个创新点验收后立即归档过期文档（`git mv` 进 `archive/` + 在 `archive/README.md` 记原因），不攒批。
 ## 并线协作约定（多 Agent 并行推进论文）
 
 本仓库由多个 AI agent 并线推进论文（当前：证据线 ZCode、文字线 GPT），遵守以下规则：
