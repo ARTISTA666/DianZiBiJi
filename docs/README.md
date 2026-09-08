@@ -46,7 +46,7 @@
 | `scripts/import_gse*.py`、`prepare_*`、`populate_*.py` | `scripts/data/…` |
 | `scripts/generate_*_chart.py`、`generate_thesis_diagrams.py`、`render_*.py`、`summarize_*.py`、`update_rag_evidence_openapi.py`、`verify_refs.py`、`revise_si_docx.py` | `scripts/render/…` |
 | `scripts/audit_*.py` | `scripts/audit/…` |
-| `scripts/load_smoke.py`、`soak_smoke.py`、`restore_drill.py`、`backup-system.sh`、`restore-system.sh`、`docker-compose-with-revision.sh`、`run-rust-db-tests.sh`、`run-system-e2e.sh`、`start-macos.sh`、`check-macos.sh` | `scripts/ops/…` |
+| `scripts/load_smoke.py`、`soak_smoke.py`、`restore_drill.py`（旧位置写法，指这些文件本身） | `scripts/ops/…` |
 | `evaluation-lab/` | `tools/evaluation-lab/` |
 | `CONVERSATION_MIGRATIONS/` | `docs/coordination/handoff/` |
 
