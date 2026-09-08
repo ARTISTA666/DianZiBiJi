@@ -40,7 +40,7 @@ if [ "$allow_dirty" -eq 0 ]; then
     [ -n "$status_line" ] || continue
     path="${status_line#?? }"
     case "$path" in
-      data/real/*|agent-work/analysis/*|agent-work/blind-review/*|agent-work/freeze/*|agent-work/paper-material/*|agent-work/question-sets/*|agent-work/reports/*|agent-work/runs/*)
+      data/real/*|agent-work/*)
         ;;
       *)
         disallowed_untracked=1

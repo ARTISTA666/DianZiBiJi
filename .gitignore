@@ -16,11 +16,12 @@ npm-debug.log*
 # QA 测试产物（不入库）
 test-results/
 
-# IDE
+# IDE & AI tooling
 .idea/
 .vscode/
 .qoder/
 .reasonix/
+.zcode/
 *.swp
 *.swo
 
@@ -37,6 +38,7 @@ docker-data/
 # Build
 dist/
 build/
+_build/
 target/
 tmp/
 output/
