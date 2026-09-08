@@ -25,11 +25,12 @@
 
 **共享边界**：`docs/experiments/innovation-ablation-2026-09-07.{md,json}`、`scripts/run_innovation_ablation.py` 归 ZCode；JSON 与脚本冻结不改。其他 agent 报告互不修改。
 
-## 3. 版本不确定项（ZC-04 更新 2026-09-08）
+## 3. 版本不确定项（ZC-05 轮更新 2026-09-08 晚）
 
-- 主工作区 HEAD `cc4eb8a`；**运行栈 /ready revision 已于 2026-09-08 重建为 `cc4eb8a`**（此前"运行行为 97ffd43、revision 标签 4606189"历史快照作废）。部署用 `--allow-dirty`（development 模式，tracked 源码 clean、仅 docs M 状态）。
-- **工作副本源码级一致 ≠ 部署镜像内容已证**的保留原则不变，但本轮 revision 标签与 HEAD 一致，版本归因风险已消除。
-- 桌面旧演示视频（09-05 录制）对应版本仍未核实；**新演示材料以 `docs/innovation/创新点试用展示-2026-09-08.md` 及其 screenshots/ 为准**。
+- 主工作区 HEAD `8092dae`；**运行栈 /ready revision `8092dae`（2026-09-08 晚重建）**——含 AG-04 六项前端修复（d828ef3，AG 线自行提交）、B2 建议采纳留痕后端（8494edc，隔离测试库 274 项全绿，生产烟测三连通过）、ZC-05 补证报告。此前全部 revision 快照作废。
+- `agent_suggestion_feedback` 表已在运行库生效（migration 0017 + runtime DDL）；**前端采纳/忽略按钮未接线**（AG 线候选工单，ZC-05 §3-3）。
+- 桌面旧演示视频（09-05 录制）对应版本仍未核实；**新演示材料以 `docs/innovation/创新点试用展示-2026-09-08.md` 及其 screenshots/ 为准（截图为 cc4eb8a 版，AG-04 修复后界面有改进）**。
+- 仓库结构变更（第 7 节）后续注意：compose 脚本现位于 `scripts/ops/docker-compose-with-revision.sh`。
 
 ## 4. 账号配额对账锚（共享账号，无精确 token 换算）
 
@@ -56,8 +57,11 @@
 | `docs/innovation/创新点试用展示-2026-09-08.md` + screenshots/ | ZCode | 新建，待验收 |
 | `docs/innovation/创新点前端可用性评估-v1.md` | ZCode | 新建，可转派 AG 第四轮，待验收 |
 | AG-01.md / AG-02.md | Antigravity | 已提交，待验收；第三轮文档修正进行中 |
+| **AG-04（六项前端修复，d828ef3）** | Antigravity | **已提交（09-08），待验收**；npm build 通过 |
 | DS-01.md | DeepSeek | 已提交，待验收 |
-| DS-02（agent-work/research/DS-02） | DeepSeek | 进行中，勿打扰 |
+| DS-02（agent-work/research/DS-02） | DeepSeek | 已完成（含给各端行动卡），待验收 |
+| **DS-03（防御表+双时态设计+措辞建议）** | DeepSeek | **进行中（09-08 接单开工，勿打扰）** |
+| **B2 后端（8494edc）+ 运行栈重建（8092dae）** | ZCode | 已完成：端点烟测三连通过；前端接线待 AG |
 | README.md 索引 | ZCode | 随 ZC-03 同步更新，待验收 |
 
 ## 7. 目录重构补记（2026-09-08；本节由 DeepSeek Harness 代记，第 1-6 节仍为 ZCode 原文）
