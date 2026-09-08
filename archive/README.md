@@ -15,9 +15,10 @@
 | audit-snapshots/ | 1 | 论文主张-证据状态矩阵(2026-08-13 快照) | 已被三轮优化与新证据(含 3 项安全性质测试)超越 |
 | deprecated-scripts/ | 9 | 围绕旧初稿的参考文献核验 + md→docx 工具链(audit/check/prune/restore/expand_references、chapter_stats、check_thesis、chk、md_to_docx) | 目标文件 `docs/毕业论文初稿.md` 已归档 |
 | rendered/ | 13MB | 旧版论文的评审页渲染图 | 基于过期版本,仅供参考 |
+| advisor-package-2026-06/ | 18MB(21 文件) | 2026-06-13 交付导师的完整审阅材料包(意见对照表×3/参考文献核验×4/成稿清单/图表清单/旧版论文 docx·pdf/experiments·user-guide-assets 子集) | 6 月冻结的历史交付物,项目此后大改;凭证价值保留,活跃区不再维护(2026-09-08 迁入,git mv 保留历史) |
 
 ## 注意事项
 
 - 若需对现行重构稿重新执行参考文献核验或转 docx:把 `deprecated-scripts/` 中对应脚本的输入路径改为 `docs/毕业论文重构稿.md`,移回 `scripts/` 并先在旧数据上验证输出。
-- `docs/论文导师审阅材料包/`(目录版)仍在 `docs/`,未归档;其内容与 `advisor-snapshots/论文导师审阅材料包.zip` 等价。
+- 2026-09-08 起新增 `advisor-package-2026-06/`(原 `docs/论文导师审阅材料包/` 目录版整体迁入,git mv 保留历史;与 `advisor-snapshots/论文导师审阅材料包.zip` 等价)。
 - `data/real/`(129MB 数据集)与 `agent-work/` 实验工作区(44MB DRAFT)不属于本归档,保持本地不入库。
