@@ -100,7 +100,7 @@ def guard(s: str) -> str:
     s = re.sub(r"^```latex$", "```{=latex}", s, flags=re.M)
     def _img(m):
         path = m.group(0)
-        return path if "assets/screenshots/" in path else (
+        return path if ("assets/screenshots/" in path or "assets/innovation-screenshots/" in path) else (
             r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}")
     s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}", _img, s)
     s = s.replace("\\\\[S]", "\\\\{}[S]").replace("\\\\[G]", "\\\\{}[G]")
