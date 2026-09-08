@@ -52,7 +52,7 @@
 | ZC-02.md | ZCode | 已交，待验收 |
 | [ZC-03.md](ZC-03.md)（最小补证方案表） | ZCode | 已交，待验收 |
 | **ZC-04.md（走查+试用展示+前端评估+DS对齐）** | ZCode | **2026-09-08 新建，待验收** |
-| **ZC-05.md（零调用补证轮）+ `docs/experiments/innovation-supplement-2026-09-08.md`** | ZCode | **2026-09-08 新建，待验收**（D1 重算 4/4 一致、C1 追溯 1/15 vs 3/15、①-A 留痕降级、①-B B4 不可行；含阈值单位缺陷发现，详见 ZC-05 §3） |
+| **ZC-05.md（零调用补证轮）+ `docs/experiments/innovation-supplement-2026-09-08.md` + `docs/innovation/补证素材论文挂接表-2026-09-08.md`** | ZCode | **2026-09-08 新建，待验收**（D1 重算 4/4 一致、C1 追溯 1/15 vs 3/15、①-A 留痕降级、①-B B4 不可行；含阈值单位缺陷发现与 Q-11/Q-12 登记，详见 ZC-05 §3；挂接表供文字线取材） |
 | `docs/innovation/创新点试用展示-2026-09-08.md` + screenshots/ | ZCode | 新建，待验收 |
 | `docs/innovation/创新点前端可用性评估-v1.md` | ZCode | 新建，可转派 AG 第四轮，待验收 |
 | AG-01.md / AG-02.md | Antigravity | 已提交，待验收；第三轮文档修正进行中 |
