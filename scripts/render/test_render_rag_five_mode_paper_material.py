@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -681,10 +682,19 @@ def test_recompute_citation_failures_rejects_question_text_drift(tmp_path: Path)
         MODULE.recompute_citation_failure_rows(csv_path, questions_path)
 
 
-def test_checked_in_material_matches_current_renderer_output() -> None:
+def test_checked_in_material_matches_current_renderer_output(monkeypatch) -> None:
     audit_path = ROOT / "docs/experiments/rag-experiment-5-internal-bundle-audit-2026-08-12.json"
     validation_path = ROOT / "data/real/experiment-5/internal-five-mode-validation.json"
     material_path = ROOT / "docs/experiments/rag-experiment-5-internal-descriptive-results-v1.md"
+    material_text = material_path.read_text(encoding="utf-8")
+
+    match = re.search(r"当前分析 Git revision：`([0-9a-f]+)`；当前工作树 dirty：`(True|False)`", material_text)
+    if match:
+        monkeypatch.setattr(
+            MODULE,
+            "git_snapshot",
+            lambda _root: {"revision": match.group(1), "dirty": match.group(2) == "True"},
+        )
 
     rendered = MODULE.render(
         json.loads(audit_path.read_text(encoding="utf-8")),
@@ -693,7 +703,7 @@ def test_checked_in_material_matches_current_renderer_output() -> None:
         validation_path,
     )
 
-    assert rendered == material_path.read_text(encoding="utf-8")
+    assert rendered == material_text
 
 
 def test_material_rejects_incomplete_audit() -> None:
