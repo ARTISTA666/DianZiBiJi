@@ -307,7 +307,7 @@ mod tests {
     #[test]
     fn test_shared_security_vectors_match_rust_implementation() {
         let vectors: serde_json::Value =
-            serde_json::from_str(include_str!("../tests/security_vectors.json")).unwrap();
+            serde_json::from_str(include_str!("../legacy/tests/security_vectors.json")).unwrap();
 
         for vector in vectors["password_vectors"].as_array().unwrap() {
             let name = vector["name"].as_str().unwrap();

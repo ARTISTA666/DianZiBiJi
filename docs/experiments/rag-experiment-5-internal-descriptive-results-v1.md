@@ -33,7 +33,7 @@
 - 检索参数：`{"chunk_overlap": 120, "chunk_size": 700, "collection_retrieval_top_k": 12, "graph_min_score": 1.0, "graph_top_k": 10, "retrieval_top_k": 6, "vector_candidate_k": 30}`。
 - Prompt 版本：`{"bm25_rag": "bm25-rag-v1", "kg_enhanced_rag": "rag-v4-local-hybrid-kg-numeric", "project_rag": "rag-v4-local-hybrid-kg-numeric", "pure_llm": "pure-llm-v1", "structured_query": "structured-query-v1"}`。
 - 语料快照哈希：`2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9`；执行计划哈希：`d750782a3cdf7794a8ed1621376c68a16322bb2a54ae5cadaa11d74a7a2fadaa`。
-- 应用 revision：`unversioned`；当前分析 Git revision：`8d43777a14390c1c396a820cef0a8617a9c34692`；当前工作树 dirty：`True`；当前分析 Python：`Python 3.12.14`；平台：`macOS-26.6-arm64-arm-64bit`。
+- 应用 revision：`unversioned`；当前分析 Git revision：`0482ab964dcf630cfd5a46b57d7bd3c45cdeb02d`；当前工作树 dirty：`True`；当前分析 Python：`Python 3.12.14`；平台：`macOS-26.6-arm64-arm-64bit`。
 
 `app_revision=unversioned` 且当前工作树 dirty，因此这些参数记录只能说明内部批次的配置快照，不能构成确认性版本归档。
 
