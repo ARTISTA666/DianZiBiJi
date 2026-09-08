@@ -7,7 +7,7 @@ Production backend for the Electronic Lab Notebook system, implemented in Rust 1
 ```bash
 # Run via Docker Compose (recommended)
 cp .env.example .env
-bash scripts/docker-compose-with-revision.sh up -d --build
+bash scripts/ops/docker-compose-with-revision.sh up -d --build
 
 # Health check
 curl http://localhost:8001/health
@@ -36,7 +36,7 @@ cargo fmt --all --check
 cargo clippy --locked --all-targets --all-features -- -D warnings
 
 # Run tests (requires PostgreSQL with pgvector)
-./scripts/run-rust-db-tests.sh
+./scripts/ops/run-rust-db-tests.sh
 
 # Or run tests directly
 cargo test --locked --all-targets --all-features -- --test-threads=1

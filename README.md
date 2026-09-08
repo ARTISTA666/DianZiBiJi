@@ -8,7 +8,7 @@
 
 后端已完整迁移到 Rust 1.88 + Axum，认证、权限、项目、实验笔记、文件/OCR、检索、知识图谱、RAG、智能体与成熟度门禁均由单个 Rust 进程直接执行，不再启动或代理 Python/FastAPI 服务。接口路径、请求/响应结构、PostgreSQL 数据库和前端保持不变；响应头 `x-backend-runtime: axum` 可用于确认运行时。
 
-工程协作采用分工明确的多 Agent 组织与独立发布复审，分层、所有权、RACI 和门禁见 [工程 Agent 组织、分类与发布责任制](docs/engineering-agent-organization.md)。
+工程协作采用分工明确的多 Agent 组织与独立发布复审，分层、所有权、RACI 和门禁见 [工程 Agent 组织、分类与发布责任制（已归档）](archive/design-superseded/engineering-agent-organization.md)。
 
 ## AI 架构
 
@@ -118,13 +118,13 @@ bash scripts/ops/docker-compose-with-revision.sh up -d --build
 创建一致性系统备份（执行时短暂停止前后端写入）：
 
 ```bash
-scripts/backup-system.sh
+scripts/ops/backup-system.sh
 ```
 
 备份同时包含 PostgreSQL 自定义格式 dump、上传文件归档、发布版本与 SHA-256 清单。恢复会替换当前数据，因此必须显式确认；脚本会先生成一份恢复前回滚包，并在恢复后等待 `/ready`：
 
 ```bash
-scripts/restore-system.sh backups/eln-YYYYMMDDTHHMMSSZ --confirm-replace
+scripts/ops/restore-system.sh backups/eln-YYYYMMDDTHHMMSSZ --confirm-replace
 ```
 
 详细操作、验证记录和未覆盖风险见 [docs/operations/backup-restore.md](docs/operations/backup-restore.md)。该手册同时定义加密、异地复制、保留周期、RPO/RTO 和恢复抽检要求，可用以下命令预检：
@@ -148,7 +148,7 @@ backend/.venv/bin/python scripts/gates/check_backup_policy.py \
 
 模拟数据脚本不再生成 AI 问答、评价或智能体结果，论文统计应只使用真实接口运行产生的数据。
 
-详细配置与复现方法见 [docs/ai-rag-setup.md](docs/ai-rag-setup.md)。
+详细配置与复现方法见 [docs/ai-rag-setup.md](archive/design-superseded/ai-rag-setup.md)。
 人工试评与正式确认性评审的启动条件见 [docs/experiments/human-review-readiness-2026-07-16.md](docs/experiments/human-review-readiness-2026-07-16.md)。
 
 ## GSE111619 真实数据导入
@@ -156,13 +156,13 @@ backend/.venv/bin/python scripts/gates/check_backup_policy.py \
 先检查本地文件、样本映射和 GEO 压缩包哈希，不写入系统：
 
 ```bash
-backend/.venv/bin/python scripts/import_gse111619_via_api.py --dry-run
+backend/.venv/bin/python scripts/data/import_gse111619_via_api.py --dry-run
 ```
 
 系统启动后，通过正式 API 创建项目、提交和审核 4 条样本笔记、上传 6 份来源文件、构建图谱并同步知识库：
 
 ```bash
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/import_gse111619_via_api.py --verify-query
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/data/import_gse111619_via_api.py --verify-query
 ```
 
 导入过程可重复执行；同名同哈希文件会复用，同名但内容不同的文件会被拒绝。验证报告写入 `data/real/GSE111619/system_import_report.json`。
@@ -170,8 +170,8 @@ ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/import_gse111619_via_api.
 执行 20 个固定问题、普通 RAG 与图谱增强 RAG 的正式成对实验：
 
 ```bash
-backend/.venv/bin/python scripts/run_gse111619_experiment.py --dry-run
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/run_gse111619_experiment.py
+backend/.venv/bin/python scripts/experiments/run_gse111619_experiment.py --dry-run
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/experiments/run_gse111619_experiment.py
 ```
 
 正式结果写入 `data/real/GSE111619/gse111619_paired_experiment.csv` 和 `gse111619_paired_experiment_report.json`。`validation_report.*` 仅为独立 SQLite/测试向量后端的离线预检，不得作为部署系统效果引用。
@@ -179,8 +179,8 @@ ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/run_gse111619_experiment.
 run #3 使用只有 12 个向量块的汇总语料，两种模式均达到 56/56 事实覆盖，属于语料饱和诊断，不能用于证明图谱增益。为避免这一问题，系统另建了只索引 GEO 原始资料的内部冻结评测项目：
 
 ```bash
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/import_gse111619_via_api.py --benchmark
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/run_gse111619_experiment.py --benchmark
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/data/import_gse111619_via_api.py --benchmark
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/experiments/run_gse111619_experiment.py --benchmark
 ```
 
 内部评测 run #4 使用 984 个原始语料块和 12 道项目内部冻结的问题。普通 RAG 命中 9/32 个预设事实，图谱增强 RAG 命中 25/32 个。这是自动文本匹配结果，不是答案准确率。题目和规则由项目开发方编写，因此该结果只用于开发诊断，不作为论文的最终效果证据。完整账目和限制见 `data/real/GSE111619/gse111619_kg_holdout_analysis.md`。
@@ -226,7 +226,7 @@ PostgreSQL 16 + pgvector 测试库，设置 `TEST_DATABASE_URL`，串行运行 R
 使用本机 `.env` 中的真实 DeepSeek 密钥执行不落盘提示词/回答的最小回归：
 
 ```bash
-backend/.venv/bin/python scripts/validate_real_llm.py
+backend/.venv/bin/python scripts/experiments/validate_real_llm.py
 ```
 
 该脚本只覆盖指令遵循、无证据拒答和单一证据引用三条微型用例，不能替代冻结语料回归。最近一次结果与限制见 [docs/experiments/real-llm-regression-2026-07-16.md](docs/experiments/real-llm-regression-2026-07-16.md)。
@@ -264,7 +264,7 @@ backend/.venv/bin/python scripts/gates/check_backup_policy.py \
 backend/.venv/bin/python scripts/gates/check_reverse_proxy_config.py \
   --output docs/system-evidence/reverse-proxy-latest.json
 
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/load_smoke.py \
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/ops/load_smoke.py \
   --api-base http://127.0.0.1:8001 \
   --username admin \
   --password admin123 \
@@ -280,7 +280,7 @@ backend/.venv/bin/python scripts/gates/check_monitoring_alerts.py \
   --max-in-flight 50 \
   --output docs/system-evidence/monitoring-alerts-latest.json
 
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/soak_smoke.py \
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/ops/soak_smoke.py \
   --api-base http://127.0.0.1:8001 \
   --username admin \
   --password admin123 \
@@ -291,13 +291,13 @@ ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/soak_smoke.py \
   --max-p95-ms 2000 \
   --output docs/system-evidence/soak-smoke-latest.json
 
-scripts/backup-system.sh /private/tmp/eln-maturity-backup-$(date -u +%Y%m%dT%H%M%SZ)
+scripts/ops/backup-system.sh /private/tmp/eln-maturity-backup-$(date -u +%Y%m%dT%H%M%SZ)
 
 BACKUP_DIR=$(ls -td /private/tmp/eln-maturity-backup-* | head -1)
-backend/.venv/bin/python scripts/restore_drill.py "$BACKUP_DIR" \
+backend/.venv/bin/python scripts/ops/restore_drill.py "$BACKUP_DIR" \
   --output docs/system-evidence/restore-drill-latest.json
 
-backend/.venv/bin/python scripts/export_validation_evidence.py \
+backend/.venv/bin/python scripts/freeze/export_validation_evidence.py \
   --retrieval-report data/real/GSE111619/main-retrieval-evaluation/report.json \
   --playwright-results output/playwright/results.json \
   --backend-url http://127.0.0.1:8001/health \
@@ -318,17 +318,17 @@ backend/.venv/bin/python scripts/export_validation_evidence.py \
   --reverse-proxy-report docs/system-evidence/reverse-proxy-latest.json \
   --output-dir docs/system-evidence
 
-ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/validate_agent_probe.py \
+ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/experiments/validate_agent_probe.py \
   --api-base http://127.0.0.1:8001 \
   --username admin \
   --password admin123 \
   --report data/real/GSE111619/main_v8_agent_probe_report.json
 
-backend/.venv/bin/python scripts/freeze_system_evidence.py --replace
-backend/.venv/bin/python scripts/freeze_system_evidence.py \
+backend/.venv/bin/python scripts/freeze/freeze_system_evidence.py --replace
+backend/.venv/bin/python scripts/freeze/freeze_system_evidence.py \
   --verify output/release-evidence/maturity-evidence-manifest.json
 
-backend/.venv/bin/python scripts/release_maturity_gate.py \
+backend/.venv/bin/python scripts/gates/release_maturity_gate.py \
   --retrieval-report data/real/GSE111619/main-retrieval-evaluation/report.json \
   --experiment-report data/real/GSE111619/main_v8_kg_holdout_experiment_report.json \
   --agent-report data/real/GSE111619/main_v8_agent_probe_report.json \
@@ -340,14 +340,14 @@ backend/.venv/bin/python scripts/release_maturity_gate.py \
 
 证据包 SHA-256 清单写入已被 Git 忽略的 `output/release-evidence/maturity-evidence-manifest.json`；它只允许从 clean checkout 冻结，并绑定当前 Git commit、`backend/Cargo.lock` 与 `frontend/package-lock.json`。门禁会重新校验这些来源信息、证据文件和当前 checkout，随后把同一 `source_revision` 贯穿内部门禁、最终门禁和确认性评审完成门禁；运行时 `/maturity/status` 还会要求该 revision 与编译时 `ELN_BUILD_REVISION` 一致。门禁结果写入 `docs/experiments/main-maturity-gate-latest.json` 和 `docs/experiments/main-maturity-gate-latest.md`。只要门禁失败，就不启动人工评审；优先修复报告中的失败项。即使门禁通过，仍需独立人工评审、外部冻结语料和更长时间 soak 后才能声称最终成熟。
 
-最终成熟门禁用于判断是否可以启动论文确认性人工评审；它不是受控试运行的唯一上线门槛。若目标是先收集真实用户反馈，可使用 `scripts/controlled_beta_gate.py`，但生产配置、TLS、备份、运行时健康检查和内部门禁仍必须通过：
+最终成熟门禁用于判断是否可以启动论文确认性人工评审；它不是受控试运行的唯一上线门槛。若目标是先收集真实用户反馈，可使用 `scripts/gates/controlled_beta_gate.py`，但生产配置、TLS、备份、运行时健康检查和内部门禁仍必须通过：
 
 ```bash
-backend/.venv/bin/python scripts/freeze_final_maturity_evidence.py --replace
-backend/.venv/bin/python scripts/freeze_final_maturity_evidence.py \
+backend/.venv/bin/python scripts/freeze/freeze_final_maturity_evidence.py --replace
+backend/.venv/bin/python scripts/freeze/freeze_final_maturity_evidence.py \
   --verify docs/experiments/final-maturity-evidence-manifest.json
 
-backend/.venv/bin/python scripts/final_maturity_gate.py
+backend/.venv/bin/python scripts/gates/final_maturity_gate.py
 ```
 
 它要求内部门禁通过、`docs/system-evidence/production-config-latest.json` 与 `validation-results.json` 内嵌生产配置快照均为 `passed`，且 env 文件 SHA-256、关键项清单和结构化生产检查 `checks` 完全一致并全部通过；还要求外部冻结包通过、经 `scripts/gates/check_long_soak_report.py` 校验的长时 soak 证据通过、经 `scripts/gates/check_tls_deployment.py` 生成的真实 TLS 部署证据通过、经 `scripts/gates/check_offsite_backup_evidence.py` 校验的异地加密备份证据通过，并且最终证据 SHA-256 manifest 验证通过。当前缺少这些外部/生产证据时，该门禁应当失败，并把阻塞项写入 `docs/experiments/final-maturity-gate-latest.md`。这条门禁仍用于论文确认性人工评审和正式人工质量声明；受控试运行策略见 [docs/operations/controlled-beta-launch.md](docs/operations/controlled-beta-launch.md)。
@@ -359,7 +359,7 @@ backend/.venv/bin/python scripts/final_maturity_gate.py
 正式确认性人工评审启动前，还必须校验外部冻结包：
 
 ```bash
-backend/.venv/bin/python scripts/validate_human_review_freeze.py \
+backend/.venv/bin/python scripts/experiments/validate_human_review_freeze.py \
   docs/experiments/confirmatory-human-review-freeze.json \
   --root .
 ```
@@ -369,11 +369,11 @@ backend/.venv/bin/python scripts/validate_human_review_freeze.py \
 确认性人工评审完成后，发表任何人工准确率、可追溯率或质量分前，还必须通过完成门禁：
 
 ```bash
-backend/.venv/bin/python scripts/freeze_confirmatory_review_evidence.py --replace
-backend/.venv/bin/python scripts/freeze_confirmatory_review_evidence.py \
+backend/.venv/bin/python scripts/freeze/freeze_confirmatory_review_evidence.py --replace
+backend/.venv/bin/python scripts/freeze/freeze_confirmatory_review_evidence.py \
   --verify docs/experiments/confirmatory-review-evidence-manifest.json
 
-backend/.venv/bin/python scripts/confirmatory_review_completion_gate.py
+backend/.venv/bin/python scripts/gates/confirmatory_review_completion_gate.py
 ```
 
 该门禁首先要求 `final-maturity-gate-latest.json` 已经 PASS，随后要求冻结包仍可验证、导出的正式评审 CSV 存在、每个“问题—方法”都有两名评价人的 method-masked 评分、导出 `question_index` 集合完全等于冻结 `question_index` 集合、导出方法集合完全等于冻结方法集合、导出评价人 ID 完全等于冻结评价人的 `user_id`，导出条目数等于冻结问题数 × 方法数；正式 CSV 还必须包含一致的 `review_batch_id`（`R` + 12 位大写十六进制）、`export_protocol=confirmatory_human_review_v1` 和匹配当前最终成熟门禁文件的 `final_maturity_gate_sha256`，且评审证据 SHA-256 manifest 覆盖最终成熟门禁、冻结包和导出 CSV 并验证通过。当前最终成熟门禁失败、缺少正式冻结包、正式评审导出或评审证据 manifest 时，该门禁应当失败。
