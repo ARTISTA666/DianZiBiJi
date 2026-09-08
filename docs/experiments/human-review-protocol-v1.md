@@ -59,7 +59,7 @@
 系统管理员在两名评价者都完成后导出实验 CSV，再运行：
 
 ```bash
-python scripts/summarize_system_reviews.py \
+python scripts/render/summarize_system_reviews.py \
   --export docs/experiments/rag-experiment-5.csv \
   --expected-reviewers 2 \
   --output docs/experiments/rag-experiment-5-human-review-summary.json

@@ -25,12 +25,12 @@ Thesis claims about the implemented system must use the latter two artifact grou
 - Fingerprint: `54e4e477ddb927e252f5988ce1b4ec73ee68f05f04947b13795408074c26ccf2`
 - Sample accessions: GSM3035185, GSM3035186, GSM3035187, GSM3035188
 - Gene rows: 25369
-- Script: `../../../scripts/validate_gse111619.py`
+- Script: `../../../scripts/experiments/validate_gse111619.py`
 
 Run from the repository root with:
 
 ```bash
-backend/.venv/bin/python scripts/validate_gse111619.py
+backend/.venv/bin/python scripts/experiments/validate_gse111619.py
 ```
 
 The first full run may download the 90 MB `BAAI/bge-small-zh-v1.5` embedding model into `model-cache/`.

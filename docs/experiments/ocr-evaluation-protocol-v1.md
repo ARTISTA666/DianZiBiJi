@@ -68,7 +68,7 @@
 评价清单表头见 `ocr-evaluation-manifest-template.csv`。运行命令：
 
 ```bash
-python scripts/evaluate_ocr.py \
+python scripts/experiments/evaluate_ocr.py \
   --manifest data/real/smithsonian_tainter/ocr_manifest.csv \
   --output data/real/smithsonian_tainter/ocr_evaluation_report.json
 ```

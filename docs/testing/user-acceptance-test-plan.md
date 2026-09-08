@@ -1,5 +1,8 @@
 # 用户级验收测试项目
 
+> status: current
+> owner: QA
+
 ## 目的与边界
 
 本项目验证科研人员是否能在接近真实课题组协作的条件下完成工作，而不以接口成功、单组件渲染或预置演示数据替代用户体验。测试对象是“智能电子实验笔记系统”的生产构建与隔离数据栈。
@@ -31,7 +34,7 @@
 
 ```bash
 cd /Users/yusong/Downloads/new/full-system
-scripts/run-system-e2e.sh
+scripts/ops/run-system-e2e.sh
 ```
 
 单独调试用户旅程时：

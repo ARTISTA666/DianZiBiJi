@@ -3,7 +3,7 @@
 
 必须使用独立 venv 运行（系统 python3 受 PEP 668 限制，且依赖不在系统环境）：
 
-    /Users/yusong/.venvs/ragas/bin/python scripts/run_ragas_evaluation.py [--smoke N]
+    /Users/yusong/.venvs/ragas/bin/python scripts/experiments/run_ragas_evaluation.py [--smoke N]
 
 judge 模型：deepseek-v4-flash（DeepSeek OpenAI 兼容接口），密钥从仓库根目录
 .env 的 DEEPSEEK_API_KEY 读取，脚本不会打印密钥。

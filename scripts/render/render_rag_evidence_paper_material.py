@@ -201,7 +201,7 @@ def render(
 
 ## 输入材料指纹
 
-下列文件共同定义本附录的证据版本。SHA-256 只用于绑定引用的具体字节，不代表外部冻结、人工金标准或代码 revision；生成前应由 `scripts/check_paper_material_freshness.py` 重新核对。
+下列文件共同定义本附录的证据版本。SHA-256 只用于绑定引用的具体字节，不代表外部冻结、人工金标准或代码 revision；生成前应由 `scripts/gates/check_paper_material_freshness.py` 重新核对。
 
 | 材料 | 路径 | SHA-256 |
 | --- | --- | --- |

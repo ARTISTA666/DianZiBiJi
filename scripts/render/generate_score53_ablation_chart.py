@@ -2,7 +2,7 @@
 
 图 7-3:式(5-3) 系数消融的排序稳定性。数据源为
 docs/experiments/kg-score53-coefficient-ablation-2026-09-04.json(2026-09-04 批次)。
-风格与 scripts/generate_kg_sensitivity_chart.py(图 7-2)保持一致。
+风格与 scripts/render/generate_kg_sensitivity_chart.py(图 7-2)保持一致。
 """
 
 from __future__ import annotations

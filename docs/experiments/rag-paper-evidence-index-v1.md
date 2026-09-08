@@ -39,17 +39,17 @@
 ### 协议与验证工具
 
 - `docs/experiments/rag-evidence-package-protocol-v1.md`：证据包字段、状态语义、失败分母、案例来源和归档边界。
-- `scripts/check_rag_experiment_evidence.py`：校验 schema、执行计划、哈希、状态、案例计数、失败摘要和 `query_log_id` 来源。
-- `scripts/test_check_rag_experiment_evidence.py`：覆盖非终态、终态计数、计划漂移、失败映射、日志来源边界，以及对答案引用标记、来源/图谱数组边界和 `citation_audit` 字段的独立重算；其中 `passed` 还复现生产端证据类别覆盖和关键事实段落同段引用规则，拒绝真值或假值漂移。
-- `scripts/audit_rag_csv_consistency.py`：对历史 CSV 与规则化评价表做标准库离线对账，检查案例分母、问题—模式配对、唯一日志 ID、来源/图谱 JSON、回退、错误行和人工评价字段填充情况。
-- `scripts/audit_rag_five_mode_bundle.py`：对实验 5 内部五方法批次做报告—CSV—题集—运行参数—冻结清单交叉审计，并区分结构一致性、严格引用一致性和论文可用性门禁。
+- `scripts/gates/check_rag_experiment_evidence.py`：校验 schema、执行计划、哈希、状态、案例计数、失败摘要和 `query_log_id` 来源。
+- `scripts/gates/test_check_rag_experiment_evidence.py`：覆盖非终态、终态计数、计划漂移、失败映射、日志来源边界，以及对答案引用标记、来源/图谱数组边界和 `citation_audit` 字段的独立重算；其中 `passed` 还复现生产端证据类别覆盖和关键事实段落同段引用规则，拒绝真值或假值漂移。
+- `scripts/audit/audit_rag_csv_consistency.py`：对历史 CSV 与规则化评价表做标准库离线对账，检查案例分母、问题—模式配对、唯一日志 ID、来源/图谱 JSON、回退、错误行和人工评价字段填充情况。
+- `scripts/audit/audit_rag_five_mode_bundle.py`：对实验 5 内部五方法批次做报告—CSV—题集—运行参数—冻结清单交叉审计，并区分结构一致性、严格引用一致性和论文可用性门禁。
 - `docs/experiments/rag-experiment-5-preregistration.md`：确认性实验的题集、五方法、重复、指标、失败归因和盲评预注册要求；当前状态仍为待执行。
 
 当前 Rust 端的 `GET /rag/experiments/{run_id}/evidence.json` 已通过路由级回归：导出包包含 `rag-evidence-package-v1`、完整的重复/随机化协议字段、案例分母、唯一 `query_log_id`、逐案例 citation audit，并保留未落库失败。实验创建入口现在会在题目 trim 后拒绝重复题目，使生产运行域与归档检查器的唯一题集约束一致；同一执行序号已有落库失败日志时，导出器不会再次从 `summary.errors` 补入重复案例。新增的 `questions_sha256`、`corpus_snapshot_hash` 和 `rag_index_version` 将运行绑定到题集以及生产检索实际使用的已批准/已同步/当前索引版本文档块；检查器会复算题集哈希，并要求数据集依赖模式提供语料快照哈希。执行器领取队列后、且每个后续案例开始前，会复核这些输入绑定及嵌入/生成模型；隔离数据库回归证明语料哈希漂移会把运行置为 `failed` 并记录运行级 fatal error，而不是产出 completed 结果。新增的 `failure_scope`/`failure_code` 进一步把 `input_binding_drift` 等运行级故障与 `query_error` 等案例级失败机器可读地区分，检查器拒绝范围错配和未知代码，不再依赖错误文本推断。原始 evidence 端点还复用了 `require_unblinded_access`：管理员可下载，独立评审员访问返回 `403`，评审员仍可访问去标识的盲评 API；该隔离数据库回归防止证据导出绕过方法隐藏。端点对 `queued`/`running` 和未知状态返回 `409`，与离线检查器的非终态/未知状态拒绝一致；`interrupted` 保留未执行分母并按部分包披露。OpenAPI 路径现在显式引用 `RagEvidencePackage`，并暴露稳定的实验绑定字段、失败枚举和摘要 fatal error；前端类型由 `npm run generate:api` 幂等生成，证据扩展对象保持可扩展。上述是工程契约证据，不改变当前内部批次缺少外部冻结题集、版本 revision、独立盲评和确认性 v1 证据包的结论。
 
 本轮进一步将逐案例检索参数纳入归档门禁：有 `query_log_id` 的案例必须保留嵌入模型、索引版本、`graph_schema_version`、检索策略、普通/集合 top-k、向量候选数、图谱 top-k、分块大小/重叠和两个最低相关度阈值；图谱版本必须与顶层实验绑定逐字一致，同一证据包内这些稳定参数不得漂移。生产执行器也会在运行开始/恢复和每个后续案例前复核图谱 schema 版本，漂移时以 `input_binding_drift` 运行级失败关闭，避免队列跨版本继续产出案例。`RagEvidenceRetrievalConfig` 已进入 OpenAPI，前端类型由生成脚本同步。`check_rag_experiment_evidence.py` 的输出新增 `statistics.rag-evidence-statistics-v1`，从答案、证据数组和案例遥测独立重算状态/失败分层、来源/图谱对象数、引用计数、按方法时延中位数/P95和运行参数快照；它不读取可篡改的 `citation_audit` 计数字段，也不把结果解释为人工准确率、引用正确性或显著性证据。该统计输出可作为论文附录的可重生成描述性材料，但正式效果结论仍需外部冻结题集、金标准、独立双人盲评与确认性运行包。
 
-为避免统计输出与论文材料再次分叉，新增 `scripts/render_rag_evidence_paper_material.py` 作为唯一的 v1 描述性附录渲染入口。它只接受通过 `check_rag_experiment_evidence.py` 的 `passed=true` 结果，并从同一 `cases[]` 再次重算 `rag-evidence-statistics-v1`；输入 schema、检查状态或统计任一漂移即失败关闭。生成内容限定为分母、失败代码、证据对象、按方法时延、引用标记重算和运行参数绑定，并明确不证明人工准确率、引用正确性、显著性检验或方法优越性。当前仓库仍无可通过 v1 的确认性运行包，因此本轮只提交渲染器、测试和协议，不生成虚假的论文结果附件。
+为避免统计输出与论文材料再次分叉，新增 `scripts/render/render_rag_evidence_paper_material.py` 作为唯一的 v1 描述性附录渲染入口。它只接受通过 `check_rag_experiment_evidence.py` 的 `passed=true` 结果，并从同一 `cases[]` 再次重算 `rag-evidence-statistics-v1`；输入 schema、检查状态或统计任一漂移即失败关闭。生成内容限定为分母、失败代码、证据对象、按方法时延、引用标记重算和运行参数绑定，并明确不证明人工准确率、引用正确性、显著性检验或方法优越性。当前仓库仍无可通过 v1 的确认性运行包，因此本轮只提交渲染器、测试和协议，不生成虚假的论文结果附件。
 
 该渲染器同时生成按 `execution_order` 排序的失败案例逐项清单，保留题目序号、方法、重复编号、`query_log_id`、失败范围/代码、来源与图谱证据数量及原始错误文本，包含未落库失败。清单用于论文失败案例复核和分母审计；原始错误不等于因果解释，证据对象数量不等于检索相关性或答案正确性。
 
@@ -63,7 +63,7 @@
 
 该重算门禁还通过临时篡改报告字段的回归测试：模式 `hit_facts` 或配对时延被修改时，审计结果会明确失败并列出漂移字段。由此可区分“原始数据与报告一致”与“报告数字被事后修改后仍可通过”，为论文材料提供结果完整性审计证据；它不等价于代码版本、输入数据或人工标注的独立确认。
 
-论文可引用的内部描述性汇总由 `scripts/render_rag_five_mode_paper_material.py` 从上述审计产物自动生成至 `docs/experiments/rag-experiment-5-internal-descriptive-results-v1.md`。该材料固定写入 `paper_ready=false`、严格引用失败、统计验证警告和允许/禁止表述，避免手工抄录内部数字时越过证据边界；若审计 schema、五模式汇总或四组配对比较缺失，生成器会失败关闭。
+论文可引用的内部描述性汇总由 `scripts/render/render_rag_five_mode_paper_material.py` 从上述审计产物自动生成至 `docs/experiments/rag-experiment-5-internal-descriptive-results-v1.md`。该材料固定写入 `paper_ready=false`、严格引用失败、统计验证警告和允许/禁止表述，避免手工抄录内部数字时越过证据边界；若审计 schema、五模式汇总或四组配对比较缺失，生成器会失败关闭。
 
 该材料同时生成“门禁失败摘要”，按检查名稳定排序列出所有未通过检查的严重级别、实际值和期望值。摘要列采用有限深度、确定性排序以便论文阅读，完整 JSON 列保留原始值供机器复核；渲染器要求顶层 `checks` 为非空 JSON 数组，并对非对象检查项、非布尔 `passed`、空检查名、空严重级别和重复检查名失败关闭，避免摘要本身产生歧义。正文“证据链门禁”另外显式呈现 `retrieval_gap_summary_valid`；若审计项缺失或类型不是布尔值，渲染器失败关闭，防止 JSON 层的结构门禁在论文材料层被静默遗漏。当前摘要直接展示 `app_revision=unversioned`、引用审计重算不一致、输入冻结清单失败、单项目/12 题规模、人工评审为空和缺少 `rag-evidence-package-v1` 等阻塞，避免只写一个 `paper_ready=false` 而让读者无法定位原因。该摘要是证据状态解释，不是失败原因的因果证明，也不能把门禁失败反向解释为方法效果。
 
@@ -89,7 +89,7 @@
 
 渲染器还单独输出“引用审计报告—重算差异”表：逐字段列出报告摘要值与从原始 CSV 重算值，包含全局范围判定和按方法的非法标记计数等差异。该表避免读者只能从完整 JSON 中发现“报告—重算”漂移；它是报告完整性与失败定位证据，不是引用内容正确性、来源支持性或方法效果证据。若 `reported_audit_mismatch` 与差异数组不一致，或差异项缺少字段、重算值和报告值，渲染失败关闭。
 
-归档回归还要求当前审计 JSON 与验证 JSON 的重渲染结果逐字节等于已保存 Markdown；生成器将审计/验证文件和正文中的引用统一写成仓库根目录相对路径，并拒绝根目录外输入。`scripts/test_render_rag_five_mode_paper_material.py` 已对真实材料执行该断言及越界输入回归。这样输入指纹门禁之外，正文的表格、限制和允许/禁止表述若被手工改写也会被发现；重渲染一致只证明生成链未漂移，不提升 `paper_ready=false` 的论文结论等级。
+归档回归还要求当前审计 JSON 与验证 JSON 的重渲染结果逐字节等于已保存 Markdown；生成器将审计/验证文件和正文中的引用统一写成仓库根目录相对路径，并拒绝根目录外输入。`scripts/render/test_render_rag_five_mode_paper_material.py` 已对真实材料执行该断言及越界输入回归。这样输入指纹门禁之外，正文的表格、限制和允许/禁止表述若被手工改写也会被发现；重渲染一致只证明生成链未漂移，不提升 `paper_ready=false` 的论文结论等级。
 
 该材料还强制带入验证记录的 `CAUTION` 总体置信级别、11/11 统计谬误扫描、按题目聚类的 post-run bootstrap 区间、重复稳定性和未作多重比较校正的限制；缺失警告或完整谬误扫描时生成失败关闭。这样论文材料不会只保留有利的点估计，而会同步保留不确定性和分析时序。
 
@@ -97,7 +97,7 @@
 
 材料进一步绑定 3 个分析脚本（实验包审计器、材料生成器、统计验证器）的 SHA-256，并原样呈现方法、重复次数、随机种子、模型、温度、最大 Token、检索 top-k、图谱阈值、语料快照哈希和执行计划哈希。它同时标注 `app_revision=unversioned`、当前工作树 dirty 和分析 Python 版本；这些记录支持内部复核，但不能冒充确认性版本归档。
 
-归档前还应运行 `scripts/check_paper_material_freshness.py`，对描述性 Markdown 中的 SHA-256 表逐项重算输入文件。该检查器对材料越界、缺失指纹章节、空表、格式错误表行、缺失输入、越界路径、格式错误摘要、重复材料名和摘要漂移失败关闭，并输出带有结构化 `reason` 的 `paper-material-freshness-v1` JSON；其 `material` 为相对校验根目录的 POSIX 路径，`root` 固定为 `"."`，不把机器绝对路径写入归档。本轮对实验 5 描述性材料核验 11/11 输入通过，其中包含审计器与渲染器共享的 retrieval 字段契约脚本。它只证明材料未脱离所列输入版本，不证明输入本身具备外部有效性，也不解除 `paper_ready=false` 门禁。
+归档前还应运行 `scripts/gates/check_paper_material_freshness.py`，对描述性 Markdown 中的 SHA-256 表逐项重算输入文件。该检查器对材料越界、缺失指纹章节、空表、格式错误表行、缺失输入、越界路径、格式错误摘要、重复材料名和摘要漂移失败关闭，并输出带有结构化 `reason` 的 `paper-material-freshness-v1` JSON；其 `material` 为相对校验根目录的 POSIX 路径，`root` 固定为 `"."`，不把机器绝对路径写入归档。本轮对实验 5 描述性材料核验 11/11 输入通过，其中包含审计器与渲染器共享的 retrieval 字段契约脚本。它只证明材料未脱离所列输入版本，不证明输入本身具备外部有效性，也不解除 `paper_ready=false` 门禁。
 
 严格引用失败现在以案例级字段归档：CSV 行号、题目索引与题目 ID、方法、重复编号、唯一 `query_log_id`、非法标记和来源/图谱数组规模。论文材料渲染器按 CSV 行稳定排序，并拒绝缺失/非正身份、重复行号、重复日志 ID 或重复案例键，避免把失败计数与可回放案例错配。当前 4 条失败记录为 H04/bm25_rag（重复 1、3、2）与 H03/bm25_rag（重复 2），分别可由 `query_log_id` 128、172、191、273 回放；这支持论文报告具体失败模式，不把“引用审计失败”停留在抽象计数。v1 归档检查器还会重新扫描每个有答案案例的 `[S数字]`/`[G数字]` 标记，并要求 `citation_count`、`invalid_citations`、`has_evidence` 与答案及证据数组一致，同时复现生产端的证据类别覆盖和关键事实段落同段引用规则，要求 `passed` 与重算结果严格相等；完成案例还必须存在非空回答，失败案例才允许 `answer=null`，但两类案例都必须保留对象数组形式的 `sources`/`graph_context`，每个来源对象必须保留正整数 `chunk_id`/`file_id`，每个图谱对象必须保留正整数 `relation_id`/`source_entity_id`/`target_entity_id`，且 `source_count`/`graph_hit_count` 必须分别等于对应数组长度。所有案例的响应时延、提供方、提示版本、模型/回退字段和检索配置/用量对象也必须满足导出类型约束；未落库失败也使用稳定的 `prompt_version="experiment-unlogged-failure-v1"`，实验级 `embedding_model`/`generation_model` 必须同时与 `config_snapshot` 一致，有 `query_log_id` 的案例还必须将 `retrieval_config.embedding_model`、`retrieval_config.index_version` 和 `retrieval_config.graph_schema_version` 分别绑定到实验级模型、索引版本与图谱 schema 版本，且非空案例模型必须匹配实验级生成模型。因此导出时漏记审计字段、越界标记、范围标记、`passed` 真值漂移、空回答冒充完成、证据数组畸形、证据对象身份缺失、证据计数漂移、遥测字段畸形、模型快照漂移或逐案例输入绑定漂移会失败关闭。该新增门禁只证明语法、强制引用规则、案例完整性、证据容器、对象身份、冗余计数一致性、遥测结构、输入绑定和导出内部一致性，不升级为引用正确性、检索质量或人工准确率证据。
 
@@ -142,19 +142,19 @@
 
 ```bash
 backend/.venv/bin/python -m pytest -q \
-  scripts/test_check_rag_experiment_evidence.py \
-  scripts/test_check_rag_evidence.py \
-  scripts/test_freeze_rag_evidence.py
-backend/.venv/bin/python scripts/check_rag_experiment_evidence.py \
+  scripts/gates/test_check_rag_experiment_evidence.py \
+  scripts/gates/test_check_rag_evidence.py \
+  scripts/freeze/test_freeze_rag_evidence.py
+backend/.venv/bin/python scripts/gates/check_rag_experiment_evidence.py \
   --package rag-experiment-<run_id>-evidence.json \
   --output rag-experiment-<run_id>-evidence-check.json
-python3 scripts/audit_rag_csv_consistency.py \
+python3 scripts/audit/audit_rag_csv_consistency.py \
   --csv rag-experiment-<run_id>.csv \
   --evaluation rag-experiment-<run_id>-evaluation-sheet.csv \
   --output rag-experiment-<run_id>-csv-audit.json
-python3 scripts/audit_rag_five_mode_bundle.py \
+python3 scripts/audit/audit_rag_five_mode_bundle.py \
   --output docs/experiments/rag-experiment-5-internal-bundle-audit-YYYY-MM-DD.json
-backend/.venv/bin/python scripts/check_paper_material_freshness.py \
+backend/.venv/bin/python scripts/gates/check_paper_material_freshness.py \
   docs/experiments/rag-experiment-5-internal-descriptive-results-v1.md \
   --root . \
   --output docs/experiments/rag-experiment-5-internal-descriptive-results-freshness-latest.json

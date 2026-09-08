@@ -75,7 +75,7 @@ curl -H "Authorization: Bearer $ELN_ACCESS_TOKEN" \
 下载后可在归档前运行一致性检查：
 
 ```bash
-python3 scripts/check_rag_experiment_evidence.py \
+python3 scripts/gates/check_rag_experiment_evidence.py \
   --package rag-experiment-<run_id>-evidence.json \
   --output rag-experiment-<run_id>-evidence-check.json
 ```
@@ -85,7 +85,7 @@ python3 scripts/check_rag_experiment_evidence.py \
 证据包下载权限与盲评权限分离：原始 `evidence.json` 只允许项目成员在允许解盲的上下文中导出；独立评审员访问该端点会返回 HTTP 403，只能通过 `/projects/{project_id}/rag/blind-review/*` 获取去除方法、文件名和内部来源标记的盲评材料。Rust 隔离 PostgreSQL 回归同时验证管理员证据包下载、评审员端点拒绝和盲评 API 可用，防止论文证据包成为绕过方法隐藏的入口。
 
 若要把导出结果写入自动生成的论文描述性材料，还必须对材料内的输入指纹运行
-`scripts/check_paper_material_freshness.py`。该门禁对缺少指纹章节、空表或格式错误表行
+`scripts/gates/check_paper_material_freshness.py`。该门禁对缺少指纹章节、空表或格式错误表行
 失败关闭，并逐项检查 Markdown 所列 SHA-256 是否仍与实际输入一致；它不会把内部自动
 统计升级为确认性结果。输出 `paper-material-freshness-v1` 的 `material` 使用相对于
 校验根目录的 POSIX 路径，`root` 固定为 `"."`，不记录机器相关的绝对工作区路径；材料
@@ -104,9 +104,9 @@ python3 scripts/check_rag_experiment_evidence.py \
 
 该哈希是运行创建时的输入绑定，不替代外部冻结清单；若要形成确认性证据，还需在归档时将其与语料文件哈希、题集文件哈希和版本清单交叉核对。实验级 `embedding_model` 与 `generation_model` 必须同时出现在 `experiment` 和 `config_snapshot`，且两处值严格一致。对于已落库案例，`retrieval_config.embedding_model` 和 `retrieval_config.index_version` 还必须分别等于实验级 `embedding_model` 和 `rag_index_version`；同时必须保留 `retrieval_strategy`、`retrieval_top_k`、`collection_retrieval_top_k`、`vector_candidate_k`、`graph_top_k`、`chunk_size`、`chunk_overlap`、`graph_min_score` 和 `retrieval_min_score`。同一证据包的已落库案例不能出现这些稳定参数的漂移；若案例的 `model` 非空，则还必须等于实验级 `generation_model`。系统兜底或结构化查询可以记录 `model=null`，但不能借此掩盖非空模型漂移。这样逐案例运行参数不会脱离顶层输入绑定。未落库的系统失败案例没有查询日志，只保留失败元数据和空证据容器，不虚构逐案例检索绑定。
 
-检查器结果中的 `statistics` 字段由 `scripts/check_rag_experiment_evidence.py` 从 `cases[]` 独立派生，版本为 `rag-evidence-statistics-v1`。它固定输出状态/失败分层、来源与图谱对象数量、引用审计重算计数、按方法的完成/失败/时延（中位数、P95）以及已落库案例的模型/索引/检索参数快照。统计不读取可被手工修改的 `citation_audit.citation_count` 或 `passed`，而是从答案文本和证据数组重新计算；因此可作为论文附录的可重生成描述性材料，但不等价于人工准确率、引用正确性、显著性检验或方法优越性证据。
+检查器结果中的 `statistics` 字段由 `scripts/gates/check_rag_experiment_evidence.py` 从 `cases[]` 独立派生，版本为 `rag-evidence-statistics-v1`。它固定输出状态/失败分层、来源与图谱对象数量、引用审计重算计数、按方法的完成/失败/时延（中位数、P95）以及已落库案例的模型/索引/检索参数快照。统计不读取可被手工修改的 `citation_audit.citation_count` 或 `passed`，而是从答案文本和证据数组重新计算；因此可作为论文附录的可重生成描述性材料，但不等价于人工准确率、引用正确性、显著性检验或方法优越性证据。
 
-论文材料渲染必须继续使用通过该检查器的同一 v1 包：`scripts/render_rag_evidence_paper_material.py` 要求检查结果 `passed=true`、无失败项且 `statistics` 与当前 `cases[]` 的再次派生结果完全相等，然后才生成 Markdown 附录。渲染器只输出分母、失败代码、证据容器、时延和运行参数等描述性层，不生成准确率、引用正确性、显著性或方法优越性结论；没有通过检查的确认性包时，不得用旧版运行记录或手工统计替代。
+论文材料渲染必须继续使用通过该检查器的同一 v1 包：`scripts/render/render_rag_evidence_paper_material.py` 要求检查结果 `passed=true`、无失败项且 `statistics` 与当前 `cases[]` 的再次派生结果完全相等，然后才生成 Markdown 附录。渲染器只输出分母、失败代码、证据容器、时延和运行参数等描述性层，不生成准确率、引用正确性、显著性或方法优越性结论；没有通过检查的确认性包时，不得用旧版运行记录或手工统计替代。
 
 该附录还按 `execution_order` 输出所有 `status=failed` 案例的逐项清单，至少保留题目序号、方法、重复编号、`query_log_id`、`failure_scope`、`failure_code`、来源/图谱证据对象数量和原始错误文本。`query_log_id=null` 的未落库失败不得从清单删除；错误文本只是运行遥测，不能被解释为失败原因的因果证明，来源/图谱数量也不是相关性或正确性指标。
 
@@ -126,7 +126,7 @@ python3 scripts/check_rag_experiment_evidence.py \
 
 论文材料还输出固定集合覆盖表，逐组报告实验设计/运行配置 18 项、证据链 5 项、数据—问题集绑定 7 项和论文门禁派生检查 1 项的注册数、观察数、缺失名和状态。缺少任一正文注册检查时渲染失败关闭；观察到只表示检查项存在，不表示其通过。
 
-材料还输出“论文 blocker—最低归档清单映射”表：每个 `paper_blocker` 必须绑定到唯一的确认性归档要求；当前 `app_revision_is_bound`、`external_freeze_inputs_present`、`multi_project_question_set_ready`、`independent_human_review_present` 和 `confirmatory_evidence_package_present` 分别映射到最低清单第 8、1、2、6、4 项。`report_scope_is_internal_only` 是范围声明检查，保留为通过的独立 blocker 记录，不冒充八项清单缺口。该映射由 `scripts/rag_experiment_contract.py` 注册，审计器原样写入 `paper_blocker_archive_mapping`，渲染器同时核对共享契约和审计 JSON；因此论文表不是依赖隐藏展示逻辑推导。若新增、删除、改名或篡改 blocker 映射，材料生成失败关闭；映射状态只表示归档门禁状态，不表示方法效果。
+材料还输出“论文 blocker—最低归档清单映射”表：每个 `paper_blocker` 必须绑定到唯一的确认性归档要求；当前 `app_revision_is_bound`、`external_freeze_inputs_present`、`multi_project_question_set_ready`、`independent_human_review_present` 和 `confirmatory_evidence_package_present` 分别映射到最低清单第 8、1、2、6、4 项。`report_scope_is_internal_only` 是范围声明检查，保留为通过的独立 blocker 记录，不冒充八项清单缺口。该映射由 `scripts/experiments/rag_experiment_contract.py` 注册，审计器原样写入 `paper_blocker_archive_mapping`，渲染器同时核对共享契约和审计 JSON；因此论文表不是依赖隐藏展示逻辑推导。若新增、删除、改名或篡改 blocker 映射，材料生成失败关闭；映射状态只表示归档门禁状态，不表示方法效果。
 
 材料还输出“论文主张边界审计”：要求审计范围仍是内部开发证据、`paper_ready=false` 且存在未完成的论文级归档项；正文据此只允许描述性/方法学诊断表述，并自动列出必须披露的 blocker—归档项对照。若范围、ready 状态或缺口披露条件被篡改，材料渲染失败关闭。该边界门禁控制论文表述等级，不把审计失败解释为回答失败率、事实准确率或方法效果。
 
@@ -134,7 +134,7 @@ python3 scripts/check_rag_experiment_evidence.py \
 
 材料随后输出“失败检查身份闭环”表：渲染器从 `checks` 重新计算全部失败检查名，并与审计 JSON 的 `failure_summary`、正文“门禁失败摘要”和 `paper_blockers` 逐项交叉核对。闭环同时报告失败总数与 `paper_blocker` 失败名集合；当前内部批次为 153 个失败检查，其中 148 个为 required、5 个为 `paper_blocker`，这只是结构性门禁缺口的身份与分母证据，不是方法失败率、效果差异或因果机制。若摘要缺失、排序/数量不一致、失败名遗漏，或 `paper_blockers` 不是审计失败的 `paper_blocker` 子集，材料渲染失败关闭。
 
-该渲染器还单独输出“引用审计报告—重算差异”表：逐字段列出报告摘要值与从原始 CSV 重算值，包含全局范围判定和按方法的非法标记计数等差异。该表避免读者只能从完整 JSON 中发现“报告—重算”漂移；它是报告完整性与失败定位证据，不是引用内容正确性、来源支持性或方法效果证据。若 `reported_audit_mismatch` 与差异数组不一致，或差异项缺少字段、重算值和报告值，渲染失败关闭。审计器和渲染器共用 `scripts/rag_experiment_contract.py` 中的模式及逐案例 retrieval 必需字段顺序；该契约脚本也纳入材料指纹，防止两端字段解释漂移而 freshness 仍误报通过。渲染器源码或输入变更后，必须重新生成 Markdown 并再次运行 freshness 检查。
+该渲染器还单独输出“引用审计报告—重算差异”表：逐字段列出报告摘要值与从原始 CSV 重算值，包含全局范围判定和按方法的非法标记计数等差异。该表避免读者只能从完整 JSON 中发现“报告—重算”漂移；它是报告完整性与失败定位证据，不是引用内容正确性、来源支持性或方法效果证据。若 `reported_audit_mismatch` 与差异数组不一致，或差异项缺少字段、重算值和报告值，渲染失败关闭。审计器和渲染器共用 `scripts/experiments/rag_experiment_contract.py` 中的模式及逐案例 retrieval 必需字段顺序；该契约脚本也纳入材料指纹，防止两端字段解释漂移而 freshness 仍误报通过。渲染器源码或输入变更后，必须重新生成 Markdown 并再次运行 freshness 检查。
 
 该材料的严格引用失败表还按 CSV 行号稳定排序，并同时保留题目索引、题目 ID、方法、重复编号、唯一 `query_log_id`、非法标记和来源/图谱计数；渲染前拒绝缺失/非正身份、重复行号、重复日志 ID和重复案例键。该约束只保证失败案例与可回放身份的对应关系，不把引用格式失败解释为事实错误或因果机制。
 

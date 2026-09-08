@@ -48,11 +48,11 @@
 | --- | --- | --- |
 | 题集与答案要点 | `data/real/GSE111619/gse111619_questions.json` | 20 题、56 个答案要点；SHA-256 `f1f4f8e2726129cdf54e4c65cfcc09d6fb9314ca30498ccbd854533fc6f2fe4a` |
 | 原始知识文档 | `data/real/GSE111619/gse111619_knowledge_document.txt` | SHA-256 `5a9188ebde46c5707b070c48e85eb6faea543b131cc1a5b6f94179f30afa04ea`；该文件哈希不等于数据库语料快照哈希 |
-| Rust 评测入口、指标/trace/canonicalization 主实现 | `scripts/evaluate_rust_retrieval.py` | 在批次 manifest 中自动计算，不在协议中手工维护“当前哈希” |
-| 匹配规范化、题集校验与 fact ID 依赖 | `scripts/evaluate_retrieval.py` | 在批次 manifest 中自动计算；不得把其中旧 IR 适配器当作本 pilot 的指标公式 |
-| 证据冻结实现 | `scripts/freeze_rag_evidence.py`（仅发布级 BGE-M3 绑定）与 `scripts/freeze_system_evidence.py --rust-pilot-readiness`（本 pilot 冻结前审计） | 在批次 manifest 中自动计算；两者不得混用 |
+| Rust 评测入口、指标/trace/canonicalization 主实现 | `scripts/experiments/evaluate_rust_retrieval.py` | 在批次 manifest 中自动计算，不在协议中手工维护“当前哈希” |
+| 匹配规范化、题集校验与 fact ID 依赖 | `scripts/experiments/evaluate_retrieval.py` | 在批次 manifest 中自动计算；不得把其中旧 IR 适配器当作本 pilot 的指标公式 |
+| 证据冻结实现 | `scripts/freeze/freeze_rag_evidence.py`（仅发布级 BGE-M3 绑定）与 `scripts/freeze/freeze_system_evidence.py --rust-pilot-readiness`（本 pilot 冻结前审计） | 在批次 manifest 中自动计算；两者不得混用 |
 | Rust 方法与状态实现 | `backend/src/rag.rs`、`backend/src/api/rag.rs`、`backend/src/api/mod.rs`、`backend/src/models.rs`、`backend/src/state.rs` | 在批次 manifest 中自动计算 |
-| 接口与验证实现 | `backend/openapi.json`、`frontend/src/lib/api-schema.d.ts`、`frontend/src/lib/api.ts`、`scripts/test_evaluate_rust_retrieval.py` | 在批次 manifest 中自动计算 |
+| 接口与验证实现 | `backend/openapi.json`、`frontend/src/lib/api-schema.d.ts`、`frontend/src/lib/api.ts`、`scripts/experiments/test_evaluate_rust_retrieval.py` | 在批次 manifest 中自动计算 |
 | Rust 工具链 | `backend/rust-toolchain.toml`、`backend/Cargo.lock` | 在批次 manifest 中自动计算 |
 
 题集与原始文档哈希只是协议起草时核对的输入身份，不是未来运行的完整冻结清单。正式执行前必须在代码稳定且 commit 固定后自动生成一次性 manifest；manifest 必须包含 UTC `generated_at`、完整 commit、dirty 状态、所有输入和实现文件哈希。所有 manifest 路径必须是该 checkout 内的真实相对路径；缺失必需输入必须写为 `sha256: null`、`status: FAIL` 并使 `local_manifest_inputs_complete: false`，不得以临时文件名或 basename 代替绑定。`local_manifest_inputs_complete` 只表示 manifest 声明的本地文件均存在并已哈希，不表示整个 pilot 已冻结；整体是否满足 revision、镜像/模型、corpus/graph 与 G5A/G5B 等准入项由 `freeze_requirements_complete` 和 `overall_verdict` 表示。禁止手工维护代码“当前哈希”，也不能用原始文档哈希替代数据库实际语料快照哈希。
@@ -147,7 +147,7 @@ Rust 当前默认策略是 `rrf-v1`，不是论文历史实验中的 `0.8 × vec
 
 ## 6. 执行顺序
 
-1. 通过 G0–G4 与 G5A，并用现有 `scripts/freeze_system_evidence.py --rust-pilot-readiness` 生成 `rust-retrieval-pilot-freeze-readiness-latest.json` 与绑定输入的 manifest。该命令只读审计、不访问检索端点、不生成指标；报告成功写出不等于 gate 通过，`overall_verdict` 必须为 `PASS` 才能进入第一遍。审计命令在发现阻断时仍可返回 0，以便保存报告；`overall_verdict=BLOCKED` 是唯一放行判据。
+1. 通过 G0–G4 与 G5A，并用现有 `scripts/freeze/freeze_system_evidence.py --rust-pilot-readiness` 生成 `rust-retrieval-pilot-freeze-readiness-latest.json` 与绑定输入的 manifest。该命令只读审计、不访问检索端点、不生成指标；报告成功写出不等于 gate 通过，`overall_verdict` 必须为 `PASS` 才能进入第一遍。审计命令在发现阻断时仍可返回 0，以便保存报告；`overall_verdict=BLOCKED` 是唯一放行判据。
 2. 保存 `/metrics`、项目 RAG 状态和容器镜像检查结果。
 3. 用固定题集运行第一遍，保存 raw/canonical 数据、逐 fact 匹配 trace 和 `result_sha256`，随后执行第一遍 G5B。
 4. 在相同部署与数据库状态下立即运行第二遍，执行第二遍 G5B，并比较两份已落盘 canonical 完整结果的哈希。

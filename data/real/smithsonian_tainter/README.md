@@ -26,12 +26,12 @@ Smithsonian 的项目说明允许个人、教育和其他非商业用途，并�
 2. 从 PDF 导出页面图片和 Smithsonian 已复核转录。
 3. 在不查看标准转录的情况下运行系统 OCR，并由校对人员只对照原图修改。
 4. 冻结原始 OCR、校正文本和标准文本。
-5. 使用 `scripts/evaluate_ocr.py` 生成字符错误率报告。
+5. 使用 `scripts/experiments/evaluate_ocr.py` 生成字符错误率报告。
 
 示例命令：
 
 ```bash
-python scripts/evaluate_ocr.py \
+python scripts/experiments/evaluate_ocr.py \
   --manifest data/real/smithsonian_tainter/ocr_manifest.csv \
   --output data/real/smithsonian_tainter/ocr_evaluation_report.json
 ```

@@ -1,5 +1,8 @@
 # 密钥与凭据轮换手册
 
+> status: current
+> owner: 运维
+
 本手册用于生产环境的计划轮换和疑似泄漏应急轮换。轮换前必须明确维护窗口、负责人、回滚人和验证人；不要在聊天、截图或日志中粘贴真实密钥。
 
 ## 覆盖对象
@@ -15,14 +18,14 @@
 1. 创建当前一致性备份，并保存到离机位置：
 
    ```bash
-   scripts/backup-system.sh /secure/backups/eln-before-secret-rotation-$(date -u +%Y%m%dT%H%M%SZ)
+   scripts/ops/backup-system.sh /secure/backups/eln-before-secret-rotation-$(date -u +%Y%m%dT%H%M%SZ)
    ```
 
 2. 运行当前成熟证据链中的健康检查，确认不是带故障轮换：
 
    ```bash
-   backend/.venv/bin/python scripts/check_monitoring_alerts.py --api-base https://ELN_DOMAIN/api
-   backend/.venv/bin/python scripts/check_secret_hygiene.py --output docs/system-evidence/secret-hygiene-latest.json
+   backend/.venv/bin/python scripts/gates/check_monitoring_alerts.py --api-base https://ELN_DOMAIN/api
+   backend/.venv/bin/python scripts/gates/check_secret_hygiene.py --output docs/system-evidence/secret-hygiene-latest.json
    ```
 
 3. 准备新 secret，长度和来源必须满足生产预检；不要复用旧值。
@@ -33,7 +36,7 @@
 2. 重启后端容器：
 
    ```bash
-   bash scripts/docker-compose-with-revision.sh up -d --no-deps backend
+   bash scripts/ops/docker-compose-with-revision.sh up -d --no-deps backend
    ```
 
 3. 验证 `/ready`、`/metrics` 和登录流程。
@@ -53,7 +56,7 @@
 2. 在数据库内修改业务用户密码：
 
    ```bash
-   bash scripts/docker-compose-with-revision.sh exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
+   bash scripts/ops/docker-compose-with-revision.sh exec -T db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" \
      -c "ALTER USER \"$POSTGRES_USER\" WITH PASSWORD 'NEW_STRONG_PASSWORD';"
    ```
 
@@ -68,7 +71,7 @@
 3. 运行最小真实模型回归：
 
    ```bash
-   backend/.venv/bin/python scripts/validate_real_llm.py
+   backend/.venv/bin/python scripts/experiments/validate_real_llm.py
    ```
 
 4. 验证 RAG 问答和 Agent 探针。
@@ -78,9 +81,9 @@
 ## 轮换后必须执行
 
 ```bash
-backend/.venv/bin/python scripts/check_production_config.py --output docs/system-evidence/production-config-latest.json
-backend/.venv/bin/python scripts/check_secret_hygiene.py --output docs/system-evidence/secret-hygiene-latest.json
-backend/.venv/bin/python scripts/check_monitoring_alerts.py --api-base https://ELN_DOMAIN/api --output docs/system-evidence/monitoring-alerts-latest.json
+backend/.venv/bin/python scripts/gates/check_production_config.py --output docs/system-evidence/production-config-latest.json
+backend/.venv/bin/python scripts/gates/check_secret_hygiene.py --output docs/system-evidence/secret-hygiene-latest.json
+backend/.venv/bin/python scripts/gates/check_monitoring_alerts.py --api-base https://ELN_DOMAIN/api --output docs/system-evidence/monitoring-alerts-latest.json
 ```
 
 通过后记录轮换时间、操作者、验证人、涉及 secret 名称、是否回滚、旧凭据撤销时间。不要记录 secret 值本身。

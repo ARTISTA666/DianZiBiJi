@@ -130,7 +130,7 @@ python scripts/freeze/freeze_preregistration.py \
   backend/app/api/rag.py \
   backend/app/services/local_rag.py \
   backend/app/services/knowledge_graph.py \
-  scripts/summarize_system_reviews.py \
+  scripts/render/summarize_system_reviews.py \
   --root . \
   --output docs/experiments/rag-experiment-5-freeze-manifest-v2.json
 ```
@@ -146,5 +146,5 @@ python scripts/freeze/freeze_preregistration.py \
 人工盲评完成后再汇总,未填完整或未签名时脚本应失败:
 
 ```bash
-python scripts/summarize_blind_review.py --sheet docs/experiments/rag-experiment-5-blind-review-sheet.csv --key docs/experiments/rag-experiment-5-blind-review-key.csv -o docs/experiments/rag-experiment-5-blind-review-summary.json
+python scripts/render/summarize_blind_review.py --sheet docs/experiments/rag-experiment-5-blind-review-sheet.csv --key docs/experiments/rag-experiment-5-blind-review-key.csv -o docs/experiments/rag-experiment-5-blind-review-summary.json
 ```

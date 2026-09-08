@@ -1,5 +1,8 @@
 # 受控试运行上线策略
 
+> status: current
+> owner: 证据线
+
 本项目先以“受控试运行”获得真实科研用户反馈，再根据反馈迭代。确认性人工评审暂不作为首批上线阻塞项，但它仍保留为后续科研质量验证和论文质量声明的门禁。
 
 ## 上线边界
@@ -12,7 +15,7 @@
 ## 发布门禁
 
 ```bash
-backend/.venv/bin/python scripts/controlled_beta_gate.py
+backend/.venv/bin/python scripts/gates/controlled_beta_gate.py
 ```
 
 该门禁不检查确认性人工评审，但仍要求：内部门禁、生产配置、真实 TLS 证据、异地加密备份证据、Rust `/health` 与 `/ready`、Docker Compose 配置全部通过。当前开发环境的生产配置快照是 `skipped_non_production`，因此不能直接宣称已具备公网发布条件。

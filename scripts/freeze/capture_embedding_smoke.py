@@ -17,13 +17,13 @@ revision-bound backend), replacing the prior BLOCKED state that only had the
 hash test-double. It does NOT index or modify any knowledge base content.
 
 Usage (default: probe the in-container backend + API URL):
-    python scripts/capture_embedding_smoke.py
+    python scripts/freeze/capture_embedding_smoke.py
 
     BACKEND_READY_URL=http://127.0.0.1:8000/ready \
     EMBEDDING_API_URL=http://host.docker.internal:11434/v1/embeddings \
     EMBEDDING_MODEL=BAAI/bge-m3 \
     EMBEDDING_DIMENSION=1024 \
-    python scripts/capture_embedding_smoke.py
+    python scripts/freeze/capture_embedding_smoke.py
 """
 
 from __future__ import annotations

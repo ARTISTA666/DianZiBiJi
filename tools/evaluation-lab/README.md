@@ -21,7 +21,7 @@ node evaluation-lab/server.mjs
 也可以使用独立容器：
 
 ```bash
-bash scripts/docker-compose-with-revision.sh -f docker-compose.evaluation.yml up -d --build
+bash scripts/ops/docker-compose-with-revision.sh -f docker-compose.evaluation.yml up -d --build
 ```
 
 评测实验室只保存短期内存会话；实验数据仍由主系统的 RAG 实验接口记录，冻结论文基线来自 `data/real/GSE111619`。
