@@ -24,7 +24,7 @@ from typing import Any
 from urllib.parse import urljoin
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "system-evidence"
 HTTP_METHODS = ("delete", "get", "head", "options", "patch", "post", "put", "trace")
 CONTRACT_FILES = ("api-list.csv", "openapi.json", "rust-runtime-contract-latest.json")

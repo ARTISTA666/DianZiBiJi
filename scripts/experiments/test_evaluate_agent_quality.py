@@ -6,8 +6,8 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "evaluate_agent_quality.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "experiments" / "evaluate_agent_quality.py"
 SPEC = importlib.util.spec_from_file_location("evaluate_agent_quality", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -102,7 +102,7 @@ def test_stage_boundary_accepts_direct_negative_control_citation() -> None:
 
 
 def test_frozen_gold_has_five_unique_task_types() -> None:
-    gold = json.loads((ROOT / "evaluation-lab/agent-quality/gold-v1.json").read_text(encoding="utf-8"))
+    gold = json.loads((ROOT / "tools/evaluation-lab/agent-quality/gold-v1.json").read_text(encoding="utf-8"))
 
     assert len(gold["cases"]) == 5
     assert {case["task_type"] for case in gold["cases"]} == {

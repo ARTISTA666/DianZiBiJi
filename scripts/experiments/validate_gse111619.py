@@ -19,7 +19,7 @@ from typing import Any
 import numpy as np
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 BACKEND = ROOT / "backend"
 DEFAULT_DATA_DIR = ROOT / "data" / "real" / "GSE111619"
 sys.path.insert(0, str(BACKEND))

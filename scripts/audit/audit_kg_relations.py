@@ -10,7 +10,7 @@ from collections import defaultdict
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = ROOT / "docs" / "experiments"
 PROJECT_NAME = "论文演示项目：KG-RAG 实验流程"
 

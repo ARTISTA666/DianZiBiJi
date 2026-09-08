@@ -13,7 +13,7 @@ from typing import Any
 
 import httpx
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 from confirmatory_preflight import (  # noqa: E402
     MODES,
     PreflightError,

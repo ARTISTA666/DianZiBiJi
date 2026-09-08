@@ -120,7 +120,7 @@
 仍需外部人员冻结后提供：`corpus-manifest.json`、`questions.json` 和 `gold-facts.json`。缺少任一文件时，下列命令必须失败。
 
 ```bash
-python scripts/freeze_preregistration.py \
+python scripts/freeze/freeze_preregistration.py \
   docs/experiments/rag-experiment-5-preregistration.md \
   data/real/experiment-5/corpus-manifest.json \
   data/real/experiment-5/questions.json \
@@ -138,7 +138,7 @@ python scripts/freeze_preregistration.py \
 运行实验前先校验清单：
 
 ```bash
-python scripts/freeze_preregistration.py \
+python scripts/freeze/freeze_preregistration.py \
   --verify docs/experiments/rag-experiment-5-freeze-manifest-v2.json \
   --root .
 ```

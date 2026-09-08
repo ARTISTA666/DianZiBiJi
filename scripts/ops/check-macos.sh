@@ -1,11 +1,11 @@
 #!/bin/sh
 set -eu
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 cd "$ROOT"
 
 compose() {
-  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+  bash "$ROOT/scripts/ops/docker-compose-with-revision.sh" "$@"
 }
 
 failures=0

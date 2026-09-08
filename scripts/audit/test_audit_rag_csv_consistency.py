@@ -7,8 +7,8 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "audit_rag_csv_consistency.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "audit" / "audit_rag_csv_consistency.py"
 SPEC = importlib.util.spec_from_file_location("audit_rag_csv_consistency", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

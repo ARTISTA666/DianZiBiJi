@@ -17,7 +17,7 @@ from typing import Any
 from freeze_preregistration import verify_manifest
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPORT = ROOT / "data" / "real" / "experiment-5" / "internal-five-mode-experiment-report.json"
 DEFAULT_CSV = ROOT / "data" / "real" / "experiment-5" / "internal-five-mode-experiment.csv"
 DEFAULT_FREEZE = ROOT / "docs" / "experiments" / "rag-experiment-5-internal-freeze-manifest-v2.json"

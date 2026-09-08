@@ -1,9 +1,9 @@
 #!/bin/sh
 set -eu
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 compose() {
-  bash "$ROOT/scripts/docker-compose-with-revision.sh" -p eln-e2e -f "$ROOT/docker-compose.e2e.yml" "$@"
+  bash "$ROOT/scripts/ops/docker-compose-with-revision.sh" -p eln-e2e -f "$ROOT/docker-compose.e2e.yml" "$@"
 }
 OUTPUT="$ROOT/output/playwright"
 
@@ -60,7 +60,7 @@ if ! npm run test:e2e; then
   exit 1
 fi
 
-"$E2E_PYTHON_BIN" "$ROOT/scripts/validate_experiment_restart.py" \
+"$E2E_PYTHON_BIN" "$ROOT/scripts/experiments/validate_experiment_restart.py" \
   --api-base http://127.0.0.1:18000 \
   --compose-file "$ROOT/docker-compose.e2e.yml" \
   --compose-project eln-e2e \
@@ -68,7 +68,7 @@ fi
   --password admin123 \
   --output "$OUTPUT/restart-recovery.json"
 
-"$E2E_PYTHON_BIN" "$ROOT/scripts/load_smoke.py" \
+"$E2E_PYTHON_BIN" "$ROOT/scripts/ops/load_smoke.py" \
   --api-base http://127.0.0.1:18000 \
   --username admin \
   --password admin123 \

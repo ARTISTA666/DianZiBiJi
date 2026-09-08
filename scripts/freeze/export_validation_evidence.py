@@ -15,7 +15,7 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "system-evidence"
 COMPOSE_WRAPPER = str(ROOT / "scripts" / "docker-compose-with-revision.sh")
 

@@ -16,7 +16,7 @@ from typing import Any
 import httpx
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DATA_DIR = ROOT / "data" / "real" / "GSE111619"
 DEFAULT_REPORT = DEFAULT_DATA_DIR / "system_import_report.json"
 PROJECT_NAME = "GSE111619 真实数据验证项目"

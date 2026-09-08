@@ -24,7 +24,7 @@ import numpy as np
 from ir_measures import R, RR, nDCG
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 BACKEND = ROOT / "backend"
 sys.path.insert(0, str(BACKEND))
 

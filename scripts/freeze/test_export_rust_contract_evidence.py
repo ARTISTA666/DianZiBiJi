@@ -6,8 +6,8 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "export_rust_contract_evidence.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "freeze" / "export_rust_contract_evidence.py"
 SPEC = importlib.util.spec_from_file_location("export_rust_contract_evidence", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

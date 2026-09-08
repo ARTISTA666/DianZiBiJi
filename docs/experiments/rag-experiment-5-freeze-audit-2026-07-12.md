@@ -26,7 +26,7 @@
 新清单示例：
 
 ```bash
-python scripts/freeze_preregistration.py \
+python scripts/freeze/freeze_preregistration.py \
   docs/experiments/rag-experiment-5-preregistration.md \
   data/real/experiment-5/corpus-manifest.json \
   data/real/experiment-5/questions.json \
@@ -40,7 +40,7 @@ python scripts/freeze_preregistration.py \
 校验命令：
 
 ```bash
-python scripts/freeze_preregistration.py \
+python scripts/freeze/freeze_preregistration.py \
   --verify docs/experiments/rag-experiment-5-freeze-manifest-v2.json \
   --root .
 ```

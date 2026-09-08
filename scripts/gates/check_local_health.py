@@ -21,7 +21,7 @@ from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_ENV_FILE = ROOT / ".env"
 REVISION_PATTERN = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 

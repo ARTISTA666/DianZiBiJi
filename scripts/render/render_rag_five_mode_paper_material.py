@@ -3,6 +3,15 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_SCRIPTS_ROOT = Path(__file__).resolve().parents[1]
+for _sub in ("gates", "freeze", "experiments", "data", "render", "ops", "audit"):
+    _p = str(_SCRIPTS_ROOT / _sub)
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 import argparse
 import csv
 import hashlib
@@ -20,7 +29,7 @@ from rag_experiment_contract import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_AUDIT = ROOT / "docs/experiments/rag-experiment-5-internal-bundle-audit-2026-08-12.json"
 DEFAULT_VALIDATION = ROOT / "data/real/experiment-5/internal-five-mode-validation.json"
 DEFAULT_OUTPUT = ROOT / "docs/experiments/rag-experiment-5-internal-descriptive-results-v1.md"
@@ -713,10 +722,10 @@ def source_fingerprints(
         "run_config_json": resolve_source_path(input_paths.get("run_config", ""), root),
         "question_set_json": resolve_source_path(input_paths.get("questions", ""), root),
         "freeze_manifest_json": resolve_source_path(input_paths.get("freeze_manifest", ""), root),
-        "experiment_contract_script": root / "scripts/rag_experiment_contract.py",
-        "bundle_audit_script": root / "scripts/audit_rag_five_mode_bundle.py",
-        "material_renderer_script": root / "scripts/render_rag_five_mode_paper_material.py",
-        "validation_script": root / "scripts/validate_five_mode_experiment.py",
+        "experiment_contract_script": root / "scripts/experiments/rag_experiment_contract.py",
+        "bundle_audit_script": root / "scripts/audit/audit_rag_five_mode_bundle.py",
+        "material_renderer_script": root / "scripts/render/render_rag_five_mode_paper_material.py",
+        "validation_script": root / "scripts/experiments/validate_five_mode_experiment.py",
     }
     fingerprints = []
     for name, path in named_paths.items():
@@ -1176,8 +1185,8 @@ def render(
 ## 复现入口
 
 ```bash
-backend/.venv/bin/python scripts/audit_rag_five_mode_bundle.py
-backend/.venv/bin/python scripts/render_rag_five_mode_paper_material.py
+backend/.venv/bin/python scripts/audit/audit_rag_five_mode_bundle.py
+backend/.venv/bin/python scripts/render/render_rag_five_mode_paper_material.py
 ```
 
 只有当审计产物的 `paper_ready=true`、严格引用审计通过、输入冻结清单可复核、版本与参数绑定、外部多项目题集和独立双人盲评齐备时，才可将本材料中的数字升级为确认性论文结果。

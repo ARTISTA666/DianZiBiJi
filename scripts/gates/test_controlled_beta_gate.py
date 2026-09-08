@@ -7,8 +7,8 @@ from pathlib import Path
 from types import SimpleNamespace
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts/controlled_beta_gate.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts/gates/controlled_beta_gate.py"
 SPEC = importlib.util.spec_from_file_location("controlled_beta_gate", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

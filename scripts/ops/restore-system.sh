@@ -3,14 +3,14 @@ set -eu
 
 umask 077
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 cd "$ROOT"
 
 BUILD_REVISION=$(git rev-parse --verify HEAD^{commit})
 export BUILD_REVISION
 
 compose() {
-  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+  bash "$ROOT/scripts/ops/docker-compose-with-revision.sh" "$@"
 }
 
 if [ "$#" -ne 2 ] || [ "$2" != "--confirm-replace" ]; then
@@ -114,7 +114,7 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM
 mkdir "$extracted/storage"
-"$restore_python" "$ROOT/scripts/safe_extract_storage.py" \
+"$restore_python" "$ROOT/scripts/data/safe_extract_storage.py" \
   "$backup/storage.tar.gz" "$extracted/storage"
 
 if ! compose exec -T db pg_isready -U "$database_user" -d "$database" >/dev/null; then
@@ -128,7 +128,7 @@ fi
 
 timestamp=$(date -u +%Y%m%dT%H%M%SZ)
 rollback=backups/pre-restore-$timestamp
-scripts/backup-system.sh "$rollback"
+scripts/ops/backup-system.sh "$rollback"
 printf '[OK] pre-restore rollback bundle created: %s/%s\n' "$ROOT" "$rollback"
 
 restore_started=1

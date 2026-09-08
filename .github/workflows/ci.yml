@@ -22,21 +22,21 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: backend/legacy
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: backend/requirements*.txt
+          cache-dependency-path: backend/legacy/requirements*.txt
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Run tests
         run: python -m pytest tests -q
       - name: Run repository script tests
         working-directory: .
-        run: python -m pytest -q scripts/test_*.py
+        run: python -m pytest -q scripts/*/test_*.py
 
   backend-rust:
     name: Backend (Rust)
@@ -112,14 +112,14 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: backend/requirements*.txt
+          cache-dependency-path: backend/legacy/requirements*.txt
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - name: Install probe dependencies
-        run: python -m pip install -r backend/requirements.txt
+        run: python -m pip install -r backend/legacy/requirements.txt
       - name: Install browser test dependencies
         working-directory: frontend
         run: |
@@ -128,7 +128,7 @@ jobs:
       - name: Run browser, restart-recovery, and load gates
         env:
           E2E_PYTHON: python
-        run: ./scripts/run-system-e2e.sh
+        run: ./scripts/ops/run-system-e2e.sh
       - name: Upload system-test evidence
         if: always()
         uses: actions/upload-artifact@v4

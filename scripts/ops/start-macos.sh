@@ -1,11 +1,11 @@
 #!/bin/sh
 set -eu
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 cd "$ROOT"
 
 compose() {
-  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+  bash "$ROOT/scripts/ops/docker-compose-with-revision.sh" "$@"
 }
 
 if [ ! -f .env ]; then
@@ -16,7 +16,7 @@ fi
 BUILD_REVISION=$(git rev-parse --verify HEAD^{commit})
 export BUILD_REVISION
 
-sh scripts/check-macos.sh
+sh scripts/ops/check-macos.sh
 compose up -d --build
 
 env_value() {

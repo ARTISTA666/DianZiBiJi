@@ -8,10 +8,10 @@ from pathlib import Path
 from types import SimpleNamespace
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCRIPTS = ROOT / "scripts"
 sys.path.insert(0, str(SCRIPTS))
-SCRIPT = SCRIPTS / "run_gse111619_experiment.py"
+SCRIPT = SCRIPTS / "experiments" / "run_gse111619_experiment.py"
 SPEC = importlib.util.spec_from_file_location("gse111619_experiment", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -25,7 +25,7 @@ def test_run_experiment_waits_for_background_completion(monkeypatch) -> None:
             get=lambda _path: SimpleNamespace(is_success=True, status_code=200, text="\ufeffcsv-body")
         )
 
-        def get(self, path):
+        def get(self, path, **_kwargs):
             if path == "/projects":
                 return [{"id": 7, "name": MODULE.PROJECT_NAME}]
             return {"id": 9, "status": "completed", "completed_cases": 1, "failed_cases": 0}

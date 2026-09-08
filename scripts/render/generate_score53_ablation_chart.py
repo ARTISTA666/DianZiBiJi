@@ -16,7 +16,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 DATA_PATH = ROOT / "docs" / "experiments" / "kg-score53-coefficient-ablation-2026-09-04.json"
 CHART_PATH = ROOT / "docs" / "user-guide-assets" / "11-score53-coefficient-ablation.png"
 

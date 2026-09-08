@@ -9,9 +9,9 @@ from pathlib import Path
 import pytest
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-SCRIPT = ROOT / "scripts" / "freeze_system_evidence.py"
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "freeze"))
+SCRIPT = ROOT / "scripts" / "freeze" / "freeze_system_evidence.py"
 SPEC = importlib.util.spec_from_file_location("freeze_system_evidence", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -400,7 +400,7 @@ def test_rust_pilot_readiness_writes_atomic_assets_without_mutating_inputs(tmp_p
     relative_files = {
         "protocol.md": Path("docs/experiments/rust-retrieval-pilot-protocol-v1.md"),
         "questions.json": Path("data/real/GSE111619/gse111619_questions.json"),
-        "evaluator.py": Path("scripts/evaluate_rust_retrieval.py"),
+        "evaluator.py": Path("scripts/experiments/evaluate_rust_retrieval.py"),
         "openapi.json": Path("backend/openapi.json"),
     }
     for name, relative_path in relative_files.items():
@@ -427,7 +427,7 @@ def test_rust_pilot_readiness_writes_atomic_assets_without_mutating_inputs(tmp_p
     )
     output = tmp_path / "preflight.json"
     manifest = tmp_path / "manifest.json"
-    gate_script = tmp_path / "scripts" / "freeze_system_evidence.py"
+    gate_script = tmp_path / "scripts" / "freeze" / "freeze_system_evidence.py"
     gate_script.parent.mkdir(parents=True, exist_ok=True)
     gate_script.write_bytes(SCRIPT.read_bytes())
 
@@ -453,9 +453,9 @@ def test_rust_pilot_readiness_writes_atomic_assets_without_mutating_inputs(tmp_p
     assert {item["path"] for item in written_manifest["files"]} == {
         "docs/experiments/rust-retrieval-pilot-protocol-v1.md",
         "data/real/GSE111619/gse111619_questions.json",
-        "scripts/evaluate_rust_retrieval.py",
+        "scripts/experiments/evaluate_rust_retrieval.py",
         "backend/openapi.json",
-        "scripts/freeze_system_evidence.py",
+        "scripts/freeze/freeze_system_evidence.py",
     }
     protocol_entry = next(
         item

@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 
 
-OPENAPI_PATH = Path(__file__).resolve().parents[1] / "backend" / "openapi.json"
+OPENAPI_PATH = Path(__file__).resolve().parents[2] / "backend" / "openapi.json"
 EVIDENCE_PATH = "/rag/experiments/{run_id}/evidence.json"
 RUST_RETRIEVAL_PATH = "/projects/{project_id}/rag/retrieve"
 EXPERIMENT_PATH = "/projects/{project_id}/rag/experiments"

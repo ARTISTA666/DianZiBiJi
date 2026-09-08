@@ -8,9 +8,9 @@ from pathlib import Path
 import pytest
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-SCRIPT = ROOT / "scripts" / "evaluate_rust_retrieval.py"
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "experiments"))
+SCRIPT = ROOT / "scripts" / "experiments" / "evaluate_rust_retrieval.py"
 SPEC = importlib.util.spec_from_file_location("evaluate_rust_retrieval", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

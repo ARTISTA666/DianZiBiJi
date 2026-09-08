@@ -19,10 +19,10 @@
 | run_config_json | `data/real/experiment-5/run-config.json` | `0bbc5aafd2c98a7a40a1eac546fb60b728c09b339cb3f5b2d49fff71ddce1c6a` |
 | question_set_json | `data/real/GSE111619/gse111619_kg_holdout_questions.json` | `ca3b868748e4771460973a3a2923a829c2397ff90fceb08062b643054e9cd889` |
 | freeze_manifest_json | `docs/experiments/rag-experiment-5-internal-freeze-manifest-v2.json` | `2f5f6445fdb995900b24fb19f821716a09057d6e39b153aca9303bce4f6b90a0` |
-| experiment_contract_script | `scripts/rag_experiment_contract.py` | `7accb59407093aa42ed1968603af661c40bd3cda7f7310883a49d79669717f0c` |
-| bundle_audit_script | `scripts/audit_rag_five_mode_bundle.py` | `26e3fac82b91cab6645a7c80dfc204a871340690f9084db385793ed83dd777cb` |
-| material_renderer_script | `scripts/render_rag_five_mode_paper_material.py` | `7b5e831d477bf0afe33940fdc407bacefd9c745a4c78a2420985217d8d17e190` |
-| validation_script | `scripts/validate_five_mode_experiment.py` | `90ff2164e2c62e0aab21764e3e05f26ccb032e715eb5c1335d773d9b67253f4a` |
+| experiment_contract_script | `scripts/experiments/rag_experiment_contract.py` | `7accb59407093aa42ed1968603af661c40bd3cda7f7310883a49d79669717f0c` |
+| bundle_audit_script | `scripts/audit/audit_rag_five_mode_bundle.py` | `89ef9538ac0cb4e5866fc29d9053e0609d90828b102d8945fbbbf93759a65af4` |
+| material_renderer_script | `scripts/render/render_rag_five_mode_paper_material.py` | `456aee1a5084d378d51281b7634e9764726910497abbc5182a369f297e3bdfda` |
+| validation_script | `scripts/experiments/validate_five_mode_experiment.py` | `9f9f2be13c306eb688c7a88b75bc6bfd83d9be5458a5ccfc9bd8a6f8be63a60b` |
 
 ## 运行版本与参数快照
 
@@ -33,7 +33,7 @@
 - 检索参数：`{"chunk_overlap": 120, "chunk_size": 700, "collection_retrieval_top_k": 12, "graph_min_score": 1.0, "graph_top_k": 10, "retrieval_top_k": 6, "vector_candidate_k": 30}`。
 - Prompt 版本：`{"bm25_rag": "bm25-rag-v1", "kg_enhanced_rag": "rag-v4-local-hybrid-kg-numeric", "project_rag": "rag-v4-local-hybrid-kg-numeric", "pure_llm": "pure-llm-v1", "structured_query": "structured-query-v1"}`。
 - 语料快照哈希：`2b6b174ed671f3dd20774341c0a88accb8544cfeb04ff0270487ac7a5fb610f9`；执行计划哈希：`d750782a3cdf7794a8ed1621376c68a16322bb2a54ae5cadaa11d74a7a2fadaa`。
-- 应用 revision：`unversioned`；当前分析 Git revision：`89354a9ea09829ade69461aaecb6fce6de287529`；当前工作树 dirty：`True`；当前分析 Python：`Python 3.12.13`；平台：`macOS-26.6-arm64-arm-64bit`。
+- 应用 revision：`unversioned`；当前分析 Git revision：`8d43777a14390c1c396a820cef0a8617a9c34692`；当前工作树 dirty：`True`；当前分析 Python：`Python 3.12.14`；平台：`macOS-26.6-arm64-arm-64bit`。
 
 `app_revision=unversioned` 且当前工作树 dirty，因此这些参数记录只能说明内部批次的配置快照，不能构成确认性版本归档。
 
@@ -435,8 +435,8 @@
 ## 复现入口
 
 ```bash
-backend/.venv/bin/python scripts/audit_rag_five_mode_bundle.py
-backend/.venv/bin/python scripts/render_rag_five_mode_paper_material.py
+backend/.venv/bin/python scripts/audit/audit_rag_five_mode_bundle.py
+backend/.venv/bin/python scripts/render/render_rag_five_mode_paper_material.py
 ```
 
 只有当审计产物的 `paper_ready=true`、严格引用审计通过、输入冻结清单可复核、版本与参数绑定、外部多项目题集和独立双人盲评齐备时，才可将本材料中的数字升级为确认性论文结果。

@@ -13,7 +13,7 @@ from typing import Any
 from import_gse111619_via_api import ApiClient, BENCHMARK_PROJECT_NAME
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPORT = ROOT / "data" / "real" / "GSE111619" / "agent_probe_report.json"
 TASK_TYPES = ("experiment_summary", "weekly_report", "stage_report", "graph_overview")
 

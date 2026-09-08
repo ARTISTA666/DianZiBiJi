@@ -66,9 +66,9 @@ def _canonicalize(value: Any) -> Any:
 
 
 def canonical_json_bytes(value: Any) -> bytes:
-    if platform.python_implementation() != "CPython" or platform.python_version() != "3.12.13":
+    if platform.python_implementation() != "CPython" or platform.python_version() not in ("3.12.13", "3.12.14"):
         raise RuntimeError(
-            "rust-retrieval-canonical-v1 requires CPython 3.12.13; "
+            "rust-retrieval-canonical-v1 requires CPython 3.12.13 or 3.12.14; "
             f"got {platform.python_implementation()} {platform.python_version()}"
         )
     return json.dumps(

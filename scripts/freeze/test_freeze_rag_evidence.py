@@ -7,9 +7,9 @@ from copy import deepcopy
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-SCRIPT = ROOT / "scripts" / "freeze_rag_evidence.py"
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "freeze"))
+SCRIPT = ROOT / "scripts" / "freeze" / "freeze_rag_evidence.py"
 SPEC = importlib.util.spec_from_file_location("freeze_rag_evidence", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

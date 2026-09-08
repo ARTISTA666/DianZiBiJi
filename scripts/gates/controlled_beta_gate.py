@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_RELEASE_GATE = ROOT / "docs/experiments/main-maturity-gate-latest.json"
 DEFAULT_PRODUCTION_CONFIG = ROOT / "docs/system-evidence/production-config-latest.json"
 DEFAULT_TLS = ROOT / "docs/system-evidence/tls-deployment-latest.json"

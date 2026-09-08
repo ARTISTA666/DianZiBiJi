@@ -74,14 +74,14 @@ DeepSeek 密钥只注入后端容器，不会传给前端。敏感项目默认�
 生产公网入口应放在 TLS 反向代理之后。仓库提供 [deploy/nginx.conf.template](deploy/nginx.conf.template)，包含 HTTP→HTTPS、证书占位符、HSTS、上传体积限制、反代超时、`X-Forwarded-*` 和 `X-Request-ID` 透传。使用前必须替换 `${ELN_DOMAIN}`、`${TLS_CERT_PATH}`、`${TLS_KEY_PATH}`、`${CLIENT_MAX_BODY_SIZE}`、`${BACKEND_PORT}` 和 `${FRONTEND_PORT}`，并运行：
 
 ```bash
-backend/.venv/bin/python scripts/check_reverse_proxy_config.py \
+backend/.venv/bin/python scripts/gates/check_reverse_proxy_config.py \
   --output docs/system-evidence/reverse-proxy-latest.json
 ```
 
 密钥轮换流程见 [docs/operations/secret-rotation.md](docs/operations/secret-rotation.md)，覆盖 `SECRET_KEY`、管理员/用户密码、`POSTGRES_PASSWORD` 和 `AI_API_KEY`（兼容期含 `DEEPSEEK_API_KEY`）的备份、变更、验证、回滚和旧凭据撤销。修改该手册后运行：
 
 ```bash
-backend/.venv/bin/python scripts/check_secret_rotation_runbook.py \
+backend/.venv/bin/python scripts/gates/check_secret_rotation_runbook.py \
   --output docs/system-evidence/secret-rotation-latest.json
 ```
 
@@ -96,7 +96,7 @@ macOS 或 Linux：
 ```bash
 cd /path/to/full-system
 cp .env.example .env
-bash scripts/docker-compose-with-revision.sh up -d --build
+bash scripts/ops/docker-compose-with-revision.sh up -d --build
 ```
 
 Windows PowerShell：
@@ -104,7 +104,7 @@ Windows PowerShell：
 ```powershell
 Set-Location C:\path\to\full-system
 Copy-Item .env.example .env
-bash scripts/docker-compose-with-revision.sh up -d --build
+bash scripts/ops/docker-compose-with-revision.sh up -d --build
 ```
 
 项目使用同一套 Docker 配置，不需要维护 Windows 和 macOS 两套代码。Compose 默认构建生产前端并通过 `next start` 运行，不挂载源代码或使用开发服务器；代码变更后需要重新构建镜像。
@@ -130,7 +130,7 @@ scripts/restore-system.sh backups/eln-YYYYMMDDTHHMMSSZ --confirm-replace
 详细操作、验证记录和未覆盖风险见 [docs/operations/backup-restore.md](docs/operations/backup-restore.md)。该手册同时定义加密、异地复制、保留周期、RPO/RTO 和恢复抽检要求，可用以下命令预检：
 
 ```bash
-backend/.venv/bin/python scripts/check_backup_policy.py \
+backend/.venv/bin/python scripts/gates/check_backup_policy.py \
   --output docs/system-evidence/backup-policy-latest.json
 ```
 
@@ -190,7 +190,7 @@ ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/run_gse111619_experiment.
 没有人工测试人员时，可先用以下只读命令快速确认本地栈是否可用：
 
 ```bash
-backend/.venv/bin/python scripts/check_local_health.py \
+backend/.venv/bin/python scripts/gates/check_local_health.py \
   --output docs/system-evidence/local-health-latest.json
 ```
 
@@ -199,9 +199,9 @@ backend/.venv/bin/python scripts/check_local_health.py \
 macOS 或 Linux 本地开发环境：
 
 ```bash
-bash scripts/docker-compose-with-revision.sh build backend
+bash scripts/ops/docker-compose-with-revision.sh build backend
 
-./scripts/run-rust-db-tests.sh
+./scripts/ops/run-rust-db-tests.sh
 
 cd backend
 cargo +1.88.0 fmt --all --check
@@ -215,11 +215,11 @@ cd ..
 # 可选：验证仓库中不参与服务运行的离线证据脚本
 backend/.venv/bin/python -m pytest backend/tests -q
 backend/.venv/bin/python -m pytest -q scripts/test_*.py
-bash scripts/docker-compose-with-revision.sh config --quiet
+bash scripts/ops/docker-compose-with-revision.sh config --quiet
 npm --prefix frontend audit --omit=dev --audit-level=low
 ```
 
-`scripts/run-rust-db-tests.sh` 会用 `docker-compose.test-db.yml` 启动一次性的
+`scripts/ops/run-rust-db-tests.sh` 会用 `docker-compose.test-db.yml` 启动一次性的
 PostgreSQL 16 + pgvector 测试库，设置 `TEST_DATABASE_URL`，串行运行 Rust
 集成测试，并在结束后删除测试容器和临时卷。生产数据库不会被使用或修改。
 
@@ -251,17 +251,17 @@ E2E_BROWSER_CHANNEL=chrome npm --prefix frontend run test:e2e
 npm --prefix frontend audit --omit=dev --audit-level=low --json \
   > docs/system-evidence/npm-audit-latest.json
 cargo +1.88.0 build --manifest-path backend/Cargo.toml --release --locked
-backend/.venv/bin/python scripts/check_production_config.py \
+backend/.venv/bin/python scripts/gates/check_production_config.py \
   --env-file .env \
   --rust-config-checker backend/target/release/eln-backend \
   --output docs/system-evidence/production-config-latest.json
-backend/.venv/bin/python scripts/check_secret_hygiene.py \
+backend/.venv/bin/python scripts/gates/check_secret_hygiene.py \
   --output docs/system-evidence/secret-hygiene-latest.json
-backend/.venv/bin/python scripts/check_secret_rotation_runbook.py \
+backend/.venv/bin/python scripts/gates/check_secret_rotation_runbook.py \
   --output docs/system-evidence/secret-rotation-latest.json
-backend/.venv/bin/python scripts/check_backup_policy.py \
+backend/.venv/bin/python scripts/gates/check_backup_policy.py \
   --output docs/system-evidence/backup-policy-latest.json
-backend/.venv/bin/python scripts/check_reverse_proxy_config.py \
+backend/.venv/bin/python scripts/gates/check_reverse_proxy_config.py \
   --output docs/system-evidence/reverse-proxy-latest.json
 
 ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/load_smoke.py \
@@ -273,7 +273,7 @@ ELN_PASSWORD=admin123 backend/.venv/bin/python scripts/load_smoke.py \
   --max-p95-ms 2000 \
   --output docs/system-evidence/load-smoke-latest.json
 
-backend/.venv/bin/python scripts/check_monitoring_alerts.py \
+backend/.venv/bin/python scripts/gates/check_monitoring_alerts.py \
   --api-base http://127.0.0.1:8001 \
   --max-p95-ms 2000 \
   --max-error-rate 0.01 \
@@ -350,7 +350,7 @@ backend/.venv/bin/python scripts/freeze_final_maturity_evidence.py \
 backend/.venv/bin/python scripts/final_maturity_gate.py
 ```
 
-它要求内部门禁通过、`docs/system-evidence/production-config-latest.json` 与 `validation-results.json` 内嵌生产配置快照均为 `passed`，且 env 文件 SHA-256、关键项清单和结构化生产检查 `checks` 完全一致并全部通过；还要求外部冻结包通过、经 `scripts/check_long_soak_report.py` 校验的长时 soak 证据通过、经 `scripts/check_tls_deployment.py` 生成的真实 TLS 部署证据通过、经 `scripts/check_offsite_backup_evidence.py` 校验的异地加密备份证据通过，并且最终证据 SHA-256 manifest 验证通过。当前缺少这些外部/生产证据时，该门禁应当失败，并把阻塞项写入 `docs/experiments/final-maturity-gate-latest.md`。这条门禁仍用于论文确认性人工评审和正式人工质量声明；受控试运行策略见 [docs/operations/controlled-beta-launch.md](docs/operations/controlled-beta-launch.md)。
+它要求内部门禁通过、`docs/system-evidence/production-config-latest.json` 与 `validation-results.json` 内嵌生产配置快照均为 `passed`，且 env 文件 SHA-256、关键项清单和结构化生产检查 `checks` 完全一致并全部通过；还要求外部冻结包通过、经 `scripts/gates/check_long_soak_report.py` 校验的长时 soak 证据通过、经 `scripts/gates/check_tls_deployment.py` 生成的真实 TLS 部署证据通过、经 `scripts/gates/check_offsite_backup_evidence.py` 校验的异地加密备份证据通过，并且最终证据 SHA-256 manifest 验证通过。当前缺少这些外部/生产证据时，该门禁应当失败，并把阻塞项写入 `docs/experiments/final-maturity-gate-latest.md`。这条门禁仍用于论文确认性人工评审和正式人工质量声明；受控试运行策略见 [docs/operations/controlled-beta-launch.md](docs/operations/controlled-beta-launch.md)。
 
 当前整改状态、代码冻结前置和外部事项的执行顺序见 [发布整改状态（2026-07-30）](docs/operations/release-remediation-2026-07-30.md)。
 前端“报告”页会通过 `/maturity/status` 只读显示内部门禁、最终成熟门禁和确认性人工评审完成门禁，并区分 `human_review_allowed`（可启动正式评审）与 `human_review_report_allowed`（可发布人工评审结果）；只要最终成熟门禁失败，页面会明确提示不要启动正式人工评审。
@@ -381,7 +381,7 @@ backend/.venv/bin/python scripts/confirmatory_review_completion_gate.py
 运行隔离的生产构建浏览器闭环、实验中途强杀恢复和短并发探针：
 
 ```bash
-scripts/run-system-e2e.sh
+scripts/ops/run-system-e2e.sh
 ```
 
 后端质量检查使用固定的 Rust 1.88.0 工具链；Python 文件仅作为离线数据处理和证据校验脚本，不参与后端服务运行：
@@ -393,12 +393,12 @@ cargo +1.88.0 clippy --all-targets -- -D warnings
 cargo +1.88.0 test --all-targets --locked
 
 cd ../
-bash scripts/docker-compose-with-revision.sh exec -T frontend npm run lint
+bash scripts/ops/docker-compose-with-revision.sh exec -T frontend npm run lint
 ```
 
 运行状态：
 
 ```bash
-bash scripts/docker-compose-with-revision.sh ps
+bash scripts/ops/docker-compose-with-revision.sh ps
 docker stats --no-stream
 ```

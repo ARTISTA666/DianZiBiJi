@@ -57,3 +57,12 @@ docs/experiments/final-maturity-gate-latest.json
 docs/experiments/final-maturity-gate-latest.md
 docs/experiments/confirmatory-review-completion-latest.json
 docs/experiments/confirmatory-review-completion-latest.md
+
+# Thesis binary exports (use Release or cloud storage for distribution)
+*.pdf
+*.docx
+*.zip
+
+# Agent video recordings
+agent-work/reports/**/*.mp4
+agent-work/reports/**/*.webm

@@ -3,6 +3,15 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_SCRIPTS_ROOT = Path(__file__).resolve().parents[1]
+for _sub in ("gates", "freeze", "experiments", "data", "render", "ops", "audit"):
+    _p = str(_SCRIPTS_ROOT / _sub)
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 import argparse
 import csv
 import hashlib
@@ -25,7 +34,7 @@ from rag_experiment_contract import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPORT = ROOT / "data/real/experiment-5/internal-five-mode-experiment-report.json"
 DEFAULT_CSV = ROOT / "data/real/experiment-5/internal-five-mode-experiment.csv"
 DEFAULT_CONFIG = ROOT / "data/real/experiment-5/run-config.json"

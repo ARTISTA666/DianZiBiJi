@@ -5,9 +5,9 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-SCRIPT = ROOT / "scripts" / "freeze_confirmatory_review_evidence.py"
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "freeze"))
+SCRIPT = ROOT / "scripts" / "freeze" / "freeze_confirmatory_review_evidence.py"
 SPEC = importlib.util.spec_from_file_location("freeze_confirmatory_review_evidence", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

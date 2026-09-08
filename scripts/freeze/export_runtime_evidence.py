@@ -16,7 +16,7 @@ from typing import Any
 from urllib.parse import urljoin
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT_DIR = ROOT / "docs" / "system-evidence"
 PROJECTION_SCHEMA = "full-system.rust-runtime-projection-v1"
 COMPOSE_PROJECTION_SCHEMA = "full-system.rust-resolved-compose-projection-v1"

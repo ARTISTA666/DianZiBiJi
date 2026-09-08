@@ -1,9 +1,9 @@
 #!/bin/sh
 set -eu
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 compose() {
-  bash "$ROOT/scripts/docker-compose-with-revision.sh" \
+  bash "$ROOT/scripts/ops/docker-compose-with-revision.sh" \
     -p eln-rust-test-db -f "$ROOT/docker-compose.test-db.yml" "$@"
 }
 

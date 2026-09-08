@@ -3,6 +3,15 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_SCRIPTS_ROOT = Path(__file__).resolve().parents[1]
+for _sub in ("gates", "freeze", "experiments", "data", "render", "ops", "audit"):
+    _p = str(_SCRIPTS_ROOT / _sub)
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 import argparse
 import hashlib
 import json

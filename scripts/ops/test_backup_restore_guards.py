@@ -11,8 +11,8 @@ from pathlib import Path
 import pytest
 
 
-ROOT = Path(__file__).resolve().parents[1]
-RESTORE = ROOT / "scripts" / "restore-system.sh"
+ROOT = Path(__file__).resolve().parents[2]
+RESTORE = ROOT / "scripts" / "ops" / "restore-system.sh"
 
 
 def sha256(path: Path) -> str:

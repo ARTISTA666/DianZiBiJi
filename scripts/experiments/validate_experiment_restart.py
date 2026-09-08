@@ -13,7 +13,7 @@ import httpx
 
 
 TERMINAL = {"completed", "completed_with_errors", "failed", "interrupted"}
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 COMPOSE_WRAPPER = ROOT / "scripts" / "docker-compose-with-revision.sh"
 
 

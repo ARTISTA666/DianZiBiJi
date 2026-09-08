@@ -6,8 +6,8 @@ import tarfile
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "restore_drill.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "ops" / "restore_drill.py"
 SPEC = importlib.util.spec_from_file_location("restore_drill", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

@@ -3,6 +3,15 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+_SCRIPTS_ROOT = Path(__file__).resolve().parents[1]
+for _sub in ("gates", "freeze", "experiments", "data", "render", "ops", "audit"):
+    _p = str(_SCRIPTS_ROOT / _sub)
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
 import argparse
 import csv
 import hashlib
@@ -17,7 +26,7 @@ from summarize_system_reviews import summarize
 from validate_human_review_freeze import validate as validate_human_freeze
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FREEZE = ROOT / "docs" / "experiments" / "confirmatory-human-review-freeze.json"
 DEFAULT_EXPORT = ROOT / "docs" / "experiments" / "confirmatory-human-review-export.csv"
 DEFAULT_FINAL_GATE = ROOT / "docs" / "experiments" / "final-maturity-gate-latest.json"

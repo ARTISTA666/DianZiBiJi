@@ -7,8 +7,8 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "audit_rag_five_mode_bundle.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "audit" / "audit_rag_five_mode_bundle.py"
 sys.path.insert(0, str(SCRIPT.parent))
 SPEC = importlib.util.spec_from_file_location("audit_rag_five_mode_bundle", SCRIPT)
 assert SPEC and SPEC.loader

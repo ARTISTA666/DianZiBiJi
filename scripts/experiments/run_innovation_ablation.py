@@ -31,7 +31,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 PROJECT_ID = 10
-OUT_DIR = Path(__file__).resolve().parent.parent / "docs" / "experiments"
+OUT_DIR = Path(__file__).resolve().parents[2] / "docs" / "experiments"
 NOW = datetime.now(timezone.utc)
 
 

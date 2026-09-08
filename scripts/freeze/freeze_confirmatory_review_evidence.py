@@ -10,7 +10,7 @@ from pathlib import Path
 from freeze_preregistration import build_manifest, verify_manifest, write_manifest
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = ROOT / "docs" / "experiments" / "confirmatory-review-evidence-manifest.json"
 DEFAULT_FILES = [
     ROOT / "docs" / "experiments" / "final-maturity-gate-latest.json",

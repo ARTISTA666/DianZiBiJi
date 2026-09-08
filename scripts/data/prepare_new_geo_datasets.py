@@ -17,7 +17,7 @@ import hashlib
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 GSE306433_DIR = ROOT / "data" / "real" / "GSE306433_colitis"
 GSE291942_DIR = ROOT / "data" / "real" / "GSE291942_arabidopsis_heat"

@@ -14,7 +14,7 @@ import sys
 from time import perf_counter
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "backend"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
@@ -186,7 +186,7 @@ async def run(gold: dict) -> dict:
 
 
 def main() -> int:
-    gold_path = ROOT / "evaluation-lab" / "agent-quality" / "gold-v1.json"
+    gold_path = ROOT / "tools" / "evaluation-lab" / "agent-quality" / "gold-v1.json"
     gold = json.loads(gold_path.read_text(encoding="utf-8"))
     report = asyncio.run(run(gold))
     print(json.dumps(report, ensure_ascii=False, indent=2))

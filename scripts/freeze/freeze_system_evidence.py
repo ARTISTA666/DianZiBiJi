@@ -21,7 +21,7 @@ from freeze_preregistration import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = ROOT / "output" / "release-evidence" / "maturity-evidence-manifest.json"
 DEFAULT_FILES = [
     ROOT / "docs" / "system-evidence" / "validation-results.json",
@@ -55,21 +55,21 @@ RUST_PILOT_READINESS_GENERATOR = "freeze_system_evidence.py"
 RUST_PILOT_READINESS_GENERATOR_VERSION = 1
 RUST_PILOT_SCOPE_PREFIXES = (
     "docs/experiments/rust-retrieval-pilot-protocol-v1.md",
-    "scripts/evaluate_rust_retrieval.py",
-    "scripts/test_evaluate_rust_retrieval.py",
-    "scripts/freeze_system_evidence.py",
-    "scripts/test_freeze_system_evidence.py",
+    "scripts/experiments/evaluate_rust_retrieval.py",
+    "scripts/experiments/test_evaluate_rust_retrieval.py",
+    "scripts/freeze/freeze_system_evidence.py",
+    "scripts/freeze/test_freeze_system_evidence.py",
     "backend/openapi.json",
     "frontend/src/lib/api-schema.d.ts",
     "backend/src/",
-    "scripts/update_rag_evidence_openapi.py",
-    "scripts/test_update_rag_evidence_openapi.py",
+    "scripts/render/update_rag_evidence_openapi.py",
+    "scripts/render/test_update_rag_evidence_openapi.py",
     "docs/system-evidence/rust-runtime-contract-latest.json",
 )
 DEFAULT_RUST_PILOT_PROTOCOL = ROOT / "docs/experiments/rust-retrieval-pilot-protocol-v1.md"
 DEFAULT_RUST_PILOT_QUESTIONS = ROOT / "data/real/GSE111619/gse111619_questions.json"
-DEFAULT_RUST_PILOT_EVALUATOR = ROOT / "scripts/evaluate_rust_retrieval.py"
-DEFAULT_RUST_PILOT_EVALUATOR_TESTS = ROOT / "scripts/test_evaluate_rust_retrieval.py"
+DEFAULT_RUST_PILOT_EVALUATOR = ROOT / "scripts/experiments/evaluate_rust_retrieval.py"
+DEFAULT_RUST_PILOT_EVALUATOR_TESTS = ROOT / "scripts/experiments/test_evaluate_rust_retrieval.py"
 DEFAULT_RUST_PILOT_OPENAPI = ROOT / "backend/openapi.json"
 DEFAULT_RUST_PILOT_RUNTIME = ROOT / "docs/system-evidence/rust-runtime-contract-latest.json"
 DEFAULT_RUST_PILOT_PREFLIGHT = ROOT / "docs/experiments/rust-retrieval-pilot-freeze-readiness-latest.json"
@@ -85,7 +85,7 @@ DEFAULT_RUST_PILOT_IMPLEMENTATION_FILES = (
     ROOT / "backend/Cargo.lock",
     ROOT / "frontend/src/lib/api-schema.d.ts",
     ROOT / "frontend/src/lib/api.ts",
-    ROOT / "scripts/evaluate_retrieval.py",
+    ROOT / "scripts/experiments/evaluate_retrieval.py",
 )
 
 

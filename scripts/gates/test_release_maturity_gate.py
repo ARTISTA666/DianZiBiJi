@@ -8,12 +8,12 @@ from pathlib import Path
 from types import SimpleNamespace
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "gates"))
 import freeze_system_evidence as SYSTEM_FREEZE  # noqa: E402
 from check_rag_evidence import canonical_sha256  # noqa: E402
 
-SCRIPT = ROOT / "scripts" / "release_maturity_gate.py"
+SCRIPT = ROOT / "scripts" / "gates" / "release_maturity_gate.py"
 SPEC = importlib.util.spec_from_file_location("release_maturity_gate", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

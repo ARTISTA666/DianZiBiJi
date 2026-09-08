@@ -26,10 +26,10 @@ FORMAL_STATUSES = frozenset({"AUTHORIZED", "EXTERNALLY_SIGNED", "FROZEN", "FROZE
 AUTHORITY_NAMESPACE = "full-system.confirmatory.v1"
 TRUST_ROOT_SCHEMA = "full-system.confirmatory-trust-root-v1"
 TOOLING_FILES = (
-    "scripts/run_rag_confirmatory_experiment.py",
-    "scripts/confirmatory_preflight.py",
+    "scripts/experiments/run_rag_confirmatory_experiment.py",
+    "scripts/gates/confirmatory_preflight.py",
     "docs/experiments/rag-evidence-package-protocol-v1.md",
-    "scripts/evaluate_rust_retrieval.py",
+    "scripts/experiments/evaluate_rust_retrieval.py",
 )
 # Untracked files are acceptable only when they are explicitly part of the
 # frozen input/result boundary.  Source code, configs, and runtime evidence

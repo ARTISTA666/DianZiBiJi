@@ -12,8 +12,8 @@ from unittest.mock import patch
 from PIL import Image, ImageDraw
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "run_ocr_region_upper_bound.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "experiments" / "run_ocr_region_upper_bound.py"
 SPEC = importlib.util.spec_from_file_location("run_ocr_region_upper_bound", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

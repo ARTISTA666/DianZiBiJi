@@ -23,7 +23,7 @@ from typing import Any
 from import_gse111619_via_api import ApiClient, BENCHMARK_PROJECT_NAME, PROJECT_NAME
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = ROOT / "data" / "real" / "GSE111619"
 DEFAULT_QUESTIONS = DATA_DIR / "gse111619_questions.json"
 DEFAULT_CSV = DATA_DIR / "gse111619_paired_experiment.csv"

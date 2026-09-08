@@ -9,11 +9,11 @@ import sys
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "gates"))
 from freeze_preregistration import build_manifest  # noqa: E402
 
-SCRIPT = ROOT / "scripts" / "confirmatory_review_completion_gate.py"
+SCRIPT = ROOT / "scripts" / "gates" / "confirmatory_review_completion_gate.py"
 SPEC = importlib.util.spec_from_file_location("confirmatory_review_completion_gate", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

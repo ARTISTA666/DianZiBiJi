@@ -8,8 +8,8 @@ from pathlib import Path
 import pytest
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "render_rag_five_mode_paper_material.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "render" / "render_rag_five_mode_paper_material.py"
 sys.path.insert(0, str(SCRIPT.parent))
 SPEC = importlib.util.spec_from_file_location("render_rag_five_mode_paper_material", SCRIPT)
 assert SPEC and SPEC.loader
@@ -104,7 +104,7 @@ def test_material_renders_audit_status_and_recomputed_values() -> None:
 
 
 def test_audit_and_renderer_share_retrieval_contract() -> None:
-    audit_script = ROOT / "scripts" / "audit_rag_five_mode_bundle.py"
+    audit_script = ROOT / "scripts" / "audit" / "audit_rag_five_mode_bundle.py"
     audit_spec = importlib.util.spec_from_file_location("audit_contract_probe", audit_script)
     assert audit_spec and audit_spec.loader
     audit_module = importlib.util.module_from_spec(audit_spec)

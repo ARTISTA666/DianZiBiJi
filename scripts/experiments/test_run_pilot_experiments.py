@@ -10,8 +10,8 @@ import unittest
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "scripts" / "run_rag_confirmatory_experiment.py"
+ROOT = Path(__file__).resolve().parents[2]
+SCRIPT = ROOT / "scripts" / "experiments" / "run_rag_confirmatory_experiment.py"
 SPEC = importlib.util.spec_from_file_location("run_pilot_experiments", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
@@ -44,10 +44,10 @@ def fixture(root: Path) -> dict[str, Path | str]:
     tracked.write_text("clean\n", encoding="utf-8")
     subprocess.run(["git", "add", "scripts/confirmatory-policy", "tracked.txt"], cwd=root, check=True)
     tooling = {
-        "scripts/run_rag_confirmatory_experiment.py": "runner fixture\n",
-        "scripts/confirmatory_preflight.py": "preflight fixture\n",
+        "scripts/experiments/run_rag_confirmatory_experiment.py": "runner fixture\n",
+        "scripts/gates/confirmatory_preflight.py": "preflight fixture\n",
         "docs/experiments/rag-evidence-package-protocol-v1.md": "protocol fixture\n",
-        "scripts/evaluate_rust_retrieval.py": "evaluator fixture\n",
+        "scripts/experiments/evaluate_rust_retrieval.py": "evaluator fixture\n",
     }
     for name, content in tooling.items():
         path = root / name

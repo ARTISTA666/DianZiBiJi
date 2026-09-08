@@ -146,7 +146,7 @@ def load_answers(path: Path) -> dict[str, str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--gold", type=Path, default=Path("evaluation-lab/agent-quality/gold-v1.json"))
+    parser.add_argument("--gold", type=Path, default=Path("tools/evaluation-lab/agent-quality/gold-v1.json"))
     parser.add_argument("--answers", type=Path, required=True)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()

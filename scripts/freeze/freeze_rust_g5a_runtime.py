@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = "full-system.rust-g5a-runtime-freeze"
 MANIFEST_SCHEMA = "full-system.rust-g5a-runtime-freeze-manifest"
 REVISION = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")

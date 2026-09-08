@@ -6,7 +6,7 @@
 
 正式确认性评审的阻塞项包括两类：一是目前只有短并发、非破坏性备份 smoke 和隔离恢复证据，尚未完成数小时至数天的长时间、大语料、多进程和接近生产容量的运行验证；二是正式证据包尚未齐全，现有回答来自开发者整理的单项目内部题集，外部冻结的多项目问题、标准事实以及两名真实评价人仍未落实。
 
-最新最终成熟门禁见 `docs/experiments/final-maturity-gate-latest.md`。该门禁当前明确阻塞：生产配置尚未在 `APP_ENV=production` 下通过、`confirmatory-human-review-freeze.json` 缺失、经 `scripts/check_long_soak_report.py` 校验的长时 soak 证据缺失、经 `scripts/check_tls_deployment.py` 生成的真实 TLS 部署证据缺失、经 `scripts/check_offsite_backup_evidence.py` 校验的异地加密备份证据缺失。
+最新最终成熟门禁见 `docs/experiments/final-maturity-gate-latest.md`。该门禁当前明确阻塞：生产配置尚未在 `APP_ENV=production` 下通过、`confirmatory-human-review-freeze.json` 缺失、经 `scripts/gates/check_long_soak_report.py` 校验的长时 soak 证据缺失、经 `scripts/gates/check_tls_deployment.py` 生成的真实 TLS 部署证据缺失、经 `scripts/gates/check_offsite_backup_evidence.py` 校验的异地加密备份证据缺失。
 这些证据文件的最小结构见 `docs/operations/final-maturity-evidence.md`。
 
 ## 已达到的技术条件

@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def get_json(url: str, timeout: int = 10) -> tuple[int | None, dict, str | None]:

@@ -9,11 +9,11 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / "scripts" / "gates"))
 from freeze_preregistration import build_manifest  # noqa: E402
 
-SCRIPT = ROOT / "scripts" / "final_maturity_gate.py"
+SCRIPT = ROOT / "scripts" / "gates" / "final_maturity_gate.py"
 SPEC = importlib.util.spec_from_file_location("final_maturity_gate", SCRIPT)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)

@@ -17,7 +17,7 @@
 运行方式：
 
 ```bash
-backend/.venv/bin/python scripts/validate_real_llm.py
+backend/.venv/bin/python scripts/experiments/validate_real_llm.py
 ```
 
 ## 明确限制

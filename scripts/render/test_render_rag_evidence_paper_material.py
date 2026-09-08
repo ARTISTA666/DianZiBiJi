@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def load_module(name: str, path: Path):
@@ -24,19 +24,19 @@ def load_module(name: str, path: Path):
 
 CHECKER = load_module(
     "check_rag_experiment_evidence_for_paper_material",
-    ROOT / "scripts/check_rag_experiment_evidence.py",
+    ROOT / "scripts/gates/check_rag_experiment_evidence.py",
 )
 FIXTURES = load_module(
     "check_rag_experiment_evidence_fixtures_for_paper_material",
-    ROOT / "scripts/test_check_rag_experiment_evidence.py",
+    ROOT / "scripts/gates/test_check_rag_experiment_evidence.py",
 )
 MODULE = load_module(
     "render_rag_evidence_paper_material",
-    ROOT / "scripts/render_rag_evidence_paper_material.py",
+    ROOT / "scripts/render/render_rag_evidence_paper_material.py",
 )
 FRESHNESS = load_module(
     "check_paper_material_freshness_for_rag_evidence_material",
-    ROOT / "scripts/check_paper_material_freshness.py",
+    ROOT / "scripts/gates/check_paper_material_freshness.py",
 )
 
 
@@ -55,8 +55,8 @@ def checked_package() -> tuple[dict, dict]:
 
 
 REQUIRED_INPUTS = (
-    "scripts/check_rag_experiment_evidence.py",
-    "scripts/render_rag_evidence_paper_material.py",
+    "scripts/gates/check_rag_experiment_evidence.py",
+    "scripts/render/render_rag_evidence_paper_material.py",
     "docs/experiments/rag-evidence-package-protocol-v1.md",
     "docs/experiments/rag-paper-evidence-index-v1.md",
 )
@@ -179,7 +179,7 @@ def test_cli_writes_material_without_absolute_workspace_path(tmp_path: Path) -> 
 
 def test_fingerprints_are_stable_and_use_relative_paths() -> None:
     fingerprints = MODULE.input_fingerprints(
-        ROOT / "scripts/test_check_rag_experiment_evidence.py", ROOT
+        ROOT / "scripts/gates/test_check_rag_experiment_evidence.py", ROOT
     )
 
     names = [item["name"] for item in fingerprints]

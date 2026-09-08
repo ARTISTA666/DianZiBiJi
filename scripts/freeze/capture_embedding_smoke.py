@@ -37,7 +37,7 @@ import urllib.error
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 OUT_DIR = ROOT / "docs" / "system-evidence"
 PROBE_TEXT = "科研电子实验笔记系统 bge-m3 1024 维嵌入运行冒烟"
 FINGERPRINT_N = 16

@@ -12,13 +12,13 @@ from pathlib import Path
 from typing import Any
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_VERSION = "rag-evidence-package-v1"
 STATISTICS_SCHEMA_VERSION = "rag-evidence-statistics-v1"
 
 
 def _load_checker() -> Any:
-    path = ROOT / "scripts/check_rag_experiment_evidence.py"
+    path = ROOT / "scripts/gates/check_rag_experiment_evidence.py"
     spec = importlib.util.spec_from_file_location("rag_evidence_checker_for_renderer", path)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"cannot load evidence checker: {path}")
@@ -54,8 +54,8 @@ def input_fingerprints(package_path: Path, root: Path = ROOT) -> list[dict[str, 
     root = root.resolve()
     inputs = (
         ("evidence_package", package_path),
-        ("evidence_checker", root / "scripts/check_rag_experiment_evidence.py"),
-        ("paper_material_renderer", root / "scripts/render_rag_evidence_paper_material.py"),
+        ("evidence_checker", root / "scripts/gates/check_rag_experiment_evidence.py"),
+        ("paper_material_renderer", root / "scripts/render/render_rag_evidence_paper_material.py"),
         ("evidence_protocol", root / "docs/experiments/rag-evidence-package-protocol-v1.md"),
         ("paper_evidence_index", root / "docs/experiments/rag-paper-evidence-index-v1.md"),
     )
@@ -253,8 +253,8 @@ def render(
 在同一仓库根目录执行检查器并将结果传给本渲染器；任一输入漂移均应失败关闭：
 
 ```text
-backend/.venv/bin/python scripts/check_rag_experiment_evidence.py --package {package_reference} --output check.json
-backend/.venv/bin/python scripts/render_rag_evidence_paper_material.py --package {package_reference} --check-result check.json --output rag-evidence-paper-material.md
+backend/.venv/bin/python scripts/gates/check_rag_experiment_evidence.py --package {package_reference} --output check.json
+backend/.venv/bin/python scripts/render/render_rag_evidence_paper_material.py --package {package_reference} --check-result check.json --output rag-evidence-paper-material.md
 ```
 
 正式效果结论仍需外部冻结题集、金标准、独立双人盲评、应用 revision 和确认性运行包。本材料不替代这些证据，也不把描述性分层升级为统计显著性检验。

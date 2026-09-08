@@ -3,7 +3,7 @@ set -eu
 
 umask 077
 
-ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/../.." && pwd)
 cd "$ROOT"
 
 build_revision=$(git rev-parse --verify HEAD^{commit})
@@ -19,7 +19,7 @@ if [ "${#build_revision}" -ne 40 ] && [ "${#build_revision}" -ne 64 ]; then
 fi
 
 compose() {
-  bash "$ROOT/scripts/docker-compose-with-revision.sh" "$@"
+  bash "$ROOT/scripts/ops/docker-compose-with-revision.sh" "$@"
 }
 
 if [ ! -f .env ]; then

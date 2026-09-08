@@ -21,7 +21,7 @@
 离线复算已有回答：
 
 ```bash
-backend/.venv/bin/python scripts/evaluate_agent_quality.py --answers /path/to/answers.json
+backend/.venv/bin/python scripts/experiments/evaluate_agent_quality.py --answers /path/to/answers.json
 ```
 
 输入格式为 `[{"id": "experiment-summary-01", "answer": "..."}]`，也可放在对象的 `answers` 字段中。只有显式指定 `--output` 才写出报告；报告不含回答正文。
@@ -29,7 +29,7 @@ backend/.venv/bin/python scripts/evaluate_agent_quality.py --answers /path/to/an
 真实 DeepSeek 验收：
 
 ```bash
-backend/.venv/bin/python scripts/validate_real_agent_quality.py
+backend/.venv/bin/python scripts/experiments/validate_real_agent_quality.py
 ```
 
 脚本默认不落盘、不输出提示词、回答或密钥，只输出指标、回答 SHA-256、模型、延迟和 token 用量。执行前必须确认本地安全配置已存在。
