@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, useEffect, useMemo, type ReactNode } from "react";
 import { useParams } from "next/navigation";
-import { Play, FileText, Copy, ChevronsDownUp, ChevronsUpDown } from "lucide-react";
+import { Play, FileText, Copy, ChevronsDownUp, ChevronsUpDown, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -82,9 +82,25 @@ export default function ReportsPage() {
   const [dateTo, setDateTo] = useState("");
   const [agentBusy, setAgentBusy] = useState(false);
   const [expandedRunIds, setExpandedRunIds] = useState<Set<number>>(new Set());
+  const [onlySuccess, setOnlySuccess] = useState(false);
   const feedback = useActionFeedback();
   const membership = members.find((member) => member.user_id === user?.id);
   const canWrite = user?.role === "super_admin" || membership?.can_write === true;
+
+  // 排序与过滤：成功/待审记录优先置顶，失败记录后置；支持“仅看成功”过滤
+  const sortedAndFilteredRuns = useMemo(() => {
+    let list = [...agentRuns];
+    if (onlySuccess) {
+      list = list.filter((r) => r.status !== "failed");
+    }
+    list.sort((a, b) => {
+      const aFailed = a.status === "failed" ? 1 : 0;
+      const bFailed = b.status === "failed" ? 1 : 0;
+      if (aFailed !== bFailed) return aFailed - bFailed;
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+    return list;
+  }, [agentRuns, onlySuccess]);
 
   useEffect(() => {
     if (token) loadReportsTabData(token, projectId);
@@ -157,9 +173,23 @@ export default function ReportsPage() {
         </Card>
       ) : (
         <Card>
-          <CardHeader><CardTitle className="text-base">运行记录</CardTitle></CardHeader>
+          <CardHeader className="flex flex-row items-center justify-between pb-3">
+            <CardTitle className="text-base">
+              运行记录 ({sortedAndFilteredRuns.length}
+              {onlySuccess ? ` / 全部 ${agentRuns.length}` : ""})
+            </CardTitle>
+            <label className="flex items-center gap-1.5 text-xs font-normal text-muted-foreground cursor-pointer hover:text-foreground">
+              <input
+                type="checkbox"
+                checked={onlySuccess}
+                onChange={(e) => setOnlySuccess(e.target.checked)}
+                className="h-3.5 w-3.5 rounded border-gray-300 text-primary focus:ring-primary"
+              />
+              仅看成功与就绪记录
+            </label>
+          </CardHeader>
           <CardContent className="space-y-2">
-            {agentRuns.map((run) => {
+            {sortedAndFilteredRuns.map((run) => {
               const expanded = expandedRunIds.has(run.id);
               const collapsible = run.body.length > BODY_PREVIEW_LENGTH;
               return (
@@ -172,11 +202,36 @@ export default function ReportsPage() {
                       </Button>
                     )}
                   </div>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    状态: {agentStatusText[run.status] || run.status}
-                    {" · 生成时间: "}
-                    {new Date(run.created_at).toLocaleString("zh-CN")}
-                  </p>
+                  <div className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+                    <span>状态:</span>
+                    <span
+                      className={`inline-flex items-center rounded px-1.5 py-0.5 text-[11px] font-medium ${
+                        run.status === "completed"
+                          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400"
+                          : run.status === "failed"
+                          ? "bg-destructive/10 text-destructive cursor-help"
+                          : run.status === "needs_review"
+                          ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300"
+                          : "bg-muted text-muted-foreground"
+                      }`}
+                      title={run.status === "failed" ? (run.message || "执行中断或超出Token上限，已记录在错误日志中") : undefined}
+                    >
+                      {agentStatusText[run.status] || run.status}
+                    </span>
+                    <span>{" · 生成时间: "}</span>
+                    <span>{new Date(run.created_at).toLocaleString("zh-CN")}</span>
+                  </div>
+                  {run.status === "failed" && (
+                    <div className="mt-2 rounded bg-destructive/5 border border-destructive/20 p-2.5 text-xs text-destructive flex items-start gap-2">
+                      <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-medium">任务执行中断</p>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          {run.message || "由于历史模型 max_tokens 限制或网络波动中断；可在上方重新发起任务。"}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                   {run.status === "needs_review" && (
                     <p className="mt-2 rounded bg-amber-50 px-2 py-1 text-xs text-amber-800">
                       引用校验未完全通过。请人工核对来源后再使用此草稿。

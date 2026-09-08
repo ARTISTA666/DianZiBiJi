@@ -15,6 +15,8 @@ import {
   BrainCircuit,
   ChevronDown,
   ChevronRight,
+  ChevronUp,
+  Minimize2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -87,13 +89,52 @@ export function AgentAssistant() {
   const [chainOfThought, setChainOfThought] = useState<Array<{ step: string; detail: string; status: string }>>([]);
   const [showChain, setShowChain] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [expandedMessageIds, setExpandedMessageIds] = useState<Set<string>>(new Set());
   const messageId = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const ragRequestId = useRef(0);
   const serverSessionId = useRef<string | null>(null);
   const eventStreamCleanup = useRef<(() => void) | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const toggleExpandMessage = (id: string) => {
+    setExpandedMessageIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  // 点击外部区域或按 Escape 自动收起侧栏，防止遮挡底层页面按钮（如“调整阈值”）
+  useEffect(() => {
+    if (!open) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        sectionRef.current &&
+        !sectionRef.current.contains(target) &&
+        toggleButtonRef.current &&
+        !toggleButtonRef.current.contains(target)
+      ) {
+        setOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
 
   const currentProjectId = projectIdFromPath(pathname);
   const currentProject = selectedProject?.id === currentProjectId ? selectedProject : null;
@@ -381,7 +422,7 @@ export function AgentAssistant() {
   return (
     <div className="fixed bottom-5 right-5 z-[60] flex flex-col items-end gap-3">
       {open && (
-        <section aria-label="Agent 助手" className="flex h-[min(680px,calc(100vh-7rem))] w-[min(430px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border bg-background shadow-2xl ring-1 ring-black/5">
+        <section ref={sectionRef} aria-label="Agent 助手" className="flex h-[min(680px,calc(100vh-7rem))] w-[min(430px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border bg-background shadow-2xl ring-1 ring-black/5 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <div className="flex items-center justify-between bg-primary px-4 py-3 text-primary-foreground">
             <div className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15"><Bot className="h-5 w-5" /></div>
@@ -390,7 +431,7 @@ export function AgentAssistant() {
                 <p className="text-xs text-primary-foreground/75">{currentProject?.name || "跨项目工作区"}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <label className="sr-only" htmlFor="agent-profile">Agent 模式</label>
               <select
                 id="agent-profile"
@@ -402,19 +443,52 @@ export function AgentAssistant() {
                 <option value="fast" className="text-foreground">快速</option>
                 <option value="deep" className="text-foreground">深度（需确认计划）</option>
               </select>
-              <Button aria-label="关闭 Agent" variant="ghost" size="icon" className="h-8 w-8 text-primary-foreground hover:bg-white/15 hover:text-primary-foreground" onClick={() => setOpen(false)}><X className="h-4 w-4" /></Button>
+              <Button aria-label="收起 Agent 浮层" variant="ghost" size="icon" className="h-8 w-8 text-primary-foreground hover:bg-white/15 hover:text-primary-foreground" title="一键收起（点击外部亦可收起）" onClick={() => setOpen(false)}><Minimize2 className="h-4 w-4" /></Button>
+              <Button aria-label="关闭 Agent" variant="ghost" size="icon" className="h-8 w-8 text-primary-foreground hover:bg-white/15 hover:text-primary-foreground" title="关闭" onClick={() => setOpen(false)}><X className="h-4 w-4" /></Button>
             </div>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto bg-muted/20 p-4" aria-live="polite">
-            {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[90%] ${message.role === "assistant" ? "space-y-1" : ""}`}>
-                  <div className={message.role === "user" ? "rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5 text-sm text-primary-foreground" : "whitespace-pre-wrap rounded-2xl rounded-bl-md border bg-background px-3.5 py-2.5 text-sm leading-6 shadow-sm"}>{message.content}</div>
-                  {message.meta && <p className="px-1 text-[11px] text-muted-foreground">{message.meta}</p>}
+            {messages.map((message) => {
+              const isAssistant = message.role === "assistant";
+              const isLong = isAssistant && message.content.length > 180;
+              const isExpanded = expandedMessageIds.has(message.id);
+              const displayContent = isLong && !isExpanded
+                ? message.content.slice(0, 140) + "…"
+                : message.content;
+
+              return (
+                <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                  <div className={`max-w-[90%] ${isAssistant ? "space-y-1" : ""}`}>
+                    <div className={message.role === "user" ? "rounded-2xl rounded-br-md bg-primary px-3.5 py-2.5 text-sm text-primary-foreground" : "whitespace-pre-wrap rounded-2xl rounded-bl-md border bg-background px-3.5 py-2.5 text-sm leading-6 shadow-sm"}>
+                      {displayContent}
+                      {isLong && (
+                        <div className="mt-1.5 pt-1.5 border-t border-border/40 flex justify-end">
+                          <button
+                            type="button"
+                            onClick={() => toggleExpandMessage(message.id)}
+                            className="inline-flex items-center gap-1 text-[11px] font-medium text-primary hover:underline cursor-pointer"
+                          >
+                            {isExpanded ? (
+                              <>
+                                <ChevronUp className="h-3 w-3" />
+                                收起全文
+                              </>
+                            ) : (
+                              <>
+                                <ChevronDown className="h-3 w-3" />
+                                展开全文 ({message.content.length} 字)
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {message.meta && <p className="px-1 text-[11px] text-muted-foreground">{message.meta}</p>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             {chainOfThought.length > 0 && (
               <div className="rounded-xl border bg-background p-2.5 text-sm shadow-sm">
                 <button type="button" className="flex w-full items-center gap-1.5 text-xs font-medium text-muted-foreground" onClick={() => setShowChain((v) => !v)}>
@@ -469,7 +543,7 @@ export function AgentAssistant() {
 
       <div className="relative">
         {!open && <span className="absolute inset-0 animate-ping rounded-full bg-primary/30" aria-hidden="true" />}
-        <Button aria-label={open ? "关闭 Agent 助手" : "打开 Agent 助手"} aria-expanded={open} size="icon" className="relative h-14 w-14 rounded-full shadow-lg transition-transform hover:scale-105" onClick={() => setOpen((current) => !current)}>{open ? <X className="h-5 w-5" /> : <Bot className="h-6 w-6" />}</Button>
+        <Button ref={toggleButtonRef} aria-label={open ? "关闭 Agent 助手" : "打开 Agent 助手"} aria-expanded={open} size="icon" className="relative h-14 w-14 rounded-full shadow-lg transition-transform hover:scale-105" onClick={() => setOpen((current) => !current)}>{open ? <X className="h-5 w-5" /> : <Bot className="h-6 w-6" />}</Button>
       </div>
     </div>
   );

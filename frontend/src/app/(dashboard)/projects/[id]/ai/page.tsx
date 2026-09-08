@@ -101,6 +101,20 @@ export default function AIPage() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
+  // 支持 URL 参数预填问题（如从知识蓝图缺口一键跳转：?q=...）
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get("q");
+      if (q && q.trim()) {
+        setQuestion(q.trim());
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (token) loadAITabData(token, projectId);
   }, [token, projectId, loadAITabData]);

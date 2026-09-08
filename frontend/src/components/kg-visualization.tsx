@@ -643,18 +643,43 @@ export function KnowledgeGraphVisualization({
   );
 
   // 关键稳定性保障：专用于射线拾取判定（Shadow Canvas），稳定提供拾取色块，杜绝 Hover 碰撞震颤循环
+  // P1-2 优化：将拾取半径扩大至 ≥24px，并将处于可见态的标签药丸一并纳入拾取层，大幅提高悬停聚焦与点击锁定的命中率
   const paintNodePointerArea = useCallback(
     (node: any, color: string, ctx: CanvasRenderingContext2D) => {
       const x = node.x;
       const y = node.y;
       if (!Number.isFinite(x) || !Number.isFinite(y)) return;
-      const r = (node.radius || 11) + 3;
+      const baseR = node.radius || 11;
+      const pickR = Math.max(24, baseR + 12);
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.arc(x, y, pickR, 0, Math.PI * 2);
       ctx.fillStyle = color;
       ctx.fill();
+
+      // 当节点附带文本标签时，将标签药丸区域也绘制到 Shadow Canvas，使得文字区域同样可响应 Hover 聚焦与点击
+      const hasActiveFocus = primaryFocusId !== null;
+      const isInFocusNetwork = highlightedIds.has(node.id);
+      const isFocusCenter = node.id === primaryFocusId;
+      const shouldDrawLabel =
+        hasActiveFocus
+          ? isInFocusNetwork
+          : (labelMode === "all" || (labelMode === "smart" && node.isNote));
+
+      if (shouldDrawLabel) {
+        const displayName = node.displayName || node.name || "";
+        const labelText = isFocusCenter || node.isNote ? (node.labelWithSummary || displayName) : displayName;
+        if (labelText) {
+          const approxWidth = Math.max(32, labelText.length * 9 + 12);
+          const pillHeight = 18;
+          const pillY = y + baseR + 2;
+          ctx.beginPath();
+          ctx.rect(x - approxWidth / 2, pillY, approxWidth, pillHeight);
+          ctx.fillStyle = color;
+          ctx.fill();
+        }
+      }
     },
-    []
+    [primaryFocusId, highlightedIds, labelMode]
   );
 
   // 连线中点语义药丸标签
@@ -874,7 +899,7 @@ export function KnowledgeGraphVisualization({
                   <>
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                     <span className="text-muted-foreground">全景图谱 ({nodes.length} 实体)</span>
-                    <span className="text-[10px] text-muted-foreground/80">· 鼠标悬停聚焦</span>
+                    <span className="text-[11px] text-muted-foreground/80">· 悬停聚焦一跳 · 单击锁定 · 拖拽固定</span>
                   </>
                 )}
               </div>
@@ -884,7 +909,8 @@ export function KnowledgeGraphVisualization({
                   variant="ghost"
                   size="sm"
                   onClick={() => onEntitySelect(null)}
-                  className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                  className="h-7 px-2 text-xs text-primary font-medium hover:text-primary/80"
+                  title="释放当前实体的锁定聚焦，恢复全景图谱浏览"
                 >
                   <X className="mr-1 h-3 w-3" />
                   释放锁定
@@ -924,7 +950,7 @@ export function KnowledgeGraphVisualization({
                 size="sm"
                 onClick={handleUnpinAll}
                 className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
-                title="释放所有手动钉住的节点"
+                title="释放所有手动拖拽固定的节点位置，恢复力导向自动布局"
               >
                 <PinOff className="mr-1 h-3.5 w-3.5" />
                 释放固定
@@ -1191,17 +1217,22 @@ export function KnowledgeGraphVisualization({
             </div>
           )}
 
-          {/* 底部折叠式「图例说明」 */}
-          <div className="absolute bottom-3 left-3 z-10">
+          {/* 底部折叠式「图例说明」与交互提示 */}
+          <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
             {!legendOpen ? (
-              <button
-                type="button"
-                onClick={() => setLegendOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-background/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-subtle backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
-              >
-                <MapIcon className="h-3.5 w-3.5 text-primary" />
-                <span>实体色板图例</span>
-              </button>
+              <>
+                <button
+                  type="button"
+                  onClick={() => setLegendOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-background/90 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-subtle backdrop-blur-md transition-colors hover:bg-background hover:text-foreground"
+                >
+                  <MapIcon className="h-3.5 w-3.5 text-primary" />
+                  <span>实体色板图例</span>
+                </button>
+                <div className="hidden md:inline-flex items-center rounded-lg border border-border/70 bg-background/85 px-2.5 py-1 text-[11px] text-muted-foreground shadow-xs backdrop-blur-md">
+                  💡 悬停节点聚焦一跳 · 点击锁定 · 拖拽可固定位置
+                </div>
+              </>
             ) : (
               <div className="w-72 rounded-xl border border-border/80 bg-background/95 p-3.5 shadow-card backdrop-blur-md transition-all">
                 <div className="mb-2 flex items-center justify-between border-b border-border/50 pb-2">

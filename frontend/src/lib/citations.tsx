@@ -171,6 +171,37 @@ export function RagSourceList({ sources, projectId }: { sources: RagSource[]; pr
   );
 }
 
+function formatCitationAuditBadge(audit: NonNullable<RagQueryResponse["citation_audit"]>): {
+  label: string;
+  tooltip: string;
+} {
+  if (audit.passed) {
+    return {
+      label: audit.citation_count > 0 ? `引用校验通过（${audit.citation_count} 个编号）` : "引用校验通过",
+      tooltip: audit.message || `共核对 ${audit.citation_count} 个证据编号，全部有效。`,
+    };
+  }
+
+  // 校验未通过时，拆分总体判定与明细两段，彻底杜绝“未通过：通过……”的自相矛盾文案
+  const rawMessage = audit.message || "";
+  const strippedMessage = rawMessage.replace(/^引用校验通过[，,]\s*/, "").trim();
+
+  let detail = strippedMessage;
+  if (rawMessage.includes("缺少强制引用")) {
+    detail = "缺关键事实强制引用 → 降级 needs_review";
+  } else if (audit.invalid_citations && audit.invalid_citations.length > 0) {
+    detail = `${audit.invalid_citations.length} 处编号无效 → 降级 needs_review`;
+  } else if (audit.has_evidence && audit.citation_count === 0) {
+    detail = "未引用检索证据 → 降级 needs_review";
+  }
+
+  const prefix = audit.citation_count > 0 ? `${audit.citation_count} 个编号核对通过；` : "";
+  const label = `${prefix}${detail}`;
+  const tooltip = `总体判定：降级待复核 (needs_review)\n明细：${rawMessage || detail}`;
+
+  return { label, tooltip };
+}
+
 /** 质量元信息行：模式、耗时、引用校验、降级原因。 */
 export function RagMetaInfo({ result }: { result: RagQueryResponse }) {
   const audit = result.citation_audit;
@@ -180,25 +211,34 @@ export function RagMetaInfo({ result }: { result: RagQueryResponse }) {
     : result.rag_mode === "structured_query"
       ? "未命中图谱证据"
       : "未命中项目证据";
+
+  const auditBadge = audit ? (() => {
+    if (noProjectEvidence) {
+      return (
+        <Badge variant="outline" className="font-normal" title={audit.message}>
+          {noEvidenceLabel}
+        </Badge>
+      );
+    }
+    const { label, tooltip } = formatCitationAuditBadge(audit);
+    return (
+      <Badge
+        variant={audit.passed ? "secondary" : "destructive"}
+        className="font-normal"
+        title={tooltip}
+      >
+        {label}
+      </Badge>
+    );
+  })() : null;
+
   return (
     <div className="mt-3 flex flex-wrap items-center gap-2 border-t pt-2 text-xs text-muted-foreground">
       <Badge variant="outline" className="font-normal">
         {ragModeText[result.rag_mode] || result.rag_mode}
       </Badge>
       {result.response_ms !== null && <span>耗时 {result.response_ms} ms</span>}
-      {audit && (
-        <Badge
-          variant={noProjectEvidence ? "outline" : audit.passed ? "secondary" : "destructive"}
-          className="font-normal"
-          title={audit.message}
-        >
-          {noProjectEvidence
-            ? noEvidenceLabel
-            : audit.passed
-              ? "引用校验通过"
-              : `引用校验未通过：${audit.message}`}
-        </Badge>
-      )}
+      {auditBadge}
       {result.fallback_reason && (
         <span className="text-warning">降级：{result.fallback_reason}</span>
       )}

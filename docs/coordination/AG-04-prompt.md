@@ -20,3 +20,32 @@
 
 - 修完后自行走查：Agent 长回答下"调整阈值"可点；图谱悬停 3 个随机点至少 2 个触发聚焦；横幅文案无自相矛盾；蓝图页无"水波/形状"字样。
 - 在本文件末尾追加"执行记录"小节（改了什么/验证方式/未做项），保持只写自己文件纪律。
+
+## 执行记录（2026-09-08 Antigravity 第四轮交付）
+
+> 执行者：Antigravity（前端线）。
+> 纪律遵守：仅修改 `frontend/src/` 及本工单执行记录；未改动后端代码、未改脚本、未触碰主论文与他人报告；未触发 Docker 重建。
+
+### 1. 改动清单（P1×3 + P2×3 全闭环）
+
+| 编号 | 任务项 | 修改文件 | 核心实现与机制 |
+| --- | --- | --- | --- |
+| **P1-1** | Agent 助手浮层遮挡页面按钮 | `frontend/src/components/shared/AgentAssistant.tsx` | ① 监听 `mousedown` 点击外部区域（`sectionRef` / `toggleButtonRef`）与 `Escape` 键盘事件自动收起浮层；<br>② 助手长回答（>180 字）默认折叠（截断 140 字），支持一键“展开全文 (字数)”与“收起全文”；<br>③ 浮层顶部工具栏新增 `Minimize2` 一键最小化收起按钮。 |
+| **P1-2** | 图谱悬停聚焦命中率低 | `frontend/src/components/kg-visualization.tsx` | ① 重构 Shadow Canvas 拾取层 `paintNodePointerArea`：将碰撞几何半径扩大至 `Math.max(24, baseR + 12)`，并与可见文本药丸矩形做射线拾取合并，大幅提升悬停触发率；<br>② 保持物理引擎与视图解耦，不引入悬停乱动；<br>③ 顶部控制条与左下图例补充“💡 悬停聚焦一跳 · 单击锁定 · 拖拽固定”引导文案与交互 Tooltip。 |
+| **P1-3** | 引用校验横幅文案自相矛盾 | `frontend/src/lib/citations.tsx` | ① 新增 `formatCitationAuditBadge`：拆分“总体判定”与“明细原因”两段逻辑；<br>② 自动剔除后端剥离不彻底的“引用校验通过，”前缀，杜绝“未通过：通过…”自相矛盾文案；<br>③ 显示如“22 个编号核对通过；缺关键事实强制引用 → 降级 needs_review”，Tooltip 详尽说明。 |
+| **P2-1** | 报告页历史失败记录置顶 | `frontend/src/app/(dashboard)/projects/[id]/reports/page.tsx` | ① 重构排序权重：成功与就绪状态记录优先置顶，失败历史记录自动后置；<br>② 顶部增加「仅看成功与就绪记录」筛选开关；<br>③ 失败记录呈现柔和警示样式，并添加悬停 Tooltip 提示失败明细。 |
+| **P2-2** | 蓝图缺口 → AI 建议不互通 | `frontend/src/components/kg-blueprint.tsx`<br>`frontend/src/app/(dashboard)/projects/[id]/ai/page.tsx` | ① 蓝图节点详情卡为待实证缺口增加醒目的「让 AI 围绕此缺口给建议」主按钮（已实证节点提供深入建议）；<br>② 点击后携带结构化实体与描述信息路由至 `/projects/${id}/ai?q=...`；<br>③ AI 问答页读取 URL `q` 参数自动填入提问框并聚焦，实现“缺口→建议→行动”链路闭环。 |
+| **P2-3** | 蓝图图例文案残留 | `frontend/src/components/kg-blueprint.tsx` | ① 图例说明更新为“实心节点 = 已实证”、“虚线节点 = 待实证知识缺口（下一步做）”；<br>② 右侧标注修正为“颜色=实体类型 · 连线颜色=关系语义”；<br>③ 彻底清除“水波”、“形状”等历史残留词汇，确保代码界面与论文主稿、映射规范 v1.1 绝对一致。 |
+
+### 2. 验证方式与结果
+
+- **TypeScript 类型检查**：`npm run typecheck`（0 errors，PASS）
+- **ESLint 规范检查**：`npm run lint`（0 warnings，PASS）
+- **生产构建验证**：`npm run build`（Next.js 16.3.0 静态生成与路由编译全部通过，0 errors，PASS）
+
+### 3. 未做项 / 遗留项声明
+
+- 无前端未完成项；
+- 后端建议反馈表（DS 行动卡 B2 相关）已由其他线提交至工作区，前端未私自触碰后端代码或提交非前端资产；
+- 本轮改动均在前端本地编译通过，停在验收点等待 Codex / 用户统一审阅。
+

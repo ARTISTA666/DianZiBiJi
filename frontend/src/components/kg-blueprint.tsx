@@ -3,6 +3,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import {
   CheckCircle2,
   CircleDashed,
@@ -109,6 +110,7 @@ export function KnowledgeBlueprintView({
   token: string;
   canWrite: boolean;
 }) {
+  const router = useRouter();
   const [blueprint, setBlueprint] = useState<KnowledgeBlueprint | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -601,15 +603,15 @@ export function KnowledgeBlueprintView({
             <div className="flex flex-wrap items-center gap-4">
               <span className="inline-flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
                 <CheckCircle2 className="h-3.5 w-3.5" />
-                实心水波 = 已获实验记录实证
+                实心节点 = 已实证
               </span>
               <span className="inline-flex items-center gap-1.5 font-medium text-amber-600 dark:text-amber-400">
                 <CircleDashed className="h-3.5 w-3.5" />
-                虚线流光 = 待实证知识缺口（下一步做）
+                虚线节点 = 待实证知识缺口（下一步做）
               </span>
             </div>
             <div className="text-[10px]">
-              形状=实体角色 · 颜色=实体类型 · 连线颜色=关系语义
+              颜色=实体类型 · 连线颜色=关系语义
             </div>
           </div>
         </CardContent>
@@ -890,26 +892,45 @@ export function KnowledgeBlueprintView({
                   </p>
                 )}
 
-                <div className="flex items-center justify-between pt-1 border-t border-border/50">
+                <div className="pt-2 border-t border-border/50 space-y-2">
                   <Button
                     size="sm"
-                    variant="outline"
-                    className="h-7 text-xs"
-                    onClick={() => focusOnNode(selectedNode.id)}
+                    className="w-full h-8 text-xs bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-1.5 shadow-sm font-medium"
+                    onClick={() => {
+                      const isProven = selectedNode.evidence.entity_count > 0;
+                      const promptText = isProven
+                        ? `围绕项目知识蓝图中的已实证节点【${selectedNode.label}】（类型：${blueprintEntityTypeText(selectedNode.entity_type)}${selectedNode.description ? `，描述：${selectedNode.description}` : ""}），请结合已有实验数据与关联实体提供进一步的深入研究或验证建议。`
+                        : `围绕项目知识蓝图中的待实证缺口【${selectedNode.label}】（类型：${blueprintEntityTypeText(selectedNode.entity_type)}${selectedNode.description ? `，描述：${selectedNode.description}` : ""}），请给出下一步具体实验方案设计与实证补齐建议。`;
+                      router.push(`/projects/${projectId}/ai?q=${encodeURIComponent(promptText)}`);
+                    }}
                   >
-                    <Focus className="mr-1 h-3 w-3" />
-                    定位在蓝图中
+                    <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+                    {selectedNode.evidence.entity_count > 0
+                      ? "让 AI 围绕此节点给建议"
+                      : "让 AI 围绕此缺口给建议"}
                   </Button>
-                  {canWrite && (
+
+                  <div className="flex items-center justify-between">
                     <Button
                       size="sm"
-                      variant="ghost"
-                      className="h-7 text-xs text-destructive hover:bg-destructive/10"
-                      onClick={() => handleRetire(selectedNode.id)}
+                      variant="outline"
+                      className="h-7 text-xs"
+                      onClick={() => focusOnNode(selectedNode.id)}
                     >
-                      作废此计划节点
+                      <Focus className="mr-1 h-3 w-3" />
+                      定位在蓝图中
                     </Button>
-                  )}
+                    {canWrite && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-7 text-xs text-destructive hover:bg-destructive/10"
+                        onClick={() => handleRetire(selectedNode.id)}
+                      >
+                        作废此计划节点
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             ) : (
