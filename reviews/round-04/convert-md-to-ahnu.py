@@ -52,7 +52,24 @@ TABLE_NAMES = {
     "B-3": "运行时扩展域数据表",
     "C-1": "MCP 工具完整安全规格",
     "C-2": "固定任务模板注册表",
-    "D-1": "GSE111619 数据文件完整性清单",
+    "D-1": "GSE111619 数据文件完整性清单",    "1-1": "代表性路线五维比较",
+    "3-1": "用户角色与需求定位",
+    "3-2": "关键痛点与需求约束对应",
+    "3-3": "业务场景与AI处理目标映射",
+    "4-1": "用户类型与能力矩阵",
+    "4-2": "核心功能模块输入输出",
+    "4-3": "功能链路与验证材料对应",
+    "5-1": "实体类型定义",
+    "5-2": "关系类型定义",
+    "5-3": "抽取运行批次与计数",
+    "5-4": "固定任务模板与安全属性",
+    "5-5": "MCP受控工具安全规格",
+    "5-6": "预警四维指标与缺省阈值",
+    "5-7": "预警操作权限与审计事件",
+    "6-1": "核心已审核笔记结构化样例",
+    "6-2": "知识图谱抽取关系样例",
+    "6-3": "创新点运行界面素材索引",
+    "6-4": "系统界面截图素材索引",
 }
 
 CAPTION_OVERRIDES = {
@@ -89,6 +106,7 @@ def add_table_captions(s: str) -> str:
                     cap_name = first_cell
                 cap_line = "\\textbf{表 %s  %s}" % (cap, cap_name)
                 out.append("")
+                out.append("\\needspace{6\\baselineskip}")
                 out.append(cap_line)
                 out.append("")
         elif pending_caption is None:
@@ -120,7 +138,45 @@ def to_tex(fragment: str, name: str) -> str:
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
     if r.returncode:
         print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
-    return frag.with_suffix(".tex").read_text(encoding="utf-8")
+    return fix_bare_param_strings(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))
+
+def fix_table_code_breaks(tex: str) -> str:
+    """texttt 代码串断行修复:列表逗号后、以及长 texttt 内部的下划线转义点后插 allowbreak。"""
+    # 1) 列表分隔: \texttt{a},\texttt{b} / a、b
+    pat1 = re.compile(r'(\\texttt\{[^}]*\})(,|、)(?=\\texttt\{)')
+    tex = pat1.sub(r'\1\2\\allowbreak ', tex)
+    # 2) \texttt{...} 内部: 下划线转义(\_)与逗号后允许断行(仅长度>16 的串)
+    def _inner(m):
+        body = m.group(1)
+        if len(body) <= 16:
+            return m.group(0)
+        body2 = body.replace("\\_", "\\_\\allowbreak{}")
+        body2 = body2.replace(",", ",\\allowbreak{}")
+        body2 = body2.replace("/", "/\\allowbreak{}")
+        body2 = body2.replace("-", "-\\allowbreak{}")
+        body2 = body2.replace("=", "=\\allowbreak{}")
+        return "\\texttt{" + body2 + "}"
+    tex = re.sub(r'\\texttt\{([^}]*)\}', _inner, tex)
+    return tex
+
+def to_tex(fragment: str, name: str) -> str:
+    frag = Path(f"/tmp/crlt/frag_{name}.md")
+    frag.write_text(guard(add_table_captions(fragment)), encoding="utf-8")
+    r = subprocess.run(["pandoc", str(frag), "-f", "markdown+smart", "-t", "latex",
+                        "--top-level-division=chapter", "--shift-heading-level-by=-1",
+                        "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
+    if r.returncode:
+        print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
+    return fix_bare_param_strings(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))
+
+def fix_bare_param_strings(tex: str) -> str:
+    """裸参数串(非 texttt)temperature=...,max_tokens=... 逗号/等号后插断点。"""
+    tex = tex.replace("temperature=0.1,max\\_tokens=2200,stream=false",
+                      "temperature=0.1,\\allowbreak{}max\\_tokens=2200,\\allowbreak{}stream=false")
+    tex = tex.replace("temperature=0.1,max\\_tokens=1800,stream=false",
+                      "temperature=0.1,\\allowbreak{}max\\_tokens=1800,\\allowbreak{}stream=false")
+    return tex
+
 
 def strip_numbers(tex: str) -> str:
     tex = re.sub(r"(\\chapter\{)第[一二三四五六七八九十]+章\s*", r"\1", tex)
@@ -138,7 +194,7 @@ zh_body = re.sub(r"关键词：[^\n]*", "", zh_body)
 
 en_body = to_tex(segs["Abstract"], "absen")
 en_body = re.sub(r"\\section\*?\{Abstract\}\n?", "", en_body)
-en_body = re.sub(r"Key words:[^\n]*", "", en_body)
+en_body = re.sub(r"Key words:.*?(?=\n\n|\Z)", "", en_body, flags=re.S)
 (PROJ/"extraTex/front/abstract_en.tex").write_text(
     "\\ahnuFrontHeading{Abstract}\n\n" + en_body.strip() +
     "\n\n\\vspace{1.2cm}\n\\noindent\\textbf{Key words:}\\ \\ahnuKeywordsEn\n", encoding="utf-8")
