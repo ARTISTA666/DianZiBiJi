@@ -115,6 +115,9 @@ def add_table_captions(s: str) -> str:
     return "\n".join(out)
 
 def guard(s: str) -> str:
+    # 双 fence 归一:```latex\needspace{...} 紧跟 ```latex 时合并为单 fence(防 pandoc 把后块包进 verbatim)
+    s = re.sub(r"^```latex(\\needspace\{[^}]*\})\n```latex$",
+               r"```{=latex}\n\1", s, flags=re.M)
     s = re.sub(r"^```latex$", "```{=latex}", s, flags=re.M)
     def _img(m):
         path = m.group(0)
@@ -138,7 +141,30 @@ def to_tex(fragment: str, name: str) -> str:
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
     if r.returncode:
         print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
-    return fix_bare_param_strings(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))
+    return fix_bare_param_strings(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8"))))
+
+def fix_table_62_widths(tex: str) -> str:
+    """表 6-2(知识图谱抽取关系样例)列宽重分配:7 列等宽导致"目标实体"长文本挤压重叠。
+    关系ID/置信度/来源类型/金标准判定 4 个窄列缩到 0.09,把空间让给源实体/关系类型/目标实体。"""
+    if "知识图谱抽取关系样例" not in tex:
+        return tex
+    old_cols = [r"p{(\linewidth - 12\tabcolsep) * \real{0.1739}}",
+                r"p{(\linewidth - 12\tabcolsep) * \real{0.1304}}"]
+    # 头 4 个 real{0.1739} 之外的等宽列顺序: [ID 0.1739, 源 0.1304, 类型 0.1304, 目标 0.1304, 置信 0.1739, 来源 0.1304, 金标准 0.1304]
+    new_order = ["0.09", "0.22", "0.17", "0.22", "0.09", "0.10", "0.11"]
+    pat = re.compile(r"p\{\(\\linewidth - 12\\tabcolsep\) \* \\real\{0\.\d+\}\}")
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.1304"
+        return "p{(\\linewidth - 12\\tabcolsep) * \\real{%s}}" % w
+    # 仅替换 longtable 表头定义区(第一个 longtable 块)
+    start = tex.find("知识图谱抽取关系样例")
+    head = tex[:start]; tail = tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    seg = tail[:seg_end]
+    seg2 = pat.sub(_sub, seg)
+    return head + seg2 + tail[seg_end:]
 
 def fix_table_code_breaks(tex: str) -> str:
     """texttt 代码串断行修复:列表逗号后、以及长 texttt 内部的下划线转义点后插 allowbreak。"""
