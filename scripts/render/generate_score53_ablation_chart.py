@@ -106,12 +106,9 @@ def main() -> None:
         plt.Line2D([0], [0], color="#F58518", lw=6, label="top-10 集合重合率"),
     ]
     if font is not None:
-        for handle in legend_lines:
-            handle.set_fontproperties(font)
-    if font is not None:
-        legend = axis_left.legend(handles=legend_lines, loc="lower left", prop=font, fontsize=9)
+        legend = axis_left.legend(handles=legend_lines, loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=2, prop=font, fontsize=9, frameon=False)
     else:
-        legend = axis_left.legend(handles=legend_lines, loc="lower left", fontsize=9)
+        legend = axis_left.legend(handles=legend_lines, loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=2, fontsize=9, frameon=False)
     axis_left.set_title("")
 
     CHART_PATH.parent.mkdir(parents=True, exist_ok=True)
