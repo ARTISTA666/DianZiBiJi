@@ -52,7 +52,8 @@ TABLE_NAMES = {
     "B-3": "运行时扩展域数据表",
     "C-1": "MCP 工具完整安全规格",
     "C-2": "固定任务模板注册表",
-    "D-1": "GSE111619 数据文件完整性清单",    "1-1": "代表性路线五维比较",
+    "D-1": "GSE111619 数据文件完整性清单",
+    "1-1": "代表性路线五维比较",
     "3-1": "用户角色与需求定位",
     "3-2": "关键痛点与需求约束对应",
     "3-3": "业务场景与AI处理目标映射",
@@ -141,7 +142,7 @@ def to_tex(fragment: str, name: str) -> str:
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
     if r.returncode:
         print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
-    return fix_bare_param_strings(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8"))))
+    return fix_bare_param_strings(fix_mixed_breaks(fix_fk_underscore_breaks(fix_bare_slash_breaks(fix_table_c_widths(fix_identifier_breaks(fix_long_hex_breaks(fix_table_b2_widths(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))))))))))
 
 def fix_table_62_widths(tex: str) -> str:
     """表 6-2(知识图谱抽取关系样例)列宽重分配:7 列等宽导致"目标实体"长文本挤压重叠。
@@ -165,6 +166,23 @@ def fix_table_62_widths(tex: str) -> str:
     seg = tail[:seg_end]
     seg2 = pat.sub(_sub, seg)
     return head + seg2 + tail[seg_end:]
+
+def fix_mixed_breaks(tex: str) -> str:
+    """中西文混排长串(如 pCDNA3.1,A260/280=1.85)逗号后插断点(裸文本段,标点后断行无害)。"""
+    def _sub(m):
+        return m.group(1) + m.group(2) + "\\allowbreak{}" + m.group(3)
+    out = []
+    in_tikz = False
+    for ln in tex.split("\n"):
+        if "begin{tikzpicture}" in ln: in_tikz = True
+        if "end{tikzpicture}" in ln:
+            in_tikz = False
+            out.append(ln); continue
+        if in_tikz or any(k in ln for k in ("node[", ".style=", "label=", "includegraphics")):
+            out.append(ln)
+        else:
+            out.append(re.sub(r"([A-Za-z0-9%\)])(,)([A-Za-z0-9\[])", _sub, ln))
+    return "\n".join(out)
 
 def fix_table_code_breaks(tex: str) -> str:
     """texttt 代码串断行修复:列表逗号后、以及长 texttt 内部的下划线转义点后插 allowbreak。"""
