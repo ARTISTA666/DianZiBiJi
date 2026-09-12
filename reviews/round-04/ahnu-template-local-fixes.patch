@@ -5,7 +5,7 @@ index 7b916b7..9289f9c 100644
 @@ -1,6 +1,8 @@
  \ProvidesFile{bthesis-style-thesis-ahnu-master.tex}
    [2026/04/18 v1.0.0 Thesis style: thesis-ahnu-master]
- 
+
 +\RequirePackage{calc}
 +\RequirePackage{amsmath}
  \RequirePackage{geometry}
@@ -24,6 +24,43 @@ index 7b916b7..9289f9c 100644
  \RequirePackage{etoolbox}
  \RequirePackage{tikz}
 +\usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric,fit}
- 
+
  \geometry{
    a4paper,
+@@ -194,17 +198,17 @@
+ \providecommand{\ahnuKeywordsZh}{关键词 1；关键词 2；关键词 3}
+ \providecommand{\ahnuKeywordsEn}{keyword 1; keyword 2; keyword 3}
+
+-\newcommand{\ahnuCoverField}[4]{%
++\newcommand{\ahnuCoverField}[5]{%
+   \node[anchor=west,inner sep=0pt]
+     at ([xshift=#2,yshift=-#1]current page.north west)
+     {{\ahnuCoverLabelFont #3}};
+   \draw[line width=0.4pt]
+-    ([xshift=7.95cm,yshift=\dimexpr-#1-0.04cm\relax]current page.north west) --
+-    ([xshift=17.02cm,yshift=\dimexpr-#1-0.04cm\relax]current page.north west);
++    ([xshift=#5,yshift=\dimexpr-#1-0.29cm\relax]current page.north west) --
++    ([xshift=17.02cm,yshift=\dimexpr-#1-0.29cm\relax]current page.north west);
+   \node[anchor=center,inner sep=0pt,align=center,text width=8.8cm]
+     at ([xshift=12.49cm,yshift=\dimexpr-#1+0.02cm\relax]current page.north west)
+     {{\ahnuCoverValueFont #4}};
+ }
+
+ \newcommand{\ahnuCoverFieldEn}[3]{%
+   \node[anchor=west,inner sep=0pt]
+@@ -243,9 +247,9 @@
+     \ahnuCoverFieldEn{14.10cm}{Title:}{{\ahnuCoverTitleEnFont \ahnuTitleEn}}
+-    \ahnuCoverField{18.45cm}{4.25cm}{学 科、专业：}{\ahnuMajor}
+-    \ahnuCoverField{19.80cm}{4.25cm}{研 究 方 向：}{\ahnuResearchDirection}
+-    \ahnuCoverField{21.15cm}{4.25cm}{作 者 姓 名：}{\ahnuAuthor}
+-    \ahnuCoverField{22.50cm}{4.25cm}{导师及职称：}{\ahnuSupervisor}
+-    \ahnuCoverField{23.85cm}{4.25cm}{论文提交日：}{\ahnuSubmitDate}
+-    \ahnuCoverField{25.20cm}{4.25cm}{授予学位期：}{\ahnuDegreeDate}
++    \ahnuCoverField{18.45cm}{4.25cm}{学 科、专业：}{\ahnuMajor}{7.95cm}
++    \ahnuCoverField{19.80cm}{4.25cm}{研 究 方 向：}{\ahnuResearchDirection}{7.95cm}
++    \ahnuCoverField{21.15cm}{4.25cm}{作 者 姓 名：}{\ahnuAuthor}{7.95cm}
++    \ahnuCoverField{22.50cm}{4.25cm}{导师及职称：}{\ahnuSupervisor}{7.95cm}
++    \ahnuCoverField{23.85cm}{4.25cm}{论文提交日期：}{\ahnuSubmitDate}{8.35cm}
++    \ahnuCoverField{25.20cm}{4.25cm}{授予学位日期：}{\ahnuDegreeDate}{8.35cm}
+   \end{tikzpicture}%
+   \null\vfill
