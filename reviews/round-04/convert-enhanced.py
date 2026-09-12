@@ -1,0 +1,368 @@
+# -*- coding: utf-8 -*-
+"""最新重构稿 md → bensz-thesis/thesis-ahnu-master 项目章节 tex"""
+import io, re, subprocess, sys, shutil
+from pathlib import Path
+
+MD = Path("/Users/yusong/Downloads/new/full-system/docs/毕业论文重构稿-创新点增强版.md")
+PROJ = Path("/tmp/crlt/projects/thesis-ahnu-master")
+CN_NUM = "一二三四五六七八九十"
+
+text = MD.read_text(encoding="utf-8")
+lines0 = text.split("\n")
+if lines0 and lines0[0].strip().startswith("面向科研实验记录"):
+    lines0 = lines0[1:]
+    while lines0 and not lines0[0].strip():
+        lines0 = lines0[1:]
+    text = "\n".join(lines0)
+
+# ---------- 切分 ## 段 ----------
+segs = []  # (title, body)
+cur_title, cur = None, []
+for ln in text.split("\n"):
+    m = re.match(r"^## (.+)$", ln)
+    if m:
+        if cur_title is not None:
+            segs.append((cur_title, "\n".join(cur)))
+        cur_title, cur = m.group(1).strip(), []
+    else:
+        cur.append(ln)
+if cur_title is not None:
+    segs.append((cur_title, "\n".join(cur)))
+segs = dict(segs)
+print("segments:", list(segs.keys()))
+
+# ---------- 片段清洗 ----------
+TABLE_NAMES = {
+    "6-2": "交付系统复现批次结果",
+    "6-3": "功能闭环与安全边界测试项",
+    "6-4": "性能测试指标与判定方式",
+    "6-5": "实验数据处理阶段与产出",
+    "6-6": "实验记录样例的结构化结果",
+    "6-7": "三项目语料规模统计",
+    "6-8": "关系核验原始与修复后批次",
+    "6-9": "20 题成对实验总体结果",
+    "6-10": "四臂扩展消融结果",
+    "6-11": "固定任务生成验证明细",
+    "A-1": "RAG 对照实验问题清单",
+    "B-1": "核心数据表域映射",
+    "B-2": "主要数据表字段与主外键",
+    "B-3": "运行时扩展域数据表",
+    "C-1": "MCP 工具完整安全规格",
+    "C-2": "固定任务模板注册表",
+    "D-1": "GSE111619 数据文件完整性清单",
+    "1-1": "代表性路线五维比较",
+    "3-1": "用户角色与需求定位",
+    "3-2": "关键痛点与需求约束对应",
+    "3-3": "业务场景与AI处理目标映射",
+    "4-1": "用户类型与能力矩阵",
+    "4-2": "核心功能模块输入输出",
+    "4-3": "功能链路与验证材料对应",
+    "4-4": "实体类型定义",
+    "4-5": "关系类型定义",
+    "4-6": "抽取运行批次与计数",
+    "4-7": "固定任务模板与安全属性",
+    "4-8": "MCP受控工具安全规格",
+    "4-9": "预警四维指标与缺省阈值",
+    "4-10": "预警操作权限与审计事件",
+    "5-1": "核心已审核笔记结构化样例",
+    "5-2": "知识图谱抽取关系样例",
+    "5-3": "创新点运行界面素材索引",
+    "5-4": "系统界面截图素材索引",}
+
+CAPTION_OVERRIDES = {
+    "| 工具 | 风险 | 需确认 | 强制幂等键 | 权限范围 | 审计动作 |": "C-1",
+}
+
+def add_table_captions(s: str) -> str:
+    """给每张 markdown 管道表注入题注行(供 merge-captions.py 并入 longtable)。
+    编号取表前 6 行内最近一次出现的"表 X-Y"或"表 X-Y";6 行内没有编号的表按
+    CAPTION_OVERRIDES 的行号内容键补录(附录表等前文远离表体的情形)。"""
+    lines = s.split("\n")
+    out = []
+    pending_caption = None
+    for i, ln in enumerate(lines):
+        if ln.startswith("|") and i + 1 < len(lines) and re.match(r"^\|[\s:|-]+\|?$", lines[i + 1]):
+            # 找近前文编号
+            cap = None
+            for back in range(1, 7):
+                seg = "\n".join(lines[max(0, i - back):i])
+                m = re.findall(r"表 ([A-Z]-\d+|\d+-\d+)[^\dA-Z]", seg + " ")
+                if m:
+                    cap = m[-1]
+                    break
+            if ln in CAPTION_OVERRIDES:
+                cap = CAPTION_OVERRIDES[ln]
+            elif cap is None and pending_caption:
+                cap = pending_caption
+                pending_caption = None
+            if cap:
+                # 题注文本:用编号 + 通用名(从表首格内容生成简短名)
+                cap_name = TABLE_NAMES.get(cap)
+                if cap_name is None:
+                    first_cell = ln.strip("|").split("|")[0].strip()
+                    cap_name = first_cell
+                cap_line = "\\textbf{表 %s  %s}" % (cap, cap_name)
+                out.append("")
+                out.append("\\needspace{6\\baselineskip}")
+                out.append(cap_line)
+                out.append("")
+        elif pending_caption is None:
+            pass
+        out.append(ln)
+    return "\n".join(out)
+
+def guard(s: str) -> str:
+    # 双 fence 归一:```latex\needspace{...} 紧跟 ```latex 时合并为单 fence(防 pandoc 把后块包进 verbatim)
+    s = re.sub(r"^```latex(\\needspace\{[^}]*\})\n```latex$",
+               r"```{=latex}\n\1", s, flags=re.M)
+    s = re.sub(r"^```latex$", "```{=latex}", s, flags=re.M)
+    def _img(m):
+        path = m.group(0)
+        return path if ("assets/screenshots/" in path or "assets/innovation-screenshots/" in path) else (
+            r"\\fbox{\\parbox[c][6cm][c]{0.85\\textwidth}{\\centering (位图占位:由学校模板插入原图)}}")
+    s = re.sub(r"\\includegraphics\[[^\]]*\]\{[^}]*\}", _img, s)
+    s = s.replace("\\\\[S]", "\\\\{}[S]").replace("\\\\[G]", "\\\\{}[G]")
+    s = s.replace("℃", "°C").replace("‐", "-")
+    out = []
+    for ln in s.split("\n"):
+        if re.match(r"^(Read\(u, p\)|Write\(u, p\)|Review\(u, p\)|Manage\(u, p\)|conf\(r\) =|P = TP|F1 = 2PR|C = \(1/N\)|Src_avg|T_avg)", ln):
+            ln = ln.replace("_", "\\_")
+        out.append(ln)
+    return "\n".join(out)
+
+def fix_table_62_widths(tex: str) -> str:
+    """表 6-2(知识图谱抽取关系样例)列宽重分配:7 列等宽导致"目标实体"长文本挤压重叠。
+    关系ID/置信度/来源类型/金标准判定 4 个窄列缩到 0.09,把空间让给源实体/关系类型/目标实体。"""
+    if "知识图谱抽取关系样例" not in tex:
+        return tex
+    old_cols = [r"p{(\linewidth - 12\tabcolsep) * \real{0.1739}}",
+                r"p{(\linewidth - 12\tabcolsep) * \real{0.1304}}"]
+    # 头 4 个 real{0.1739} 之外的等宽列顺序: [ID 0.1739, 源 0.1304, 类型 0.1304, 目标 0.1304, 置信 0.1739, 来源 0.1304, 金标准 0.1304]
+    new_order = ["0.09", "0.19", "0.16", "0.19", "0.09", "0.12", "0.16"]
+    pat = re.compile(r"p\{\(\\linewidth - 12\\tabcolsep\) \* \\real\{0\.\d+\}\}")
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.1304"
+        return "p{(\\linewidth - 12\\tabcolsep) * \\real{%s}}" % w
+    # 仅替换 longtable 表头定义区(第一个 longtable 块)
+    start = tex.find("知识图谱抽取关系样例")
+    head = tex[:start]; tail = tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    seg = tail[:seg_end]
+    seg2 = pat.sub(_sub, seg)
+    return head + seg2 + tail[seg_end:]
+
+def fix_table_b2_widths(tex: str) -> str:
+    """附录表 B-2(主要数据表字段与主外键)5 列等宽 0.20 → 长外键/核心字段 texttt 串溢出 40-89pt。
+    重分配:数据表0.13 主键0.05 外键0.30 核心字段0.26 字段含义0.26。"""
+    if "主要数据表字段与主外键" not in tex:
+        return tex
+    pat = re.compile(r"p\{\(\\linewidth - 8\\tabcolsep\) \* \\real\{0\.2000\}\}")
+    new_order = ["0.13", "0.05", "0.30", "0.26", "0.26"]
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.20"
+        return "p{(\\linewidth - 8\\tabcolsep) * \\real{%s}}" % w
+    start = tex.find("主要数据表字段与主外键")
+    head, tail = tex[:start], tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    seg = tail[:seg_end]
+    return head + pat.sub(_sub, seg) + tail[seg_end:]
+
+def fix_long_hex_breaks(tex: str) -> str:
+    """超长无分隔标识串(40 位 git 哈希等):每 10 字符插 \allowbreak,消 50-96pt 溢出。"""
+    def _hex(m):
+        body = m.group(1)
+        if len(body) < 24 or not re.fullmatch(r"[0-9a-fA-F]+", body):
+            return m.group(0)
+        chunks = [body[i:i+10] for i in range(0, len(body), 10)]
+        return "\\texttt{" + "\\allowbreak{}".join(chunks) + "}"
+    return re.sub(r"\\texttt\{([^}]*)\}", _hex, tex)
+
+def fix_identifier_breaks(tex: str) -> str:
+    """长驼峰类名/工具名(≥22 字符无分隔):在大小写交界与下划线处插断点。"""
+    def _camel(m):
+        body = m.group(1)
+        if len(body) < 16 or re.fullmatch(r"[0-9a-fA-F]+", body):
+            return m.group(0)
+        # 驼峰交界补断点(幂等:已有断点处 pattern 不再匹配)
+        pat = re.compile(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Za-z])(?=[A-Z][a-z])")
+        out = pat.sub(lambda _: "\\allowbreak{}", body)
+        return "\\texttt{" + out + "}"
+    return re.sub(r"\\texttt\{([^}]*)\}", _camel, tex)
+
+def fix_table_c_widths(tex: str) -> str:
+    """附录 MCP 工具表(6 列等宽 0.1667):工具名/权限范围 texttt 串 20-48pt 溢出。
+    重分配:工具0.22 风险0.09 需确认0.09 幂等0.10 权限0.26 映射0.24。"""
+    if "工具" not in tex or "强制幂等键" not in tex:
+        return tex
+    pat = re.compile(r"p\{\(\\linewidth - 10\\tabcolsep\) \* \\real\{0\.1667\}\}")
+    new_order = ["0.22", "0.09", "0.09", "0.10", "0.26", "0.24"]
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.1667"
+        return "p{(\\linewidth - 10\\tabcolsep) * \\real{%s}}" % w
+    start = tex.find("强制幂等键")
+    head, tail = tex[:start], tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    return head + pat.sub(_sub, tail[:seg_end]) + tail[seg_end:]
+
+def fix_bare_slash_breaks(tex: str) -> str:
+    """裸文本斜杠连写(GraphRAG/LightRAG 等,Camel 两侧≥6 字符)插断点。"""
+    # Camel/Camel 连写在斜杠后允许断行(仅两侧均为长 Camel 词)
+    def _slash(m):
+        return m.group(1) + "/\\allowbreak{}" + m.group(2)
+    tex = re.sub(r"([A-Z][a-zA-Z]{5,})/([A-Z][a-zA-Z]{5,})", _slash, tex)
+    # 长小写串/长串 后跟 ( 或 [ 亦断
+    tex = re.sub(r"([a-z0-9]{12,})_", lambda m: m.group(1) + "_\\allowbreak{}", tex)
+    return tex
+
+def fix_fk_underscore_breaks(tex: str) -> str:
+    """FK/表名 texttt 内含嵌套 \textgreater{} 时正则截断 → 兜底:所有 \w+\_\w+ 蛇形词内的 \_ 后统一插 \allowbreak{}(幂等)。"""
+    pat = re.compile(r"\\_(?!\\allowbreak)")
+    return pat.sub(lambda _: "\\_" + "\\allowbreak{}", tex)
+
+def fix_mixed_breaks(tex: str) -> str:
+    """中西文混排长串(如 pCDNA3.1,A260/280=1.85)逗号后插断点(裸文本段,标点后断行无害)。"""
+    def _sub(m):
+        return m.group(1) + m.group(2) + "\\allowbreak{}" + m.group(3)
+    out = []
+    in_tikz = False
+    for ln in tex.split("\n"):
+        if "begin{tikzpicture}" in ln: in_tikz = True
+        if "end{tikzpicture}" in ln:
+            in_tikz = False
+            out.append(ln); continue
+        if in_tikz or any(k in ln for k in ("node[", ".style=", "label=", "includegraphics")):
+            out.append(ln)
+        else:
+            out.append(re.sub(r"([A-Za-z0-9%\)])(,)([A-Za-z0-9\[])", _sub, ln))
+    return "\n".join(out)
+
+def fix_table_code_breaks(tex: str) -> str:
+    """texttt 代码串断行修复:列表逗号后、以及长 texttt 内部的下划线转义点后插 allowbreak。"""
+    # 1) 列表分隔: \texttt{a},\texttt{b} / a、b
+    pat1 = re.compile(r'(\\texttt\{[^}]*\})(,|、)(?=\\texttt\{)')
+    tex = pat1.sub(r'\1\2\\allowbreak ', tex)
+    # 2) \texttt{...} 内部: 下划线转义(\_)与逗号后允许断行(仅长度>16 的串)
+    def _inner(m):
+        body = m.group(1)
+        if len(body) <= 16:
+            return m.group(0)
+        body2 = body.replace("\\_", "\\_\\allowbreak{}")
+        body2 = body2.replace(",", ",\\allowbreak{}")
+        body2 = body2.replace("/", "/\\allowbreak{}")
+        body2 = body2.replace("-", "-\\allowbreak{}")
+        body2 = body2.replace("=", "=\\allowbreak{}")
+        return "\\texttt{" + body2 + "}"
+    tex = re.sub(r'\\texttt\{([^}]*)\}', _inner, tex)
+    return tex
+
+def to_tex(fragment: str, name: str) -> str:
+    frag = Path(f"/tmp/crlt/frag_{name}.md")
+    frag.write_text(guard(add_table_captions(fragment)), encoding="utf-8")
+    r = subprocess.run(["pandoc", str(frag), "-f", "markdown+smart", "-t", "latex",
+                        "--top-level-division=chapter", "--shift-heading-level-by=-1",
+                        "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
+    if r.returncode:
+        print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
+    return fix_bare_param_strings(fix_mixed_breaks(fix_fk_underscore_breaks(fix_bare_slash_breaks(fix_table_c_widths(fix_identifier_breaks(fix_long_hex_breaks(fix_table_b2_widths(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))))))))))
+
+def fix_bare_param_strings(tex: str) -> str:
+    """裸参数串(非 texttt)temperature=...,max_tokens=... 逗号/等号后插断点。"""
+    tex = tex.replace("temperature=0.1,max\\_tokens=2200,stream=false",
+                      "temperature=0.1,\\allowbreak{}max\\_tokens=2200,\\allowbreak{}stream=false")
+    tex = tex.replace("temperature=0.1,max\\_tokens=1800,stream=false",
+                      "temperature=0.1,\\allowbreak{}max\\_tokens=1800,\\allowbreak{}stream=false")
+    return tex
+
+def strip_numbers(tex: str) -> str:
+    tex = re.sub(r"(\\chapter\{)第[一二三四五六七八九十]+章\s*", r"\1", tex)
+    tex = re.sub(r"(\\section\{)\d+\.\d+\s*", r"\1", tex)
+    tex = re.sub(r"(\\subsection\{)\d+\.\d+\.\d+\s*", r"\1", tex)
+    return tex
+
+# ---------- 摘要 / Abstract ----------
+zh_body = to_tex(segs["摘要"], "abszh")
+zh_body = re.sub(r"\\section\*?\{摘\s*要\}\n?", "", zh_body)
+zh_body = re.sub(r"关键词：[^\n]*", "", zh_body)
+(PROJ/"extraTex/front/abstract_zh.tex").write_text(
+    "\\ahnuFrontHeading{摘\\quad 要}\n\n" + zh_body.strip() +
+    "\n\n\\vspace{1.2cm}\n\\noindent\\textbf{关键词：}\\ahnuKeywordsZh\n", encoding="utf-8")
+
+en_body = to_tex(segs["Abstract"], "absen")
+en_body = re.sub(r"\\section\*?\{Abstract\}\n?", "", en_body)
+en_body = re.sub(r"Key words:.*?(?=\n\n|\Z)", "", en_body, flags=re.S)
+(PROJ/"extraTex/front/abstract_en.tex").write_text(
+    "\\ahnuFrontHeading{Abstract}\n\n" + en_body.strip() +
+    "\n\n\\vspace{1.2cm}\n\\noindent\\textbf{Key words:}\\ \\ahnuKeywordsEn\n", encoding="utf-8")
+
+# ---------- 八章正文 ----------
+cn2ord = {c: i+1 for i, c in enumerate("一二三四五六七八九十")}
+written_chapters = []
+for title, body in segs.items():
+    m = re.match(r"^第([一二三四五六七八九十]+)章 (.+)$", title)
+    if not m:
+        continue
+    n = cn2ord[m.group(1)]
+    tex = strip_numbers(to_tex("## " + title + "\n\n" + body, f"ch{n}"))
+    (PROJ/f"extraTex/body/chapter-{n:02d}.tex").write_text(tex, encoding="utf-8")
+    written_chapters.append(n)
+    print(f"chapter-{n:02d} <- {title}")
+
+# ---------- 附录 A-D(合并为无编号章 + 手工目录) ----------
+appendix_titles = [t for t in segs if t.startswith("附录")]
+parts = []
+for t in appendix_titles:
+    tex = to_tex("## " + t + "\n\n" + segs[t], f"apx{t[:3]}".replace(" ", ""))
+    tex = re.sub(r"\\section\{", "\\\\section*{", tex)
+    head = f"\\chapter*{{{t}}}\n\\addcontentsline{{toc}}{{chapter}}{{{t}}}\n"
+    tex = re.sub(r"\\chapter\{[^}]*\}\n?", "", tex)
+    # 节标题加目录行
+    def addtoc(mo):
+        inner = mo.group(1)
+        return f"\\section*{{{inner}}}\n\\addcontentsline{{toc}}{{section}}{{{inner}}}\n"
+    tex = re.sub(r"\\section\*\{([^}]*)\}\n?", addtoc, tex)
+    parts.append(head + tex)
+(PROJ/"extraTex/body/appendix.tex").write_text("\n\n".join(parts), encoding="utf-8")
+print("appendix <-", appendix_titles)
+
+# ---------- 参考文献 / 致谢 ----------
+ref_body = to_tex(segs["参考文献"], "refs")
+ref_body = ref_body.replace("_", "\\_")
+(PROJ/"extraTex/back/references.tex").write_text(ref_body.strip() + "\n", encoding="utf-8")
+thanks_body = to_tex(segs["致谢"], "thanks")
+(PROJ/"extraTex/back/thanks.tex").write_text(thanks_body.strip() + "\n", encoding="utf-8")
+
+# ---------- 缩略词表清空(当前正稿无此页) ----------
+(PROJ/"extraTex/front/abbreviations.tex").write_text(
+    "% 当前正稿未包含缩略词表;如需补充请在此填写\n", encoding="utf-8")
+
+# ---------- main.tex:按实际章数输入 + 附录 ----------
+mp = PROJ/"main.tex"
+mt = mp.read_text(encoding="utf-8")
+mt = re.sub(r"(\\input\{extraTex/body/chapter-01\.tex\})([\s\S]*?)(\\clearpage\n\\chapter\*\{参考文献\})",
+            lambda m: m.group(1) + "".join(f"\n\\input{{extraTex/body/chapter-{i:02d}.tex}}" for i in range(2, max(written_chapters) + 1)) +
+                      "\n\\input{extraTex/body/appendix.tex}\n" + m.group(3), mt)
+mp.write_text(mt, encoding="utf-8")
+
+# ---------- meta.tex:真实元数据 ----------
+(PROJ/"extraTex/meta.tex").write_text("""\\def\\ahnuClassNo{TP391}
+\\def\\ahnuTitleZh{面向科研实验记录的智能电子实验笔记系统设计与实现}
+\\def\\ahnuTitleEn{Design and Implementation of an Intelligent Electronic\\\\Laboratory Notebook System for Scientific Experiment Records}
+\\def\\ahnuMajor{电子信息}
+\\def\\ahnuResearchDirection{}
+\\def\\ahnuAuthor{}
+\\def\\ahnuSupervisor{}
+\\def\\ahnuSubmitDate{2026 年 8 月 29 日}
+\\def\\ahnuDegreeDate{2026 年 9 月}
+\\def\\ahnuBottomLine{安徽师范大学硕士学位论文}
+\\def\\ahnuBottomDate{（二〇二六年九月）}
+\\def\\ahnuKeywordsZh{电子实验笔记；科研数据管理；知识图谱；检索增强生成；固定任务型智能辅助生成}
+\\def\\ahnuKeywordsEn{Electronic Laboratory Notebook; Research Data Management; Knowledge Graph; Retrieval-Augmented Generation; Fixed-Task Intelligent Generation}
+""", encoding="utf-8")
+print("meta written")
+print("MIGRATION DONE")
