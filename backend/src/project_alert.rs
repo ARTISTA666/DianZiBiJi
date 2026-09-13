@@ -385,6 +385,19 @@ pub async fn upsert_alert_threshold(
             "阈值非法：要求 0 ≤ warn ≤ critical",
         ));
     }
+    // 占比类指标阈值口径为 0-1 小数（与指标读数同单位）；百分数录入（>1）永不触发，
+    // 告警会静默失效，故在写入端直接拒绝（Q-11 根修）。
+    if crate::models::is_ratio_alert_metric(&request.metric)
+        && (request.warn_threshold > 1.0 || request.critical_threshold > 1.0)
+    {
+        return Err(ApiError::new(
+            StatusCode::BAD_REQUEST,
+            format!(
+                "指标 {} 的阈值口径为 0-1 占比小数（如 0.8 表示 80%），不接受百分数",
+                request.metric
+            ),
+        ));
+    }
     let row: AlertThresholdRead = sqlx::query_as(
         r#"
         INSERT INTO public.project_alert_thresholds

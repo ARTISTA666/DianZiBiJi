@@ -632,5 +632,68 @@ mod tests {
         )
         .await;
         assert_eq!(inverted_status, StatusCode::BAD_REQUEST);
+
+        // Q-11 根修：占比类指标拒绝百分数口径（>1），防止告警静默失效
+        let (percent_warn_status, _) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/thresholds"),
+            Some(&admin),
+            Some(json!({
+                "metric": "progress_deviation",
+                "warn_threshold": 80.0,
+                "critical_threshold": 95.0,
+                "enabled": true
+            })),
+        )
+        .await;
+        assert_eq!(percent_warn_status, StatusCode::BAD_REQUEST);
+        let (percent_critical_status, _) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/thresholds"),
+            Some(&admin),
+            Some(json!({
+                "metric": "return_rate",
+                "warn_threshold": 0.3,
+                "critical_threshold": 50.0,
+                "enabled": true
+            })),
+        )
+        .await;
+        assert_eq!(percent_critical_status, StatusCode::BAD_REQUEST);
+
+        // 非占比指标不受 0-1 上限约束（小时/天可以 >1）
+        let (hours_status, _) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/thresholds"),
+            Some(&admin),
+            Some(json!({
+                "metric": "review_stall_hours",
+                "warn_threshold": 72.0,
+                "critical_threshold": 168.0,
+                "enabled": true
+            })),
+        )
+        .await;
+        assert_eq!(hours_status, StatusCode::OK);
+
+        // 合法的占比小数仍可通过
+        let (valid_ratio_status, valid_ratio) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/thresholds"),
+            Some(&admin),
+            Some(json!({
+                "metric": "progress_deviation",
+                "warn_threshold": 0.7,
+                "critical_threshold": 0.9,
+                "enabled": true
+            })),
+        )
+        .await;
+        assert_eq!(valid_ratio_status, StatusCode::OK);
+        assert_eq!(valid_ratio["warn_threshold"], 0.7);
     }
 }

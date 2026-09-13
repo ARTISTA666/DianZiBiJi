@@ -15,6 +15,15 @@ pub const ALERT_METRICS: &[&str] = &[
     ALERT_METRIC_PROGRESS_DEVIATION,
 ];
 
+/// 占比类指标（读数与阈值同为 0-1 小数）。写入端按此拒绝"80 表示 80%"式百分数误录，
+/// 否则阈值 80 永不触发、告警静默失效（Q-11，审计 901/903 实录）。
+pub const RATIO_ALERT_METRICS: &[&str] =
+    &[ALERT_METRIC_RETURN_RATE, ALERT_METRIC_PROGRESS_DEVIATION];
+
+pub fn is_ratio_alert_metric(metric: &str) -> bool {
+    RATIO_ALERT_METRICS.contains(&metric)
+}
+
 /// 指标的人类可读说明（前端/文档共用口径）。
 pub fn alert_metric_description(metric: &str) -> &'static str {
     match metric {
