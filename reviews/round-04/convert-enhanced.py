@@ -263,7 +263,10 @@ def fix_table_code_breaks(tex: str) -> str:
 
 def to_tex(fragment: str, name: str) -> str:
     frag = Path(f"/tmp/crlt/frag_{name}.md")
-    frag.write_text(guard(add_table_captions(fragment)), encoding="utf-8")
+    # `?"`+中文:pandoc smart 把句末问号后的收尾直引号误判为左引号(5.3 节 Q06/Q07/Q11 三处 ¿ 渲染缺陷实录);
+    # 此类序列统一为全角问号+全角右引号,md 源保持半角风格不动
+    frag_text = re.sub(r'\?"(?=[\u4e00-\u9fff\u3000-\u303f])', "？”", guard(add_table_captions(fragment)))
+    frag.write_text(frag_text, encoding="utf-8")
     r = subprocess.run(["pandoc", str(frag), "-f", "markdown+smart", "-t", "latex",
                         "--top-level-division=chapter", "--shift-heading-level-by=-1",
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
