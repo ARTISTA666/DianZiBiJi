@@ -33,16 +33,13 @@ print("segments:", list(segs.keys()))
 
 # ---------- 片段清洗 ----------
 TABLE_NAMES = {
+    "6-1": "两套运行时关键口径对照",
     "6-2": "交付系统复现批次结果",
     "6-3": "功能闭环与安全边界测试项",
     "6-4": "性能测试指标与判定方式",
     "6-5": "实验数据处理阶段与产出",
     "6-6": "实验记录样例的结构化结果",
-    "6-7": "三项目语料规模统计",
-    "6-8": "关系核验原始与修复后批次",
-    "6-9": "20 题成对实验总体结果",
-    "6-10": "四臂扩展消融结果",
-    "6-11": "固定任务生成验证明细",
+    "6-7": "20 题成对实验总体结果",
     "A-1": "RAG 对照实验问题清单",
     "B-1": "核心数据表域映射",
     "B-2": "主要数据表字段与主外键",
@@ -57,17 +54,16 @@ TABLE_NAMES = {
     "4-1": "用户类型与能力矩阵",
     "4-2": "核心功能模块输入输出",
     "4-3": "功能链路与验证材料对应",
-    "4-4": "实体类型定义",
-    "4-5": "关系类型定义",
-    "4-6": "抽取运行批次与计数",
-    "4-7": "固定任务模板与安全属性",
+    "4-4": "知识抽取处理链路",
+    "4-5": "实体类型定义",
+    "4-6": "关系类型定义",
+    "4-7": "四类固定任务的设计约束",
     "4-8": "MCP受控工具安全规格",
     "4-9": "预警四维指标与缺省阈值",
     "4-10": "预警操作权限与审计事件",
     "5-1": "核心已审核笔记结构化样例",
     "5-2": "知识图谱抽取关系样例",
-    "5-3": "创新点运行界面素材索引",
-    "5-4": "系统界面截图素材索引",}
+    "5-3": "三类 DeepSeek 调用接入方式",}
 
 CAPTION_OVERRIDES = {
     "| 工具 | 风险 | 需确认 | 强制幂等键 | 权限范围 | 审计动作 |": "C-1",
@@ -193,6 +189,89 @@ def fix_identifier_breaks(tex: str) -> str:
         return "\\texttt{" + out + "}"
     return re.sub(r"\\texttt\{([^}]*)\}", _camel, tex)
 
+def merge_captions_into_longtables(tex: str) -> str:
+    """把独立 \textbf{表 X-Y 题注} 行并入其后最近 longtable 的表头(题注→\toprule→列头
+    合为首块),使题注/表头/表体作为整体跨页迁移。此前 longtable 未合并(merge-captions.py
+    只挂在 refarch 管线),T-039 视觉验收发现页首孤表头重复(表 4-7/6-6)。逻辑与
+    merge-captions.py 一致,改为纯字符串函数供 to_tex 链尾调用。"""
+    B = chr(92)
+    line_re = re.compile(re.escape(B + "textbf{表 ") + r"([A-Z]\d*|\d+)-(\d+)\s+([^}]*)\}$")
+    lines = tex.split("\n")
+    out, i = [], 0
+    while i < len(lines):
+        m = line_re.match(lines[i].strip())
+        if not m:
+            out.append(lines[i]); i += 1; continue
+        j = i + 1
+        while j < len(lines) and j <= i + 6 and "begin{longtable}" not in lines[j]:
+            j += 1
+        if j >= len(lines) or "begin{longtable}" not in lines[j]:
+            out.append(lines[i]); i += 1; continue
+        title = "表 %s-%s %s" % (m.group(1), m.group(2), m.group(3))
+        out.extend(lines[i + 1:j + 1])  # 保留 LTcaptype 行与 begin{longtable} 行
+        _spec = lines[j].split("@{}", 1)[-1]
+        _spec = _spec.split("@{")[0]
+        cols = len(re.findall(r"[lrc]", _spec))
+        j += 1
+        while j < len(lines) and lines[j].lstrip().startswith(">{"):
+            cols += 1
+            out.append(lines[j])
+            j += 1
+        out.append(B + "multicolumn{%d}{c}{" % cols + B + "textbf{%s}}" % title + B * 2)
+        i = j
+    return "\n".join(out)
+
+def fix_table_a1_widths(tex: str) -> str:
+    """附录表 A-1(问题清单,pandoc 默认 编号0.40/类型0.30/问题0.30):
+    编号列 0.40 宽致视觉空列,问题列挤压断行。重分配 0.08/0.22/0.70。"""
+    if "RAG 对照实验问题清单" not in tex:
+        return tex
+    pat = re.compile(r"p\{\(\\linewidth - 4\\tabcolsep\) \* \\real\{0\.(4000|3000)\}\}")
+    new_order = ["0.08", "0.22", "0.70"]
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.3000"
+        return "p{(\\linewidth - 4\\tabcolsep) * \\real{%s}}" % w
+    start = tex.find("RAG 对照实验问题清单")
+    head, tail = tex[:start], tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    return head + pat.sub(_sub, tail[:seg_end]) + tail[seg_end:]
+
+def fix_table_b3_widths(tex: str) -> str:
+    """附录表 B-3(运行时扩展域)5 列等宽 0.20:主键列"主/键"竖排断行、
+    "session_id+ 回合"孤字。重分配 数据表0.15 主键0.09 约束0.22 字段0.27 含义0.27。"""
+    if "运行时扩展域数据表" not in tex:
+        return tex
+    pat = re.compile(r"p\{\(\\linewidth - 8\\tabcolsep\) \* \\real\{0\.2000\}\}")
+    new_order = ["0.15", "0.09", "0.22", "0.27", "0.27"]
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.2000"
+        return "p{(\\linewidth - 8\\tabcolsep) * \\real{%s}}" % w
+    start = tex.find("运行时扩展域数据表")
+    head, tail = tex[:start], tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    return head + pat.sub(_sub, tail[:seg_end]) + tail[seg_end:]
+
+def fix_table_65_widths(tex: str) -> str:
+    """正文表 6-5(实验数据处理阶段与产出)5 列 0.1875/0.25 均分:
+    "数量或范围"列"…7 份"孤字"份"。重分配 0.14/0.20/0.28/0.19/0.19。"""
+    if "实验数据处理阶段与产出" not in tex:
+        return tex
+    pat = re.compile(r"p\{\(\\linewidth - 8\\tabcolsep\) \* \\real\{0\.(1875|2500)\}\}")
+    new_order = ["0.14", "0.20", "0.28", "0.19", "0.19"]
+    cnt = [0]
+    def _sub(m):
+        i = cnt[0]; cnt[0] += 1
+        w = new_order[i] if i < len(new_order) else "0.1875"
+        return "p{(\\linewidth - 8\\tabcolsep) * \\real{%s}}" % w
+    start = tex.find("实验数据处理阶段与产出")
+    head, tail = tex[:start], tex[start:]
+    seg_end = tail.find("\\end{longtable}")
+    return head + pat.sub(_sub, tail[:seg_end]) + tail[seg_end:]
+
 def fix_table_c_widths(tex: str) -> str:
     """附录 MCP 工具表(6 列等宽 0.1667):工具名/权限范围 texttt 串 20-48pt 溢出。
     重分配:工具0.22 风险0.09 需确认0.09 幂等0.10 权限0.26 映射0.24。"""
@@ -272,7 +351,7 @@ def to_tex(fragment: str, name: str) -> str:
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
     if r.returncode:
         print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
-    return fix_bare_param_strings(fix_mixed_breaks(fix_fk_underscore_breaks(fix_bare_slash_breaks(fix_table_c_widths(fix_identifier_breaks(fix_long_hex_breaks(fix_table_b2_widths(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))))))))))
+    return merge_captions_into_longtables(fix_table_a1_widths(fix_table_b3_widths(fix_table_65_widths(fix_bare_param_strings(fix_mixed_breaks(fix_fk_underscore_breaks(fix_bare_slash_breaks(fix_table_c_widths(fix_identifier_breaks(fix_long_hex_breaks(fix_table_b2_widths(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))))))))))))))
 
 def fix_bare_param_strings(tex: str) -> str:
     """裸参数串(非 texttt)temperature=...,max_tokens=... 逗号/等号后插断点。"""
