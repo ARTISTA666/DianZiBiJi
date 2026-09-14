@@ -54,13 +54,12 @@ TABLE_NAMES = {
     "4-1": "用户类型与能力矩阵",
     "4-2": "核心功能模块输入输出",
     "4-3": "功能链路与验证材料对应",
-    "4-4": "知识抽取处理链路",
-    "4-5": "实体类型定义",
-    "4-6": "关系类型定义",
-    "4-7": "四类固定任务的设计约束",
-    "4-8": "MCP受控工具安全规格",
-    "4-9": "预警四维指标与缺省阈值",
-    "4-10": "预警操作权限与审计事件",
+    "4-4": "实体类型定义",
+    "4-5": "关系类型定义",
+    "4-6": "四类固定任务的设计约束",
+    "4-7": "MCP受控工具安全规格",
+    "4-8": "预警四维指标与缺省阈值",
+    "4-9": "预警操作权限与审计事件",
     "5-1": "核心已审核笔记结构化样例",
     "5-2": "知识图谱抽取关系样例",
     "5-3": "三类 DeepSeek 调用接入方式",}
@@ -221,6 +220,49 @@ def merge_captions_into_longtables(tex: str) -> str:
         i = j
     return "\n".join(out)
 
+def fix_table_atomicity(tex: str) -> str:
+    r"""三线表尽量不跨页(作者点名 T-041):
+    ① 体量小的 longtable(表体 ≤11 数据行且 ≤1400 字符)整体转 tabular——tabular 不可断行,
+       放不下时整表移至下一页,题注/表头/表体永不跨页;
+    ② 其余长表保留 longtable,显式拆出 endfirsthead(题注+表头,仅首页)与 endhead(表头,续页),
+       消除跨页时"题注+表头"整体重复(表 4-6/6-6 实录)。"""
+    pat = re.compile(
+        r"\{\\def\\LTcaptype\{none\}[^\n]*\n"
+        r"(\\begin\{longtable\}\[\]\{@\{\}[\s\S]*?@\{\}\})\n"
+        r"([\s\S]*?)"
+        r"(\\end\{longtable\}\n\})", re.M)
+    cap_re = re.compile(r"^\\multicolumn\{\d+\}\{c\}\{\\textbf\{表 [^}]+\}\}\\\\\n")
+    def _split_rest(rest):
+        # rest = \toprule..HEAD..\midrule..\endhead \bottomrule..\endlastfoot BODY
+        i_head = rest.find("\\endhead")
+        i_body = rest.find("\\endlastfoot")
+        if i_head < 0 or i_body < 0:
+            return None
+        head = rest[:i_head]                      # 含 \toprule..\midrule..\noalign{}
+        body = rest[i_body + len("\\endlastfoot"):].lstrip("\n")
+        return head, body
+    def _fix(m):
+        head_spec, mid, tail = m.group(1), m.group(2), m.group(3)
+        cap_m = cap_re.match(mid)
+        if not cap_m:
+            return m.group(0)
+        cap_line = cap_m.group(0)
+        sp = _split_rest(mid[cap_m.end():])
+        if sp is None:
+            return m.group(0)
+        head, body = sp
+        n_rows = body.count("\\\\")
+        if n_rows <= 11 and len(body) <= 1400:
+            tab = head_spec.replace("\\begin{longtable}[]{", "\\begin{tabular}{")
+            return ("{\\def\\LTcaptype{none} % do not increment counter\n"
+                    "\\begin{center}\n" + tab + "\n" + cap_line + head
+                    + body + "\\bottomrule\n\\end{tabular}\n\\end{center}\n}")
+        # 长表:题注+表头 → endfirsthead;续页 endhead 仅表头
+        return ("{\\def\\LTcaptype{none} % do not increment counter\n"
+                + head_spec + "\n" + cap_line + head + "\\endfirsthead\n"
+                + head + "\\endhead\n\\bottomrule\\noalign{}\n\\endlastfoot\n" + body + tail)
+    return pat.sub(_fix, tex)
+
 def fix_table_a1_widths(tex: str) -> str:
     """附录表 A-1(问题清单,pandoc 默认 编号0.40/类型0.30/问题0.30):
     编号列 0.40 宽致视觉空列,问题列挤压断行。重分配 0.08/0.22/0.70。"""
@@ -351,7 +393,7 @@ def to_tex(fragment: str, name: str) -> str:
                         "-o", str(frag.with_suffix(".tex"))], capture_output=True, text=True)
     if r.returncode:
         print("pandoc fail", name, r.stderr[:400]); sys.exit(1)
-    return merge_captions_into_longtables(fix_table_a1_widths(fix_table_b3_widths(fix_table_65_widths(fix_bare_param_strings(fix_mixed_breaks(fix_fk_underscore_breaks(fix_bare_slash_breaks(fix_table_c_widths(fix_identifier_breaks(fix_long_hex_breaks(fix_table_b2_widths(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8")))))))))))))))
+    return fix_table_atomicity(merge_captions_into_longtables(fix_table_a1_widths(fix_table_b3_widths(fix_table_65_widths(fix_bare_param_strings(fix_mixed_breaks(fix_fk_underscore_breaks(fix_bare_slash_breaks(fix_table_c_widths(fix_identifier_breaks(fix_long_hex_breaks(fix_table_b2_widths(fix_table_62_widths(fix_table_code_breaks(frag.with_suffix(".tex").read_text(encoding="utf-8"))))))))))))))))
 
 def fix_bare_param_strings(tex: str) -> str:
     """裸参数串(非 texttt)temperature=...,max_tokens=... 逗号/等号后插断点。"""
