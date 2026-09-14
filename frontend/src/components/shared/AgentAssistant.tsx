@@ -494,7 +494,7 @@ export function AgentAssistant() {
                 <button type="button" className="flex w-full items-center gap-1.5 text-xs font-medium text-muted-foreground" onClick={() => setShowChain((v) => !v)}>
                   {showChain ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
                   <BrainCircuit className="h-3.5 w-3.5" />
-                  思维链（{chainOfThought.length} 步）
+                  执行轨迹（{chainOfThought.length} 步）
                 </button>
                 {showChain && (
                   <ol className="mt-2 space-y-1.5 border-l border-border/60 pl-3 text-xs">
