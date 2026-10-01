@@ -7,8 +7,10 @@ import {
   XCircle,
   Archive,
   Trash2,
+  Image as ImageIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,7 +21,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { statusText } from "@/components/constants";
-import type { NoteVersion, NoteApproval, ProjectMember, StoredFile } from "@/lib/api";
+import { fileDownloadUrl, type NoteVersion, type NoteApproval, type ProjectMember, type StoredFile } from "@/lib/api";
+import { ImageCarousel, type CarouselImage } from "@/components/image-carousel";
 
 export type NoteItem = {
   id: number;
@@ -49,6 +52,11 @@ interface NoteDetailDialogProps {
   canWrite?: boolean;
 }
 
+const isImageFile = (file: StoredFile) => {
+  if (file.mime_type?.startsWith("image/")) return true;
+  return /\.(png|jpe?g|gif|webp|svg|bmp|ico)$/i.test(file.original_filename);
+};
+
 export function NoteDetailDialog({
   open,
   onOpenChange,
@@ -67,10 +75,86 @@ export function NoteDetailDialog({
 }: NoteDetailDialogProps) {
   // 审批记录按 created_at 倒序返回，第一条退回即最近一次退回意见。
   const latestReturn = approvals.find((a) => a.action === "returned");
+
+  // 提取日记关联的多张图片（优先附件图片，其次正文中的图片）
+  const noteImages: CarouselImage[] = useMemo(() => {
+    const list: CarouselImage[] = [];
+    const seenUrls = new Set<string>();
+
+    // 1. 来自附件中的图片文件
+    attachments.forEach((file) => {
+      if (isImageFile(file)) {
+        const url = fileDownloadUrl(file.id);
+        if (!seenUrls.has(url)) {
+          seenUrls.add(url);
+          list.push({
+            id: `file-${file.id}`,
+            fileId: file.id,
+            url,
+            title: file.original_filename,
+          });
+        }
+      }
+    });
+
+    // 2. 来自最新版本正文 content_json 中的 images 数组
+    if (versions.length > 0) {
+      const contentJson = versions[0].content_json;
+      if (Array.isArray(contentJson?.images)) {
+        contentJson.images.forEach((imgItem: unknown, idx: number) => {
+          if (typeof imgItem === "string" && !seenUrls.has(imgItem)) {
+            seenUrls.add(imgItem);
+            list.push({
+              id: `content-img-${idx}`,
+              url: imgItem,
+              title: `正文图片 ${idx + 1}`,
+            });
+          } else if (imgItem && typeof imgItem === "object" && "url" in imgItem) {
+            const item = imgItem as { url: string; title?: string };
+            if (item.url && !seenUrls.has(item.url)) {
+              seenUrls.add(item.url);
+              list.push({
+                id: `content-img-${idx}`,
+                url: item.url,
+                title: item.title || `正文图片 ${idx + 1}`,
+              });
+            }
+          }
+        });
+      }
+
+      // 3. 从 Markdown 语法 ![alt](url) 解析
+      const text = typeof contentJson?.text === "string" ? contentJson.text : "";
+      const mdRegex = /!\[(.*?)\]\((.*?)\)/g;
+      let match: RegExpExecArray | null;
+      let mdIndex = 0;
+      while ((match = mdRegex.exec(text)) !== null) {
+        const alt = match[1];
+        const url = match[2];
+        if (url && !seenUrls.has(url)) {
+          seenUrls.add(url);
+          list.push({
+            id: `md-img-${mdIndex++}`,
+            url,
+            title: alt || `图片 ${list.length + 1}`,
+          });
+        }
+      }
+    }
+
+    return list;
+  }, [attachments, versions]);
+
+  // 过滤非图片附件
+  const nonImageAttachments = useMemo(
+    () => attachments.filter((file) => !isImageFile(file)),
+    [attachments]
+  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       {note && (
-        <DialogContent className="max-w-xl max-h-[80vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{note.title}</DialogTitle>
           </DialogHeader>
@@ -89,6 +173,24 @@ export function NoteDetailDialog({
               </div>
             )}
 
+            {/* 日记多图画廊与左右切换轮播 */}
+            {noteImages.length > 0 && (
+              <div className="space-y-2 rounded-lg border bg-muted/20 p-3">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium flex items-center gap-1.5">
+                    <ImageIcon className="h-4 w-4 text-primary" />
+                    日记图片（{noteImages.length} 张）
+                  </p>
+                  {noteImages.length > 1 && (
+                    <span className="text-xs text-muted-foreground">
+                      可点击左右箭头、小圆点或全屏切换查看
+                    </span>
+                  )}
+                </div>
+                <ImageCarousel images={noteImages} />
+              </div>
+            )}
+
             {versions.length > 0 && (
               <div className="rounded-md border p-3">
                 <p className="text-sm font-medium mb-1">
@@ -101,11 +203,11 @@ export function NoteDetailDialog({
               </div>
             )}
 
-            {/* 审批记录 */}
-            {attachments.length > 0 && (
+            {/* 非图片附件 */}
+            {nonImageAttachments.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium">笔记附件</p>
-                {attachments.map((file) => (
+                <p className="text-sm font-medium">其他附件文档</p>
+                {nonImageAttachments.map((file) => (
                   <Link
                     key={file.id}
                     href={`/projects/${projectId}/data#file-${file.id}`}

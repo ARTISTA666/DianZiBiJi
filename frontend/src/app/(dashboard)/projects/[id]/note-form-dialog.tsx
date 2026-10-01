@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useRef, ChangeEvent, FormEvent } from "react";
+import { ImagePlus, X, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -39,6 +40,8 @@ interface NoteFormDialogProps {
   onSave: (e: FormEvent) => void;
   busy: boolean;
   error: string;
+  pendingImages?: File[];
+  onPendingImagesChange?: (files: File[]) => void;
 }
 
 export function NoteFormDialog({
@@ -51,8 +54,11 @@ export function NoteFormDialog({
   busy,
   error,
   templates,
+  pendingImages = [],
+  onPendingImagesChange,
 }: NoteFormDialogProps) {
   const [titleError, setTitleError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const selectedTemplate = templates.find((template) => template.id === form.template_id);
   const templateFields = selectedTemplate?.schema_json.fields ?? [];
 
@@ -89,9 +95,25 @@ export function NoteFormDialog({
     }
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !onPendingImagesChange) return;
+    const newFiles = Array.from(e.target.files).filter((file) =>
+      file.type.startsWith("image/")
+    );
+    if (newFiles.length > 0) {
+      onPendingImagesChange([...pendingImages, ...newFiles]);
+    }
+    e.target.value = "";
+  };
+
+  const removePendingImage = (index: number) => {
+    if (!onPendingImagesChange) return;
+    onPendingImagesChange(pendingImages.filter((_, i) => i !== index));
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{editingNote ? "编辑笔记" : "新建笔记"}</DialogTitle>
         </DialogHeader>
@@ -170,13 +192,98 @@ export function NoteFormDialog({
             <Label htmlFor="ncontent">内容</Label>
             <Textarea
               id="ncontent"
-              rows={8}
+              rows={6}
               value={form.content_text}
               onChange={(e) =>
                 onFormChange({ ...form, content_text: e.target.value })
               }
               placeholder="实验笔记内容..."
             />
+          </div>
+
+          {/* 日记图片上传与管理 */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label className="flex items-center gap-1.5 text-sm font-medium">
+                <ImagePlus className="h-4 w-4 text-primary" />
+                日记图片
+                {pendingImages.length > 0 && (
+                  <span className="text-xs text-muted-foreground font-normal">
+                    （已选 {pendingImages.length} 张，保存后可左右切换查看）
+                  </span>
+                )}
+              </Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                accept="image/*"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-8 text-xs gap-1.5"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload className="h-3.5 w-3.5" />
+                添加图片
+              </Button>
+            </div>
+
+            {/* 待上传图片预览列表 */}
+            {pendingImages.length > 0 ? (
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 p-2 rounded-lg border border-dashed border-border/80 bg-muted/20">
+                {pendingImages.map((file, idx) => {
+                  const previewUrl = URL.createObjectURL(file);
+                  return (
+                    <div
+                      key={`${file.name}-${idx}`}
+                      className="group relative aspect-square overflow-hidden rounded-md border border-border/60 bg-muted"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={previewUrl}
+                        alt={file.name}
+                        className="h-full w-full object-cover"
+                        onLoad={() => URL.revokeObjectURL(previewUrl)}
+                      />
+                      <button
+                        type="button"
+                        aria-label={`移除图片 ${file.name}`}
+                        className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/75 text-white hover:bg-destructive transition-colors"
+                        onClick={() => removePendingImage(idx)}
+                      >
+                        <X className="h-3 w-3" />
+                      </button>
+                      <div className="absolute bottom-0 inset-x-0 bg-black/60 px-1 py-0.5 text-[9px] text-white truncate text-center">
+                        {file.name}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div
+                role="button"
+                tabIndex={0}
+                className="flex flex-col items-center justify-center gap-1 p-3 rounded-lg border border-dashed border-border/80 bg-muted/10 hover:bg-muted/20 cursor-pointer transition-colors text-center"
+                onClick={() => fileInputRef.current?.click()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    fileInputRef.current?.click();
+                  }
+                }}
+              >
+                <ImagePlus className="h-5 w-5 text-muted-foreground/70" />
+                <p className="text-xs text-muted-foreground">
+                  点击或添加日记附图（支持多张图片）
+                </p>
+              </div>
+            )}
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
           <p className="text-xs text-muted-foreground">编辑中的内容会自动保存在本机，刷新或暂时断网后可恢复。</p>

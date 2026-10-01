@@ -3,7 +3,16 @@
 import { useRef, useState, useCallback, FormEvent, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useAuthStore, useProjectStore } from "@/stores";
-import { getNoteVersions, getNoteApprovals, getNoteFiles, type NoteVersion, type NoteApproval, type StoredFile, type Template } from "@/lib/api";
+import {
+  getNoteVersions,
+  getNoteApprovals,
+  getNoteFiles,
+  uploadFile,
+  type NoteVersion,
+  type NoteApproval,
+  type StoredFile,
+  type Template,
+} from "@/lib/api";
 import { getErrorMessage } from "@/lib/utils";
 import { useConfirmDialog } from "@/hooks/use-confirm-dialog";
 import { useActionFeedback } from "@/hooks/use-action-feedback";
@@ -73,6 +82,7 @@ export default function ProjectNotesPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<number | null>(null);
   const [form, setForm] = useState<NoteFormData>(emptyForm);
+  const [pendingImages, setPendingImages] = useState<File[]>([]);
 
   // Detail / versions / approvals
   const [detailNote, setDetailNote] = useState<NoteItem | null>(null);
@@ -170,11 +180,17 @@ export default function ProjectNotesPage() {
     ),
   });
 
-  const resetForm = () => { setForm(emptyForm); setEditingNote(null); setError(""); };
+  const resetForm = () => {
+    setForm(emptyForm);
+    setEditingNote(null);
+    setPendingImages([]);
+    setError("");
+  };
 
   const openNew = useCallback(() => {
     setForm(formForTemplate(templates[0]));
     setEditingNote(null);
+    setPendingImages([]);
     setError("");
     setDialogOpen(true);
   }, [templates]);
@@ -192,6 +208,7 @@ export default function ProjectNotesPage() {
       detailRequestEpoch.current += 1;
       setDetailNote(null);
       setEditingNote(note.id);
+      setPendingImages([]);
       setForm({
         title: note.title,
         experiment_type: note.experiment_type,
@@ -220,14 +237,27 @@ export default function ProjectNotesPage() {
         fixed_fields_json: form.fixed_fields_json,
         content_json: { text: form.content_text },
       };
+      let targetNoteId = editingNote;
       if (editingNote) {
         await updateNote(token, editingNote, payload);
       } else {
-        await createNote(token, {
+        const created = await createNote(token, {
           project_id: projectId,
           ...payload,
         });
+        targetNoteId = created.id;
       }
+
+      // 如果用户选择了待上传图片，并发上传并关联到该笔记
+      const uploadedImageCount = pendingImages.length;
+      if (uploadedImageCount > 0 && targetNoteId) {
+        await Promise.all(
+          pendingImages.map((imgFile) =>
+            uploadFile(token, projectId, imgFile, targetNoteId, "note_attachment")
+          )
+        );
+      }
+
       try {
         window.localStorage.removeItem(`eln.note-draft:${projectId}:${editingNote ?? "new"}`);
       } catch {
@@ -236,7 +266,11 @@ export default function ProjectNotesPage() {
       setDialogOpen(false);
       resetForm();
       fetchNotes();
-      feedback.success("笔记已保存");
+      feedback.success(
+        uploadedImageCount > 0
+          ? `笔记已保存，已成功上传 ${uploadedImageCount} 张图片`
+          : "笔记已保存"
+      );
     } catch (e) {
       setError(getErrorMessage(e, "保存失败"));
     } finally {
@@ -365,6 +399,8 @@ export default function ProjectNotesPage() {
         onSave={handleSave}
         busy={saving}
         error={error}
+        pendingImages={pendingImages}
+        onPendingImagesChange={setPendingImages}
       />
 
       {/* 详情 Dialog */}
