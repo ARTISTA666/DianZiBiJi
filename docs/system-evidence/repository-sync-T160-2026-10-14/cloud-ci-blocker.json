@@ -1,0 +1,22 @@
+{
+  "scope": "GitHub Actions runs for T160 source and canonical-doc commits",
+  "latest_observed_commit": "56cb7e1f5e1a25ffa1ed8f40016c5a6878349d26",
+  "latest_run_id": 38544188211,
+  "latest_run_url": "https://github.com/ARTISTA666/DianZiBiJi/actions/runs/38544188211",
+  "source_run_id": 38543093495,
+  "source_run_url": "https://github.com/ARTISTA666/DianZiBiJi/actions/runs/38543093495",
+  "status": "completed",
+  "conclusion": "failure",
+  "job_count": 4,
+  "job_steps_started": 0,
+  "runner_ids": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "annotation": "The job was not started because your account is locked due to a billing issue.",
+  "assessment": "Account billing blocker; no cloud code checks executed. Local validation is separately recorded.",
+  "failed_log_request_result": "log not found",
+  "actions_taken": "Read-only inspection; no billing change, workflow rerun, or CI/source edits."
+}
