@@ -1,0 +1,194 @@
+{
+  "task": "T139 QA final clean-snapshot validation",
+  "status": "QA_CHECKS_PASS",
+  "utc": "2026-10-11T06:47:57.722639+00:00",
+  "source_primary_head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+  "baseline_head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+  "initial_snapshot_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+  "final_snapshot_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+  "checkout": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo",
+  "snapshot_input_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/snapshot-input.json",
+  "snapshot_input_sha256": "41e95b9353ac8b9db670bd5393566b8fe0bd96656d76b8a81998c788dea770a5",
+  "authorized_source_file_count": 15,
+  "source_sha256": {
+    "backend/src/api/agent_runtime.rs": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+    "backend/src/api/agents.rs": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+    "backend/src/api/files.rs": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+    "backend/src/api/knowledge_graph.rs": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+    "backend/src/api/mcp.rs": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+    "backend/src/api/notes.rs": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+    "backend/src/api/project_alert.rs": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+    "backend/src/api/projects.rs": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+    "backend/src/api/rag/mod.rs": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+    "backend/src/project_alert.rs": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+    "backend/src/rag/index.rs": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+    "frontend/src/components/project-alerts.tsx": "6598665e59ab591982fd06e21e93a40f52ca648e331e9c2eead1ef233d2b9feb",
+    "frontend/src/lib/api.ts": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+    "scripts/experiments/validate_experiment_restart.py": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6",
+    "frontend/src/components/shared/AgentAssistant.tsx": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47"
+  },
+  "final_source_primary_copy_committed_bytes_match": true,
+  "clean_status": "",
+  "gates": [
+    {
+      "gate": "cargo_fmt",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "cargo +1.88.0 fmt --manifest-path backend/Cargo.toml --all --check",
+      "executed_snapshot_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+      "accepted_final_snapshot_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/cargo-fmt-check.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "duration_seconds": null,
+      "duration_note": "Exit code was recorded; elapsed time was not independently measured."
+    },
+    {
+      "gate": "cargo_clippy",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "CARGO_TARGET_DIR=/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/cargo-target cargo +1.88.0 clippy --manifest-path backend/Cargo.toml --locked --all-targets --all-features -- -D warnings",
+      "executed_snapshot_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+      "accepted_final_snapshot_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+      "duration_seconds": 36.74,
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/cargo-clippy.log",
+      "log_sha256": "beab921ea5eba1fb735137648e593c0967e28549958a13fb0c3e49dcd136b0ee"
+    },
+    {
+      "gate": "full_rust_isolated_postgresql",
+      "result_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/rust-db-tests-full-result.json",
+      "utc": "2026-10-11T06:46:53.408328+00:00",
+      "status": "PASS",
+      "exit_code": 0,
+      "executed_snapshot_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+      "final_snapshot_revision_inherited_by_hash": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+      "command": "APP_ENV=development TEST_DB_PORT=55440 CARGO_TARGET_DIR=/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/cargo-target bash ./scripts/ops/run-rust-db-tests.sh",
+      "cwd": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo",
+      "rust_toolchain": "1.88.0",
+      "library": {
+        "passed": 282,
+        "failed": 0,
+        "duration_seconds": 391.58
+      },
+      "main": {
+        "passed": 2,
+        "failed": 0,
+        "duration_seconds": 0.0
+      },
+      "total_passed": 284,
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/rust-db-tests-full.log",
+      "log_sha256": "f08ef866b669722218393dcbddd52aa587a426adb9c387574d0d602835cafbf2",
+      "docker_project": "eln-rust-test-db",
+      "isolated_port": 55440,
+      "cleanup_postcondition": {
+        "containers": "",
+        "networks": "",
+        "volumes": ""
+      },
+      "unaffected_reusable_databases": {
+        "qa": {
+          "project": "eln-t139-qa-test-db",
+          "port": 55438,
+          "healthy": true
+        },
+        "backend": {
+          "project": "eln-t139-test-db",
+          "port": 55439,
+          "healthy": true
+        }
+      },
+      "scope": "Axum/Rust unit and isolated PostgreSQL integration tests; does not claim deployed E2E or LLM generation quality.",
+      "test_execution_duration_seconds": 391.58,
+      "compilation_duration_seconds": 46.74,
+      "command_total_duration_seconds": null,
+      "duration_note": "Cargo log reports compilation and test execution durations; wrapper startup and cleanup wall time were not independently timed."
+    },
+    {
+      "gate": "scripts_tracked_full",
+      "result_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-clean-final-result.json",
+      "utc": "2026-10-11T06:47:57.722639+00:00",
+      "snapshot_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+      "status": "PASS",
+      "exit_code": 0,
+      "passed": 546,
+      "failed": 0,
+      "duration_seconds": 52.69,
+      "test_file_count": 59,
+      "command": "/Users/yusong/Downloads/new/full-system/backend/.venv/bin/python -m pytest -q scripts/*/test_*.py",
+      "cwd": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo",
+      "input_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-clean-final-input.json",
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-clean-final.log",
+      "log_sha256": "172b4a4dd0744ad928494f01b35b3d2e92bfc87c8bb6f9a00af6c35e26e9266e",
+      "changed_test_input_files_during_run": [],
+      "clean_status": ""
+    }
+  ],
+  "inherited_rust_and_frontend_scope": {
+    "rust_fmt_clippy_full_test_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+    "unchanged_backend_files": 11,
+    "unchanged_frontend_files": 3,
+    "all_other_14_source_files_unchanged": true,
+    "rust_configuration_unchanged": true,
+    "reason": "Only the restart probe subprocess invocation gained explicit bash; Rust/backend and frontend source bytes match the initially validated commit."
+  },
+  "test_environment": {
+    "rust_toolchain": "1.88.0",
+    "python": "3.12.14",
+    "cargo_target_dir": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/cargo-target",
+    "python_environment_preparation": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/python-runtime-preparation.json",
+    "test_db_project": "eln-rust-test-db",
+    "test_db_port": 55440,
+    "owned_test_db_auto_cleanup_verified": true
+  },
+  "preserved_earlier_runs": [
+    {
+      "scope": "primary scripts includes user preexisting files",
+      "passed": 602,
+      "failed": 1,
+      "failure_reason": "Existing dirty-checkout protection prevents fake Docker branch",
+      "result_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-primary-result.json",
+      "user_preexisting_untracked_test_files": [
+        "scripts/experiments/test_run_t114_cross_judge.py",
+        "scripts/experiments/test_run_t114_rust_retest.py",
+        "scripts/experiments/test_run_t114_rust_retest_v2.py",
+        "scripts/experiments/test_run_t114_semantic_judge.py",
+        "scripts/experiments/test_run_t136_kg_validation.py"
+      ]
+    },
+    {
+      "scope": "initial clean snapshot first run",
+      "passed": 532,
+      "failed": 14,
+      "failure_reasons": {
+        "dirty_guard_during_root_dependency_symlink_window": 1,
+        "existing_render_tests_missing_ignored_backend_venv_runtime_path": 13
+      },
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-clean-snapshot.log",
+      "log_sha256": "203d950f72cca694d385634313503f6ec20b5ab66b7c61b90547ce1477f064f3",
+      "source_or_guard_modified_to_pass": false
+    },
+    {
+      "scope": "initial clean snapshot corrected runtime environment",
+      "passed": 546,
+      "failed": 0,
+      "result_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-clean-snapshot-v2-result.json"
+    }
+  ],
+  "ownership": {
+    "qa": "fmt,clippy,isolated full Rust,scripts full,snapshot input audit",
+    "root": "frontend three checks and deployed system E2E",
+    "frontend_or_e2e_result_claimed_by_this_manifest": false
+  },
+  "constraints_verified": [
+    "No primary checkout commit/stash/reset performed by QA",
+    "Only authorized 15 source files copied to local snapshot",
+    "Second snapshot commit changes restart probe only",
+    "No guard/ignore/source modification by QA",
+    "No original frozen experiment evidence changed",
+    "Disposable test database project ownership checked before execution",
+    "All logs retained, including environment/setup failures"
+  ],
+  "qa_test_db_final_state": {
+    "status": "stopped_container_and_volumes_preserved",
+    "result_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/qa-test-db-stop-result.json"
+  }
+}

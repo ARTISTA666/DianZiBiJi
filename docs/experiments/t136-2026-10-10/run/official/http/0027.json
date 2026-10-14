@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-10T15:52:28.779274+00:00",
+  "path": "/notes/6/approve",
+  "method": "POST",
+  "request": {
+    "comment": "T136 isolated functional test"
+  },
+  "status": 200,
+  "response": {
+    "id": 6,
+    "project_id": 1,
+    "template_id": null,
+    "title": "ubc2021-02 RFP plasmid retransformation",
+    "experiment_type": "plasmid_transformation",
+    "experiment_date": "2021-07-05",
+    "owner_user_id": 1,
+    "status": "approved",
+    "current_version_id": 6,
+    "created_at": "2026-10-10T15:52:29.200519Z",
+    "updated_at": "2026-10-10T15:52:29.212401Z"
+  }
+}

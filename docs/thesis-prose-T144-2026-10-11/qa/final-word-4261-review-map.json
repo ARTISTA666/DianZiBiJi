@@ -1,0 +1,60 @@
+{
+  "task": "T144 final Word 4261 semantic/protection identity map",
+  "utc": "2026-10-11T15:09:11.166894+00:00",
+  "final_word": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+  "final_word_sha256": "4261c0cc08263ba5bb70e97fae444fb5998a5a206d83e2ceed6b57e8cec901dc",
+  "source_word_sha256": "35e9ebf37cc07087239feb8857b131873bf8643c26693cfbdcacf4eb0602bc45",
+  "protection": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/candidate-4261-final-protection-review-v2.json",
+    "sha256": "bba0e83962481c4259f0cd5216042a472449140e8e8746eca60cfb90c336ef28",
+    "result": "PASS_STRUCTURE_CONTENT_PROTECTION",
+    "all_gates": 38,
+    "all_passed": true
+  },
+  "semantic_review": {
+    "base_review": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/candidate-df765-semantic-review.json",
+    "base_review_sha256": "41995b48d6331df24e4d5700e3cf7a7e6a4606dfab03a5c20ea530a33c5f0702",
+    "reviewed_edits": 102,
+    "additional_local_prose_review": {
+      "paragraph_index": 230,
+      "before": "通过两个编码器分别将问题与候选段落转换为向量，再按向量相似度检索相关段落",
+      "after": "用两个编码器分别将问题与候选段落编码为向量，再按相似度检索相关段落",
+      "result": "PASS_CONSERVATIVE_SEMANTICS",
+      "reason": "两编码器分别把问题/段落编码成向量、按相似度检索的内容完整保留；精简“通过/转换/向量”冗字未新增或降低实质条件；所有9组引用run严格同源。"
+    },
+    "total_prose_edits": 103,
+    "total_prose_paragraphs": 78,
+    "inheritance_basis": {
+      "TOC_step_df765_to_c4d4_only_one_64_to_65_w_t": true,
+      "TOC_step_df765_to_c4d4_all_nontext_XML_exact": true,
+      "TOC_step_df765_to_c4d4_all_other_parts_byte_exact": true,
+      "citation_repair_only_one_plain_text_run_changed": true,
+      "citation_repair_all_nontext_XML_exact": true,
+      "citation_repair_all_other_parts_byte_exact": true
+    },
+    "status": "PASS_CONSERVATIVE_SEMANTICS"
+  },
+  "one_TOC_numeric_change": {
+    "paragraph_index": 145,
+    "bookmark": "_Toc1834773436",
+    "before": "64",
+    "after": "65"
+  },
+  "counts": {
+    "checks": 38,
+    "passed": 38,
+    "prose_edits": 103,
+    "prose_paragraphs": 78,
+    "changed_paragraphs": 82,
+    "prose_character_delta": 609,
+    "cover_character_delta": -34,
+    "total_character_delta": 575,
+    "comments_removed": 16,
+    "anchors_removed": 28,
+    "actual_media_files": 47
+  },
+  "findings": [],
+  "native_PDF": "PENDING final export",
+  "native_visual": "PENDING new actual PNG review",
+  "result": "PASS_WORD_PROTECTION_AND_SEMANTICS_ONLY"
+}

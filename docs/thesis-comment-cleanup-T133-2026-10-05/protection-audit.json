@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "owner": "code-reviewer",
+  "completed_at": "2026-10-05T11:48:40.747391+08:00",
+  "source_path": "/private/tmp/comment-cleanup-T133-20261005/source.docx",
+  "source_sha256": "3a8d895325db84268bb9a8dc93e769cd8db6f7aa7584064a7cf79e779bfc9a2c",
+  "author_desktop_source_path": "/Users/yusong/Desktop/1004-批注修订与精简版.docx",
+  "author_desktop_source_sha256": "3a8d895325db84268bb9a8dc93e769cd8db6f7aa7584064a7cf79e779bfc9a2c",
+  "candidate_path": "/private/tmp/comment-cleanup-T133-20261005/1005.docx",
+  "candidate_sha256": "75690450e47df0580e8eb8ee466d80f2b0aafe6c5ddf3c151f010f112331c9f4",
+  "source_review_path": "/private/tmp/comment-cleanup-T133-20261005/source-review.json",
+  "source_review_sha256": "e2a78f0de9ff12b93a47ac9ca69be31a11cbc4700c598bfe00cfe2bfd8cac7d7",
+  "checks": {
+    "locked_source_and_desktop_hash": true,
+    "locked_candidate_hash": true,
+    "only_two_comment_parts_removed_and_none_added": true,
+    "only_document_relationships_content_types_changed": true,
+    "all_other_entries_byte_identical": true,
+    "exactly_61_empty_comment_markers_removed": true,
+    "document_raw_bytes_only_61_markers_removed": true,
+    "zero_comment_anchor_reference_nodes": true,
+    "zero_comment_people_parts": true,
+    "zero_comment_relationships": true,
+    "document_relationships_only_two_comment_relationships_removed": true,
+    "content_types_only_two_comment_overrides_removed": true,
+    "zero_comment_content_type_residue": true,
+    "all_48_OMML_formulas_canonical_and_order_retained": true,
+    "all_48_media_entry_bytes_retained": true,
+    "all_48_picture_instances_and_order_retained": true,
+    "all_104_tables_text_data_retained": true,
+    "all_81_references_canonical_and_order_retained": true,
+    "all_58_citations_order_frequency_retained": true,
+    "current_author_acknowledgment_not_reverted": true,
+    "entire_document_XML_structure_style_TOC_and_body_identical_after_marker_removal": true,
+    "all_XML_parts_parse_and_zero_comment_elements": true,
+    "all_internal_relationship_targets_valid": true,
+    "ZIP_CRC_valid": true,
+    "source_and_desktop_immutable_after_audit": true,
+    "candidate_immutable_after_audit": true
+  },
+  "details": {
+    "only_two_comment_parts_removed_and_none_added": {
+      "removed": [
+        "word/comments.xml",
+        "word/commentsExtended.xml"
+      ],
+      "added": []
+    },
+    "only_document_relationships_content_types_changed": {
+      "changed": [
+        "[Content_Types].xml",
+        "word/_rels/document.xml.rels",
+        "word/document.xml"
+      ],
+      "unchanged_entry_count": 70
+    },
+    "exactly_61_empty_comment_markers_removed": {
+      "commentReference": 33,
+      "commentRangeStart": 14,
+      "commentRangeEnd": 14
+    },
+    "document_relationships_only_two_comment_relationships_removed": [
+      {
+        "Id": "rId4",
+        "Type": "http://schemas.microsoft.com/office/2011/relationships/commentsExtended",
+        "Target": "commentsExtended.xml"
+      },
+      {
+        "Id": "rId3",
+        "Type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
+        "Target": "comments.xml"
+      }
+    ],
+    "content_types_only_two_comment_overrides_removed": [
+      {
+        "PartName": "/word/comments.xml",
+        "ContentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"
+      },
+      {
+        "PartName": "/word/commentsExtended.xml",
+        "ContentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml"
+      }
+    ],
+    "all_48_picture_instances_and_order_retained": {
+      "image_instance_count": 48
+    },
+    "current_author_acknowledgment_not_reverted": {
+      "paragraph_count": 5,
+      "preserved_names": [
+        "孙明斋",
+        "陆洲",
+        "徐琳",
+        "刘燕",
+        "刘辉",
+        "陆一松"
+      ],
+      "ending_poem_preserved": true
+    },
+    "all_XML_parts_parse_and_zero_comment_elements": {
+      "xml_parts_checked": 19,
+      "parse_errors": [],
+      "comment_elements": []
+    },
+    "all_internal_relationship_targets_valid": [],
+    "all_48_media_entry_bytes_retained": {
+      "media_file_count": 48,
+      "media_directory_entries": [
+        "word/media/"
+      ],
+      "all_file_and_directory_bytes_retained": true
+    }
+  },
+  "all_passed": true,
+  "result": "pass",
+  "errors": [],
+  "files_modified_by_reviewer": [
+    "source-review.json",
+    "protection-audit.json"
+  ],
+  "scope": "仅删除当前作者实物的批注部件/61空标记/2关系/2内容类型；未修改论文、候选或repo。",
+  "limits": [
+    "本记录为ZIP/XML保护审计；渲染视觉验收由主线程执行。"
+  ]
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "id": "iisc2019-01",
+    "source_id": "iisc2019",
+    "page_start": 2,
+    "page_end": 2,
+    "source_date": "2019-04-09",
+    "title": "Buffer and medium preparation",
+    "experiment_type": "reagent_and_medium_preparation",
+    "body": " Specific buffers were made:\no 0.1M CaCl2 in 15% glycerol.\no 1M 100ml HCl\no 5M 100ml NaCl\no 0.1M 100ml MgCl2\no 250ml LB + Agar\no LB solution (broth)\no 500 ml 50X TAE\no Alkaline lysis buffer-I\no Alkaline lysis buffer-II\n These solutions were prepared for autoclaving.",
+    "selection_note": "已配制多种明确命名缓冲液与培养基；按最早阅读顺序选取已执行配制记录。"
+  },
+  {
+    "id": "iisc2019-02",
+    "source_id": "iisc2019",
+    "page_start": 2,
+    "page_end": 2,
+    "source_date": "2019-04-10",
+    "title": "Autoclaving and antibiotic solution preparation",
+    "experiment_type": "autoclaving_and_antibiotic_preparation",
+    "body": " The prepared solutions were autoclaved along with the tip-boxes.\n Prepared antibiotic solutions:\no Ampicillin\no Chloramphenico\nPoured plates (Petri dishes were autoclaved earlier)",
+    "selection_note": "记录已灭菌、已配制Ampicillin和Chloramphenico并浇板；至少两个明确材料事实，保留原文拼写。"
+  },
+  {
+    "id": "iisc2019-03",
+    "source_id": "iisc2019",
+    "page_start": 2,
+    "page_end": 3,
+    "source_date": "2019-04-13",
+    "title": "PCR and gel electrophoresis",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "body": " Created PCR mix for 4 different DNA sequences and 5 controls:\n DNA Sequences:\n 6-His imcherry (708bp)\n mcp-1 + HlyA(713bp)\n mcp-1 + PelB (536bp)\n mcp-1 expression\n Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.\n The PCR (Total 25 µl) mix was created by adding the following ingredients in order:\n1. NF H2O: 8.9 µl\n2. Buffer: 5 µl\n3. dNTP mix: 0.5 µl\n4. Forward primer: 0.2 µl\n5. Reverse primer: 0.2 µl\n6. DNA sequence: 10 µl\n PCR was run by the following process:\nDenaturalisation: 95oC/98oC – 2min\nAnnealing (30 times): 95oC - 20s; Tm(67oC) – 30s;\nExtension: 72oC-20s/kb -> 10min\n Gel Electrophoresis (Gel preparation and electrophoresis)\n1% Agarose Gel(1X); Heated in the oven for 30-45s, till transparency is achieved.\nLoading Order:\n1.Gene Ruler\n2.imCherry\n3.mcp-1 Hly-A\n4.mcp-1 Hly-A\nBlank 6.mcp expression\n7. Control (no DNA)\n8.Control (no primer)\nGene ruler: 1µl loading dye + 1µl gene ruler + 1µl NF H2O\n2-8: 2µl loading dye + 10µl DNA (PCR mix)",
+    "selection_note": "连续同日PCR配制/运行与电泳跨页合并；含多个DNA、引物、试剂与操作参数事实，并非纯表格。原文控制数量与加样量不校正。"
+  },
+  {
+    "id": "iisc2019-04",
+    "source_id": "iisc2019",
+    "page_start": 3,
+    "page_end": 3,
+    "source_date": "2019-05-14",
+    "title": "LB medium and agar plate preparation",
+    "experiment_type": "medium_and_plate_preparation",
+    "body": " Prepared 250ml LB agar and 200ml LB and was autoclaved.\n Prepared agar plates.",
+    "selection_note": "正文超过60字符，记录250ml LB agar、200ml LB及琼脂平板的已执行配制/灭菌；跳过较早短条目和纯协议指针后最早合格单元。"
+  },
+  {
+    "id": "ubc2021-01",
+    "source_id": "ubc2021",
+    "page_start": 1,
+    "page_end": 1,
+    "source_date": "2021-06-30",
+    "title": "Gel electrophoresis of PCR products",
+    "experiment_type": "agarose_gel_electrophoresis",
+    "body": "- Ran gel electrophoresis on PCR products of Ryan’s primer design\n- The DNA ladder was picked up in the evening by Janella, so used the DNA ladder 1kb plus from Hallam lab instead\n- Got the login key from Avery\n- Used the gel stain from the buffer/enzyme box [from the map] and misplaced it in the BIOMOD shelf.\n- Took a photo of the gel from gel analyzer.",
+    "selection_note": "已运行PCR产物电泳并使用1kb plus DNA ladder、gel stain和gel analyzer；保留同日其他原文记录。"
+  },
+  {
+    "id": "ubc2021-02",
+    "source_id": "ubc2021",
+    "page_start": 1,
+    "page_end": 1,
+    "source_date": "2021-07-05",
+    "title": "RFP plasmid retransformation",
+    "experiment_type": "plasmid_transformation",
+    "body": "- Re-transforming RFP to get more stock of pSB1C3-RFP plasmid we got from 2019 iGEM, since we have to remove the backbone from it via PCR and are running low on our stock. Re-transforming instead of picking a colony again because the RFP plates have been out for ~a month so are probably bad by now. This was confirmed by re-picking and miniprepping, resulted in low yield.\n- 5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).\n- Transformation #5 used fresh SOC instead of supernatant to resuspend\n- Only 4 LB + CM plates are left, should make more asap!",
+    "selection_note": "记录5次转化、不同年份/浓度的RFP质粒、SOC与LB+CM平板，并报告重挑菌落/miniprep低产量；非纯计划。"
+  },
+  {
+    "id": "ubc2021-03",
+    "source_id": "ubc2021",
+    "page_start": 1,
+    "page_end": 2,
+    "source_date": "2021-07-06",
+    "title": "Golden Gate assembly of psicA and RFP construct",
+    "experiment_type": "Golden_Gate_assembly",
+    "body": "- Transforming RFP Constructs\n- Moved 5 transformation plates from 37C room to 4C room (as per instructed by Janella)\n- Golden Gate Assembly of psicA and golden gate compatible RFP construct (x2 duplicates)\n1. IDT psicA gene fragment preparation\n- Added 25 uL to make 10 ng/uL of psicA\n- Incubated for ~10 minutes at 60 degrees celsius to ensure the solvent comes in contact with the tiny pellet.\n2. Golden Gate Assembly Reaction:\n- 0.5 uL of T4 ligase\n- 1 uL BsaI\n- 2 uL 10X T4 Buffer\n- 2 uL 10X BSA Buffer\n- 6 uL psicA insert + 0.5 uL of DNA amplicon\n- Fix volume to 20 uL using H2O\n3. Incubated Golden Gate Assembly reaction at 37 degrees celsius for 1hr",
+    "selection_note": "同日同实验跨页合并，含T4 ligase、BsaI、buffer、基因片段与37°C孵育1小时的已执行记录；按PDF阅读顺序，不按日期重排。"
+  },
+  {
+    "id": "ubc2021-04",
+    "source_id": "ubc2021",
+    "page_start": 2,
+    "page_end": 2,
+    "source_date": "2021-07-08",
+    "title": "RFP transformation plate observations and retransformation",
+    "experiment_type": "transformation_observation_and_retransformation",
+    "body": "- Checked plates from Madina, Taylor, and Janella’s transformation on July 5th. The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth. the 2017 10pg test kit worked, but had few colonies. 2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.\n- Retransformed 50ul of competent cells with the 2019 RFP plasmid (17ng/ul) using 2.5ul to get less growth on plates. Included a negative control without any DNA to sort out what is happening with non red growth, but couldn’t plate it because of no more CM plates left.\n- Practiced a mock ligation without DNA.\n- Placed transformation at 37 degrees in the warm room.",
+    "selection_note": "有红色菌落/生长观察、50ul感受态细胞和2.5ul质粒再转化；明确保留阴性对照未能涂板的事实，不补成已执行。"
+  },
+  {
+    "id": "team5863-01",
+    "source_id": "team5863",
+    "page_start": 2,
+    "page_end": 2,
+    "source_date": "2025-05-04",
+    "title": "Field sampling",
+    "experiment_type": "field_sample_collection",
+    "body": "● Visit to the Mango farm.\n● Collected 6 eppendorf tubes of thrips (approximately >10 thrips in each tube).\nThey are stored in 99% ethanol.",
+    "selection_note": "日期/标题明确，采集6管蓟马、每管约>10只并存于99%乙醇；至少两个明确样本/试剂事实。作者及团队未确认。"
+  },
+  {
+    "id": "team5863-02",
+    "source_id": "team5863",
+    "page_start": 2,
+    "page_end": 3,
+    "source_date": "2025-06-11",
+    "title": "DNA extraction of collected samples",
+    "experiment_type": "insect_DNA_extraction",
+    "body": "Quick Protocol: DNeasy Blood & Tissue Kit (for insects)\nMaterials Needed:\n● DNeasy Blood & Tissue Kit (Qiagen)\n● 1.5 mL microcentrifuge tubes\n● Ethanol (96–100%)\n● Proteinase K\n● Buffer ATL, AL, AW1, AW2, AE\n\n1. Sample Prep\n● 5 samples collected from farms were used (4 samples collected by Baha and 1 sample collected by Wahei)\n● Samples were centrifuged to spin down the insects and ethanol was discarded\n● Incubated in 56 °C until excess ethanol dried out\n● Add 180 µL Buffer ATL.\n● Add 20 µL Proteinase K.\n● Vortex briefly or flick.\n● Incubate at 56 °C for 1–3 hours (or overnight) until fully lysed.\n2. Lysis\n● Add 200 µL Buffer AL, mix.\n● Add 200 µL ethanol (96–100%), mix well.\n3. Binding\n● Transfer the mixture to a DNeasy spin column in a collection tube.\n● Centrifuge 1 min at ≥6000 x g (8000 rpm).\n● Discard flow-through.\n4. Wash\n● Add 500 µL Buffer AW1, spin 1 min, discard flow-through.\n● x\n5. Elution\n● Place column in a clean 1.5 mL tube.\n● Add 100 µL Buffer AE (or nuclease-free water).\n● Incubate 1 min, then centrifuge 1 min at ≥6000 x g.\n\nStore:\n● Store eluted DNA at –20 °C.",
+    "selection_note": "记录5个实采样本已使用、离心与干燥，并附DNeasy kit材料和操作段；同日跨页合并。保留命令式及单独“x”，不补流程缺漏或声称每一步均已执行。"
+  },
+  {
+    "id": "team5863-03",
+    "source_id": "team5863",
+    "page_start": 3,
+    "page_end": 3,
+    "source_date": "2025-06-12",
+    "title": "PCR tests of extracted DNA samples",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "body": "PCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1.25 ul of 10uM of each ThripsITSF\n● 1.25 ul of 10uM of each ThripsITSR\n● 1.25 ul of 10uM of each SdITSF3\n● 1.25 ul of 10uM of each SdITSF7\n● 3 ul of extracted DNA\n● 4.5 ul of H2O\n\nPCR conditions:\n\nInitial denaturation 98°C 30 sec\nDenaturation 98°C 10 sec\n}25 cycles\nAnnealing 60°C 10 sec\nExtension 72°C 30 sec\nFinal extension 72°C 5 min\n\n\nRun on 1% agarose gel (0.5 g of agarose and 50 ml of TAE buffer) with 180 V for 5 min\n\nThe result was unclear.",
+    "selection_note": "含Phusion Plus Master Mix、引物、DNA与1%琼脂糖电泳；结果明确为“The result was unclear.”，不是纯表格。"
+  },
+  {
+    "id": "team5863-04",
+    "source_id": "team5863",
+    "page_start": 4,
+    "page_end": 4,
+    "source_date": "2025-06-26",
+    "title": "PCR test extracted DNA samples (optimize)",
+    "experiment_type": "PCR_optimization_and_gel_electrophoresis",
+    "body": "This time, we used PCR protocol from paper:\nPCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1 ul of 20uM of each ThripsITSF (20 pmol)\n● 1 ul of 20uM of each ThripsITSR (20 pmol)\n● 1 ul of 20uM of each SdITSF3 (20 pmol)\n● 1 ul of 20uM of each SdITSF7 (20 pmol)\n● 5 ul of extracted DNA\n● 3.5 of H2O\n\n\nPCR conditions:\n\nInitial denaturation 94°C 9 min\nDenaturation 94°C 30 sec\n}35 cycles\nAnnealing 52°C 30 sec\nExtension 72°C 1 min\nFinal extension 72°C 7 min\n\nMix PCR samples with loading dye (5:1) and use the appropriate ladder (with bands on 200-500 bp). Run on gel 2% agarose gel (1 g of agarose dissolved in 50 ml of TAE) with 130 V for 15 min.\nClear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).\nSamples were loaded in this order: diluted ladder, miss, 7ng/ul extracted dna (trap water), 3.3 ng/ul, 2.6 ng/ul, 0.8 ng/ul, 0 ng/ul (Figure 1).",
+    "selection_note": "记录PCR配方、2%琼脂糖电泳及200/300bp条带结果；保留“3.5 of H2O”和“characteristic to 300 bp”等原文，作者及团队未确认。"
+  }
+]

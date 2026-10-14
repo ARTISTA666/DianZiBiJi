@@ -1,0 +1,349 @@
+{
+  "task": "T139 v8 independent complete browser, restart, load and current script review",
+  "captured_at_utc": "2026-10-11T08:04:40.361690+00:00",
+  "snapshot_revision": "0268b88a949a78a72198ec80542c6306ed7f71cc",
+  "status": "SYSTEM_E2E_PASS",
+  "system_runner_exit_code": 0,
+  "runner_exit_evidence": "Root owner reported actual natural exit 0 for exec session60236; independently checked same-run result JSONs, matching stdout reports and cleanup state. QA does not own this process session.",
+  "playwright_stats": {
+    "startTime": "2026-10-11T08:00:11.420Z",
+    "duration": 140156.856,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "independent_counts": {
+    "total_cases": 9,
+    "passed": 9,
+    "failed": 0,
+    "not_run": 0,
+    "interrupted": 0,
+    "skipped": 0,
+    "flaky": 0,
+    "retries": 0
+  },
+  "cases": [
+    {
+      "name": "真实课题组四项目全员协作与 AI 验收",
+      "source_file": "real-lab-acceptance.spec.ts",
+      "line": 265,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 69609,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "登录并完成笔记审批",
+      "source_file": "system.spec.ts",
+      "line": 131,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 4839,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
+      "source_file": "system.spec.ts",
+      "line": 161,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 7606,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "独立评价人只能在盲评页面提交评价",
+      "source_file": "system.spec.ts",
+      "line": 226,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 5390,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "系统管理员完成账号、小组和审计闭环",
+      "source_file": "system.spec.ts",
+      "line": 248,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 7342,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "项目负责人、记录员和审核人完成退回修订审批闭环",
+      "source_file": "user-journeys.spec.ts",
+      "line": 105,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 15760,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "笔记附件必须关联笔记并在资料页保留关联关系",
+      "source_file": "user-journeys.spec.ts",
+      "line": 175,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 3649,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "多角色完成 AI 资料、图谱、问答与报告协作闭环",
+      "source_file": "user-journeys.spec.ts",
+      "line": 212,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 12731,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "只读成员只能查阅，不能看到写入或项目管理操作",
+      "source_file": "user-journeys.spec.ts",
+      "line": 275,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 6967,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    }
+  ],
+  "browser_runtime_seconds": 140.156856,
+  "restart_probe": {
+    "status": "PASS",
+    "report": {
+      "run_id": 2,
+      "interrupted": true,
+      "resumed_status": "completed"
+    },
+    "report_mtime_utc": "2026-10-11T08:03:06.096311+00:00",
+    "configured_wait_for_interrupted_seconds": 40,
+    "interrupted_unexecuted_cases_1": {
+      "evidence_type": "Executed probe assertion inferred from successful completion after this mandatory check",
+      "source_location": "scripts/experiments/validate_experiment_restart.py:104-105",
+      "direct_json_field_available": false
+    },
+    "resumed_completed_cases_1": {
+      "evidence_type": "Executed probe assertion inferred from successful completion after this mandatory check",
+      "source_location": "scripts/experiments/validate_experiment_restart.py:110-111",
+      "direct_json_field_available": false
+    },
+    "scope": "Kill isolated backend during one pure_llm E2E_DELAY case; wait lease recovery, explicitly resume and complete. The fixed model stub validates recovery mechanics, not real-model answer quality.",
+    "limit": "Report contains run_id/interrupted/resumed_status only; no per-poll status trace or raw case counters were saved in this v8 report."
+  },
+  "load_probe": {
+    "status": "PASS",
+    "report": {
+      "requests": 90,
+      "successful": 90,
+      "errors": [],
+      "p95_ms": 20,
+      "max_ms": 22
+    },
+    "report_mtime_utc": "2026-10-11T08:03:06.634389+00:00",
+    "configured_concurrency": 10,
+    "configured_requests": 90,
+    "configured_max_p95_ms": 2000,
+    "pass_conditions_from_executed_script": "No error entries and p95_ms <= 2000; each successful request required HTTP200 and echoed X-Request-ID.",
+    "endpoint_mix_from_script_and_arguments": {
+      "/health": 30,
+      "/ready": 30,
+      "/projects": 30
+    },
+    "summary_internal_consistency": true,
+    "p95_algorithm_from_source": "Nearest rank: sorted success latencies[ceil(n*0.95)-1], i.e. 86th smallest of 90; success latencies were rounded to integer milliseconds.",
+    "raw_individual_client_latencies_saved": false,
+    "p95_independently_recomputed_from_raw_latencies": false,
+    "p95_evidence": "Same-run emitted summary and load-smoke.json both report 20ms; max22ms. No raw latency distribution claim.",
+    "scope": "90-request, concurrency10 local isolated read smoke probe; no long soak, 600-request recovery, write throughput or production capacity claim."
+  },
+  "fresh_tracked_scripts": {
+    "status": "PASS",
+    "passed": 546,
+    "failed": 0,
+    "test_file_count": 59,
+    "pytest_reported_duration_seconds": 66.82,
+    "old_result_inherited": false,
+    "result_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-v8-result.json"
+  },
+  "runtime_identity": {
+    "manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-runtime-identity.json",
+    "backend_container_image_oci_and_ready_all_match": true,
+    "backend_image_id": "sha256:25a4836cef4e4b370db630a95d33f6d897380f2f1a8e6f2d10dcaacc62e27871",
+    "frontend_image_id": "sha256:9e76a86165a0cef97148f4ffd741eb8ab0c9ed1a99332d689ae8657189e46369",
+    "frontend_oci_revision_label_available": false,
+    "frontend_tracked_build_input_count": 102,
+    "frontend_tracked_build_input_aggregate_sha256": "ed5fd615491f533d7246fdc02177e88c46dc46875b08919a3bc5e80797f27b48",
+    "frontend_build_inputs_match_committed_v8_and_validated8d45": true
+  },
+  "script_input_identity": [
+    {
+      "path": "scripts/ops/run-system-e2e.sh",
+      "committed_sha256": "7a7340c7f2d093385689ee27a3f7052e2f06ff50723a32c82ad3be239a3245e3",
+      "live_copy_matches_v8_commit": true
+    },
+    {
+      "path": "scripts/experiments/validate_experiment_restart.py",
+      "committed_sha256": "34a11cbd1d804e7e4594592d8a94346aacdce3bc5c5fefef5ba7f619c7223638",
+      "live_copy_matches_v8_commit": true
+    },
+    {
+      "path": "scripts/ops/load_smoke.py",
+      "committed_sha256": "cfc375d4d976b004f6ca2b129b536b5d8a67686bec0f01349de378cb3610c21c",
+      "live_copy_matches_v8_commit": true
+    },
+    {
+      "path": "scripts/ops/docker-compose-with-revision.sh",
+      "committed_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "live_copy_matches_v8_commit": true
+    },
+    {
+      "path": "docker-compose.e2e.yml",
+      "committed_sha256": "d7b066304e4ad24b20c3d623bc6c41f72f95b95b9a090d5f2757b746d0b2fbfb",
+      "live_copy_matches_v8_commit": true
+    }
+  ],
+  "cleanup_review": {
+    "read_at_utc": "2026-10-11T08:04:40.362041+00:00",
+    "owned_project": "eln-e2e",
+    "owned_project_containers_remaining": 0,
+    "docker_read_command": [
+      "docker",
+      "ps",
+      "-a",
+      "--filter",
+      "label=com.docker.compose.project=eln-e2e",
+      "--format",
+      "{{.ID}}\\t{{.Names}}\\t{{.Status}}"
+    ],
+    "cleanup_scope_verified_from_source": "run-system-e2e.sh compose() fixes -p eln-e2e and its isolated compose file; EXIT/INT/TERM cleanup invokes that scoped compose down -v --remove-orphans.",
+    "nonowned_running_containers_after_run": [
+      {
+        "container_id": "f4208714581da9be39908fbd93837f8bb2746e596e6debfc3c29ac1bf17a8f88",
+        "name": "/eln-backend-1",
+        "compose_project": "eln",
+        "state": "running",
+        "started_at": "2026-10-01T09:27:02.643808377Z",
+        "started_before_v8_browser_run": true
+      },
+      {
+        "container_id": "4bc03cc2589a57213671fa70ce4df2d705d4bc38b394936dd6dd6e0b579ce97b",
+        "name": "/eln-frontend-1",
+        "compose_project": "eln",
+        "state": "running",
+        "started_at": "2026-10-01T09:27:02.644049669Z",
+        "started_before_v8_browser_run": true
+      },
+      {
+        "container_id": "d8758a40428d18639ba5e7f81e3631184f2d680b5cc0bbd1b825ccdac81b2402",
+        "name": "/eln-db-1",
+        "compose_project": "eln",
+        "state": "running",
+        "started_at": "2026-10-01T09:27:02.661050169Z",
+        "started_before_v8_browser_run": true
+      },
+      {
+        "container_id": "68ac7b21efc45a757a3ca64ebb83f4ebed75a292089a38df1bfbf31de1515550",
+        "name": "/eln-t114-backend-1",
+        "compose_project": "eln-t114",
+        "state": "running",
+        "started_at": "2026-10-01T09:35:28.757151689Z",
+        "started_before_v8_browser_run": true
+      },
+      {
+        "container_id": "c7aa3e02a038674ad29f29401d9c831e0757e1f42646bc2971fd5710c9df4d69",
+        "name": "/eln-t114-db-1",
+        "compose_project": "eln-t114",
+        "state": "running",
+        "started_at": "2026-10-01T09:31:38.482064993Z",
+        "started_before_v8_browser_run": true
+      }
+    ],
+    "observation_limit": "Post-exit selected nonowned containers are running with starts predating v8. No full Docker before/after audit is claimed. QA performed no container mutation."
+  },
+  "evidence_files": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-playwright-results.json",
+      "sha256": "eac44ead627f12b2bbde2abf22ff01b42c391136ac20f3882dec4bd71a0e39a0",
+      "mtime_utc": "2026-10-11T08:03:06.056794+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-input-snapshot.json",
+      "sha256": "6ee238cd4be0cc987d4bd7b22719829c23c0b297427eadf88df8c778c4c2de1e",
+      "mtime_utc": "2026-10-11T08:03:06.057408+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/system-e2e-final-v8.log",
+      "sha256": "8ee5de3cb5b0c9ee0adcd0454bee4e3f02eaca9bf26a067438ae9e4a3510b11d",
+      "mtime_utc": "2026-10-11T08:03:06.634480+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-runtime-identity.json",
+      "sha256": "a9b6217e1fafd3391be8dce94426877f7018d05cd8174e5db6e75a261271b60b",
+      "mtime_utc": "2026-10-11T08:00:41.966788+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-frontend-build-input.json",
+      "sha256": "508ea8887ac9f2bf4338b1ae25f49b159ca7bbe8277f5c3bc76d4c4a861d7be1",
+      "mtime_utc": "2026-10-11T07:58:43.697291+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-restart-recovery.json",
+      "sha256": "05e179a5a2af609494d3d05fff85320eb7beb835d049168b2b2b35716d201404",
+      "mtime_utc": "2026-10-11T08:04:40.079518+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v8-load-smoke.json",
+      "sha256": "8bc913a0161dc17263fdf898c8c6f150e88c90cc60188c0991c4174d2b8fdc3e",
+      "mtime_utc": "2026-10-11T08:04:40.079862+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-v8-input.json",
+      "sha256": "9bc11664f97a255ae771e809293febf5d7e6112b5594e80d3cedfb17fc412cfa",
+      "mtime_utc": "2026-10-11T07:56:42.627843+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-v8-result.json",
+      "sha256": "f4c817a5661bdc2f79395c171feef61895f68856e6afc93d7bf8747fee8bd600",
+      "mtime_utc": "2026-10-11T07:57:50.068680+00:00"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/scripts-pytest-v8.log",
+      "sha256": "c3a9e82f2f39302b6f789abe9c72dbc8b291cea486b9302f3b2fcb3a20d544fa",
+      "mtime_utc": "2026-10-11T07:57:49.734282+00:00"
+    }
+  ],
+  "result_boundaries": [
+    "All nine browser cases passed in this single v8 run, one attempt each, no retries; no cross-round assembly",
+    "The same v8 system runner then produced successful restart and load reports and exited0",
+    "Earlier v2-v7 failures and the original8d45 QA evidence remain unchanged",
+    "Old output/playwright/compose.log was not used as v8 evidence",
+    "Frontend OCI revision label is absent; tracked build-input inheritance and actual image ID are recorded separately",
+    "No new experiments, product source edits, timeout/config edits, Rust reruns, separate browser runs or Compose mutations were performed by this QA review"
+  ]
+}

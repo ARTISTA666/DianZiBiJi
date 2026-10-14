@@ -1,0 +1,19 @@
+来源：docs/system-evidence/agent-safety-property-tests-2026-08-28.md
+日期：2026-08-28；基线 bbe72eb；当时工作树含未提交测试。
+
+## 运行记录(摘录)
+
+```
+$ TEST_DATABASE_URL=... cargo test --locked --all-targets --no-default-features \
+    agent_runtime::tests -- --test-threads=1
+running 8 tests
+test api::agent_runtime::tests::confirmed_action_executes_once_and_same_key_replays_cached_result ... ok
+test api::agent_runtime::tests::expired_or_consumed_pending_actions_cannot_be_confirmed ... ok
+test api::agent_runtime::tests::high_risk_tool_waits_for_confirmation_and_rejection_blocks_execution ... ok
+...(模块内 5 项既有单元测试)...
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 254 filtered out
+```
+
+- 全量套件:`scripts/run-rust-db-tests.sh` 通过(隔离库,lib 目标 264 项 + bin 目标 2 项,含上述 3 项新测试);`cargo fmt --all --check` 与 `cargo clippy --locked --all-targets --all-features -- -D warnings` 通过。
+- legacy Python 套件(同一提交,SQLite 模式):`backend/.venv/bin/python -m pytest tests -q` → **346 passed, 11 skipped**(10.43s)。
+

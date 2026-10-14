@@ -1,0 +1,24 @@
+{
+  "captured_at_utc": "2026-10-11T07:19:25.483743+00:00",
+  "command": "pmset -g log (only selected Sleep/Wake/WakeTime event fields)",
+  "exit_code": 0,
+  "events": [
+    {
+      "timestamp_local": "2026-10-11 15:02:52 +0800",
+      "event": "Sleep",
+      "reason": "Idle Sleep",
+      "duration_seconds": 610
+    },
+    {
+      "timestamp_local": "2026-10-11 15:13:02 +0800",
+      "event": "Wake",
+      "reason": "keyboard/UserActivity",
+      "type": "Wake from Deep Idle"
+    },
+    {
+      "timestamp_local": "2026-10-11 15:13:02 +0800",
+      "event": "WakeTime",
+      "seconds": 0.443
+    }
+  ]
+}

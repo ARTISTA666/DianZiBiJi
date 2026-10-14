@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-10T15:52:29.544417+00:00",
+  "path": "/notes/27/approve",
+  "method": "POST",
+  "request": {
+    "comment": "T136 isolated functional test"
+  },
+  "status": 200,
+  "response": {
+    "id": 27,
+    "project_id": 3,
+    "template_id": null,
+    "title": "Western Blot 蛋白表达验证",
+    "experiment_type": "Western Blot",
+    "experiment_date": "2026-06-05",
+    "owner_user_id": 1,
+    "status": "approved",
+    "current_version_id": 27,
+    "created_at": "2026-10-10T15:52:29.539335Z",
+    "updated_at": "2026-10-10T15:52:29.547470Z"
+  }
+}

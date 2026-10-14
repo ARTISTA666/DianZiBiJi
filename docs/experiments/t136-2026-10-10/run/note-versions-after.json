@@ -1,0 +1,435 @@
+[
+  {
+    "note_id": 1,
+    "title": "iisc2019-01 Buffer and medium preparation",
+    "status": "APPROVED",
+    "current_version_id": 1,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": " Specific buffers were made:\no 0.1M CaCl2 in 15% glycerol.\no 1M 100ml HCl\no 5M 100ml NaCl\no 0.1M 100ml MgCl2\no 250ml LB + Agar\no LB solution (broth)\no 500 ml 50X TAE\no Alkaline lysis buffer-I\no Alkaline lysis buffer-II\n These solutions were prepared for autoclaving."
+    }
+  },
+  {
+    "note_id": 2,
+    "title": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+    "status": "APPROVED",
+    "current_version_id": 2,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": " The prepared solutions were autoclaved along with the tip-boxes.\n Prepared antibiotic solutions:\no Ampicillin\no Chloramphenico\nPoured plates (Petri dishes were autoclaved earlier)"
+    }
+  },
+  {
+    "note_id": 3,
+    "title": "iisc2019-03 PCR and gel electrophoresis",
+    "status": "APPROVED",
+    "current_version_id": 3,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": " Created PCR mix for 4 different DNA sequences and 5 controls:\n DNA Sequences:\n 6-His imcherry (708bp)\n mcp-1 + HlyA(713bp)\n mcp-1 + PelB (536bp)\n mcp-1 expression\n Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.\n The PCR (Total 25 µl) mix was created by adding the following ingredients in order:\n1. NF H2O: 8.9 µl\n2. Buffer: 5 µl\n3. dNTP mix: 0.5 µl\n4. Forward primer: 0.2 µl\n5. Reverse primer: 0.2 µl\n6. DNA sequence: 10 µl\n PCR was run by the following process:\nDenaturalisation: 95oC/98oC – 2min\nAnnealing (30 times): 95oC - 20s; Tm(67oC) – 30s;\nExtension: 72oC-20s/kb -> 10min\n Gel Electrophoresis (Gel preparation and electrophoresis)\n1% Agarose Gel(1X); Heated in the oven for 30-45s, till transparency is achieved.\nLoading Order:\n1.Gene Ruler\n2.imCherry\n3.mcp-1 Hly-A\n4.mcp-1 Hly-A\nBlank 6.mcp expression\n7. Control (no DNA)\n8.Control (no primer)\nGene ruler: 1µl loading dye + 1µl gene ruler + 1µl NF H2O\n2-8: 2µl loading dye + 10µl DNA (PCR mix)"
+    }
+  },
+  {
+    "note_id": 4,
+    "title": "iisc2019-04 LB medium and agar plate preparation",
+    "status": "APPROVED",
+    "current_version_id": 4,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": " Prepared 250ml LB agar and 200ml LB and was autoclaved.\n Prepared agar plates."
+    }
+  },
+  {
+    "note_id": 5,
+    "title": "ubc2021-01 Gel electrophoresis of PCR products",
+    "status": "APPROVED",
+    "current_version_id": 5,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "- Ran gel electrophoresis on PCR products of Ryan’s primer design\n- The DNA ladder was picked up in the evening by Janella, so used the DNA ladder 1kb plus from Hallam lab instead\n- Got the login key from Avery\n- Used the gel stain from the buffer/enzyme box [from the map] and misplaced it in the BIOMOD shelf.\n- Took a photo of the gel from gel analyzer."
+    }
+  },
+  {
+    "note_id": 6,
+    "title": "ubc2021-02 RFP plasmid retransformation",
+    "status": "APPROVED",
+    "current_version_id": 6,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "- Re-transforming RFP to get more stock of pSB1C3-RFP plasmid we got from 2019 iGEM, since we have to remove the backbone from it via PCR and are running low on our stock. Re-transforming instead of picking a colony again because the RFP plates have been out for ~a month so are probably bad by now. This was confirmed by re-picking and miniprepping, resulted in low yield.\n- 5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).\n- Transformation #5 used fresh SOC instead of supernatant to resuspend\n- Only 4 LB + CM plates are left, should make more asap!"
+    }
+  },
+  {
+    "note_id": 7,
+    "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+    "status": "APPROVED",
+    "current_version_id": 7,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "- Transforming RFP Constructs\n- Moved 5 transformation plates from 37C room to 4C room (as per instructed by Janella)\n- Golden Gate Assembly of psicA and golden gate compatible RFP construct (x2 duplicates)\n1. IDT psicA gene fragment preparation\n- Added 25 uL to make 10 ng/uL of psicA\n- Incubated for ~10 minutes at 60 degrees celsius to ensure the solvent comes in contact with the tiny pellet.\n2. Golden Gate Assembly Reaction:\n- 0.5 uL of T4 ligase\n- 1 uL BsaI\n- 2 uL 10X T4 Buffer\n- 2 uL 10X BSA Buffer\n- 6 uL psicA insert + 0.5 uL of DNA amplicon\n- Fix volume to 20 uL using H2O\n3. Incubated Golden Gate Assembly reaction at 37 degrees celsius for 1hr"
+    }
+  },
+  {
+    "note_id": 8,
+    "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+    "status": "APPROVED",
+    "current_version_id": 8,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "- Checked plates from Madina, Taylor, and Janella’s transformation on July 5th. The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth. the 2017 10pg test kit worked, but had few colonies. 2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.\n- Retransformed 50ul of competent cells with the 2019 RFP plasmid (17ng/ul) using 2.5ul to get less growth on plates. Included a negative control without any DNA to sort out what is happening with non red growth, but couldn’t plate it because of no more CM plates left.\n- Practiced a mock ligation without DNA.\n- Placed transformation at 37 degrees in the warm room."
+    }
+  },
+  {
+    "note_id": 9,
+    "title": "team5863-01 Field sampling",
+    "status": "APPROVED",
+    "current_version_id": 9,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "● Visit to the Mango farm.\n● Collected 6 eppendorf tubes of thrips (approximately >10 thrips in each tube).\nThey are stored in 99% ethanol."
+    }
+  },
+  {
+    "note_id": 10,
+    "title": "team5863-02 DNA extraction of collected samples",
+    "status": "APPROVED",
+    "current_version_id": 10,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "Quick Protocol: DNeasy Blood & Tissue Kit (for insects)\nMaterials Needed:\n● DNeasy Blood & Tissue Kit (Qiagen)\n● 1.5 mL microcentrifuge tubes\n● Ethanol (96–100%)\n● Proteinase K\n● Buffer ATL, AL, AW1, AW2, AE\n\n1. Sample Prep\n● 5 samples collected from farms were used (4 samples collected by Baha and 1 sample collected by Wahei)\n● Samples were centrifuged to spin down the insects and ethanol was discarded\n● Incubated in 56 °C until excess ethanol dried out\n● Add 180 µL Buffer ATL.\n● Add 20 µL Proteinase K.\n● Vortex briefly or flick.\n● Incubate at 56 °C for 1–3 hours (or overnight) until fully lysed.\n2. Lysis\n● Add 200 µL Buffer AL, mix.\n● Add 200 µL ethanol (96–100%), mix well.\n3. Binding\n● Transfer the mixture to a DNeasy spin column in a collection tube.\n● Centrifuge 1 min at ≥6000 x g (8000 rpm).\n● Discard flow-through.\n4. Wash\n● Add 500 µL Buffer AW1, spin 1 min, discard flow-through.\n● x\n5. Elution\n● Place column in a clean 1.5 mL tube.\n● Add 100 µL Buffer AE (or nuclease-free water).\n● Incubate 1 min, then centrifuge 1 min at ≥6000 x g.\n\nStore:\n● Store eluted DNA at –20 °C."
+    }
+  },
+  {
+    "note_id": 11,
+    "title": "team5863-03 PCR tests of extracted DNA samples",
+    "status": "APPROVED",
+    "current_version_id": 11,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "PCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1.25 ul of 10uM of each ThripsITSF\n● 1.25 ul of 10uM of each ThripsITSR\n● 1.25 ul of 10uM of each SdITSF3\n● 1.25 ul of 10uM of each SdITSF7\n● 3 ul of extracted DNA\n● 4.5 ul of H2O\n\nPCR conditions:\n\nInitial denaturation 98°C 30 sec\nDenaturation 98°C 10 sec\n}25 cycles\nAnnealing 60°C 10 sec\nExtension 72°C 30 sec\nFinal extension 72°C 5 min\n\n\nRun on 1% agarose gel (0.5 g of agarose and 50 ml of TAE buffer) with 180 V for 5 min\n\nThe result was unclear."
+    }
+  },
+  {
+    "note_id": 12,
+    "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+    "status": "APPROVED",
+    "current_version_id": 12,
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "This time, we used PCR protocol from paper:\nPCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1 ul of 20uM of each ThripsITSF (20 pmol)\n● 1 ul of 20uM of each ThripsITSR (20 pmol)\n● 1 ul of 20uM of each SdITSF3 (20 pmol)\n● 1 ul of 20uM of each SdITSF7 (20 pmol)\n● 5 ul of extracted DNA\n● 3.5 of H2O\n\n\nPCR conditions:\n\nInitial denaturation 94°C 9 min\nDenaturation 94°C 30 sec\n}35 cycles\nAnnealing 52°C 30 sec\nExtension 72°C 1 min\nFinal extension 72°C 7 min\n\nMix PCR samples with loading dye (5:1) and use the appropriate ladder (with bands on 200-500 bp). Run on gel 2% agarose gel (1 g of agarose dissolved in 50 ml of TAE) with 130 V for 15 min.\nClear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).\nSamples were loaded in this order: diluted ladder, miss, 7ng/ul extracted dna (trap water), 3.3 ng/ul, 2.6 ng/ul, 0.8 ng/ul, 0 ng/ul (Figure 1)."
+    }
+  },
+  {
+    "note_id": 13,
+    "title": "iisc2019-01 Buffer and medium preparation",
+    "status": "APPROVED",
+    "current_version_id": 13,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [],
+      "reagents": [
+        "CaCl2",
+        "glycerol",
+        "LB",
+        "Agar"
+      ],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 14,
+    "title": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+    "status": "APPROVED",
+    "current_version_id": 14,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [],
+      "reagents": [],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 15,
+    "title": "iisc2019-03 PCR and gel electrophoresis",
+    "status": "APPROVED",
+    "current_version_id": 15,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [
+        "6-His imcherry",
+        "mcp-1 + HlyA",
+        "mcp-1 + PelB",
+        "mcp-1 expression",
+        "DNA only",
+        "FP only",
+        "No DNA",
+        "Primers only",
+        "RP only",
+        "No primers"
+      ],
+      "reagents": [
+        "NF H2O",
+        "Buffer",
+        "dNTP mix",
+        "Forward primer",
+        "Reverse primer",
+        "1% Agarose Gel(1X)",
+        "Gene Ruler",
+        "loading dye"
+      ],
+      "instrument": [
+        "oven"
+      ]
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 16,
+    "title": "iisc2019-04 LB medium and agar plate preparation",
+    "status": "APPROVED",
+    "current_version_id": 16,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [],
+      "reagents": [],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 17,
+    "title": "ubc2021-01 Gel electrophoresis of PCR products",
+    "status": "APPROVED",
+    "current_version_id": 17,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [
+        "PCR products of Ryan’s primer design"
+      ],
+      "reagents": [
+        "DNA ladder 1kb plus",
+        "gel stain"
+      ],
+      "instrument": [
+        "gel analyzer"
+      ]
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 18,
+    "title": "ubc2021-02 RFP plasmid retransformation",
+    "status": "APPROVED",
+    "current_version_id": 18,
+    "fixed_fields_json": {
+      "result": [
+        "This was confirmed by re-picking and miniprepping, resulted in low yield."
+      ],
+      "sample": [
+        "2019 RFP plasmid that was left out (118ng/ul)",
+        "2019 RFP plasmid (17ng/ul)",
+        "2017 RFP plasmid (10pg/ul)"
+      ],
+      "reagents": [
+        "SOC"
+      ],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 19,
+    "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+    "status": "APPROVED",
+    "current_version_id": 19,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [
+        "golden gate compatible RFP construct",
+        "psicA insert",
+        "DNA amplicon"
+      ],
+      "reagents": [
+        "T4 ligase",
+        "BsaI",
+        "10X T4 Buffer",
+        "10X BSA Buffer",
+        "H2O"
+      ],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 20,
+    "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+    "status": "APPROVED",
+    "current_version_id": 20,
+    "fixed_fields_json": {
+      "result": [
+        "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+        "the 2017 10pg test kit worked, but had few colonies.",
+        "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates."
+      ],
+      "sample": [
+        "plates from Madina, Taylor, and Janella’s transformation on July 5th",
+        "competent cells",
+        "2019 RFP plasmid (17ng/ul)",
+        "negative control without any DNA"
+      ],
+      "reagents": [],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 21,
+    "title": "team5863-01 Field sampling",
+    "status": "APPROVED",
+    "current_version_id": 21,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [
+        "thrips"
+      ],
+      "reagents": [
+        "99% ethanol"
+      ],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 22,
+    "title": "team5863-02 DNA extraction of collected samples",
+    "status": "APPROVED",
+    "current_version_id": 22,
+    "fixed_fields_json": {
+      "result": [],
+      "sample": [
+        "samples collected from farms"
+      ],
+      "reagents": [],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 23,
+    "title": "team5863-03 PCR tests of extracted DNA samples",
+    "status": "APPROVED",
+    "current_version_id": 23,
+    "fixed_fields_json": {
+      "result": [
+        "The result was unclear."
+      ],
+      "sample": [
+        "extracted DNA"
+      ],
+      "reagents": [
+        "Phusion Plus Master Mix",
+        "ThripsITSF",
+        "ThripsITSR",
+        "SdITSF3",
+        "SdITSF7",
+        "H2O",
+        "agarose",
+        "TAE buffer"
+      ],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 24,
+    "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+    "status": "APPROVED",
+    "current_version_id": 24,
+    "fixed_fields_json": {
+      "result": [
+        "Clear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp)."
+      ],
+      "sample": [
+        "extracted DNA",
+        "PCR samples",
+        "7ng/ul extracted dna (trap water)"
+      ],
+      "reagents": [
+        "Phusion Plus Master Mix",
+        "ThripsITSF",
+        "ThripsITSR",
+        "SdITSF3",
+        "SdITSF7",
+        "H2O",
+        "loading dye",
+        "ladder",
+        "agarose",
+        "TAE"
+      ],
+      "instrument": []
+    },
+    "content_json": {}
+  },
+  {
+    "note_id": 25,
+    "title": "PCR 条件优化实验",
+    "status": "APPROVED",
+    "current_version_id": 25,
+    "fixed_fields_json": {
+      "result": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。",
+      "sample": "样本 A、样本 B",
+      "reagents": "Taq DNA Polymerase、dNTP、MgCl2、模板 DNA",
+      "instrument": "PCR Thermal Cycler"
+    },
+    "content_json": {
+      "text": "试剂: Taq DNA Polymerase、dNTP、MgCl2\n仪器: PCR Thermal Cycler\n样本: 样本 A、样本 B\n结果: 58℃ 条件下条带清晰。"
+    }
+  },
+  {
+    "note_id": 26,
+    "title": "细胞活力检测实验",
+    "status": "APPROVED",
+    "current_version_id": 26,
+    "fixed_fields_json": {
+      "result": "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。",
+      "sample": "处理组细胞、对照组细胞",
+      "reagents": "CCK-8、PBS、DMEM 培养基",
+      "instrument": "酶标仪、CO2 培养箱"
+    },
+    "content_json": {
+      "text": "试剂: CCK-8、PBS、DMEM 培养基\n仪器: 酶标仪、CO2 培养箱\n样本: 处理组细胞、对照组细胞\n结果: 细胞活力下降约 18%。"
+    }
+  },
+  {
+    "note_id": 27,
+    "title": "Western Blot 蛋白表达验证",
+    "status": "APPROVED",
+    "current_version_id": 27,
+    "fixed_fields_json": {
+      "result": "目标蛋白在处理组表达降低，内参条带稳定。",
+      "sample": "蛋白样本 P1、蛋白样本 P2",
+      "reagents": "RIPA 裂解液、BCA 试剂盒、一抗、二抗",
+      "instrument": "电泳仪、转膜仪、凝胶成像系统"
+    },
+    "content_json": {
+      "text": "试剂: RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器: 电泳仪、转膜仪、凝胶成像系统\n样本: 蛋白样本 P1、蛋白样本 P2\n结果: 处理组目标蛋白表达降低。"
+    }
+  },
+  {
+    "note_id": 28,
+    "title": "qPCR 定量验证实验",
+    "status": "APPROVED",
+    "current_version_id": 28,
+    "fixed_fields_json": {
+      "result": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。",
+      "sample": "cDNA 样本 1、cDNA 样本 2、阴性对照",
+      "reagents": "SYBR Green Master Mix、cDNA 模板、引物对、无酶水",
+      "instrument": "荧光定量 PCR 仪、微量分光光度计"
+    },
+    "content_json": {
+      "text": "试剂: SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器: 荧光定量 PCR 仪、微量分光光度计\n样本: cDNA 样本 1、2、阴性对照\n结果: 目标基因差异表达约 2.3 倍。"
+    }
+  }
+]

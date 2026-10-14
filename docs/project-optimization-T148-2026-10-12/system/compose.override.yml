@@ -1,0 +1,5 @@
+services:
+  backend:
+    image: eln-backend-t148-20261012
+  frontend:
+    image: eln-frontend-t148-20261012

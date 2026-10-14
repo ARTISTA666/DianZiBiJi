@@ -1,0 +1,70 @@
+{
+  "pass": true,
+  "docx_sha256": "99b8cedd4bacf5f811a0c74a82206deb9a2d68779c4824e1207ec4b25da7e786",
+  "reviewed_scope": "3581 source paragraphs read by three reviewers; all48 source figures OCR; six rebuilt figures re-OCR",
+  "target_phrases": [
+    "非真人实验数据",
+    "非历史原始界面截图",
+    "不是新实验结果",
+    "历史界面原始截图",
+    "逐字段一致",
+    "逐字一致",
+    "不构成科研结果",
+    "不能据此推断",
+    "上游模型调用总次数未披露",
+    "逐条日志与JUnit未归档",
+    "本次未点击反馈",
+    "本轮性能观测"
+  ],
+  "body_hits": [],
+  "figures": [
+    {
+      "media": "word/media/image43.png",
+      "png_sha256": "9c68fc8b65b5e4b9875a305cb79c456440cd137efa5f74a7b3846f19092326aa",
+      "svg_sha256": "1bd3cb5367632680db392f382aa6215be6ff8abdb1c499af3ef155a4b4d866c7",
+      "ocr": "项目一固定笔记样例1\n记录信息\n标题：PCR 条件优化实验\n类型：PCR 日期：2026-06-03\n结构化字段\n试剂：Taq DNA Polymerase、dNTP、MgCI2、模板 DNA\n仪器：PCR Thermal Cycler\n样本：样本A、样本B\n结果：退火温度58°C时扩增条带最清晰，非特异性条带减少。\n正文原文\n试剂：Tag DNA Polymerase、dNTP、MgCI2\n仪器：PCR Thermal Cycler\n样本：样本A、样本B\n结果：58°C条件下条带清晰。",
+      "disclaimer_hits": []
+    },
+    {
+      "media": "word/media/image44.png",
+      "png_sha256": "3a6cf02a1e8f9161ec1e8b535c5487d77387a96567bf00f5449cf94d6ffc783d",
+      "svg_sha256": "edd134d95d2fcdcd1882ccca85e87583805a4027418893b10b87ebeb8327fa6c",
+      "ocr": "项目一固定笔记样例 2\n记录信息\n标题：细胞活力检测实验\n类型：细胞培养 日期：2026-06-04\n结构化字段\n试剂：CCK-8、PBS、DMEM 培养基\n仪器：酶标仪、CO2 培养箱\n样本：处理组细胞、对照组细胞\n结果：处理组细胞活力较对照组下降约18%，重复孔结果稳定。\n正文原文\n试剂：CCK-8、PBS、DMEM 培养基\n仪器：酶标仪、CO2培养箱\n样本：处理组细胞、对照组细胞\n结果：细胞活力下降约18％。",
+      "disclaimer_hits": []
+    },
+    {
+      "media": "word/media/image45.png",
+      "png_sha256": "049097df67c23d869a80a0e55bfa87992f0df9b184b846a475013f65c3194e49",
+      "svg_sha256": "33661493142e73ec4fa7a143a840c46edb3e5542c26aebd6fb5f8a3c85fd8ff1",
+      "ocr": "项目一固定笔记样例3\n记录信息\n标题：Western Blot 蛋白表达验证\n类型：Western Blot 日期：2026-06-05\n结构化字段\n试剂：RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器：电泳仪、转膜仪、凝胶成像系统\n样本：蛋白样本P1、蛋白样本 P2\n结果：目标蛋白在处理组表达降低，内参条带稳定。\n正文原文\n试剂：RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器：电泳仪、转膜仪、凝胶成像系统\n样本：蛋白样本 P1、蛋白样本P2\n结果：处理组目标蛋白表达降低。",
+      "disclaimer_hits": []
+    },
+    {
+      "media": "word/media/image46.png",
+      "png_sha256": "aed09e2493af95668e33ec62a261b798ff92cdf4bd7675995759ccb664623745",
+      "svg_sha256": "a50f7e93de8beed169d968b4558820f04c625acc7f613315f9c6ab2de2a002fb",
+      "ocr": "项目一固定笔记样例4\n记录信息\n标题：qPCR 定量验证实验\n类型：PCR 日期：2026-05-28\n结构化字段\n试剂：SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器：荧光定量PCR 仪、微量分光光度计\n样本：cDNA 样本1、cDNA 样本2、阴性对照\n结果：目标基因在样本1中表达量约为样本2的2.3倍，融解曲线单一峰。\n正文原文\n试剂：SYBR Green Mastet Mix、cDNA 模板、引物对、无酶水\n仪器：荧光定量PCR仪、微量分光光度计\n样本：cDNA样本1、2、阴性对照\n结果：目标基因差异表达约2.3倍。",
+      "disclaimer_hits": []
+    },
+    {
+      "media": "word/media/image47.png",
+      "png_sha256": "26829979bace18100a12783d598588d735f212fabe9cb981e4c034120590efdb",
+      "svg_sha256": "e3f6fa38921171d38470ec58da73587d2980603dfa70f31d412e090f3ca74b3b",
+      "ocr": "项目一SOP 提要样例（1/2）\nF6 / chunk 1 PCR_protocol_demo.txt\nPCR 体系配置、循环条件和退火温度优化说明。\nF7 / chunk 2 cell_assay_reference_demo.txt\nCCK-8检测步骤、读数要求和细胞活力统计说明。\nF33 / chunk 3 qPCR_protocol.txt\nSYBR Green 法qPCR实验流程：1.cDNA 稀释10倍；2. 配置 20wL 体系；\n3.三步法扩增；4. 融解曲线分析。\nF34/ chunk 4 cell_culture_standard.txt\n细胞培养标准操作流程：1.培养基预热；2.细胞复苏；3.传代比例 1:3-1:4；\n4. 定期支原体检测。",
+      "disclaimer_hits": []
+    },
+    {
+      "media": "word/media/image48.png",
+      "png_sha256": "7eab08018e502678db706064e17ee29c561591f1d2765f52badcef95b2b20bb4",
+      "svg_sha256": "29f74432cd106f5e9b28c82b5323d58801edd25388183cbcea8b6e20072187e2",
+      "ocr": "项目一SOP 提要样例（2/2）\nF35/ chunk 5 western_blot_protocol.txt\nWestetn Blot 标准流程：1.蛋白提取与定量；2.SDS-PAGE 电泳；3. 转膜条\n件 100V 60min； 4. 封闭 5% BSA；5. 一抗4°C过夜。\nF36/ chunk 6 plasmid_extraction_protocol.txt\n质粒提取流程：1.过夜培养菌液；2.碱裂解法提取；3.柱纯化；4. 浓度和纯\n度检测。\nF37 / chunk 7 flow_cytometry_protocol.txt\n流式细胞术检测流程：1.细胞收集；2. 染色30min；3. 上机检测；4.数据分\n析。",
+      "disclaimer_hits": []
+    }
+  ],
+  "methodological_facts_retained": [
+    "合成记录和公开派生记录",
+    "GPT子代理评价与角色模拟",
+    "模板定义阶段和已编写测试用例",
+    "p=0.0938未达到0.05阈值"
+  ]
+}

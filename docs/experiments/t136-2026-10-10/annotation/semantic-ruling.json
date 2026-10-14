@@ -1,0 +1,7 @@
+{
+  "decided_utc": "2026-10-10T15:39:37.189428+00:00",
+  "decider": "root Agent, before any test note import",
+  "rule": "Prepared/autoclaved final buffer or medium products are excluded from uses_reagent; preparation actions alone are not observations. Explicitly named composition inputs may be annotated. Do not infer unstated ingredients or instruments.",
+  "selection": "retain all 12 chosen entries even when target reference is empty; do not replace based on annotation count",
+  "input_sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0"
+}

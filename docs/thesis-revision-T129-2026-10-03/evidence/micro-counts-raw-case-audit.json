@@ -1,0 +1,32 @@
+{
+  "structured_query": {
+    "case_count": 36,
+    "hit_facts": 87,
+    "total_facts": 96,
+    "forbidden_facts": 27
+  },
+  "bm25_rag": {
+    "case_count": 36,
+    "hit_facts": 41,
+    "total_facts": 96,
+    "forbidden_facts": 8
+  },
+  "pure_llm": {
+    "case_count": 36,
+    "hit_facts": 0,
+    "total_facts": 96,
+    "forbidden_facts": 0
+  },
+  "kg_enhanced_rag": {
+    "case_count": 36,
+    "hit_facts": 87,
+    "total_facts": 96,
+    "forbidden_facts": 0
+  },
+  "project_rag": {
+    "case_count": 36,
+    "hit_facts": 29,
+    "total_facts": 96,
+    "forbidden_facts": 3
+  }
+}

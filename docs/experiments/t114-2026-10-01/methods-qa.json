@@ -1,0 +1,1791 @@
+{
+  "schema_version": "t114-methods-qa-v1",
+  "material_passport": {
+    "task": "T-114 independent read-only methods QA",
+    "owner": "Codex QA agent /root/qa_methods",
+    "type": "local evidence audit",
+    "human_participants": 0,
+    "external_calls": 0,
+    "private_env_or_credentials_read": false,
+    "mutation_boundary": "only this methods-qa.json; no frozen/result/code changes"
+  },
+  "audited_at_utc": "2026-10-01T10:16:15.025342+00:00",
+  "verification_status": "ANALYZED_WITH_INDEPENDENT_LOCAL_RECALCULATION",
+  "check_count": 10909,
+  "passed_checks": 10909,
+  "errors": [],
+  "cross_judgment": {
+    "manifest_sha256": "6ea7629e852ad875caa5dfb2f604d24450bb7585bebddfb7df240de33479451a",
+    "valid": 40,
+    "expected": 40,
+    "agents": {
+      "/root/gpt_judge_01": 10,
+      "/root/gpt_judge_02": 10,
+      "/root/gpt_judge_03": 10,
+      "/root/gpt_judge_04": 10
+    },
+    "judge_overlap": 0,
+    "between_judge_agreement_estimable": false,
+    "quote_spans_checked": 421,
+    "arm_scores_recomputed": {
+      "project_rag": {
+        "claim_support_rate": {
+          "mean": 0.8308333333333333,
+          "valid_question_n": 20
+        },
+        "reference_group_coverage": {
+          "mean": 0.29166666666666663,
+          "valid_question_n": 20
+        },
+        "context_relevance_rate": {
+          "mean": 0.09166666666666666,
+          "valid_question_n": 20
+        },
+        "citation_support_rate": {
+          "mean": 0.6481481481481481,
+          "valid_question_n": 18
+        }
+      },
+      "kg_enhanced_rag": {
+        "claim_support_rate": {
+          "mean": 0.8695238095238095,
+          "valid_question_n": 20
+        },
+        "reference_group_coverage": {
+          "mean": 0.7333333333333333,
+          "valid_question_n": 20
+        },
+        "context_relevance_rate": {
+          "mean": 0.24776785714285715,
+          "valid_question_n": 20
+        },
+        "citation_support_rate": {
+          "mean": 0.6686274509803922,
+          "valid_question_n": 17
+        }
+      }
+    },
+    "paired_stats_recomputed": {
+      "claim_support_rate": {
+        "n": 20,
+        "mean": 0.038690476190476185,
+        "ci": [
+          -0.05630952380952381,
+          0.14740476190476157
+        ]
+      },
+      "reference_group_coverage": {
+        "n": 20,
+        "mean": 0.4416666666666667,
+        "ci": [
+          0.17083333333333334,
+          0.6875
+        ]
+      },
+      "context_relevance_rate": {
+        "n": 20,
+        "mean": 0.15610119047619048,
+        "ci": [
+          0.02678571428571429,
+          0.28125
+        ]
+      },
+      "citation_support_rate": {
+        "n": 15,
+        "mean": 0.002222222222222222,
+        "ci": [
+          -0.2,
+          0.17777777777777778
+        ]
+      }
+    },
+    "metric_identity": "claim-support-v1, not historical RAGAS",
+    "same_actual_agent_question_pairs": 3,
+    "different_actual_agent_question_pairs": 17,
+    "agent_arm_counts": {
+      "/root/gpt_judge_01": {
+        "project_rag": 4,
+        "kg_enhanced_rag": 6
+      },
+      "/root/gpt_judge_02": {
+        "project_rag": 4,
+        "kg_enhanced_rag": 6
+      },
+      "/root/gpt_judge_03": {
+        "project_rag": 4,
+        "kg_enhanced_rag": 6
+      },
+      "/root/gpt_judge_04": {
+        "project_rag": 8,
+        "kg_enhanced_rag": 2
+      }
+    },
+    "confirmatory_p_values_claimed": false
+  },
+  "rust_v2": {
+    "freeze_sha256": "ae260f94e7559244ec05f0aa72f69a4f260f6216b8834303dd8fe40bace23c6a",
+    "frozen_input_files_checked": 38,
+    "backend_source_files_checked": 58,
+    "generation_cases": 144,
+    "statuses": {
+      "completed": 144
+    },
+    "returned_models": {
+      "deepseek-flash": 144
+    },
+    "finish_reasons": {
+      "stop": 144
+    },
+    "reused_byte_identical_files": 17,
+    "retrieval_source_hashes_checked": 230,
+    "source_fact_locators_checked": 163,
+    "source_counts_independently_recomputed": {
+      "count_matrix_data_rows": 25369,
+      "count_columns": [
+        "NonTargeting_rep1",
+        "NonTargeting_rep2",
+        "p63KD_rep1",
+        "p63KD_rep2"
+      ],
+      "column_sums": [
+        53924761,
+        52016366,
+        53416511,
+        51926832
+      ],
+      "positive_count_gene_rows": [
+        17926,
+        17953,
+        18137,
+        18092
+      ],
+      "arithmetic_difference_GSM3035188_minus_GSM3035185": 166
+    },
+    "arm_costs_recomputed": {
+      "document_rag": {
+        "n": 36,
+        "mean_seconds": 1.4532222222222222,
+        "mean_prompt_tokens": 1541.1666666666667,
+        "mean_completion_tokens": 225.94444444444446,
+        "mean_total_tokens": 1767.111111111111,
+        "max_attempts": 1
+      },
+      "document_plus_full_notes": {
+        "n": 36,
+        "mean_seconds": 1.4159166666666667,
+        "mean_prompt_tokens": 3379.1666666666665,
+        "mean_completion_tokens": 235.0,
+        "mean_total_tokens": 3614.1666666666665,
+        "max_attempts": 1
+      },
+      "document_plus_all_triples": {
+        "n": 36,
+        "mean_seconds": 1.463611111111111,
+        "mean_prompt_tokens": 5863.166666666667,
+        "mean_completion_tokens": 249.11111111111111,
+        "mean_total_tokens": 6112.277777777777,
+        "max_attempts": 1
+      },
+      "document_plus_one_hop": {
+        "n": 36,
+        "mean_seconds": 1.4449166666666668,
+        "mean_prompt_tokens": 2431.4166666666665,
+        "mean_completion_tokens": 233.83333333333334,
+        "mean_total_tokens": 2665.25,
+        "max_attempts": 1
+      }
+    },
+    "contexts_by_question_arm": {
+      "T114-Q01/document_rag": {
+        "context_chars": 3269,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q01/document_plus_full_notes": {
+        "context_chars": 8337,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q01/document_plus_all_triples": {
+        "context_chars": 16345,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q01/document_plus_one_hop": {
+        "context_chars": 6483,
+        "aux_chars": 3207,
+        "aux_count": 30
+      },
+      "T114-Q02/document_rag": {
+        "context_chars": 3849,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q02/document_plus_full_notes": {
+        "context_chars": 8917,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q02/document_plus_all_triples": {
+        "context_chars": 16925,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q02/document_plus_one_hop": {
+        "context_chars": 7145,
+        "aux_chars": 3289,
+        "aux_count": 30
+      },
+      "T114-Q03/document_rag": {
+        "context_chars": 3926,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q03/document_plus_full_notes": {
+        "context_chars": 8996,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q03/document_plus_all_triples": {
+        "context_chars": 17006,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q03/document_plus_one_hop": {
+        "context_chars": 7512,
+        "aux_chars": 3577,
+        "aux_count": 30
+      },
+      "T114-Q04/document_rag": {
+        "context_chars": 3808,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q04/document_plus_full_notes": {
+        "context_chars": 8877,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q04/document_plus_all_triples": {
+        "context_chars": 16886,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q04/document_plus_one_hop": {
+        "context_chars": 7393,
+        "aux_chars": 3577,
+        "aux_count": 30
+      },
+      "T114-Q05/document_rag": {
+        "context_chars": 3808,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q05/document_plus_full_notes": {
+        "context_chars": 8877,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q05/document_plus_all_triples": {
+        "context_chars": 16886,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q05/document_plus_one_hop": {
+        "context_chars": 7304,
+        "aux_chars": 3488,
+        "aux_count": 30
+      },
+      "T114-Q06/document_rag": {
+        "context_chars": 3837,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q06/document_plus_full_notes": {
+        "context_chars": 8905,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q06/document_plus_all_triples": {
+        "context_chars": 16913,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q06/document_plus_one_hop": {
+        "context_chars": 4858,
+        "aux_chars": 1014,
+        "aux_count": 10
+      },
+      "T114-Q07/document_rag": {
+        "context_chars": 3863,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q07/document_plus_full_notes": {
+        "context_chars": 8931,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q07/document_plus_all_triples": {
+        "context_chars": 16939,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q07/document_plus_one_hop": {
+        "context_chars": 6691,
+        "aux_chars": 2821,
+        "aux_count": 24
+      },
+      "T114-Q08/document_rag": {
+        "context_chars": 3758,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q08/document_plus_full_notes": {
+        "context_chars": 8826,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q08/document_plus_all_triples": {
+        "context_chars": 16834,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q08/document_plus_one_hop": {
+        "context_chars": 5031,
+        "aux_chars": 1266,
+        "aux_count": 10
+      },
+      "T114-Q09/document_rag": {
+        "context_chars": 3632,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q09/document_plus_full_notes": {
+        "context_chars": 8702,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q09/document_plus_all_triples": {
+        "context_chars": 16712,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q09/document_plus_one_hop": {
+        "context_chars": 6828,
+        "aux_chars": 3187,
+        "aux_count": 30
+      },
+      "T114-Q10/document_rag": {
+        "context_chars": 3488,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q10/document_plus_full_notes": {
+        "context_chars": 8556,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q10/document_plus_all_triples": {
+        "context_chars": 16564,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q10/document_plus_one_hop": {
+        "context_chars": 4553,
+        "aux_chars": 1058,
+        "aux_count": 10
+      },
+      "T114-Q11/document_rag": {
+        "context_chars": 3950,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q11/document_plus_full_notes": {
+        "context_chars": 9019,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q11/document_plus_all_triples": {
+        "context_chars": 17028,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q11/document_plus_one_hop": {
+        "context_chars": 7237,
+        "aux_chars": 3279,
+        "aux_count": 30
+      },
+      "T114-Q12/document_rag": {
+        "context_chars": 3787,
+        "aux_chars": 0,
+        "aux_count": 0
+      },
+      "T114-Q12/document_plus_full_notes": {
+        "context_chars": 8857,
+        "aux_chars": 5066,
+        "aux_count": 4
+      },
+      "T114-Q12/document_plus_all_triples": {
+        "context_chars": 16867,
+        "aux_chars": 13064,
+        "aux_count": 100
+      },
+      "T114-Q12/document_plus_one_hop": {
+        "context_chars": 7019,
+        "aux_chars": 3223,
+        "aux_count": 30
+      }
+    },
+    "v1_statuses_retained": {
+      "completed": 55,
+      "failed": 89
+    },
+    "requested_generation_configuration": {
+      "provider": "DeepSeek",
+      "base_url": "https://api.deepseek.com",
+      "model": "deepseek-v4-flash",
+      "temperature": 0.1,
+      "max_tokens": 1000,
+      "request_timeout_seconds": 180,
+      "retry_policy": {
+        "max_attempts": 2,
+        "retry_statuses": [
+          429,
+          500,
+          502,
+          503,
+          504
+        ],
+        "backoff_seconds": 2
+      },
+      "thinking": {
+        "type": "disabled"
+      }
+    }
+  },
+  "semantic_judgment": {
+    "protocol_sha256": "3a0de26ce211a46543fd5470df7200d2e5e6569ee48bbf97e1e9918c1a6f83f0",
+    "inputs_manifest_sha256": "5f5b9e1c50e0c84680e37245df6ec367fbc1f43d71bf8c3c4d6f73eb390bc79f",
+    "planned": 144,
+    "imported": 144,
+    "missing": 0,
+    "imported_by_question": {
+      "T114-Q07": 12,
+      "T114-Q03": 12,
+      "T114-Q08": 12,
+      "T114-Q09": 12,
+      "T114-Q12": 12,
+      "T114-Q01": 12,
+      "T114-Q05": 12,
+      "T114-Q11": 12,
+      "T114-Q10": 12,
+      "T114-Q06": 12,
+      "T114-Q02": 12,
+      "T114-Q04": 12
+    },
+    "supported_facts_checked": 291,
+    "verbatim_quote_spans_checked": 1493,
+    "mathematics_final_recheck_pending": false,
+    "raw_group_files": [
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/semantic-judgments-v2/group-01.json",
+        "sha256": "d7eba4d5530f07fbd61a0635740b9a886f56a9e56035681814c1e1ce29656a8d",
+        "agent_id": "/root/semantic_judge_01",
+        "judgments": 48
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/semantic-judgments-v2/group-02.json",
+        "sha256": "b24fe45f27f42f79aef72e1175b3287248f52700c761fae9823ccfb539fa09a6",
+        "agent_id": "/root/semantic_judge_02",
+        "judgments": 48
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/semantic-judgments-v2/group-03.json",
+        "sha256": "dac57afb6f4264bb6dd761508070ab2e39efa1e12ccc14677babdf0cacdb5c19",
+        "agent_id": "/root/semantic_judge_03",
+        "judgments": 48
+      }
+    ],
+    "raw_groups_verified_cases": 144,
+    "question_aggregation_independently_recomputed": {
+      "factual_task_arms": {
+        "document_rag": {
+          "planned_questions": 10,
+          "valid_repetitions": 30,
+          "available_question_n": 10,
+          "complete_question_n": 10,
+          "required_fact_coverage": {
+            "mean_question_complete": 0.4666666666666667,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.4666666666666667,
+            "effective_available_question_n": 10
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 10
+          },
+          "strict_success": {
+            "mean_question_complete": 0.26666666666666666,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.26666666666666666,
+            "effective_available_question_n": 10
+          }
+        },
+        "document_plus_full_notes": {
+          "planned_questions": 10,
+          "valid_repetitions": 30,
+          "available_question_n": 10,
+          "complete_question_n": 10,
+          "required_fact_coverage": {
+            "mean_question_complete": 0.9,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.9,
+            "effective_available_question_n": 10
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 10
+          },
+          "strict_success": {
+            "mean_question_complete": 0.9,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.9,
+            "effective_available_question_n": 10
+          }
+        },
+        "document_plus_all_triples": {
+          "planned_questions": 10,
+          "valid_repetitions": 30,
+          "available_question_n": 10,
+          "complete_question_n": 10,
+          "required_fact_coverage": {
+            "mean_question_complete": 0.9333333333333333,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.9333333333333333,
+            "effective_available_question_n": 10
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 10
+          },
+          "strict_success": {
+            "mean_question_complete": 0.9,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.9,
+            "effective_available_question_n": 10
+          }
+        },
+        "document_plus_one_hop": {
+          "planned_questions": 10,
+          "valid_repetitions": 30,
+          "available_question_n": 10,
+          "complete_question_n": 10,
+          "required_fact_coverage": {
+            "mean_question_complete": 0.7444444444444445,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.7444444444444445,
+            "effective_available_question_n": 10
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 10
+          },
+          "strict_success": {
+            "mean_question_complete": 0.6,
+            "effective_complete_question_n": 10,
+            "mean_question_available": 0.6,
+            "effective_available_question_n": 10
+          }
+        }
+      },
+      "pure_abstention_task_arms": {
+        "document_rag": {
+          "planned_questions": 2,
+          "valid_repetitions": 6,
+          "available_question_n": 2,
+          "complete_question_n": 2,
+          "correct_abstention": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 2
+          },
+          "strict_success": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          }
+        },
+        "document_plus_full_notes": {
+          "planned_questions": 2,
+          "valid_repetitions": 6,
+          "available_question_n": 2,
+          "complete_question_n": 2,
+          "correct_abstention": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 2
+          },
+          "strict_success": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          }
+        },
+        "document_plus_all_triples": {
+          "planned_questions": 2,
+          "valid_repetitions": 6,
+          "available_question_n": 2,
+          "complete_question_n": 2,
+          "correct_abstention": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 2
+          },
+          "strict_success": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          }
+        },
+        "document_plus_one_hop": {
+          "planned_questions": 2,
+          "valid_repetitions": 6,
+          "available_question_n": 2,
+          "complete_question_n": 2,
+          "correct_abstention": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          },
+          "unsafe": {
+            "mean_question_complete": 0.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 0.0,
+            "effective_available_question_n": 2
+          },
+          "strict_success": {
+            "mean_question_complete": 1.0,
+            "effective_complete_question_n": 2,
+            "mean_question_available": 1.0,
+            "effective_available_question_n": 2
+          }
+        }
+      },
+      "question_rows": [
+        {
+          "question_id": "T114-Q01",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.6666666666666666,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q01",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q01",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q01",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.4444444444444444,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q02",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.0,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q02",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.0,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q02",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q02",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.0,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q03",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.0,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q03",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q03",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q03",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q04",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q04",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q04",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q04",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q05",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.5,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q05",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q05",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q05",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q06",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.3333333333333333,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q06",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q06",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q06",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.6666666666666666,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q07",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.0,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q07",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q07",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q07",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q08",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.8333333333333334,
+          "unsafe": 0.0,
+          "strict_success": 0.6666666666666666,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q08",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q08",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q08",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q09",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.3333333333333333,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q09",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q09",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.3333333333333333,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q09",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 0.3333333333333333,
+          "unsafe": 0.0,
+          "strict_success": 0.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q10",
+          "task_kind": "factual",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q10",
+          "task_kind": "factual",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q10",
+          "task_kind": "factual",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q10",
+          "task_kind": "factual",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": 1.0,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": null
+        },
+        {
+          "question_id": "T114-Q11",
+          "task_kind": "pure_abstention",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q11",
+          "task_kind": "pure_abstention",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q11",
+          "task_kind": "pure_abstention",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q11",
+          "task_kind": "pure_abstention",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q12",
+          "task_kind": "pure_abstention",
+          "arm": "document_rag",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q12",
+          "task_kind": "pure_abstention",
+          "arm": "document_plus_full_notes",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q12",
+          "task_kind": "pure_abstention",
+          "arm": "document_plus_all_triples",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        },
+        {
+          "question_id": "T114-Q12",
+          "task_kind": "pure_abstention",
+          "arm": "document_plus_one_hop",
+          "valid_repetitions": 3,
+          "planned_repetitions": 3,
+          "complete_repetitions": true,
+          "required_fact_coverage": null,
+          "unsafe": 0.0,
+          "strict_success": 1.0,
+          "correct_abstention": 1.0
+        }
+      ],
+      "factual_coverage_comparisons": {
+        "document_rag": {
+          "contrast": "document_plus_one_hop minus document_rag",
+          "primary": true,
+          "planned_question_n": 10,
+          "paired_question_ids": [
+            "T114-Q01",
+            "T114-Q02",
+            "T114-Q03",
+            "T114-Q04",
+            "T114-Q05",
+            "T114-Q06",
+            "T114-Q07",
+            "T114-Q08",
+            "T114-Q09",
+            "T114-Q10"
+          ],
+          "n_questions": 10,
+          "mean_difference": 0.2777777777777778,
+          "bootstrap_ci95": [
+            0.03888888888888889,
+            0.55
+          ],
+          "sign_flip_p": 0.09375
+        },
+        "document_plus_full_notes": {
+          "contrast": "document_plus_one_hop minus document_plus_full_notes",
+          "primary": false,
+          "planned_question_n": 10,
+          "paired_question_ids": [
+            "T114-Q01",
+            "T114-Q02",
+            "T114-Q03",
+            "T114-Q04",
+            "T114-Q05",
+            "T114-Q06",
+            "T114-Q07",
+            "T114-Q08",
+            "T114-Q09",
+            "T114-Q10"
+          ],
+          "n_questions": 10,
+          "mean_difference": -0.15555555555555559,
+          "bootstrap_ci95": [
+            -0.32222222222222224,
+            0.0
+          ],
+          "sign_flip_p": 0.25,
+          "holm_secondary_p": 0.5
+        },
+        "document_plus_all_triples": {
+          "contrast": "document_plus_one_hop minus document_plus_all_triples",
+          "primary": false,
+          "planned_question_n": 10,
+          "paired_question_ids": [
+            "T114-Q01",
+            "T114-Q02",
+            "T114-Q03",
+            "T114-Q04",
+            "T114-Q05",
+            "T114-Q06",
+            "T114-Q07",
+            "T114-Q08",
+            "T114-Q09",
+            "T114-Q10"
+          ],
+          "n_questions": 10,
+          "mean_difference": -0.18888888888888888,
+          "bootstrap_ci95": [
+            -0.4111111111111111,
+            0.0
+          ],
+          "sign_flip_p": 0.25,
+          "holm_secondary_p": 0.5
+        }
+      }
+    },
+    "final_analysis_file": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/semantic-results-v2/semantic-analysis.json",
+    "final_analysis_sha256": "9c15cb4169c68f6c05c732b04da8b10885a9fdd5224c0ac427efbc3c0dc2e45f"
+  },
+  "original_simulation": {
+    "actions": 84,
+    "action_hashes_verified": 84,
+    "scenario_results_from_actual_responses": {
+      "create_and_submit": {
+        "pass": 3,
+        "planned": 3
+      },
+      "review_and_return": {
+        "pass": 3,
+        "planned": 3
+      },
+      "revise_and_resubmit": {
+        "pass": 3,
+        "planned": 3
+      },
+      "approve_returned_revision": {
+        "pass": 3,
+        "planned": 3
+      },
+      "evidence_based_fact_query": {
+        "pass": 0,
+        "planned": 3
+      },
+      "insufficient_evidence_query": {
+        "pass": 0,
+        "planned": 3
+      },
+      "readonly_write_denied": {
+        "pass": 3,
+        "planned": 3
+      },
+      "nonmember_read_denied": {
+        "pass": 3,
+        "planned": 3
+      }
+    },
+    "passed": 18,
+    "planned": 24,
+    "query_failure_count": 6,
+    "query_statuses": {
+      "409": 6
+    },
+    "query_failure_detail": {
+      "detail": "暂无可检索的项目资料，请先在数据页完成资料入库"
+    },
+    "human_participants": 0,
+    "success_must_not_be_replaced_by_later_supplement": true
+  },
+  "manual_scientific_semantic_checks": [
+    {
+      "opaque_id": "C05416aff3828d41602595e9",
+      "fact_ids": [
+        "Q01-F1",
+        "Q01-F3"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "E1 directly gives each group two biological replicates; E3 explicitly ties GSM3035188 to p63KD_rep2, shRNA=p63 and p63_knockdown. Answer locates these fields in the p63 targeting group, so shRNA identity is also expressed by its group description."
+    },
+    {
+      "opaque_id": "C32c87a4aa08b4d6f3fecf63",
+      "fact_ids": [
+        "Q03-F1",
+        "Q03-F2",
+        "Q03-F3",
+        "Q03-F4"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "Four actual E excerpts independently bind all four GSM accessions to integer total_count. Independent integer arithmetic verifies 51926832 < 52016366 < 53416511 < 53924761, sufficient for all ranked entity/value facts."
+    },
+    {
+      "opaque_id": "C158be82e831dc1e6f36f77a",
+      "fact_ids": [
+        "Q05-F1",
+        "Q05-F2"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "E2 binds GSM3035186 detected_gene_rows to17953. E51 binds that record to count_matrix_gene_rows=25369. Answer keeps sample-level positive-count rows distinct from the matrix-level row count; the field semantics are explicit and raw matrix recomputation confirms both."
+    },
+    {
+      "opaque_id": "C43ef143b43ad6ba1530bfca",
+      "fact_ids": [
+        "Q08-F1",
+        "Q08-F2"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "E4/E5 use the universal source statement all samples had RIN >9, and E1-E3 provide sample instances. Strict > is retained and exact sample values are explicitly refused. This is a threshold claim, not an invented numerical measurement."
+    },
+    {
+      "opaque_id": "C19ef3b868e0606c56addaae",
+      "fact_ids": [
+        "Q09-F3"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient_with_extra_claim_caveat",
+      "reason": "Actual E1 contains HTSeq gene-level raw-counting role and version0.6.1 in the same text; the initial answer expresses that mapping. Its later sentence saying the evidence did not bind processing stages is inaccurate relative to E1. Coverage support remains defensible; strict success/unsafe under the frozen limited rubric is not an exhaustive zero-error answer audit."
+    },
+    {
+      "opaque_id": "C06ba8d6db826275338f34f9",
+      "fact_ids": [
+        "Q07-F1",
+        "Q07-F2"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "E6-E9 each identify a separate GSM sample and contain both complete reagent-kit names. The four-record universal material claim is therefore directly supported, rather than inferred from one sample."
+    },
+    {
+      "opaque_id": "C4cf533657253744f7f76ef0",
+      "fact_ids": [
+        "Q02-F1",
+        "Q02-F2"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "For each rep2, paired uses_sample and produces_result triples have the same record head/source_note id and accession. Both sample-column/group/count row bindings are explicit and match the source table."
+    },
+    {
+      "opaque_id": "C103f07a6a5c4a047331acf1",
+      "fact_ids": [
+        "Q04-F1",
+        "Q04-F2",
+        "Q04-F3"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "E1 and E3 bind GSM3035185 to17926 and GSM3035188 to18092 detected_gene_rows. Answer uses18092-17926=166 in the correct direction and explicitly limits the result to arithmetic rather than differential-expression significance."
+    },
+    {
+      "opaque_id": "C70122a296964de25c7138aa",
+      "fact_ids": [
+        "Q06-F1",
+        "Q06-F2",
+        "Q06-F3"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "Four separate sample sources each explicitly give1 microgram/mL doxycycline,37°C,5%CO2 and6days. Both Control sample records are included, supporting common exposure and control treatment without treating control as unexposed."
+    },
+    {
+      "opaque_id": "C0e36a52ae10c174f9d83363",
+      "fact_ids": [
+        "Q10-F1",
+        "Q10-F2",
+        "Q10-F3"
+      ],
+      "verdict_observed": "supported",
+      "qa": "support_semantically_sufficient",
+      "reason": "E2 directly states the imported material consists of GEO HTSeq gene counts and SOFT metadata, and excludes local laboratory original notes and raw FASTQ reads. Answer preserves all three scope-bound statements."
+    }
+  ],
+  "methodological_risks": [
+    {
+      "id": "M01",
+      "severity": "limitation",
+      "topic": "Retrospective archived references",
+      "finding": "Old40 reference groups were written after original generation. New GPT judgment cannot remove that historical hindsight bias; descriptive20-question paired comparisons only."
+    },
+    {
+      "id": "M02",
+      "severity": "limitation",
+      "topic": "Metric identity",
+      "finding": "Old claim-support-v1 is a custom four-metric scoring family, not RAGAS. It cannot be subtracted from historical RAGAS to imply same-scale model change or agreement."
+    },
+    {
+      "id": "M03",
+      "severity": "limitation",
+      "topic": "No evaluator reliability sample",
+      "finding": "Four GPT session agents score disjoint10-answer groups. No repeated cross-agent scoring exists, so agreement/reliability cannot be estimated.17 of20 paired method questions are scored by different actual agent instances; arm assignments per instance are uneven. Combined gpt_session contrasts hold evaluator configuration constant only, with residual instance/calibration risk."
+    },
+    {
+      "id": "M04",
+      "severity": "limitation",
+      "topic": "Source-derived internal questions",
+      "finding": "The12 new questions and source-bound rules are internally AI-authored, not independent human gold. No verified semantic deduplication from all historical items or independent holdout claim."
+    },
+    {
+      "id": "M05",
+      "severity": "limitation",
+      "topic": "Adapter and information-volume confounding",
+      "finding": "Actual current Rust retrieval feeds four frozen experimental adapters that directly call DeepSeek. These are not four native production query modes. A shared document base plus unequal added notes/triples/one-hop information and token volume cannot isolate pure graph-structure causality."
+    },
+    {
+      "id": "M06",
+      "severity": "limitation",
+      "topic": "Nested repetitions and small question sample",
+      "finding": "Each question has3 repetitions per arm; summarize repetitions first and use10 fact questions for paired coverage inference. Two pure-abstention questions remain separate.144 calls do not imply144 independent questions or participants."
+    },
+    {
+      "id": "M07",
+      "severity": "limitation",
+      "topic": "Post-pilot compatibility correction",
+      "finding": "v1 retained55 completed and89 failed responses. v2 adds thinking disabled after observed failures and reruns all144 cases unchanged. This is disclosed parameter-compatibility correction, not untouched independent confirmatory replication; v1 failures lack raw JSON so finish_reason causation remains inference."
+    },
+    {
+      "id": "M08",
+      "severity": "limitation",
+      "topic": "Residual mode visibility",
+      "finding": "Opaque method labels hide arms but notes/triples/evidence formats can reveal context structure. Blindness is partial and not human adjudication."
+    },
+    {
+      "id": "M09",
+      "severity": "limitation",
+      "topic": "Limited semantic rubric",
+      "finding": "Actual-evidence support is not an external scientific-truth audit. Unsafe tests only predefined forbidden assertions; supported required facts and strict task success do not guarantee every extra sentence is correct. Manual Q09 caveat demonstrates this boundary."
+    },
+    {
+      "id": "M10",
+      "severity": "required_reporting_boundary",
+      "topic": "Original workflow simulation failure",
+      "finding": "Original8×3 simulation passes18/24. Six query scenes receive409 no corpus and do not invoke model answers. A later corpus-ingestion supplement must have separate pre-action protocol/log/results, cannot retroactively replace six original failures."
+    },
+    {
+      "id": "M11",
+      "severity": "required_reporting_boundary",
+      "topic": "GPT role simulation",
+      "finding": "API decisions and responses can demonstrate executability and detect workflow blockers. Zero human participants; no satisfaction, usability burden, adoption, interview themes, population inference or frontend/MCP usability result."
+    },
+    {
+      "id": "M13",
+      "severity": "required_reporting_boundary",
+      "topic": "v3 supplemental scenario-rule success",
+      "finding": "v3 separately passes8/9 under original rules, with factualR1 failing needs_review; all three insufficient responses pass their narrow no-invented-antibody rule but retain needs_review and R2/R3 wording errors.8/9 is not unqualified answer/citation correctness. Four responses flag internal repair, so six API requests do not establish six total provider generations. Original18/24 stays immutable; v3 follows observed corpus absence and is not independent confirmation."
+    }
+  ],
+  "statistical_fallacy_scan": {
+    "coverage": "11/11 checked",
+    "items": [
+      {
+        "type": "Simpson paradox",
+        "status": "not_detected_in_available_report",
+        "note": "Separate arms/questions and factual vs abstention strata. All144 new judgments independently aggregate into48 question-arm rows, with complete10 factual and2 abstention questions per arm."
+      },
+      {
+        "type": "Ecological fallacy",
+        "status": "bounded",
+        "note": "Question-level inference; no individual participant claim."
+      },
+      {
+        "type": "Berkson/selection bias",
+        "status": "limitation",
+        "note": "Internally selected source-derived12 questions and archived20 queries restrict generalization."
+      },
+      {
+        "type": "Collider bias",
+        "status": "not_applicable",
+        "note": "No modeled post-treatment covariate adjustment."
+      },
+      {
+        "type": "Base rate neglect",
+        "status": "not_applicable",
+        "note": "No clinical sensitivity/specificity claim; abstention separated."
+      },
+      {
+        "type": "Regression to mean",
+        "status": "not_applicable",
+        "note": "No sample chosen from extreme performer scores for pre-post intervention."
+      },
+      {
+        "type": "Survivorship bias",
+        "status": "controlled_by_retention",
+        "note": "v1 retained89 failures; all v2 rerun; original6 failed queries retained. Missing never scored zero."
+      },
+      {
+        "type": "Look elsewhere effect",
+        "status": "bounded",
+        "note": "D-A primary and exactly two secondary contrasts preplanned; Holm on secondary tests. Old batch no confirmatory p-value claim."
+      },
+      {
+        "type": "Garden of forking paths",
+        "status": "disclosed_limitation",
+        "note": "v2 correction follows initial service outcomes; new rule/prompt hashes frozen before v2 generation, all original outputs kept."
+      },
+      {
+        "type": "Correlation causation",
+        "status": "limitation",
+        "note": "Observed arm differences combine evidence volume and representation; cannot isolate pure graph mechanism or real-user outcomes."
+      },
+      {
+        "type": "Reverse causality",
+        "status": "not_applicable_to_logged_sequence",
+        "note": "Fixed source rules precede generation; workflow action times establish actual response-before-followup sequence; broader causal extrapolation remains unsupported."
+      }
+    ]
+  },
+  "simulation_v3_supplement": {
+    "protocol_file": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/simulation-v3/protocol.json",
+    "protocol_sha256": "28a913cec4c5925e6955c588d05054bf07816e3bc67c687b4d8d8cf5a1bf70bb",
+    "actions_file": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/simulation-v3/actions.jsonl",
+    "actions_sha256": "8fa7a2face9c39f603ab4fff7fed11a4d9accbf72fd455363bd5e3d5d50bcf6c",
+    "viewer_decisions_sha256": "8cdcf8d2e3fb94523362178693fffc7be951b9e6ff87620f2d9624f928858abf",
+    "independent_summary": {
+      "successes": 8,
+      "failures": 1,
+      "fact_query_successes": 2,
+      "fact_query_failures": 1,
+      "insufficient_evidence_query_successes": 3,
+      "insufficient_evidence_query_failures": 0,
+      "readonly_write_denied_successes": 3,
+      "readonly_write_denied_failures": 0,
+      "query_responses_with_fallback_reason_needs_review": 4,
+      "query_responses_with_citation_audit_passed": 2
+    },
+    "scenes": [
+      {
+        "index": 1,
+        "scenario": "evidence_based_fact_query",
+        "success": false,
+        "fallback_reason": "needs_review",
+        "citation_audit_passed": false,
+        "internal_citation_repair_attempted": true,
+        "wording_caveats": []
+      },
+      {
+        "index": 2,
+        "scenario": "evidence_based_fact_query",
+        "success": true,
+        "fallback_reason": null,
+        "citation_audit_passed": true,
+        "internal_citation_repair_attempted": false,
+        "wording_caveats": []
+      },
+      {
+        "index": 3,
+        "scenario": "evidence_based_fact_query",
+        "success": true,
+        "fallback_reason": null,
+        "citation_audit_passed": true,
+        "internal_citation_repair_attempted": false,
+        "wording_caveats": []
+      },
+      {
+        "index": 4,
+        "scenario": "insufficient_evidence_query",
+        "success": true,
+        "fallback_reason": "needs_review",
+        "citation_audit_passed": false,
+        "internal_citation_repair_attempted": true,
+        "wording_caveats": []
+      },
+      {
+        "index": 5,
+        "scenario": "insufficient_evidence_query",
+        "success": true,
+        "fallback_reason": "needs_review",
+        "citation_audit_passed": false,
+        "internal_citation_repair_attempted": true,
+        "wording_caveats": [
+          "“未出现任何孵育、抗体孵育或时间字段”的“任何时间字段”措辞过宽：来源明确有培养6 days，答复后文也说明这是培养条件。该问题不构成虚构抗体参数，但应保留。"
+        ]
+      },
+      {
+        "index": 6,
+        "scenario": "insufficient_evidence_query",
+        "success": true,
+        "fallback_reason": "needs_review",
+        "citation_audit_passed": false,
+        "internal_citation_repair_attempted": true,
+        "wording_caveats": [
+          "末段将1 µg/mL doxycycline并列括入“培养条件”，分类措辞宽泛；前文已明确为细胞培养与doxycycline处理，并否认其是抗体孵育条件。该问题不构成将培养时长/处理浓度替代抗体参数。"
+        ]
+      },
+      {
+        "index": 7,
+        "scenario": "readonly_write_denied",
+        "success": true,
+        "fallback_reason": null,
+        "citation_audit_passed": null,
+        "internal_citation_repair_attempted": null,
+        "wording_caveats": []
+      },
+      {
+        "index": 8,
+        "scenario": "readonly_write_denied",
+        "success": true,
+        "fallback_reason": null,
+        "citation_audit_passed": null,
+        "internal_citation_repair_attempted": null,
+        "wording_caveats": []
+      },
+      {
+        "index": 9,
+        "scenario": "readonly_write_denied",
+        "success": true,
+        "fallback_reason": null,
+        "citation_audit_passed": null,
+        "internal_citation_repair_attempted": null,
+        "wording_caveats": []
+      }
+    ],
+    "source_files": [
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/rust-retest/corpus/knowledge_files/GSE111619_family.soft",
+        "sha256": "186a3fe633b6d5241e3d6d5e7fcf2a6547bc7ba5d9a53d487d98849d3d7e9e68"
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/rust-retest/corpus/knowledge_files/GSE111619_series_matrix.txt",
+        "sha256": "dfd860cd6462009dc67a0db9302f90ba5f387df7248b33d4495e4414a5aeca30"
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/rust-retest/corpus/knowledge_files/gse111619_knowledge_document.txt",
+        "sha256": "5a9188ebde46c5707b070c48e85eb6faea543b131cc1a5b6f94179f30afa04ea"
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t114-2026-10-01/rust-retest/corpus/knowledge_files/gse111619_samples.csv",
+        "sha256": "7aec664d8f87f24c01979206e8561d5c008482b8239fb0d853a4cf1a83b8e55d"
+      }
+    ],
+    "administrative_ingestion_before_role_freeze": true,
+    "original84_actions_and_viewer_unchanged": true,
+    "all9_original_requests_exactly_reused": true,
+    "separate_denominator": 9,
+    "original_denominator": 24,
+    "original_successes": 18,
+    "api_request_count": 6,
+    "actual_upstream_generation_call_count": null,
+    "internal_repair_attempted_response_count": 4,
+    "model_boundary": "Six planned Rust query requests return actual DeepSeek responses. Four flag internal citation repair; logs do not expose exact outbound provider call count. Do not call this exactly six upstream model generations.",
+    "manual_semantics": "Read all six answers and supporting texts. Three fact answers bind GSM3035185 to NonTargeting_rep1/Control and GSM3035187 to p63KD_rep1/p63, with H226 from series design. R1 is a failure under no-fallback rule. Three insufficient answers decline antibody dilution/incubation parameters and distinguish these from culture/induction parameters, so pass the frozen narrow rule despite all having needs_review. R2 falsely says no any time field even though six culture days appear; R3 concludes with doxycycline included under culture conditions. These are preserved caveats, not whole-answer correctness passes.",
+    "design_limit": "Post-observation data-precondition amendment. Same source-derived missions, same role and repeated payloads. A functional supplement, not independent confirmatory replication, user study, frontend/MCP proof or24/24 repair."
+  }
+}

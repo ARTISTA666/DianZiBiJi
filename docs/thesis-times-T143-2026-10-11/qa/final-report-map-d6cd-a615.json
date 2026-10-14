@@ -1,0 +1,85 @@
+{
+  "task": "T143",
+  "identity": {
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/1005-时间说明精简版-2026-10-11.docx",
+    "word_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-wps/1005-时间说明精简版-2026-10-11.pdf",
+    "pdf_sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a"
+  },
+  "status": "PASS",
+  "qa_reports_for_archive": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/word-candidate-d6cd-protection-review.json",
+      "sha256": "54c627e516c370e2e5586ce4e24d9fe3d90389098b8a032eb7227edfe60312ee"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/content-date-scope-candidate-d6cd-review.json",
+      "sha256": "ccc7e41719a7b7d89e38d0bbc63da64b5ae21e31b9083c8ac5d5c63129172440"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/toc-native-final-d6cd-a615-review.json",
+      "sha256": "a7ca2a14d32d27951b2c61556a71905e07e463e00f0ef9947ca13e7f2b2207c4"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/table-rules-native-final-d6cd-a615-coordinate-review.json",
+      "sha256": "20de95c973180476deebf827db5e6db7f221aae030bfd2ffa61b8b36f760c239"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/table-same-page-native-final-d6cd-a615-text-review.json",
+      "sha256": "7c99ee1a973cc8e7b5a2df56f91c4b5e56f38988c8623cd6d3b240f75608cc4b"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/table-same-page-native-final-d6cd-a615-closure.json",
+      "sha256": "921cc92d0fc06272cc2017579f16fe8a824a88309c1363b7800ca273882a5b81"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/visual-input-native-final-d6cd-a615.json",
+      "sha256": "3906cf498b351bacba53f52910bf90c3c05366f3106130ca0d76f60b530afaba"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-qa-pages.json",
+      "sha256": "dd9c3a36e69fd32ac6e4cb8fafbaeba574e0ecdb90d0261555d4f5ddadf1c7b1"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/protected-inputs-native-final-d6cd-a615-review.json",
+      "sha256": "80119309a5e612f60b263df371b7ad3e31b74162fd0137c6625eb3f467930f57"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+      "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/qa-native-final-d6cd-a615-summary.json",
+      "sha256": "3a5f1fbb169cfae772dc51ac2d369711133b89fbccd92e7edfa61af6f1fc5d47"
+    }
+  ],
+  "other_team_reports": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/backend/native-final-d6cd-a615-visual-7-pages.json",
+      "sha256": "5935917cbd0437d09295d46776c1d6cd19c47aaac4cb142fe5e544dc7f03c7a5"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/root-supplementary-visual-review.json",
+      "sha256": "c571865d3cfb29cd6a996e021d13fb4d970ebd1875492ecefc7e5fde036e19ec"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/pdf-citation-geometry-final.json",
+      "sha256": "71992ef155e774f98b828f58352494b14e31eb791f683e1528486589dd4336f6"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/desktop-delivery-verification.json",
+      "sha256": "d2081179fbfba965baf396ac3c2833de8b67a9c0ef0319309f9f62e27e30eef8"
+    }
+  ],
+  "new_final_files": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+      "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/qa-native-final-d6cd-a615-summary.json",
+      "sha256": "3a5f1fbb169cfae772dc51ac2d369711133b89fbccd92e7edfa61af6f1fc5d47"
+    }
+  ],
+  "existing_reports_preserved": true
+}

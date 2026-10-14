@@ -1,0 +1,1194 @@
+{
+  "task": "T141",
+  "reviewer": "/root/code_reviewer",
+  "created_at": "2026-10-11T10:03:20.830964+00:00",
+  "status": "historical_snapshot_readability_verified_left_rule_alignment_pending_not_final_acceptance",
+  "inputs_at_personal_inspection": {
+    "word_path_at_inspection": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/1005-深审整改版-2026-10-11.docx",
+    "word_sha256_observed_before_root_followup_indent_edit": "a9e89d3c4a6a258d2c3e13f246271c227e06ed933f7be39eb71cf9f0df6a8b75",
+    "pdf_path_at_inspection": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-wps/1005-深审整改版-2026-10-11.pdf",
+    "pdf_sha256_observed": "ea8ca9cf1ed2dbfb76c98a8153a0b688a3ff2e35fbccb8f6f59e722396a79f0e",
+    "pdfinfo_page_count_verified": 100,
+    "PNG_directory": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render",
+    "actual_pixel_size": [
+      1415,
+      2000
+    ],
+    "identity_warning": "Canonical Word was edited by root after inspection to add140twip table indent; this report deliberately binds only the observed historicala9e89/ea8ca9 snapshot and is not current/final acceptance."
+  },
+  "scope": {
+    "physical_pages": [
+      34,
+      67
+    ],
+    "count": 34,
+    "fresh_original_views": [
+      36,
+      45,
+      46,
+      67
+    ],
+    "exact_byte_inherited_original_reviews": [
+      34,
+      35,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66
+    ],
+    "outside_scope_visual_acceptance_claimed": false
+  },
+  "independent_SHA_comparison": {
+    "all100_PNG_compared": true,
+    "changed_from_table1_release": [
+      36,
+      45,
+      46,
+      67,
+      99
+    ],
+    "changed_from_native_clean": [
+      9,
+      36,
+      45,
+      46,
+      67,
+      99
+    ],
+    "changed_in_scope": [
+      36,
+      45,
+      46,
+      67
+    ],
+    "unchanged_in_scope_count": 30
+  },
+  "preserved_prior_reports": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965",
+      "preserved_unchanged": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-final-34-67.json",
+      "sha256": "b4e47bf3aa5216a5a2dbd2761ec1aceb45fe03b3a0c06cbfb9728f7481c06c50",
+      "preserved_unchanged": true
+    }
+  ],
+  "summary": {
+    "34_scope_pages_readability_complete": true,
+    "strict_alignment_inherited_pass_pages": 30,
+    "strict_alignment_pending_pages": [
+      36,
+      45,
+      46,
+      67
+    ],
+    "final_delivery_acceptance": false
+  },
+  "open_findings": [
+    {
+      "id": "NV05",
+      "physical_pages": [
+        36,
+        45,
+        46,
+        67
+      ],
+      "severity": "format_blocker_under_strict_page_body_requirement",
+      "fact": "Raster original-resolution observation: the corrected-width four table rules beginatx180/181 rather than normal body/nearby standard table referenceaboutx189; right edgesatx1189/1191 are safely inside bodyrightaboutx1225. The content/caption/header/body is complete, but a smallleft rule overhangremains.",
+      "inference": "8–9px correspondsapproximately3.4–3.8pt at1415px/595.3pt. RootQA independently suppliedvector3.5pt; exactvectormeasurementis not independentlyclaimedbythisreviewer.",
+      "minimal_fix": "Root has authorizedonlytblInd0→140twips(7pt) forfive correctedtables withoutcontent/widthchange. FreshreviewrequiredafterWPSexport foranychanged scopePNG.",
+      "confidence": "high"
+    }
+  ],
+  "table_width_measurements": [
+    {
+      "physical_page": 36,
+      "printed_page": 29,
+      "table": "表4-10",
+      "OOXML_table_index_zero_based": 24,
+      "grid_twips_observed_before_indent_update": [
+        1470,
+        7034
+      ],
+      "grid_total_twips": 8504,
+      "tblW_twips": 8504,
+      "layout": "fixed",
+      "rule_x_pixels": [
+        181,
+        1191
+      ],
+      "rule_width_pixels": 1011,
+      "three_rule_y_pixel_bands": [
+        [
+          568,
+          570
+        ],
+        [
+          613,
+          614
+        ],
+        [
+          851,
+          853
+        ]
+      ],
+      "normal_body_or_table4_11_left_reference_x_pixels": 189,
+      "normal_body_right_reference_x_pixels": 1225,
+      "left_rule_pixels_outside_reference": 8,
+      "right_rule_pixels_inside_reference": 34,
+      "body_rows_excluding_header": 4,
+      "caption_header_body_same_page": true,
+      "full_text_readability": "pass",
+      "strict_rule_alignment": "pending_left_indent_fix"
+    },
+    {
+      "physical_page": 45,
+      "printed_page": 38,
+      "table": "表5-5",
+      "OOXML_table_index_zero_based": 32,
+      "grid_twips_observed_before_indent_update": [
+        2079,
+        6425
+      ],
+      "grid_total_twips": 8504,
+      "tblW_twips": 8504,
+      "layout": "fixed",
+      "rule_x_pixels": [
+        181,
+        1191
+      ],
+      "rule_width_pixels": 1011,
+      "three_rule_y_pixel_bands": [
+        [
+          827,
+          829
+        ],
+        [
+          872,
+          873
+        ],
+        [
+          1264,
+          1266
+        ]
+      ],
+      "normal_body_or_table4_11_left_reference_x_pixels": 189,
+      "normal_body_right_reference_x_pixels": 1225,
+      "left_rule_pixels_outside_reference": 8,
+      "right_rule_pixels_inside_reference": 34,
+      "body_rows_excluding_header": 6,
+      "caption_header_body_same_page": true,
+      "full_text_readability": "pass",
+      "strict_rule_alignment": "pending_left_indent_fix"
+    },
+    {
+      "physical_page": 46,
+      "printed_page": 39,
+      "table": "表5-6",
+      "OOXML_table_index_zero_based": 33,
+      "grid_twips_observed_before_indent_update": [
+        1748,
+        5575,
+        1181
+      ],
+      "grid_total_twips": 8504,
+      "tblW_twips": 8504,
+      "layout": "fixed",
+      "rule_x_pixels": [
+        180,
+        1189
+      ],
+      "rule_width_pixels": 1010,
+      "three_rule_y_pixel_bands": [
+        [
+          387,
+          390
+        ],
+        [
+          460,
+          461
+        ],
+        [
+          1049,
+          1051
+        ]
+      ],
+      "normal_body_or_table4_11_left_reference_x_pixels": 189,
+      "normal_body_right_reference_x_pixels": 1225,
+      "left_rule_pixels_outside_reference": 9,
+      "right_rule_pixels_inside_reference": 36,
+      "body_rows_excluding_header": 13,
+      "caption_header_body_same_page": true,
+      "full_text_readability": "pass",
+      "strict_rule_alignment": "pending_left_indent_fix"
+    },
+    {
+      "physical_page": 67,
+      "printed_page": 60,
+      "table": "表6-11a",
+      "OOXML_table_index_zero_based": 48,
+      "grid_twips_observed_before_indent_update": [
+        2173,
+        1134,
+        2409,
+        2788
+      ],
+      "grid_total_twips": 8504,
+      "tblW_twips": 8504,
+      "layout": "fixed",
+      "rule_x_pixels": [
+        180,
+        1189
+      ],
+      "rule_width_pixels": 1010,
+      "three_rule_y_pixel_bands": [
+        [
+          782,
+          784
+        ],
+        [
+          827,
+          828
+        ],
+        [
+          992,
+          994
+        ]
+      ],
+      "normal_body_or_table4_11_left_reference_x_pixels": 189,
+      "normal_body_right_reference_x_pixels": 1225,
+      "left_rule_pixels_outside_reference": 9,
+      "right_rule_pixels_inside_reference": 36,
+      "body_rows_excluding_header": 4,
+      "caption_header_body_same_page": true,
+      "full_text_readability": "pass",
+      "strict_rule_alignment": "pending_left_indent_fix"
+    }
+  ],
+  "pages": [
+    {
+      "physical_page": 34,
+      "printed_page": 27,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-34.png",
+      "sha256": "fab2a281f3fb1ca5a6bb69a8fc989e937b96bae6b488fa28588574eb20acd910",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表4-8题注、表头及4行表体完整同页；顶线、表头下线、底线清楚，无竖线或表体内横线。",
+        "4.7、4.7.1均有后续正文，权限与反馈边界文字完整，无页边截断。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "fab2a281f3fb1ca5a6bb69a8fc989e937b96bae6b488fa28588574eb20acd910",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 35,
+      "printed_page": 28,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-35.png",
+      "sha256": "d7f0d01c70efb6a478e6994e6e9dea41f9c78f1978850dfcb1fc0fa1193c7711",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图4-10的三个工作流、节点与箭头完整，图题同页。",
+        "4.7.2后接完整正文；表4-9六类任务题注、表头、表体完整同页，严格三线，无页脚遮挡。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "d7f0d01c70efb6a478e6994e6e9dea41f9c78f1978850dfcb1fc0fa1193c7711",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 36,
+      "printed_page": 29,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-36.png",
+      "sha256": "2cfbdfc6c1a36d24f2f236731eca23bd3cdee57ea9f395509b8bb8bd5dd0aa7a",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "personal_full_page_original_resolution_view_of_a9e89_ea8ca9_snapshot",
+      "result": "readability_pass_left_rule_alignment_pending",
+      "observations": [
+        "表4-10题注、表头及任务与输入范围、引用规则、输出章节、来源映射例4行表体完整同页。2026-06-03至2026-06-05、笔记3条、资料7份、关系38条及[N9]/[N10]/[R1936]均可读；[R]自然换行但不截断。",
+        "严格三线，表4-11的12个工具及4.7.3解释正文仍完整，最底行变更成员权限无裁切。",
+        "右侧越线已消除，但左横线起点约180–181px仍比正文/正常表格参考189px左出8–9px，不能作为严格版心最终通过。"
+      ],
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "ebb2c787b83485f9e0adcc0f1100a02df1731c91db3370cba07e7dad07ce5a80",
+      "same_bytes_as_prior_native_clean": false,
+      "table_width_measurement": {
+        "physical_page": 36,
+        "printed_page": 29,
+        "table": "表4-10",
+        "OOXML_table_index_zero_based": 24,
+        "grid_twips_observed_before_indent_update": [
+          1470,
+          7034
+        ],
+        "grid_total_twips": 8504,
+        "tblW_twips": 8504,
+        "layout": "fixed",
+        "rule_x_pixels": [
+          181,
+          1191
+        ],
+        "rule_width_pixels": 1011,
+        "three_rule_y_pixel_bands": [
+          [
+            568,
+            570
+          ],
+          [
+            613,
+            614
+          ],
+          [
+            851,
+            853
+          ]
+        ],
+        "normal_body_or_table4_11_left_reference_x_pixels": 189,
+        "normal_body_right_reference_x_pixels": 1225,
+        "left_rule_pixels_outside_reference": 8,
+        "right_rule_pixels_inside_reference": 34,
+        "body_rows_excluding_header": 4,
+        "caption_header_body_same_page": true,
+        "full_text_readability": "pass",
+        "strict_rule_alignment": "pending_left_indent_fix"
+      }
+    },
+    {
+      "physical_page": 37,
+      "printed_page": 30,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-37.png",
+      "sha256": "16636233dcc3cfe7a00edbe0badd8fde24d5fb872277c3f4f90fc020b89af922",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "4.7.4事务/幂等、4.7.5提示身份及4.8均有完整正文；标识缺省的短句无孤行。",
+        "原生表4-12落在本页，四指标全部分式、上下标及阈值完整，题注与表头表体同页，严格三线。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "16636233dcc3cfe7a00edbe0badd8fde24d5fb872277c3f4f90fc020b89af922",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 38,
+      "printed_page": 31,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-38.png",
+      "sha256": "d451f234f511a74ba76a3847b3c28b82563ff5060da1419952725af517c4c052",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表4-12后的变量、退回状态、批准来源/角色匹配与更新间隔定义完整可读。",
+        "4.9小结完整，下面留白属于第四章末，未见内容丢失。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "d451f234f511a74ba76a3847b3c28b82563ff5060da1419952725af517c4c052",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 39,
+      "printed_page": 32,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-39.png",
+      "sha256": "aa455e4263e8b915af60cb058746e71efe15664a9fe928d3ce5cc6b9a8e62877",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "第五章、5.1、5.2均有后续正文。",
+        "表5-1全部17项实现环境/参数完整同页，严格三线；自然行末换行未截断正文。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "aa455e4263e8b915af60cb058746e71efe15664a9fe928d3ce5cc6b9a8e62877",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 40,
+      "printed_page": 33,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-40.png",
+      "sha256": "7ff5053756dddd180c74e73a4b899e35413a0e500ca4ade44bef698f37cd2d8a",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表5-2三个项目及合计、表5-3四个原始合成样例完整同页，均严格三线。",
+        "字段及长日期可辨，底部说明与页脚分离，无表格裁切。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "7ff5053756dddd180c74e73a4b899e35413a0e500ca4ade44bef698f37cd2d8a",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 41,
+      "printed_page": 34,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-41.png",
+      "sha256": "d1b99793ea1f8889f6ce9916c4aef357299588e613bb1ccbd3720f1d7cebeb0a",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-1模态窗前景审核状态及退回记录清楚，暗化背景属于原界面上下文。",
+        "图5-2五状态列表节选完整，图题同页；5.3后接正文，无孤立标题。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "d1b99793ea1f8889f6ce9916c4aef357299588e613bb1ccbd3720f1d7cebeb0a",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 42,
+      "printed_page": 35,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-42.png",
+      "sha256": "e9b5efccb5eb236744da6670e3101ce4393fb17cd13cfac57276be74fb2efef0",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-3紧凑流程所有节点标签、主要流程连接完整，无标签遮挡；短垂直连接间距紧凑。",
+        "图5-4六状态及RETURNED→SUBMITTED“修改后再提交”箭头完整。",
+        "图5-5分类、OCR、审核、分块及向量入库流程完整，三个图题均同页。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "e9b5efccb5eb236744da6670e3101ce4393fb17cd13cfac57276be74fb2efef0",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 43,
+      "printed_page": 36,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-43.png",
+      "sha256": "77106931b014979f60fa546e79aab315fdd0d6f8e69da94627aa41b8f20264b4",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "资料/OCR状态说明承接前页，文字完整。",
+        "表5-4所有配对参数完整同页，严格三线；5.3.2、5.3.3均有后续正文。",
+        "图5-6全景网络节点/连线/颜色及题注完整；微小后台菜单作为界面上下文，不影响图谱全景的主要阅读目标。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "77106931b014979f60fa546e79aab315fdd0d6f8e69da94627aa41b8f20264b4",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 44,
+      "printed_page": 37,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-44.png",
+      "sha256": "5178782f728fbdd0d7b3dee831e2984aa157a7f74a327496287a525eb731b925",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-7左右视窗保留一跳关联实体列表及来源/15%信息，原UI省略号保留，图题注明分段节选。",
+        "5.3.4有后续正文；图5-8筛选、生成历史、状态及草稿节选完整，图题同页，无页边溢出。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "5178782f728fbdd0d7b3dee831e2984aa157a7f74a327496287a525eb731b925",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 45,
+      "printed_page": 38,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-45.png",
+      "sha256": "6d6bf338760d22ec017f4f52f258234733d509a02dc5785f200103bed684b87b",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "personal_full_page_original_resolution_view_of_a9e89_ea8ca9_snapshot",
+      "result": "readability_pass_left_rule_alignment_pending",
+      "observations": [
+        "表5-5题注、表头及标题、生成范围、输入来源、[N9]、[N10]、关系依据6行表体完整同页；Taq DNA Polymerase换行完整，18%、[R1926]/[R1929]均清楚。",
+        "严格三线，图5-9覆盖头/全部gap/source面板及5.3.5/5.3.6正文完整，无截断重叠。",
+        "右侧越线已消除，但左横线起点约180–181px仍比正文/正常表格参考189px左出8–9px，不能作为严格版心最终通过。"
+      ],
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "34a91fb12529902ecbe102b8392639d9758562d78aa44beb0fbe5259010e06dc",
+      "same_bytes_as_prior_native_clean": false,
+      "table_width_measurement": {
+        "physical_page": 45,
+        "printed_page": 38,
+        "table": "表5-5",
+        "OOXML_table_index_zero_based": 32,
+        "grid_twips_observed_before_indent_update": [
+          2079,
+          6425
+        ],
+        "grid_total_twips": 8504,
+        "tblW_twips": 8504,
+        "layout": "fixed",
+        "rule_x_pixels": [
+          181,
+          1191
+        ],
+        "rule_width_pixels": 1011,
+        "three_rule_y_pixel_bands": [
+          [
+            827,
+            829
+          ],
+          [
+            872,
+            873
+          ],
+          [
+            1264,
+            1266
+          ]
+        ],
+        "normal_body_or_table4_11_left_reference_x_pixels": 189,
+        "normal_body_right_reference_x_pixels": 1225,
+        "left_rule_pixels_outside_reference": 8,
+        "right_rule_pixels_inside_reference": 34,
+        "body_rows_excluding_header": 6,
+        "caption_header_body_same_page": true,
+        "full_text_readability": "pass",
+        "strict_rule_alignment": "pending_left_indent_fix"
+      }
+    },
+    {
+      "physical_page": 46,
+      "printed_page": 39,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-46.png",
+      "sha256": "334801da1832011eeddbfe62455a86f190faf688fb1aff1ae5dfdc48aab0db22",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "personal_full_page_original_resolution_view_of_a9e89_ea8ca9_snapshot",
+      "result": "readability_pass_left_rule_alignment_pending",
+      "observations": [
+        "表5-6题注、表头及13个子模块完整同页，严格三线。图号（5-×）表头自然换两行，全部图号及代表流程可读。",
+        "表后说明、图5-10全部5名成员角色/能力与图题仍完整同页，添加成员按钮可见。",
+        "右侧越线已消除，但左横线起点约180–181px仍比正文/正常表格参考189px左出8–9px，不能作为严格版心最终通过。"
+      ],
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "67e00eea7e2ad1a3725356c61151bb769069532f4e4f3b8ddaf0360da8896176",
+      "same_bytes_as_prior_native_clean": false,
+      "table_width_measurement": {
+        "physical_page": 46,
+        "printed_page": 39,
+        "table": "表5-6",
+        "OOXML_table_index_zero_based": 33,
+        "grid_twips_observed_before_indent_update": [
+          1748,
+          5575,
+          1181
+        ],
+        "grid_total_twips": 8504,
+        "tblW_twips": 8504,
+        "layout": "fixed",
+        "rule_x_pixels": [
+          180,
+          1189
+        ],
+        "rule_width_pixels": 1010,
+        "three_rule_y_pixel_bands": [
+          [
+            387,
+            390
+          ],
+          [
+            460,
+            461
+          ],
+          [
+            1049,
+            1051
+          ]
+        ],
+        "normal_body_or_table4_11_left_reference_x_pixels": 189,
+        "normal_body_right_reference_x_pixels": 1225,
+        "left_rule_pixels_outside_reference": 9,
+        "right_rule_pixels_inside_reference": 36,
+        "body_rows_excluding_header": 13,
+        "caption_header_body_same_page": true,
+        "full_text_readability": "pass",
+        "strict_rule_alignment": "pending_left_indent_fix"
+      }
+    },
+    {
+      "physical_page": 47,
+      "printed_page": 40,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-47.png",
+      "sha256": "9c62e090199cacb1ce40863e13d2127bab1ca5eeba7470191d06a63bb0fd1b4c",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-11退回意见、v2内容与重新提审操作条分段节选完整，图题同页。",
+        "图5-12上传关联与四项审核/入库状态完整，图题同页。",
+        "下部留白可由下一完整OCR截图、题注及其后说明不拆分解释，未见独立孤立标题。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "9c62e090199cacb1ce40863e13d2127bab1ca5eeba7470191d06a63bb0fd1b4c",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 48,
+      "printed_page": 41,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-48.png",
+      "sha256": "a77cef2d5a890561da9dfd8952a4312973546dc9b1ea13dd80f238b815e5e0bb",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-13识别文本、人工校对及确认签名完整，图题同页。",
+        "图5-14分段节选的完整问题/回答、S1/G1/G3及无法确认说明可读，图题同页。",
+        "图5-15预警与历史确认入口完整，图题同页；底部说明自然跨页，无遮挡。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "a77cef2d5a890561da9dfd8952a4312973546dc9b1ea13dd80f238b815e5e0bb",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 49,
+      "printed_page": 42,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-49.png",
+      "sha256": "ba8cbc900c3ff619e3a1b4470edb8af24455b93bf516f68777430f1a3c40c6c0",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-16展开审计摘要的authentication/outcome/risk/tool字段完整，原列表UI缩略保留。",
+        "图5-17盲评隔离提示、图5-18回答/S1来源/降级/轻反馈均完整，三个图题同页。",
+        "页面内容较密但末段完整，与页脚有清楚间距。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "ba8cbc900c3ff619e3a1b4470edb8af24455b93bf516f68777430f1a3c40c6c0",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 50,
+      "printed_page": 43,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-50.png",
+      "sha256": "39d671cde36daa2e7139d332e2e5faea8e613f59c6152bf847f3f0c27ad1d1aa",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-19编辑正文、本机草稿提示、取消/保存条节选完整，图题同页。",
+        "图5-20全部四项历史阈值配置完整；正文明确为修订前截图且解释当前名称及计算边界。",
+        "末尾固定任务说明自然承接下一页，无图题拆页。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "39d671cde36daa2e7139d332e2e5faea8e613f59c6152bf847f3f0c27ad1d1aa",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 51,
+      "printed_page": 44,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-51.png",
+      "sha256": "6674df7b856c085729d13c30c2883c66dc760063f1a77a2cce8712b0d5f15394",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "前页固定任务失败边界说明在本页完整承接。",
+        "图5-21四类实验结论及来源标记节选完整；图5-22三类来源计数与编号完整，图题分别同页。",
+        "图5-23前导说明有两行正文，无孤立标题。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "6674df7b856c085729d13c30c2883c66dc760063f1a77a2cce8712b0d5f15394",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 52,
+      "printed_page": 45,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-52.png",
+      "sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图5-23计划项TRIzol状态、优先级、规划描述及来源历史完整，图题同页。",
+        "5.4小结有完整正文；其下留白为第五章末。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 53,
+      "printed_page": 46,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-53.png",
+      "sha256": "32a4a22d7d83a330636162177ab667f61a18af2a95c1394f48bbba64b73ebd29",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "第六章、6.1均有后续正文。",
+        "表6-1三个验证对象及表6-2全部四种语料用途/规模完整同页，均严格三线。",
+        "旧原型与当前Rust环境边界可读，末段与页脚分离。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "32a4a22d7d83a330636162177ab667f61a18af2a95c1394f48bbba64b73ebd29",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 54,
+      "printed_page": 47,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-54.png",
+      "sha256": "0762ee0453a5ec3fc4e4d4e094cd3953ccf37386d2cba06084232e7158855ee7",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图6-1三项目15/10/10计数、轴标签与题注完整。",
+        "6.2标题有两行后续正文；较大下部留白是为下一页完整表6-3保留，表6-3整体高度超过本页剩余空间。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "0762ee0453a5ec3fc4e4d4e094cd3953ccf37386d2cba06084232e7158855ee7",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 55,
+      "printed_page": 48,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-55.png",
+      "sha256": "cf17815d4c8d7de53e1753530ba2b04fb7fc10d978d0178a03f61462a99b0c79",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-3五类测试设计及结果完整同页，严格三线；文字在正文左右界内。",
+        "浏览器模型桩及历史批次说明完整，无孤立标题或裁切。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "cf17815d4c8d7de53e1753530ba2b04fb7fc10d978d0178a03f61462a99b0c79",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 56,
+      "printed_page": 49,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-56.png",
+      "sha256": "7dc4cba9ec05bf5ef319b5cacd749690081650d36b32a6dbd6a51a83eb2635ed",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-3a、6-3b、6-3c三张表均恢复到正文页边内，右端约x=1190，右侧保留正常页边，没有表线被纸张裁切。",
+        "三表各自题注、表头与全部表体完整同页，仍只有顶线、表头下线、底线，无竖线或表体内横线。",
+        "B01–B08全部场景、R01–R03全部高风险用例与结果可读；长英文标识自然换行，没有遮挡或字句丢失。",
+        "原R02“通过（ok）”紫色矩形消失；底部负载与明细缺失说明完整，并与页脚分离。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [
+        "NV01",
+        "NV02"
+      ],
+      "prior_native_clean_sha256": "7dc4cba9ec05bf5ef319b5cacd749690081650d36b32a6dbd6a51a83eb2635ed",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 57,
+      "printed_page": 50,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-57.png",
+      "sha256": "64754bc091001f40b29aa0a7f524737c2a06c0f096f81c478beba66981c3b607",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-4题注、表头、全部指标与式(6-1)至式(6-10)完整同页，严格三线。",
+        "原(6-1)右侧、18题及上下文精确率公式右端的紫色标记全部消失。",
+        "分式、求和上下限、变量上下标及分母中的10^-10清楚完整，未见残留批注遮挡或裁切。",
+        "表后指标定义完整，6.3标题有后续表格与正文，底部和页脚分离。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [
+        "NV01"
+      ],
+      "prior_native_clean_sha256": "64754bc091001f40b29aa0a7f524737c2a06c0f096f81c478beba66981c3b607",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 58,
+      "printed_page": 51,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-58.png",
+      "sha256": "f19c0c71a9356f13556295dda6eaaf0204418ead873414b7f9bcae5fbd2cc8ce",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "实验问题、McNemar及集合键说明完整可读。",
+        "6.4标题实际在物理58/印刷51页，后接完整两段正文，无孤立标题。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "f19c0c71a9356f13556295dda6eaaf0204418ead873414b7f9bcae5fbd2cc8ce",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 59,
+      "printed_page": 52,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-59.png",
+      "sha256": "38c526a2781ee9dace3f8638d8e08d9bdacd675df1100d012e36ad6679dd4ae6",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "6.5、6.5.1均有后续正文；表6-5两批次TP/FP/FN/P/R/F1完整同页，严格三线。",
+        "6.5.2标题实际在物理59/印刷52页，后接完整实验目的与设计正文。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "38c526a2781ee9dace3f8638d8e08d9bdacd675df1100d012e36ad6679dd4ae6",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 60,
+      "printed_page": 53,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-60.png",
+      "sha256": "8217ebb27bbdc05f25b07df9ae920ffa2e6580e204ee366d72c05b961e1284b0",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-6全部8项总体结果完整同页，严格三线。",
+        "图6-2四类题型数据、轴/图例及图题完整；表后和图后说明完整。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "8217ebb27bbdc05f25b07df9ae920ffa2e6580e204ee366d72c05b961e1284b0",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 61,
+      "printed_page": 54,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-61.png",
+      "sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图6-3两个面板的18题证据口径与响应开销标签清楚，图题同页。",
+        "图6-4双轴、百分比柱、平均命中线及零命中标记完整，图题同页。",
+        "正文完整，底部图题和页脚分离。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 62,
+      "printed_page": 55,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-62.png",
+      "sha256": "8a845fdc7dc84f8f50b85e6d38dc80eed71ac48dc243f08de4a87294a7c35cbf",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "引用格式/范围说明完整；6.5.3有后续正文。",
+        "表6-7三项全题集及四项共同14题结果完整同页，严格三线；多行表头自然换行。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "8a845fdc7dc84f8f50b85e6d38dc80eed71ac48dc243f08de4a87294a7c35cbf",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 63,
+      "printed_page": 56,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-63.png",
+      "sha256": "d38d4cafac7e4aeed25f60a3bbb896ba96ab99f81657a32f2c05576d9dc0ef5a",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-8五方法及全部指标完整同页，严格三线。",
+        "图6-5共同14题四项1/14、0/14、8/14、11/14标签完整，历史快照/非同期受控实验及不同数据快照说明清楚，图题同页。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "d38d4cafac7e4aeed25f60a3bbb896ba96ab99f81657a32f2c05576d9dc0ef5a",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 64,
+      "printed_page": 57,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-64.png",
+      "sha256": "b76b2d0f25fbecd83a5633c8ac225ad85e26606a256f9fbfb6acbecdd9297265",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "图6-6五方法柱、数值、图例及图题完整。",
+        "27次非赢家样本名惩罚与76.32%的说明完整，未把禁止词命中等同事实错误。",
+        "6.5.4实际在物理64/印刷57页，后接完整固定任务设计正文。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "b76b2d0f25fbecd83a5633c8ac225ad85e26606a256f9fbfb6acbecdd9297265",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 65,
+      "printed_page": 58,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-65.png",
+      "sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-9四类固定任务及来源/Token/耗时完整同页，严格三线。",
+        "6.5.5和6.5.6均有后续正文；角色区别、历史覆盖及评分例子可读，无裁切。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 66,
+      "printed_page": 59,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-66.png",
+      "sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "inherited_only_after_independent_exact_byte_SHA256_comparison",
+      "result": "pass",
+      "observations": [
+        "表6-10全部五行RAGAS结果、有效样本及未评测标记完整同页，严格三线。",
+        "6.6有后续正文；范围展开、E匿名化及资料元数据限制说明完整；末句自然跨页。"
+      ],
+      "inherited_from_report": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/figures/visual-review-native-clean-34-67.json",
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+      "same_bytes_as_prior_native_clean": true,
+      "inherited_report_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965"
+    },
+    {
+      "physical_page": 67,
+      "printed_page": 60,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-margin-release-render/page-67.png",
+      "sha256": "9c5c32dad68da2c5158f0e55bc3241ff1a4a187a858720aa708b2d2d4c888a14",
+      "pixel_size": [
+        1415,
+        2000
+      ],
+      "inspection": "personal_full_page_original_resolution_view_of_a9e89_ea8ca9_snapshot",
+      "result": "readability_pass_left_rule_alignment_pending",
+      "observations": [
+        "表6-11a题注、4列表头、4指标及全部配对题数/差值/描述性95%区间同页完整；负号、括号完整，无挤字截断，严格三线。",
+        "20/20/20/15、+3.87/+44.17/+15.61/+0.22及[-5.63,14.74]/[17.08,68.75]/[2.68,28.12]/[-20.00,17.78]均可读；表6-11及5000次bootstrap、Rust234/39/100和144回答正文完整。",
+        "右侧越线已消除，但左横线起点约180–181px仍比正文/正常表格参考189px左出8–9px，不能作为严格版心最终通过。"
+      ],
+      "closed_finding_ids": [],
+      "prior_native_clean_sha256": "5f97290611a9e2e57ace9c32b2e923974b57e008ca46211c5c8c0f8a7b9a4836",
+      "same_bytes_as_prior_native_clean": false,
+      "table_width_measurement": {
+        "physical_page": 67,
+        "printed_page": 60,
+        "table": "表6-11a",
+        "OOXML_table_index_zero_based": 48,
+        "grid_twips_observed_before_indent_update": [
+          2173,
+          1134,
+          2409,
+          2788
+        ],
+        "grid_total_twips": 8504,
+        "tblW_twips": 8504,
+        "layout": "fixed",
+        "rule_x_pixels": [
+          180,
+          1189
+        ],
+        "rule_width_pixels": 1010,
+        "three_rule_y_pixel_bands": [
+          [
+            782,
+            784
+          ],
+          [
+            827,
+            828
+          ],
+          [
+            992,
+            994
+          ]
+        ],
+        "normal_body_or_table4_11_left_reference_x_pixels": 189,
+        "normal_body_right_reference_x_pixels": 1225,
+        "left_rule_pixels_outside_reference": 9,
+        "right_rule_pixels_inside_reference": 36,
+        "body_rows_excluding_header": 4,
+        "caption_header_body_same_page": true,
+        "full_text_readability": "pass",
+        "strict_rule_alignment": "pending_left_indent_fix"
+      }
+    }
+  ],
+  "limitations": [
+    "This is a preserved historicalsnapshot, not a finalPASS. Fresh native-deliveryPNG review ispending.",
+    "Only physical34–67 has this reviewercoverage; total100pagevisualacceptancerequiresotherteamreviews.",
+    "Currentfourwidth/layoutattributeswerecapturedbeforefollowupindentedit; reportdoesnotclaim wholeWordcontent/fontpreservationor independentannotationobjectcount."
+  ],
+  "mutations": "Only this newJSON reportwaswritten; noexistingWord,PDF,PNG,oldreport,source,script,indexortrackeddocwasmodified."
+}

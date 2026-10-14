@@ -1,0 +1,890 @@
+{
+  "annotator": "research-reviewer Agent",
+  "input_sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0",
+  "annotation_notes": [
+    "AI-assisted reference annotations, created solely from the frozen input bodies and the pre-output protocol/schema; no current implementation or system outputs were inspected in this annotation task.",
+    "Four content relation types only. Metadata is outside this draft. Evidence and labels retain source language/spelling and contiguous source text.",
+    "Pre-output ruling: prepared finished media/buffers are not automatically used reagents or observed results; explicitly stated mixture ingredients can be reagent inputs. Empty reference sets are allowed, without replacing selected records.",
+    "Explicit named control mixtures are sample objects; a control labeled No DNA does not imply use of DNA. Imperative protocol instructions without execution confirmation, missing materials, future plans, unmentioned hardware and unstable classifications are excluded.",
+    "Structured-fields counterparts constructed from these labels are oracle field-mapping controls, not automatic understanding of natural notes."
+  ],
+  "relations": [
+    {
+      "record_id": "iisc2019-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "CaCl2",
+      "evidence": "0.1M CaCl2 in 15% glycerol.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "glycerol",
+      "evidence": "0.1M CaCl2 in 15% glycerol.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "LB",
+      "evidence": "250ml LB + Agar",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Agar",
+      "evidence": "250ml LB + Agar",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "6-His imcherry",
+      "evidence": "6-His imcherry (708bp)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "mcp-1 + HlyA",
+      "evidence": "mcp-1 + HlyA(713bp)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "mcp-1 + PelB",
+      "evidence": "mcp-1 + PelB (536bp)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "mcp-1 expression",
+      "evidence": "mcp-1 expression",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "DNA only",
+      "evidence": "Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "FP only",
+      "evidence": "Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "No DNA",
+      "evidence": "Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "Primers only",
+      "evidence": "Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "RP only",
+      "evidence": "Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "No primers",
+      "evidence": "Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "NF H2O",
+      "evidence": "1. NF H2O: 8.9 µl",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Buffer",
+      "evidence": "2. Buffer: 5 µl",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "dNTP mix",
+      "evidence": "3. dNTP mix: 0.5 µl",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Forward primer",
+      "evidence": "4. Forward primer: 0.2 µl",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Reverse primer",
+      "evidence": "5. Reverse primer: 0.2 µl",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "1% Agarose Gel(1X)",
+      "evidence": "1% Agarose Gel(1X); Heated in the oven for 30-45s, till transparency is achieved.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Gene Ruler",
+      "evidence": "1.Gene Ruler",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "loading dye",
+      "evidence": "Gene ruler: 1µl loading dye + 1µl gene ruler + 1µl NF H2O",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "relation_type": "uses_instrument",
+      "target_type": "instrument",
+      "target_label": "oven",
+      "evidence": "1% Agarose Gel(1X); Heated in the oven for 30-45s, till transparency is achieved.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-01",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "PCR products of Ryan’s primer design",
+      "evidence": "Ran gel electrophoresis on PCR products of Ryan’s primer design",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "DNA ladder 1kb plus",
+      "evidence": "The DNA ladder was picked up in the evening by Janella, so used the DNA ladder 1kb plus from Hallam lab instead",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "gel stain",
+      "evidence": "Used the gel stain from the buffer/enzyme box [from the map] and misplaced it in the BIOMOD shelf.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-01",
+      "relation_type": "uses_instrument",
+      "target_type": "instrument",
+      "target_label": "gel analyzer",
+      "evidence": "Took a photo of the gel from gel analyzer.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-02",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "2019 RFP plasmid that was left out (118ng/ul)",
+      "evidence": "5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-02",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "2019 RFP plasmid (17ng/ul)",
+      "evidence": "5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-02",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "2017 RFP plasmid (10pg/ul)",
+      "evidence": "5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-02",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "SOC",
+      "evidence": "Transformation #5 used fresh SOC instead of supernatant to resuspend",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-02",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "This was confirmed by re-picking and miniprepping, resulted in low yield.",
+      "evidence": "This was confirmed by re-picking and miniprepping, resulted in low yield.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "T4 ligase",
+      "evidence": "0.5 uL of T4 ligase",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "BsaI",
+      "evidence": "1 uL BsaI",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "10X T4 Buffer",
+      "evidence": "2 uL 10X T4 Buffer",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "10X BSA Buffer",
+      "evidence": "2 uL 10X BSA Buffer",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "H2O",
+      "evidence": "Fix volume to 20 uL using H2O",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "golden gate compatible RFP construct",
+      "evidence": "Golden Gate Assembly of psicA and golden gate compatible RFP construct (x2 duplicates)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "psicA insert",
+      "evidence": "6 uL psicA insert + 0.5 uL of DNA amplicon",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "DNA amplicon",
+      "evidence": "6 uL psicA insert + 0.5 uL of DNA amplicon",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "plates from Madina, Taylor, and Janella’s transformation on July 5th",
+      "evidence": "Checked plates from Madina, Taylor, and Janella’s transformation on July 5th.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "competent cells",
+      "evidence": "Retransformed 50ul of competent cells with the 2019 RFP plasmid (17ng/ul) using 2.5ul to get less growth on plates.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "2019 RFP plasmid (17ng/ul)",
+      "evidence": "Retransformed 50ul of competent cells with the 2019 RFP plasmid (17ng/ul) using 2.5ul to get less growth on plates.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "negative control without any DNA",
+      "evidence": "Included a negative control without any DNA to sort out what is happening with non red growth, but couldn’t plate it because of no more CM plates left.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+      "evidence": "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "the 2017 10pg test kit worked, but had few colonies.",
+      "evidence": "the 2017 10pg test kit worked, but had few colonies.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.",
+      "evidence": "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-01",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "thrips",
+      "evidence": "Collected 6 eppendorf tubes of thrips (approximately >10 thrips in each tube).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-01",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "99% ethanol",
+      "evidence": "They are stored in 99% ethanol.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-02",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "samples collected from farms",
+      "evidence": "5 samples collected from farms were used (4 samples collected by Baha and 1 sample collected by Wahei)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-02",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "Incubated in 56 °C until excess ethanol dried out",
+      "evidence": "Incubated in 56 °C until excess ethanol dried out",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Phusion Plus Master Mix",
+      "evidence": "12.5 ul of Phusion Plus Master Mix",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "ThripsITSF",
+      "evidence": "1.25 ul of 10uM of each ThripsITSF",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "ThripsITSR",
+      "evidence": "1.25 ul of 10uM of each ThripsITSR",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "SdITSF3",
+      "evidence": "1.25 ul of 10uM of each SdITSF3",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "SdITSF7",
+      "evidence": "1.25 ul of 10uM of each SdITSF7",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "H2O",
+      "evidence": "4.5 ul of H2O",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "agarose",
+      "evidence": "Run on 1% agarose gel (0.5 g of agarose and 50 ml of TAE buffer) with 180 V for 5 min",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "TAE buffer",
+      "evidence": "Run on 1% agarose gel (0.5 g of agarose and 50 ml of TAE buffer) with 180 V for 5 min",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "extracted DNA",
+      "evidence": "3 ul of extracted DNA",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-03",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "The result was unclear.",
+      "evidence": "The result was unclear.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "Phusion Plus Master Mix",
+      "evidence": "12.5 ul of Phusion Plus Master Mix",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "ThripsITSF",
+      "evidence": "1 ul of 20uM of each ThripsITSF (20 pmol)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "ThripsITSR",
+      "evidence": "1 ul of 20uM of each ThripsITSR (20 pmol)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "SdITSF3",
+      "evidence": "1 ul of 20uM of each SdITSF3 (20 pmol)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "SdITSF7",
+      "evidence": "1 ul of 20uM of each SdITSF7 (20 pmol)",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "H2O",
+      "evidence": "3.5 of H2O",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "loading dye",
+      "evidence": "Mix PCR samples with loading dye (5:1) and use the appropriate ladder (with bands on 200-500 bp).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "ladder",
+      "evidence": "use the appropriate ladder (with bands on 200-500 bp).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "agarose",
+      "evidence": "Run on gel 2% agarose gel (1 g of agarose dissolved in 50 ml of TAE) with 130 V for 15 min.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_reagent",
+      "target_type": "reagent",
+      "target_label": "TAE",
+      "evidence": "Run on gel 2% agarose gel (1 g of agarose dissolved in 50 ml of TAE) with 130 V for 15 min.",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "extracted DNA",
+      "evidence": "5 ul of extracted DNA",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "PCR samples",
+      "evidence": "Mix PCR samples with loading dye (5:1) and use the appropriate ladder (with bands on 200-500 bp).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "uses_sample",
+      "target_type": "sample",
+      "target_label": "7ng/ul extracted dna (trap water)",
+      "evidence": "Samples were loaded in this order: diluted ladder, miss, 7ng/ul extracted dna (trap water), 3.3 ng/ul, 2.6 ng/ul, 0.8 ng/ul, 0 ng/ul (Figure 1).",
+      "evidence_kind": "explicit"
+    },
+    {
+      "record_id": "team5863-04",
+      "relation_type": "produces_result",
+      "target_type": "result",
+      "target_label": "Clear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).",
+      "evidence": "Clear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).",
+      "evidence_kind": "explicit"
+    }
+  ],
+  "exclusions": [
+    {
+      "record_id": "iisc2019-01",
+      "text": "Specific buffers were made:",
+      "reason": "Preparation identifies finished buffers rather than their use in a later operation; preparation alone is not an observed experimental result. Only explicitly stated mixture components are annotated as reagent inputs."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "1M 100ml HCl",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "5M 100ml NaCl",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "0.1M 100ml MgCl2",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "LB solution (broth)",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "500 ml 50X TAE",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "Alkaline lysis buffer-I",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "Alkaline lysis buffer-II",
+      "reason": "Named finished preparation, with no explicit account of its use or of the starting material; excluded under the pre-output preparation ruling."
+    },
+    {
+      "record_id": "iisc2019-01",
+      "text": "These solutions were prepared for autoclaving.",
+      "reason": "Autoclaving is a purpose/future step here; no autoclave device or completed autoclaving is explicitly stated."
+    },
+    {
+      "record_id": "iisc2019-02",
+      "text": "The prepared solutions were autoclaved along with the tip-boxes.",
+      "reason": "Completed sterilization is an operation, not an observation result; generic prepared solutions and consumable tip-boxes are not stably identified biological/material samples under this schema. No device is named."
+    },
+    {
+      "record_id": "iisc2019-02",
+      "text": "Ampicillin",
+      "reason": "The antibiotic solution was prepared as a finished material; its use as an input is not explicitly recorded. Original spelling is preserved."
+    },
+    {
+      "record_id": "iisc2019-02",
+      "text": "Chloramphenico",
+      "reason": "The antibiotic solution was prepared as a finished material; its use as an input is not explicitly recorded. Original spelling is preserved."
+    },
+    {
+      "record_id": "iisc2019-02",
+      "text": "Poured plates (Petri dishes were autoclaved earlier)",
+      "reason": "Plate preparation/sterilization is an operation; Petri dishes are consumables, not an explicitly named instrument or identified experimental sample."
+    },
+    {
+      "record_id": "iisc2019-03",
+      "text": "6. DNA sequence: 10 µl",
+      "reason": "Generic collective mention of the four explicitly enumerated DNA samples; it is not counted as an additional unidentified sample."
+    },
+    {
+      "record_id": "iisc2019-03",
+      "text": "2.imCherry\n3.mcp-1 Hly-A\n4.mcp-1 Hly-A\nBlank 6.mcp expression\n7. Control (no DNA)\n8.Control (no primer)",
+      "reason": "Loading-order shorthand is not used to invent additional distinct biological samples or an alias mapping. The earlier explicit DNA-sequence/control list supplies the sample labels; Blank has no identified material."
+    },
+    {
+      "record_id": "iisc2019-03",
+      "text": "till transparency is achieved.",
+      "reason": "This wording gives the heating endpoint, without a separate unambiguous recorded observation; excluded from produces_result."
+    },
+    {
+      "record_id": "iisc2019-03",
+      "text": "PCR was run by the following process:",
+      "reason": "PCR is a method, not an explicitly named instrument; no thermal cycler is added by inference."
+    },
+    {
+      "record_id": "iisc2019-03",
+      "text": "2-8: 2µl loading dye + 10µl DNA (PCR mix)",
+      "reason": "DNA (PCR mix) is a collective mention of already annotated DNA/control mixtures, rather than a separately identified sample."
+    },
+    {
+      "record_id": "iisc2019-04",
+      "text": "Prepared 250ml LB agar and 200ml LB and was autoclaved.",
+      "reason": "Finished medium preparation and sterilization are recorded, but not starting-material use or an observed experimental result. No instrument is named."
+    },
+    {
+      "record_id": "iisc2019-04",
+      "text": "Prepared agar plates.",
+      "reason": "Finished plate preparation alone does not establish uses_reagent or produces_result under the pre-output ruling."
+    },
+    {
+      "record_id": "ubc2021-01",
+      "text": "Got the login key from Avery",
+      "reason": "Access information is outside the four scientific-content relation types."
+    },
+    {
+      "record_id": "ubc2021-01",
+      "text": "buffer/enzyme box [from the map]",
+      "reason": "Storage location/container; it does not establish that buffers or enzymes were used, or identify an instrument."
+    },
+    {
+      "record_id": "ubc2021-01",
+      "text": "BIOMOD shelf",
+      "reason": "Storage location rather than an instrument used in the experiment."
+    },
+    {
+      "record_id": "ubc2021-01",
+      "text": "Took a photo of the gel from gel analyzer.",
+      "reason": "Photo acquisition is an operation; no band/intensity observation is stated for produces_result."
+    },
+    {
+      "record_id": "ubc2021-02",
+      "text": "pSB1C3-RFP plasmid we got from 2019 iGEM",
+      "reason": "General construct/stock identification; the actual transformed 2019 and 2017 stock preparations are labeled with their explicitly stated distinguishing descriptions instead of adding this as another sample."
+    },
+    {
+      "record_id": "ubc2021-02",
+      "text": "we have to remove the backbone from it via PCR",
+      "reason": "A stated future need, not an already performed PCR or an observed outcome."
+    },
+    {
+      "record_id": "ubc2021-02",
+      "text": "RFP plates have been out for ~a month so are probably bad by now.",
+      "reason": "Possible deterioration is an explicit hypothesis; the actual low-yield observation is separately annotated."
+    },
+    {
+      "record_id": "ubc2021-02",
+      "text": "supernatant",
+      "reason": "Explicitly not selected for transformation #5: fresh SOC was used instead."
+    },
+    {
+      "record_id": "ubc2021-02",
+      "text": "Only 4 LB + CM plates are left, should make more asap!",
+      "reason": "Inventory plus a future preparation request; the sentence does not explicitly state use of these plates in this entry."
+    },
+    {
+      "record_id": "ubc2021-03",
+      "text": "Transforming RFP Constructs",
+      "reason": "General process mention; the explicitly named assembly construct is retained rather than adding an unidentified collective sample."
+    },
+    {
+      "record_id": "ubc2021-03",
+      "text": "Moved 5 transformation plates from 37C room to 4C room (as per instructed by Janella)",
+      "reason": "Storage relocation, with rooms rather than devices; no distinct sample identity or experimental observation is given."
+    },
+    {
+      "record_id": "ubc2021-03",
+      "text": "IDT psicA gene fragment preparation",
+      "reason": "The subsequent reaction explicitly names the psicA insert. This preparation-heading mention is not counted as a further distinct sample or mapped through a newly invented alias."
+    },
+    {
+      "record_id": "ubc2021-03",
+      "text": "Added 25 uL to make 10 ng/uL of psicA",
+      "reason": "The added solvent is unnamed; its identity is not inferred."
+    },
+    {
+      "record_id": "ubc2021-03",
+      "text": "Incubated for ~10 minutes at 60 degrees celsius to ensure the solvent comes in contact with the tiny pellet.",
+      "reason": "Incubation parameters and intended purpose, with no named instrument or separate confirmed observation."
+    },
+    {
+      "record_id": "ubc2021-03",
+      "text": "Incubated Golden Gate Assembly reaction at 37 degrees celsius for 1hr",
+      "reason": "An operation/condition rather than an observed experimental result; equipment is not explicitly named."
+    },
+    {
+      "record_id": "ubc2021-04",
+      "text": "the 2017 10pg test kit",
+      "reason": "Used to identify a previous transformation condition, but whether the kit denotes a reagent, plasmid stock or whole test cannot be stably resolved from this entry; its stated colony observation is retained."
+    },
+    {
+      "record_id": "ubc2021-04",
+      "text": "2019 RFP plasmid that was left out (118ng/ul)",
+      "reason": "Describes a previous transformation condition of the checked plates, rather than an explicit reagent/sample input for the current retransformation; checked plates are annotated as the observed sample objects."
+    },
+    {
+      "record_id": "ubc2021-04",
+      "text": "couldn’t plate it because of no more CM plates left.",
+      "reason": "Plating explicitly did not occur; CM plates are not annotated as used."
+    },
+    {
+      "record_id": "ubc2021-04",
+      "text": "Practiced a mock ligation without DNA.",
+      "reason": "DNA is explicitly absent; no DNA use or unmentioned ligation components/instruments are inferred."
+    },
+    {
+      "record_id": "ubc2021-04",
+      "text": "Placed transformation at 37 degrees in the warm room.",
+      "reason": "A temperature/location statement; a warm room is not an explicitly named device and the operation is not an observation result."
+    },
+    {
+      "record_id": "team5863-01",
+      "text": "eppendorf tubes",
+      "reason": "Consumable containers, not named instruments or separate biological samples."
+    },
+    {
+      "record_id": "team5863-01",
+      "text": "Collected 6 eppendorf tubes of thrips (approximately >10 thrips in each tube).",
+      "reason": "Collection action and sample quantity are retained as sample evidence, not counted again as an experimental observation result."
+    },
+    {
+      "record_id": "team5863-01",
+      "text": "Visit to the Mango farm.",
+      "reason": "Location/action outside the four scientific-content relations."
+    },
+    {
+      "record_id": "team5863-02",
+      "text": "Quick Protocol: DNeasy Blood & Tissue Kit (for insects)\nMaterials Needed:\n● DNeasy Blood & Tissue Kit (Qiagen)\n● 1.5 mL microcentrifuge tubes\n● Ethanol (96–100%)\n● Proteinase K\n● Buffer ATL, AL, AW1, AW2, AE",
+      "reason": "Protocol heading and materials-needed list do not independently confirm actual kit/reagent use in this executed record."
+    },
+    {
+      "record_id": "team5863-02",
+      "text": "Samples were centrifuged to spin down the insects and ethanol was discarded",
+      "reason": "Explicit processing action, but no centrifuge device is named; discarded ethanol is not annotated as a newly used reagent. Insects are not added as another sample distinct from the farm samples."
+    },
+    {
+      "record_id": "team5863-02",
+      "text": "Add 180 µL Buffer ATL.\n● Add 20 µL Proteinase K.\n● Vortex briefly or flick.\n● Incubate at 56 °C for 1–3 hours (or overnight) until fully lysed.",
+      "reason": "Imperative protocol steps do not confirm execution or fully lysed outcome; no reagent, vortex instrument or overnight incubation is inferred."
+    },
+    {
+      "record_id": "team5863-02",
+      "text": "2. Lysis\n● Add 200 µL Buffer AL, mix.\n● Add 200 µL ethanol (96–100%), mix well.\n3. Binding\n● Transfer the mixture to a DNeasy spin column in a collection tube.\n● Centrifuge 1 min at ≥6000 x g (8000 rpm).\n● Discard flow-through.\n4. Wash\n● Add 500 µL Buffer AW1, spin 1 min, discard flow-through.\n● x\n5. Elution\n● Place column in a clean 1.5 mL tube.\n● Add 100 µL Buffer AE (or nuclease-free water).\n● Incubate 1 min, then centrifuge 1 min at ≥6000 x g.",
+      "reason": "Imperative protocol; actual reagent/consumable use and completion are not confirmed. The missing wash detail is not repaired and AE versus water is an unresolved stated alternative."
+    },
+    {
+      "record_id": "team5863-02",
+      "text": "Store:\n● Store eluted DNA at –20 °C.",
+      "reason": "Storage instruction does not establish that eluted DNA was obtained or that a freezer was used."
+    },
+    {
+      "record_id": "team5863-03",
+      "text": "PCR conditions:",
+      "reason": "Temperature program identifies the PCR method/conditions, not a named instrument; no thermal cycler or electrophoresis apparatus is inferred."
+    },
+    {
+      "record_id": "team5863-03",
+      "text": "1% agarose gel",
+      "reason": "The gel matrix is represented by its explicitly stated agarose and TAE buffer components rather than adding another label for the same reagent preparation."
+    },
+    {
+      "record_id": "team5863-04",
+      "text": "PCR conditions:",
+      "reason": "A temperature program does not name the instrument used; no thermal cycler is added."
+    },
+    {
+      "record_id": "team5863-04",
+      "text": "2% agarose gel",
+      "reason": "The explicitly stated agarose and TAE components represent this gel preparation, avoiding an additional label for the same reagent matrix."
+    },
+    {
+      "record_id": "team5863-04",
+      "text": "diluted ladder",
+      "reason": "Repeated mention of the already annotated ladder; not treated as an additional reagent identity."
+    },
+    {
+      "record_id": "team5863-04",
+      "text": "miss",
+      "reason": "Loading-order token has no stable material identity; no missing/blank sample is invented."
+    },
+    {
+      "record_id": "team5863-04",
+      "text": "3.3 ng/ul, 2.6 ng/ul, 0.8 ng/ul, 0 ng/ul",
+      "reason": "Bare concentration entries do not name their material independently; sample identities or omitted words are not invented, and 0 ng/ul is not converted into DNA use."
+    }
+  ]
+}

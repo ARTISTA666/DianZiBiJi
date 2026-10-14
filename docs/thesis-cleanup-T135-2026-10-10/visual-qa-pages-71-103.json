@@ -1,0 +1,606 @@
+{
+  "task": "T135",
+  "version": "final-v3-103pages",
+  "status": "pass",
+  "word": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/1005-防御性说明清理版-2026-10-10.docx",
+  "word_sha256": "99b8cedd4bacf5f811a0c74a82206deb9a2d68779c4824e1207ec4b25da7e786",
+  "pdf": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/1005-防御性说明清理版-2026-10-10.pdf",
+  "pdf_sha256": "ba4ea4bbd4dbeb77f1c37e545760031b29871049be48e8f91e43b5e53c50c0f8",
+  "render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3",
+  "render_total_pages": 103,
+  "scope_physical_pages": [
+    71,
+    103
+  ],
+  "covered_page_count": 33,
+  "direct_original_size_personally_inspected_pages": [
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103
+  ],
+  "direct_original_size_personally_inspected_page_count": 29,
+  "byte_identical_inherited_pages": [
+    71,
+    72,
+    73,
+    74
+  ],
+  "all_pages_covered_by_original_size_personal_inspection_or_exact_byte_identity": true,
+  "rehashed_after_inspection": true,
+  "updated_at": "2026-10-10T04:16:48.409242+00:00",
+  "issues": [],
+  "resolved_issues": [
+    {
+      "source_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/visual-qa-pages-71-104-v1.json",
+      "source_page": 76,
+      "issue": "7.3末尾两行成为独立尾页，留白较大。",
+      "resolution": "final-v3第75页完整容纳第七章及四项展望；第76页开始致谢。",
+      "verified_by": "view_image detail=original physical75 and76"
+    }
+  ],
+  "protected_figures": {
+    "figures": [
+      "D-1",
+      "D-2",
+      "D-3",
+      "D-4",
+      "D-5",
+      "D-6"
+    ],
+    "physical_pages": [
+      100,
+      101,
+      102
+    ],
+    "all_complete": true,
+    "captions_with_figures": true,
+    "data_identity": "D.3 retains 合成测试笔记 and SOP短提要 in prose."
+  },
+  "pages": [
+    {
+      "page": 71,
+      "printed_page": "64",
+      "result": "pass",
+      "notes": "表6-10单页完整；自动评价与6.6导语字形清晰，页眉页脚正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-71.png",
+      "png_sha256": "f29fc60cc77eaf552a8ecb6ab7436db35c534cbfd3498694c899b06eaa2c7714",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "SHA256 byte-identical inheritance from personally inspected v1 view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": false,
+      "inherited_from": {
+        "report": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/visual-qa-pages-71-104-v1.json",
+        "word_sha256": "0662fbdc0ba1d8f38d9ee00812eebd5f13e0a87b4c4df73169ecf784f52a441d",
+        "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-71.png",
+        "png_sha256": "f29fc60cc77eaf552a8ecb6ab7436db35c534cbfd3498694c899b06eaa2c7714"
+      }
+    },
+    {
+      "page": 72,
+      "printed_page": "65",
+      "result": "pass",
+      "notes": "表6-11、6-11a标题与数据齐全；区间与配对样本数无遮挡。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-72.png",
+      "png_sha256": "8439ea18e1df74b7ba9045f79bb19ed3742f1b97e071b63496e83802bece6f32",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "SHA256 byte-identical inheritance from personally inspected v1 view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": false,
+      "inherited_from": {
+        "report": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/visual-qa-pages-71-104-v1.json",
+        "word_sha256": "0662fbdc0ba1d8f38d9ee00812eebd5f13e0a87b4c4df73169ecf784f52a441d",
+        "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-72.png",
+        "png_sha256": "8439ea18e1df74b7ba9045f79bb19ed3742f1b97e071b63496e83802bece6f32"
+      }
+    },
+    {
+      "page": 73,
+      "printed_page": "66",
+      "result": "pass",
+      "notes": "表6-12完整；统计解释保留p=0.0938及未达到0.05结论，原始差值、公式和引文82–84清晰。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-73.png",
+      "png_sha256": "77070ea24d6b2ec10864329c0542ce9dba2ebb16dde03b4e69b68cd62976c603",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "SHA256 byte-identical inheritance from personally inspected v1 view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": false,
+      "inherited_from": {
+        "report": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/visual-qa-pages-71-104-v1.json",
+        "word_sha256": "0662fbdc0ba1d8f38d9ee00812eebd5f13e0a87b4c4df73169ecf784f52a441d",
+        "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-73.png",
+        "png_sha256": "77070ea24d6b2ec10864329c0542ce9dba2ebb16dde03b4e69b68cd62976c603"
+      }
+    },
+    {
+      "page": 74,
+      "printed_page": "67",
+      "result": "pass",
+      "notes": "表6-13完整；8/9补测结果与失败条件文字清晰，6.7段落分页正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-74.png",
+      "png_sha256": "2558a8332c8da118e156abc8109f5250f9919f30ef215befa89a1d8048b1f2c6",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "SHA256 byte-identical inheritance from personally inspected v1 view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": false,
+      "inherited_from": {
+        "report": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/visual-qa-pages-71-104-v1.json",
+        "word_sha256": "0662fbdc0ba1d8f38d9ee00812eebd5f13e0a87b4c4df73169ecf784f52a441d",
+        "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-74.png",
+        "png_sha256": "2558a8332c8da118e156abc8109f5250f9919f30ef215befa89a1d8048b1f2c6"
+      }
+    },
+    {
+      "page": 75,
+      "printed_page": "68",
+      "result": "pass",
+      "notes": "第七章7.1–7.3及四项展望均完整容纳一页，末行不裁切；v1尾段独占页问题已消除。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-75.png",
+      "png_sha256": "5997d6427f6ec17875c561005121e442c687ac29097ffb14c4abd6600424e2b2",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 76,
+      "printed_page": "69",
+      "result": "pass",
+      "notes": "致谢另起一页完整；陆洲、孙明斋、刘燕、刘辉、陆一松姓名字形清晰，页眉页脚正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-76.png",
+      "png_sha256": "8d3faab9cd3e0bef0a5cd9c00975e16a2e3b5dc85ca18f38cc9a5ca49f015780",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 77,
+      "printed_page": "70",
+      "result": "pass",
+      "notes": "参考文献[1]–[14]连续，悬挂缩进与外文字形清晰，页底完整。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-77.png",
+      "png_sha256": "a3b679106c62f4c5fecb658c02bcebef9fc23fe37793e4dc56b5a29d120da837",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 78,
+      "printed_page": "71",
+      "result": "pass",
+      "notes": "参考文献[15]–[30]连续，长题名正常换行，无遮挡或裁切。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-78.png",
+      "png_sha256": "86cf2c4f41d3000caa91f2690fbce8b72a54ba60637c7294c5c9b396d297777a",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 79,
+      "printed_page": "72",
+      "result": "pass",
+      "notes": "参考文献[31]–[48]连续，中英文行距与字形正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-79.png",
+      "png_sha256": "a89d0121a25e3cff95e0a063d6e951438bea7c7a26d6111619f4f25ea152e6ca",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 80,
+      "printed_page": "73",
+      "result": "pass",
+      "notes": "参考文献[49]–[67]连续，长英文题名正常换行，无叠字或页底裁切。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-80.png",
+      "png_sha256": "28b4107615f5386bdd5c62c7e77af3922f4cd816ff6b5bbd7df0153054adb9b7",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 81,
+      "printed_page": "74",
+      "result": "pass",
+      "notes": "参考文献[68]–[84]完整，统计文献[82]–[84]题名与出版信息清晰。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-81.png",
+      "png_sha256": "cf3c121808a6ea8e3a21c48eb2e376374225495cc11a550d1aa3a82667c98b49",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 82,
+      "printed_page": "75",
+      "result": "pass",
+      "notes": "附录A表A-1全部20题在同页完整，Q05/Q20†标记、40条配对记录方法说明清晰。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-82.png",
+      "png_sha256": "cb1eb9265251bb0a1ed4612a0c7ba861f198711b630599a304e34791db7164b9",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 83,
+      "printed_page": "76",
+      "result": "pass",
+      "notes": "附录B合成笔记身份、52条关系说明清晰；表B-1(a)序号1–12完整。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-83.png",
+      "png_sha256": "1e61e275b28aaea097676e74f6dd5e5b4f0ed8b8c63a6edc26d1d2f346e872b5",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 84,
+      "printed_page": "77",
+      "result": "pass",
+      "notes": "表B-1(b)、B-1(c)序号13–38完整连续，字形和表格边框清楚。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-84.png",
+      "png_sha256": "705c64efffcada433daf818160302592321a29a6587d6dd02afbec3b5f58fc2c",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 85,
+      "printed_page": "78",
+      "result": "pass",
+      "notes": "表B-1(d)序号39–52完整，qPCR记录字段与2.3倍结果清晰；B.3及表B-2方法说明完整。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-85.png",
+      "png_sha256": "0ecec7147bbcdb7bd02a6a0c5fd56feef467cc23e5a77beea226c7da706cd855",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 86,
+      "printed_page": "79",
+      "result": "pass",
+      "notes": "续表B-2字段G01–G18及表B-3完整，状态枚举和表格字形清晰，无遮挡。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-86.png",
+      "png_sha256": "c468f28d781bf293fa6212c1e8417d7521db434766cd5c8673aafa11ab9583d8",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 87,
+      "printed_page": "80",
+      "result": "pass",
+      "notes": "表B-4至B-9共六表完整，题注与表格对应，文字和边框清晰。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-87.png",
+      "png_sha256": "701dd925b4e968550cb8128afcd0bf38ce28874b3a365620fb93247bf6b01245",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 88,
+      "printed_page": "81",
+      "result": "pass",
+      "notes": "表B-10至B-14共五表完整，较长字段值正常换行，无溢出或遮挡。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-88.png",
+      "png_sha256": "84e2d022ee2b30d37e487bdb35fca7b5ac4408a30745914fc27092cb4d25b793",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 89,
+      "printed_page": "82",
+      "result": "pass",
+      "notes": "表B-15至B-17完整，文件、OCR与RAG数据集字段及模型默认值正常换行。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-89.png",
+      "png_sha256": "69d7e2f44274fc4f85aba18f154f7b7ffc947c7df4e570acd865e6a3c8282b55",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 90,
+      "printed_page": "83",
+      "result": "pass",
+      "notes": "表B-18至B-20完整，索引版本等长值正常换行，补充约束与题注均清楚。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-90.png",
+      "png_sha256": "55775395789982cacbf312c5d4dfa865d07b03f49fb5b61f8b4d4adfd3b6e17e",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 91,
+      "printed_page": "84",
+      "result": "pass",
+      "notes": "表B-21至B-24完整，计划来源默认值及WHERE约束行字形清晰，无裁切。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-91.png",
+      "png_sha256": "3632eb0af3f9d581eea4670f5ab80030aea87e1f2f9e7de9d818e51f912531e1",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 92,
+      "printed_page": "85",
+      "result": "pass",
+      "notes": "表B-25、B-26完整，二行题注与数据表间距正常，问答日志字段连续。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-92.png",
+      "png_sha256": "0460a078395c6f45c80682c28a8ba3a30472766b5e657f148e4ad8d16ce73b11",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 93,
+      "printed_page": "86",
+      "result": "pass",
+      "notes": "表B-27至B-29完整，长题注和盲评补充约束正常换行，页底完整。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-93.png",
+      "png_sha256": "7b35c8cac5aa0004d05b5dd174dd78b5a3c9b029fae9c1e6e281379457398dab",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 94,
+      "printed_page": "87",
+      "result": "pass",
+      "notes": "表B-30至B-33完整，MCP访问令牌和HTTP会话字段未拆页，页眉页脚正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-94.png",
+      "png_sha256": "ee72083c6688e4af3ca726ea2d4732024be7b18df159b1af0287bad1d6a84824",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 95,
+      "printed_page": "88",
+      "result": "pass",
+      "notes": "表B-34至B-37完整，回合版本默认值正常换行，题注与字段无遮挡。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-95.png",
+      "png_sha256": "3779c918e02a7ba36637c89a78391b149eddbb571b552d028caa2f00f2d50d19",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 96,
+      "printed_page": "89",
+      "result": "pass",
+      "notes": "表B-38至B-41完整，长幂等约束行正常换行，页底补充约束未裁切。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-96.png",
+      "png_sha256": "48e0d22bca805a6eeb071a50f8f1dc4f2e65e3bd4104ad22c841c4afe5be7197",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 97,
+      "printed_page": "90",
+      "result": "pass",
+      "notes": "表B-42至B-45完整，反馈状态与版本表字形清晰，附录B结束分页正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-97.png",
+      "png_sha256": "94fe28f57ba5469392d870da5d6b84b8c91092bb1e1135708a0b9e50adbe71ef",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 98,
+      "printed_page": "91",
+      "result": "pass",
+      "notes": "附录C及表C-1、C-2完整；12项工具、5项高风险及六模板状态清晰。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-98.png",
+      "png_sha256": "2f259cdcd4a62d6d5f854207eac09511a1fd5a5ae4d22df9ea91718ef1240957",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 99,
+      "printed_page": "92",
+      "result": "pass",
+      "notes": "附录D、表D-1与D-2完整；GSE111619文件与前16位哈希、40条问答和GPT角色方法身份清晰，链接和段尾无裁切。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-99.png",
+      "png_sha256": "7ea2b721517214004496eb73287846486d5ad32627eedd19d25d6f7cad14d3b9",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 100,
+      "printed_page": "93",
+      "result": "pass",
+      "notes": "D.3合成测试笔记身份说明清晰；图D-1、D-2及题注同页完整，58℃、18%和日期清楚，无防御性副标题或来源footer。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-100.png",
+      "png_sha256": "b1b557ff47d12254d2ab85d5f3444a2059e9d2b4717be179f136729b1644f1e1",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 101,
+      "printed_page": "94",
+      "result": "pass",
+      "notes": "图D-3、D-4和题注完整，qPCR类型PCR、2026-05-28及2.3倍值清晰；结构化字段与正文原文分区正常，无遮挡。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-101.png",
+      "png_sha256": "af5571649d53a6e5c5454228299b47b91e2a828cf2eb6880fa9435e24b6f09af",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 102,
+      "printed_page": "95",
+      "result": "pass",
+      "notes": "图D-5、D-6及各题注完整，七份SOP文件名、chunk号、10倍、20μL、1:3-1:4、100V/60min、5%、4℃与30min均清楚；D.4标题与导语未拆散。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-102.png",
+      "png_sha256": "8d4d9662fbe584437c322f14211202534266f0a3fdc7fc6cfdc6e22ae001929b",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    },
+    {
+      "page": 103,
+      "printed_page": "96",
+      "result": "pass",
+      "notes": "表D-3全部三行与运行方法说明完整，长Rust测试名称、持续观测方法和600次请求结果清晰；论文末页页眉页脚正常。",
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-103.png",
+      "png_sha256": "6458b907c832d2303c5e6ab73d75b8df1cdafeaf4caed622b24b014d4eb30981",
+      "pixels": [
+        1414,
+        2000
+      ],
+      "inspection_method": "view_image detail=original",
+      "inspected_personally": true,
+      "directly_inspected_in_final_v3": true
+    }
+  ]
+}

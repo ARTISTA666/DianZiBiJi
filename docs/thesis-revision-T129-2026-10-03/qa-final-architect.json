@@ -1,0 +1,816 @@
+{
+  "reviewer": "architect",
+  "candidate_path": "/private/tmp/advisor-T129-20261003/candidate.docx",
+  "candidate_sha256": "03206e97eb2ba36fb385f6df07cf91c87b39cafd658e441491646592b05ea4a2",
+  "candidate_bytes": 5965135,
+  "render_directory": "/private/tmp/advisor-T129-20261003/render-v7",
+  "render_page_count": 107,
+  "scope": {
+    "physical_pages_start": 1,
+    "physical_pages_end": 40,
+    "pages_reviewed": 40
+  },
+  "verification_method": "每个变化页以 view_image(detail=original) 原尺寸亲看；仅逐页 SHA-256 完全相同的页面复用此前原尺寸亲看结果。",
+  "directly_viewed_physical_pages": [
+    6,
+    7,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38
+  ],
+  "inherited_physical_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12,
+    39,
+    40
+  ],
+  "checks": [
+    "无空白异常页",
+    "无图题分离",
+    "范围内全部表格完整同页",
+    "公式与图片无裁切",
+    "无孤立标题",
+    "无页眉或页脚冲突",
+    "新 ER 和流程与 Rust 代码相符"
+  ],
+  "result": "pass",
+  "blocking_issues": [],
+  "nonblocking_observations": [
+    {
+      "physical_pages": [
+        36,
+        38
+      ],
+      "note": "下方留白来自将后续较长表格完整放到下一页，符合整表同页要求。"
+    },
+    {
+      "physical_pages": [
+        40
+      ],
+      "note": "表 4-12 单位列局部换行，可读且未裁切。"
+    }
+  ],
+  "technical_review": [
+    {
+      "subject": "图 4-3 ER 关系和基数",
+      "physical_page": 22,
+      "result": "pass",
+      "findings": [
+        "project_members.id 为主键，(project_id,user_id) 组合唯一。",
+        "projects.owner_user_id 可空且 Rust 模型为 Option<i32>：项目可有零或一个负责人，用户可负责零到多个项目。",
+        "其余图示主要外键非空：每个子记录必须指向一个父记录；父记录可无子记录。",
+        "kg_relations 的源实体、目标实体是独立外键角色。",
+        "note_versions.created_by 字段保留，图中注释明确省略其连接。"
+      ],
+      "sources": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/backend/sql/0001_initial.sql",
+          "sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+          "line_spans": [
+            "352-364",
+            "611-622",
+            "687-698",
+            "760-770",
+            "797-810",
+            "907-917",
+            "1426",
+            "1506",
+            "2300-2308",
+            "2412",
+            "2444-2460",
+            "2492-2516",
+            "2556"
+          ]
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/project.rs",
+          "sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+          "line_spans": [
+            "15",
+            "29",
+            "40"
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "图 4-10 三条智能辅助调用流程",
+      "physical_page": 36,
+      "result": "pass",
+      "findings": [
+        "tools/list 使用完整注册清单；tools/call 检查 PAT scope、参数、项目权限和风险。",
+        "会话助手按项目授权筛选模型工具定义，随后复用同一 Rust MCP 工具注册表；高风险调用产生待确认动作。",
+        "批准执行以用户、工具、幂等键查重，参数哈希不同则拒绝复用。",
+        "固定任务引用检查后最多进行一次修订，结果与来源以 completed 或 needs_review 保存，供用户核对。"
+      ],
+      "sources": [
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/mcp.rs",
+          "sha256": "038af28eefad735247859dae2d8f00fae536e869c52a615730fdc61458ff43cc",
+          "line_spans": [
+            "488-501",
+            "773-849"
+          ]
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "sha256": "1ee3357360d85f058169594587f036436bb0b0fbf471a01005b6fa8f7f502d58",
+          "line_spans": [
+            "628-718",
+            "1025-1047"
+          ]
+        },
+        {
+          "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/agents.rs",
+          "sha256": "dc875e0c658cd29fbd83b5fbecbcdbb971d005a06310a83beaf7e4d1e2ef90ec",
+          "line_spans": [
+            "167-174",
+            "238-335"
+          ]
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "physical_page": 1,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-1.png",
+      "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "封面布局完整，未见裁切。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-1.png",
+        "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 2,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-2.png",
+      "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "声明页布局完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-2.png",
+        "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 3,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-3.png",
+      "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "摘要页布局完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-3.png",
+        "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 4,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-4.png",
+      "png_sha256": "a2ecc524d23c5ad8181fad4b577a05b735daa8fad089e576ba03cda4925c016e",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "摘要续页布局完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-4.png",
+        "png_sha256": "a2ecc524d23c5ad8181fad4b577a05b735daa8fad089e576ba03cda4925c016e",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 5,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-5.png",
+      "png_sha256": "21406fb1f6ba314a400fc10fc42e933965d46a8eee4b9cf31b4a8de77f0a8b33",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "英文摘要页布局完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-5.png",
+        "png_sha256": "21406fb1f6ba314a400fc10fc42e933965d46a8eee4b9cf31b4a8de77f0a8b33",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 6,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-6.png",
+      "png_sha256": "3957c1d28b3ac8a662d18f9deffa9fd4b10f616c1f172710bcf92b519b7dfc06",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "目录页码已更新，无 0 占位；条目完整。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 7,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-7.png",
+      "png_sha256": "48438f6d1deaa9e0cff72c789b9fe8dc5f55d928cad0888dae9f83f3328831cb",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "目录续页条目完整，新增 5.3.7、D.4、D.5 可见。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 8,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-8.png",
+      "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第一章文字完整，无孤立标题或页脚冲突。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-8.png",
+        "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 9,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-9.png",
+      "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第一章文字完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-9.png",
+        "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 10,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-10.png",
+      "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第二章起始页完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-10.png",
+        "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 11,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-11.png",
+      "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第二章文字及标题完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-11.png",
+        "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 12,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-12.png",
+      "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第二章文字完整。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-12.png",
+        "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 13,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-13.png",
+      "png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "2.6 小结完整留在本页，无尾页孤段。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 14,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-14.png",
+      "png_sha256": "8ac558d2502878654ac210ca66d2e50d4663fa568dbb22170648af55eed21257",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第三章起始页与表 3-1 完整同页。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 15,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-15.png",
+      "png_sha256": "ab49de93815006879bdc04691fc74c57129ae55624aed51a6d8090b37ecaff41",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 3-1 与图题同页；表 3-2、3-3 完整同页。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 16,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-16.png",
+      "png_sha256": "b9cebe7777331f93ba2d4870f5d42ab2dd0f3e53d3ae5614b30d1002e4cf7ba7",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 3-4 完整同页。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 17,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-17.png",
+      "png_sha256": "adc9b3e41abc7674bbf4cb6b4eb33fa278f4c601225d23e84f522f52cb4cd944",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 3-5 完整同页，章末留白自然。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 18,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-18.png",
+      "png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "第四章起始页，图 4-1 与图题同页；Rust/Axum、PostgreSQL/pgvector 架构标注清楚。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 19,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-19.png",
+      "png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "式 4-1 四项条件完整，无公式裁切。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 20,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-20.png",
+      "png_sha256": "18c7c606e43c0dea05832840c3fdc60162a69ba23a8e600575ef41e601bf458b",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-1 与图 4-2 完整。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 21,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-21.png",
+      "png_sha256": "3a9a9f5a45302b81cb0bcc67e1bfe6fb7c0187875fff0ff1eaf54eb391795747",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-2、4-3 完整；4.4、4.4.1 后均有正文。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 22,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-22.png",
+      "png_sha256": "4ae8d111ecdfca056ed0faff24b1cff587bb8d69af0efc8e74b1702d35ec0060",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-3 与图题同页，乌鸦脚符号、字段和注释可辨认；可空项目负责人 0..1、父端到子记录 0..N、必需外键父实体 1 与 SQL 一致。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 23,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-23.png",
+      "png_sha256": "2f2b3e898ee9fdd3810e58e99a8e75d6ef100d3a3dcc45b9388fb151204b1faa",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-4 完整同页；4.5 标题后有正文。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 24,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-24.png",
+      "png_sha256": "7a8558743d06b80c3df04e8557fa912063c9271023365144048bb7160f005bb3",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-4 与图题同页，4.5.1、4.5.2 后有正文。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 25,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-25.png",
+      "png_sha256": "10549f3d237d95167171d15cc63b2b4962c41611b3143fbeed2d639248afa4fe",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-5、4-6 完整同页，4.5.4 后有正文。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 26,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-26.png",
+      "png_sha256": "e144690c833e7cd00b43174f05a011c5bfa7884fc843d917ac44d7593dfe600c",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-5 与图题同页；冒号字段标记解释完整。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 27,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-27.png",
+      "png_sha256": "dcdb28a1fdec499abd50d050f51fa557cae1395864ea36c9c4afcbbcec8d840f",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-6 与图题同页；算法解释已移至图后填充，算法整表另页。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 28,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-28.png",
+      "png_sha256": "08cba44662c2dafbdc83f7331a54e449e657ffe689c803687158c9b09df16bfb",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "算法 4-1 完整同页；式 4-2 完整，未触碰页脚。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 29,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-29.png",
+      "png_sha256": "cf44104ff6c3e7317cc8dc60b731408def868716e8b64fab74f547f681ce8cc6",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "4.5.5 至 4.5.8 标题均跟正文，未裁切。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 30,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-30.png",
+      "png_sha256": "798ab961d861489ce2b1e0a47c7a1371d915bd3d0f5d329394a40b1876a1950a",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-7 与图题同页；式 4-3 完整。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 31,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-31.png",
+      "png_sha256": "ce32513b0bf12331340beb4058725650fb71e986ed81e3e2e26ef162bed9c711",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "式 4-4、4-5 完整，4.6.2、4.6.3 正文无裁切。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 32,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-32.png",
+      "png_sha256": "c38c0d88a56fdcf01de3cf012a1d4a19b1fae7343bfc8e1a96cf4a1a837e0fb0",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "式 4-6 至 4-10 完整；六项关系文本与指示函数解释清楚。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 33,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-33.png",
+      "png_sha256": "0ee9464d867814255527459306dd7b23ce4b07ab17de8310016e1b32cfd41b85",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-8 与图题同页；表 4-7 公式和说明完整同页。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 34,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-34.png",
+      "png_sha256": "d551fb04c3b7a50f17737ce571f6981c10b2dbba5a02fb3508ce162ce00bc860",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-9 与图题同页；表 4-8 完整同页；4.6.6 正文续下一页。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 35,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-35.png",
+      "png_sha256": "4b45567eaf21ed6838dd70dd0c0dd9a89781fd6803279a410cca196be6e491f4",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "4.6.6 续文与 4.7、4.7.1 完整，外部工具发现与调用授权阶段区分正确。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 36,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-36.png",
+      "png_sha256": "db6cc5538f2efe8991fab55fe11d97c9877874d2a6d23c594d12a6b57f0ee0be",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "图 4-10 三条纯业务流程与图题完整同页；工具清单未按 PAT scope 过滤，scope 检查置于实际调用；会话权限筛选、风险及幂等检查，固定任务引用检查与有限修订符合 Rust 实现。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 37,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-37.png",
+      "png_sha256": "876e7b3bedbddcc79a5df53f86c042e811ffddaa6200914b154f864fb69f4c38",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-9 六类任务完整同页；N/F/R 来源标记说明完整。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 38,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-38.png",
+      "png_sha256": "6a3e390e6b88a53307e683985ed5c0f55f114508f83420b052509ee2fac1c757",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-10 完整同页；历史 Python 示例与当前 Rust 生产后端的证据边界清楚；4.7.3 后有正文。"
+      ],
+      "review_method": "direct_view_image_original",
+      "reuse_source": null
+    },
+    {
+      "physical_page": 39,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-39.png",
+      "png_sha256": "eedb666cf3b39bf19b5f6a8c61a23c22ab3058f35f62801a19342ee4ff955ff8",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-11 完整同页。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-39.png",
+        "png_sha256": "eedb666cf3b39bf19b5f6a8c61a23c22ab3058f35f62801a19342ee4ff955ff8",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    },
+    {
+      "physical_page": 40,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-40.png",
+      "png_sha256": "c6dda960c4c6504a90f53a8b458be9822b08ffba00a35a07e4bf9e4541046d16",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "result": "pass",
+      "notes": [
+        "表 4-12 完整同页，章节文字完整；单位列局部换行但可读。"
+      ],
+      "review_method": "inherited_sha256_identical",
+      "reuse_source": {
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-40.png",
+        "png_sha256": "c6dda960c4c6504a90f53a8b458be9822b08ffba00a35a07e4bf9e4541046d16",
+        "prior_review": "personally viewed with view_image(detail=original)"
+      }
+    }
+  ],
+  "written_at_utc": "2026-10-03T16:48:50.086037+00:00"
+}

@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "owner": "manuscript_audit readonly reviewer",
+  "status": "passed",
+  "audited_at_utc": "2026-10-01T10:31:26.165510+00:00",
+  "audited_document": "/Users/yusong/Downloads/new/full-system/docs/毕业论文-补充验证与批注修订稿-T114-2026-10-01.docx",
+  "audited_docx_sha256": "3be347db706020e1d1d0f2caee54768d7da8ae602a08489d825dddbbc03954cd",
+  "render_directory": "/private/tmp/thesis-t114/render-delivery",
+  "rendered_page_count": 82,
+  "assigned_physical_page_range": [
+    29,
+    56
+  ],
+  "assigned_pages_count": 28,
+  "all_assigned_pages_actually_viewed_at_original_resolution": true,
+  "all_assigned_pages_passed": true,
+  "pages": [
+    {
+      "physical_page": 29,
+      "printed_page": 22,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-29.png",
+      "sha256": "3bf34b7366e9cb0c7816ab5b5fd5d189e212d3259ebc052aa9262d5e1cd7c7cc",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Figure4-6 and algorithm4-1 are legible; input/output and all ten numbered steps fit on one page.",
+      "findings": []
+    },
+    {
+      "physical_page": 30,
+      "printed_page": 23,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-30.png",
+      "sha256": "0937ae8f8d1c504a154aaef2102ff81987dc293ce9d0155d4d629c422d51c145",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Confidence formula4-2 and graph-processing subsections fit cleanly.",
+      "findings": []
+    },
+    {
+      "physical_page": 31,
+      "printed_page": 24,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-31.png",
+      "sha256": "91d2fd8cb396411293ff81ccd49480504df80082fc6b15f192920cfb244a11be",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Knowledge-layer boundary, plan matching and retrieval intro clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 32,
+      "printed_page": 25,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-32.png",
+      "sha256": "5422902908319697d83f9bb62d00a13da4fee02ef1db6fb97f8cc7cec2d35cfa",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Figure4-7 and retrieval subsections clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 33,
+      "printed_page": 26,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-33.png",
+      "sha256": "f2233d6ba91fd61c6511c440f1f03e01736ae801efbddd6c8fc74a87e8aa2a54",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Native formulas4-3 through4-6 are legible and correctly numbered.",
+      "findings": []
+    },
+    {
+      "physical_page": 34,
+      "printed_page": 27,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-34.png",
+      "sha256": "73774363b51521b40ebcbec80fb8c968937394391319daef85682f2849155ec8",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Figure4-8 shows relation score reference(4-7); equation4-7 matches; table4-6 starts cleanly.",
+      "findings": []
+    },
+    {
+      "physical_page": 35,
+      "printed_page": 28,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-35.png",
+      "sha256": "5fcb222f5a9ea3d98c464ae7867a9ae762d30a8516ba063abab2baf029eeb1a7",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Table4-6 continues with repeated headings; figure4-9 reference(4-7) is correct and legible.",
+      "findings": []
+    },
+    {
+      "physical_page": 36,
+      "printed_page": 29,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-36.png",
+      "sha256": "2e5e327002a7ed98204a03f75b5091e4d507ceb483f7a9d17c95d8a48675e73d",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Table4-7 and MCP implementation prose clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 37,
+      "printed_page": 30,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-37.png",
+      "sha256": "cd5bf6caf1f75aa79e66fed0f2299b2e4a1bc8fe84a943bd725e14c5a64916db",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Figure4-10 three invocation paths and fixed-task section clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 38,
+      "printed_page": 31,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-38.png",
+      "sha256": "9d191b448cce786d3412d4b98524e013413959e05a7b8ba5c0f946d911b46f08",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Table4-8 and archived template example fit; no cell clipping.",
+      "findings": []
+    },
+    {
+      "physical_page": 39,
+      "printed_page": 32,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-39.png",
+      "sha256": "7444728ba6c11e1a479d91292ea86854c2829008c0f79da542eca91689e67b19",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Twelve-tool MCP table4-9 complete and legible.",
+      "findings": []
+    },
+    {
+      "physical_page": 40,
+      "printed_page": 33,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-40.png",
+      "sha256": "0fcb3b885137ca8941acc8bf7e56b2595ee197f1b5214e023946dd2eed4f429a",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Confirmation/idempotency sections and threshold table4-10 clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 41,
+      "printed_page": 34,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-41.png",
+      "sha256": "ce19325c7f96d9bbbd982754f0bc6dfb1432724e09df9a2319f91b19830069a6",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Chapter4 summary followed by intentional chapter-end white space; no content loss.",
+      "findings": []
+    },
+    {
+      "physical_page": 42,
+      "printed_page": 35,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-42.png",
+      "sha256": "71f32ad23ea7f591e5c19e15c672cd52d56dd6af02405153b85c57663a37759c",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Chapter5 opening and environment table5-1 clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 43,
+      "printed_page": 36,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-43.png",
+      "sha256": "9b7491029d4a7e298c189b96b5c5ebd548308c47b1a1090d340e428b27035eb4",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Dataset table5-2 clean; table5-3 begins at page bottom with continuation.",
+      "findings": []
+    },
+    {
+      "physical_page": 44,
+      "printed_page": 37,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-44.png",
+      "sha256": "74c9a2ddbc83eb8c93e3b6385a74899d956c91618aac1d7e7354fc114c907ada",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Table5-3 continuation and UI figures5-1/5-2 complete; screenshot scale preserved.",
+      "findings": []
+    },
+    {
+      "physical_page": 45,
+      "printed_page": 38,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-45.png",
+      "sha256": "bf82ebbb83fec4666352655f7d92ee7f445e46723aef648708eb8a447a281e32",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Flow figures5-3/5-4 and note-state implementation clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 46,
+      "printed_page": 39,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-46.png",
+      "sha256": "b86ef2d45dfcee05c1f5f8c6903f16186970524c42c7a43b267dd2d91754ca12",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Ingestion figure5-5, retrieval parameter table5-4 and graph UI prose clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 47,
+      "printed_page": 40,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-47.png",
+      "sha256": "901b2262fe7545d068862e6fac5da937970ae264741840815007ba6a9ecf15c4",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Graph screenshots5-6/5-7 complete; section5.3.4 text clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 48,
+      "printed_page": 41,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-48.png",
+      "sha256": "28cc414951fc904dcf6271a7f2f52834358db9e442dbd4a42a69d6dfa44a2254",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Figures5-8/5-9 complete; report-title fallback/status/preview description accurate.",
+      "findings": []
+    },
+    {
+      "physical_page": 49,
+      "printed_page": 42,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-49.png",
+      "sha256": "e90db9ec137226d8a68b81fd085aa3d52b3533652febd20a9ec445a8ace027d5",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Clearly labelled organized draft excerpt table and permission/plan prose clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 50,
+      "printed_page": 43,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-50.png",
+      "sha256": "d4de81b40388f590ef37d6f6b29a6cfc2efb97946a04bb322e803ed41d1cebc8",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Chapter5 summary with intentional chapter-end white space; no missing content.",
+      "findings": []
+    },
+    {
+      "physical_page": 51,
+      "printed_page": 44,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-51.png",
+      "sha256": "598a966dab989a828c12368da4fa3cd02e35a3253f0568682aff1b88975908c6",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Chapter6 opening and validation configuration table6-1 clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 52,
+      "printed_page": 45,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-52.png",
+      "sha256": "e066efee3d8287b1fe9bce6e31c1371b1355042d69b5c5c50bb855c37f5200a2",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Dataset table6-2, distribution chart6-1 and function table6-3 beginning clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 53,
+      "printed_page": 46,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-53.png",
+      "sha256": "f5a9524c214db77488786bf2942664cfbf4ff7759211f9f1987cbd6666164672",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Table6-3 continuation and metric table6-4 clean with repeated headings.",
+      "findings": []
+    },
+    {
+      "physical_page": 54,
+      "printed_page": 47,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-54.png",
+      "sha256": "dc081b133d982803e1060f9e3735bb2caa4a9f9b433647878f43ce42a2598371",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Native formulas6-1..6-6 and retrospective-rule explanation clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 55,
+      "printed_page": 48,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-55.png",
+      "sha256": "7861d4d5eec0f19f0ea3baebbea13af1cd5c264c309b8591e0bcadbc314e0a01",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Historical RAGAS and custom GPT separation explicit; section headings and prose clean.",
+      "findings": []
+    },
+    {
+      "physical_page": 56,
+      "printed_page": 49,
+      "path": "/private/tmp/thesis-t114/render-delivery/page-56.png",
+      "sha256": "af6a21ad63b66d873523985ab97b5400e78ca0f086e5328ebac40837b60d063a",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "inspection_method": "tools.view_image(detail=\"original\"); actual page pixels reviewed",
+      "reviewed": true,
+      "status": "passed",
+      "observations": "Extraction table6-5 and archived RAG results table6-6 complete; running paragraph continues normally.",
+      "findings": []
+    }
+  ],
+  "closed_prior_visual_findings": [
+    {
+      "id": "V02-01",
+      "status": "resolved",
+      "physical_pages": [
+        34,
+        35
+      ],
+      "details": "Both embedded relation score references are4-7; verified in actual original-resolution delivery page images."
+    }
+  ],
+  "open_findings": [],
+  "scope_limit": "This report covers assigned physical pages29–56 only; remaining pages are covered by other reviewers. Chapter-end white space on41/50 is intentional and retained."
+}

@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-10T15:52:29.357868+00:00",
+  "path": "/projects/2/notes",
+  "method": "POST",
+  "request": {
+    "title": "team5863-02 DNA extraction of collected samples",
+    "experiment_type": "insect_DNA_extraction",
+    "experiment_date": "2025-06-11",
+    "fixed_fields_json": {
+      "reagents": [],
+      "instrument": [],
+      "sample": [
+        "samples collected from farms"
+      ],
+      "result": []
+    },
+    "content_json": {}
+  },
+  "status": 200,
+  "response": {
+    "id": 22,
+    "project_id": 2,
+    "template_id": null,
+    "title": "team5863-02 DNA extraction of collected samples",
+    "experiment_type": "insect_DNA_extraction",
+    "experiment_date": "2025-06-11",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 22,
+    "created_at": "2026-10-10T15:52:29.362746Z",
+    "updated_at": "2026-10-10T15:52:29.362746Z"
+  }
+}

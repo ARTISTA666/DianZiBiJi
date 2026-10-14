@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:28.872012+00:00",
+  "path": "/notes/10/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 10,
+    "project_id": 1,
+    "template_id": null,
+    "title": "team5863-02 DNA extraction of collected samples",
+    "experiment_type": "insect_DNA_extraction",
+    "experiment_date": "2025-06-11",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 10,
+    "created_at": "2026-10-10T15:52:29.300513Z",
+    "updated_at": "2026-10-10T15:52:29.305609Z"
+  }
+}

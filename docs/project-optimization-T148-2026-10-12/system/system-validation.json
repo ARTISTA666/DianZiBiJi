@@ -1,0 +1,51 @@
+{
+  "e2e": {
+    "stats": {
+      "startTime": "2026-10-12T14:12:19.566Z",
+      "duration": 108697.632,
+      "expected": 9,
+      "skipped": 9,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "command": "npm run test:e2e -- --reporter=list,json --output=<T148 system/artifacts>",
+    "reporter_override": "PLAYWRIGHT_JSON_OUTPUT_NAME points to own batch; existing output/playwright not overwritten",
+    "opt_in_agent_events": "9 intentionally skipped here; 9/9 separate isolated native SSE browser regressions passed",
+    "humans_involved": false
+  },
+  "compose": {
+    "project": "eln-t148-e2e",
+    "allow_dirty": true,
+    "app_env": "development",
+    "reason": "Preserve prior uncommitted work; revision label alone is insufficient; exact build source manifests bound separately",
+    "base": "docker-compose.e2e.yml",
+    "override": "agent-work/t148-2026-10-12/system/compose.override.yml"
+  },
+  "containers": {
+    "backend": {
+      "image_id": "sha256:60a283bface6eec959ea264122a5c80a6958537ba2922965b1d1572ea063ea53",
+      "configured_image": "eln-backend-t148-20261012",
+      "container_id": "bf02c6c1e579c33f19957f75aa2fd6f74ab3d5fea3cc2993008c701672ca77e1",
+      "state": "running"
+    },
+    "frontend": {
+      "image_id": "sha256:e5bdaf016250574ab0490709039b86404f1f3cc6316dfc935587fdebf9005f5e",
+      "configured_image": "eln-frontend-t148-20261012",
+      "container_id": "98f7814e7c1476d4505702745929d19d314fefba1616a3d9225b82b48a19a565",
+      "state": "running"
+    },
+    "db": {
+      "image_id": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+      "configured_image": "pgvector/pgvector:pg16",
+      "container_id": "2d1cea20b411e7bc4ffb1db3cb1fbed4618d2ffd3425b3b62d00636eaa264ea1",
+      "state": "running"
+    },
+    "llm-stub": {
+      "image_id": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1",
+      "configured_image": "python:3.12-slim",
+      "container_id": "0d0ed9dc700d8684200cc24bcf01a973a5e62f0bf2ddb4118cf44bf449a76361",
+      "state": "running"
+    }
+  },
+  "e2e_results_sha256": "5caa0d25c1fc22f3990a31bb0b93f45d00eb20257028038cc10afc175caae010"
+}

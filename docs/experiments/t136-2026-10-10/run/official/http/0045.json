@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.895715+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "team5863-03 PCR tests of extracted DNA samples",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2025-06-12",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "PCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1.25 ul of 10uM of each ThripsITSF\n● 1.25 ul of 10uM of each ThripsITSR\n● 1.25 ul of 10uM of each SdITSF3\n● 1.25 ul of 10uM of each SdITSF7\n● 3 ul of extracted DNA\n● 4.5 ul of H2O\n\nPCR conditions:\n\nInitial denaturation 98°C 30 sec\nDenaturation 98°C 10 sec\n}25 cycles\nAnnealing 60°C 10 sec\nExtension 72°C 30 sec\nFinal extension 72°C 5 min\n\n\nRun on 1% agarose gel (0.5 g of agarose and 50 ml of TAE buffer) with 180 V for 5 min\n\nThe result was unclear."
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 11,
+    "project_id": 1,
+    "template_id": null,
+    "title": "team5863-03 PCR tests of extracted DNA samples",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2025-06-12",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 11,
+    "created_at": "2026-10-10T15:52:29.329875Z",
+    "updated_at": "2026-10-10T15:52:29.329875Z"
+  }
+}

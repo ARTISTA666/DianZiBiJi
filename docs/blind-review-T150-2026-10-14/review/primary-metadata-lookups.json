@@ -1,0 +1,490 @@
+{
+  "date": "2026-10-14",
+  "no_manuscript_uploaded": true,
+  "lookups": [
+    {
+      "name": "6_doi",
+      "url": "https://api.crossref.org/works/10.26434/chemrxiv-2023-2tvct",
+      "final_url": "https://api.crossref.org/works/10.26434/chemrxiv-2023-2tvct",
+      "status": "downloaded",
+      "content_type": "application/json",
+      "sha256": "617cc2c728a8aeac8de409cee445752e5ed3c75d3415ff9298cf2bae7ef6b410",
+      "metadata": {
+        "title": [
+          "LabInform ELN: A lightweight and flexible electronic laboratory notebook for academic research based on the open-source software DokuWiki"
+        ],
+        "author": [
+          {
+            "given": "Mirjam",
+            "family": "Schröder",
+            "sequence": "first",
+            "affiliation": [
+              {
+                "id": [
+                  {
+                    "id": "https://ror.org/029hg0311",
+                    "id-type": "ROR",
+                    "asserted-by": "publisher"
+                  }
+                ],
+                "name": "Leibniz Institute for Catalysis",
+                "place": [
+                  "Germany"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          },
+          {
+            "ORCID": "https://orcid.org/0000-0003-2913-0004",
+            "authenticated-orcid": false,
+            "given": "Till",
+            "family": "Biskup",
+            "sequence": "additional",
+            "affiliation": [
+              {
+                "id": [
+                  {
+                    "id": "https://ror.org/0245cg223",
+                    "id-type": "ROR",
+                    "asserted-by": "publisher"
+                  }
+                ],
+                "name": "University of Freiburg",
+                "place": [
+                  "Germany"
+                ]
+              }
+            ],
+            "role": [
+              {
+                "vocabulary": "crossref",
+                "role": "author"
+              }
+            ]
+          }
+        ],
+        "published": {
+          "date-parts": [
+            [
+              2023,
+              4,
+              25
+            ]
+          ]
+        },
+        "DOI": "10.26434/chemrxiv-2023-2tvct",
+        "version": null,
+        "publisher": "American Chemical Society (ACS)",
+        "URL": "https://doi.org/10.26434/chemrxiv-2023-2tvct",
+        "type": "posted-content",
+        "page": null,
+        "container-title": []
+      }
+    },
+    {
+      "name": "13_html",
+      "url": "https://mc.spacejournal.cn/article/doi/10.19304/J.ISSN1000-7180.2025.0652?viewType=HTML",
+      "final_url": "https://mc.spacejournal.cn/article/doi/10.19304/J.ISSN1000-7180.2025.0652?viewType=HTML",
+      "status": "downloaded",
+      "content_type": "text/html;charset=UTF-8",
+      "sha256": "4516278e04a73d734c0734a50d63e35b52a5ad8fa4e957fc4aac06e79f6af8e4",
+      "citation_meta": [
+        {
+          "name": "citation_journal_title",
+          "content": "微电子学与计算机"
+        },
+        {
+          "name": "citation_publisher",
+          "content": "《微电子学与计算机》编辑部"
+        },
+        {
+          "name": "citation_journal_abbrev",
+          "content": "wdzxyjsj"
+        },
+        {
+          "name": "citation_issn",
+          "content": "1000-7180"
+        },
+        {
+          "name": "citation_authors",
+          "content": "李子骏, 肖辉, 李雪峰, "
+        },
+        {
+          "name": "citation_date",
+          "content": "2025-10-05"
+        },
+        {
+          "name": "citation_abstract_html_url",
+          "content": "https://mc.spacejournal.cn/cn/article/doi/10.19304/J.ISSN1000-7180.2025.0652?viewType=HTML"
+        },
+        {
+          "name": "citation_pdf_url",
+          "content": "https://mc.spacejournal.cn/cn/article/pdf/preview/10.19304/J.ISSN1000-7180.2025.0652.pdf"
+        },
+        {
+          "name": "citation_public_url",
+          "content": "https://mc.spacejournal.cn/cn/article/doi/10.19304/J.ISSN1000-7180.2025.0652"
+        },
+        {
+          "name": "citation_title",
+          "content": "面向知识密集型任务的检索增强生成技术综述"
+        },
+        {
+          "name": "citation_author",
+          "content": "李子骏"
+        },
+        {
+          "name": "citation_author",
+          "content": "肖辉"
+        },
+        {
+          "name": "citation_author",
+          "content": "李雪峰"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "检索增强生成, 预训练语言模型, 信息检索, 文本生成, 知识密集型任务, "
+        },
+        {
+          "name": "citation_year",
+          "content": "2025"
+        },
+        {
+          "name": "citation_volume",
+          "content": "42"
+        },
+        {
+          "name": "citation_issue",
+          "content": "10"
+        },
+        {
+          "name": "citation_firstpage",
+          "content": "48"
+        },
+        {
+          "name": "citation_lastpage",
+          "content": "65"
+        },
+        {
+          "name": "citation_doi",
+          "content": "10.19304/J.ISSN1000-7180.2025.0652"
+        },
+        {
+          "name": "citation_id",
+          "content": "d260f430-c5c6-4e53-ab96-e744ef3e90f5"
+        },
+        {
+          "name": "citation_state",
+          "content": ""
+        }
+      ]
+    },
+    {
+      "name": "50_pdf",
+      "url": "https://cjc.ict.ac.cn/online/onlinepaper/008_yl-2026227143149.pdf",
+      "status": "error",
+      "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)>"
+    },
+    {
+      "name": "58_pdf",
+      "url": "https://crad.ict.ac.cn/cn/article/pdf/preview/10.7544/issn1000-1239.202440265.pdf",
+      "final_url": "https://crad.ict.ac.cn/cn/article/pdf/preview/10.7544/issn1000-1239.202440265.pdf",
+      "status": "downloaded",
+      "content_type": "application/pdf",
+      "sha256": "58275ac5cae8f7b167db2c6b46eec1c180940c0935570ff1475310ae38fa544f",
+      "pages": 40,
+      "first_page_metadata_lines": [
+        " ",
+        "大语言模型安全与隐私风险综述",
+        "姜　毅 1,2　杨　勇 1　印佳丽 3　刘小垒 4　李吉亮 5　王　伟 6　田有亮 7　巫英才 1　纪守领 1",
+        "1 （浙江大学计算机科学与技术学院　杭州　310007）",
+        "2 （贵州大学人民武装学院　贵阳　550025）",
+        "3 （福州大学计算机与大数据学院　福州　350108）",
+        "4 （中国工程物理研究院计算机应用研究所　四川绵阳　621054）",
+        "5 （西安交通大学网络空间安全学院　西安　710049）",
+        "6 （智能交通数据安全与隐私保护技术北京市重点实验室（北京交通大学）　北京　100091）",
+        "7 （贵州大学计算机科学与技术学院　贵阳　550025）",
+        "  （jiangyi2021@zju.edu.cn）",
+        "Survey on Security and Privacy Risks in Large Language Models",
+        "Jiang Yi1,2 , Yang Yong1 , Yin Jiali3 , Liu Xiaolei4 , Li Jiliang5 , Wang Wei6 , Tian Youliang7 , Wu Yingcai1 , and Ji Shouling1",
+        "1  （College of Computer Science and Technology, Zhejiang University, Hangzhou 310007）",
+        "2  （College of Renwu, Guizhou University, Guiyang 550025）",
+        "3  （College of Computer Science and Big Data, Fuzhou University, Fuzhou 350108）",
+        "4  （Institute of Computer Application, China Academy of Engineering Physics, Mianyang, Sichuan 621054）",
+        "5  （School of Cyber Science and Engineering, Xi’an Jiaotong University, Xi’an 710049）",
+        "6  （Beijing Key Laboratory of Security and Privacy in Intelligent Transportation (Beijing Jiaotong University), Beijing 100091）",
+        "7  （College of Computer Science and Technology, Guizhou University, Guiyang 550025）",
+        "Abstract　In recent years, large language models (LLMs) have emerged as a critical branch of deep learning network",
+        "technology,  achieving  a  series  of  breakthrough  accomplishments  in  the  field  of  natural  language  processing  (NLP),",
+        "and gaining widespread adoption. However, throughout their entire lifecycle, including pre-training, fine-tuning, and",
+        "actual  deployment,  a  variety  of  security  threats  and  risks  of  privacy  breaches  have  been  discovered,  drawing",
+        "increasing  attention  from  both  the  academic  and  industrial  sectors.  Navigating  the  development  of  the  paradigm  of",
+        "using large language models to handle natural language processing tasks, as known as the pre-training and fine-tuning",
+        "paradigm,  the  pre-training  and  prompt  learning  paradigm,  and  the  pre-training  and  instruction-tuning  paradigm,  this",
+        "article outlines conventional security threats against large language models, specifically representative studies on the",
+        "three types of traditional adversarial attacks (adversarial example attack, backdoor attack and poisoning attack). It then",
+        "summarizes some of the novel security threats revealed by recent research, followed by a discussion on the privacy",
+        "risks of large language models and the progress in their research. The content aids researchers and deployers of large",
+        "language models in identifying, preventing, and mitigating these threats and risks during the model design, training,",
+        "and  application  processes,  while  also  achieving  a  balance  between  model  performance,  security,  and  privacy",
+        "protection.",
+        "Key words　 large language models (LLMs)；pre-trained language models；security；privacy；threat",
+        " ",
+        " ",
+        "收稿日期：2024-04-18；修回日期：2025-02-17"
+      ]
+    },
+    {
+      "name": "59_html",
+      "url": "https://crad.ict.ac.cn/cn/article/doi/10.7544/issn1000-1239.2016.20148228",
+      "final_url": "https://crad.ict.ac.cn/cn/article/doi/10.7544/issn1000-1239.2016.20148228",
+      "status": "downloaded",
+      "content_type": "text/html;charset=UTF-8",
+      "sha256": "200ffdd8cb529d36da3858b965f056c47baaed794bacc28265b98370e6c42c43",
+      "citation_meta": [
+        {
+          "name": "citation_journal_title",
+          "content": "计算机研究与发展"
+        },
+        {
+          "name": "citation_publisher",
+          "content": ""
+        },
+        {
+          "name": "citation_journal_abbrev",
+          "content": "jsjyjyfz"
+        },
+        {
+          "name": "citation_issn",
+          "content": "1000-1239"
+        },
+        {
+          "name": "citation_authors",
+          "content": "刘峤, 李杨, 段宏, 刘瑶, 秦志光, "
+        },
+        {
+          "name": "citation_date",
+          "content": "2016-03-01"
+        },
+        {
+          "name": "citation_abstract_html_url",
+          "content": "https://crad.ict.ac.cn/cn/article/doi/10.7544/issn1000-1239.2016.20148228?viewType=HTML"
+        },
+        {
+          "name": "citation_pdf_url",
+          "content": "https://crad.ict.ac.cn/cn/article/pdf/preview/10.7544/issn1000-1239.2016.20148228.pdf"
+        },
+        {
+          "name": "citation_public_url",
+          "content": "https://crad.ict.ac.cn/cn/article/doi/10.7544/issn1000-1239.2016.20148228"
+        },
+        {
+          "name": "citation_title",
+          "content": "知识图谱构建技术综述"
+        },
+        {
+          "name": "citation_author",
+          "content": "刘峤"
+        },
+        {
+          "name": "citation_author",
+          "content": "李杨"
+        },
+        {
+          "name": "citation_author",
+          "content": "段宏"
+        },
+        {
+          "name": "citation_author",
+          "content": "刘瑶"
+        },
+        {
+          "name": "citation_author",
+          "content": "秦志光"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "知识图谱, 语义网, 信息检索, 语义搜索引擎, 自然语言处理, "
+        },
+        {
+          "name": "citation_year",
+          "content": "2016"
+        },
+        {
+          "name": "citation_volume",
+          "content": "53"
+        },
+        {
+          "name": "citation_issue",
+          "content": "3"
+        },
+        {
+          "name": "citation_firstpage",
+          "content": "582"
+        },
+        {
+          "name": "citation_lastpage",
+          "content": "600"
+        },
+        {
+          "name": "citation_doi",
+          "content": "10.7544/issn1000-1239.2016.20148228"
+        },
+        {
+          "name": "citation_id",
+          "content": "3127"
+        },
+        {
+          "name": "citation_state",
+          "content": ""
+        }
+      ]
+    },
+    {
+      "name": "62_html",
+      "url": "https://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0061803",
+      "final_url": "https://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0061803",
+      "status": "downloaded",
+      "content_type": "text/html;charset=UTF-8",
+      "sha256": "62eac62f51817286d7c954efa7f5857454ecd91eb5bb851b147b9d2a494835bd",
+      "citation_meta": [
+        {
+          "name": "citation_issn",
+          "content": "1000-3428"
+        },
+        {
+          "name": "citation_journal_title",
+          "content": "计算机工程"
+        },
+        {
+          "name": "citation_journal_title",
+          "content": "Computer Engineering"
+        },
+        {
+          "name": "citation_language",
+          "content": "zh"
+        },
+        {
+          "name": "citation_volume",
+          "content": "48"
+        },
+        {
+          "name": "citation_issue",
+          "content": "3"
+        },
+        {
+          "name": "citation_firstpage",
+          "content": "23"
+        },
+        {
+          "name": "citation_id",
+          "content": "48/3/23"
+        },
+        {
+          "name": "citation_doi",
+          "content": "10.19678/j.issn.1000-3428.0061803"
+        },
+        {
+          "name": "citation_title",
+          "content": "知识图谱构建技术综述"
+        },
+        {
+          "name": "citation_title",
+          "content": "Survey of Knowledge Graph Construction Techniques"
+        },
+        {
+          "name": "citation_authors",
+          "content": "张吉祥, 张祥森, 武长旭, 赵增顺"
+        },
+        {
+          "name": "citation_authors",
+          "content": "ZHANG Jixiang, ZHANG Xiangsen, WU Changxu, ZHAO Zengshun"
+        },
+        {
+          "name": "citation_publication_date",
+          "content": ""
+        },
+        {
+          "name": "citation_online_date",
+          "content": "2021-09-09"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "知识图谱"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "信息抽取"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "语义网"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "深度学习"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "自然语言处理"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "knowledge graph"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "information extraction"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "semantic Web"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "deep learning"
+        },
+        {
+          "name": "citation_keywords",
+          "content": "Natural Language Processing(NLP)"
+        },
+        {
+          "name": "citation_abstract_html_url",
+          "content": "https://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0061803"
+        },
+        {
+          "name": "citation_abstract_html_url",
+          "content": "https://www.ecice06.com/EN/10.19678/j.issn.1000-3428.0061803"
+        },
+        {
+          "name": "citation_pdf_url",
+          "content": "https://www.ecice06.com/CN/PDF/10.19678/j.issn.1000-3428.0061803"
+        },
+        {
+          "name": "DC.Title",
+          "content": "知识图谱构建技术综述"
+        },
+        {
+          "name": "DC.Identifier",
+          "content": "10.19678/j.issn.1000-3428.0061803"
+        },
+        {
+          "name": "DC.Date",
+          "content": ""
+        }
+      ]
+    },
+    {
+      "name": "6_pdf",
+      "url": "https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/64458f4cdf78ec5015479533/original/lab-inform-eln-a-lightweight-and-flexible-electronic-laboratory-notebook-for-academic-research-based-on-the-open-source-software-doku-wiki.pdf",
+      "status": "error",
+      "error": "HTTP Error 403: Forbidden"
+    }
+  ]
+}

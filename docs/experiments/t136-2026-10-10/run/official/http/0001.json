@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-10T15:52:28.394695+00:00",
+  "path": "/ready",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "checks": {
+      "database": "ok",
+      "storage": "ok"
+    },
+    "revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "status": "ready"
+  }
+}

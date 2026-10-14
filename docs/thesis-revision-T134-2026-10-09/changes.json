@@ -1,0 +1,544 @@
+{
+  "source_sha256": "6bd8280e5092a302040afbd46a5e16e64ef96a8ec3846ecd8753efe13ebc649d",
+  "accepted_revisions": {
+    "ins": 31,
+    "del": 14,
+    "rPrChange": 17,
+    "pPrChange": 1,
+    "tblPrChange": 6,
+    "trPrChange": 46,
+    "tcPrChange": 168,
+    "sectPrChange": 0,
+    "tblGridChange": 6,
+    "tblPrExChange": 46
+  },
+  "changes": [
+    {
+      "p": 45,
+      "old": "系统支持用户与项目权限管理、实验笔记编写与版本保存、提交审核与退回修改，以及附件和知识文档的上传、审核与归档。纸质扫描件经光学字符识别与人工校对后，可作为项目知识资料入库。在此基础上，系统提供知识图谱与来源浏览、项目问答与评价、固定任务生成、计划覆盖核对、按需预警和审计查询。",
+      "new": "系统面向高校课题组成员、审核人员和项目负责人，由管理员维护账号与全局权限。成员可编写笔记、保存版本并上传附件和知识文档；审核人员可批准记录或退回修改；项目负责人管理成员及权限。资料审核后归档，扫描件经光学字符识别与人工校对后可入库。系统还提供知识图谱与来源浏览、项目问答与评价、固定任务生成、计划覆盖核对、按需预警和审计查询。",
+      "reason": "导师批注 0"
+    },
+    {
+      "p": 46,
+      "old": "系统实现采用 Rust/Axum、Next.js、PostgreSQL/pgvector 和 DeepSeek等技术栈。已审核笔记驱动图谱更新，计划预期知识独立保存并与实际记录匹配；已审核资料经分块和向量化参与项目内混合检索。固定任务按模板读取证据，会话工具按项目授权筛选，高风险操作经人工确认，工具写入按用户、工具名与幂等键防重，参数一致的重复提交复用执行结果；来源与工具调用写入审计记录。",
+      "new": "系统采用前后端分离架构，以Next.js构建界面，以Rust/Axum实现业务接口，由PostgreSQL/pgvector保存记录与文档向量，并接入DeepSeek完成问答与文本生成。笔记审核通过后，系统抽取实验对象及关系并更新项目图谱；计划预期知识独立保存，用于与已审核记录匹配。已审核资料经分块和向量化后参与项目内混合检索。固定任务按模板组织证据；会话助手仅提供当前项目已授权工具，高风险调用经人工确认后执行。后端按用户、工具名与幂等键识别重复写入，参数一致时复用既有结果，并记录来源与工具调用日志。",
+      "reason": "导师批注 1,2"
+    },
+    {
+      "p": 48,
+      "old": "归档测试中，8个浏览器端到端场景及高风险确认与幂等模块的8项测试均通过。四条合成种子笔记与内部52条参考关系比对，修复后的精确率、召回率和F1均为100.00%。早期原型20题问答的普通检索与图谱增强完成数为4/20和14/20，引用格式及范围合格数为17/20和15/20。当前Rust检索证据下的四组配置产生144条回答，一跳关系与资料检索的事实覆盖率为74.44%和46.67%，题级主检验p=0.0938，未达到0.05阈值。语义评价与角色接口验证进一步核对证据支持和业务约束。",
+      "new": "归档测试中，8个浏览器端到端场景及高风险确认与幂等模块的8项测试均通过。在四条合成种子笔记与内部52条参考关系的核验中，修复后的精确率、召回率和F1均为100.00%；该结果仅反映固定测试样本与内部参考集的一致性。早期原型20题问答的普通检索与图谱增强完成数为4/20和14/20，引用格式及范围合格数为17/20和15/20。当前Rust检索证据下的四组配置产生144条回答，一跳关系与资料检索的事实覆盖率为74.44%和46.67%，题级主检验p=0.0938，高于0.05，差异未达到统计显著性标准。语义评价与角色接口验证进一步核对证据支持和业务约束。",
+      "reason": "导师批注 3,4,5"
+    },
+    {
+      "p": 170,
+      "old": "上述 ELN 工作为记录集中管理、访问控制和过程追溯提供了基础。面向本文的科研问答场景，还需要进一步组织自由文本与附件中的实验对象，并将对象级检索与笔记来源相连接；同时，需要明确哪些审核状态的记录能够进入知识库，以及记录修订后如何同步更新知识。本文据此关注业务审核与知识组织之间的衔接。",
+      "new": "上述ELN工作为记录集中管理、访问控制和过程追溯提供了基础。面向本文的科研问答场景，还需要进一步组织自由文本与附件中的实验对象，并将对象级检索与笔记来源相连接；同时，需要明确哪些审核状态的记录能够进入知识库，以及记录修订后如何同步更新知识。因此，本文研究如何将笔记审核流程与知识组织过程相衔接。",
+      "reason": "导师批注 5"
+    },
+    {
+      "p": 1188,
+      "old": "表6-3a—6-3c列出具体用例。浏览器结果绑定2026年8月10日冻结快照，步骤按当前同名定义提炼；Rust用例取自8月28日具名运行摘录。",
+      "new": "表6-3a—6-3c列出了具体用例。浏览器测试结果来自2026年8月10日冻结快照，用例步骤根据当前同名测试定义整理；Rust测试结果来自8月28日运行日志中列有测试名称和结果的摘录。",
+      "reason": "导师批注 5,9"
+    },
+    {
+      "p": 1251,
+      "old": "通过（ok摘录）",
+      "new": "通过（归档日志标记为ok）",
+      "reason": "导师批注 5,9"
+    },
+    {
+      "p": 1256,
+      "old": "通过（ok摘录）",
+      "new": "通过（归档日志标记为ok）",
+      "reason": "导师批注 9"
+    },
+    {
+      "p": 1261,
+      "old": "通过（ok摘录）",
+      "new": "通过（归档日志标记为ok）",
+      "reason": "导师批注 9"
+    },
+    {
+      "p": 1674,
+      "old": "论文完成之际，谨向在学习与研究过程中给予我帮助的人表达感谢。首先感谢陆洲和孙明斋两位老师在选题、研究设计与论文写作中给予的指导。围绕电子实验笔记系统展开研究时，我需要不断厘清研究问题、系统设计与论证依据之间的关系。反复梳理这些问题。在这个过程中，我逐渐认识到，工程类论文既要说明系统做了什么，也要交代设计所回应的需求，以及已有材料能够支持怎样的结论。两位导师的指导伴随这一思考和写作过程，在此致以诚挚谢意。",
+      "new": "论文完成之际，谨向在学习与研究过程中给予我帮助的人表达感谢。首先感谢陆洲和孙明斋两位老师在选题、研究设计与论文写作中给予的指导。围绕电子实验笔记系统展开研究时，我反复梳理研究问题、系统设计与论证依据之间的关系。在这一过程中，我逐渐认识到，工程类论文既要说明系统做了什么，也要交代设计所回应的需求，以及已有材料能够支持怎样的结论。两位导师的指导伴随这一思考和写作过程，在此致以诚挚谢意。",
+      "reason": "导师批注 14,15"
+    },
+    {
+      "p": 187,
+      "old": "针对上述研究问题，本文的总体研究目标是：设计并实现一个面向科研实验记录的智能电子实验笔记系统，实现实验记录的统一管理与受控智能辅助，使实验知识可组织、可检索、可追溯。具体分解为四个研究内容：",
+      "new": "针对上述研究问题，本文的总体研究目标是：设计并实现一个面向科研实验记录的智能电子实验笔记系统，实现实验记录的统一管理与受控智能辅助，使实验知识可组织、可检索、可追溯。具体研究内容如下：",
+      "reason": "研究内容引导句改为具体研究内容如下，后续按导师删除线保留四项"
+    },
+    {
+      "p": 52,
+      "old": "The system provides user and project permissions, note editing and version snapshots, submission and review with revision requests, and attachment and document upload, review, and archiving. Scanned records can enter the project knowledge base after optical character recognition and manual correction. It also supports graph and source browsing, project question answering and evaluation, fixed-task generation, plan-coverage checking, on-demand alerts, and audit queries.",
+      "new": "Members edit and version notes, upload materials, and correct scanned records; reviewers approve records; project leaders manage membership and permissions; administrators maintain accounts and global access. Features include document archiving, graph and source browsing, project question answering and evaluation, fixed-task generation, plan-coverage checks, on-demand alerts, and audit queries.",
+      "reason": "同步中文用户与功能摘要"
+    },
+    {
+      "p": 54,
+      "old": "Built with Rust/Axum, Next.js, PostgreSQL/pgvector, and DeepSeek, the system updates graphs on note approval and compares planned knowledge points with reviewed records. Reviewed documents undergo chunking and vectorization for project-scoped hybrid retrieval. Source identifiers link document passages and direct relations to their origins. Fixed tasks use reviewed evidence and templates; session tools enforce permissions, high-risk confirmation, idempotency, and audit logging.",
+      "new": "Next.js and Rust/Axum provide interfaces and APIs; PostgreSQL/pgvector stores records and embeddings; DeepSeek supports generation. Approval triggers relation extraction and graph updates. Planned knowledge remains separate for comparison. Approved documents support project-scoped hybrid retrieval, and task templates organize evidence. Session tools require project authorization and high-risk calls require confirmation. Matching users, tools, idempotency keys, and parameters reuse write results. Sources and calls are logged.",
+      "reason": "同步中文实现路径摘要"
+    },
+    {
+      "p": 55,
+      "old": "Archived tests passed eight browser end-to-end scenarios and eight high-risk confirmation and idempotency tests. Extraction from four synthetic seed notes achieved 100.00% precision, recall, and F1 against 52 internally compiled reference relations. In 20 archived prototype questions, ordinary and graph-enhanced retrieval completed 4/20 and 14/20 questions under the rule-based measure; citation syntax and range checks passed 17/20 and 15/20 answers. Four configurations using current Rust retrieval evidence produced 144 answers. One-hop relations achieved 74.44% fact coverage versus 46.67% for document retrieval (question-level p=0.0938, above the 0.05 threshold). Semantic evaluation and role-based API checks assessed evidence support and workflow constraints.",
+      "new": "Archived tests passed eight browser scenarios and eight confirmation and idempotency tests. Corrected extraction on four synthetic notes achieved 100.00% precision, recall, and F1 against 52 internal reference relations, indicating fixed-set agreement. Ordinary and graph-enhanced prototype retrieval completed 4/20 and 14/20 questions; citation checks passed 17/20 and 15/20. Four current Rust configurations produced 144 answers. One-hop relations achieved 74.44% fact coverage versus 46.67% for document retrieval; question-level p=0.0938 exceeded 0.05, indicating no statistically significant difference. Semantic evaluations and role-based API checks assessed evidence support and workflow constraints.",
+      "reason": "同步结果适用边界与统计解释"
+    },
+    {
+      "p": 169,
+      "old": "国外主流电子实验笔记产品与开源系统已形成较成熟的功能体系。OpenBIS ELN-LIMS 将实验、样本与数据集中管理，并提供较完善的访问控制[2]；LabInform ELN 等开源方案为实验室提供了轻量部署与元数据定制的参考[5]；相关研究还总结了 ELN 落地实施中的身份认证、数据导出、版本控制、备份与人员培训等实践经验[6-7]，以及材料实验记录、教学场景中的使用问题[3,8]。国内方面，中国科学院相关研究所部署了电子实验记录本，验证了其对实验数据规范和溯源的支撑作用[4]。",
+      "new": "围绕实验记录、样本与原始数据分散保存的问题，Barillari 等开发了 openBIS ELN-LIMS，将实验笔记、材料信息及原始和分析数据纳入同一数据库，并通过网页界面提供录入、检索与访问控制[2]。该系统使记录与实验材料、数据文件能够相互关联，为课题组的数据管理和协作提供了统一入口。Schröder 与 Biskup 则针对学术实验室的部署与定制需求，基于 DokuWiki 开发 LabInform ELN，通过表单、页面模板和交叉引用组织样本与测量记录，并采用无需数据库后端的部署方式[5]。两项工作分别体现了集中式数据管理与轻量化记录组织的实现路径。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "after_p": 169,
+      "new": "除系统开发外，研究者也关注 ELN 的实施条件。Higgins 等提出了学术环境中选择和实施 ELN 的工作框架[7]；Vandendorpe 等将产品选择、试用、人员培训、敏感数据处理及备份归档等经验归纳为实施规则[6]。这些工作表明，ELN 的实际收益取决于其与实验流程、人员习惯及数据管理制度的衔接。Buonsanti 从材料合成实践出发，讨论了电子记录对实验步骤、表征数据检索和研究人员间知识交接的帮助，同时指出领域术语组织与使用推广仍有困难[3]。这些工作主要总结实施条件和实践经验。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "after_p": 169,
+      "new": "在应用验证方面，Chen 等在科学实验课程中引入 ELN，结合学生反馈和课程成绩考察使用效果；学生认可其对数据保存和实验报告整理的帮助，但研究未发现课程成绩随之改善[8]。国内方面，中国科学院介绍的电子实验记录本应用将实验数据采集、规范化管理与溯源结合，提供了科研机构部署 ELN 的实践案例[4]。教学研究与机构应用报道分别提供了使用体验和部署经验，其结论仍应在相应场景内理解。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "p": 170,
+      "old": "上述 ELN 工作为记录集中管理、访问控制和过程追溯提供了基础。面向本文的科研问答场景，还需要进一步组织自由文本与附件中的实验对象，并将对象级检索与笔记来源相连接；同时，需要明确哪些审核状态的记录能够进入知识库，以及记录修订后如何同步更新知识。本文据此关注业务审核与知识组织之间的衔接。",
+      "new": "已有 ELN 工作为记录集中管理、材料与数据关联以及实施规范提供了基础。本文面向课题组实验记录的问答与业务辅助，在这些能力之上考察自由文本中的实验对象如何组织为可检索知识，以及知识如何与记录审核、修订和项目授权衔接。本文将记录审核、版本修订与项目授权作为知识组织和来源回查的具体约束。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 172,
+      "old": "检索增强生成（Retrieval-Augmented Generation，RAG）通过检索外部资料补充大语言模型（Large Language Model，LLM）的输入，显著提升了知识密集型问答的准确性[9-11]。后续研究围绕检索粒度、重排序、上下文组织与可信性评价展开[12-13]；Self-RAG 引入检索与生成的自反思判断[14]。在评价方面，RAGAS 是用于检索增强生成的自动评价框架[15]：忠实度衡量回答陈述获得上下文支持的比例，上下文召回衡量参考答案陈述被上下文覆盖的比例，带参考的上下文精确率结合相关片段的检索顺序计算。",
+      "new": "针对语言模型仅依赖参数知识时难以访问和更新外部事实的问题，Lewis 等提出 RAG，将预训练生成模型与稠密检索得到的维基百科文本结合，并比较按序列和按词元组织检索信息的生成方式[9]。该方法在所测试的知识密集型任务中改善了开放域问答表现，说明检索资料能够为生成过程补充事实依据；其验证对象主要是开放域文本任务，不能直接代表实验记录中的对象关系查询效果。Gao 等和 Gupta 等分别梳理了 RAG 的检索、增强与生成流程、架构演进及应用方向[10-11]，国内李子骏等也总结了面向知识密集型任务的模型与检索协同方法[13]。这些综述提供了方法选择的比较框架，而非某一种检索方案在所有场景中的效果证明。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "after_p": 172,
+      "new": "针对固定检索可能引入无关上下文的问题，Asai 等提出 Self-RAG，通过训练模型生成反思标记，判断何时检索，并评估资料相关性、回答支持程度与生成质量[14]。其在所测试任务中的事实性和引用表现有所改善，但需要专门的模型训练，模型自我判断也不能替代业务记录的审核。针对评价环节，Es 等提出 RAGAS，以自动评价方法分别考察检索资料的相关性、回答对资料的忠实程度及生成质量，降低反复比较 RAG 流水线的评价成本[15]。这类指标能够辅助方法比较，仍需与具体任务的人工判断结合。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "after_p": 172,
+      "new": "Zhou 等从事实性、鲁棒性、公平性、透明性、问责性和隐私六个方面组织 RAG 可信性研究，并建立相应评价基准[12]。该研究指出，外部资料带来的收益仍取决于检索内容是否适当以及模型是否正确使用资料。因此，RAG 的研究问题已经从补充外部知识延伸到检索质量、证据利用和可信性评价。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "p": 173,
+      "old": "RAG 无需重新训练模型即可接入领域资料，适合为科研问答提供文本依据。应用于实验记录时，检索结果还应覆盖试剂、仪器、样本与结果之间的关系，并遵守项目授权和资料审核状态。本文在资料片段检索之外补充直接对象关系，考察这种信息组织方式对任务完成情况的影响。",
+      "new": "上述工作为本文的文本检索与回答评价提供了依据。对于实验记录，资料相关性之外还需识别试剂、仪器、样本与结果的直接关系，并限定检索可使用的项目和审核状态。本文据此在普通文本 RAG 的基础上补充对象关系证据，以对照实验考察任务完成情况与检索代价。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 175,
+      "old": "知识图谱以实体、关系和属性组织领域对象[16-17]，为分散记录中的同一实验对象建立关联提供了手段。在科研数据领域，知识图谱已用于文献知识抽取与材料科学数据组织[18-20]；在问答层面，图谱增强 RAG 将关系证据与文本片段共同输入生成模型，弥补纯文本检索在关系捕获上的不足[21-22]。GraphRAG、LightRAG 等方法进一步利用图结构进行社区摘要与增量检索[23-24]。",
+      "new": "Hogan 等和 Ji 等分别梳理了知识图谱的表示、构建、补全、质量管理与应用方法，为从分散资料中组织实体关系提供了研究框架[16-17]。在构建方法方面，Trajanoska 等以可持续发展相关文本为对象，比较大语言模型与预训练关系抽取模型的实体关系提取效果，说明大语言模型可以用于自动构建领域图谱[18]。Lairgi 等提出 iText2KG，将文档整理、实体关系提取与图谱整合分为增量处理步骤，并通过语义匹配减少不同文档中的实体和关系重复[20]。这些工作降低了非结构化文本转为图谱的处理负担，但抽取与融合结果仍需在具体领域检验。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "after_p": 175,
+      "new": "面向材料科学，Bai 等利用大语言模型从框架材料文献摘要中抽取实体关系，构建 KG-FM，并结合图查询支持材料信息检索和问答[19]。该工作将分散文献中的材料、性质与应用信息组织起来，并保留文献来源，展示了图谱支持专业知识获取的用途。其数据来自发表文献，本文需要处理的则是具有项目归属、审核状态和修订过程的实验笔记，二者的知识更新条件有所不同。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "after_p": 175,
+      "new": "在问答方法方面，Linders 与 Tomczak 提出 KG-RAG，通过问题分解、图谱多跳检索和显式推理处理需要关联多个事实的问题；其在所测多跳问答任务中取得改进，但单跳任务表现略有下降[21]。Edge 等的 GraphRAG 面向整个资料集合的全局问题，通过实体关系图和预生成的社区摘要汇总主题，提高了所测全局问答的覆盖广度与多样性[23]。Guo 等的 LightRAG 则结合图结构与向量检索，采用实体与关系的双层检索，并提供新资料的增量更新方式[24]。Ma 等进一步按问答类型和图谱参与方式归纳相关研究，为不同任务选择图谱增强方案提供了比较依据[22]。这些方法解决的问题不同，其收益需结合查询类型与构建成本判断。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "p": 176,
+      "old": "这些研究说明图结构能够用于关联对象与检索关系证据。将其用于 ELN，还需要解决图谱随笔记审核与修订更新、实体限定于所属项目、关系保留来源记录等业务问题。本文将这些要求纳入图谱构建与查询流程，并采用一跳直接关系检索开展验证。",
+      "new": "已有研究说明，图谱能够关联跨记录对象，并为部分关系查询和全局问答提供补充证据。本文结合 ELN 的记录审核与修订流程，组织带项目范围和来源记录的一跳直接关系，考察这一较小范围的信息补充是否有助于科研问答。图谱随业务状态更新、实体限定于所属项目以及关系来源回查，是本文场景中的实施与验证要求。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 178,
+      "old": "ReAct 范式将推理与行动交替组织[25]，Toolformer 验证了模型学习调用外部工具的可行性[26]，相关综述归纳了智能体在规划、记忆与工具使用方面的能力框架[27]；在科研领域，已有大模型与化学工具结合、自主化学实验等探索[28-29]。工具调用通常依赖标准化的模型—工具交互协议，其中模型上下文协议（Model Context Protocol，MCP）为模型提供了访问外部工具与资源的通用接口规范。",
+      "new": "针对语言模型难以通过单次生成完成需要外部信息和连续操作的任务，Yao 等提出 ReAct，将推理过程与工具行动交替组织，使模型能够从外部检索结果中更新判断与行动计划，并在所测试的问答和交互任务中改善任务表现[25]。Schick 等提出 Toolformer，通过少量示例和自监督训练，使模型学习何时调用工具、选择工具参数以及利用返回结果，在若干任务中提高了模型的零样本表现[26]。前者强调任务执行过程的组织，后者强调工具调用能力的学习；两者的实验结果均不能直接证明实际业务写入操作已受到充分控制。Wang 等的综述从规划、记忆、行动及应用评价等方面总结了自主智能体的构建方法与挑战[27]。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "after_p": 178,
+      "new": "在科研应用中，Bran 等开发 ChemCrow，将大语言模型与化学检索、性质计算和合成相关工具结合，用于化学问题求解和实验规划；专家评价显示，工具补充有助于提高部分复杂任务的回答质量[28]。该系统已纳入安全检查，并在启动合成前请求用户许可，表明科研智能体研究同时重视工具能力与执行约束。Boiko 等开发 Coscientist，通过互联网和设备文档检索、代码执行及实验自动化模块，将自然语言任务转为实验规划和操作，并演示了化学合成与反应优化等任务[29]。这些研究展示了工具调用参与科研流程的可行性，结论主要来自所配置工具和特定实验任务。",
+      "reason": "文献综述扩写分段"
+    },
+    {
+      "p": 179,
+      "old": "工具调用扩展了模型能够完成的任务，也使模型输出进入实际业务操作。在科研记录管理场景中，工具执行需要进一步绑定项目权限，对写入动作控制重复请求，对审核和成员变更等高风险操作设置人工确认，并保存审计记录。本文以这些约束设计智能辅助流程。",
+      "new": "从通用智能体到科研工具系统，已有工作逐步将模型能力扩展到可执行流程，并对安全检查和人工介入进行探索。本文关注的课题组记录管理还包含项目成员权限、记录审核和业务状态变更，因此需将每次工具执行与具体项目授权绑定，控制重复写入，为高风险操作保留人工确认并记录审计信息。这些要求共同构成本文智能辅助流程的执行约束。",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 181,
+      "old": "面向课题组实验记录，已有工作还需衔接对象级知识组织、审核准入、回答与业务来源对应，以及项目权限下的工具风险控制。据此提出三个研究问题（Research Question，RQ）：",
+      "new": "综合上述研究，ELN 已形成记录、材料与数据集中管理的实践，RAG 和知识图谱提供了外部资料检索及对象关系组织的方法，智能体研究展示了工具参与科研任务的可行性。不同研究的验证对象、查询类型和执行条件存在差异，本文需在确定的项目范围、审核状态和业务任务条件下进一步验证这些方法。本文围绕已审核记录的知识组织、对象关系对问答的作用以及项目权限下的受控辅助，提出三个研究问题（Research Question，RQ）：",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 1682,
+      "old": "[3] Buonsanti R. Electronic Lab Notebooks for Materials Synthesis[J]. Chemistry of Materials, 2023, 35(5): 1586-1587.",
+      "new": "[3] Buonsanti R. Electronic Lab Notebooks for Materials Synthesis[J]. Chemistry of Materials, 2023, 35(3): 805-806. DOI: 10.1021/acs.chemmater.3c00019.",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 1691,
+      "old": "[12] Zhou Y, Zhang W, Shao J, et al. Trustworthiness in Retrieval-Augmented Generation Systems: A Survey[EB/OL]. arXiv:2409.10102, 2024.",
+      "new": "[12] Zhou Y, Liu Y, Li X, et al. Trustworthiness in Retrieval-Augmented Generation Systems: A Survey[EB/OL]. arXiv:2409.10102v1, 2024.",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 1698,
+      "old": "[19] Bai X, He S, Li X, et al. Construction of a Knowledge Graph for Framework Material Enabled by Large Language Models and Its Application[J]. npj Computational Materials, 2025, 11: 51.",
+      "new": "[19] Bai X, He S, Li Y, et al. Construction of a Knowledge Graph for Framework Material Enabled by Large Language Models and Its Application[J]. npj Computational Materials, 2025, 11: 51. DOI: 10.1038/s41524-025-01540-6.",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 1703,
+      "old": "[24] Guo Z, Xia L, Yu M. LightRAG: Simple and Fast Retrieval-Augmented Generation[EB/OL]. arXiv:2410.05779, 2024.",
+      "new": "[24] Guo Z, Xia L, Yu Y, et al. LightRAG: Simple and Fast Retrieval-Augmented Generation[EB/OL]. arXiv:2410.05779, 2024.",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 1705,
+      "old": "[26] Schick T, Dwivedi-Yu R, Dessì R, et al. Toolformer: Language Models Can Teach Themselves to Use Tools[C]//NeurIPS. 2023.",
+      "new": "[26] Schick T, Dwivedi-Yu J, Dessì R, et al. Toolformer: Language Models Can Teach Themselves to Use Tools[C]//NeurIPS. 2023.",
+      "reason": "研究现状按作者、方法、问题及效果重写或文献元数据核正"
+    },
+    {
+      "p": 1625,
+      "old": "事实覆盖与严格成功率先在同题三次重复内平均，再汇总10道事实题；拒答单列2道纯不足题，每组6条回答，耗用统计每组全部36条生成。一跳关系比资料检索的覆盖差为27.78个百分点，95%自助重采样区间为3.89至55.00个百分点，题级符号翻转检验p=0.0938（n=10），未达到0.05阈值。相对全文笔记与全部三元组的差值为-15.56和-18.89个百分点，Holm校正p均为0.5000。差值同时反映上下文规模、信息量与检索组织。",
+      "new": "当前 Rust 证据下的语义评价以问题为统计单位。每条事实题回答的事实覆盖率为获得实际检索证据支持且实体、字段绑定正确的必需事实数除以该题必需事实总数；全部必需事实均获支持且未肯定断言预设禁止事实时，严格成功记为1，否则记为0。事实覆盖与严格成功率先在同题三次重复内平均，再汇总10道事实题；拒答单列2道纯不足题，每组6条回答，耗用统计每组全部36条生成。严格成功仅针对冻结规则，不能等同于全面正确性或引用审查通过。",
+      "reason": "统计计算与来源解释"
+    },
+    {
+      "after_p": 1625,
+      "new": "对一跳关系与资料检索配置，先求同题覆盖率差值，再计算10道事实题的差值均值。采用问题级配对bootstrap[82]，每次从10个差值中有放回地抽取10个并求均值，重复10000次，随机种子固定为20261001114；以重采样均值分布的2.5%和97.5%分位点经线性插值形成95%百分位区间。同时采用题级精确双侧符号翻转检验[83]，在各题差值符号可交换的零假设下，完整枚举2^10=1024种符号组合，以差值之和的绝对值为统计量，将不小于观测统计量的组合比例作为p值。三次生成属于同题内重复，未作为30个独立事实题处理。",
+      "reason": "统计计算与来源补充段"
+    },
+    {
+      "after_p": 1625,
+      "new": "一跳关系比资料检索的覆盖差为27.78个百分点，95%自助重采样区间为3.89至55.00个百分点。未舍入题级差值依次为-2/9、0、1、0、1/2、1/3、1、1/6、0、0，其均值为5/18；1024种符号组合中有96种达到或超过观测统计量，故p=96/1024=0.09375，报告为p=0.0938（n=10），未达到0.05阈值。百分位bootstrap区间与符号翻转检验来自不同构造，该区间并非主检验的反演区间；因此，区间虽不跨0，仍不能据此认定主检验达到统计显著。",
+      "reason": "统计计算与来源补充段"
+    },
+    {
+      "after_p": 1625,
+      "new": "相对全文笔记与全部三元组的差值为-15.56和-18.89个百分点。两项次要比较构成预先固定的比较族，按Holm方法[84]校正：两项原始p均为0.2500，升序排列后依次乘以2和1，再取累积最大值，得到两项Holm校正p均为0.5000。差值同时反映上下文规模、信息量与检索组织。以上推断限于内部制定的本题集，属于探索性题级比较。",
+      "reason": "统计计算与来源补充段"
+    },
+    {
+      "new": "[82] Efron B. Bootstrap Methods: Another Look at the Jackknife[J]. The Annals of Statistics, 1979, 7(1): 1-26. DOI:10.1214/aos/1176344552.",
+      "reason": "新增统计方法参考文献"
+    },
+    {
+      "new": "[83] Ernst M D. Permutation Methods: A Basis for Exact Inference[J]. Statistical Science, 2004, 19(4): 676-685. DOI:10.1214/088342304000000396.",
+      "reason": "新增统计方法参考文献"
+    },
+    {
+      "new": "[84] Holm S. A Simple Sequentially Rejective Multiple Test Procedure[J]. Scandinavian Journal of Statistics, 1979, 6(2): 65-70.",
+      "reason": "新增统计方法参考文献"
+    },
+    {
+      "p": 599,
+      "old": "1: if rebuild then ClearNoteGraph(n.id) end if",
+      "new": "1:\tif rebuild then",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 600,
+      "old": "2: E ← ∅; R ← ∅; T ← ∅",
+      "new": "4:\tE ← ∅; R ← ∅; T ← ∅",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 601,
+      "old": "3: p ← UpsertEntity(project, n.project_id)",
+      "new": "5:\tp ← UpsertEntity(project, n.project_id)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 602,
+      "old": "4: e_n ← UpsertEntity(note, n.id); E ← {p, e_n}",
+      "new": "6:\te_n ← UpsertEntity(note, n.id); E ← {p, e_n}",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 603,
+      "old": "5: B ← BasicEdges(n, A, p, e_n)",
+      "new": "7:\tB ← BasicEdges(n, A, p, e_n)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 604,
+      "old": "6: for (u, v, ρ) in B do",
+      "new": "8:\tfor (u, v, ρ) in B do",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 605,
+      "old": "7:       E ← E ∪ {u, v}",
+      "new": "9:\t\tE ← E ∪ {u, v}",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 606,
+      "old": "8:       R ← R ∪ {UpsertRelation(u, v, ρ, 1.0)}",
+      "new": "10:\t\tR ← R ∪ {UpsertRelation(u, v, ρ, 1.0)}",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 607,
+      "old": "9: end for",
+      "new": "11:\tend for",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 608,
+      "old": "10: for (k, v) in RecursiveFields(F, C) do",
+      "new": "12:\tfor (k, v) in RecursiveFields(F, C) do",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 609,
+      "old": "11: if ClassifyKey(k) ≠ ∅ then",
+      "new": "13:\t\tif ClassifyKey(k) ≠ ∅ then",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 610,
+      "old": "12: T ← T ∪ SplitValue(v, ClassifyKey(k))",
+      "new": "14:\t\t\tT ← T ∪ SplitValue(v, ClassifyKey(k))",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 611,
+      "old": "13: end if",
+      "new": "15:\t\tend if",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 612,
+      "old": "14: end for",
+      "new": "16:\tend for",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 613,
+      "old": "15: x ← FlattenText(F, C)",
+      "new": "17:\tx ← FlattenText(F, C)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 614,
+      "old": "16: T ← T ∪ MatchMarkers(x) ∪ MatchDomainRules(x)",
+      "new": "18:\tT ← T ∪ MatchMarkers(x) ∪ MatchDomainRules(x)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 615,
+      "old": "17: T ← MergeByKey(T, type, Normalize(label))",
+      "new": "19:\tT ← MergeByKey(T, type, Normalize(label))",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 616,
+      "old": "18: for t in T do",
+      "new": "20:\tfor t in T do",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 617,
+      "old": "19: e ← UpsertEntity(n.project_id, t.type, t.label)",
+      "new": "21:\t\te ← UpsertEntity(n.project_id, t.type, t.label)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 618,
+      "old": "20: r ← UpsertRelation(e_n, e, t.relation, 0.7, t.roles)",
+      "new": "22:\t\tr ← UpsertRelation(e_n, e, t.relation, 0.7, t.roles)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 619,
+      "old": "21: E ← E ∪ {e}; R ← R ∪ {r}",
+      "new": "23:\t\tE ← E ∪ {e}; R ← R ∪ {r}",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 620,
+      "old": "22: end for",
+      "new": "24:\tend for",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 621,
+      "old": "23: U ← RecordRun(n, |E|, |R|, completed)",
+      "new": "25:\tU ← RecordRun(n, |E|, |R|, completed)",
+      "reason": "for/if块缩进"
+    },
+    {
+      "p": 622,
+      "old": "24: return E, R, U",
+      "new": "26:\treturn E, R, U",
+      "reason": "for/if块缩进"
+    },
+    {
+      "after_p": 599,
+      "new": "2:\t\tClearNoteGraph(n.id)",
+      "reason": "展开首个if块并缩进，后续行号顺延"
+    },
+    {
+      "after_p": 599,
+      "new": "3:\tend if",
+      "reason": "展开首个if块并缩进，后续行号顺延"
+    },
+    {
+      "p": 1272,
+      "old": "（6-1）",
+      "new": "（6-1）",
+      "reason": "公式编号右对齐/顺延"
+    },
+    {
+      "p": 1277,
+      "old": "（6-2）",
+      "new": "（6-2）",
+      "reason": "公式编号右对齐/顺延"
+    },
+    {
+      "p": 1282,
+      "old": "（6-3）",
+      "new": "（6-3）",
+      "reason": "公式编号右对齐/顺延"
+    },
+    {
+      "p": 1287,
+      "old": "（6-4）",
+      "new": "（6-4）",
+      "reason": "公式编号右对齐/顺延"
+    },
+    {
+      "p": 1292,
+      "old": "（6-5）",
+      "new": "（6-5）",
+      "reason": "公式编号右对齐/顺延"
+    },
+    {
+      "p": 1302,
+      "old": "（6-6）",
+      "new": "（6-7）",
+      "reason": "公式编号右对齐/顺延"
+    },
+    {
+      "after_p": 1296,
+      "new": "（6-6）",
+      "reason": "补缺失公式编号"
+    },
+    {
+      "after_p": 1306,
+      "new": "（6-8）",
+      "reason": "补缺失公式编号"
+    },
+    {
+      "after_p": 1307,
+      "new": "（6-9）",
+      "reason": "补缺失公式编号"
+    },
+    {
+      "after_p": 1309,
+      "new": "（6-10）",
+      "reason": "补缺失公式编号"
+    },
+    {
+      "formula_p": 1271,
+      "removed_number_p": 1272,
+      "number": "（6-1）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1276,
+      "removed_number_p": 1277,
+      "number": "（6-2）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1281,
+      "removed_number_p": 1282,
+      "number": "（6-3）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1286,
+      "removed_number_p": 1287,
+      "number": "（6-4）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1291,
+      "removed_number_p": 1292,
+      "number": "（6-5）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1296,
+      "removed_number_p": null,
+      "number": "（6-6）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1306,
+      "removed_number_p": null,
+      "number": "（6-8）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "formula_p": 1307,
+      "removed_number_p": null,
+      "number": "（6-9）",
+      "reason": "公式及靠右编号同一行以保持指标表单页，原OMML不变"
+    },
+    {
+      "table_contains_p": 1271,
+      "reason": "指标表段前段后为0，文字固定行距13磅，含数学段最小行距13磅，长公式编号独立靠右；不改表格行列与数学内容"
+    },
+    {
+      "p": 1312,
+      "old": "为评估系统在知识抽取、问答检索与任务生成上的表现，表 6-4 汇总各实验使用的指标、含义、计算方式与用途，并在相应指标行内给出式（6-1）至式（6-6）。",
+      "new": "为评估系统在知识抽取、问答检索与任务生成上的表现，表6-4汇总各实验使用的指标、含义、计算方式与用途，并在相应指标行内给出式（6-1）至式（6-10）。其中，证据覆盖率、McNemar检验和三项RAGAS指标分别对应式（6-6）、式（6-7）及式（6-8）至式（6-10）。",
+      "reason": "编号范围与引用同步"
+    },
+    {
+      "p": 1315,
+      "old": "McNemar 双侧精确检验[81]按同一问题配对两种模式的二元结果。其中 b、c 分别为仅增强模式完成、仅普通模式完成的题数；一致配对时 p=1。式（6-6）中 C(b+c,k) 表示组合数。该精确条件检验基于不一致配对的二项分布，小样本下可能较保守[81]。归档批次采用回顾性答案要点，检验值随配对计数保留用于复算。",
+      "new": "McNemar 双侧精确检验[81]按同一问题配对两种模式的二元结果。其中 b、c 分别为仅增强模式完成、仅普通模式完成的题数；一致配对时 p=1。式（6-7）中 C(b+c,k) 表示组合数。该精确条件检验基于不一致配对的二项分布，小样本下可能较保守[81]。归档批次采用回顾性答案要点，检验值随配对计数保留用于复算。",
+      "reason": "McNemar式号同步"
+    },
+    {
+      "p": 1349,
+      "old": "结果分析：修复前的额外关系来自正文“cDNA 样本 1、2”的分隔处理，程序将“2”单独识别为目标标签。修复后该处名称按样本前缀补全，输出与 52 条参考关系逐条一致，解决了本例的简写样本名误拆问题。图 6-1 展示三个合成测试项目的已审核笔记规模。",
+      "new": "结果分析：修复前的额外关系来自正文“cDNA 样本 1、2”的分隔处理，程序将“2”单独识别为目标标签。修复后该处名称按样本前缀补全，输出与 52 条参考关系逐条一致，解决了本例的简写样本名误拆问题。图 6-1 展示三个合成测试项目的已审核笔记规模。修复后TP=52、FP=0、FN=0，因此按式（6-1）至式（6-3）计算，三个指标均为100.00%。该结果是同一固定合成样本与内部参考集的核验结果，不能据此推断对其他实验记录的抽取质量。",
+      "reason": "解释100%算式及固定样本边界"
+    },
+    {
+      "removed_p": 192,
+      "old": "（5）对系统功能及方法进行实验验证：通过功能测试、安全测试与对照实验，检验系统的正确性、安全性与方法有效性。",
+      "reason": "落实导师2026-10-09T22:44:17Z整段删除线，研究内容保留前四项；导师已将前文五项改为四项"
+    },
+    {
+      "accepted_format_revision": "trPrChange",
+      "count": 46,
+      "reason": "接受导师已有行格式修订，实际有效行属性原样保持，仅移除历史属性副本"
+    },
+    {
+      "accepted_format_revision": {
+        "tblGridChange": 6,
+        "tblPrExChange": 46
+      },
+      "reason": "接受导师已有网格与行属性例外修订，实际有效属性原样保持，仅移除历史属性副本"
+    }
+  ]
+}

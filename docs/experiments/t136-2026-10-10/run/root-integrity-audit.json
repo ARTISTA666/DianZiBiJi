@@ -1,0 +1,30 @@
+{
+  "auditor": "root Agent",
+  "audited_utc": "2026-10-10T15:55:01.999776+00:00",
+  "raw_graph_rescore_equals_saved_metrics": true,
+  "http_request_count": 174,
+  "all_http_200": true,
+  "first_test_note_import_utc": "2026-10-10T15:52:28.618389+00:00",
+  "last_test_note_import_utc": "2026-10-10T15:52:29.561864+00:00",
+  "freeze_utc": "2026-10-10T15:52:21.952128+00:00",
+  "freeze_before_all_test_note_imports": true,
+  "stable_content_metadata_out_of_scope_rebuilds": 28,
+  "rust_build_input_diff": "empty",
+  "ready_after": {
+    "checks": {
+      "database": "ok",
+      "storage": "ok"
+    },
+    "revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "status": "ready"
+  },
+  "database_after": {
+    "notes": 28,
+    "approved_notes": 28,
+    "projects": 3,
+    "kg_entities": 165,
+    "kg_relations": 201
+  },
+  "post_run_diagnostic_correction": "Initial read-only SQL check used lowercase approved, but PostgreSQL enum uses APPROVED; corrected after schema lookup. No data modification or API rerun.",
+  "persisted_content_and_fields_match_frozen_payload_count": 28
+}

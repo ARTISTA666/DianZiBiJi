@@ -1,0 +1,133 @@
+{
+  "snapshot_counts": {
+    "untracked_nonignored": 63381,
+    "agent_work": 60376,
+    "docs": 2943,
+    "total_bytes": 24147176395
+  },
+  "summary_by_class_action": {
+    "build_runtime_artifact|exclude_from_git_keep_local": {
+      "count": 38840,
+      "bytes": 19409163121
+    },
+    "reproducible_data_evidence|retain_candidate": {
+      "count": 2918,
+      "bytes": 187510461
+    },
+    "source_code|retain_candidate": {
+      "count": 1125,
+      "bytes": 41201655
+    },
+    "reproducible_data_evidence|manual_review": {
+      "count": 1948,
+      "bytes": 445882591
+    },
+    "large_dataset_archive|exclude_from_git_keep_local": {
+      "count": 68,
+      "bytes": 3531072244
+    },
+    "build_runtime_artifact|exclude_duplicate_copy_keep_local": {
+      "count": 18473,
+      "bytes": 519030963
+    },
+    "build_runtime_artifact|manual_review": {
+      "count": 6,
+      "bytes": 350
+    },
+    "thesis_binary|exclude_from_git_keep_local": {
+      "count": 3,
+      "bytes": 13315010
+    }
+  },
+  "preservation_rules": [
+    "Do not delete or rewrite historical/negative results, AI contribution disclosures, T150 missing-items/unclosed issues or T159 GitHub audit.",
+    "Exclude only reproducible compiler/cache/duplicate/export material from Git; preserve local originals.",
+    "Before excluding any duplicate or generated tree, retain its canonical input, runner, result summary and source/hash map.",
+    "Agent-work evidence retains INTERNAL_DEVELOPMENT/DRAFT/NOT_FROZEN origin unless independent acceptance already exists; uploading is not human acceptance.",
+    "New docs Markdown requires docs/README registration and status/owner metadata; record authorship accurately.",
+    "Candidate lists do not assert all files have passed publication or tests."
+  ],
+  "gitignore_rule_notes": [
+    "No .gitignore edits were made by this agent.",
+    "Patterns beginning / are repository-root anchored; * below concrete render directories covers image suffixes only, leaving audit JSON and text visible.",
+    "Ignoring /agent-work/ leaves its already tracked files tracked. Preserve research evidence mirrored in canonical docs, including all negative probes and unresolved T150 findings.",
+    "Do not replace image-only render rules with whole docs audit-directory ignores."
+  ],
+  "status": "frozen-evidence",
+  "owner": "Codex evidence line T160",
+  "inventory_sha256": "74b8eee3be5ccb1a592ad09ad09181f9fff263c9e740bb8a6313d4cb9dadc8b7",
+  "scope_note": "The full local inventory is not published; only canonical docs and source are synchronized. No agent-work deletion. Existing tracked records remain public.",
+  "canonical_docs_candidate_count_before_final_additions": 1034,
+  "public_redaction": "docs/thesis-fixes-T139-2026-10-11/e2e-failed-v4-public-redaction-T160.json",
+  "ignored_render_image_count": 1906,
+  "ignored_new_thesis_binary_count": 3,
+  "canonical_docs_secret_review": {
+    "scope": "Retained canonical docs small textual files only. Full preliminary scan remains in secret_scan for provenance; its agent-work hits do not imply publication scope.",
+    "findings": [
+      {
+        "path": "docs/experiments/t136-2026-10-10/code/run_t136_kg_validation.py",
+        "line": 141,
+        "type": "literal_assignment:password",
+        "classification": "placeholder_or_test_fixture",
+        "recommended_action": "retain_as_test_or_placeholder_after_context_check"
+      },
+      {
+        "path": "docs/experiments/t136-2026-10-10/code/run_t136_kg_validation.py",
+        "line": 210,
+        "type": "literal_assignment:password",
+        "classification": "placeholder_or_test_fixture",
+        "recommended_action": "retain_as_test_or_placeholder_after_context_check"
+      },
+      {
+        "path": "docs/experiments/t136-2026-10-10/run/official/http/0002.json",
+        "line": 7,
+        "type": "literal_assignment:password",
+        "classification": "placeholder_or_test_fixture",
+        "recommended_action": "retain_as_test_or_placeholder_after_context_check"
+      },
+      {
+        "path": "docs/project-optimization-T148-2026-10-12/delta.patch",
+        "line": 3112,
+        "type": "literal_assignment:access_token",
+        "classification": "placeholder_or_test_fixture",
+        "recommended_action": "retain_as_test_or_placeholder_after_context_check"
+      },
+      {
+        "path": "docs/project-optimization-T148-2026-10-12/system/run_mixed_smoke.py",
+        "line": 36,
+        "type": "literal_assignment:password",
+        "classification": "placeholder_or_test_fixture",
+        "recommended_action": "retain_as_test_or_placeholder_after_context_check"
+      },
+      {
+        "path": "docs/project-optimization-T148-2026-10-12/system/run_mixed_smoke.py",
+        "line": 65,
+        "type": "literal_assignment:password",
+        "classification": "placeholder_or_test_fixture",
+        "recommended_action": "retain_as_test_or_placeholder_after_context_check"
+      },
+      {
+        "path": "docs/thesis-fixes-T139-2026-10-11/e2e-failed-v4-results.json",
+        "line": 122,
+        "type": "jwt_token",
+        "classification": "recorded_local_e2e_token_expired",
+        "recommended_action": "Preserve original locally with SHA; publish explicitly labeled token-redacted derivative while retaining all failure counts and error descriptions.",
+        "verification": {
+          "source_copy_byte_identical": true,
+          "urls_loopback_only": true,
+          "expiry_in_past_at_scan": true
+        }
+      }
+    ],
+    "finding_counts_by_classification": {
+      "placeholder_or_test_fixture": 6,
+      "recorded_local_e2e_token_expired": 1
+    },
+    "actual_local_env_secret_matches_in_canonical_docs": 0,
+    "limitations": [
+      "Pattern/context scan cannot prove absence of all secrets.",
+      "An expired local test JWT is still an original recorded token and warrants a labeled public derivative; do not delete failure evidence."
+    ]
+  },
+  "limitations": "Heuristic inventory, literal/pattern secret scan; not proof of complete absence of secrets or proof of research validity."
+}

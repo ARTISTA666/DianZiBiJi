@@ -1,0 +1,22 @@
+{
+  "task": "T139",
+  "status": "reviewed_snapshot",
+  "owner": "root",
+  "scope": {
+    "physical_pages_start": 9,
+    "physical_pages_end": 9,
+    "reviewed_count": 1
+  },
+  "method": "view_image(detail=original), full 1414x2000 page",
+  "pages": [
+    {
+      "page": 9,
+      "sha256": "d56319bb8d5a267e32860ec3414a4b66696758a95d2589de20f636ebfd6ce24f",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-caption/page-9.png",
+      "result": "pass",
+      "observation": "新增表1-1题注居中且与既有题注一致；三线表四行、引文和注释完整，未见跨页、遮挡或裁切。"
+    }
+  ],
+  "closed_issue": "V01: centered caption verified",
+  "final_inheritance_rule": "Only byte-identical same-page final PNG may inherit this review."
+}

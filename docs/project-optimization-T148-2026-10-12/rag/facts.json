@@ -1,0 +1,866 @@
+[
+  {
+    "id": "N1-cell_line-0",
+    "subject": "GSM3035185",
+    "predicate": "cell_line",
+    "object": "H226",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-cell_type-0",
+    "subject": "GSM3035185",
+    "predicate": "cell_type",
+    "object": "lung squamous cell carcinoma",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-count_method-0",
+    "subject": "GSM3035185",
+    "predicate": "count_method",
+    "object": "HTSeq v0.6.1",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-culture_condition-0",
+    "subject": "GSM3035185",
+    "predicate": "culture_condition",
+    "object": "37°C, 5% CO2, 6 days",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-genome_build-0",
+    "subject": "GSM3035185",
+    "predicate": "genome_build",
+    "object": "GRCh37/hg19",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-instruments-0",
+    "subject": "GSM3035185",
+    "predicate": "instruments",
+    "object": "Illumina HiSeq 2500",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-instruments-1",
+    "subject": "GSM3035185",
+    "predicate": "instruments",
+    "object": "Bioanalyzer RNA Pico chips",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-reagents-0",
+    "subject": "GSM3035185",
+    "predicate": "reagents",
+    "object": "doxycycline (1 microgram per mL)",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-reagents-1",
+    "subject": "GSM3035185",
+    "predicate": "reagents",
+    "object": "PureLink RNA Mini kit",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-reagents-2",
+    "subject": "GSM3035185",
+    "predicate": "reagents",
+    "object": "TruSeq Stranded mRNA Library Prep Kit",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-record_text-0",
+    "subject": "GSM3035185",
+    "predicate": "record_text",
+    "object": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035185。\n样本信息为 GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035185: total_count=53924761, detected_gene_rows=17926；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-results-0",
+    "subject": "GSM3035185",
+    "predicate": "results",
+    "object": "GSM3035185: total_count=53924761, detected_gene_rows=17926",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-results-1",
+    "subject": "GSM3035185",
+    "predicate": "results",
+    "object": "RNA quality: RIN > 9",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-samples-0",
+    "subject": "GSM3035185",
+    "predicate": "samples",
+    "object": "GSM3035185 [NonTargeting_rep1 | shRNA=Control | condition=control]",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-shrna_construct-0",
+    "subject": "GSM3035185",
+    "predicate": "shrna_construct",
+    "object": "Control",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-source-0",
+    "subject": "GSM3035185",
+    "predicate": "source",
+    "object": "NCBI GEO GSE111619",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-source_accession-0",
+    "subject": "GSM3035185",
+    "predicate": "source_accession",
+    "object": "GSM3035185",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N1-treatment-0",
+    "subject": "GSM3035185",
+    "predicate": "treatment",
+    "object": "1 µg/mL doxycycline",
+    "source": {
+      "note_id": 1,
+      "note_version_id": 1,
+      "version_number": 1,
+      "snapshot_sha256": "a261471066cc80ade214ba16d2a6e2799d3ca4359265e212bc157cdfcc76bf01"
+    }
+  },
+  {
+    "id": "N2-cell_line-0",
+    "subject": "GSM3035186",
+    "predicate": "cell_line",
+    "object": "H226",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-cell_type-0",
+    "subject": "GSM3035186",
+    "predicate": "cell_type",
+    "object": "lung squamous cell carcinoma",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-count_method-0",
+    "subject": "GSM3035186",
+    "predicate": "count_method",
+    "object": "HTSeq v0.6.1",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-culture_condition-0",
+    "subject": "GSM3035186",
+    "predicate": "culture_condition",
+    "object": "37°C, 5% CO2, 6 days",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-genome_build-0",
+    "subject": "GSM3035186",
+    "predicate": "genome_build",
+    "object": "GRCh37/hg19",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-instruments-0",
+    "subject": "GSM3035186",
+    "predicate": "instruments",
+    "object": "Illumina HiSeq 2500",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-instruments-1",
+    "subject": "GSM3035186",
+    "predicate": "instruments",
+    "object": "Bioanalyzer RNA Pico chips",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-reagents-0",
+    "subject": "GSM3035186",
+    "predicate": "reagents",
+    "object": "doxycycline (1 microgram per mL)",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-reagents-1",
+    "subject": "GSM3035186",
+    "predicate": "reagents",
+    "object": "PureLink RNA Mini kit",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-reagents-2",
+    "subject": "GSM3035186",
+    "predicate": "reagents",
+    "object": "TruSeq Stranded mRNA Library Prep Kit",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-record_text-0",
+    "subject": "GSM3035186",
+    "predicate": "record_text",
+    "object": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035186。\n样本信息为 GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035186: total_count=52016366, detected_gene_rows=17953；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-results-0",
+    "subject": "GSM3035186",
+    "predicate": "results",
+    "object": "GSM3035186: total_count=52016366, detected_gene_rows=17953",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-results-1",
+    "subject": "GSM3035186",
+    "predicate": "results",
+    "object": "RNA quality: RIN > 9",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-samples-0",
+    "subject": "GSM3035186",
+    "predicate": "samples",
+    "object": "GSM3035186 [NonTargeting_rep2 | shRNA=Control | condition=control]",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-shrna_construct-0",
+    "subject": "GSM3035186",
+    "predicate": "shrna_construct",
+    "object": "Control",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-source-0",
+    "subject": "GSM3035186",
+    "predicate": "source",
+    "object": "NCBI GEO GSE111619",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-source_accession-0",
+    "subject": "GSM3035186",
+    "predicate": "source_accession",
+    "object": "GSM3035186",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N2-treatment-0",
+    "subject": "GSM3035186",
+    "predicate": "treatment",
+    "object": "1 µg/mL doxycycline",
+    "source": {
+      "note_id": 2,
+      "note_version_id": 2,
+      "version_number": 1,
+      "snapshot_sha256": "56ddadb9f303db2832db7d68200300462a59353267950d43bd12804855c8a7e1"
+    }
+  },
+  {
+    "id": "N3-cell_line-0",
+    "subject": "GSM3035187",
+    "predicate": "cell_line",
+    "object": "H226",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-cell_type-0",
+    "subject": "GSM3035187",
+    "predicate": "cell_type",
+    "object": "lung squamous cell carcinoma",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-count_method-0",
+    "subject": "GSM3035187",
+    "predicate": "count_method",
+    "object": "HTSeq v0.6.1",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-culture_condition-0",
+    "subject": "GSM3035187",
+    "predicate": "culture_condition",
+    "object": "37°C, 5% CO2, 6 days",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-genome_build-0",
+    "subject": "GSM3035187",
+    "predicate": "genome_build",
+    "object": "GRCh37/hg19",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-instruments-0",
+    "subject": "GSM3035187",
+    "predicate": "instruments",
+    "object": "Illumina HiSeq 2500",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-instruments-1",
+    "subject": "GSM3035187",
+    "predicate": "instruments",
+    "object": "Bioanalyzer RNA Pico chips",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-reagents-0",
+    "subject": "GSM3035187",
+    "predicate": "reagents",
+    "object": "doxycycline (1 microgram per mL)",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-reagents-1",
+    "subject": "GSM3035187",
+    "predicate": "reagents",
+    "object": "PureLink RNA Mini kit",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-reagents-2",
+    "subject": "GSM3035187",
+    "predicate": "reagents",
+    "object": "TruSeq Stranded mRNA Library Prep Kit",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-record_text-0",
+    "subject": "GSM3035187",
+    "predicate": "record_text",
+    "object": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035187。\n样本信息为 GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035187: total_count=53416511, detected_gene_rows=18137；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-results-0",
+    "subject": "GSM3035187",
+    "predicate": "results",
+    "object": "GSM3035187: total_count=53416511, detected_gene_rows=18137",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-results-1",
+    "subject": "GSM3035187",
+    "predicate": "results",
+    "object": "RNA quality: RIN > 9",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-samples-0",
+    "subject": "GSM3035187",
+    "predicate": "samples",
+    "object": "GSM3035187 [p63KD_rep1 | shRNA=p63 | condition=p63_knockdown]",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-shrna_construct-0",
+    "subject": "GSM3035187",
+    "predicate": "shrna_construct",
+    "object": "p63",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-source-0",
+    "subject": "GSM3035187",
+    "predicate": "source",
+    "object": "NCBI GEO GSE111619",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-source_accession-0",
+    "subject": "GSM3035187",
+    "predicate": "source_accession",
+    "object": "GSM3035187",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N3-treatment-0",
+    "subject": "GSM3035187",
+    "predicate": "treatment",
+    "object": "1 µg/mL doxycycline",
+    "source": {
+      "note_id": 3,
+      "note_version_id": 3,
+      "version_number": 1,
+      "snapshot_sha256": "976ee9a1c104ac921fb5da9a58c73b51e6590f3ba5901398db2d1775e4cd8e98"
+    }
+  },
+  {
+    "id": "N4-cell_line-0",
+    "subject": "GSM3035188",
+    "predicate": "cell_line",
+    "object": "H226",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-cell_type-0",
+    "subject": "GSM3035188",
+    "predicate": "cell_type",
+    "object": "lung squamous cell carcinoma",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-count_method-0",
+    "subject": "GSM3035188",
+    "predicate": "count_method",
+    "object": "HTSeq v0.6.1",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-culture_condition-0",
+    "subject": "GSM3035188",
+    "predicate": "culture_condition",
+    "object": "37°C, 5% CO2, 6 days",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-genome_build-0",
+    "subject": "GSM3035188",
+    "predicate": "genome_build",
+    "object": "GRCh37/hg19",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-instruments-0",
+    "subject": "GSM3035188",
+    "predicate": "instruments",
+    "object": "Illumina HiSeq 2500",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-instruments-1",
+    "subject": "GSM3035188",
+    "predicate": "instruments",
+    "object": "Bioanalyzer RNA Pico chips",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-reagents-0",
+    "subject": "GSM3035188",
+    "predicate": "reagents",
+    "object": "doxycycline (1 microgram per mL)",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-reagents-1",
+    "subject": "GSM3035188",
+    "predicate": "reagents",
+    "object": "PureLink RNA Mini kit",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-reagents-2",
+    "subject": "GSM3035188",
+    "predicate": "reagents",
+    "object": "TruSeq Stranded mRNA Library Prep Kit",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-record_text-0",
+    "subject": "GSM3035188",
+    "predicate": "record_text",
+    "object": "数据来源：NCBI GEO GSE111619，样本登录号 GSM3035188。\n样本信息为 GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]。\n处理：1 µg/mL doxycycline；培养条件：37°C, 5% CO2, 6 days。\n使用的处理物和建库材料包括 doxycycline (1 microgram per mL)、PureLink RNA Mini kit 和TruSeq Stranded mRNA Library Prep Kit。\n仪器信息包括 Illumina HiSeq 2500 和 Bioanalyzer RNA Pico chips。\n计数摘要为 RNA quality RIN > 9；GSM3035188: total_count=51926832, detected_gene_rows=18092；count_matrix_gene_rows=25369。\n处理流程：TopHat2 比对至 GRCh37/hg19，HTSeq 生成基因级原始计数；本文仅作记录管理与检索验证，不据此进行差异表达显著性推断。",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-results-0",
+    "subject": "GSM3035188",
+    "predicate": "results",
+    "object": "GSM3035188: total_count=51926832, detected_gene_rows=18092",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-results-1",
+    "subject": "GSM3035188",
+    "predicate": "results",
+    "object": "RNA quality: RIN > 9",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-samples-0",
+    "subject": "GSM3035188",
+    "predicate": "samples",
+    "object": "GSM3035188 [p63KD_rep2 | shRNA=p63 | condition=p63_knockdown]",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-shrna_construct-0",
+    "subject": "GSM3035188",
+    "predicate": "shrna_construct",
+    "object": "p63",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-source-0",
+    "subject": "GSM3035188",
+    "predicate": "source",
+    "object": "NCBI GEO GSE111619",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-source_accession-0",
+    "subject": "GSM3035188",
+    "predicate": "source_accession",
+    "object": "GSM3035188",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  },
+  {
+    "id": "N4-treatment-0",
+    "subject": "GSM3035188",
+    "predicate": "treatment",
+    "object": "1 µg/mL doxycycline",
+    "source": {
+      "note_id": 4,
+      "note_version_id": 4,
+      "version_number": 1,
+      "snapshot_sha256": "6397d1717c44c915496f89ddf6d187eff7ab7f47693cb7faf8a4eb26552537d1"
+    }
+  }
+]

@@ -1,0 +1,475 @@
+{
+  "utc": "2026-10-10T15:52:30.191289+00:00",
+  "path": "/notes/28/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 3,
+    "entities": [
+      {
+        "id": 116,
+        "project_id": 3,
+        "entity_type": "project",
+        "label": "T136 regression",
+        "normalized_label": "t136 regression",
+        "natural_key": "project:project:3",
+        "source_type": "project",
+        "source_id": 3,
+        "properties": {
+          "project_id": 3
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 118,
+        "project_id": 3,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 119,
+        "project_id": 3,
+        "entity_type": "experiment_type",
+        "label": "PCR",
+        "normalized_label": "聚合酶链反应",
+        "natural_key": "experiment_type:聚合酶链反应",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "PCR"
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 299,
+        "project_id": 3,
+        "entity_type": "note",
+        "label": "qPCR 定量验证实验",
+        "normalized_label": "实时荧光定量聚合酶链反应 定量验证实验",
+        "natural_key": "note:note:28",
+        "source_type": "note",
+        "source_id": 28,
+        "properties": {
+          "experiment_date": "2026-05-28",
+          "note_id": 28,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 300,
+        "project_id": 3,
+        "entity_type": "instrument",
+        "label": "微量分光光度计",
+        "normalized_label": "微量分光光度计",
+        "natural_key": "instrument:微量分光光度计",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 301,
+        "project_id": 3,
+        "entity_type": "instrument",
+        "label": "荧光定量 PCR 仪",
+        "normalized_label": "荧光定量 聚合酶链反应 仪",
+        "natural_key": "instrument:荧光定量 聚合酶链反应 仪",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 302,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "SYBR Green Master Mix",
+        "normalized_label": "sybr green master mix",
+        "natural_key": "reagent:sybr green master mix",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 303,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "cDNA 模板",
+        "normalized_label": "cdna 模板",
+        "natural_key": "reagent:cdna 模板",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 304,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "引物对",
+        "normalized_label": "引物对",
+        "natural_key": "reagent:引物对",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 305,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "无酶水",
+        "normalized_label": "无酶水",
+        "natural_key": "reagent:无酶水",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 306,
+        "project_id": 3,
+        "entity_type": "result",
+        "label": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。",
+        "normalized_label": "目标基因在样本 1 中表达量约为样本 2 的 2 3 倍 融解曲线单一峰",
+        "natural_key": "result:目标基因在样本 1 中表达量约为样本 2 的 2 3 倍 融解曲线单一峰",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 307,
+        "project_id": 3,
+        "entity_type": "result",
+        "label": "目标基因差异表达约 2.3 倍。",
+        "normalized_label": "目标基因差异表达约 2 3 倍",
+        "natural_key": "result:目标基因差异表达约 2 3 倍",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 308,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "2",
+        "normalized_label": "2",
+        "natural_key": "sample:2",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 309,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "cDNA 样本 1",
+        "normalized_label": "cdna 样本 1",
+        "natural_key": "sample:cdna 样本 1",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 310,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "cDNA 样本 2",
+        "normalized_label": "cdna 样本 2",
+        "natural_key": "sample:cdna 样本 2",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 311,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "阴性对照",
+        "normalized_label": "阴性对照",
+        "natural_key": "sample:阴性对照",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z",
+        "updated_at": "2026-10-10T15:52:30.189786Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 388,
+        "project_id": 3,
+        "source_entity_id": 116,
+        "target_entity_id": 299,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 28,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 389,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 118,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 28,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 390,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 119,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 28,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 391,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 300,
+        "relation_type": "uses_instrument",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 392,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 301,
+        "relation_type": "uses_instrument",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 393,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 302,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 394,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 303,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 395,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 304,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 396,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 305,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 397,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 306,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 398,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 307,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": [
+            "data_boundary"
+          ]
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 399,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 308,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 400,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 309,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 401,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 310,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      },
+      {
+        "id": 402,
+        "project_id": 3,
+        "source_entity_id": 299,
+        "target_entity_id": 311,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 28,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.189786Z"
+      }
+    ]
+  }
+}

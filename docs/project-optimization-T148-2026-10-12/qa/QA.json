@@ -1,0 +1,1524 @@
+{
+  "task": "T148",
+  "owner": "qa-engineer",
+  "started_utc": "2026-10-12T14:06:10.116067+00:00",
+  "status": "passed",
+  "scope": "Actual Rust fmt, strict Clippy, all-targets/all-features database-connected tests; no source or historical evidence writes",
+  "database_environment": {
+    "TEST_DATABASE_URL": "postgresql://eln_test:[redacted]@127.0.0.1:55448/qa_t148",
+    "DATABASE_URL": "same dedicated URL",
+    "both_explicitly_set": true
+  },
+  "prior_test_counts_inherited": false,
+  "toolchain": {
+    "cargo": "cargo 1.88.0 (873a06493 2025-05-10)",
+    "rustc": "rustc 1.88.0 (6b00bc388 2025-06-23)",
+    "rustfmt": "rustfmt 1.8.0-stable (6b00bc3880 2025-06-23)",
+    "clippy": "clippy 0.1.88 (6b00bc3880 2025-06-23)"
+  },
+  "git_head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+  "git_rust_status": "M backend/src/api/agent_runtime.rs\n M backend/src/api/agents.rs\n M backend/src/api/files.rs\n M backend/src/api/kg_blueprint.rs\n M backend/src/api/knowledge_graph.rs\n M backend/src/api/mcp.rs\n M backend/src/api/notes.rs\n M backend/src/api/project_alert.rs\n M backend/src/api/projects.rs\n M backend/src/api/rag/mod.rs\n M backend/src/embedding.rs\n M backend/src/kg_blueprint.rs\n M backend/src/knowledge_graph.rs\n M backend/src/models/kg_blueprint.rs\n M backend/src/project_alert.rs\n M backend/src/rag/index.rs",
+  "db_before": {
+    "database": "qa_t148",
+    "user": "eln_test",
+    "version": "PostgreSQL 16.14 (Debian 16.14-1.pgdg12+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "server_addr": "172.17.0.2/32",
+    "server_port": 5432,
+    "backend_pid": 410,
+    "extensions": [
+      {
+        "name": "plpgsql",
+        "version": "1.0"
+      }
+    ],
+    "database_stats": {
+      "xact_commit": 7,
+      "xact_rollback": 0,
+      "tup_returned": 2786,
+      "tup_fetched": 969,
+      "tup_inserted": 0,
+      "tup_updated": 0,
+      "tup_deleted": 0
+    },
+    "public_table_count": 0,
+    "checked_utc": "2026-10-12T14:06:11.141524+00:00",
+    "actually_connected": true,
+    "connection_target": "127.0.0.1:55448/qa_t148"
+  },
+  "inputs_before": {
+    "checked_utc": "2026-10-12T14:06:11.146544+00:00",
+    "count": 65,
+    "rust_source_count": 58,
+    "aggregate_sha256": "467b555ac1b7e3c45823c38bea2944a03a1b787215870ff4b627f323ba02cbd1",
+    "files": [
+      {
+        "path": "backend/Cargo.lock",
+        "sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe"
+      },
+      {
+        "path": "backend/Cargo.toml",
+        "sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e"
+      },
+      {
+        "path": "backend/rust-toolchain.toml",
+        "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2"
+      },
+      {
+        "path": "backend/sql/0001_initial.sql",
+        "sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e"
+      },
+      {
+        "path": "backend/src/ai_provider.rs",
+        "sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e"
+      },
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c"
+      },
+      {
+        "path": "backend/src/api/agent_suggestion.rs",
+        "sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d"
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067"
+      },
+      {
+        "path": "backend/src/api/audit.rs",
+        "sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031"
+      },
+      {
+        "path": "backend/src/api/auth.rs",
+        "sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60"
+      },
+      {
+        "path": "backend/src/api/files.rs",
+        "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117"
+      },
+      {
+        "path": "backend/src/api/groups.rs",
+        "sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d"
+      },
+      {
+        "path": "backend/src/api/kg_blueprint.rs",
+        "sha256": "0fc840194750a702e13dcebf4d4cd610c39537f36bda32e9d441b76848d64d0d"
+      },
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4"
+      },
+      {
+        "path": "backend/src/api/maturity.rs",
+        "sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794"
+      },
+      {
+        "path": "backend/src/api/mcp.rs",
+        "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3"
+      },
+      {
+        "path": "backend/src/api/mod.rs",
+        "sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab"
+      },
+      {
+        "path": "backend/src/api/notes.rs",
+        "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69"
+      },
+      {
+        "path": "backend/src/api/ocr.rs",
+        "sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525"
+      },
+      {
+        "path": "backend/src/api/project_alert.rs",
+        "sha256": "ff6b8eabffc1a00bc0b5c5ae0c6f3f72ecd44528f77b5c7005db285d4d52fcdc"
+      },
+      {
+        "path": "backend/src/api/projects.rs",
+        "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985"
+      },
+      {
+        "path": "backend/src/api/rag/blind.rs",
+        "sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca"
+      },
+      {
+        "path": "backend/src/api/rag/experiments.rs",
+        "sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07"
+      },
+      {
+        "path": "backend/src/api/rag/mod.rs",
+        "sha256": "883cc3179713aa79de642fce612d589a9a2b88108819e8e9f4233b99d778a739"
+      },
+      {
+        "path": "backend/src/api/search.rs",
+        "sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28"
+      },
+      {
+        "path": "backend/src/api/templates.rs",
+        "sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66"
+      },
+      {
+        "path": "backend/src/api/users.rs",
+        "sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40"
+      },
+      {
+        "path": "backend/src/audit.rs",
+        "sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d"
+      },
+      {
+        "path": "backend/src/config.rs",
+        "sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973"
+      },
+      {
+        "path": "backend/src/db.rs",
+        "sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250"
+      },
+      {
+        "path": "backend/src/embedding.rs",
+        "sha256": "f6f52ef103da27ef3dbadfe1572a467147ba972fd60bf0bb25e458e21675d6b5"
+      },
+      {
+        "path": "backend/src/error.rs",
+        "sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138"
+      },
+      {
+        "path": "backend/src/kg_blueprint.rs",
+        "sha256": "2c18fe0453cbc679537162bb845710681bb2047230324920fd4bb2120c77c429"
+      },
+      {
+        "path": "backend/src/knowledge_graph.rs",
+        "sha256": "cefe3c340499ce326994448d43e98dd88b8621e3db2d974b75acd8cecff6dd1b"
+      },
+      {
+        "path": "backend/src/lib.rs",
+        "sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e"
+      },
+      {
+        "path": "backend/src/main.rs",
+        "sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930"
+      },
+      {
+        "path": "backend/src/models/agent.rs",
+        "sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b"
+      },
+      {
+        "path": "backend/src/models/file.rs",
+        "sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512"
+      },
+      {
+        "path": "backend/src/models/kg_blueprint.rs",
+        "sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518"
+      },
+      {
+        "path": "backend/src/models/knowledge_graph.rs",
+        "sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8"
+      },
+      {
+        "path": "backend/src/models/mod.rs",
+        "sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162"
+      },
+      {
+        "path": "backend/src/models/note.rs",
+        "sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0"
+      },
+      {
+        "path": "backend/src/models/pagination.rs",
+        "sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766"
+      },
+      {
+        "path": "backend/src/models/project.rs",
+        "sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a"
+      },
+      {
+        "path": "backend/src/models/project_alert.rs",
+        "sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44"
+      },
+      {
+        "path": "backend/src/models/rag.rs",
+        "sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64"
+      },
+      {
+        "path": "backend/src/models/search.rs",
+        "sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379"
+      },
+      {
+        "path": "backend/src/models/user.rs",
+        "sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296"
+      },
+      {
+        "path": "backend/src/models/validation.rs",
+        "sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4"
+      },
+      {
+        "path": "backend/src/ocr.rs",
+        "sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca"
+      },
+      {
+        "path": "backend/src/permissions.rs",
+        "sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e"
+      },
+      {
+        "path": "backend/src/project_alert.rs",
+        "sha256": "c266e3d62fe9e8a20ea8dfd3c20ead7819d514a86dffb0e4d6911cc1a98eb2e8"
+      },
+      {
+        "path": "backend/src/rag/bm25.rs",
+        "sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57"
+      },
+      {
+        "path": "backend/src/rag/chunk.rs",
+        "sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3"
+      },
+      {
+        "path": "backend/src/rag/citations.rs",
+        "sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99"
+      },
+      {
+        "path": "backend/src/rag/graph.rs",
+        "sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b"
+      },
+      {
+        "path": "backend/src/rag/index.rs",
+        "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf"
+      },
+      {
+        "path": "backend/src/rag/mod.rs",
+        "sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d"
+      },
+      {
+        "path": "backend/src/rag/retrieval.rs",
+        "sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b"
+      },
+      {
+        "path": "backend/src/rag/snapshot.rs",
+        "sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213"
+      },
+      {
+        "path": "backend/src/security.rs",
+        "sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95"
+      },
+      {
+        "path": "backend/src/state.rs",
+        "sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a"
+      },
+      {
+        "path": "docker-compose.test-db.yml",
+        "sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699"
+      },
+      {
+        "path": "scripts/ops/docker-compose-with-revision.sh",
+        "sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d"
+      },
+      {
+        "path": "scripts/ops/run-rust-db-tests.sh",
+        "sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec"
+      }
+    ]
+  },
+  "protected_before": {
+    "checked_utc": "2026-10-12T14:06:11.634313+00:00",
+    "baseline_manifest_sha256": "25e687a102a19a9663745b8fafc94ce0888fe5d55005ba50afbe16819915a69a",
+    "count": 50,
+    "unchanged_count": 50,
+    "all_unchanged": true,
+    "checks": [
+      {
+        "path": "docs/experiments/t136-2026-10-10",
+        "actually_recomputed": true,
+        "expected_count": 213,
+        "actual_count": 213,
+        "expected_aggregate_sha256": "8118218f11476e0a9abb8990da6ae35a38356cc3e89128fa1518bb0dec341fa1",
+        "actual_aggregate_sha256": "8118218f11476e0a9abb8990da6ae35a38356cc3e89128fa1518bb0dec341fa1",
+        "unchanged": true
+      },
+      {
+        "path": "docs/experiments/t114-2026-10-01",
+        "actually_recomputed": true,
+        "expected_count": 10,
+        "actual_count": 10,
+        "expected_aggregate_sha256": "96af9e5f3395209c9fc6e6650a96ef2e20baed1d5db53f12d8ea2a6343903d2e",
+        "actual_aggregate_sha256": "96af9e5f3395209c9fc6e6650a96ef2e20baed1d5db53f12d8ea2a6343903d2e",
+        "unchanged": true
+      },
+      {
+        "path": "docs/thesis-fixes-T141-2026-10-11",
+        "actually_recomputed": true,
+        "expected_count": 54,
+        "actual_count": 54,
+        "expected_aggregate_sha256": "fe93e8c52487ca9488b3680fcd37c3dd9e8491f7fe7a718ac6a6c3504b9fc124",
+        "actual_aggregate_sha256": "fe93e8c52487ca9488b3680fcd37c3dd9e8491f7fe7a718ac6a6c3504b9fc124",
+        "unchanged": true
+      },
+      {
+        "path": "docs/thesis-abstract-T146-2026-10-11",
+        "actually_recomputed": true,
+        "expected_count": 21,
+        "actual_count": 21,
+        "expected_aggregate_sha256": "060df5b8e6f86578453ae770995d0863a45563535e885da0d05e7178aae1ea2c",
+        "actual_aggregate_sha256": "060df5b8e6f86578453ae770995d0863a45563535e885da0d05e7178aae1ea2c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/system-evidence",
+        "actually_recomputed": true,
+        "expected_count": 32,
+        "actual_count": 32,
+        "expected_aggregate_sha256": "6e0613ddd5b24685703e42a0294f9771a53ed6416dd8c377851f09362a45c936",
+        "actual_aggregate_sha256": "6e0613ddd5b24685703e42a0294f9771a53ed6416dd8c377851f09362a45c936",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿.md",
+        "actually_recomputed": true,
+        "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "actual_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "unchanged": true
+      },
+      {
+        "path": "agent-work/t146-2026-10-11/1005-摘要语句精校版-2026-10-11.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+        "actual_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全文逻辑复盘精修副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "97478db92e4ba2eb2995b6578b289a2d6f5b06bd8c686bcd3eb41f496549d497",
+        "actual_sha256": "97478db92e4ba2eb2995b6578b289a2d6f5b06bd8c686bcd3eb41f496549d497",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全篇深审修订副本-2026-09-23.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "3fa2e0913191a9aa7080970198dda17e48efbc61d93e0692070dffc094c36afa",
+        "actual_sha256": "3fa2e0913191a9aa7080970198dda17e48efbc61d93e0692070dffc094c36afa",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全篇深审修订副本-2026-09-24-续审版.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "d8bb6dba0b888f837ab3a8e3f6a706ce6b8e058deb5c3966a795ec5cbff5ddc6",
+        "actual_sha256": "d8bb6dba0b888f837ab3a8e3f6a706ce6b8e058deb5c3966a795ec5cbff5ddc6",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全篇深审修订副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "8b5a0579a0ef5bf96574dbeca91e69a99f8085eea4ba9b9192b4604314de0e9d",
+        "actual_sha256": "8b5a0579a0ef5bf96574dbeca91e69a99f8085eea4ba9b9192b4604314de0e9d",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-公式引文排版深度精校版-2026-09-25.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "2df6553c26caca2cb177c84b1e04b11a7dbb49a793de5d4b09b97f8257089a59",
+        "actual_sha256": "2df6553c26caca2cb177c84b1e04b11a7dbb49a793de5d4b09b97f8257089a59",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-可编辑PDF对齐版-2026-09-17.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "cf482b72cf6c00354938406640b8c8117238d0d60df71a5784a03dccf85934bd",
+        "actual_sha256": "cf482b72cf6c00354938406640b8c8117238d0d60df71a5784a03dccf85934bd",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-可编辑润色版-2026-09-18.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "5da8e2731723bd8e0bcf4bf8972c29e4a7229d2c6ccef80946b8f94a24504a91",
+        "actual_sha256": "5da8e2731723bd8e0bcf4bf8972c29e4a7229d2c6ccef80946b8f94a24504a91",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-图表风格统一版-2026-09-25.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "f213903acad68a92accec5038cfc7b4644fa66046534874fe22264f74a55382d",
+        "actual_sha256": "f213903acad68a92accec5038cfc7b4644fa66046534874fe22264f74a55382d",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见修订版-2026-09-19-Qoder内容修订.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "75c86e7d275348aa2ecea2cd273bc2ad69cdae532d79b12206869afeb836a5b4",
+        "actual_sha256": "75c86e7d275348aa2ecea2cd273bc2ad69cdae532d79b12206869afeb836a5b4",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见修订版-2026-09-19-Qoder格式修改.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "3fa65129ca7c157a1636ece3333d3c9ba684397ce6a1cb005ce411df7622a251",
+        "actual_sha256": "3fa65129ca7c157a1636ece3333d3c9ba684397ce6a1cb005ce411df7622a251",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见修订版-2026-09-19.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "57eb26ba3696caa687119c11268d1c3fe92953741651e88b867013046843c207",
+        "actual_sha256": "57eb26ba3696caa687119c11268d1c3fe92953741651e88b867013046843c207",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见针对性精修副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "c557e84cc757cf05985baa00d74a25f87b08274ce57271afd4d680b213f62ccd",
+        "actual_sha256": "c557e84cc757cf05985baa00d74a25f87b08274ce57271afd4d680b213f62ccd",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师批注修订副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "4a9bcbc459f0fb8d8ed55eb48a146ab15700fc44bd33ac7ba9a9695d24a4a34e",
+        "actual_sha256": "4a9bcbc459f0fb8d8ed55eb48a146ab15700fc44bd33ac7ba9a9695d24a4a34e",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师批注复核版-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "ac3e89063498495cfea96c60ebf6d3fc3fa388151e1deb7bf12a2c553fa6f05c",
+        "actual_sha256": "ac3e89063498495cfea96c60ebf6d3fc3fa388151e1deb7bf12a2c553fa6f05c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师评价深化修订副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "955bb34c3352b97a252103a71c6789940c1efb78a39a9167af599364f11959ac",
+        "actual_sha256": "955bb34c3352b97a252103a71c6789940c1efb78a39a9167af599364f11959ac",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师评价深化修订副本-2026-09-24.pages",
+        "actually_recomputed": true,
+        "expected_sha256": "faff3f1c8045d69bad0de6fd2d13b33ab91cf40e9af088972e850b5b44197f0a",
+        "actual_sha256": "faff3f1c8045d69bad0de6fd2d13b33ab91cf40e9af088972e850b5b44197f0a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-数据逻辑修订副本-2026-09-21.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "a6829d7650793ae8ac152840092d7589af09eadd9e1a86d9f7428b1f06a2cc14",
+        "actual_sha256": "a6829d7650793ae8ac152840092d7589af09eadd9e1a86d9f7428b1f06a2cc14",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-新增批注深度修订稿-T113-2026-10-01.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "1fd1aa00b8b0d8ff3b0592794fb50bf91e711a517e84f7176f8b51364f79eb4a",
+        "actual_sha256": "1fd1aa00b8b0d8ff3b0592794fb50bf91e711a517e84f7176f8b51364f79eb4a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-新增批注深度修订稿-T113-2026-10-01.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "484dacb3ad257930b2899b775cc4737b18f3d0313dce013f4faae3ef2dcf1a80",
+        "actual_sha256": "484dacb3ad257930b2899b775cc4737b18f3d0313dce013f4faae3ef2dcf1a80",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-补充验证与批注修订稿-T114-2026-10-01.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "2f015f53cf7a27995d5e2dd486c8a0ee5346d279975920d2908aa4dc8ed8854e",
+        "actual_sha256": "2f015f53cf7a27995d5e2dd486c8a0ee5346d279975920d2908aa4dc8ed8854e",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逐字格式精校副本-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "9be8fb8e4d95dabda56a6f2bc9de03bc3b4a1b6718a86a0001d14ff5c761cc05",
+        "actual_sha256": "9be8fb8e4d95dabda56a6f2bc9de03bc3b4a1b6718a86a0001d14ff5c761cc05",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逐章评审整改副本-Qoder-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "a7867869b32890cd83501b0ce02a4e82595b2305e9dd399ade69915265240417",
+        "actual_sha256": "a7867869b32890cd83501b0ce02a4e82595b2305e9dd399ade69915265240417",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逐章逻辑与行文整合修订副本-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "46d58bf5054f770cf368c568789bd516c86749f24d0d1798c84a094d113029c5",
+        "actual_sha256": "46d58bf5054f770cf368c568789bd516c86749f24d0d1798c84a094d113029c5",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逻辑行文整改副本-Qoder-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "95f2f5de70aec3096753c865643a0b0bdb51e6a1ddcda8ef972c751f0b0cba1c",
+        "actual_sha256": "95f2f5de70aec3096753c865643a0b0bdb51e6a1ddcda8ef972c751f0b0cba1c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU模板版-2026-09-04.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "976f4a1667833e6afb57a23bde1c78846784d319dbff6d98fb6387025ecf77dc",
+        "actual_sha256": "976f4a1667833e6afb57a23bde1c78846784d319dbff6d98fb6387025ecf77dc",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU模板版-2026-09-09.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "b5482300eeffc46a387e53ed171b04f5304adbada9b360c120d2d6693298a217",
+        "actual_sha256": "b5482300eeffc46a387e53ed171b04f5304adbada9b360c120d2d6693298a217",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU模板版-参考架构版-2026-09-01.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "1bb03f974bc225608a9d20cf18d46d23435079bbc338b640d2fd1b6284c532a9",
+        "actual_sha256": "1bb03f974bc225608a9d20cf18d46d23435079bbc338b640d2fd1b6284c532a9",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU物电格式-2026-09-02.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "a6d81b12b51bdf6bb8c8a477dcad56b65fed15061782150becb36040e4276465",
+        "actual_sha256": "a6d81b12b51bdf6bb8c8a477dcad56b65fed15061782150becb36040e4276465",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-09.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "e2badc889abaf2dc0e90f02dc5493398a3454eb868148b1d3dcaeeb183dd017c",
+        "actual_sha256": "e2badc889abaf2dc0e90f02dc5493398a3454eb868148b1d3dcaeeb183dd017c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-12.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "16d48c5f928944215df75afe01bfe090b71843eb8d92b32241bb60ee321fb04f",
+        "actual_sha256": "16d48c5f928944215df75afe01bfe090b71843eb8d92b32241bb60ee321fb04f",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-14.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "bd1e71ae3e1ef0df2ec4dbaeed315a965f90856f6bb0ad69ab5f7a0e376c5cf3",
+        "actual_sha256": "bd1e71ae3e1ef0df2ec4dbaeed315a965f90856f6bb0ad69ab5f7a0e376c5cf3",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-15.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "30f8e84db673584b773bbbb23dee1073f3574b6962890bfc653ef94ba50540c1",
+        "actual_sha256": "30f8e84db673584b773bbbb23dee1073f3574b6962890bfc653ef94ba50540c1",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-16.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "02f7f18271bb135cca93041bf204b02797b924819a4cdf62c6b488e9c7f25b42",
+        "actual_sha256": "02f7f18271bb135cca93041bf204b02797b924819a4cdf62c6b488e9c7f25b42",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-三图重绘-2026-09-16.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "9ab99b383a733f35d0d3435571b40ce6e35b91854c2b43106974d252d3014ace",
+        "actual_sha256": "9ab99b383a733f35d0d3435571b40ce6e35b91854c2b43106974d252d3014ace",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-图4-7重绘-2026-09-16.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "actual_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-图4-7重绘-2026-09-16.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "6b511a18cf9f15b2ff994bbc59d56010e63511647f4d1aac200984c1bf5abf4a",
+        "actual_sha256": "6b511a18cf9f15b2ff994bbc59d56010e63511647f4d1aac200984c1bf5abf4a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU物电格式-2026-09-17.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "actual_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版.md",
+        "actually_recomputed": true,
+        "expected_sha256": "4ec6ec7c6873b7873dceed182c02e6ce4e64a0ee3d49de9c751571316e9ab71a",
+        "actual_sha256": "4ec6ec7c6873b7873dceed182c02e6ce4e64a0ee3d49de9c751571316e9ab71a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-参考架构版.md",
+        "actually_recomputed": true,
+        "expected_sha256": "d5d49c97d9b51a3dc555cb31255c3ccd733285fc6d99bd50601520a967209fe6",
+        "actual_sha256": "d5d49c97d9b51a3dc555cb31255c3ccd733285fc6d99bd50601520a967209fe6",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-学术润色版-2026-09-14.md",
+        "actually_recomputed": true,
+        "expected_sha256": "19c23cdd03de7aa7175b953ee743cc5115ae0feb2bd016f087929be1dffeaa87",
+        "actual_sha256": "19c23cdd03de7aa7175b953ee743cc5115ae0feb2bd016f087929be1dffeaa87",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿.md",
+        "actually_recomputed": true,
+        "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "actual_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "unchanged": true
+      },
+      {
+        "path": "docs/项目续审与论文增益优化评估-T147-2026-10-12.md",
+        "actually_recomputed": true,
+        "expected_sha256": "00ac1695c38f9077281d69fe04392299c8e8b236363c67c4d8b05fe69d131951",
+        "actual_sha256": "00ac1695c38f9077281d69fe04392299c8e8b236363c67c4d8b05fe69d131951",
+        "unchanged": true
+      },
+      {
+        "path": "docs/项目续审核验证据-T147-2026-10-12.json",
+        "actually_recomputed": true,
+        "expected_sha256": "7e2ff402f130a64ef407f22c1ee08631576adf76b4033d15a610f2f611f9facb",
+        "actual_sha256": "7e2ff402f130a64ef407f22c1ee08631576adf76b4033d15a610f2f611f9facb",
+        "unchanged": true
+      }
+    ],
+    "aggregate_algorithm": "SHA256 of sorted repository-relative path:SHA256(file) rows joined by LF with no final LF; exclude __pycache__ and .pyc"
+  },
+  "checks": [
+    {
+      "name": "fmt",
+      "actually_run": true,
+      "command": [
+        "cargo",
+        "+1.88.0",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "cwd": "/Users/yusong/Downloads/new/full-system/backend",
+      "started_utc": "2026-10-12T14:06:11.641714+00:00",
+      "finished_utc": "2026-10-12T14:06:12.327542+00:00",
+      "elapsed_seconds": 0.686,
+      "exit_code": 0,
+      "passed": true,
+      "log": "agent-work/t148-2026-10-12/qa/rust-fmt.log",
+      "log_sha256": "a06964476f86e12ed05dfc3577272013aa1ce4089210c75ebe45efa6a5fce641"
+    },
+    {
+      "name": "clippy",
+      "actually_run": true,
+      "command": [
+        "cargo",
+        "+1.88.0",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--all-features",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/Users/yusong/Downloads/new/full-system/backend",
+      "started_utc": "2026-10-12T14:06:12.328381+00:00",
+      "finished_utc": "2026-10-12T14:06:23.485064+00:00",
+      "elapsed_seconds": 11.157,
+      "exit_code": 0,
+      "passed": true,
+      "log": "agent-work/t148-2026-10-12/qa/rust-clippy.log",
+      "log_sha256": "38b554f73af2a0bf2e58ce2de276b22baa93790fd2433e586ed519c60579ea7f"
+    },
+    {
+      "name": "test",
+      "actually_run": true,
+      "command": [
+        "cargo",
+        "+1.88.0",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--all-features",
+        "--",
+        "--test-threads=1"
+      ],
+      "cwd": "/Users/yusong/Downloads/new/full-system/backend",
+      "started_utc": "2026-10-12T14:06:23.486246+00:00",
+      "finished_utc": "2026-10-12T14:10:51.722220+00:00",
+      "elapsed_seconds": 268.236,
+      "exit_code": 0,
+      "passed": true,
+      "log": "agent-work/t148-2026-10-12/qa/rust-test.log",
+      "log_sha256": "60655217b46b69d404998fffe7070db579901aacb3ad1acaf3da27c5d9e1d8ef",
+      "test_summaries": [
+        {
+          "result": "ok",
+          "passed": 303,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0,
+          "elapsed_seconds": 267.87
+        },
+        {
+          "result": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 0,
+          "elapsed_seconds": 0.01
+        }
+      ],
+      "actual_total": {
+        "passed": 305,
+        "failed": 0,
+        "ignored": 0,
+        "measured": 0,
+        "filtered_out": 0
+      },
+      "individual_test_results": 305,
+      "skip_mentions": [
+        "test api::rag::experiments::tests::test_experiment_resume_skips_summary_errors ... ok",
+        "test api::rag::tests::test_citation_repair_skips_when_no_evidence_exists ... ok"
+      ],
+      "skip_mentions_interpretation": "The two skip matches are successful test names about conditional product behavior; no database-skipped diagnostic or ignored test appeared."
+    }
+  ],
+  "db_after": {
+    "database": "qa_t148",
+    "user": "eln_test",
+    "version": "PostgreSQL 16.14 (Debian 16.14-1.pgdg12+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "server_addr": "172.17.0.2/32",
+    "server_port": 5432,
+    "backend_pid": 734,
+    "extensions": [
+      {
+        "name": "plpgsql",
+        "version": "1.0"
+      },
+      {
+        "name": "vector",
+        "version": "0.8.5"
+      }
+    ],
+    "database_stats": {
+      "xact_commit": 6133,
+      "xact_rollback": 75,
+      "tup_returned": 1276616,
+      "tup_fetched": 803725,
+      "tup_inserted": 8024,
+      "tup_updated": 1430,
+      "tup_deleted": 791
+    },
+    "public_table_count": 43,
+    "checked_utc": "2026-10-12T14:10:51.798181+00:00",
+    "actually_connected": true,
+    "connection_target": "127.0.0.1:55448/qa_t148"
+  },
+  "db_observed_delta": {
+    "xact_commit": 6126,
+    "xact_rollback": 75,
+    "tup_returned": 1273830,
+    "tup_fetched": 802756,
+    "tup_inserted": 8024,
+    "tup_updated": 1430,
+    "tup_deleted": 791
+  },
+  "pgvector_initialized": true,
+  "inputs_after": {
+    "checked_utc": "2026-10-12T14:10:51.799722+00:00",
+    "count": 65,
+    "rust_source_count": 58,
+    "aggregate_sha256": "467b555ac1b7e3c45823c38bea2944a03a1b787215870ff4b627f323ba02cbd1",
+    "files": [
+      {
+        "path": "backend/Cargo.lock",
+        "sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe"
+      },
+      {
+        "path": "backend/Cargo.toml",
+        "sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e"
+      },
+      {
+        "path": "backend/rust-toolchain.toml",
+        "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2"
+      },
+      {
+        "path": "backend/sql/0001_initial.sql",
+        "sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e"
+      },
+      {
+        "path": "backend/src/ai_provider.rs",
+        "sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e"
+      },
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c"
+      },
+      {
+        "path": "backend/src/api/agent_suggestion.rs",
+        "sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d"
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067"
+      },
+      {
+        "path": "backend/src/api/audit.rs",
+        "sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031"
+      },
+      {
+        "path": "backend/src/api/auth.rs",
+        "sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60"
+      },
+      {
+        "path": "backend/src/api/files.rs",
+        "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117"
+      },
+      {
+        "path": "backend/src/api/groups.rs",
+        "sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d"
+      },
+      {
+        "path": "backend/src/api/kg_blueprint.rs",
+        "sha256": "0fc840194750a702e13dcebf4d4cd610c39537f36bda32e9d441b76848d64d0d"
+      },
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4"
+      },
+      {
+        "path": "backend/src/api/maturity.rs",
+        "sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794"
+      },
+      {
+        "path": "backend/src/api/mcp.rs",
+        "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3"
+      },
+      {
+        "path": "backend/src/api/mod.rs",
+        "sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab"
+      },
+      {
+        "path": "backend/src/api/notes.rs",
+        "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69"
+      },
+      {
+        "path": "backend/src/api/ocr.rs",
+        "sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525"
+      },
+      {
+        "path": "backend/src/api/project_alert.rs",
+        "sha256": "ff6b8eabffc1a00bc0b5c5ae0c6f3f72ecd44528f77b5c7005db285d4d52fcdc"
+      },
+      {
+        "path": "backend/src/api/projects.rs",
+        "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985"
+      },
+      {
+        "path": "backend/src/api/rag/blind.rs",
+        "sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca"
+      },
+      {
+        "path": "backend/src/api/rag/experiments.rs",
+        "sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07"
+      },
+      {
+        "path": "backend/src/api/rag/mod.rs",
+        "sha256": "883cc3179713aa79de642fce612d589a9a2b88108819e8e9f4233b99d778a739"
+      },
+      {
+        "path": "backend/src/api/search.rs",
+        "sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28"
+      },
+      {
+        "path": "backend/src/api/templates.rs",
+        "sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66"
+      },
+      {
+        "path": "backend/src/api/users.rs",
+        "sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40"
+      },
+      {
+        "path": "backend/src/audit.rs",
+        "sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d"
+      },
+      {
+        "path": "backend/src/config.rs",
+        "sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973"
+      },
+      {
+        "path": "backend/src/db.rs",
+        "sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250"
+      },
+      {
+        "path": "backend/src/embedding.rs",
+        "sha256": "f6f52ef103da27ef3dbadfe1572a467147ba972fd60bf0bb25e458e21675d6b5"
+      },
+      {
+        "path": "backend/src/error.rs",
+        "sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138"
+      },
+      {
+        "path": "backend/src/kg_blueprint.rs",
+        "sha256": "2c18fe0453cbc679537162bb845710681bb2047230324920fd4bb2120c77c429"
+      },
+      {
+        "path": "backend/src/knowledge_graph.rs",
+        "sha256": "cefe3c340499ce326994448d43e98dd88b8621e3db2d974b75acd8cecff6dd1b"
+      },
+      {
+        "path": "backend/src/lib.rs",
+        "sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e"
+      },
+      {
+        "path": "backend/src/main.rs",
+        "sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930"
+      },
+      {
+        "path": "backend/src/models/agent.rs",
+        "sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b"
+      },
+      {
+        "path": "backend/src/models/file.rs",
+        "sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512"
+      },
+      {
+        "path": "backend/src/models/kg_blueprint.rs",
+        "sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518"
+      },
+      {
+        "path": "backend/src/models/knowledge_graph.rs",
+        "sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8"
+      },
+      {
+        "path": "backend/src/models/mod.rs",
+        "sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162"
+      },
+      {
+        "path": "backend/src/models/note.rs",
+        "sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0"
+      },
+      {
+        "path": "backend/src/models/pagination.rs",
+        "sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766"
+      },
+      {
+        "path": "backend/src/models/project.rs",
+        "sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a"
+      },
+      {
+        "path": "backend/src/models/project_alert.rs",
+        "sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44"
+      },
+      {
+        "path": "backend/src/models/rag.rs",
+        "sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64"
+      },
+      {
+        "path": "backend/src/models/search.rs",
+        "sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379"
+      },
+      {
+        "path": "backend/src/models/user.rs",
+        "sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296"
+      },
+      {
+        "path": "backend/src/models/validation.rs",
+        "sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4"
+      },
+      {
+        "path": "backend/src/ocr.rs",
+        "sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca"
+      },
+      {
+        "path": "backend/src/permissions.rs",
+        "sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e"
+      },
+      {
+        "path": "backend/src/project_alert.rs",
+        "sha256": "c266e3d62fe9e8a20ea8dfd3c20ead7819d514a86dffb0e4d6911cc1a98eb2e8"
+      },
+      {
+        "path": "backend/src/rag/bm25.rs",
+        "sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57"
+      },
+      {
+        "path": "backend/src/rag/chunk.rs",
+        "sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3"
+      },
+      {
+        "path": "backend/src/rag/citations.rs",
+        "sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99"
+      },
+      {
+        "path": "backend/src/rag/graph.rs",
+        "sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b"
+      },
+      {
+        "path": "backend/src/rag/index.rs",
+        "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf"
+      },
+      {
+        "path": "backend/src/rag/mod.rs",
+        "sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d"
+      },
+      {
+        "path": "backend/src/rag/retrieval.rs",
+        "sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b"
+      },
+      {
+        "path": "backend/src/rag/snapshot.rs",
+        "sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213"
+      },
+      {
+        "path": "backend/src/security.rs",
+        "sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95"
+      },
+      {
+        "path": "backend/src/state.rs",
+        "sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a"
+      },
+      {
+        "path": "docker-compose.test-db.yml",
+        "sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699"
+      },
+      {
+        "path": "scripts/ops/docker-compose-with-revision.sh",
+        "sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d"
+      },
+      {
+        "path": "scripts/ops/run-rust-db-tests.sh",
+        "sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec"
+      }
+    ]
+  },
+  "input_changes_during_run": [],
+  "inputs_unchanged_during_run": true,
+  "protected_after": {
+    "checked_utc": "2026-10-12T14:10:51.980552+00:00",
+    "baseline_manifest_sha256": "25e687a102a19a9663745b8fafc94ce0888fe5d55005ba50afbe16819915a69a",
+    "count": 50,
+    "unchanged_count": 50,
+    "all_unchanged": true,
+    "checks": [
+      {
+        "path": "docs/experiments/t136-2026-10-10",
+        "actually_recomputed": true,
+        "expected_count": 213,
+        "actual_count": 213,
+        "expected_aggregate_sha256": "8118218f11476e0a9abb8990da6ae35a38356cc3e89128fa1518bb0dec341fa1",
+        "actual_aggregate_sha256": "8118218f11476e0a9abb8990da6ae35a38356cc3e89128fa1518bb0dec341fa1",
+        "unchanged": true
+      },
+      {
+        "path": "docs/experiments/t114-2026-10-01",
+        "actually_recomputed": true,
+        "expected_count": 10,
+        "actual_count": 10,
+        "expected_aggregate_sha256": "96af9e5f3395209c9fc6e6650a96ef2e20baed1d5db53f12d8ea2a6343903d2e",
+        "actual_aggregate_sha256": "96af9e5f3395209c9fc6e6650a96ef2e20baed1d5db53f12d8ea2a6343903d2e",
+        "unchanged": true
+      },
+      {
+        "path": "docs/thesis-fixes-T141-2026-10-11",
+        "actually_recomputed": true,
+        "expected_count": 54,
+        "actual_count": 54,
+        "expected_aggregate_sha256": "fe93e8c52487ca9488b3680fcd37c3dd9e8491f7fe7a718ac6a6c3504b9fc124",
+        "actual_aggregate_sha256": "fe93e8c52487ca9488b3680fcd37c3dd9e8491f7fe7a718ac6a6c3504b9fc124",
+        "unchanged": true
+      },
+      {
+        "path": "docs/thesis-abstract-T146-2026-10-11",
+        "actually_recomputed": true,
+        "expected_count": 21,
+        "actual_count": 21,
+        "expected_aggregate_sha256": "060df5b8e6f86578453ae770995d0863a45563535e885da0d05e7178aae1ea2c",
+        "actual_aggregate_sha256": "060df5b8e6f86578453ae770995d0863a45563535e885da0d05e7178aae1ea2c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/system-evidence",
+        "actually_recomputed": true,
+        "expected_count": 32,
+        "actual_count": 32,
+        "expected_aggregate_sha256": "6e0613ddd5b24685703e42a0294f9771a53ed6416dd8c377851f09362a45c936",
+        "actual_aggregate_sha256": "6e0613ddd5b24685703e42a0294f9771a53ed6416dd8c377851f09362a45c936",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿.md",
+        "actually_recomputed": true,
+        "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "actual_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "unchanged": true
+      },
+      {
+        "path": "agent-work/t146-2026-10-11/1005-摘要语句精校版-2026-10-11.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+        "actual_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全文逻辑复盘精修副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "97478db92e4ba2eb2995b6578b289a2d6f5b06bd8c686bcd3eb41f496549d497",
+        "actual_sha256": "97478db92e4ba2eb2995b6578b289a2d6f5b06bd8c686bcd3eb41f496549d497",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全篇深审修订副本-2026-09-23.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "3fa2e0913191a9aa7080970198dda17e48efbc61d93e0692070dffc094c36afa",
+        "actual_sha256": "3fa2e0913191a9aa7080970198dda17e48efbc61d93e0692070dffc094c36afa",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全篇深审修订副本-2026-09-24-续审版.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "d8bb6dba0b888f837ab3a8e3f6a706ce6b8e058deb5c3966a795ec5cbff5ddc6",
+        "actual_sha256": "d8bb6dba0b888f837ab3a8e3f6a706ce6b8e058deb5c3966a795ec5cbff5ddc6",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-全篇深审修订副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "8b5a0579a0ef5bf96574dbeca91e69a99f8085eea4ba9b9192b4604314de0e9d",
+        "actual_sha256": "8b5a0579a0ef5bf96574dbeca91e69a99f8085eea4ba9b9192b4604314de0e9d",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-公式引文排版深度精校版-2026-09-25.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "2df6553c26caca2cb177c84b1e04b11a7dbb49a793de5d4b09b97f8257089a59",
+        "actual_sha256": "2df6553c26caca2cb177c84b1e04b11a7dbb49a793de5d4b09b97f8257089a59",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-可编辑PDF对齐版-2026-09-17.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "cf482b72cf6c00354938406640b8c8117238d0d60df71a5784a03dccf85934bd",
+        "actual_sha256": "cf482b72cf6c00354938406640b8c8117238d0d60df71a5784a03dccf85934bd",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-可编辑润色版-2026-09-18.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "5da8e2731723bd8e0bcf4bf8972c29e4a7229d2c6ccef80946b8f94a24504a91",
+        "actual_sha256": "5da8e2731723bd8e0bcf4bf8972c29e4a7229d2c6ccef80946b8f94a24504a91",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-图表风格统一版-2026-09-25.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "f213903acad68a92accec5038cfc7b4644fa66046534874fe22264f74a55382d",
+        "actual_sha256": "f213903acad68a92accec5038cfc7b4644fa66046534874fe22264f74a55382d",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见修订版-2026-09-19-Qoder内容修订.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "75c86e7d275348aa2ecea2cd273bc2ad69cdae532d79b12206869afeb836a5b4",
+        "actual_sha256": "75c86e7d275348aa2ecea2cd273bc2ad69cdae532d79b12206869afeb836a5b4",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见修订版-2026-09-19-Qoder格式修改.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "3fa65129ca7c157a1636ece3333d3c9ba684397ce6a1cb005ce411df7622a251",
+        "actual_sha256": "3fa65129ca7c157a1636ece3333d3c9ba684397ce6a1cb005ce411df7622a251",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见修订版-2026-09-19.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "57eb26ba3696caa687119c11268d1c3fe92953741651e88b867013046843c207",
+        "actual_sha256": "57eb26ba3696caa687119c11268d1c3fe92953741651e88b867013046843c207",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师意见针对性精修副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "c557e84cc757cf05985baa00d74a25f87b08274ce57271afd4d680b213f62ccd",
+        "actual_sha256": "c557e84cc757cf05985baa00d74a25f87b08274ce57271afd4d680b213f62ccd",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师批注修订副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "4a9bcbc459f0fb8d8ed55eb48a146ab15700fc44bd33ac7ba9a9695d24a4a34e",
+        "actual_sha256": "4a9bcbc459f0fb8d8ed55eb48a146ab15700fc44bd33ac7ba9a9695d24a4a34e",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师批注复核版-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "ac3e89063498495cfea96c60ebf6d3fc3fa388151e1deb7bf12a2c553fa6f05c",
+        "actual_sha256": "ac3e89063498495cfea96c60ebf6d3fc3fa388151e1deb7bf12a2c553fa6f05c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师评价深化修订副本-2026-09-24.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "955bb34c3352b97a252103a71c6789940c1efb78a39a9167af599364f11959ac",
+        "actual_sha256": "955bb34c3352b97a252103a71c6789940c1efb78a39a9167af599364f11959ac",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-导师评价深化修订副本-2026-09-24.pages",
+        "actually_recomputed": true,
+        "expected_sha256": "faff3f1c8045d69bad0de6fd2d13b33ab91cf40e9af088972e850b5b44197f0a",
+        "actual_sha256": "faff3f1c8045d69bad0de6fd2d13b33ab91cf40e9af088972e850b5b44197f0a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-数据逻辑修订副本-2026-09-21.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "a6829d7650793ae8ac152840092d7589af09eadd9e1a86d9f7428b1f06a2cc14",
+        "actual_sha256": "a6829d7650793ae8ac152840092d7589af09eadd9e1a86d9f7428b1f06a2cc14",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-新增批注深度修订稿-T113-2026-10-01.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "1fd1aa00b8b0d8ff3b0592794fb50bf91e711a517e84f7176f8b51364f79eb4a",
+        "actual_sha256": "1fd1aa00b8b0d8ff3b0592794fb50bf91e711a517e84f7176f8b51364f79eb4a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-新增批注深度修订稿-T113-2026-10-01.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "484dacb3ad257930b2899b775cc4737b18f3d0313dce013f4faae3ef2dcf1a80",
+        "actual_sha256": "484dacb3ad257930b2899b775cc4737b18f3d0313dce013f4faae3ef2dcf1a80",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-补充验证与批注修订稿-T114-2026-10-01.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "2f015f53cf7a27995d5e2dd486c8a0ee5346d279975920d2908aa4dc8ed8854e",
+        "actual_sha256": "2f015f53cf7a27995d5e2dd486c8a0ee5346d279975920d2908aa4dc8ed8854e",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逐字格式精校副本-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "9be8fb8e4d95dabda56a6f2bc9de03bc3b4a1b6718a86a0001d14ff5c761cc05",
+        "actual_sha256": "9be8fb8e4d95dabda56a6f2bc9de03bc3b4a1b6718a86a0001d14ff5c761cc05",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逐章评审整改副本-Qoder-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "a7867869b32890cd83501b0ce02a4e82595b2305e9dd399ade69915265240417",
+        "actual_sha256": "a7867869b32890cd83501b0ce02a4e82595b2305e9dd399ade69915265240417",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逐章逻辑与行文整合修订副本-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "46d58bf5054f770cf368c568789bd516c86749f24d0d1798c84a094d113029c5",
+        "actual_sha256": "46d58bf5054f770cf368c568789bd516c86749f24d0d1798c84a094d113029c5",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文-逻辑行文整改副本-Qoder-2026-09-22.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "95f2f5de70aec3096753c865643a0b0bdb51e6a1ddcda8ef972c751f0b0cba1c",
+        "actual_sha256": "95f2f5de70aec3096753c865643a0b0bdb51e6a1ddcda8ef972c751f0b0cba1c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU模板版-2026-09-04.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "976f4a1667833e6afb57a23bde1c78846784d319dbff6d98fb6387025ecf77dc",
+        "actual_sha256": "976f4a1667833e6afb57a23bde1c78846784d319dbff6d98fb6387025ecf77dc",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU模板版-2026-09-09.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "b5482300eeffc46a387e53ed171b04f5304adbada9b360c120d2d6693298a217",
+        "actual_sha256": "b5482300eeffc46a387e53ed171b04f5304adbada9b360c120d2d6693298a217",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU模板版-参考架构版-2026-09-01.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "1bb03f974bc225608a9d20cf18d46d23435079bbc338b640d2fd1b6284c532a9",
+        "actual_sha256": "1bb03f974bc225608a9d20cf18d46d23435079bbc338b640d2fd1b6284c532a9",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-AHNU物电格式-2026-09-02.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "a6d81b12b51bdf6bb8c8a477dcad56b65fed15061782150becb36040e4276465",
+        "actual_sha256": "a6d81b12b51bdf6bb8c8a477dcad56b65fed15061782150becb36040e4276465",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-09.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "e2badc889abaf2dc0e90f02dc5493398a3454eb868148b1d3dcaeeb183dd017c",
+        "actual_sha256": "e2badc889abaf2dc0e90f02dc5493398a3454eb868148b1d3dcaeeb183dd017c",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-12.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "16d48c5f928944215df75afe01bfe090b71843eb8d92b32241bb60ee321fb04f",
+        "actual_sha256": "16d48c5f928944215df75afe01bfe090b71843eb8d92b32241bb60ee321fb04f",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-14.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "bd1e71ae3e1ef0df2ec4dbaeed315a965f90856f6bb0ad69ab5f7a0e376c5cf3",
+        "actual_sha256": "bd1e71ae3e1ef0df2ec4dbaeed315a965f90856f6bb0ad69ab5f7a0e376c5cf3",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-15.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "30f8e84db673584b773bbbb23dee1073f3574b6962890bfc653ef94ba50540c1",
+        "actual_sha256": "30f8e84db673584b773bbbb23dee1073f3574b6962890bfc653ef94ba50540c1",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-2026-09-16.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "02f7f18271bb135cca93041bf204b02797b924819a4cdf62c6b488e9c7f25b42",
+        "actual_sha256": "02f7f18271bb135cca93041bf204b02797b924819a4cdf62c6b488e9c7f25b42",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-三图重绘-2026-09-16.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "9ab99b383a733f35d0d3435571b40ce6e35b91854c2b43106974d252d3014ace",
+        "actual_sha256": "9ab99b383a733f35d0d3435571b40ce6e35b91854c2b43106974d252d3014ace",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-图4-7重绘-2026-09-16.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "actual_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU模板版-图4-7重绘-2026-09-16.pdf",
+        "actually_recomputed": true,
+        "expected_sha256": "6b511a18cf9f15b2ff994bbc59d56010e63511647f4d1aac200984c1bf5abf4a",
+        "actual_sha256": "6b511a18cf9f15b2ff994bbc59d56010e63511647f4d1aac200984c1bf5abf4a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版-AHNU物电格式-2026-09-17.docx",
+        "actually_recomputed": true,
+        "expected_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "actual_sha256": "65a9c6ab6d8540827fd7cbd1e86b4134fa15dc583c864539e77353f9cc8d636f",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-创新点增强版.md",
+        "actually_recomputed": true,
+        "expected_sha256": "4ec6ec7c6873b7873dceed182c02e6ce4e64a0ee3d49de9c751571316e9ab71a",
+        "actual_sha256": "4ec6ec7c6873b7873dceed182c02e6ce4e64a0ee3d49de9c751571316e9ab71a",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-参考架构版.md",
+        "actually_recomputed": true,
+        "expected_sha256": "d5d49c97d9b51a3dc555cb31255c3ccd733285fc6d99bd50601520a967209fe6",
+        "actual_sha256": "d5d49c97d9b51a3dc555cb31255c3ccd733285fc6d99bd50601520a967209fe6",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿-学术润色版-2026-09-14.md",
+        "actually_recomputed": true,
+        "expected_sha256": "19c23cdd03de7aa7175b953ee743cc5115ae0feb2bd016f087929be1dffeaa87",
+        "actual_sha256": "19c23cdd03de7aa7175b953ee743cc5115ae0feb2bd016f087929be1dffeaa87",
+        "unchanged": true
+      },
+      {
+        "path": "docs/毕业论文重构稿.md",
+        "actually_recomputed": true,
+        "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "actual_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "unchanged": true
+      },
+      {
+        "path": "docs/项目续审与论文增益优化评估-T147-2026-10-12.md",
+        "actually_recomputed": true,
+        "expected_sha256": "00ac1695c38f9077281d69fe04392299c8e8b236363c67c4d8b05fe69d131951",
+        "actual_sha256": "00ac1695c38f9077281d69fe04392299c8e8b236363c67c4d8b05fe69d131951",
+        "unchanged": true
+      },
+      {
+        "path": "docs/项目续审核验证据-T147-2026-10-12.json",
+        "actually_recomputed": true,
+        "expected_sha256": "7e2ff402f130a64ef407f22c1ee08631576adf76b4033d15a610f2f611f9facb",
+        "actual_sha256": "7e2ff402f130a64ef407f22c1ee08631576adf76b4033d15a610f2f611f9facb",
+        "unchanged": true
+      }
+    ],
+    "aggregate_algorithm": "SHA256 of sorted repository-relative path:SHA256(file) rows joined by LF with no final LF; exclude __pycache__ and .pyc"
+  },
+  "finished_utc": "2026-10-12T14:10:51.980622+00:00",
+  "supplemental_include_str_assets": {
+    "note": "Additional include_str assets, first observed midrun; outside original65-inputcontract",
+    "assets": [
+      {
+        "path": "backend/openapi.json",
+        "midrun_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+        "t148_start_baseline_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+        "matches_task_start": true,
+        "pre_command_freeze_recorded": false,
+        "postrun_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+        "unchanged_midrun_to_postrun": true
+      },
+      {
+        "path": "backend/legacy/tests/security_vectors.json",
+        "midrun_sha256": "c07b30b0f25ce16d87df2ee5d84da1952aababb1f85071aca6b487cc76eac69d",
+        "t148_start_baseline_sha256": null,
+        "matches_task_start": null,
+        "pre_command_freeze_recorded": false,
+        "postrun_sha256": "c07b30b0f25ce16d87df2ee5d84da1952aababb1f85071aca6b487cc76eac69d",
+        "unchanged_midrun_to_postrun": true
+      }
+    ]
+  },
+  "database_container_record": {
+    "path": "agent-work/t148-2026-10-12/qa/db-container.json",
+    "sha256": "a2605af7d596eb888d5f0846328cafe46d78a093f2dd864c9b38555345433440"
+  },
+  "qa_runner_sha256": "5eda34c7fe84ff4e967e15da54f9f06f29c0c7bf1963cd18adf8fc2bb8ef66c3",
+  "independent_log_cross_check": {
+    "actual_individual_ok_count": 305,
+    "actual_individual_failed_count": 0,
+    "actual_individual_ignored_count": 0,
+    "summary_lines": [
+      "test result: ok. 303 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 267.87s",
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s"
+    ],
+    "all_phase_log_hashes_verified": true,
+    "no_previous_run_counts_used": true,
+    "database_skipped_diagnostics": 0
+  },
+  "outside_scope_checks": [
+    {
+      "name": "scripts_suite",
+      "actually_run_by_this_qa": false,
+      "responsible": "root"
+    },
+    {
+      "name": "frontend lint/typecheck/build",
+      "actually_run_by_this_qa": false,
+      "responsible": "frontend-engineer"
+    },
+    {
+      "name": "system-e2e",
+      "actually_run_by_this_qa": false,
+      "responsible": "root"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "source_path": "/Users/yusong/Desktop/1003-导师批注逐项修订版.docx",
+  "source_sha256": "11268ba5ee190c89e08cfb0b32010219920d2d8d7186f7e24384d9270a895556",
+  "candidate_path": "/private/tmp/advisor-T130-20261004/candidate.docx",
+  "candidate_sha256_before_toc_refresh": "bf9e0a0260b7597401a48ee7c853ee7be878001cab68ace33a64e2a115c65b7e",
+  "changes": [
+    {
+      "kind": "text",
+      "before": "归档记录显示，8 个浏览器端到端场景及高风险确认与幂等模块的 8 项测试均通过。四条合成种子笔记的抽取结果与内部编制的 52 条参考关系集比对，修复后精确率、召回率和 F1 均为 100.00%，该结果仅表示清单内的一致性。迁移前 Python 原型的 20 题归档问答中，普通检索与图谱增强的规则化任务完成数分别为 4/20 和 14/20，引用格式及范围复核合格数为 17/20 和 15/20。当前 Rust 检索证据下的四组配置共产生 144 条回答，一跳关系组事实覆盖率为 74.44%，资料检索组为 46.67%；题级主检验 p=0.0938，尚未达到 0.05 阈值。补充语义评价与角色接口验证用于核对证据支持和业务约束，真人参与者为 0。",
+      "after": "归档记录显示，8 个浏览器端到端场景及高风险确认与幂等模块的 8 项测试均通过。四条合成种子笔记的抽取结果与内部编制的 52 条参考关系集比对，修复后精确率、召回率和 F1 均为 100.00%，该结果仅表示清单内的一致性。迁移前 Python 原型的 20 题归档问答中，普通检索与图谱增强的规则化任务完成数分别为 4/20 和 14/20，引用格式及范围复核合格数为 17/20 和 15/20。当前 Rust 检索证据下的四组配置共产生 144 条回答，一跳关系组事实覆盖率为 74.44%，资料检索组为 46.67%；题级主检验 p=0.0938，尚未达到 0.05 阈值。补充语义评价与角色接口验证用于核对证据支持和业务约束。",
+      "reason": "删除中文摘要中未开展的真人实测说明"
+    },
+    {
+      "kind": "text",
+      "before": "Archived records show that eight browser end-to-end scenarios and eight high-risk confirmation and idempotency tests passed. Extraction from four synthetic seed notes achieved 100.00% precision, recall, and F1 against 52 internally compiled reference relations; these scores describe agreement with that checklist. In 20 archived questions from the Python prototype before its migration to Rust, ordinary retrieval and graph-enhanced retrieval completed 4/20 and 14/20 questions under the rule-based measure, while citation syntax and range checks passed 17/20 and 15/20 answers. Four configurations using current Rust retrieval evidence produced 144 answers. One-hop relations achieved 74.44% fact coverage versus 46.67% for document retrieval (question-level p=0.0938, above the 0.05 threshold). Semantic evaluation and role-based API checks involved no human participants.",
+      "after": "Archived records show that eight browser end-to-end scenarios and eight high-risk confirmation and idempotency tests passed. Extraction from four synthetic seed notes achieved 100.00% precision, recall, and F1 against 52 internally compiled reference relations; these scores describe agreement with that checklist. In 20 archived questions from the Python prototype before its migration to Rust, ordinary retrieval and graph-enhanced retrieval completed 4/20 and 14/20 questions under the rule-based measure, while citation syntax and range checks passed 17/20 and 15/20 answers. Four configurations using current Rust retrieval evidence produced 144 answers. One-hop relations achieved 74.44% fact coverage versus 46.67% for document retrieval (question-level p=0.0938, above the 0.05 threshold). Semantic evaluation and role-based API checks assessed evidence support and workflow constraints.",
+      "reason": "英文摘要同步"
+    },
+    {
+      "kind": "text",
+      "before": "审计页按项目展示操作记录，展开后可核对调用工具、风险与完成状态（图5-16）。独立盲评要求评价者无项目读权限，当前管理员被该入口拒绝（图5-17），这一画面只说明访问隔离，不是已完成真人评价。",
+      "after": "审计页按项目展示操作记录，展开后可核对调用工具、风险与完成状态（图5-16）。独立盲评要求评价者无项目读权限，当前管理员被该入口拒绝（图5-17），这一画面展示该入口的访问隔离。",
+      "reason": "保留功能截图身份，删除未开展真人评价的表述"
+    },
+    {
+      "kind": "text",
+      "before": "问答完成后，当前会话在回答下方提供“有帮助／没帮助”入口，收集效果轻反馈。反馈经项目读权限及非盲访问条件校验后记录为审计事件，与后端保留的1～5分非盲评分记录及独立盲评流程分别处理。图5-18来自2026年10月3日23:33的演示项目10、问答1934，采用deepseek-flash及bge-m3（1024维），提示版本rag-v9-source-and-graph-citations；自动模式降级为项目RAG。本次未点击反馈，也未产生人工评分，不并入历史实验样本。",
+      "after": "问答完成后，当前会话在回答下方提供“有帮助／没帮助”入口，收集效果轻反馈。反馈经项目读权限及非盲访问条件校验后记录为审计事件，与后端保留的1～5分非盲评分记录及独立盲评流程分别处理。图5-18来自2026年10月3日23:33的演示项目10、问答1934，采用deepseek-flash及bge-m3（1024维），提示版本rag-v9-source-and-graph-citations；自动模式降级为项目RAG。本次未点击反馈，不并入历史实验样本。",
+      "reason": "删除未产生人工评分的说明，保留界面采集批次边界"
+    },
+    {
+      "kind": "text",
+      "before": "上述结果来自真实Rust接口的功能测试与GPT角色模拟：批准版本可回查，普通RAG在资料未入库时返回409，入库后按原规则通过8/9场，项目读取与写入权限分别核验。实际请求、生成结果与完整响应保存在补验附件中。这些记录支持相应接口与业务条件的检查，但真人参与者为0，未评价满意度、使用负担、长期采用率或前端与MCP的实际可用性。",
+      "after": "上述结果来自真实Rust接口的功能测试与GPT角色模拟：批准版本可回查，普通RAG在资料未入库时返回409，入库后按原规则通过8/9场，项目读取与写入权限分别核验。实际请求、生成结果与完整响应保存在补验附件中。这些记录支持相应接口与业务条件的检查。",
+      "reason": "删除真人实测欠项列表；本段真实Rust接口及GPT模拟身份保持"
+    },
+    {
+      "kind": "text",
+      "before": "（1）验证语料与参考规则的独立性不足。现有材料以内部合成记录和公开数据派生记录为主，52条关系参考集覆盖四条规范化笔记，尚无独立复核签名；新12题及前置规则由AI依据来源编制，不能替代独立研究者金标准。这使结果主要反映固定语料与既定规则内的一致性。后续应引入未参与实现、生成与制题的研究者，独立制定或复核关系及问答参考，保留原始判断、分歧和一致性统计，并扩大真实实验记录的来源。",
+      "after": "（1）验证语料与参考规则的独立性不足。现有材料以内部合成记录和公开数据派生记录为主，52条关系参考集覆盖四条规范化笔记，尚无独立复核签名；新12题及前置规则由AI依据来源编制，不能替代独立研究者金标准。这使结果主要反映固定语料与既定规则内的一致性。后续应扩大实验记录来源，按固定规则复核关系与问答参考，保留原始依据、修订过程和核对结果，并在新语料上重复验证。",
+      "reason": "删除未实施的人工评价安排，保留语料与参考规则复核措施"
+    },
+    {
+      "kind": "text",
+      "before": "（2）样本规模和评价可比性有限。旧20题仅生成一次，使用修复前图谱，3题含已知误抽关系，并按事后规则核对；新12题在生成前锁定规则、语料与配置，同题三次重复按题汇总，两批结果分别报告。第6.6节已给出GPT语义评价及表6-11a的题级配对差值，但评审代理未统一校准，也未对同一回答重复评价；其自定义指标与DeepSeek RAGAS定义不同。后续应扩大独立题集，使用同一评分定义开展多人或多模型重复评价，报告一致性与全部成功、缺失及失败记录。扩展批次中项目RAG与词法检索RAG的自动分数仍未取得。",
+      "after": "（2）样本规模和评价可比性有限。旧20题仅生成一次，使用修复前图谱，3题含已知误抽关系，并按事后规则核对；新12题在生成前锁定规则、语料与配置，同题三次重复按题汇总，两批结果分别报告。第6.6节已给出GPT语义评价及表6-11a的题级配对差值，但评审代理未统一校准，也未对同一回答重复评价；其自定义指标与DeepSeek RAGAS定义不同。后续应扩大独立题集，使用同一评分定义开展多模型重复评价，报告一致性与全部成功、缺失及失败记录。扩展批次中项目RAG与词法检索RAG的自动分数仍未取得。",
+      "reason": "删除未开展的多人评价计划"
+    },
+    {
+      "kind": "text",
+      "before": "结果分析：实验二图谱增强的上下文召回由0.05增至0.52，忠实度由0.61降至0.53，精确率由0.27降至0.24。第11题追问“58℃条带最清晰”的来源，增强组G1、G2支持PCR笔记，G3—G10却来自质粒测序、ELISA等其他记录，可确认相关与不相关关系并存。第7题列出的样本B[G2]、样本A[G3]也与实际关系一致，但第7、11题的增强组自动忠实度均为0。评分程序同时传入资料和关系文本，现有归档未保留主张分解及判定理由，不能仅据低分将下降归因为噪声或幻觉。本批次支持“覆盖提高，自动支持及相关性指标未同步提高”的观察；GPT补评与配对差值见6.6节。",
+      "after": "结果分析：实验二图谱增强的上下文召回由0.05增至0.52，忠实度由0.61降至0.53，精确率由0.27降至0.24。上下文召回考察参考答案中的事实是否被检索上下文覆盖，忠实度考察回答陈述是否受上下文支持，两者评价对象不同，召回上升并不必然带来忠实度上升。第11题追问“58℃条带最清晰”的来源，增强组G1、G2支持PCR笔记，G3—G10却来自质粒测序、ELISA等其他记录，可确认相关与不相关关系并存。第7题列出的样本B[G2]、样本A[G3]也与实际关系一致，但第7、11题的增强组自动忠实度均为0。评分程序同时传入资料和关系文本，现有归档未保留主张分解及判定理由，不能仅据低分将下降归因为噪声或幻觉。本批次支持“覆盖提高，自动支持及相关性指标未同步提高”的观察；GPT补评与配对差值见6.6节。",
+      "reason": "补充两个指标为何可能不同方向的具体解释，不增添因果归因"
+    },
+    {
+      "kind": "text",
+      "before": "条）、答案规则与逐题判定、盲评表与解盲键",
+      "after": "条）、答案规则与逐题判定",
+      "reason": "从附件清单删除未执行的人工盲评材料"
+    },
+    {
+      "kind": "paragraph_deleted",
+      "before": "（5）真实使用效果尚未验证。第6.6节的四种GPT角色操作了隔离项目的真实接口，真人参与者为0；浏览器自动化与角色模拟不能说明课题组的实际使用负担或建议采纳情况。后续应由真实课题组按固定任务完成记录编写、审核、问答核查和告警处置，保存参与者、操作过程及反馈，评价任务完成、核查耗时和长期使用效果；图谱核对效率可通过替代界面对照检验。",
+      "reason": "未开展真人实测不在论文体现；批注30保持并迁至7.3最后一项"
+    },
+    {
+      "kind": "section_deleted",
+      "heading": "D.3 人工盲评协议",
+      "before": "人工盲评由未参与答案生成的研究者独立完成。评价者阅读匿名问题、回答及对应证据，逐项判断事实正确性和引用支持度，再给出 1—5 分综合质量评分及理由；全部评价提交后才按解盲键统计模式结果。两名评价者应报告一致率或 Cohen’s kappa，保留各自原始判断与分歧处理记录。已有表格为待执行协议，人工结果以实际完成、可签核的评价记录为依据；模型自动评分单独归档。应检查回答或证据中的 [G] 标记可能造成的模式泄露，并记录处理方式。第6.6节的GPT会话评判与角色模拟已单独归档；本协议仍用于未来由独立研究者实际完成的人工评价。",
+      "reason": "删除尚未执行的人工盲评协议"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "D.4 项目一样本原文展示",
+      "after": "D.3 项目一样本原文展示"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "D.5 测试运行与本轮性能观测记录",
+      "after": "D.4 测试运行与本轮性能观测记录"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "归档实验配置：主问答对照与固定任务运行于迁移前Python原型，生成与自动评判均为DeepSeek flash档、温度0.1，嵌入模型为bge-small-zh-v1.5（512维）。另有2026年8月28日legacy/SQLite模式的pytest摘要：346项通过、11项跳过，用时10.43 s；逐条日志及JUnit未归档，不作为生产Rust测试结果。Rust安全模块同日另有隔离PostgreSQL记录，模块8项通过，3项新增集成测试具备名称及ok摘录。运行记录见附录D.5。GSE111619扩展批次未绑定代码版本，各归档身份和配置以附录D为准。",
+      "after": "归档实验配置：主问答对照与固定任务运行于迁移前Python原型，生成与自动评判均为DeepSeek flash档、温度0.1，嵌入模型为bge-small-zh-v1.5（512维）。另有2026年8月28日legacy/SQLite模式的pytest摘要：346项通过、11项跳过，用时10.43 s；逐条日志及JUnit未归档，不作为生产Rust测试结果。Rust安全模块同日另有隔离PostgreSQL记录，模块8项通过，3项新增集成测试具备名称及ok摘录。运行记录见附录D.4。GSE111619扩展批次未绑定代码版本，各归档身份和配置以附录D为准。"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "项目一四条固定笔记为合成种子，PCR、细胞活力、Western Blot及qPCR的字段与正文展示见附录D.4。图中内容由留存种子定义重现，与早期Python同名种子逐字段一致。七份SOP提要则来自原型运行编号4的检索来源，与留存同名文件逐字一致；它们不代表原型批次全部15条笔记的完整输入快照。",
+      "after": "项目一四条固定笔记为合成种子，PCR、细胞活力、Western Blot及qPCR的字段与正文展示见附录D.3。图中内容由留存种子定义重现，与早期Python同名种子逐字段一致。七份SOP提要则来自原型运行编号4的检索来源，与留存同名文件逐字一致；它们不代表原型批次全部15条笔记的完整输入快照。"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "本轮按NFR6基础只读接口目标作持续观测：2026年10月3日，版本fb87ce38，10项目、46笔记、44文件；10个并发工作者分别以约1请求/s循环访问/health、/ready、/projects。墙时60.01074 s，三个端点各200次，共600次请求全部成功；成功吞吐9.99821请求/s，整体p95为13.376 ms，最大17.724 ms，三个端点p95分别为11.484、12.713、13.570 ms。本轮达到p95≤2 s及吞吐≥5请求/s的基础目标；结果仅适用于本地小数据、限速轻负载，不含模型生成、写入事务及复杂检索，不能外推峰值容量。逐请求明细与运行身份见附录D.5。",
+      "after": "本轮按NFR6基础只读接口目标作持续观测：2026年10月3日，版本fb87ce38，10项目、46笔记、44文件；10个并发工作者分别以约1请求/s循环访问/health、/ready、/projects。墙时60.01074 s，三个端点各200次，共600次请求全部成功；成功吞吐9.99821请求/s，整体p95为13.376 ms，最大17.724 ms，三个端点p95分别为11.484、12.713、13.570 ms。本轮达到p95≤2 s及吞吐≥5请求/s的基础目标；结果仅适用于本地小数据、限速轻负载，不含模型生成、写入事务及复杂检索，不能外推峰值容量。逐请求明细与运行身份见附录D.4。"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "D.4 项目一样本原文展示",
+      "after": "D.3 项目一样本原文展示"
+    },
+    {
+      "kind": "appendix_reference_renumber",
+      "before": "D.5 测试运行与本轮性能观测记录",
+      "after": "D.4 测试运行与本轮性能观测记录"
+    },
+    {
+      "kind": "comment_anchor_moved",
+      "id": "29",
+      "from": "（4）业务验证与运行评价覆盖不足。计划覆盖只按类型与规范名判断记录是否涉及知识点，不能判断科研任务是否完成；合并冲突样例不足，主动预警推送、数量汇总的项目权限隔离及上游失败写入链路尚无专项结果。退回动作枚举及重新抽取后停滞天数的指标口径仍需核对。后续应补齐冲突与异常状态测试，复核来源优先级、预警计算和状态留痕，并在声明数据规模、并发与模型配置下测量业务接口和生成任务的性能。",
+      "to": "（2）样本规模和评价可比性有限。旧20题仅生成一次，使用修复前图谱，3题含已知误抽关系，并按事后规则核对；新12题在生成前锁定规则、语料与配置，同题三次重复按题汇总，两批结果分别报告。第6.6节已给出GPT语义评价及表6-11a的题级配对差值，但评审代理未统一校准，也未对同一回答重复评价；其自定义指标与DeepSeek RAGAS定义不同。后续应扩大独立题集，使用同一评分定义开展多模型重复评价，报告一致性与全部成功、缺失及失败记录。扩展批次中项目RAG与词法检索RAG的自动分数仍未取得。",
+      "reason": "批注随差值说明及表6-11a回指定位；批注文字不变"
+    }
+  ]
+}

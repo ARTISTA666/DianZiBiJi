@@ -1,0 +1,3323 @@
+[
+  {
+    "arm": "body",
+    "record_id": "iisc2019-01",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "iisc2019-01 Buffer and medium preparation",
+      "experiment_type": "reagent_and_medium_preparation",
+      "experiment_date": "2019-04-09",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": " Specific buffers were made:\no 0.1M CaCl2 in 15% glycerol.\no 1M 100ml HCl\no 5M 100ml NaCl\no 0.1M 100ml MgCl2\no 250ml LB + Agar\no LB solution (broth)\no 500 ml 50X TAE\no Alkaline lysis buffer-I\no Alkaline lysis buffer-II\n These solutions were prepared for autoclaving."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-01 Buffer and medium preparation",
+        "target_identity": "iisc2019-01"
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "reagent_and_medium_preparation",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "CaCl2",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "glycerol",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "LB",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Agar",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "iisc2019-02",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+      "experiment_type": "autoclaving_and_antibiotic_preparation",
+      "experiment_date": "2019-04-10",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": " The prepared solutions were autoclaved along with the tip-boxes.\n Prepared antibiotic solutions:\no Ampicillin\no Chloramphenico\nPoured plates (Petri dishes were autoclaved earlier)"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-02",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "target_identity": "iisc2019-02"
+      },
+      {
+        "record_id": "iisc2019-02",
+        "source_type": "note",
+        "source_label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "source_identity": "iisc2019-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-02",
+        "source_type": "note",
+        "source_label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "source_identity": "iisc2019-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "autoclaving_and_antibiotic_preparation",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "iisc2019-03",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "iisc2019-03 PCR and gel electrophoresis",
+      "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+      "experiment_date": "2019-04-13",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": " Created PCR mix for 4 different DNA sequences and 5 controls:\n DNA Sequences:\n 6-His imcherry (708bp)\n mcp-1 + HlyA(713bp)\n mcp-1 + PelB (536bp)\n mcp-1 expression\n Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.\n The PCR (Total 25 µl) mix was created by adding the following ingredients in order:\n1. NF H2O: 8.9 µl\n2. Buffer: 5 µl\n3. dNTP mix: 0.5 µl\n4. Forward primer: 0.2 µl\n5. Reverse primer: 0.2 µl\n6. DNA sequence: 10 µl\n PCR was run by the following process:\nDenaturalisation: 95oC/98oC – 2min\nAnnealing (30 times): 95oC - 20s; Tm(67oC) – 30s;\nExtension: 72oC-20s/kb -> 10min\n Gel Electrophoresis (Gel preparation and electrophoresis)\n1% Agarose Gel(1X); Heated in the oven for 30-45s, till transparency is achieved.\nLoading Order:\n1.Gene Ruler\n2.imCherry\n3.mcp-1 Hly-A\n4.mcp-1 Hly-A\nBlank 6.mcp expression\n7. Control (no DNA)\n8.Control (no primer)\nGene ruler: 1µl loading dye + 1µl gene ruler + 1µl NF H2O\n2-8: 2µl loading dye + 10µl DNA (PCR mix)"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-03 PCR and gel electrophoresis",
+        "target_identity": "iisc2019-03"
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR_and_agarose_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "6-His imcherry",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "mcp-1 + HlyA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "mcp-1 + PelB",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "mcp-1 expression",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "DNA only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "FP only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "No DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "Primers only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "RP only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "No primers",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "NF H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "dNTP mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Forward primer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Reverse primer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "1% Agarose Gel(1X)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Gene Ruler",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "loading dye",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "oven",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "iisc2019-04",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "iisc2019-04 LB medium and agar plate preparation",
+      "experiment_type": "medium_and_plate_preparation",
+      "experiment_date": "2019-05-14",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": " Prepared 250ml LB agar and 200ml LB and was autoclaved.\n Prepared agar plates."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-04",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-04 LB medium and agar plate preparation",
+        "target_identity": "iisc2019-04"
+      },
+      {
+        "record_id": "iisc2019-04",
+        "source_type": "note",
+        "source_label": "iisc2019-04 LB medium and agar plate preparation",
+        "source_identity": "iisc2019-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-04",
+        "source_type": "note",
+        "source_label": "iisc2019-04 LB medium and agar plate preparation",
+        "source_identity": "iisc2019-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "medium_and_plate_preparation",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "ubc2021-01",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "ubc2021-01 Gel electrophoresis of PCR products",
+      "experiment_type": "agarose_gel_electrophoresis",
+      "experiment_date": "2021-06-30",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "- Ran gel electrophoresis on PCR products of Ryan’s primer design\n- The DNA ladder was picked up in the evening by Janella, so used the DNA ladder 1kb plus from Hallam lab instead\n- Got the login key from Avery\n- Used the gel stain from the buffer/enzyme box [from the map] and misplaced it in the BIOMOD shelf.\n- Took a photo of the gel from gel analyzer."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "target_identity": "ubc2021-01"
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "agarose_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "PCR products of Ryan’s primer design",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "DNA ladder 1kb plus",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "gel stain",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "gel analyzer",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "ubc2021-02",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "ubc2021-02 RFP plasmid retransformation",
+      "experiment_type": "plasmid_transformation",
+      "experiment_date": "2021-07-05",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "- Re-transforming RFP to get more stock of pSB1C3-RFP plasmid we got from 2019 iGEM, since we have to remove the backbone from it via PCR and are running low on our stock. Re-transforming instead of picking a colony again because the RFP plates have been out for ~a month so are probably bad by now. This was confirmed by re-picking and miniprepping, resulted in low yield.\n- 5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).\n- Transformation #5 used fresh SOC instead of supernatant to resuspend\n- Only 4 LB + CM plates are left, should make more asap!"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-02 RFP plasmid retransformation",
+        "target_identity": "ubc2021-02"
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "plasmid_transformation",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2019 RFP plasmid that was left out (118ng/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2019 RFP plasmid (17ng/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2017 RFP plasmid (10pg/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SOC",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "This was confirmed by re-picking and miniprepping, resulted in low yield.",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "ubc2021-03",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+      "experiment_type": "Golden_Gate_assembly",
+      "experiment_date": "2021-07-06",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "- Transforming RFP Constructs\n- Moved 5 transformation plates from 37C room to 4C room (as per instructed by Janella)\n- Golden Gate Assembly of psicA and golden gate compatible RFP construct (x2 duplicates)\n1. IDT psicA gene fragment preparation\n- Added 25 uL to make 10 ng/uL of psicA\n- Incubated for ~10 minutes at 60 degrees celsius to ensure the solvent comes in contact with the tiny pellet.\n2. Golden Gate Assembly Reaction:\n- 0.5 uL of T4 ligase\n- 1 uL BsaI\n- 2 uL 10X T4 Buffer\n- 2 uL 10X BSA Buffer\n- 6 uL psicA insert + 0.5 uL of DNA amplicon\n- Fix volume to 20 uL using H2O\n3. Incubated Golden Gate Assembly reaction at 37 degrees celsius for 1hr"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "target_identity": "ubc2021-03"
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "Golden_Gate_assembly",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "T4 ligase",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "BsaI",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "10X T4 Buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "10X BSA Buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "golden gate compatible RFP construct",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "psicA insert",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "DNA amplicon",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "ubc2021-04",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+      "experiment_type": "transformation_observation_and_retransformation",
+      "experiment_date": "2021-07-08",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "- Checked plates from Madina, Taylor, and Janella’s transformation on July 5th. The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth. the 2017 10pg test kit worked, but had few colonies. 2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.\n- Retransformed 50ul of competent cells with the 2019 RFP plasmid (17ng/ul) using 2.5ul to get less growth on plates. Included a negative control without any DNA to sort out what is happening with non red growth, but couldn’t plate it because of no more CM plates left.\n- Practiced a mock ligation without DNA.\n- Placed transformation at 37 degrees in the warm room."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "target_identity": "ubc2021-04"
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "transformation_observation_and_retransformation",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "plates from Madina, Taylor, and Janella’s transformation on July 5th",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "competent cells",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2019 RFP plasmid (17ng/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "negative control without any DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "the 2017 10pg test kit worked, but had few colonies.",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "team5863-01",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "team5863-01 Field sampling",
+      "experiment_type": "field_sample_collection",
+      "experiment_date": "2025-05-04",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "● Visit to the Mango farm.\n● Collected 6 eppendorf tubes of thrips (approximately >10 thrips in each tube).\nThey are stored in 99% ethanol."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "team5863-01",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-01 Field sampling",
+        "target_identity": "team5863-01"
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "field_sample_collection",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "thrips",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "99% ethanol",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "team5863-02",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "team5863-02 DNA extraction of collected samples",
+      "experiment_type": "insect_DNA_extraction",
+      "experiment_date": "2025-06-11",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "Quick Protocol: DNeasy Blood & Tissue Kit (for insects)\nMaterials Needed:\n● DNeasy Blood & Tissue Kit (Qiagen)\n● 1.5 mL microcentrifuge tubes\n● Ethanol (96–100%)\n● Proteinase K\n● Buffer ATL, AL, AW1, AW2, AE\n\n1. Sample Prep\n● 5 samples collected from farms were used (4 samples collected by Baha and 1 sample collected by Wahei)\n● Samples were centrifuged to spin down the insects and ethanol was discarded\n● Incubated in 56 °C until excess ethanol dried out\n● Add 180 µL Buffer ATL.\n● Add 20 µL Proteinase K.\n● Vortex briefly or flick.\n● Incubate at 56 °C for 1–3 hours (or overnight) until fully lysed.\n2. Lysis\n● Add 200 µL Buffer AL, mix.\n● Add 200 µL ethanol (96–100%), mix well.\n3. Binding\n● Transfer the mixture to a DNeasy spin column in a collection tube.\n● Centrifuge 1 min at ≥6000 x g (8000 rpm).\n● Discard flow-through.\n4. Wash\n● Add 500 µL Buffer AW1, spin 1 min, discard flow-through.\n● x\n5. Elution\n● Place column in a clean 1.5 mL tube.\n● Add 100 µL Buffer AE (or nuclease-free water).\n● Incubate 1 min, then centrifuge 1 min at ≥6000 x g.\n\nStore:\n● Store eluted DNA at –20 °C."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "team5863-02",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-02 DNA extraction of collected samples",
+        "target_identity": "team5863-02"
+      },
+      {
+        "record_id": "team5863-02",
+        "source_type": "note",
+        "source_label": "team5863-02 DNA extraction of collected samples",
+        "source_identity": "team5863-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-02",
+        "source_type": "note",
+        "source_label": "team5863-02 DNA extraction of collected samples",
+        "source_identity": "team5863-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "insect_DNA_extraction",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-02",
+        "source_type": "note",
+        "source_label": "team5863-02 DNA extraction of collected samples",
+        "source_identity": "team5863-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "samples collected from farms",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "team5863-03",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "team5863-03 PCR tests of extracted DNA samples",
+      "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+      "experiment_date": "2025-06-12",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "PCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1.25 ul of 10uM of each ThripsITSF\n● 1.25 ul of 10uM of each ThripsITSR\n● 1.25 ul of 10uM of each SdITSF3\n● 1.25 ul of 10uM of each SdITSF7\n● 3 ul of extracted DNA\n● 4.5 ul of H2O\n\nPCR conditions:\n\nInitial denaturation 98°C 30 sec\nDenaturation 98°C 10 sec\n}25 cycles\nAnnealing 60°C 10 sec\nExtension 72°C 30 sec\nFinal extension 72°C 5 min\n\n\nRun on 1% agarose gel (0.5 g of agarose and 50 ml of TAE buffer) with 180 V for 5 min\n\nThe result was unclear."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "team5863-03",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-03 PCR tests of extracted DNA samples",
+        "target_identity": "team5863-03"
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR_and_agarose_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Phusion Plus Master Mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSF",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSR",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF3",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF7",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "agarose",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "TAE buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "extracted DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "The result was unclear.",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "body",
+    "record_id": "team5863-04",
+    "project_name": "T136 body",
+    "payload": {
+      "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+      "experiment_type": "PCR_optimization_and_gel_electrophoresis",
+      "experiment_date": "2025-06-26",
+      "fixed_fields_json": {},
+      "content_json": {
+        "text": "This time, we used PCR protocol from paper:\nPCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1 ul of 20uM of each ThripsITSF (20 pmol)\n● 1 ul of 20uM of each ThripsITSR (20 pmol)\n● 1 ul of 20uM of each SdITSF3 (20 pmol)\n● 1 ul of 20uM of each SdITSF7 (20 pmol)\n● 5 ul of extracted DNA\n● 3.5 of H2O\n\n\nPCR conditions:\n\nInitial denaturation 94°C 9 min\nDenaturation 94°C 30 sec\n}35 cycles\nAnnealing 52°C 30 sec\nExtension 72°C 1 min\nFinal extension 72°C 7 min\n\nMix PCR samples with loading dye (5:1) and use the appropriate ladder (with bands on 200-500 bp). Run on gel 2% agarose gel (1 g of agarose dissolved in 50 ml of TAE) with 130 V for 15 min.\nClear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).\nSamples were loaded in this order: diluted ladder, miss, 7ng/ul extracted dna (trap water), 3.3 ng/ul, 2.6 ng/ul, 0.8 ng/ul, 0 ng/ul (Figure 1)."
+      }
+    },
+    "expected": [
+      {
+        "record_id": "team5863-04",
+        "source_type": "project",
+        "source_label": "T136 body",
+        "source_identity": "T136 body",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "target_identity": "team5863-04"
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR_optimization_and_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Phusion Plus Master Mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSF",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSR",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF3",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF7",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "loading dye",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ladder",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "agarose",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "TAE",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "extracted DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "PCR samples",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "7ng/ul extracted dna (trap water)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "Clear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "iisc2019-01",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "iisc2019-01 Buffer and medium preparation",
+      "experiment_type": "reagent_and_medium_preparation",
+      "experiment_date": "2019-04-09",
+      "fixed_fields_json": {
+        "reagents": [
+          "CaCl2",
+          "glycerol",
+          "LB",
+          "Agar"
+        ],
+        "instrument": [],
+        "sample": [],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-01 Buffer and medium preparation",
+        "target_identity": "iisc2019-01"
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "reagent_and_medium_preparation",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "CaCl2",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "glycerol",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "LB",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-01",
+        "source_type": "note",
+        "source_label": "iisc2019-01 Buffer and medium preparation",
+        "source_identity": "iisc2019-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Agar",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "iisc2019-02",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+      "experiment_type": "autoclaving_and_antibiotic_preparation",
+      "experiment_date": "2019-04-10",
+      "fixed_fields_json": {
+        "reagents": [],
+        "instrument": [],
+        "sample": [],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-02",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "target_identity": "iisc2019-02"
+      },
+      {
+        "record_id": "iisc2019-02",
+        "source_type": "note",
+        "source_label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "source_identity": "iisc2019-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-02",
+        "source_type": "note",
+        "source_label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "source_identity": "iisc2019-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "autoclaving_and_antibiotic_preparation",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "iisc2019-03",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "iisc2019-03 PCR and gel electrophoresis",
+      "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+      "experiment_date": "2019-04-13",
+      "fixed_fields_json": {
+        "reagents": [
+          "NF H2O",
+          "Buffer",
+          "dNTP mix",
+          "Forward primer",
+          "Reverse primer",
+          "1% Agarose Gel(1X)",
+          "Gene Ruler",
+          "loading dye"
+        ],
+        "instrument": [
+          "oven"
+        ],
+        "sample": [
+          "6-His imcherry",
+          "mcp-1 + HlyA",
+          "mcp-1 + PelB",
+          "mcp-1 expression",
+          "DNA only",
+          "FP only",
+          "No DNA",
+          "Primers only",
+          "RP only",
+          "No primers"
+        ],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-03 PCR and gel electrophoresis",
+        "target_identity": "iisc2019-03"
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR_and_agarose_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "6-His imcherry",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "mcp-1 + HlyA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "mcp-1 + PelB",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "mcp-1 expression",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "DNA only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "FP only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "No DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "Primers only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "RP only",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "No primers",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "NF H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "dNTP mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Forward primer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Reverse primer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "1% Agarose Gel(1X)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Gene Ruler",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "loading dye",
+        "target_identity": ""
+      },
+      {
+        "record_id": "iisc2019-03",
+        "source_type": "note",
+        "source_label": "iisc2019-03 PCR and gel electrophoresis",
+        "source_identity": "iisc2019-03",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "oven",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "iisc2019-04",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "iisc2019-04 LB medium and agar plate preparation",
+      "experiment_type": "medium_and_plate_preparation",
+      "experiment_date": "2019-05-14",
+      "fixed_fields_json": {
+        "reagents": [],
+        "instrument": [],
+        "sample": [],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "iisc2019-04",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "iisc2019-04 LB medium and agar plate preparation",
+        "target_identity": "iisc2019-04"
+      },
+      {
+        "record_id": "iisc2019-04",
+        "source_type": "note",
+        "source_label": "iisc2019-04 LB medium and agar plate preparation",
+        "source_identity": "iisc2019-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "iisc2019-04",
+        "source_type": "note",
+        "source_label": "iisc2019-04 LB medium and agar plate preparation",
+        "source_identity": "iisc2019-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "medium_and_plate_preparation",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "ubc2021-01",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "ubc2021-01 Gel electrophoresis of PCR products",
+      "experiment_type": "agarose_gel_electrophoresis",
+      "experiment_date": "2021-06-30",
+      "fixed_fields_json": {
+        "reagents": [
+          "DNA ladder 1kb plus",
+          "gel stain"
+        ],
+        "instrument": [
+          "gel analyzer"
+        ],
+        "sample": [
+          "PCR products of Ryan’s primer design"
+        ],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "target_identity": "ubc2021-01"
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "agarose_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "PCR products of Ryan’s primer design",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "DNA ladder 1kb plus",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "gel stain",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-01",
+        "source_type": "note",
+        "source_label": "ubc2021-01 Gel electrophoresis of PCR products",
+        "source_identity": "ubc2021-01",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "gel analyzer",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "ubc2021-02",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "ubc2021-02 RFP plasmid retransformation",
+      "experiment_type": "plasmid_transformation",
+      "experiment_date": "2021-07-05",
+      "fixed_fields_json": {
+        "reagents": [
+          "SOC"
+        ],
+        "instrument": [],
+        "sample": [
+          "2019 RFP plasmid that was left out (118ng/ul)",
+          "2019 RFP plasmid (17ng/ul)",
+          "2017 RFP plasmid (10pg/ul)"
+        ],
+        "result": [
+          "This was confirmed by re-picking and miniprepping, resulted in low yield."
+        ]
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-02 RFP plasmid retransformation",
+        "target_identity": "ubc2021-02"
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "plasmid_transformation",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2019 RFP plasmid that was left out (118ng/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2019 RFP plasmid (17ng/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2017 RFP plasmid (10pg/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SOC",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-02",
+        "source_type": "note",
+        "source_label": "ubc2021-02 RFP plasmid retransformation",
+        "source_identity": "ubc2021-02",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "This was confirmed by re-picking and miniprepping, resulted in low yield.",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "ubc2021-03",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+      "experiment_type": "Golden_Gate_assembly",
+      "experiment_date": "2021-07-06",
+      "fixed_fields_json": {
+        "reagents": [
+          "T4 ligase",
+          "BsaI",
+          "10X T4 Buffer",
+          "10X BSA Buffer",
+          "H2O"
+        ],
+        "instrument": [],
+        "sample": [
+          "golden gate compatible RFP construct",
+          "psicA insert",
+          "DNA amplicon"
+        ],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "target_identity": "ubc2021-03"
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "Golden_Gate_assembly",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "T4 ligase",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "BsaI",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "10X T4 Buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "10X BSA Buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "golden gate compatible RFP construct",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "psicA insert",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-03",
+        "source_type": "note",
+        "source_label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "source_identity": "ubc2021-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "DNA amplicon",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "ubc2021-04",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+      "experiment_type": "transformation_observation_and_retransformation",
+      "experiment_date": "2021-07-08",
+      "fixed_fields_json": {
+        "reagents": [],
+        "instrument": [],
+        "sample": [
+          "plates from Madina, Taylor, and Janella’s transformation on July 5th",
+          "competent cells",
+          "2019 RFP plasmid (17ng/ul)",
+          "negative control without any DNA"
+        ],
+        "result": [
+          "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+          "the 2017 10pg test kit worked, but had few colonies.",
+          "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates."
+        ]
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "target_identity": "ubc2021-04"
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "transformation_observation_and_retransformation",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "plates from Madina, Taylor, and Janella’s transformation on July 5th",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "competent cells",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "2019 RFP plasmid (17ng/ul)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "negative control without any DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "the 2017 10pg test kit worked, but had few colonies.",
+        "target_identity": ""
+      },
+      {
+        "record_id": "ubc2021-04",
+        "source_type": "note",
+        "source_label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "source_identity": "ubc2021-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "team5863-01",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "team5863-01 Field sampling",
+      "experiment_type": "field_sample_collection",
+      "experiment_date": "2025-05-04",
+      "fixed_fields_json": {
+        "reagents": [
+          "99% ethanol"
+        ],
+        "instrument": [],
+        "sample": [
+          "thrips"
+        ],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "team5863-01",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-01 Field sampling",
+        "target_identity": "team5863-01"
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "field_sample_collection",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "thrips",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-01",
+        "source_type": "note",
+        "source_label": "team5863-01 Field sampling",
+        "source_identity": "team5863-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "99% ethanol",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "team5863-02",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "team5863-02 DNA extraction of collected samples",
+      "experiment_type": "insect_DNA_extraction",
+      "experiment_date": "2025-06-11",
+      "fixed_fields_json": {
+        "reagents": [],
+        "instrument": [],
+        "sample": [
+          "samples collected from farms"
+        ],
+        "result": []
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "team5863-02",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-02 DNA extraction of collected samples",
+        "target_identity": "team5863-02"
+      },
+      {
+        "record_id": "team5863-02",
+        "source_type": "note",
+        "source_label": "team5863-02 DNA extraction of collected samples",
+        "source_identity": "team5863-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-02",
+        "source_type": "note",
+        "source_label": "team5863-02 DNA extraction of collected samples",
+        "source_identity": "team5863-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "insect_DNA_extraction",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-02",
+        "source_type": "note",
+        "source_label": "team5863-02 DNA extraction of collected samples",
+        "source_identity": "team5863-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "samples collected from farms",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "team5863-03",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "team5863-03 PCR tests of extracted DNA samples",
+      "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+      "experiment_date": "2025-06-12",
+      "fixed_fields_json": {
+        "reagents": [
+          "Phusion Plus Master Mix",
+          "ThripsITSF",
+          "ThripsITSR",
+          "SdITSF3",
+          "SdITSF7",
+          "H2O",
+          "agarose",
+          "TAE buffer"
+        ],
+        "instrument": [],
+        "sample": [
+          "extracted DNA"
+        ],
+        "result": [
+          "The result was unclear."
+        ]
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "team5863-03",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-03 PCR tests of extracted DNA samples",
+        "target_identity": "team5863-03"
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR_and_agarose_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Phusion Plus Master Mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSF",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSR",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF3",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF7",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "agarose",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "TAE buffer",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "extracted DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-03",
+        "source_type": "note",
+        "source_label": "team5863-03 PCR tests of extracted DNA samples",
+        "source_identity": "team5863-03",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "The result was unclear.",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "fields",
+    "record_id": "team5863-04",
+    "project_name": "T136 fields",
+    "payload": {
+      "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+      "experiment_type": "PCR_optimization_and_gel_electrophoresis",
+      "experiment_date": "2025-06-26",
+      "fixed_fields_json": {
+        "reagents": [
+          "Phusion Plus Master Mix",
+          "ThripsITSF",
+          "ThripsITSR",
+          "SdITSF3",
+          "SdITSF7",
+          "H2O",
+          "loading dye",
+          "ladder",
+          "agarose",
+          "TAE"
+        ],
+        "instrument": [],
+        "sample": [
+          "extracted DNA",
+          "PCR samples",
+          "7ng/ul extracted dna (trap water)"
+        ],
+        "result": [
+          "Clear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp)."
+        ]
+      },
+      "content_json": {}
+    },
+    "expected": [
+      {
+        "record_id": "team5863-04",
+        "source_type": "project",
+        "source_label": "T136 fields",
+        "source_identity": "T136 fields",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "target_identity": "team5863-04"
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR_optimization_and_gel_electrophoresis",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Phusion Plus Master Mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSF",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ThripsITSR",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF3",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SdITSF7",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "H2O",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "loading dye",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "ladder",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "agarose",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "TAE",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "extracted DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "PCR samples",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "7ng/ul extracted dna (trap water)",
+        "target_identity": ""
+      },
+      {
+        "record_id": "team5863-04",
+        "source_type": "note",
+        "source_label": "team5863-04 PCR test extracted DNA samples (optimize)",
+        "source_identity": "team5863-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "Clear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "regression",
+    "record_id": "regression-01",
+    "project_name": "T136 regression",
+    "payload": {
+      "title": "PCR 条件优化实验",
+      "experiment_type": "PCR",
+      "experiment_date": "2026-06-03",
+      "fixed_fields_json": {
+        "reagents": "Taq DNA Polymerase、dNTP、MgCl2、模板 DNA",
+        "instrument": "PCR Thermal Cycler",
+        "sample": "样本 A、样本 B",
+        "result": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。"
+      },
+      "content_json": {
+        "text": "试剂: Taq DNA Polymerase、dNTP、MgCl2\n仪器: PCR Thermal Cycler\n样本: 样本 A、样本 B\n结果: 58℃ 条件下条带清晰。"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "regression-01",
+        "source_type": "project",
+        "source_label": "T136 regression",
+        "source_identity": "T136 regression",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "PCR 条件优化实验",
+        "target_identity": "regression-01"
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "Taq DNA Polymerase",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "dNTP",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "MgCl2",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "模板 DNA",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "PCR Thermal Cycler",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "样本 A",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "样本 B",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-01",
+        "source_type": "note",
+        "source_label": "PCR 条件优化实验",
+        "source_identity": "regression-01",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "58℃ 条件下条带清晰。",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "regression",
+    "record_id": "regression-02",
+    "project_name": "T136 regression",
+    "payload": {
+      "title": "细胞活力检测实验",
+      "experiment_type": "细胞培养",
+      "experiment_date": "2026-06-04",
+      "fixed_fields_json": {
+        "reagents": "CCK-8、PBS、DMEM 培养基",
+        "instrument": "酶标仪、CO2 培养箱",
+        "sample": "处理组细胞、对照组细胞",
+        "result": "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。"
+      },
+      "content_json": {
+        "text": "试剂: CCK-8、PBS、DMEM 培养基\n仪器: 酶标仪、CO2 培养箱\n样本: 处理组细胞、对照组细胞\n结果: 细胞活力下降约 18%。"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "regression-02",
+        "source_type": "project",
+        "source_label": "T136 regression",
+        "source_identity": "T136 regression",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "细胞活力检测实验",
+        "target_identity": "regression-02"
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "细胞培养",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "CCK-8",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "PBS",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "DMEM 培养基",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "酶标仪",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "CO2 培养箱",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "处理组细胞",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "对照组细胞",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-02",
+        "source_type": "note",
+        "source_label": "细胞活力检测实验",
+        "source_identity": "regression-02",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "细胞活力下降约 18%。",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "regression",
+    "record_id": "regression-03",
+    "project_name": "T136 regression",
+    "payload": {
+      "title": "Western Blot 蛋白表达验证",
+      "experiment_type": "Western Blot",
+      "experiment_date": "2026-06-05",
+      "fixed_fields_json": {
+        "reagents": "RIPA 裂解液、BCA 试剂盒、一抗、二抗",
+        "instrument": "电泳仪、转膜仪、凝胶成像系统",
+        "sample": "蛋白样本 P1、蛋白样本 P2",
+        "result": "目标蛋白在处理组表达降低，内参条带稳定。"
+      },
+      "content_json": {
+        "text": "试剂: RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器: 电泳仪、转膜仪、凝胶成像系统\n样本: 蛋白样本 P1、蛋白样本 P2\n结果: 处理组目标蛋白表达降低。"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "regression-03",
+        "source_type": "project",
+        "source_label": "T136 regression",
+        "source_identity": "T136 regression",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "Western Blot 蛋白表达验证",
+        "target_identity": "regression-03"
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "Western Blot",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "RIPA 裂解液",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "BCA 试剂盒",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "一抗",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "二抗",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "电泳仪",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "转膜仪",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "凝胶成像系统",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "蛋白样本 P1",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "蛋白样本 P2",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "目标蛋白在处理组表达降低，内参条带稳定。",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-03",
+        "source_type": "note",
+        "source_label": "Western Blot 蛋白表达验证",
+        "source_identity": "regression-03",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "处理组目标蛋白表达降低。",
+        "target_identity": ""
+      }
+    ]
+  },
+  {
+    "arm": "regression",
+    "record_id": "regression-04",
+    "project_name": "T136 regression",
+    "payload": {
+      "title": "qPCR 定量验证实验",
+      "experiment_type": "PCR",
+      "experiment_date": "2026-05-28",
+      "fixed_fields_json": {
+        "reagents": "SYBR Green Master Mix、cDNA 模板、引物对、无酶水",
+        "instrument": "荧光定量 PCR 仪、微量分光光度计",
+        "sample": "cDNA 样本 1、cDNA 样本 2、阴性对照",
+        "result": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。"
+      },
+      "content_json": {
+        "text": "试剂: SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器: 荧光定量 PCR 仪、微量分光光度计\n样本: cDNA 样本 1、2、阴性对照\n结果: 目标基因差异表达约 2.3 倍。"
+      }
+    },
+    "expected": [
+      {
+        "record_id": "regression-04",
+        "source_type": "project",
+        "source_label": "T136 regression",
+        "source_identity": "T136 regression",
+        "relation_type": "has_note",
+        "target_type": "note",
+        "target_label": "qPCR 定量验证实验",
+        "target_identity": "regression-04"
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "created_by",
+        "target_type": "user",
+        "target_label": "系统管理员",
+        "target_identity": "operator"
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "has_experiment_type",
+        "target_type": "experiment_type",
+        "target_label": "PCR",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "SYBR Green Master Mix",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "cDNA 模板",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "引物对",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_reagent",
+        "target_type": "reagent",
+        "target_label": "无酶水",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "荧光定量 PCR 仪",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_instrument",
+        "target_type": "instrument",
+        "target_label": "微量分光光度计",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "cDNA 样本 1",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "cDNA 样本 2",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "uses_sample",
+        "target_type": "sample",
+        "target_label": "阴性对照",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。",
+        "target_identity": ""
+      },
+      {
+        "record_id": "regression-04",
+        "source_type": "note",
+        "source_label": "qPCR 定量验证实验",
+        "source_identity": "regression-04",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "目标基因差异表达约 2.3 倍。",
+        "target_identity": ""
+      }
+    ]
+  }
+]

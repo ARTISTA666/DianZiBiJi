@@ -1,0 +1,1151 @@
+{
+  "schema": "thesis_visual_qa_v1",
+  "reviewer": "/root/research_reviewer (qa-engineer, read-only)",
+  "completed_at_utc": "2026-10-09T16:00:51.784474+00:00",
+  "word_sha256": "3e8d82945900d6c02f1e6e837dbfd049c6c1ba16d79d43a6aa613caced6d6cc9",
+  "word_sha256_supplied_by": "root",
+  "original_render_word_sha256": "c35cd4bd4fa078327b2d2be2178eb925a4ffdac7b2218ec3400e00fd0011f1ab",
+  "original_render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final",
+  "final_render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3",
+  "inheritance": {
+    "status": "verified",
+    "reason": "71—104页最初以view_image original逐页亲查。随后独立计算v2与v3每页PNG SHA-256，均与最初亲查图片完全相同，逐页视觉结果继承到最终Word版本。",
+    "pages_compared": 34,
+    "identical_pages": 34,
+    "changed_pages": [],
+    "chain": [
+      {
+        "from_render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final",
+        "to_render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2",
+        "from_word_sha256": "c35cd4bd4fa078327b2d2be2178eb925a4ffdac7b2218ec3400e00fd0011f1ab",
+        "to_word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20",
+        "pages_compared": 34,
+        "identical_pages": 34,
+        "changed_pages": [],
+        "method": "independent per-page PNG SHA-256 equality"
+      },
+      {
+        "from_render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2",
+        "to_render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3",
+        "from_word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20",
+        "to_word_sha256": "3e8d82945900d6c02f1e6e837dbfd049c6c1ba16d79d43a6aa613caced6d6cc9",
+        "pages_compared": 34,
+        "identical_pages": 34,
+        "changed_pages": [],
+        "also_identical_to_original_inspected": true,
+        "method": "independent per-page PNG SHA-256 equality"
+      }
+    ]
+  },
+  "scope": {
+    "physical_page_start": 71,
+    "physical_page_end": 104,
+    "page_count": 34,
+    "printed_page_start": 64,
+    "printed_page_end": 97
+  },
+  "method": {
+    "tool": "view_image",
+    "detail": "original",
+    "all_pages_personally_inspected": true,
+    "batches": [
+      [
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      [
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      [
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      [
+        86,
+        87,
+        88,
+        89,
+        90
+      ],
+      [
+        91,
+        92,
+        93,
+        94,
+        95
+      ],
+      [
+        96,
+        97,
+        98,
+        99,
+        100
+      ],
+      [
+        101,
+        102,
+        103,
+        104
+      ]
+    ],
+    "critical_recheck": [
+      74,
+      75,
+      77,
+      82
+    ],
+    "no_contact_sheet_substitution": true
+  },
+  "overall_status": "pass",
+  "issues": [],
+  "critical_findings": {
+    "statistics_physical_pages": [
+      74,
+      75
+    ],
+    "statistics_result": "统计单位、区间与检验、Holm校正解释及引文[82]—[84]字形完整，无排版缺陷。",
+    "acknowledgements_physical_page": 77,
+    "acknowledgements_names": [
+      "陆洲",
+      "孙明斋",
+      "刘燕",
+      "刘辉",
+      "陆一松"
+    ],
+    "references_82_84_physical_page": 82,
+    "references_result": "三条新参考文献完整在页内，DOI等行未被裁切。"
+  },
+  "pages": [
+    {
+      "physical_page": 71,
+      "printed_page": 64,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-71.png",
+      "sha256": "1a37f3a069e9df2437becd71c4c038b4784ff994c51197d79c2a09c99935d796",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-71.png",
+      "original_inspected_sha256": "1a37f3a069e9df2437becd71c4c038b4784ff994c51197d79c2a09c99935d796",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表6-9完整在页内；图6-7双图、坐标与图例完整可读；6.5.5正文与图题无重叠。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-71.png",
+          "sha256": "1a37f3a069e9df2437becd71c4c038b4784ff994c51197d79c2a09c99935d796",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 72,
+      "printed_page": 65,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-72.png",
+      "sha256": "6c13d417c13daf51893b8bdc36454e3c4389e54b66891363f2324abe3ab13714",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-72.png",
+      "original_inspected_sha256": "6c13d417c13daf51893b8bdc36454e3c4389e54b66891363f2324abe3ab13714",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表6-10所有行完整，RAGAS结果与正文自然续页，无裁切。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-72.png",
+          "sha256": "6c13d417c13daf51893b8bdc36454e3c4389e54b66891363f2324abe3ab13714",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 73,
+      "printed_page": 66,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-73.png",
+      "sha256": "c598a961411c5aeb6a4f027300ce31f9454678983c8eb8254d1217bcabcff20f",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-73.png",
+      "original_inspected_sha256": "c598a961411c5aeb6a4f027300ce31f9454678983c8eb8254d1217bcabcff20f",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表6-11和6-11a均完整；均值、配对区间及n值字形清晰。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-73.png",
+          "sha256": "c598a961411c5aeb6a4f027300ce31f9454678983c8eb8254d1217bcabcff20f",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 74,
+      "printed_page": 67,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-74.png",
+      "sha256": "484c7ccbc730429011c7bd080fbf4bb653db94db82a248f2a21ac1e7f1b3df01",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-74.png",
+      "original_inspected_sha256": "484c7ccbc730429011c7bd080fbf4bb653db94db82a248f2a21ac1e7f1b3df01",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表6-12完整；问题级统计、bootstrap[82]、符号翻转[83]、1024组合及p值解释清晰；段落自然续页。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-74.png",
+          "sha256": "484c7ccbc730429011c7bd080fbf4bb653db94db82a248f2a21ac1e7f1b3df01",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 75,
+      "printed_page": 68,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-75.png",
+      "sha256": "903d43996d3b918d5c2cfe858ea67780f77346f19f686a23ab03b4be3b7a1795",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-75.png",
+      "original_inspected_sha256": "903d43996d3b918d5c2cfe858ea67780f77346f19f686a23ab03b4be3b7a1795",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "Holm[84]校正段落自然承接；表6-13完整，6.7小结无页脚碰撞。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-75.png",
+          "sha256": "903d43996d3b918d5c2cfe858ea67780f77346f19f686a23ab03b4be3b7a1795",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 76,
+      "printed_page": 69,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-76.png",
+      "sha256": "fa8d1db266f417f3e5fe2330f0810fd6afe4b5108c32c9b520dcfa8b07a6965e",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-76.png",
+      "original_inspected_sha256": "fa8d1db266f417f3e5fe2330f0810fd6afe4b5108c32c9b520dcfa8b07a6965e",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "第7章总结、贡献和局限各段完整；章标题和页码正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-76.png",
+          "sha256": "fa8d1db266f417f3e5fe2330f0810fd6afe4b5108c32c9b520dcfa8b07a6965e",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 77,
+      "printed_page": 70,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-77.png",
+      "sha256": "818d8c0a427e29049bdc7296020fbdfa16fd456412aa7a0b2114cca2d0b1fdd5",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-77.png",
+      "original_inspected_sha256": "818d8c0a427e29049bdc7296020fbdfa16fd456412aa7a0b2114cca2d0b1fdd5",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "致谢整页完整；复核姓名陆洲、孙明斋、刘燕、刘辉、陆一松均清晰，孙明斋的斋字与根Agent核准的XML姓名一致。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-77.png",
+          "sha256": "818d8c0a427e29049bdc7296020fbdfa16fd456412aa7a0b2114cca2d0b1fdd5",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 78,
+      "printed_page": 71,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-78.png",
+      "sha256": "43224c5706fee3fced92f84e8b2b25139d76896c49c07feecd2a0baab9f38dfc",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-78.png",
+      "original_inspected_sha256": "43224c5706fee3fced92f84e8b2b25139d76896c49c07feecd2a0baab9f38dfc",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "参考文献[1]—[14]完整；[3]35(3):805–806、[12]2024v1作者字形和行距正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-78.png",
+          "sha256": "43224c5706fee3fced92f84e8b2b25139d76896c49c07feecd2a0baab9f38dfc",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 79,
+      "printed_page": 72,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-79.png",
+      "sha256": "3e6a05be4e0b3b5de929ee7537d4f737f7887bd2c84f72da1422cca11e018b27",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-79.png",
+      "original_inspected_sha256": "3e6a05be4e0b3b5de929ee7537d4f737f7887bd2c84f72da1422cca11e018b27",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "参考文献[15]—[30]完整；[19]Li Y、[24]Yu Y、[26]Dwivedi-Yu J可读，重音字形正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-79.png",
+          "sha256": "3e6a05be4e0b3b5de929ee7537d4f737f7887bd2c84f72da1422cca11e018b27",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 80,
+      "printed_page": 73,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-80.png",
+      "sha256": "336a5ce6475617b25e000455bf0b16013c9b4e7d3bd6765dff84df0425094d1b",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-80.png",
+      "original_inspected_sha256": "336a5ce6475617b25e000455bf0b16013c9b4e7d3bd6765dff84df0425094d1b",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "参考文献[31]—[48]完整；悬挂缩进、换行和页边距正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-80.png",
+          "sha256": "336a5ce6475617b25e000455bf0b16013c9b4e7d3bd6765dff84df0425094d1b",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 81,
+      "printed_page": 74,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-81.png",
+      "sha256": "dbb7bd859daf9aea6140c128c9aaad9aa3b44dbda8dab75c58e931afa60b3b15",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-81.png",
+      "original_inspected_sha256": "dbb7bd859daf9aea6140c128c9aaad9aa3b44dbda8dab75c58e931afa60b3b15",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "参考文献[49]—[67]完整；最后一条文献未被裁切。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-81.png",
+          "sha256": "dbb7bd859daf9aea6140c128c9aaad9aa3b44dbda8dab75c58e931afa60b3b15",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 82,
+      "printed_page": 75,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-82.png",
+      "sha256": "cb488747e67232b034db4c3f52a751bf155d181784fa1cbd9db02c430a0a41e9",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-82.png",
+      "original_inspected_sha256": "cb488747e67232b034db4c3f52a751bf155d181784fa1cbd9db02c430a0a41e9",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "参考文献[68]—[84]完整；新增[82]Efron、[83]Ernst、[84]Holm均完整可读，无页脚碰撞。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-82.png",
+          "sha256": "cb488747e67232b034db4c3f52a751bf155d181784fa1cbd9db02c430a0a41e9",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 83,
+      "printed_page": 76,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-83.png",
+      "sha256": "8d3775b6dfb95d5548700fde4fe6e09f0df0f5cdd4caf89d1fe711be876f1eae",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-83.png",
+      "original_inspected_sha256": "8d3775b6dfb95d5548700fde4fe6e09f0df0f5cdd4caf89d1fe711be876f1eae",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "附录A及表A-1的20题完整，Q05/Q20标记和末行换行清晰。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-83.png",
+          "sha256": "8d3775b6dfb95d5548700fde4fe6e09f0df0f5cdd4caf89d1fe711be876f1eae",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 84,
+      "printed_page": 77,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-84.png",
+      "sha256": "8400b8f03825af61c0702cd91dcc70e38d295f1ed5b1b06fe633672ee8472008",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-84.png",
+      "original_inspected_sha256": "8400b8f03825af61c0702cd91dcc70e38d295f1ed5b1b06fe633672ee8472008",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "附录B标题、B.1/B.2及表B-1(a)PCR字段12行完整；无标题孤页。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-84.png",
+          "sha256": "8400b8f03825af61c0702cd91dcc70e38d295f1ed5b1b06fe633672ee8472008",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 85,
+      "printed_page": 78,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-85.png",
+      "sha256": "5ca360b404181464ca8a2f6eb7aa4c2f23e372d7c634b22ddc4298f48b08d696",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-85.png",
+      "original_inspected_sha256": "5ca360b404181464ca8a2f6eb7aa4c2f23e372d7c634b22ddc4298f48b08d696",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-1(b)细胞培养及B-1(c)Western Blot完整，各行均在页内。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-85.png",
+          "sha256": "5ca360b404181464ca8a2f6eb7aa4c2f23e372d7c634b22ddc4298f48b08d696",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 86,
+      "printed_page": 79,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-86.png",
+      "sha256": "971e1d844916b15b0e47ea62ba2e93a157f88339f9fafd661f4f30a91cdfa81a",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-86.png",
+      "original_inspected_sha256": "971e1d844916b15b0e47ea62ba2e93a157f88339f9fafd661f4f30a91cdfa81a",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-1(d)qPCR字段14行及表B-2符号约定完整，补充说明未越过页脚。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-86.png",
+          "sha256": "971e1d844916b15b0e47ea62ba2e93a157f88339f9fafd661f4f30a91cdfa81a",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 87,
+      "printed_page": 80,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-87.png",
+      "sha256": "1217c6d9b85881a3a8e621572675cfb3625cea87b84003265a9f25241e3b5143",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-87.png",
+      "original_inspected_sha256": "1217c6d9b85881a3a8e621572675cfb3625cea87b84003265a9f25241e3b5143",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-2公共字段G01—G18、枚举说明及表B-3完整，长英文换行正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-87.png",
+          "sha256": "1217c6d9b85881a3a8e621572675cfb3625cea87b84003265a9f25241e3b5143",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 88,
+      "printed_page": 81,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-88.png",
+      "sha256": "32e09f65de8faa56203dc8cf5671ebc80fca2395e67f8a35d217bdf6053479fb",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-88.png",
+      "original_inspected_sha256": "32e09f65de8faa56203dc8cf5671ebc80fca2395e67f8a35d217bdf6053479fb",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-4—B-9完整；组、成员、项目与审核员表字段均清晰。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-88.png",
+          "sha256": "32e09f65de8faa56203dc8cf5671ebc80fca2395e67f8a35d217bdf6053479fb",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 89,
+      "printed_page": 82,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-89.png",
+      "sha256": "475e26c8cce84938a0893cd4dd351c4a0768d3ccce8aa13347a003550c5abfdc",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-89.png",
+      "original_inspected_sha256": "475e26c8cce84938a0893cd4dd351c4a0768d3ccce8aa13347a003550c5abfdc",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-10—B-14完整；模板、笔记、版本、审批、检索文档表无遮挡。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-89.png",
+          "sha256": "475e26c8cce84938a0893cd4dd351c4a0768d3ccce8aa13347a003550c5abfdc",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 90,
+      "printed_page": 83,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-90.png",
+      "sha256": "d664d891ed35a5eae1cee00af83e0d879a8c1b6622c0dcf575a0948675923ca9",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-90.png",
+      "original_inspected_sha256": "d664d891ed35a5eae1cee00af83e0d879a8c1b6622c0dcf575a0948675923ca9",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-15—B-17完整；OCR、RAG配置长默认值自然换行，未相互遮挡。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-90.png",
+          "sha256": "d664d891ed35a5eae1cee00af83e0d879a8c1b6622c0dcf575a0948675923ca9",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 91,
+      "printed_page": 84,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-91.png",
+      "sha256": "e6016d2131443bc7afdde716abe4390ab674577d05362d187dd839aa1cf5ad64",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-91.png",
+      "original_inspected_sha256": "e6016d2131443bc7afdde716abe4390ab674577d05362d187dd839aa1cf5ad64",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-18—B-20完整；sync/chunks/entities字段及legacy-unknown字形正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-91.png",
+          "sha256": "e6016d2131443bc7afdde716abe4390ab674577d05362d187dd839aa1cf5ad64",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 92,
+      "printed_page": 85,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-92.png",
+      "sha256": "0963a2a5d8a2a0b6f40c2a0a42f6914f5c898dfd4c5082b134ff3116006aaf7c",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-92.png",
+      "original_inspected_sha256": "0963a2a5d8a2a0b6f40c2a0a42f6914f5c898dfd4c5082b134ff3116006aaf7c",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-21—B-24完整；图谱关系、抽取、蓝图节点及边约束说明自然换行。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-92.png",
+          "sha256": "0963a2a5d8a2a0b6f40c2a0a42f6914f5c898dfd4c5082b134ff3116006aaf7c",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 93,
+      "printed_page": 86,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-93.png",
+      "sha256": "9fc4960fd933c4ca98243853f513bc65f30f85c36624597dba4591bb60142792",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-93.png",
+      "original_inspected_sha256": "9fc4960fd933c4ca98243853f513bc65f30f85c36624597dba4591bb60142792",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-25题注自然分为两行；表B-25/B-26完整，长字段名清晰。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-93.png",
+          "sha256": "9fc4960fd933c4ca98243853f513bc65f30f85c36624597dba4591bb60142792",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 94,
+      "printed_page": 87,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-94.png",
+      "sha256": "eebe396a622b6654c0602fbf764c19b1030604445091458d2a4c6f437376f31a",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-94.png",
+      "original_inspected_sha256": "eebe396a622b6654c0602fbf764c19b1030604445091458d2a4c6f437376f31a",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-27—B-29完整；B-28两行题注及约束换行正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-94.png",
+          "sha256": "eebe396a622b6654c0602fbf764c19b1030604445091458d2a4c6f437376f31a",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 95,
+      "printed_page": 88,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-95.png",
+      "sha256": "6a8beac9646f8246e2cc63cb7f570858f0705d647d3dc6dc8e3257f5487311f4",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-95.png",
+      "original_inspected_sha256": "6a8beac9646f8246e2cc63cb7f570858f0705d647d3dc6dc8e3257f5487311f4",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-30—B-33完整；长题注自然换行，最后一个表远离页脚。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-95.png",
+          "sha256": "6a8beac9646f8246e2cc63cb7f570858f0705d647d3dc6dc8e3257f5487311f4",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 96,
+      "printed_page": 89,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-96.png",
+      "sha256": "5a9af1db226220fd7740ff36ebdcbb4ba41129e92b389bdefe92c92921d5038c",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-96.png",
+      "original_inspected_sha256": "5a9af1db226220fd7740ff36ebdcbb4ba41129e92b389bdefe92c92921d5038c",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-34—B-37完整；回合表长默认值分为两行，表题与表格未重叠。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-96.png",
+          "sha256": "5a9af1db226220fd7740ff36ebdcbb4ba41129e92b389bdefe92c92921d5038c",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 97,
+      "printed_page": 90,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-97.png",
+      "sha256": "758e065e2ba49fe9a8fb50c96de0e3445c172adb7242bbaea436fd011c47ea4b",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-97.png",
+      "original_inspected_sha256": "758e065e2ba49fe9a8fb50c96de0e3445c172adb7242bbaea436fd011c47ea4b",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-38—B-41完整；补充约束自然换行，B-39题注两行完整。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-97.png",
+          "sha256": "758e065e2ba49fe9a8fb50c96de0e3445c172adb7242bbaea436fd011c47ea4b",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 98,
+      "printed_page": 91,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-98.png",
+      "sha256": "95bb4bebea7550f91ebd83c0d91d9906de6c7c4ac0a1ac07274ab1cec3aae286",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-98.png",
+      "original_inspected_sha256": "95bb4bebea7550f91ebd83c0d91d9906de6c7c4ac0a1ac07274ab1cec3aae286",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "表B-42—B-45完整；项目告警及反馈约束换行自然，页码正常。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-98.png",
+          "sha256": "95bb4bebea7550f91ebd83c0d91d9906de6c7c4ac0a1ac07274ab1cec3aae286",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 99,
+      "printed_page": 92,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-99.png",
+      "sha256": "80a8a39ae20c5a7cfa99a0e865c054eae96038fbf1ace9cce4035595fa00181a",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-99.png",
+      "original_inspected_sha256": "80a8a39ae20c5a7cfa99a0e865c054eae96038fbf1ace9cce4035595fa00181a",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "附录C标题及表C-1的12项工具、表C-2的6项模板完整，无跨页断表。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-99.png",
+          "sha256": "80a8a39ae20c5a7cfa99a0e865c054eae96038fbf1ace9cce4035595fa00181a",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 100,
+      "printed_page": 93,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-100.png",
+      "sha256": "b681cb5d47c37e8479ae8139ef54f0507d6b92106f18cb2e4a20cf502045287d",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-100.png",
+      "original_inspected_sha256": "b681cb5d47c37e8479ae8139ef54f0507d6b92106f18cb2e4a20cf502045287d",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "附录D的D.1/D.2、表D-1/D-2完整；SHA前16位的省略符显示正常，网址和附件名自然换行。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-100.png",
+          "sha256": "b681cb5d47c37e8479ae8139ef54f0507d6b92106f18cb2e4a20cf502045287d",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 101,
+      "printed_page": 94,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-101.png",
+      "sha256": "0958f6ffbb26fa677d288a8009cd9588db816577e5e45550be6e729765c99aa4",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-101.png",
+      "original_inspected_sha256": "0958f6ffbb26fa677d288a8009cd9588db816577e5e45550be6e729765c99aa4",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "D.3说明及图D-1完整；图内记录、字段、原文和来源可读，图题独立无遮挡。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-101.png",
+          "sha256": "0958f6ffbb26fa677d288a8009cd9588db816577e5e45550be6e729765c99aa4",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 102,
+      "printed_page": 95,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-102.png",
+      "sha256": "a5c5bd8139d0f1824269e74ffe48446e9a6aba061f392d9494d02bd419d74574",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-102.png",
+      "original_inspected_sha256": "a5c5bd8139d0f1824269e74ffe48446e9a6aba061f392d9494d02bd419d74574",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "图D-2/D-3完整；细胞活力和Western Blot样例文字清晰，图题未孤立或遮挡。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-102.png",
+          "sha256": "a5c5bd8139d0f1824269e74ffe48446e9a6aba061f392d9494d02bd419d74574",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 103,
+      "printed_page": 96,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-103.png",
+      "sha256": "0b88bb1e34c3a420342ec3263b8964234bc811ae15656ab86001c311c2644225",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-103.png",
+      "original_inspected_sha256": "0b88bb1e34c3a420342ec3263b8964234bc811ae15656ab86001c311c2644225",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "图D-4/D-5完整；qPCR与历史SOP摘要两图均未裁切，长文本自然换行。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-103.png",
+          "sha256": "0b88bb1e34c3a420342ec3263b8964234bc811ae15656ab86001c311c2644225",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    },
+    {
+      "physical_page": 104,
+      "printed_page": 97,
+      "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v3/page-104.png",
+      "sha256": "8a99cdcb1472165c744951a791bafbab0cf53544a3daa9edc8d9602378156cc3",
+      "original_inspected_png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final/page-104.png",
+      "original_inspected_sha256": "8a99cdcb1472165c744951a791bafbab0cf53544a3daa9edc8d9602378156cc3",
+      "inherited_by_exact_png_hash": true,
+      "view_image_detail": "original",
+      "status": "pass",
+      "checks": {
+        "glyphs": "pass",
+        "occlusion_or_clipping": "pass",
+        "tables_images_and_page_breaks": "pass",
+        "header_footer": "pass"
+      },
+      "notes": "图D-6、D.4及表D-3完整；归档命令、三项测试名和性能观测记录自然换行，末段在页脚上方。",
+      "prior_render_versions": [
+        {
+          "png": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v2/page-104.png",
+          "sha256": "8a99cdcb1472165c744951a791bafbab0cf53544a3daa9edc8d9602378156cc3",
+          "word_sha256": "d298ca5d5a5702a8a87d2c5a055ea21e01d8f6f0caac517d616d52e7e57b3f20"
+        }
+      ],
+      "inheritance_chain": [
+        "render-final",
+        "render-final-v2",
+        "render-final-v3"
+      ]
+    }
+  ],
+  "binding_updated_at_utc": "2026-10-09T16:02:32.563664+00:00"
+}

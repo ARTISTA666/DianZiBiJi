@@ -1,0 +1,52 @@
+{
+  "task": "T144 final Word identity and semantic inheritance",
+  "utc": "2026-10-11T15:07:05.274901+00:00",
+  "final_word": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+  "final_word_sha256": "c4d4f8383d52f7b2f2199cbed2e629f033964d501634c5433b8e844d61560672",
+  "source_word_sha256": "35e9ebf37cc07087239feb8857b131873bf8643c26693cfbdcacf4eb0602bc45",
+  "protection": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/candidate-c4d4-final-protection-review.json",
+    "sha256": "77b6ca7c064494004fe749ef251bf8cedabeb9b5afa9c5d34e5fd04dff1bb278",
+    "result": "PASS_STRUCTURE_CONTENT_PROTECTION",
+    "all_gates": 35,
+    "all_passed": true
+  },
+  "semantic_review": {
+    "original_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/candidate-df765-semantic-review.json",
+    "original_sha256": "41995b48d6331df24e4d5700e3cf7a7e6a4606dfab03a5c20ea530a33c5f0702",
+    "original_candidate_sha256": "df765798eb3598a5818a5e492b8a229bbf4e7c12ca2ee9464171bce5e93a41d7",
+    "inheritance_basis": {
+      "final_vs_df765_only_one_64_to_65_w_t": true,
+      "final_vs_df765_all_nontext_XML_exact": true,
+      "final_vs_df765_all_other_parts_byte_exact": true
+    },
+    "inherited_status": "PASS_CONSERVATIVE_SEMANTICS"
+  },
+  "repair": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/toc-cache-repair.json",
+    "sha256": "f6965c1dac8cce8509ebaf3c28120cece14efc1a11aa1037546edd5188241fc5",
+    "bookmark": "_Toc1834773436",
+    "paragraph_index": 145,
+    "old_page": "64",
+    "new_page": "65",
+    "only_cached_field_changed": true
+  },
+  "corrected_initial_false_alarm": "Initial raw OMML comparison changed solely due to authorized commentReference id12 deletion in OMML48/P1308; all mathematical content/style remains exact after comment-only normalization. First execution record retained.",
+  "counts": {
+    "checks": 35,
+    "passed": 35,
+    "prose_edits": 102,
+    "prose_paragraphs": 77,
+    "changed_paragraphs": 81,
+    "prose_character_delta": 612,
+    "cover_character_delta": -34,
+    "total_character_delta": 578,
+    "comments_removed": 16,
+    "anchors_removed": 28,
+    "actual_media_files": 47
+  },
+  "native_PDF_TOC": "PENDING final export identity",
+  "native_visual": "PENDING actual new PNG comparison/review",
+  "findings": [],
+  "result": "PASS_WORD_PROTECTION_AND_SEMANTICS_ONLY"
+}

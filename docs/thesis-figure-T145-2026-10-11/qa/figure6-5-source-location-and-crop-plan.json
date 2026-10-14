@@ -1,0 +1,73 @@
+{
+  "task": "T145",
+  "utc": "2026-10-11T15:26:28.872334+00:00",
+  "source_word": "/Users/yusong/Desktop/1005-表述精校无批注版-2026-10-11.docx",
+  "source_word_sha256": "4261c0cc08263ba5bb70e97fae444fb5998a5a206d83e2ceed6b57e8cec901dc",
+  "desktop_equals_T144_delivery": true,
+  "drawing_paragraph_index": 1466,
+  "drawing_para_id": "3D9C21B2",
+  "drawing_paragraph_has_body_text": false,
+  "caption_paragraph_index": 1467,
+  "caption_text": "图 6-5　共同14题的历史任务完成率（描述性比较）",
+  "image": {
+    "relationship": "rId51",
+    "part": "word/media/image40.png",
+    "sha256": "d1db62ca5902d555f027ec1ec08fa7fbb792c27ac624ab357d78f465f0161ff4",
+    "dimensions": [
+      1256,
+      696
+    ],
+    "original_QA_extract": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/qa/figure6-5-original.png",
+    "actual_view": {
+      "tool": "tools.view_image",
+      "detail": "original",
+      "full_image": true
+    }
+  },
+  "display": {
+    "wp_extent_EMU": {
+      "cx": "5219700",
+      "cy": "2894330"
+    },
+    "shape_a_ext_EMU": {
+      "cx": "5219700",
+      "cy": "2894921"
+    },
+    "width_cm": 14.499166666666667,
+    "height_cm": 8.039805555555555,
+    "native_physical_page": 63,
+    "printed_page": 56
+  },
+  "removed_visible_region": {
+    "two_lines_are_image_pixels_not_w_t": true,
+    "first_line": "RAG：2026年6月11日，15条已审核笔记；裸模型 / SQL：2026年8月25日，4条。",
+    "second_line": "SQL返回数据库记录；其余方法生成回答。知识快照和输出形式不同，不能据此推断受控优劣。",
+    "cut_at_source_y_approx": 596,
+    "notes_y_approx": [
+      604,
+      678
+    ],
+    "axis_title_bottom_y_approx": 584
+  },
+  "minimal_allowed_change": {
+    "only_document_xml_paragraph_1466": true,
+    "insert": "pic:blipFill/a:srcRect b=14368",
+    "wp_extent_cy": 2478473,
+    "shape_a_ext_cy": 2478979,
+    "both_widths_unchanged": 5219700,
+    "height_ratios_preserve_no_vertical_stretch": true,
+    "original_image_bytes_preserved": true,
+    "no_paragraph_spacing_compensation": true,
+    "native_export_and_final_actual_view_pending": true
+  },
+  "preserved_plot_data": [
+    "1/14 (7.14%)",
+    "0/14 (0%)",
+    "8/14 (57.14%)",
+    "11/14 (78.57%)",
+    "0/20/40/60/80/100横轴刻度",
+    "任务完成率（%）",
+    "共同14题的历史任务完成率及顶部描述性比较副标题"
+  ],
+  "result": "PASS_SOURCE_LOCATED_MINIMAL_NATIVE_CROP_PROPOSED"
+}

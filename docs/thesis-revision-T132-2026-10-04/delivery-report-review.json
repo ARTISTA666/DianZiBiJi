@@ -1,0 +1,32 @@
+{
+  "task": "T132",
+  "reviewer": "product_manager",
+  "completed_at": "2026-10-05T11:22:44.195883+08:00",
+  "reviewed_draft": "/private/tmp/advisor-T132-20261004/report-draft.md",
+  "reviewed_draft_sha256": "12d18b3a1090d3c97d0e11fee85362187460168e6bcd6b0669977e83652cbe3b",
+  "bound_candidate_sha256": "638d0350af852ac5d8a51045e451acaaa2860a1efa59b49a041169ab4e6da483",
+  "evidence": {
+    "protected-audit.json": "2d8d7e24a9da50d9205d76460ef4a04a2aeffa7efa916391ba9afc4ee97d3f16",
+    "root-final-checks.json": "32de556e82948f645e2fcfbb50b23d5f8fcb5ab1767a34b6aa55cc77d584d46c",
+    "new-comments.json": "de28362be647d5e774938218e7d98e4f413cefab645c5d2472a113394918d69f",
+    "source-save-comparison.json": "6c1e15511305467760c2659841bab6e4d22195df6418a86d104060e7d7d332e0"
+  },
+  "result": "pass",
+  "must_correct": [],
+  "verified": {
+    "new_comment_ids_10_26_and_final_pages_31_32_65": true,
+    "33_comments_32_text_1_empty_and31_prior_retained": true,
+    "current_Rust_and_old_Python_batch_identity_separate": true,
+    "physical_pages109_to99_frontmatter7_last_printed92": true,
+    "18_common_definitions156_occurrences_plus274_specific_equals430": true,
+    "B1_four_first_row_exceptions_and52_relations_reconstruct": true,
+    "no_unperformed_human_testing_claim_added": true,
+    "WPS_native_not_verified_and_author_advisor_acceptance_pending": true
+  },
+  "notes": [
+    "草稿与受保护内容审计及root检查一致，没有必须纠正的事实。",
+    "FINAL_QA_PENDING为root待三路汇总后替换的占位，按任务说明不视为错误。",
+    "源稿109页来自源PDF实际页数，不混用源Word保存时的108页缓存；最终99为渲染器分页。",
+    "仅写本独立审查JSON，未修改草稿、论文、repo或既有证据。"
+  ]
+}

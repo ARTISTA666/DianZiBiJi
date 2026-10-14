@@ -1,0 +1,51 @@
+{
+  "capture_intro": "图5-19—5-23于2026年10月4日采集同版本界面，补充笔记编辑、阈值配置、生成草稿与计划来源详情；页面中显示的日期为既有记录时间。",
+  "coverage_updates": {
+    "实验笔记": "5-1、5-2、5-11、5-19",
+    "固定任务生成": "5-8、5-21、5-22",
+    "计划知识点": "5-9、5-23",
+    "预警管理": "5-15、5-20"
+  },
+  "figures": [
+    {
+      "number": "5-19",
+      "image_path": "/Users/yusong/Downloads/new/full-system/output/playwright/T131-2026-10-04/01-note-editor.png",
+      "width_cm": 9.8,
+      "sha256": "0c78799e73282a8f765f0d65b4aa3a2cc781ceafd0dc42c3b9bb4c089b09735d",
+      "caption": "图 5-19　实验笔记内容编辑与本机草稿提示",
+      "description": "从图5-11所示笔记详情进入编辑窗口后，可修改标题、模板、实验日期与记录内容，窗口同时提示编辑内容自动保存到本机并可恢复，如图5-19所示。该截图打开的是既有软件验收记录“成员实验记录A”的v2内容，本轮仅查看并取消编辑，未保存新版本；提交后发生的状态流转见前文笔记业务说明。"
+    },
+    {
+      "number": "5-20",
+      "image_path": "/Users/yusong/Downloads/new/full-system/output/playwright/T131-2026-10-04/02-alert-thresholds.png",
+      "width_cm": 14.8,
+      "sha256": "b282f2d4835dbccb7ece2c1afe56c82769a61843855e31cdc668081956eb7569",
+      "caption": "图 5-20　四类预警指标的分级阈值配置",
+      "description": "预警管理还提供阈值配置入口，如图5-20所示。配置面板列出审批停滞、退回率、蓝图停滞和进展偏差四类指标，每类均可设置警告与紧急阈值，并控制是否启用。该画面补充图5-15的预警处置入口，说明规则配置如何衔接告警状态查看；本轮未修改阈值或触发评估。"
+    },
+    {
+      "number": "5-21",
+      "image_path": "/Users/yusong/Downloads/new/full-system/output/playwright/T131-2026-10-04/20-report-draft-excerpt.png",
+      "width_cm": 14.8,
+      "sha256": "37b44ec53c47cf89e63749650ecd11211efb63c13bd679341494a10d2e6e3bc2",
+      "caption": "图 5-21　固定任务实验总结草稿节选",
+      "description": "图5-21补充展示固定任务生成后的正文草稿，综合结论按条目组织，并以[N]、[R]等标识关联输入记录。该画面取自项目1于2026年8月9日生成的既有测试任务，草稿中的实验名称和数值属于演示内容，不能作为生物医学实验结果或系统效果评价依据。正文仍需结合来源逐项核对。"
+    },
+    {
+      "number": "5-22",
+      "image_path": "/Users/yusong/Downloads/new/full-system/output/playwright/T131-2026-10-04/21-report-nfr-sources.png",
+      "width_cm": 14.8,
+      "sha256": "021ee17103d68dee7a6c9a442d02b177ee7006e79df31154a86b27b93f72c3be",
+      "caption": "图 5-22　生成草稿的三类来源计数与编号",
+      "description": "图5-22展示与图5-21同一任务的完成状态、生成时间和来源标识，页面列出N类实验笔记4条、F类资料文件2条、R类知识关系24条及其编号，供核对草稿输入范围与引用对象。该任务与表5-5所列项目10的示例不同，两者各自保留原有身份和计数。来源计数说明任务使用了哪些记录，不能直接证明生成结论正确。"
+    },
+    {
+      "number": "5-23",
+      "image_path": "/Users/yusong/Downloads/new/full-system/output/playwright/T131-2026-10-04/plan-gap-detail.png",
+      "width_cm": 12.0,
+      "sha256": "a0f630c391760c95d6a288eb994f925c179596d9296505ae1d0f6460db188e82",
+      "caption": "图 5-23　计划未覆盖条目的属性与来源追溯",
+      "description": "图5-23补充图5-9的条目详情：选择项目10中的“TRIzol试剂”后，可查看“待实证（缺口）”状态、项目计划书来源、优先级及规划描述，来源历史同时列出对应计划书记录。该画面说明未覆盖条目如何保留规划依据并供追溯；待实证状态表示尚未获得相应记录支持，不能据此推断实验已经开展。"
+    }
+  ]
+}

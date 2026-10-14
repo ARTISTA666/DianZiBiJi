@@ -1,0 +1,2712 @@
+{
+  "task_id": "T136",
+  "audit_identity": {
+    "agent": "architect Agent",
+    "canonical_task": "/root/architect",
+    "independent_reviewer_type": "AI Agent computational and artifact audit",
+    "human_review": false
+  },
+  "status": "pass",
+  "scope": {
+    "raw_original_graphs": 28,
+    "raw_rebuilt_graphs": 28,
+    "cases": 28,
+    "frozen_files": 102,
+    "http_logs": 174,
+    "modified_artifacts": [],
+    "new_file": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/run/independent-audit.json"
+  },
+  "method": {
+    "implementation": "Independent Python standard-library audit, executed inline. Did not import or call official scorer, run API requests, or run extraction/tests. Expected typed keys freshly reconstructed from frozen gold/records/regression input plus frozen metadata, then compared to cases.json.",
+    "raw_source": "graph.entities and graph.relations from observations.json and rebuild-check.json; each raw graph also compared exactly with its archived HTTP response.",
+    "key_fields": [
+      "record_id",
+      "source_type",
+      "source_label",
+      "source_identity",
+      "relation_type",
+      "target_type",
+      "target_label",
+      "target_identity"
+    ],
+    "normalization": "Unicode NFKC, casefold, collapse whitespace; preserve punctuation, label content and entity types. No synonyms, substring matching, numeric fragment repair or label substitution.",
+    "directed_identity": "Use actual source and target entity IDs, entity_type and raw label; project/note/user stable identities bound from entity origin source_type/source_id to actual project/note/operator database identities. Note identity keeps record ID. Business entity identity is blank as declared by protocol.",
+    "provenance_filter": "All graph project IDs, relation origin note ID, relation origin type and endpoint project IDs checked. Metadata origin must be note, business content origin must be note_extraction. Unknown relation types counted outside scope without discarding them silently.",
+    "counts": "Set intersection/difference of complete typed directed keys; count repeated relation database IDs separately from repeated typed keys. Scored each arm separately and each of content/metadata/all separately.",
+    "metrics": "TP=|pred∩gold|, FP=|pred−gold|, FN=|gold−pred|; P=TP/(TP+FP), R=TP/(TP+FN), F1=2TP/(2TP+FP+FN). Return null when a denominator is zero. Exact is equality of sets, including both empty. Macro F1 excludes only notes with undefined F1 and records its denominator.",
+    "comparison": "Compared every official metric leaf, including per-note values, all seven by-relation groups, FP/FN typed key lists, duplicate counts and macro denominators; floating equality tolerance 1e-12. Checked rebuild set and multiplicity equality, status/IDs/run ownership and entity/relation response counts.",
+    "annotation_scope": "Audit verifies frozen reference/input correspondence and timing; it is not independent human annotation or a re-assessment of every source-PDF interpretation."
+  },
+  "timeline": {
+    "gold_adjudicated_utc": "2026-10-10T15:51:13.296305+00:00",
+    "frozen_at": "2026-10-10T15:52:21.952128+00:00",
+    "first_http_utc": "2026-10-10T15:52:28.394695+00:00",
+    "first_import_utc": "2026-10-10T15:52:28.618389+00:00",
+    "freeze_before_first_import_seconds": 6.666261,
+    "last_http_utc": "2026-10-10T15:52:30.191289+00:00",
+    "completion_utc": "2026-10-10T15:52:30.234590+00:00",
+    "import_sequence": [
+      {
+        "arm": "body",
+        "record_id": "iisc2019-01",
+        "note_id": 1,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.618389+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.633749+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.658441+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "iisc2019-02",
+        "note_id": 2,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.665043+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.674179+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.682785+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "iisc2019-03",
+        "note_id": 3,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.687852+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.700754+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.711118+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "iisc2019-04",
+        "note_id": 4,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.719346+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.728720+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.736696+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-01",
+        "note_id": 5,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.743333+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.753420+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.760250+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-02",
+        "note_id": 6,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.766645+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.779274+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.786180+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-03",
+        "note_id": 7,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.792602+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.801503+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.808776+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-04",
+        "note_id": 8,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.813390+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.821568+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.829756+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-01",
+        "note_id": 9,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.837596+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.850117+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.859025+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-02",
+        "note_id": 10,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.866751+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.877336+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.887312+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-03",
+        "note_id": 11,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.895715+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.908734+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.918225+00:00"
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-04",
+        "note_id": 12,
+        "project_id": 1,
+        "import_request_utc": "2026-10-10T15:52:28.927077+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.939138+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.950629+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-01",
+        "note_id": 13,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:28.967443+00:00",
+        "approved_request_utc": "2026-10-10T15:52:28.982153+00:00",
+        "graph_request_utc": "2026-10-10T15:52:28.997287+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-02",
+        "note_id": 14,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.018708+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.043946+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.061310+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-03",
+        "note_id": 15,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.071494+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.091672+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.112418+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-04",
+        "note_id": 16,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.126346+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.139128+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.148697+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-01",
+        "note_id": 17,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.160419+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.172688+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.185458+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-02",
+        "note_id": 18,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.195054+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.207466+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.221312+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-03",
+        "note_id": 19,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.234229+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.247549+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.263850+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-04",
+        "note_id": 20,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.274705+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.289436+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.306016+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-01",
+        "note_id": 21,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.322108+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.335959+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.346660+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-02",
+        "note_id": 22,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.357868+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.369903+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.378888+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-03",
+        "note_id": 23,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.387809+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.401288+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.417120+00:00"
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-04",
+        "note_id": 24,
+        "project_id": 2,
+        "import_request_utc": "2026-10-10T15:52:29.426467+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.438544+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.455433+00:00"
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-01",
+        "note_id": 25,
+        "project_id": 3,
+        "import_request_utc": "2026-10-10T15:52:29.472721+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.484032+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.497005+00:00"
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-02",
+        "note_id": 26,
+        "project_id": 3,
+        "import_request_utc": "2026-10-10T15:52:29.505487+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.516169+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.525754+00:00"
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-03",
+        "note_id": 27,
+        "project_id": 3,
+        "import_request_utc": "2026-10-10T15:52:29.534864+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.544417+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.554127+00:00"
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-04",
+        "note_id": 28,
+        "project_id": 3,
+        "import_request_utc": "2026-10-10T15:52:29.561864+00:00",
+        "approved_request_utc": "2026-10-10T15:52:29.570616+00:00",
+        "graph_request_utc": "2026-10-10T15:52:29.582064+00:00"
+      }
+    ],
+    "all_imports_after_freeze": true
+  },
+  "runtime_snapshot": {
+    "database_at_freeze": {
+      "notes": 0,
+      "projects": 0,
+      "kg_entities": 0,
+      "kg_relations": 0
+    },
+    "environment_at_freeze": {
+      "captured_utc": "2026-10-10T15:52:21.948775+00:00",
+      "head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+      "rust_build_inputs_diff": "empty",
+      "ready": {
+        "checks": {
+          "database": "ok",
+          "storage": "ok"
+        },
+        "revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+        "status": "ready"
+      },
+      "notes_before_freeze": 0
+    },
+    "backend": {
+      "name": "eln-t136-backend-1",
+      "container_id": "2651579a5005d184755dec7053a48486f7627cfc2cbe006608ed79d7ee71a961",
+      "image_id": "sha256:f39264ceca846f14d87559e972206fdfd0ba0c10731aadf90b8b3c8a2995552e",
+      "created": "2026-10-10T15:24:51.383156298Z",
+      "health": "healthy",
+      "ports": {
+        "8000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18036"
+          }
+        ]
+      },
+      "mounts": [
+        {
+          "name": "eln-t136_t136_storage",
+          "destination": "/storage"
+        }
+      ]
+    },
+    "database": {
+      "name": "eln-t136-db-1",
+      "container_id": "754c4dcddc89fcbe0c877d00c744e12c70c9a577b31fc961c1998236ff763255",
+      "image_id": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+      "created": "2026-10-10T15:24:51.325921487Z",
+      "health": "healthy",
+      "ports": {
+        "5432/tcp": null
+      },
+      "mounts": [
+        {
+          "name": "eln-t136_t136_db",
+          "destination": "/var/lib/postgresql/data"
+        }
+      ]
+    },
+    "compose_seed_disabled": true,
+    "compose_external_models_disabled": true,
+    "HTTP_logged_paths_include_only_frozen_local_test_API_sequence": true
+  },
+  "reference": {
+    "identity": "AI-assisted pre-output reference, no human annotator",
+    "annotator": "research-reviewer Agent; product-manager Agent blind review; root Agent adjudication",
+    "scientific_unique_relations": 74,
+    "scientific_by_relation": {
+      "uses_reagent": 39,
+      "uses_sample": 27,
+      "uses_instrument": 2,
+      "produces_result": 6
+    },
+    "natural_record_count": 12,
+    "source_count": 3,
+    "empty_scientific_reference_count": 2,
+    "empty_scientific_reference_record_ids": [
+      "iisc2019-02",
+      "iisc2019-04"
+    ],
+    "regression_record_count": 4,
+    "regression_content_relation_count": 40,
+    "regression_all_relation_count": 52,
+    "body_fields_paired": true
+  },
+  "exact_record_ids": {
+    "body": {
+      "content": [
+        "iisc2019-02",
+        "iisc2019-04"
+      ],
+      "metadata": [
+        "iisc2019-01",
+        "iisc2019-02",
+        "iisc2019-03",
+        "iisc2019-04",
+        "ubc2021-01",
+        "ubc2021-02",
+        "ubc2021-03",
+        "ubc2021-04",
+        "team5863-01",
+        "team5863-02",
+        "team5863-03",
+        "team5863-04"
+      ],
+      "all": [
+        "iisc2019-02",
+        "iisc2019-04"
+      ]
+    },
+    "fields": {
+      "content": [
+        "iisc2019-01",
+        "iisc2019-02",
+        "iisc2019-03",
+        "iisc2019-04",
+        "ubc2021-01",
+        "ubc2021-02",
+        "ubc2021-03",
+        "team5863-01",
+        "team5863-02",
+        "team5863-03",
+        "team5863-04"
+      ],
+      "metadata": [
+        "iisc2019-01",
+        "iisc2019-02",
+        "iisc2019-03",
+        "iisc2019-04",
+        "ubc2021-01",
+        "ubc2021-02",
+        "ubc2021-03",
+        "ubc2021-04",
+        "team5863-01",
+        "team5863-02",
+        "team5863-03",
+        "team5863-04"
+      ],
+      "all": [
+        "iisc2019-01",
+        "iisc2019-02",
+        "iisc2019-03",
+        "iisc2019-04",
+        "ubc2021-01",
+        "ubc2021-02",
+        "ubc2021-03",
+        "team5863-01",
+        "team5863-02",
+        "team5863-03",
+        "team5863-04"
+      ]
+    },
+    "regression": {
+      "content": [
+        "regression-01",
+        "regression-02",
+        "regression-03"
+      ],
+      "metadata": [
+        "regression-01",
+        "regression-02",
+        "regression-03",
+        "regression-04"
+      ],
+      "all": [
+        "regression-01",
+        "regression-02",
+        "regression-03"
+      ]
+    }
+  },
+  "duplicates": {
+    "original_unique_database_relation_ids": 201,
+    "original_raw_database_relation_rows": 201,
+    "rebuilt_unique_database_relation_ids": 201,
+    "rebuilt_raw_database_relation_rows": 201,
+    "each_arm_duplicate_relation_ids_and_typed_rows": {
+      "body": {
+        "relation_ids": 0,
+        "typed_keys": 0
+      },
+      "fields": {
+        "relation_ids": 0,
+        "typed_keys": 0
+      },
+      "regression": {
+        "relation_ids": 0,
+        "typed_keys": 0
+      }
+    }
+  },
+  "rebuild": {
+    "count": 28,
+    "all_stable_count": 28,
+    "content_stable_count": 28,
+    "metadata_stable_count": 28,
+    "out_of_scope_stable_count": 28,
+    "response_entity_and_relation_counts_checked": true,
+    "details": [
+      {
+        "arm": "body",
+        "record_id": "iisc2019-01",
+        "project_id": 1,
+        "note_id": 1,
+        "extract_run_id": 29,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "iisc2019-02",
+        "project_id": 1,
+        "note_id": 2,
+        "extract_run_id": 30,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "iisc2019-03",
+        "project_id": 1,
+        "note_id": 3,
+        "extract_run_id": 31,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "iisc2019-04",
+        "project_id": 1,
+        "note_id": 4,
+        "extract_run_id": 32,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-01",
+        "project_id": 1,
+        "note_id": 5,
+        "extract_run_id": 33,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-02",
+        "project_id": 1,
+        "note_id": 6,
+        "extract_run_id": 34,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-03",
+        "project_id": 1,
+        "note_id": 7,
+        "extract_run_id": 35,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "ubc2021-04",
+        "project_id": 1,
+        "note_id": 8,
+        "extract_run_id": 36,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-01",
+        "project_id": 1,
+        "note_id": 9,
+        "extract_run_id": 37,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-02",
+        "project_id": 1,
+        "note_id": 10,
+        "extract_run_id": 38,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-03",
+        "project_id": 1,
+        "note_id": 11,
+        "extract_run_id": 39,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "body",
+        "record_id": "team5863-04",
+        "project_id": 1,
+        "note_id": 12,
+        "extract_run_id": 40,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-01",
+        "project_id": 2,
+        "note_id": 13,
+        "extract_run_id": 41,
+        "status": "completed",
+        "extracted_entity_count": 8,
+        "extracted_relation_count": 7,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-02",
+        "project_id": 2,
+        "note_id": 14,
+        "extract_run_id": 42,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-03",
+        "project_id": 2,
+        "note_id": 15,
+        "extract_run_id": 43,
+        "status": "completed",
+        "extracted_entity_count": 23,
+        "extracted_relation_count": 22,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "iisc2019-04",
+        "project_id": 2,
+        "note_id": 16,
+        "extract_run_id": 44,
+        "status": "completed",
+        "extracted_entity_count": 4,
+        "extracted_relation_count": 3,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-01",
+        "project_id": 2,
+        "note_id": 17,
+        "extract_run_id": 45,
+        "status": "completed",
+        "extracted_entity_count": 8,
+        "extracted_relation_count": 7,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-02",
+        "project_id": 2,
+        "note_id": 18,
+        "extract_run_id": 46,
+        "status": "completed",
+        "extracted_entity_count": 9,
+        "extracted_relation_count": 8,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-03",
+        "project_id": 2,
+        "note_id": 19,
+        "extract_run_id": 47,
+        "status": "completed",
+        "extracted_entity_count": 12,
+        "extracted_relation_count": 11,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "ubc2021-04",
+        "project_id": 2,
+        "note_id": 20,
+        "extract_run_id": 48,
+        "status": "completed",
+        "extracted_entity_count": 13,
+        "extracted_relation_count": 12,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-01",
+        "project_id": 2,
+        "note_id": 21,
+        "extract_run_id": 49,
+        "status": "completed",
+        "extracted_entity_count": 6,
+        "extracted_relation_count": 5,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-02",
+        "project_id": 2,
+        "note_id": 22,
+        "extract_run_id": 50,
+        "status": "completed",
+        "extracted_entity_count": 5,
+        "extracted_relation_count": 4,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-03",
+        "project_id": 2,
+        "note_id": 23,
+        "extract_run_id": 51,
+        "status": "completed",
+        "extracted_entity_count": 14,
+        "extracted_relation_count": 13,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "fields",
+        "record_id": "team5863-04",
+        "project_id": 2,
+        "note_id": 24,
+        "extract_run_id": 52,
+        "status": "completed",
+        "extracted_entity_count": 18,
+        "extracted_relation_count": 17,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-01",
+        "project_id": 3,
+        "note_id": 25,
+        "extract_run_id": 53,
+        "status": "completed",
+        "extracted_entity_count": 13,
+        "extracted_relation_count": 12,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-02",
+        "project_id": 3,
+        "note_id": 26,
+        "extract_run_id": 54,
+        "status": "completed",
+        "extracted_entity_count": 13,
+        "extracted_relation_count": 12,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-03",
+        "project_id": 3,
+        "note_id": 27,
+        "extract_run_id": 55,
+        "status": "completed",
+        "extracted_entity_count": 15,
+        "extracted_relation_count": 14,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      },
+      {
+        "arm": "regression",
+        "record_id": "regression-04",
+        "project_id": 3,
+        "note_id": 28,
+        "extract_run_id": 56,
+        "status": "completed",
+        "extracted_entity_count": 16,
+        "extracted_relation_count": 15,
+        "stable": {
+          "content": true,
+          "metadata": true,
+          "all": true,
+          "out_of_scope": true
+        },
+        "duplicate_relation_ids": 0,
+        "duplicate_typed_rows": 0
+      }
+    ]
+  },
+  "verification": {
+    "checks_by_category": {
+      "freeze": 209,
+      "revision": 67,
+      "time": 32,
+      "reference": 135,
+      "source": 3,
+      "identity": 36,
+      "input": 52,
+      "graph": 2404,
+      "decode": 56,
+      "metric_compare": 5540,
+      "rebuild": 309,
+      "http": 432,
+      "runtime": 3,
+      "artifact_stability": 282,
+      "persisted_versions": 29
+    },
+    "checks_total": 9589,
+    "numeric_metric_leaves_compared": 1287,
+    "official_metrics_match": true,
+    "all_frozen_hashes_and_sizes_match": true,
+    "all_artifacts_unchanged_during_audit": true,
+    "issues": []
+  },
+  "interpretation": [
+    "Body arm has no scientific/business relations for all 12 natural English records; 74 nonempty reference relations are missed. Two records have empty scientific reference and therefore exact empty output, with undefined per-note F1; they are excluded from content macro-F1 denominator (10).",
+    "Fields arm is a label-serialization/extraction control with frozen gold labels supplied as fixed fields, not free-text scientific understanding. One comma-containing sample label is split into three predicted labels; this yields three content FP and one content FN.",
+    "Regression arm reuses four known development examples and its frozen 52-relation reference. The extra bare sample label 2 in qPCR contributes one FP; 40 content and 12 metadata reference relations are retained.",
+    "Metadata relations are correct in all arms, but content and metadata metrics are reported separately because merging correct metadata can inflate apparent body extraction performance.",
+    "All 28 manual rebuilds preserve scored relation sets and multiplicities, including the observed split-label errors. Rebuild stability verifies repeatability, not scientific extraction correctness.",
+    "This small paired three-source English input set and known regression controls do not establish overall language coverage, external validity, human annotation accuracy, population performance or a significance claim. Approval was exercised by the frozen super_admin test operator."
+  ],
+  "created_utc": "2026-10-10T16:00:35.331836+00:00",
+  "updated_utc": "2026-10-10T16:02:02.781086+00:00",
+  "bindings": {
+    "revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "freeze_manifest_sha256": "2addac2083e383b14985d42e2412036499e279d3bf11ddf0f0484c6915e75b9f",
+    "gold_sha256": "7f758ab962f06f4b694bd160b41acd91e03be0969afa227811826cf8232a461f",
+    "records_sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0",
+    "cases_sha256": "bb4286c66634bd81cbe844822cd0ceca62793513387f791d7c69beb00b538602",
+    "operator_sha256": "7d571a2e9d33e0a20a6bb54eef693de8e07043ab9eeaeb64d1eacba1939c5b41",
+    "scorer_sha256": "9ee31bf8a3d06538938dd0bcd0876b55f71d84f23919b30d4b18cd775eabdfa8",
+    "protocol_sha256": "26f1de4dfcc1f5bbc70489f9ee54f58e2049786e3d025875f1644d80ca56bc68",
+    "official": {
+      "observations.json": "11edb055311f5ed5466afacb549874ebf2c694917328ff59b0ed4feaec546668",
+      "metrics.json": "eedbf0ff3ad115827523840fedc1babfb3164f7e9f2ef6769ea928a70aaee834",
+      "rebuild-check.json": "1a9992f6abcaaab593cbd0b8ce851e3fb9c885b8abd93582d453caac237ccf2e",
+      "completion.json": "dfdd75aba73e8600563eafa56b83c10f57293eb9e1a22184db6debbc7788c85b"
+    },
+    "sources": [
+      {
+        "id": "iisc2019",
+        "url": "https://static.igem.org/mediawiki/2019/3/34/T--IISc-Bangalore--Wetlab_Notebook.pdf",
+        "sha256": "18cf31a1a5685b96d7c27ccd6d16be09537e772cb9b21ac9767e39a1a41dbdd0",
+        "bytes": 3533907
+      },
+      {
+        "id": "ubc2021",
+        "url": "https://static.igem.org/mediawiki/2021/4/40/T--British_Columbia--LabNotebook.pdf",
+        "sha256": "65ca2cd39d40dfaa92b5de8096435642e483ecaec475e13f44d412b0bb4c570d",
+        "bytes": 28943332
+      },
+      {
+        "id": "team5863",
+        "url": "https://static.igem.wiki/teams/5863/wetlab/notebook.pdf",
+        "sha256": "81ef285bbad2ab6cb254a7be981b657baac9f4be31d15b93c898f9bee7869c14",
+        "bytes": 499701
+      }
+    ],
+    "frozen_file_check_count": 102,
+    "frozen_file_hash_and_size_match_count": 102,
+    "backend_revision_bound_input_count": 63,
+    "backend_input_revision_match_count": 63,
+    "http_logs_count": 174,
+    "http_log_hash_bundle_sha256": "f4e959fc4afba592f8f0dc165ac1f760f04935cfd520d7350f94a4988d34db12",
+    "http_hash_bundle_definition": "SHA256 of UTF-8 compact JSON array [[repo-relative path, file SHA256], ...], sorted by HTTP log filename; separators comma/colon, ensure_ascii=false.",
+    "note_versions_after_sha256": "feb946fb7f267dec4653b56710c13ea85f267ba968169b58924a46378644ca79",
+    "file_hashes_checked_unchanged_during_primary_audit_count": 282
+  },
+  "persisted_approved_versions": {
+    "source": "agent-work/t136-2026-10-10/run/note-versions-after.json",
+    "rows": 28,
+    "distinct_note_ids": 28,
+    "approved_fixed_fields_and_content_exactly_match_frozen_cases_count": 28,
+    "approved_title_and_current_version_id_match_import_response_count": 28,
+    "errors": [],
+    "identity": "Independent Agent comparison of archived SQL output; did not reuse root-integrity-audit assertions or query live API."
+  },
+  "independent_metrics": {
+    "body": {
+      "content": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 74,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "exact": false,
+        "raw_row_count": 0,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 12,
+        "exact_note_count": 2,
+        "macro_f1": 0.0,
+        "macro_nonempty_count": 10
+      },
+      "metadata": {
+        "tp": 36,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "exact": true,
+        "raw_row_count": 36,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 12,
+        "exact_note_count": 12,
+        "macro_f1": 1.0,
+        "macro_nonempty_count": 12
+      },
+      "all": {
+        "tp": 36,
+        "fp": 0,
+        "fn": 74,
+        "precision": 1.0,
+        "recall": 0.32727272727272727,
+        "f1": 0.4931506849315068,
+        "exact": false,
+        "raw_row_count": 36,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 12,
+        "exact_note_count": 2,
+        "macro_f1": 0.5964756077256077,
+        "macro_nonempty_count": 12
+      },
+      "by_relation": {
+        "created_by": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 12,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "has_experiment_type": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 12,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "has_note": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 12,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "produces_result": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 6,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact": false,
+          "raw_row_count": 0,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_instrument": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact": false,
+          "raw_row_count": 0,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_reagent": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 39,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact": false,
+          "raw_row_count": 0,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_sample": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 27,
+          "precision": null,
+          "recall": 0.0,
+          "f1": 0.0,
+          "exact": false,
+          "raw_row_count": 0,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        }
+      },
+      "out_of_scope": {},
+      "per_note": {
+        "content": [
+          {
+            "record_id": "iisc2019-01",
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-02",
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "exact": true,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-03",
+            "tp": 0,
+            "fp": 0,
+            "fn": 19,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-04",
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "exact": true,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-01",
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-02",
+            "tp": 0,
+            "fp": 0,
+            "fn": 5,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-03",
+            "tp": 0,
+            "fp": 0,
+            "fn": 8,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-04",
+            "tp": 0,
+            "fp": 0,
+            "fn": 7,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-01",
+            "tp": 0,
+            "fp": 0,
+            "fn": 2,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-02",
+            "tp": 0,
+            "fp": 0,
+            "fn": 1,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-03",
+            "tp": 0,
+            "fp": 0,
+            "fn": 10,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-04",
+            "tp": 0,
+            "fp": 0,
+            "fn": 14,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "exact": false,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ],
+        "metadata": [
+          {
+            "record_id": "iisc2019-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ],
+        "all": [
+          {
+            "record_id": "iisc2019-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.42857142857142855,
+            "f1": 0.6,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 19,
+            "precision": 1.0,
+            "recall": 0.13636363636363635,
+            "f1": 0.24,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 4,
+            "precision": 1.0,
+            "recall": 0.42857142857142855,
+            "f1": 0.6,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 5,
+            "precision": 1.0,
+            "recall": 0.375,
+            "f1": 0.5454545454545454,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 8,
+            "precision": 1.0,
+            "recall": 0.2727272727272727,
+            "f1": 0.42857142857142855,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 7,
+            "precision": 1.0,
+            "recall": 0.3,
+            "f1": 0.46153846153846156,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 2,
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.75,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 1,
+            "precision": 1.0,
+            "recall": 0.75,
+            "f1": 0.8571428571428571,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 10,
+            "precision": 1.0,
+            "recall": 0.23076923076923078,
+            "f1": 0.375,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 14,
+            "precision": 1.0,
+            "recall": 0.17647058823529413,
+            "f1": 0.3,
+            "exact": false,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ]
+      }
+    },
+    "fields": {
+      "content": {
+        "tp": 73,
+        "fp": 3,
+        "fn": 1,
+        "precision": 0.9605263157894737,
+        "recall": 0.9864864864864865,
+        "f1": 0.9733333333333334,
+        "exact": false,
+        "raw_row_count": 76,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 12,
+        "exact_note_count": 11,
+        "macro_f1": 0.975,
+        "macro_nonempty_count": 10
+      },
+      "metadata": {
+        "tp": 36,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "exact": true,
+        "raw_row_count": 36,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 12,
+        "exact_note_count": 12,
+        "macro_f1": 1.0,
+        "macro_nonempty_count": 12
+      },
+      "all": {
+        "tp": 109,
+        "fp": 3,
+        "fn": 1,
+        "precision": 0.9732142857142857,
+        "recall": 0.990909090909091,
+        "f1": 0.9819819819819819,
+        "exact": false,
+        "raw_row_count": 112,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 12,
+        "exact_note_count": 11,
+        "macro_f1": 0.9848484848484849,
+        "macro_nonempty_count": 12
+      },
+      "by_relation": {
+        "created_by": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 12,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "has_experiment_type": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 12,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "has_note": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 12,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "produces_result": {
+          "tp": 6,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 6,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_instrument": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 2,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_reagent": {
+          "tp": 39,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 39,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_sample": {
+          "tp": 26,
+          "fp": 3,
+          "fn": 1,
+          "precision": 0.896551724137931,
+          "recall": 0.9629629629629629,
+          "f1": 0.9285714285714286,
+          "exact": false,
+          "raw_row_count": 29,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        }
+      },
+      "out_of_scope": {},
+      "per_note": {
+        "content": [
+          {
+            "record_id": "iisc2019-01",
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 4,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-02",
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "exact": true,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-03",
+            "tp": 19,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 19,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-04",
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "exact": true,
+            "raw_row_count": 0,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-01",
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 4,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-02",
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 5,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-03",
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 8,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-04",
+            "tp": 6,
+            "fp": 3,
+            "fn": 1,
+            "precision": 0.6666666666666666,
+            "recall": 0.8571428571428571,
+            "f1": 0.75,
+            "exact": false,
+            "raw_row_count": 9,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-01",
+            "tp": 2,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 2,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-02",
+            "tp": 1,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 1,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-03",
+            "tp": 10,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 10,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-04",
+            "tp": 14,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 14,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ],
+        "metadata": [
+          {
+            "record_id": "iisc2019-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ],
+        "all": [
+          {
+            "record_id": "iisc2019-01",
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 7,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-03",
+            "tp": 22,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 22,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "iisc2019-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-01",
+            "tp": 7,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 7,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-02",
+            "tp": 8,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 8,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-03",
+            "tp": 11,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 11,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "ubc2021-04",
+            "tp": 9,
+            "fp": 3,
+            "fn": 1,
+            "precision": 0.75,
+            "recall": 0.9,
+            "f1": 0.8181818181818182,
+            "exact": false,
+            "raw_row_count": 12,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-01",
+            "tp": 5,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 5,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-02",
+            "tp": 4,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 4,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-03",
+            "tp": 13,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 13,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "team5863-04",
+            "tp": 17,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 17,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ]
+      }
+    },
+    "regression": {
+      "content": {
+        "tp": 40,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.975609756097561,
+        "recall": 1.0,
+        "f1": 0.9876543209876543,
+        "exact": false,
+        "raw_row_count": 41,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 4,
+        "exact_note_count": 3,
+        "macro_f1": 0.9891304347826086,
+        "macro_nonempty_count": 4
+      },
+      "metadata": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "exact": true,
+        "raw_row_count": 12,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 4,
+        "exact_note_count": 4,
+        "macro_f1": 1.0,
+        "macro_nonempty_count": 4
+      },
+      "all": {
+        "tp": 52,
+        "fp": 1,
+        "fn": 0,
+        "precision": 0.9811320754716981,
+        "recall": 1.0,
+        "f1": 0.9904761904761905,
+        "exact": false,
+        "raw_row_count": 53,
+        "duplicate_relation_ids": 0,
+        "duplicate_rows": 0,
+        "note_count": 4,
+        "exact_note_count": 3,
+        "macro_f1": 0.9913793103448276,
+        "macro_nonempty_count": 4
+      },
+      "by_relation": {
+        "created_by": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 4,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "has_experiment_type": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 4,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "has_note": {
+          "tp": 4,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 4,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "produces_result": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 8,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_instrument": {
+          "tp": 8,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 8,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_reagent": {
+          "tp": 15,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "exact": true,
+          "raw_row_count": 15,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        },
+        "uses_sample": {
+          "tp": 9,
+          "fp": 1,
+          "fn": 0,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9473684210526315,
+          "exact": false,
+          "raw_row_count": 10,
+          "duplicate_relation_ids": 0,
+          "duplicate_rows": 0
+        }
+      },
+      "out_of_scope": {},
+      "per_note": {
+        "content": [
+          {
+            "record_id": "regression-01",
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 9,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-02",
+            "tp": 9,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 9,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-03",
+            "tp": 11,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 11,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-04",
+            "tp": 11,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9166666666666666,
+            "recall": 1.0,
+            "f1": 0.9565217391304348,
+            "exact": false,
+            "raw_row_count": 12,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ],
+        "metadata": [
+          {
+            "record_id": "regression-01",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-02",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-03",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-04",
+            "tp": 3,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 3,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ],
+        "all": [
+          {
+            "record_id": "regression-01",
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 12,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-02",
+            "tp": 12,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 12,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-03",
+            "tp": 14,
+            "fp": 0,
+            "fn": 0,
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact": true,
+            "raw_row_count": 14,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          },
+          {
+            "record_id": "regression-04",
+            "tp": 14,
+            "fp": 1,
+            "fn": 0,
+            "precision": 0.9333333333333333,
+            "recall": 1.0,
+            "f1": 0.9655172413793104,
+            "exact": false,
+            "raw_row_count": 15,
+            "duplicate_relation_ids": 0,
+            "duplicate_rows": 0
+          }
+        ]
+      }
+    }
+  },
+  "error_details": {
+    "body": {
+      "content_false_positive_count": 0,
+      "content_false_negative_count": 74,
+      "false_negative_counts_by_record": {
+        "iisc2019-01": 4,
+        "iisc2019-03": 19,
+        "team5863-01": 2,
+        "team5863-02": 1,
+        "team5863-03": 10,
+        "team5863-04": 14,
+        "ubc2021-01": 4,
+        "ubc2021-02": 5,
+        "ubc2021-03": 8,
+        "ubc2021-04": 7
+      },
+      "false_negative_counts_by_relation": {
+        "uses_reagent": 39,
+        "uses_instrument": 2,
+        "uses_sample": 27,
+        "produces_result": 6
+      },
+      "full_typed_false_negative_list_equals_official": true
+    },
+    "fields": {
+      "content_false_positives": [
+        [
+          "ubc2021-04",
+          "note",
+          "ubc2021-04 rfp transformation plate observations and retransformation",
+          "ubc2021-04",
+          "uses_sample",
+          "sample",
+          "and janella’s transformation on july 5th",
+          ""
+        ],
+        [
+          "ubc2021-04",
+          "note",
+          "ubc2021-04 rfp transformation plate observations and retransformation",
+          "ubc2021-04",
+          "uses_sample",
+          "sample",
+          "plates from madina",
+          ""
+        ],
+        [
+          "ubc2021-04",
+          "note",
+          "ubc2021-04 rfp transformation plate observations and retransformation",
+          "ubc2021-04",
+          "uses_sample",
+          "sample",
+          "taylor",
+          ""
+        ]
+      ],
+      "content_false_negatives": [
+        [
+          "ubc2021-04",
+          "note",
+          "ubc2021-04 rfp transformation plate observations and retransformation",
+          "ubc2021-04",
+          "uses_sample",
+          "sample",
+          "plates from madina, taylor, and janella’s transformation on july 5th",
+          ""
+        ]
+      ]
+    },
+    "regression": {
+      "content_false_positives": [
+        [
+          "regression-04",
+          "note",
+          "qpcr 定量验证实验",
+          "regression-04",
+          "uses_sample",
+          "sample",
+          "2",
+          ""
+        ]
+      ],
+      "content_false_negatives": []
+    }
+  }
+}

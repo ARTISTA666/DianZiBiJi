@@ -1,0 +1,509 @@
+{
+  "pass": true,
+  "docx_sha256": "ac0378e5419b3e4f94d23921b65c74c30784635e7b50de137f0e1c4c5948c3cb",
+  "pdf_sha256": "047fe424ea270cdc741abeffe70ace82285cee3921fe08ed7584a4ba3f37d211",
+  "physical_pages": 111,
+  "checked_entries": 100,
+  "entries": [
+    {
+      "title": "摘要",
+      "physical_page": 4,
+      "display_page": "I"
+    },
+    {
+      "title": "Abstract",
+      "physical_page": 5,
+      "display_page": "II"
+    },
+    {
+      "title": "第一章绪论",
+      "physical_page": 8,
+      "display_page": "1"
+    },
+    {
+      "title": "1.1研究背景及意义",
+      "physical_page": 8,
+      "display_page": "1"
+    },
+    {
+      "title": "1.2国内外研究现状",
+      "physical_page": 8,
+      "display_page": "1"
+    },
+    {
+      "title": "1.2.1电子实验笔记系统研究现状",
+      "physical_page": 8,
+      "display_page": "1"
+    },
+    {
+      "title": "1.2.2大语言模型与RAG技术研究现状",
+      "physical_page": 9,
+      "display_page": "2"
+    },
+    {
+      "title": "1.2.3知识图谱在科研数据管理中的应用现状",
+      "physical_page": 10,
+      "display_page": "3"
+    },
+    {
+      "title": "1.2.4智能体与工具调用技术研究现状",
+      "physical_page": 11,
+      "display_page": "4"
+    },
+    {
+      "title": "1.2.5小结与研究问题",
+      "physical_page": 12,
+      "display_page": "5"
+    },
+    {
+      "title": "1.3研究目标及研究内容",
+      "physical_page": 12,
+      "display_page": "5"
+    },
+    {
+      "title": "1.4研究贡献",
+      "physical_page": 13,
+      "display_page": "6"
+    },
+    {
+      "title": "1.5论文组织结构",
+      "physical_page": 13,
+      "display_page": "6"
+    },
+    {
+      "title": "第二章相关理论与技术",
+      "physical_page": 14,
+      "display_page": "7"
+    },
+    {
+      "title": "2.1电子实验笔记与科研数据管理",
+      "physical_page": 14,
+      "display_page": "7"
+    },
+    {
+      "title": "2.2大语言模型与检索增强生成技术",
+      "physical_page": 14,
+      "display_page": "7"
+    },
+    {
+      "title": "2.3知识图谱与实体关系建模",
+      "physical_page": 15,
+      "display_page": "8"
+    },
+    {
+      "title": "2.4智能体与工具调用机制",
+      "physical_page": 15,
+      "display_page": "8"
+    },
+    {
+      "title": "2.5系统开发相关技术",
+      "physical_page": 15,
+      "display_page": "8"
+    },
+    {
+      "title": "2.6本章小结",
+      "physical_page": 15,
+      "display_page": "8"
+    },
+    {
+      "title": "第三章需求分析",
+      "physical_page": 16,
+      "display_page": "9"
+    },
+    {
+      "title": "3.1科研实验记录业务场景与角色分析",
+      "physical_page": 16,
+      "display_page": "9"
+    },
+    {
+      "title": "3.2系统问题场景分析",
+      "physical_page": 17,
+      "display_page": "10"
+    },
+    {
+      "title": "3.3系统功能需求分析",
+      "physical_page": 18,
+      "display_page": "11"
+    },
+    {
+      "title": "3.4系统非功能需求",
+      "physical_page": 18,
+      "display_page": "11"
+    },
+    {
+      "title": "3.5本章小结",
+      "physical_page": 19,
+      "display_page": "12"
+    },
+    {
+      "title": "第四章系统设计",
+      "physical_page": 20,
+      "display_page": "13"
+    },
+    {
+      "title": "4.1系统总体架构设计",
+      "physical_page": 20,
+      "display_page": "13"
+    },
+    {
+      "title": "4.2用户角色与权限设计",
+      "physical_page": 21,
+      "display_page": "14"
+    },
+    {
+      "title": "4.3系统功能模块设计",
+      "physical_page": 22,
+      "display_page": "15"
+    },
+    {
+      "title": "4.4数据库设计",
+      "physical_page": 23,
+      "display_page": "16"
+    },
+    {
+      "title": "4.4.1数据存储与服务依赖",
+      "physical_page": 23,
+      "display_page": "16"
+    },
+    {
+      "title": "4.4.2数据组织与表结构",
+      "physical_page": 24,
+      "display_page": "17"
+    },
+    {
+      "title": "4.5实验知识图谱构建方法",
+      "physical_page": 25,
+      "display_page": "18"
+    },
+    {
+      "title": "4.5.1实验知识图谱总体设计",
+      "physical_page": 26,
+      "display_page": "19"
+    },
+    {
+      "title": "4.5.2实验记录实体定义",
+      "physical_page": 26,
+      "display_page": "19"
+    },
+    {
+      "title": "4.5.3实验知识关系定义",
+      "physical_page": 27,
+      "display_page": "20"
+    },
+    {
+      "title": "4.5.4基于实验笔记内容的实体关系抽取方法",
+      "physical_page": 27,
+      "display_page": "20"
+    },
+    {
+      "title": "4.5.5审核状态驱动的知识图谱更新机制",
+      "physical_page": 30,
+      "display_page": "23"
+    },
+    {
+      "title": "4.5.6资料审核与知识入库机制",
+      "physical_page": 30,
+      "display_page": "23"
+    },
+    {
+      "title": "4.5.7实验知识图谱可视化与关联检索",
+      "physical_page": 30,
+      "display_page": "23"
+    },
+    {
+      "title": "4.5.8计划知识点管理与覆盖匹配",
+      "physical_page": 30,
+      "display_page": "23"
+    },
+    {
+      "title": "4.6融合知识图谱的智能问答方法",
+      "physical_page": 31,
+      "display_page": "24"
+    },
+    {
+      "title": "4.6.1项目级RAG知识库构建与分块",
+      "physical_page": 31,
+      "display_page": "24"
+    },
+    {
+      "title": "4.6.2词法检索与BM25倒排索引",
+      "physical_page": 32,
+      "display_page": "25"
+    },
+    {
+      "title": "4.6.3混合检索的RRF融合",
+      "physical_page": 32,
+      "display_page": "25"
+    },
+    {
+      "title": "4.6.4融合知识图谱的检索增强策略",
+      "physical_page": 33,
+      "display_page": "26"
+    },
+    {
+      "title": "4.6.5权限约束下的问答执行流程",
+      "physical_page": 35,
+      "display_page": "28"
+    },
+    {
+      "title": "4.6.6问答来源、审计与评价记录",
+      "physical_page": 35,
+      "display_page": "28"
+    },
+    {
+      "title": "4.7固定任务型智能辅助与工具调用设计",
+      "physical_page": 36,
+      "display_page": "29"
+    },
+    {
+      "title": "4.7.1MCP接口与会话助手实现",
+      "physical_page": 36,
+      "display_page": "29"
+    },
+    {
+      "title": "4.7.2固定任务模板设计",
+      "physical_page": 37,
+      "display_page": "30"
+    },
+    {
+      "title": "4.7.3工具注册与风险分级",
+      "physical_page": 39,
+      "display_page": "32"
+    },
+    {
+      "title": "4.7.4高风险操作的人工确认与幂等控制",
+      "physical_page": 40,
+      "display_page": "33"
+    },
+    {
+      "title": "4.7.5提示版本管理",
+      "physical_page": 40,
+      "display_page": "33"
+    },
+    {
+      "title": "4.8项目指标评估与人工干预",
+      "physical_page": 40,
+      "display_page": "33"
+    },
+    {
+      "title": "4.9本章小结",
+      "physical_page": 41,
+      "display_page": "34"
+    },
+    {
+      "title": "第五章系统实现",
+      "physical_page": 42,
+      "display_page": "35"
+    },
+    {
+      "title": "5.1系统实现环境",
+      "physical_page": 42,
+      "display_page": "35"
+    },
+    {
+      "title": "5.2实验数据集",
+      "physical_page": 42,
+      "display_page": "35"
+    },
+    {
+      "title": "5.3系统功能实现",
+      "physical_page": 45,
+      "display_page": "38"
+    },
+    {
+      "title": "5.3.1实验笔记审核与知识更新实现",
+      "physical_page": 45,
+      "display_page": "38"
+    },
+    {
+      "title": "5.3.2资料向量化与检索实现",
+      "physical_page": 46,
+      "display_page": "39"
+    },
+    {
+      "title": "5.3.3图谱增强问答与可视化实现",
+      "physical_page": 46,
+      "display_page": "39"
+    },
+    {
+      "title": "5.3.4固定任务与工具调用实现",
+      "physical_page": 48,
+      "display_page": "41"
+    },
+    {
+      "title": "5.3.5权限与审计实现",
+      "physical_page": 50,
+      "display_page": "43"
+    },
+    {
+      "title": "5.3.6计划覆盖功能实现",
+      "physical_page": 50,
+      "display_page": "43"
+    },
+    {
+      "title": "5.3.7代表操作与模块对应",
+      "physical_page": 50,
+      "display_page": "43"
+    },
+    {
+      "title": "5.4本章小结",
+      "physical_page": 58,
+      "display_page": "51"
+    },
+    {
+      "title": "第六章系统测试与实验结果分析",
+      "physical_page": 59,
+      "display_page": "52"
+    },
+    {
+      "title": "6.1测试环境与数据集",
+      "physical_page": 59,
+      "display_page": "52"
+    },
+    {
+      "title": "6.2功能与安全测试",
+      "physical_page": 60,
+      "display_page": "53"
+    },
+    {
+      "title": "6.3实验设计与评价指标",
+      "physical_page": 64,
+      "display_page": "57"
+    },
+    {
+      "title": "6.4多角色协作流程验证",
+      "physical_page": 66,
+      "display_page": "59"
+    },
+    {
+      "title": "6.5归档实验分析",
+      "physical_page": 66,
+      "display_page": "59"
+    },
+    {
+      "title": "6.5.1实验一：知识图谱抽取质量评价",
+      "physical_page": 66,
+      "display_page": "59"
+    },
+    {
+      "title": "6.5.2实验二：普通RAG与图谱增强RAG归档对照",
+      "physical_page": 67,
+      "display_page": "60"
+    },
+    {
+      "title": "6.5.3实验三：多方法对照实验",
+      "physical_page": 69,
+      "display_page": "62"
+    },
+    {
+      "title": "6.5.4实验四：固定任务生成功能验证",
+      "physical_page": 72,
+      "display_page": "65"
+    },
+    {
+      "title": "6.5.5实验五：计划覆盖与预警机制验证",
+      "physical_page": 72,
+      "display_page": "65"
+    },
+    {
+      "title": "6.5.6自动评价补充",
+      "physical_page": 73,
+      "display_page": "66"
+    },
+    {
+      "title": "6.6Rust补充实验与业务验证",
+      "physical_page": 74,
+      "display_page": "67"
+    },
+    {
+      "title": "6.7本章小结",
+      "physical_page": 78,
+      "display_page": "71"
+    },
+    {
+      "title": "第七章总结与展望",
+      "physical_page": 79,
+      "display_page": "72"
+    },
+    {
+      "title": "7.1工作总结",
+      "physical_page": 79,
+      "display_page": "72"
+    },
+    {
+      "title": "7.2研究贡献",
+      "physical_page": 79,
+      "display_page": "72"
+    },
+    {
+      "title": "7.3不足与展望",
+      "physical_page": 79,
+      "display_page": "72"
+    },
+    {
+      "title": "致谢",
+      "physical_page": 81,
+      "display_page": "74"
+    },
+    {
+      "title": "参考文献",
+      "physical_page": 82,
+      "display_page": "75"
+    },
+    {
+      "title": "附录ARAG对照实验问题清单",
+      "physical_page": 88,
+      "display_page": "81"
+    },
+    {
+      "title": "附录B知识图谱抽取参考关系集",
+      "physical_page": 89,
+      "display_page": "82"
+    },
+    {
+      "title": "B.1参考集构成与匹配判定",
+      "physical_page": 89,
+      "display_page": "82"
+    },
+    {
+      "title": "B.2参考关系完整清单",
+      "physical_page": 89,
+      "display_page": "82"
+    },
+    {
+      "title": "B.3数据分类与完整表结构设计",
+      "physical_page": 91,
+      "display_page": "84"
+    },
+    {
+      "title": "附录C智能体工具规格与任务模板清单",
+      "physical_page": 104,
+      "display_page": "97"
+    },
+    {
+      "title": "附录D实验附件与数据完整性清单",
+      "physical_page": 105,
+      "display_page": "98"
+    },
+    {
+      "title": "D.1GSE111619数据文件完整性",
+      "physical_page": 105,
+      "display_page": "98"
+    },
+    {
+      "title": "D.2实验附件归档清单",
+      "physical_page": 105,
+      "display_page": "98"
+    },
+    {
+      "title": "D.3项目一样本原文展示",
+      "physical_page": 106,
+      "display_page": "99"
+    },
+    {
+      "title": "D.4测试运行与性能观测记录",
+      "physical_page": 109,
+      "display_page": "102"
+    }
+  ]
+}

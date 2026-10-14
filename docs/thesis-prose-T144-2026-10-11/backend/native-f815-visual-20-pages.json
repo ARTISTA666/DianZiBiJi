@@ -1,0 +1,439 @@
+{
+  "task": "T144",
+  "reviewer": "backend_engineer",
+  "review_kind": "原尺寸逐页视觉复核",
+  "status": "pass",
+  "reviewed_snapshot": {
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/native-f815-before-toc.pdf",
+    "pdf_sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92",
+    "canonical_pdf_path_at_review": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-wps/1005-表述精校无批注版-2026-10-11.pdf",
+    "initial_word_sha256_provided_for_pdf": "df765798eb3598a5818a5e492b8a229bbf4e7c12ca2ee9464171bce5e93a41d7",
+    "current_word_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+    "current_word_observed_sha256": "4261c0cc08263ba5bb70e97fae444fb5998a5a206d83e2ceed6b57e8cec901dc",
+    "identity_note": "原尺寸结论绑定f815 PDF及以下20张PNG。根任务正在修正Word目录缓存64→65，当前Word已另有SHA；不将新Word身份直接归给旧导出。最终导出须逐页核对PNG字节后另行绑定。"
+  },
+  "view_method": {
+    "tool": "tools.view_image",
+    "detail": "original",
+    "full_page_images": true,
+    "contact_sheet_used": false,
+    "text_only_substitution": false,
+    "inherited_pages": 0
+  },
+  "coverage": {
+    "assigned_pages": [
+      32,
+      33,
+      34,
+      35,
+      37,
+      38,
+      39,
+      41,
+      42,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      53,
+      54,
+      55,
+      56
+    ],
+    "required_count": 20,
+    "actual_original_view_count": 20,
+    "pass_count": 20,
+    "blocking_findings": 0,
+    "other_pages_reviewed_by_this_report": false
+  },
+  "pages": [
+    {
+      "page": 32,
+      "printed_page": 25,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-032.png",
+      "sha256": "f8ab5c5cd5d9abc10c50952c53e5389120e8d146919000013ae1cacf4f2c2638",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "正文检索候选说明与4.6.4标题衔接完整；式（4-10）的双重求和、下标及role项可读，无符号缺失。",
+        "图4-8的全部节点、连线和题注同页，底部未侵入页脚。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 33,
+      "printed_page": 26,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-033.png",
+      "sha256": "d936a09b28bd6a48ef7aa61e288c9b66750ff1bf99b5e93a72493d3ad0142d85",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "表4-7题注、三线、所有计分符号及公式行完整同页，长行未越出单元格。",
+        "图4-9权限及RAG流程全部可见；4.6.6标题后有正文，未形成孤立标题。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 34,
+      "printed_page": 27,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-034.png",
+      "sha256": "83fd0acd651020a4dab098a7b2725b1c0c9361603401a7a5ce1d812acc262a19",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "表4-8两类评审对照完整同页，表头及底线可见。",
+        "来源、引用及反馈权限说明，4.7与4.7.1正文和MCP/API路径均完整可读，无裁切重叠。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 35,
+      "printed_page": 28,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-035.png",
+      "sha256": "bae6c7edacf78cfb26870034db7aeb319c66087bf1b852ceb05a5bfb0218a919",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图4-10三条调用流程的节点、箭头及题注完整。",
+        "表4-9六类固定模板完整同页，行内换行自然，末行与底线均清楚。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 37,
+      "printed_page": 30,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-037.png",
+      "sha256": "dc5a67ed0eb82bf3dc6e197f8a39c45d8976abda18a9128fe0bde15be2901a21",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "高风险幂等及事务边界、提示版本和预警段落完整可读。",
+        "表4-12四类指标、分式、下标及默认阈值均完整同页，底线与页脚分离。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 38,
+      "printed_page": 31,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-038.png",
+      "sha256": "26a00c082d6e67c6e42fc9e960d6b9e328cef6120a97b72f11d1c14016077ac9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "承接表4-12的符号、重抽与零值边界说明完整；角色条件文字无缺失。",
+        "4.9小结标题与正文同页，无孤立标题；章末留白未导致内容截断。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 39,
+      "printed_page": 32,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-039.png",
+      "sha256": "b832852fce1e79412b7e39af89489bcd3fe530248a991dac1334cca936373c91",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "第五章章名与5.1正文完整；表5-1全部实现配置行、表头及底线同页可读。",
+        "5.2标题下有完整正文，表格前后的段落衔接自然。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 41,
+      "printed_page": 34,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-041.png",
+      "sha256": "6d51e2f0fa4ab446d49e39c8ef6b31c11ce8174ad1059b28e5cfa9259d47788f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-1、图5-2的状态截图与各自题注均完整同页，无重叠。",
+        "正文的“图5-2”在连字符处跨行，但编号文字完整；5.3标题后保留正文，未孤立。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 42,
+      "printed_page": 35,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-042.png",
+      "sha256": "b40166a67b5d67f36342b8605efe3db5ab78c3f17a8d8e669d9435e170ec8a30",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-3系统流程、图5-4笔记状态、图5-5上传及入库流程均完整同页，节点、箭头和题注清楚。",
+        "段落无覆盖、越界或末行截断；页末正文正常续到下一页。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 45,
+      "printed_page": 38,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-045.png",
+      "sha256": "4aa902a8932196f0337d50ab9b34921f6c062abcce71ec422f43c30d738553fc",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-9覆盖与未匹配摘要完整，题注未分离。",
+        "表5-5草稿片段和来源[N9]、[N10]、[R1926]、[R1929]完整同页，表线与文字未裁切；5.3.5和5.3.6均有随后正文。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 46,
+      "printed_page": 39,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-046.png",
+      "sha256": "f82b7f953cf44c8afde1a61c7d0961cb1e6bcbe81329fcb41d3040b74bc24a77",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "5.3.7正文句法完整；表5-6十三项模块、简称表头及末行均在同页，三线表完整。",
+        "图5-10项目成员能力截图及题注完整，无版心外溢或重叠。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 47,
+      "printed_page": 40,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-047.png",
+      "sha256": "6c10385ea5b8f8bcbe4ac996548f404127dd0fb4c6d962feead5f3eaf6e88181",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-11退回与修订入口节选以及图5-12资料状态截图均完整同页，各题注可读。",
+        "图5-11节选中既有上下片段的白色分隔未遮住本页文字；关联资料与审核同步的正文完整。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 48,
+      "printed_page": 41,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-048.png",
+      "sha256": "6e1dbe7abe87626794e3265939969baa991b686d523e43412a810ba39823d74b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-13 OCR识别与人工校对、图5-14来源编号片段、图5-15预警入口均完整同页，S/G编号及题注可读。",
+        "成员核查回答依据与审计入口说明自然，底部独立盲评条件完整，未与页脚重叠。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 49,
+      "printed_page": 42,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-049.png",
+      "sha256": "142abe4987692cee6505a04953ab8dce655332025db9bda9ec2360348984fedd",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-16审计摘要、图5-17独立盲评隔离、图5-18回答及S1来源片段均完整同页，无裁切重叠。",
+        "反馈与评分区分以及笔记编辑入口说明完整，来源截图中的引用编号清楚可见。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 50,
+      "printed_page": 43,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-050.png",
+      "sha256": "a83500b1e642c19b13ce0051a7dfb8f68f87abf66d295298bc4450c7ff4c32b2",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图5-19编辑与本机草稿节选、图5-20修订前预警配置及各题注完整，历史截图边界说明可读。",
+        "页末固定任务草稿风险段落在逗号后正常续页；无末行截断或页脚重叠。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 51,
+      "printed_page": 44,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-051.png",
+      "sha256": "5e9d4277a92345702980cbdb4c00d5f07f6e4fd7232ae98b32ffad084b68128a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "页首完整承接上一页并明确“不能据此形成跨笔记因果结论”，限定条件未被分页拆失。",
+        "图5-21草稿结论和图5-22三类来源计数片段、题注完整同页；正文N/F/R计数与待实证含义均清楚。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 53,
+      "printed_page": 46,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-053.png",
+      "sha256": "7577a4d25920ec99e36358cba4cb159a600fa358084a40dd65d59498be41bf56",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "第六章章名及6.1标题后均有正文；历史Python批次、当前Rust补验和冻结条件的区分完整可读。",
+        "表6-1及表6-2题注、表头、全部行和底线同页可见；长数据集规模说明未裁切。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 54,
+      "printed_page": 47,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-054.png",
+      "sha256": "453cf48a287f163e6477a898288ec659491e1f4325b3b2dc09972822f09faa4c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "图6-1的坐标轴、15/10/10数值、项目标签与题注完整同页。",
+        "6.2标题后有两行完整正文；下方为下一页整表预留的留白，未形成孤立标题或丢失正文。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 55,
+      "printed_page": 48,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-055.png",
+      "sha256": "1e7ada7aee70df16448c1e180729f35a9784818e61adf159770e536f9ce517a9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "表6-3五项测试设计与结果全部完整同页；长文本换行清楚，表头和底线完整。",
+        "表6-3a的B01—B04全部行及底线同页，题注未分离；模型桩与生成质量评价边界说明可读。"
+      ],
+      "findings": []
+    },
+    {
+      "page": 56,
+      "printed_page": 49,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-056.png",
+      "sha256": "bde59420642482c6cf4f4821779d8d3011c5507f239053ef72107deca79eecc6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "status": "pass",
+      "actual_original_view": true,
+      "view_tool": "tools.view_image",
+      "view_detail": "original",
+      "observations": [
+        "表6-3b的B05—B08和表6-3c的R01—R03均完整同页，表头、三线及长英文状态字段无缺失。",
+        "NFR6正文的工作者、请求数、p95和吞吐表述以及逐请求明细局限完整；页尾留白正常，无裁切。"
+      ],
+      "findings": []
+    }
+  ],
+  "limitations": [
+    "此报告仅评价所分配20页的可见版式与段落衔接，不代替全文语义、文献真实性或新软件实验验收。",
+    "截图题注已标注的节选保留原有截图范围；未据截图执行新的浏览器验证。",
+    "第41页图5-2编号在连字符处跨行，文字完整，属于非阻塞观察。"
+  ]
+}

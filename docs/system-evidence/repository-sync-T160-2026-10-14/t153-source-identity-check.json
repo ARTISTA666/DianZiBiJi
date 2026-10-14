@@ -1,0 +1,10 @@
+{
+  "reference": "T153 SOURCE_MANIFEST.json",
+  "reference_sha256": "1b3b19799a9b81c0589b284fc147f66b6d0db75a0b6df885521d36abd8b38143",
+  "source_count": 544,
+  "matching_count": 543,
+  "mismatches": [
+    "README.md"
+  ],
+  "reuse_scope": "Production source and E2E inputs only; T153 reports remain dated historical results, not rerun in T160."
+}

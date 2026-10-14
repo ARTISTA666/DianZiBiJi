@@ -1,0 +1,100 @@
+{
+  "task": "T139 v5 multiroleAI journey failure investigation",
+  "utc": "2026-10-11T07:31:26.037981+00:00",
+  "input_revision": "9e48d93b133a62ace8207a5a274c3ce731fa2b37",
+  "status": "CONFIRMED_OUTDATED_KG_UI_TEXT_ANCHORS",
+  "failing_call": "frontend/e2e/user-journeys.spec.ts:263",
+  "actual_error": "locator.click Test180000ms timeout waiting exactbuttonname 重建图谱",
+  "facts": {
+    "ui_actor": {
+      "id": 10,
+      "display_name": "用户旅程实验记录员",
+      "role": "member"
+    },
+    "screenshot_current_button_text": "重新提取并构建图谱",
+    "kg_GET": {
+      "entity_count": 4,
+      "relation_count": 3,
+      "http_status": 200
+    },
+    "kg_rebuild_POST_count": 0,
+    "button_enabled_and_visible_in_screenshot": true,
+    "timeout_ms": 180000,
+    "api_request_witnesses": [
+      {
+        "trace_entry": "0-trace.network",
+        "utc": "2026-10-11T07:26:25.038Z",
+        "method": "POST",
+        "url": "http://127.0.0.1:18000/projects/7/files?file_category=knowledge_document",
+        "http_status": 200,
+        "duration_ms": 20.161
+      },
+      {
+        "trace_entry": "0-trace.network",
+        "utc": "2026-10-11T07:26:27.604Z",
+        "method": "POST",
+        "url": "http://127.0.0.1:18000/files/9/review",
+        "http_status": 200,
+        "duration_ms": 16.786
+      },
+      {
+        "trace_entry": "0-trace.network",
+        "utc": "2026-10-11T07:26:27.687Z",
+        "method": "POST",
+        "url": "http://127.0.0.1:18000/api/ocr/extract",
+        "http_status": 200,
+        "duration_ms": 1121.841
+      },
+      {
+        "trace_entry": "0-trace.network",
+        "utc": "2026-10-11T07:26:29.022Z",
+        "method": "POST",
+        "url": "http://127.0.0.1:18000/api/ocr/results/2/confirm",
+        "http_status": 200,
+        "duration_ms": 26.773
+      },
+      {
+        "trace_entry": "0-trace.network",
+        "utc": "2026-10-11T07:26:32.911Z",
+        "method": "GET",
+        "url": "http://127.0.0.1:18000/projects/7/kg/graph",
+        "http_status": 200,
+        "duration_ms": 14.186
+      }
+    ],
+    "actual_dom_button_fragments": [
+      {
+        "trace_entry": "0-trace.trace",
+        "snapshotName": "after@call@473",
+        "frameUrl": "http://127.0.0.1:13000/projects/7/kg",
+        "button_html_fragment": "ium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 select-none border border-input bg-background/80 hover:bg-accent hover:text-accent-foreground shadow-subtle hover:border-border rounded-md px-3 h-8 text-xs\"}, [\"svg\", {\"xmlns\": \"http://www.w3.org/2000/svg\", \"width\": \"24\", \"height\": \"24\", \"viewBox\": \"0 0 24 24\", \"fill\": \"none\", \"stroke\": \"currentColor\", \"stroke-width\": \"2\", \"stroke-linecap\": \"round\", \"stroke-linejoin\": \"round\", \"class\": \"lucide lucide-rotate-cw mr-1.5 h-3.5 w-3.5\"}, [\"path\", {\"d\": \"M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8\"}], [\"path\", {\"d\": \"M21 3v5h-5\"}]], \"重新提取并构建图谱\"]]], [\"DIV\", {\"data-state\": \"active\", \"data-orientation\": \"horizontal\", \"role\": \"tabpanel\", \"aria-labelledby\":"
+      }
+    ]
+  },
+  "inference": "TheUI was loaded andKGread API succeeded. The obsolete exactbuttonname never matched the rendered currentbutton; no rebuild request was sent. This does not implicatepermissions orRust businessfailure.",
+  "source_contract": {
+    "button": "frontend/src/app/(dashboard)/projects/[id]/kg/page.tsx:231 重新提取并构建图谱",
+    "success_toast": "frontend/src/app/(dashboard)/projects/[id]/kg/page.tsx:137 图谱已根据最新实验审核记录重新构建",
+    "write_gate": "frontend page canWrite and backend/src/api/knowledge_graph.rs:113 require_write",
+    "read_only_negative_assertion": "Executed v5 user-journeys.spec.ts:297 still searched obsoletebuttonname and would trivially count0; must update to current exactname and retaincount0."
+  },
+  "minimum_fix": "Update thepositiveclick, successmessage, and read-onlynegativebuttonassertion to current exacttexts. Preserve the same recorderrole, UI rebuild, readonlydenial, subsequentquery/report assertions and180000ms timeout.",
+  "root_follow_up": "Root reports all3text anchors corrected inmain; independentreviewer validates snapshot. QA has notmodifiedcode.",
+  "artifacts": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v5/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/trace.zip",
+      "sha256": "a806641bf0cbdbabc48d9f3d440cd6994632f61aefca831991a5dd24e8eaeb15",
+      "bytes": 49812678
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v5/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/error-context.md",
+      "sha256": "5068418353b938e51ffe0caf301d9515b3ae50dcd713e8be68fb1ec1c741d44e",
+      "bytes": 10224
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v5/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/test-failed-1.png",
+      "sha256": "d0d9ad8aa30393b6fe2ff9f58fa2e7e505a83c9df761fd6d35236885bd101846",
+      "bytes": 117305
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.665043+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+    "experiment_type": "autoclaving_and_antibiotic_preparation",
+    "experiment_date": "2019-04-10",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": " The prepared solutions were autoclaved along with the tip-boxes.\n Prepared antibiotic solutions:\no Ampicillin\no Chloramphenico\nPoured plates (Petri dishes were autoclaved earlier)"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 2,
+    "project_id": 1,
+    "template_id": null,
+    "title": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+    "experiment_type": "autoclaving_and_antibiotic_preparation",
+    "experiment_date": "2019-04-10",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 2,
+    "created_at": "2026-10-10T15:52:29.097676Z",
+    "updated_at": "2026-10-10T15:52:29.097676Z"
+  }
+}

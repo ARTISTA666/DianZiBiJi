@@ -1,0 +1,127 @@
+{
+  "task": "T150",
+  "scan_scope": "white-listed current source and selected original evidence; never reads .env or key files",
+  "patterns": [
+    "jwt",
+    "provider_key",
+    "bearer",
+    "private_key",
+    "credential_url"
+  ],
+  "files": [
+    {
+      "path": "scripts/experiments/ablate_score53_coefficients.py",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "agent-work/t139-2026-10-11/qa/reusable-test-environment.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "agent-work/t139-2026-10-11/qa/t139-qa-final-validation.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "agent-work/t139-2026-10-11/validation/system-e2e-final-v4.log",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "jwt",
+        "bearer"
+      ]
+    },
+    {
+      "path": "agent-work/t141-2026-10-11/backend/test-db-identity.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "agent-work/t148-2026-10-12/qa/QA.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "agent-work/t148-2026-10-12/qa/run_qa.py",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "docs/project-optimization-T148-2026-10-12/qa/QA.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "docs/thesis-fixes-T139-2026-10-11/e2e-failed-v4-results.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "jwt",
+        "bearer"
+      ]
+    },
+    {
+      "path": "docs/thesis-fixes-T139-2026-10-11/qa-four-status-and-metric-validation.json",
+      "reason": "sensitive-pattern candidate; original retained, no values disclosed",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "fb87ce38c08aa3444759a47adda56e491ad05db2:scripts/experiments/ablate_score53_coefficients.py",
+      "reason": "historical source sensitive-pattern candidate",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954:scripts/experiments/ablate_score53_coefficients.py",
+      "reason": "historical source sensitive-pattern candidate",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "0268b88a949a78a72198ec80542c6306ed7f71cc:scripts/experiments/ablate_score53_coefficients.py",
+      "reason": "historical source sensitive-pattern candidate",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "6d52a600ae1cc882cdad6e620205595b291ebe95:scripts/experiments/ablate_score53_coefficients.py",
+      "reason": "historical source sensitive-pattern candidate",
+      "classes": [
+        "credential_url"
+      ]
+    },
+    {
+      "path": "9548e83d4f887630385e2b818292e2b8a5afbf36:scripts/experiments/ablate_score53_coefficients.py",
+      "reason": "historical source sensitive-pattern candidate",
+      "classes": [
+        "credential_url"
+      ]
+    }
+  ],
+  "limits": [
+    "Pattern screening does not prove absence of all possible sensitive data",
+    "Full Git bundles retained private-local; historic unrelated/identifying materials have not passed distribution review",
+    "No secrets displayed in this index",
+    "Non-public browser trace ZIPs omitted because they may retain cookies or tokens"
+  ],
+  "package_is_for": "supervisor/third-party internal review; not anonymous blind-review submission"
+}

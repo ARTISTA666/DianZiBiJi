@@ -1,0 +1,285 @@
+{
+  "reviewer": "architect / independent system mechanism reviewer",
+  "manuscript": "/Users/yusong/Desktop/1005-新测试结果同步版-2026-10-11.docx",
+  "criteria": [
+    "当前Rust行为是否支持论文现在时机制主张",
+    "读写审核权限、项目作用域、人工确认和幂等边界是否在执行点成立",
+    "抽取、映射、计划覆盖与实际任务完成是否严格区分",
+    "公式、排序、阈值与流程是否可由代码复核",
+    "实验人口、版本和测试路径是否足以支撑主张范围"
+  ],
+  "version_check": {
+    "head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "manuscript_declared_T136_revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "rust_source_worktree_diff": "git diff --name-only HEAD -- backend/src: empty",
+    "evidence": [
+      {
+        "file": "/Users/yusong/Downloads/new/full-system/docs/experiments/t136-2026-10-10/environment-at-freeze.json",
+        "start": 3,
+        "end": 10
+      },
+      {
+        "file": "/Users/yusong/Downloads/new/full-system/docs/experiments/t136-2026-10-10/freeze-manifest.json",
+        "start": 6,
+        "end": 6
+      }
+    ],
+    "manuscript_paragraph": "P3617",
+    "interpretation": "当前代码与论文T136声明版本一致；不据本次静态反例推翻历史冻结通过用例或T136抽取分数。"
+  },
+  "validation_boundary": "本轮独立阅读正文与代码，未参考其他审核报告，未执行新实验；以下行为反例均为静态控制流或公式推导。已有测试文本仅作已有验证范围证据，并非本轮重跑结果。",
+  "findings": [
+    {
+      "id": "ARCH-01",
+      "severity": "重要",
+      "title": "高风险待确认动作复用同键时，异参拒绝和完成缓存语义均不成立",
+      "paragraphs": [
+        "P0847",
+        "P0848"
+      ],
+      "section": "4.7.4 幂等控制与人工确认",
+      "printed_page": 32,
+      "physical_page": 39,
+      "quote": "同一标识但参数不同的请求被拒绝；已完成且参数相同的重复请求返回缓存结果",
+      "facts": [
+        "create_pending_action仅按user/tool/key查询已有动作ID，不读取并比较已有参数摘要、状态或有效期；复用已有ID后，响应却使用本次请求的新参数摘要和固定600秒。",
+        "approve_pending_action校验的是数据库内旧arguments_json与旧arguments_hash，故不会察觉另一次同键异参请求。",
+        "已有测试明确预期已完成动作同键再调用得到旧ID、再次批准返回409；此行为是状态防重放，并非返回已缓存执行结果。"
+      ],
+      "static_counterexample": "同一用户先用key K登记review_note(N1, approve)，再用K登记review_note(N2, reject)：第二次仍返回N1动作的ID，而响应摘要来自N2参数；批准该ID按存储内容执行N1。完成后正常同键重试也不能按正文取回缓存结果。",
+      "inference": "正文把低风险草稿的缓存语义泛化到高风险确认队列，并把存储摘要自洽检查写成了同键异参检查。此处没有证明人工确认可被绕过。",
+      "code": [
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/mcp.rs",
+          "start": 1102,
+          "end": 1152
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 992,
+          "end": 1008
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 1752,
+          "end": 1788
+        }
+      ],
+      "impact": "重试者可能拿到参数摘要与待执行动作不一致的确认响应；幂等机制的论文叙述与实现及已有测试不一致。",
+      "minimum_revision": "将缓存返回限定为确已实现的低风险路径；高风险明确描述完成后409的状态防重放。在宣称同键异参拒绝前，需于队列复用时比较旧摘要，并按旧状态/有效期返回真实响应。",
+      "confidence": 0.99,
+      "experiment_status": "静态反例；未新跑"
+    },
+    {
+      "id": "ARCH-02",
+      "severity": "重要",
+      "title": "高风险领域写入与执行键登记不在同一事务，不能保证失败重试仍只有一次有效写入",
+      "paragraphs": [
+        "P0847",
+        "P1704"
+      ],
+      "section": "4.7.4；7.2",
+      "printed_page": 32,
+      "physical_page": 39,
+      "quote": "仍只产生一次有效写入；成功后保存结果，防止重复执行",
+      "facts": [
+        "approve_pending_action在外层事务锁定待确认动作，先调用execute_confirmed_tool，返回后才在该外层事务写入tool_execution_keys、标记completed并commit。",
+        "submit_note_action另开自己的池事务，并在返回前commit；review_note_action等领域动作也自行提交。外层事务回滚不能撤回已提交的领域写入。"
+      ],
+      "static_counterexample": "业务动作已提交后、1057执行键INSERT或1066外层commit之前，若进程终止或该阶段失败，业务变化保留而执行键/完成状态未提交。重试可能再次调用领域动作；提交或审核可能因状态变更409，重建等可再次写入。",
+      "inference": "当前锁可序列化正常确认请求，但不能消除跨事务故障窗口；具体故障概率及实际重复结果仍需故障注入核实。",
+      "code": [
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 990,
+          "end": 1066
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 1128,
+          "end": 1135
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/notes.rs",
+          "start": 415,
+          "end": 506
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/notes.rs",
+          "start": 761,
+          "end": 826
+        }
+      ],
+      "impact": "论文的绝对一次写入保证超过实现；业务已经改变而客户端报错/确认仍待处理的状态不在现有主张内。",
+      "minimum_revision": "将结论收窄为正常完成路径的防重复确认，并披露业务提交与执行键登记之间的故障窗口；若保留严格保证，需让业务写入与执行键原子提交，或采用有明确恢复规则的执行状态/事务性outbox。",
+      "confidence": 0.98,
+      "experiment_status": "静态故障窗口；未故障注入；不否定历史正常路径通过"
+    },
+    {
+      "id": "ARCH-03",
+      "severity": "重要",
+      "title": "笔记提审执行点缺少写权限与活动项目检查，权限公式并非所有写入路径都成立",
+      "paragraphs": [
+        "P0392",
+        "P0394",
+        "P0330",
+        "P0722"
+      ],
+      "section": "4.1 权限模型；4.7.1",
+      "printed_page": 14,
+      "physical_page": 21,
+      "quote": "负责人写入和审核仍受项目活动状态及成员授权约束",
+      "facts": [
+        "can_write_project首先检查项目active，随后检查admin或can_write成员权限。",
+        "submit_note_action只验证项目可读访问、笔记所有者及draft/returned状态，没有调用can_write_project/require_write。",
+        "MCP登记提审时检查can_write_project，但批准执行只检查project可读访问，随后调用上述缺少写权限检查的领域动作。"
+      ],
+      "static_counterexample": "用户拥有一个草稿，创建后保留can_read但被撤销can_write，或项目转为非active。该用户仍满足submit_note_action的read+owner+draft判断，REST提审可改变状态；已登记的待确认提审也存在批准时权限撤销的同类窗口。若approval_enabled=false，还会批准并建图。",
+      "inference": "通用权限函数本身正确，但未在提审执行点使用；不能由创建时权限或登记时权限推出执行时仍获授权。",
+      "code": [
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/permissions.rs",
+          "start": 23,
+          "end": 32
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/permissions.rs",
+          "start": 97,
+          "end": 109
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/notes.rs",
+          "start": 393,
+          "end": 421
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/notes.rs",
+          "start": 460,
+          "end": 477
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/mcp.rs",
+          "start": 803,
+          "end": 817
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 1128,
+          "end": 1135
+        }
+      ],
+      "impact": "现在时的统一权限/活动状态约束存在确定路径例外；撤权或归档后仍可能改变笔记和知识图谱。",
+      "minimum_revision": "在提审领域动作中按笔记实际project_id检查当前写权限与active状态；在完成前，论文应明确该执行路径例外，不能称所有写操作统一受式4-1约束。",
+      "confidence": 0.99,
+      "experiment_status": "静态权限反例；未新跑"
+    },
+    {
+      "id": "ARCH-04",
+      "severity": "重要",
+      "title": "固定项目会话只固定project_id参数，未绑定note/file对象的实际项目",
+      "paragraphs": [
+        "P0722",
+        "P0286"
+      ],
+      "section": "3.2 项目隔离要求；4.7.1 系统内会话助手",
+      "printed_page": 29,
+      "physical_page": 36,
+      "quote": "按当前项目授权筛选的工具定义；核对参数、项目授权及风险等级",
+      "facts": [
+        "内部助手把tool arguments.project_id覆盖为会话的固定项目。",
+        "execute_confirmed_tool对该project_id作可读校验，但submit_note_review/review_note/review_document随后只把note_id/file_id传入领域动作；未比较对象的真实project_id与固定项目。",
+        "领域审核动作校验对象实际项目权限，因此此问题本身不能证明越权访问无权限项目。"
+      ],
+      "static_counterexample": "用户同时可审核A和B项目，在固定A会话中模型返回B的note_id。A的project_id被强制写入参数并通过登记/确认；领域动作凭该用户在B的审核权，最终审核B的笔记。会话和待确认动作仍绑定A。",
+      "inference": "授权项目集合与当前会话项目边界是两种约束；前者没有推出后者。论文目前将当前项目工具约束写得更强。",
+      "code": [
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 656,
+          "end": 676
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/mcp.rs",
+          "start": 803,
+          "end": 817
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+          "start": 1128,
+          "end": 1194
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/notes.rs",
+          "start": 742,
+          "end": 744
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/files.rs",
+          "start": 619,
+          "end": 633
+        }
+      ],
+      "impact": "可在A会话触发用户也获授权的B对象操作，造成项目上下文与实际业务对象不一致，影响确认理解与项目审计归属。",
+      "minimum_revision": "登记及批准执行前核对目标note/file.project_id等于会话/参数project_id；论文将项目隔离表述限定到实际已实现的对象授权范围，直至该一致性检查补齐。",
+      "confidence": 0.97,
+      "experiment_status": "静态跨项目对象反例；未新跑；不声称绕过B项目授权"
+    },
+    {
+      "id": "ARCH-05",
+      "severity": "重要",
+      "title": "覆盖停滞实为匹配实体最后更新时间，重抽可清零且零覆盖不开始计时",
+      "paragraphs": [
+        "P0864",
+        "P0870",
+        "P1709"
+      ],
+      "section": "4.8 项目指标评估与人工干预；7.3（4）",
+      "printed_page": 32,
+      "physical_page": 39,
+      "quote": "覆盖停滞以M中最近一次更新为起点；M为空时D=0",
+      "facts": [
+        "实现取与有效计划节点匹配的kg_entities.max(updated_at)，没有匹配则unwrap_or(0)。公式与当前代码一致。",
+        "重建已批准笔记会先清旧图，再重新建立；复用实体也无条件把updated_at设为now。",
+        "P1709已明确将“重抽后的停滞天数”列为未来核对事项，故不是完全未披露的缺陷。"
+      ],
+      "static_counterexample": "一份计划部分覆盖后30天未新增覆盖，只重抽原已批准笔记即可令D约为0；计划建立30天仍零覆盖时M一直为空，D也一直为0。未覆盖比例可另行告警，不能称所有风险都漏报。",
+      "inference": "指标测量知识实体最近维护时间，而不是新增计划覆盖或科研进展的停滞时间。既已披露仍需收窄当前功能解释，不能仅靠未来工作消除第4章的语义错位。",
+      "code": [
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/project_alert.rs",
+          "start": 98,
+          "end": 116
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/knowledge_graph.rs",
+          "start": 64,
+          "end": 65
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/knowledge_graph.rs",
+          "start": 499,
+          "end": 505
+        },
+        {
+          "file": "/Users/yusong/Downloads/new/full-system/backend/src/api/knowledge_graph.rs",
+          "start": 93,
+          "end": 104
+        }
+      ],
+      "impact": "重建行为可抑制停滞告警；从未开始覆盖的项目缺少停滞时间信号，因此该指标对进展状态的解释有限。",
+      "minimum_revision": "当前版本将名称改为“匹配实体更新间隔”，明确重抽/维护可复位、零覆盖不计时；若保留“覆盖停滞”，以覆盖集合发生有效变化的事件时间计时，并为无覆盖情况选择明确的计划生效起点。",
+      "confidence": 1.0,
+      "experiment_status": "静态公式与控制流反例；未新跑；已披露未收口"
+    }
+  ],
+  "excluded_suspicions": [
+    "历史Python批次、英文自然正文F1=0及字段条件参考直接映射的边界已明确披露；不重复列为发现。",
+    "0.7/1.0明确是经验来源权重和排序补充，不当作未校准概率缺陷。",
+    "计划覆盖与任务完成明确区分，精确类型/规范名匹配本身不构成违规。",
+    "笔记批准与图谱抽取在同一领域事务，正文该机制主张有代码支持。",
+    "MCP tools/list展示完整注册表、执行再检查范围已披露，不因展示工具列表认定越权。",
+    "高风险执行确实要求pending状态和有效期内人工批准；未发现绕过人工批准路径。",
+    "引用审计只检验格式/范围、事实支持需人工核对已披露，不当作语义引用校验失效。",
+    "图谱检索5000行扫描和6000字符限额是可复现性补充项；基准仅100关系，不列入本次最高优先问题。"
+  ]
+}

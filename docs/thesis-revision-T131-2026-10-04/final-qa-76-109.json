@@ -1,0 +1,547 @@
+{
+  "task_id": "T131",
+  "reviewer": "product_manager",
+  "status": "pass",
+  "candidate_path": "/private/tmp/advisor-T131-20261004/candidate.docx",
+  "candidate_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+  "pdf_path": "/private/tmp/advisor-T131-20261004/render-final/candidate.pdf",
+  "pdf_sha256": "159060b00593e626e18ba739f4c4ae232b9f40bbf3a0b8ef36614eb729fe58bb",
+  "render_directory": "/private/tmp/advisor-T131-20261004/render-final",
+  "total_physical_pages": 109,
+  "scope": {
+    "physical_page_start": 76,
+    "physical_page_end": 109
+  },
+  "completed_at": "2026-10-04T16:13:22+08:00",
+  "method": "All 34 pages personally inspected through view_image(detail=original), full page without crop.",
+  "personally_viewed_pages": 34,
+  "inherited_pages": 0,
+  "checks": [
+    "No clipped figures, tables, text or page footers",
+    "Figure captions and table titles remain with their content",
+    "No abnormal page breaks or orphan section titles",
+    "Printed page numbers 69 through 102 sequential",
+    "References [1] through [81] complete in inspected pages",
+    "Appendix A-D tables, sample figures, command text and observation record complete"
+  ],
+  "acknowledgments": {
+    "physical_page": 76,
+    "printed_page": 69,
+    "result": "pass",
+    "retained_text": "首先感谢孙明斋、陆洲、徐琳三位老师在选题、研究设计与论文写作中给予的指导。"
+  },
+  "pages": [
+    {
+      "physical_page": 76,
+      "printed_page": 69,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-76.png",
+      "png_sha256": "97a0c200db4446a67c1d8cb6ea80e78c5bb4e42704853e4804a74c980801fa3c",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "致谢整页完整；孙明斋、陆洲、徐琳三位老师表述清晰保留；页脚69。"
+    },
+    {
+      "physical_page": 77,
+      "printed_page": 70,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-77.png",
+      "png_sha256": "14e317a9a8b5f7b83f5967f088573012553393f8055ad2a357952c2f7efd8d48",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "参考文献[1]–[14]完整；标题与条目同页；页脚70。"
+    },
+    {
+      "physical_page": 78,
+      "printed_page": 71,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-78.png",
+      "png_sha256": "4168e40168aea409ae93f063a61c843c8dc4307afd754e95e03c0dbfc83bfef0",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "参考文献[15]–[31]完整；悬挂缩进及连续排版正常；页脚71。"
+    },
+    {
+      "physical_page": 79,
+      "printed_page": 72,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-79.png",
+      "png_sha256": "bd6acce80b121d617c4ea81b448f26165851e526801453293cf0498c879d13a3",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "参考文献[32]–[49]完整；无页边截断；页脚72。"
+    },
+    {
+      "physical_page": 80,
+      "printed_page": 73,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-80.png",
+      "png_sha256": "a3d585c29657c997580baafa14a15ba6efa47cf8f6be36530b670daa25dcfb5d",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "参考文献[50]–[68]完整；条目内换行正常；页脚73。"
+    },
+    {
+      "physical_page": 81,
+      "printed_page": 74,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-81.png",
+      "png_sha256": "fd05a8182a348da2ffa16aad03de87cbd24ad97b66210895aabb486cc7c36ab9",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "参考文献[69]–[81]完整结束；URL与DOI未截断；页脚74。"
+    },
+    {
+      "physical_page": 82,
+      "printed_page": 75,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-82.png",
+      "png_sha256": "cc12c8d0f1c033ce8a73e2957a15d92729ad8c00fb690351370d9fbc9be5b642",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "附录A标题、说明和表A-1同页；Q01–Q20均完整，Q05/Q20的†可辨；页脚75。"
+    },
+    {
+      "physical_page": 83,
+      "printed_page": 76,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-83.png",
+      "png_sha256": "04254820b67bbd48ce0ea3e20dad6a7e9c5365b87ff1c8be62f5c5c669a92c2e",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "附录B的B.1/B.2与表B-1(a)完整；序号1–12、底线及图表标题正常；页脚76。"
+    },
+    {
+      "physical_page": 84,
+      "printed_page": 77,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-84.png",
+      "png_sha256": "ec5a7bb9c580a71f2070a5da2deb500dc00bf0e541a2dfa8bd4669f7bb0242e3",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-1(b)序号13–24完整；独立分组页留白正常；无行切断；页脚77。"
+    },
+    {
+      "physical_page": 85,
+      "printed_page": 78,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-85.png",
+      "png_sha256": "404174d5590c9d0fb4a9a2d659a73499fb361c8f6d9c5287a0664d3e4a46d739",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-1(c)序号25–38完整；英文实体折行在单元格内；底线完整；页脚78。"
+    },
+    {
+      "physical_page": 86,
+      "printed_page": 79,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-86.png",
+      "png_sha256": "58caa345918620fdccee9172352ee8d942cfab98f8c0c9c2406f3affd96e66ce",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-1(d)序号39–52完整；底线与最后单元格均可辨；页脚79。"
+    },
+    {
+      "physical_page": 87,
+      "printed_page": 80,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-87.png",
+      "png_sha256": "d70923eda59ce6fed5a4b1f9bcc9cc879163e81aaab3dab24c50cfc56633dfb5",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "B.3、表B-2符号说明及枚举列表完整同页；密集内容仍在页边内；页脚80。"
+    },
+    {
+      "physical_page": 88,
+      "printed_page": 81,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-88.png",
+      "png_sha256": "0fe94a1a1be93e588f9bbb04c0ae51c48019ce8af46d739c234bf7f10329ae93",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-3–B-6完整同页；各表标题/表头/底线清晰；无断行跨页；页脚81。"
+    },
+    {
+      "physical_page": 89,
+      "printed_page": 82,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-89.png",
+      "png_sha256": "29fe8cb855ead116d70787ecb133ca430dc3ab3794e83ca8bb3a0c11b9643357",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-7–B-9完整同页；补充约束各随所属表；页脚82。"
+    },
+    {
+      "physical_page": 90,
+      "printed_page": 83,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-90.png",
+      "png_sha256": "cbd9b34590fac54d4592885ce0b42598c0f28c3ea2dffeb5a42e636e0e60a189",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-10–B-12完整同页；列名与类型约束可辨；页脚83。"
+    },
+    {
+      "physical_page": 91,
+      "printed_page": 84,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-91.png",
+      "png_sha256": "78eed8dc2a99310066c1ca82d18bdfb001d2c46e9aebb4709783985ac8cc5793",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-13–B-15完整同页；长字段名未跨入类型列；页脚84。"
+    },
+    {
+      "physical_page": 92,
+      "printed_page": 85,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-92.png",
+      "png_sha256": "57b8336339f788abd07b8bc8af578dd3fe734986ff1dd1cd517e4e29bb012252",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-16/B-17完整；模型默认值的换行仍在约束列内；页脚85。"
+    },
+    {
+      "physical_page": 93,
+      "printed_page": 86,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-93.png",
+      "png_sha256": "7991cf9e1bc5296b417a64728e9bbcbf5fca8c8f5779c3b8eeb0a2febab91202",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-18/B-19完整；legacy-unknown换行完整；补充约束未断开；页脚86。"
+    },
+    {
+      "physical_page": 94,
+      "printed_page": 87,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-94.png",
+      "png_sha256": "2ba84b13cf8d72b81b116d0a70fc42124bb6815ba22bb4eb4ea764dbc2c5dcff",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-20–B-22完整；关系唯一约束整行可辨；页脚87。"
+    },
+    {
+      "physical_page": 95,
+      "printed_page": 88,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-95.png",
+      "png_sha256": "617c8716a7065cb388b1c0727c71ce28e616c2e831dd913c2034ee984ca79287",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-23–B-25完整；两处WHERE约束折行正常；底部表完整；页脚88。"
+    },
+    {
+      "physical_page": 96,
+      "printed_page": 89,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-96.png",
+      "png_sha256": "ef9a5eab84363c17f5b75e80ce598f5b6639786c8d16468195bfcc1f86a83313",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-26/B-27完整同页；长问答字段名可辨；评价协议默认值未截断；页脚89。"
+    },
+    {
+      "physical_page": 97,
+      "printed_page": 90,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-97.png",
+      "png_sha256": "c09cff4842d0a321754903fe63946225809a90f77401982c30e1a87e24022062",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-28/B-29完整；表后CHECK/WHERE约束在同页展开；页脚90。"
+    },
+    {
+      "physical_page": 98,
+      "printed_page": 91,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-98.png",
+      "png_sha256": "b012aa361cc26ada0bfb021ff148b060a8192f120cb1e025cbb54857703a4af4",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-30/B-31完整；最长来源关系列名与类型列之间仍有间隔；页脚91。"
+    },
+    {
+      "physical_page": 99,
+      "printed_page": 92,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-99.png",
+      "png_sha256": "aef0433cef9e87491bae02f705386a207f6f5c323ec8c3733c830413614e6a9f",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-32–B-34完整；UUID、JSONB默认值清晰；页脚92。"
+    },
+    {
+      "physical_page": 100,
+      "printed_page": 93,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-100.png",
+      "png_sha256": "d378b0485403e24b1892c41950d15a886818f8d6fb9e0228e4e28e134e91c38d",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表B-35–B-37完整；提示词默认值折行正常；全部底线可见；页脚93。"
+    },
+    {
+      "physical_page": 101,
+      "printed_page": 94,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-101.png",
+      "png_sha256": "ee6a497b933fd6310c5ceb80512c8aca1a640eee0961e23ccf74e90752b501a3",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表 B-38 agent_steps、B-39 pending_actions、B-40 idempotency_records 完整，补充约束与对应表同页；密集内容未侵入页脚。"
+    },
+    {
+      "physical_page": 102,
+      "printed_page": 95,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-102.png",
+      "png_sha256": "b052d77d8a88308789e3274c6849d6ebb117afdd2fc5cd835887eff7e8ab821d",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表 B-41 阈值、B-42 预警、B-43 建议反馈完整，CHECK 与唯一约束无截断。"
+    },
+    {
+      "physical_page": 103,
+      "printed_page": 96,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-103.png",
+      "png_sha256": "c9924b3f7fd54c9f5c4db615b55b0a0bfb1a2b4910d8a0a448e8d118620fe222",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "表 B-44 alembic_version、B-45 rust_schema_versions 完整；附录 B 结束后的留白与后续附录起页正常。"
+    },
+    {
+      "physical_page": 104,
+      "printed_page": 97,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-104.png",
+      "png_sha256": "e0ded3d4f5d610140625fc02648ad50245e8d978f9ff56f24392c4de327ceea7",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "附录 C 标题、说明、表 C-1 十二项工具权限与审计动作、表 C-2 六项固定任务模板完整，无标题孤立。"
+    },
+    {
+      "physical_page": 105,
+      "printed_page": 98,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-105.png",
+      "png_sha256": "cc2a0e93d5fa480cd649d1172ad5364a69240d47ed123628486705cf0cb7c967",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "附录 D、D.1 数据完整性、表 D-1 文件及校验前缀、表 D-2 六项归档记录完整；链接正常换行，T114 的 GPT 结构化评判与 GPT 角色接口操作身份可辨。"
+    },
+    {
+      "physical_page": 106,
+      "printed_page": 99,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-106.png",
+      "png_sha256": "9b95a17f01b962c81d1404471d15ddbceb32230d869b29369310785c65c9d3f0",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "D.3 标题和来源身份说明完整；图 D-1 PCR 固定种子笔记样例图及图题同页，字段、正文与来源均清晰无裁切。"
+    },
+    {
+      "physical_page": 107,
+      "printed_page": 100,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-107.png",
+      "png_sha256": "8a12e65ea61ea5d5945ac904fe2990866df9f4e0f48f48966783749794687d65",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "图 D-2 细胞活力与图 D-3 Western Blot 固定笔记样例完整，两个图题均随图，图内来源与测试身份可辨，无跨页截断。"
+    },
+    {
+      "physical_page": 108,
+      "printed_page": 101,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-108.png",
+      "png_sha256": "148a2d1db116201e5956622e100fce05e5b69ddacb1c0b218ee462f662753e93",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "图 D-4 qPCR 样例及图 D-5 SOP 来源文本（1/2）完整，图题同页，长文件名与文字正常换行，无裁切。"
+    },
+    {
+      "physical_page": 109,
+      "printed_page": 102,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-109.png",
+      "png_sha256": "cb105f75d97feda8ce286b0c6f0f9796f5918cc4ef04eb52338807b174d83e5d",
+      "dimensions_px": [
+        1414,
+        2000
+      ],
+      "viewed_original": true,
+      "source": "T131 render-final; personal view_image(detail=original)",
+      "inherited": false,
+      "result": "pass",
+      "notes": "图 D-6 SOP 来源文本（2/2）与图题完整；D.4、表 D-3 三类历史测试运行及下方 Rust 命令、持续观测记录均完整。最后一行留在页内，页码 102 正常。"
+    }
+  ],
+  "issues": [],
+  "scope_boundary": "Visual layout acceptance for physical pages 76-109. This record does not claim WPS interactive verification, source-reference authenticity review or repeated experiments."
+}

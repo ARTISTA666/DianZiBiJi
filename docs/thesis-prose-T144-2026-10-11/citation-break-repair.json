@@ -1,0 +1,18 @@
+{
+  "task": "T144",
+  "utc": "2026-10-11T15:07:38.498605+00:00",
+  "reason": "Fresh native page13/14 review: avoid citation [56] at next page start by removing redundant words earlier in same paragraph; no font/spacing/page break change",
+  "input": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/candidate-c4d4-before-citation-break-repair.docx",
+  "input_sha256": "c4d4f8383d52f7b2f2199cbed2e629f033964d501634c5433b8e844d61560672",
+  "output": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+  "output_sha256": "4261c0cc08263ba5bb70e97fae444fb5998a5a206d83e2ceed6b57e8cec901dc",
+  "paragraph_index": 230,
+  "before": "检索增强生成（RAG）先检索外部资料，再把命中片段输入生成模型[10,11,12,49]。相关综述以索引、检索、增强和生成为主要环节，讨论知识覆盖与证据利用[13,50]。稠密段落检索（Dense Passage Retrieval，DPR）通过两个编码器分别将问题与候选段落转换为向量，再按向量相似度检索相关段落[51]。Self-RAG 和 Corrective RAG 分别关注自反思判断与检索后修正[14,52]。RAG 评价需区分检索相关性、回答忠实性、答案相关性和资源开销[16,53]。RAGAS、RAGBench 及 ARES 提供自动指标、标注基准和评判模型等评价方式[15,54,55]，RGB 考察噪声、拒答、信息整合与反事实稳健性[56]。自动评价仍需结合领域人工核验[53,57]；外部资料接入还涉及敏感信息、提示攻击和输出可信性风险[58]。",
+  "after": "检索增强生成（RAG）先检索外部资料，再把命中片段输入生成模型[10,11,12,49]。相关综述以索引、检索、增强和生成为主要环节，讨论知识覆盖与证据利用[13,50]。稠密段落检索（Dense Passage Retrieval，DPR）用两个编码器分别将问题与候选段落编码为向量，再按相似度检索相关段落[51]。Self-RAG 和 Corrective RAG 分别关注自反思判断与检索后修正[14,52]。RAG 评价需区分检索相关性、回答忠实性、答案相关性和资源开销[16,53]。RAGAS、RAGBench 及 ARES 提供自动指标、标注基准和评判模型等评价方式[15,54,55]，RGB 考察噪声、拒答、信息整合与反事实稳健性[56]。自动评价仍需结合领域人工核验[53,57]；外部资料接入还涉及敏感信息、提示攻击和输出可信性风险[58]。",
+  "substring_before": "通过两个编码器分别将问题与候选段落转换为向量，再按向量相似度检索相关段落",
+  "substring_after": "用两个编码器分别将问题与候选段落编码为向量，再按相似度检索相关段落",
+  "character_delta": -3,
+  "protected_citations_unchanged": true,
+  "independent_semantic_reviewer": "code_reviewer approved two encoders, separate vector mappings, and similarity retrieval preserved",
+  "status": "PASS_LOCAL_PROSE_REPAIR"
+}

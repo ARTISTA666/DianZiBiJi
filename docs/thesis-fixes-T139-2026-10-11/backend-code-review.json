@@ -1,0 +1,145 @@
+{
+  "task": "T139",
+  "reviewer": "/root/code_reviewer",
+  "scope": "只读检查实际工作区生产 backend diff；未编辑生产代码、论文或旧证据",
+  "review_basis": [
+    "git diff -- backend/src/api/{agent_runtime,mcp,notes,files,projects,knowledge_graph,rag/mod}.rs backend/src/rag/index.rs",
+    "确认调用链及共享 Transaction 传递",
+    "既有 green-extended.log 五项通过记录（测试由 backend 工程员执行）"
+  ],
+  "overall": "最终只读复审通过，可冻结当前生产代码。两项新增 P2 已最小修正，相关真实 RED→GREEN 和 legacy SSE replay 回归通过；前端新增状态消费静态复核通过。完整后端与前端检查由 root/QA 继续完成。",
+  "findings": [
+    {
+      "id": "B01",
+      "severity": "P2",
+      "status": "closed",
+      "file": "backend/src/api/rag/mod.rs",
+      "line": 339,
+      "related_lines": [
+        450,
+        486
+      ],
+      "title": "项目重建与单文件同步持有反序行锁",
+      "fact": "本轮把 bulk UPDATE rag_file_syncs 的事务保留到所有文件同步及确认提交后；重建路径 syncs→files，普通同步路径 files→syncs。",
+      "inference": "对已有 stale/failed sync 行，单文件重试与项目重建可形成 files↔syncs 锁环。",
+      "impact": "PostgreSQL 可中止一个请求，虽然 DB 原子性保持，确认失败且已经发生的外部调用成本可能浪费。",
+      "minimal_fix": "先按 file id 锁住全部待处理 files，再更新 syncs；统一 mark_sync_failed 的锁顺序；增加确定性并发回归。",
+      "confidence": "high",
+      "verification": "red-followup.log 复现反序锁导致 regular files→syncs 无进展；green-final.log 同一真实 PostgreSQL 阻塞观测回归通过。",
+      "fix_review": "rebuild :337 按 id FOR UPDATE 先锁批准 files；单文件 helper :407 在 dataset/sync 前锁 files 并重新读元数据；mark_sync_failed :1867 先 UPDATE files 后 UPDATE syncs，三条路径锁顺序一致。"
+    },
+    {
+      "id": "B02",
+      "severity": "P2",
+      "status": "closed",
+      "file": "backend/src/api/agent_runtime.rs",
+      "line": 724,
+      "related_files": [
+        {
+          "file": "backend/src/api/mcp.rs",
+          "line": 1207
+        },
+        {
+          "file": "backend/src/api/mcp.rs",
+          "line": 852
+        },
+        {
+          "file": "backend/src/api/agent_runtime.rs",
+          "line": 750
+        }
+      ],
+      "title": "不可用确认仍被登记为 completed",
+      "fact": "create_pending_action 对过期/拒绝动作返回 Ok JSON、isError=true、confirmation_unavailable；run_agent_tool_turn 除 confirmation_required 外把全部 Ok(value) 归为 completed。MCP audit 仅按 requires_pending_action 固定记 confirmation_required，未跟随实际 unavailable 状态。",
+      "inference": "同键动作过期或被拒后重试，可产生工具 completed 记录并向汇报模型提供成功状态，尽管动作明确不会执行。",
+      "impact": "用户可收到未执行动作的成功报告，Agent 步骤误记完成；MCP 审计仍误称需要确认；DB 幂等性本身未被绕过。",
+      "minimal_fix": "required 分支之后识别 isError/confirmation_unavailable 并记 failed/unavailable；汇报及审计均读取实际结构化状态；对过期/拒绝同键调用验证不会生成成功状态。",
+      "confidence": "high",
+      "verification": "red-followup.log 复现 expired step 被标 completed；red-replay.log 复现旧 SSE fallback 重放失败步骤为 tool.completed；green-final.log 真实 Agent 调用、模型报告输入、MCP audit 及历史 SSE replay 均通过。测试覆盖 expired/rejected/completed 三类旧动作。",
+      "fix_review": "runtime :724 识别 isError 为 failed；already_completed 单列；:755 汇报提示明确此前已完成/本次未重新执行；mcp :854 审计跟随真实 structured code。"
+    },
+    {
+      "id": "B03",
+      "severity": "boundary",
+      "status": "preexisting_risk_not_new_regression",
+      "file": "backend/src/embedding.rs",
+      "line": 43,
+      "related_files": [
+        {
+          "file": "backend/src/embedding.rs",
+          "line": 69
+        },
+        {
+          "file": "backend/src/rag/index.rs",
+          "line": 96
+        },
+        {
+          "file": "backend/src/api/agent_runtime.rs",
+          "line": 1056
+        }
+      ],
+      "title": "外部嵌入调用无显式耗时上界且成本不可回滚",
+      "fact": "远程 client 与 send/json 没有显式 timeout；调用在拥有数据库 Transaction 的确认路径中 await。",
+      "inference": "慢或不结束的上游响应延长事务和行锁占用；回滚后重试会重复发生嵌入成本。",
+      "impact": "DB 同次提交不等同外部 exactly-once，不提供外部耗时/付费上界。",
+      "minimal_fix": "论文保留数据库范围限定；工程层可配置有限远程请求 timeout，独立验证外部失败回滚。",
+      "confidence": "high",
+      "verification": "代码边界核查；未向真实上游发请求"
+    },
+    {
+      "id": "B04",
+      "severity": "P2",
+      "status": "closed_static_review",
+      "file": "frontend/src/lib/api.ts",
+      "line": 1342,
+      "related_files": [
+        {
+          "file": "frontend/src/components/shared/AgentAssistant.tsx",
+          "line": 350
+        },
+        {
+          "file": "frontend/src/components/shared/AgentAssistant.tsx",
+          "line": 353
+        }
+      ],
+      "title": "前端尚未消费新增失败事件及历史完成状态",
+      "fact": "SSE eventTypes 无 tool.failed；组件仅处理 tool.completed 并显示已完成，turn.completed 会把残留 running 项改 done；already_completed 后端仍发送 tool.completed 但 payload.status 区分。",
+      "impact": "后端步骤和最终汇报正确后，实时流程仍可能把失败步骤或历史动作显示为本次完成。",
+      "minimal_fix": "增加 tool.failed 订阅与组件失败状态；tool.completed 按 payload.status 区分历史已完成；终轮完成保留已失败状态。",
+      "confidence": "high",
+      "verification": "静态检查事件生产与前端消费；未编辑前端。",
+      "fix_review": "api.ts 订阅 tool.failed；组件标 failed 并保留失败颜色，already_completed 明示此前完成/本次未执行，终轮残留 running 转 waiting 不擅自补成功。root 继续跑前端 lint/typecheck/build。"
+    }
+  ],
+  "confirmed": [
+    "submit_note_review: note 状态、必要版本快照、自动 KG（关闭审批时）、FTS、audit 与 key/pending 同事务",
+    "review_note: 当前版本锁、note_approvals、note 状态、KG、FTS、audit 与 key/pending 同事务",
+    "review_document approve: 文件审批、dataset、sync 状态、chunks、领域 audit 与 key/pending 同事务；OCR 未确认允许 pending_sync 不伪称入库",
+    "change_project_member: advisory lock 后重核管理权限、成员修改与 audit 同事务",
+    "rebuild graph/rag/all: 共享确认 Transaction；内层 helper 未提前 commit",
+    "Agent 固定 project_id 在调用前覆盖模型参数；note/file 登记与执行均验证实际所属项目；hash 检查绑定请求参数",
+    "首次嵌入返回长度与维度验证在删除旧 chunks 前完成；后续 DB 错误由调用者事务回滚",
+    "确认已消费状态、execution key、session/turn 完成状态一起提交；业务领域审计一起提交"
+  ],
+  "limits": [
+    "confirmation.completed 展示事件在 commit 后另写，不属于原子提交",
+    "pool 侧权限读取不构成与并发撤权的串行化保证；本文不主张权限在全事务期间永远不变",
+    "本轮已经阅读的故障矩阵有已批准 pending_sync 资料，但初始无既有 chunks；保留旧有效索引的复核另由工程员补充",
+    "没有找到当前 API 改动 note/file project_id 的入口，故未把 scope 查询与对象 FOR UPDATE 之间空隙提升为可利用换项目漏洞",
+    "本审查未运行重型完整测试或访问生产数据库"
+  ],
+  "freeze_approved": true,
+  "verification_log": "agent-work/t139-2026-10-11/backend/green-final.log",
+  "test_record": "工程员日志：7 passed; 0 failed; 275 filtered out（本审查员只读核对日志，未自行重跑）。",
+  "final_reviewed_source_sha256": {
+    "backend/src/api/agent_runtime.rs": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+    "backend/src/api/mcp.rs": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+    "backend/src/api/notes.rs": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+    "backend/src/api/files.rs": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+    "backend/src/api/projects.rs": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+    "backend/src/api/knowledge_graph.rs": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+    "backend/src/api/rag/mod.rs": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+    "backend/src/rag/index.rs": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+    "frontend/src/lib/api.ts": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+    "frontend/src/components/shared/AgentAssistant.tsx": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47"
+  }
+}

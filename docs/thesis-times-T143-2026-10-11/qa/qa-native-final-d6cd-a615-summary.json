@@ -1,0 +1,309 @@
+{
+  "task": "T143",
+  "reviewer": "qa-engineer",
+  "utc": "2026-10-11T12:24:54.904519+00:00",
+  "identity": {
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/1005-时间说明精简版-2026-10-11.docx",
+    "word_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-wps/1005-时间说明精简版-2026-10-11.pdf",
+    "pdf_sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a"
+  },
+  "baseline": {
+    "word_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+    "pdf_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410"
+  },
+  "checks": {
+    "exact_text_whitelist": {
+      "status": "PASS",
+      "changed_paragraphs": 45,
+      "net_characters_removed": 663,
+      "changed_w_t_nodes": 45,
+      "all_other_XML_and_package_parts_unchanged": true,
+      "proof": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/word-candidate-d6cd-protection-review.json",
+        "sha256": "54c627e516c370e2e5586ce4e24d9fe3d90389098b8a032eb7227edfe60312ee"
+      }
+    },
+    "semantic_scope": {
+      "status": "PASS",
+      "manual_before_after_review_count": 45,
+      "calendar_and_execution_durations_removed_as_whitelisted": true,
+      "performance_latency_and_observation_window_retained": true,
+      "bibliography_dates_protocol_version_evidence_paths_business_fields_and_original_images_retained": true,
+      "historical_current_batches_and_evidence_limitations_retained": true,
+      "proof": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/content-date-scope-candidate-d6cd-review.json",
+        "sha256": "ccc7e41719a7b7d89e38d0bbc63da64b5ae21e31b9083c8ac5d5c63129172440"
+      }
+    },
+    "Word_protection": {
+      "status": "PASS",
+      "check_count": 15,
+      "binding": "已执行候选保护的Word SHA与最终/桌面Word实际SHA完全相同，原候选报告保留；此汇总将其绑定最终原生PDF而不改旧报告。",
+      "48_ordered_OMML": 48,
+      "bibliography_XML_identity_count": 85,
+      "true_superscript_groups": 73,
+      "citation_first_sequence": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "all_85_used": true,
+      "comment_content_and_exact_anchors": 16,
+      "tracked_changes": 0,
+      "media_parts": 49,
+      "original_notes_4_and_SOP_pages_2": 6,
+      "business_tables": 43,
+      "fields": 430,
+      "common_definitions": 18,
+      "common_uses": 156,
+      "relations": 52,
+      "all_styles_paragraph_properties_fonts_spacing_A4_margins_unchanged": true,
+      "ordinary_body_12pt_exact20pt_and_formula_exception_preserved": true,
+      "table_layout_attributes_unchanged": true
+    },
+    "native_PDF": {
+      "status": "PASS",
+      "physical_pages": 100,
+      "page_cap_met": true,
+      "TOC_entries_actual_pages_matched": 100,
+      "OOXML_total_tables": 108,
+      "strict_three_rule_tables": 98,
+      "caption_header_fullbody_same_page": 98,
+      "wide_horizontal_rules_scanned": 298,
+      "actual_wide_rule_coordinate_violations": 0,
+      "coordinate_tolerance_pt": 0.05,
+      "body_interval_pt": [
+        79.4,
+        515.9
+      ],
+      "annotation_count": 200,
+      "annotation_subtypes": [
+        "/Link"
+      ],
+      "only_Link_annotations": true,
+      "comment_marks_not_exported": true,
+      "visual_pages_covered": 100,
+      "visual_findings": []
+    },
+    "actual_PDF_citation_geometry": {
+      "status": "PASS",
+      "source": "主审实际PDF逐字形检查，QA读取并核验最终输入身份、73/85条记录及结果，不假称QA重复执行几何脚本。",
+      "complete_raised_marker_groups_7_8pt_TNR": 73,
+      "normal_baseline_bibliography_labels_10_45pt": 85,
+      "proof": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/pdf-citation-geometry-final.json",
+        "sha256": "71992ef155e774f98b828f58352494b14e31eb791f683e1528486589dd4336f6"
+      }
+    },
+    "visual_coverage": {
+      "status": "PASS",
+      "unique_pages": 100,
+      "byte_identical_inherited": 84,
+      "changed_fresh_original": 16,
+      "extra_fresh_unchanged": [
+        57
+      ],
+      "duplicate_root_supplement": [
+        14,
+        99
+      ],
+      "proof": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      }
+    },
+    "protected_inputs": {
+      "status": "PASS",
+      "paths_checked": 53,
+      "T142_archive_files_including_manifest": 50,
+      "main_Markdown_and_T142_desktop_word_pdf": 3,
+      "all_current_sha256_and_byte_counts_match": true,
+      "main_Markdown_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+      "proof": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/protected-inputs-native-final-d6cd-a615-review.json",
+        "sha256": "80119309a5e612f60b263df371b7ad3e31b74162fd0137c6625eb3f467930f57"
+      }
+    },
+    "desktop_delivery": {
+      "status": "PASS",
+      "qa_independently_rehashed": true,
+      "copies": [
+        {
+          "kind": "word",
+          "source": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/1005-时间说明精简版-2026-10-11.docx",
+          "desktop": "/Users/yusong/Desktop/1005-时间说明精简版-2026-10-11.docx",
+          "sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+          "bytes": 6024380,
+          "byte_equal": true,
+          "qa_actual_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+          "qa_actual_bytes": 6024380,
+          "qa_verified": true
+        },
+        {
+          "kind": "pdf",
+          "source": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-wps/1005-时间说明精简版-2026-10-11.pdf",
+          "desktop": "/Users/yusong/Desktop/1005-时间说明精简版-2026-10-11.pdf",
+          "sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a",
+          "bytes": 5387585,
+          "byte_equal": true,
+          "qa_actual_sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a",
+          "qa_actual_bytes": 5387585,
+          "qa_verified": true
+        }
+      ],
+      "coordinator_proof": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/desktop-delivery-verification.json",
+        "sha256": "d2081179fbfba965baf396ac3c2833de8b67a9c0ef0319309f9f62e27e30eef8"
+      }
+    }
+  },
+  "evidence_reports": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/word-candidate-d6cd-protection-review.json",
+      "sha256": "54c627e516c370e2e5586ce4e24d9fe3d90389098b8a032eb7227edfe60312ee"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/content-date-scope-candidate-d6cd-review.json",
+      "sha256": "ccc7e41719a7b7d89e38d0bbc63da64b5ae21e31b9083c8ac5d5c63129172440"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/toc-native-final-d6cd-a615-review.json",
+      "sha256": "a7ca2a14d32d27951b2c61556a71905e07e463e00f0ef9947ca13e7f2b2207c4"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/table-rules-native-final-d6cd-a615-coordinate-review.json",
+      "sha256": "20de95c973180476deebf827db5e6db7f221aae030bfd2ffa61b8b36f760c239"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/table-same-page-native-final-d6cd-a615-text-review.json",
+      "sha256": "7c99ee1a973cc8e7b5a2df56f91c4b5e56f38988c8623cd6d3b240f75608cc4b"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/table-same-page-native-final-d6cd-a615-closure.json",
+      "sha256": "921cc92d0fc06272cc2017579f16fe8a824a88309c1363b7800ca273882a5b81"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/visual-input-native-final-d6cd-a615.json",
+      "sha256": "3906cf498b351bacba53f52910bf90c3c05366f3106130ca0d76f60b530afaba"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-qa-pages.json",
+      "sha256": "dd9c3a36e69fd32ac6e4cb8fafbaeba574e0ecdb90d0261555d4f5ddadf1c7b1"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/protected-inputs-native-final-d6cd-a615-review.json",
+      "sha256": "80119309a5e612f60b263df371b7ad3e31b74162fd0137c6625eb3f467930f57"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+      "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/backend/native-final-d6cd-a615-visual-7-pages.json",
+      "sha256": "5935917cbd0437d09295d46776c1d6cd19c47aaac4cb142fe5e544dc7f03c7a5"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/root-supplementary-visual-review.json",
+      "sha256": "c571865d3cfb29cd6a996e021d13fb4d970ebd1875492ecefc7e5fde036e19ec"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/pdf-citation-geometry-final.json",
+      "sha256": "71992ef155e774f98b828f58352494b14e31eb791f683e1528486589dd4336f6"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/desktop-delivery-verification.json",
+      "sha256": "d2081179fbfba965baf396ac3c2833de8b67a9c0ef0319309f9f62e27e30eef8"
+    }
+  ],
+  "findings": [],
+  "result": "PASS_ALL_REQUESTED_T143_QA",
+  "new_tests_or_experiments_executed": false,
+  "limits": [
+    "本轮只作已授权时间说明精简及保护验收，不重写或重算旧实验。",
+    "正式版本保留性能观测时长/响应时延、书目精确时间、MCP版本、业务字段与原截图日期；不声称全部时间字符消失。",
+    "全100页视觉闭合为84页SHA承接加16页本轮真实原尺寸实视；不把跨版本变化页仅按目录或文本判通过。"
+  ]
+}

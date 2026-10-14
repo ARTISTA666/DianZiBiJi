@@ -1,0 +1,57 @@
+{
+  "captured_at": "2026-10-12T14:17:14.915214+00:00",
+  "docker_vm": {
+    "ServerVersion": "29.5.2",
+    "NCPU": 4,
+    "MemTotal": 8307175424,
+    "OperatingSystem": "Ubuntu 24.04.4 LTS",
+    "Architecture": "aarch64"
+  },
+  "backend_selected_env": {
+    "GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE": "2000",
+    "GLOBAL_RATE_LIMIT_READ_PER_MINUTE": "10000"
+  },
+  "unset_embedding_defaults": {
+    "backend": "hash",
+    "model": "rust-hash-512-v1",
+    "dimension": 512
+  },
+  "test_observation": "same Docker engine/settings as bounded smoke; captured after run; not host hardware alone",
+  "dataset_embedding_models": [
+    {
+      "id": 1,
+      "project_id": 2,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    {
+      "id": 2,
+      "project_id": 3,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    {
+      "id": 3,
+      "project_id": 4,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    {
+      "id": 4,
+      "project_id": 5,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    {
+      "id": 6,
+      "project_id": 7,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    {
+      "id": 5,
+      "project_id": 6,
+      "embedding_model": "rust-hash-512-v1"
+    },
+    {
+      "id": 8,
+      "project_id": 8,
+      "embedding_model": "rust-hash-512-v1"
+    }
+  ]
+}

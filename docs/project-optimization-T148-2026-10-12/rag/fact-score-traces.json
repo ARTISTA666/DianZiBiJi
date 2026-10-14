@@ -1,0 +1,1282 @@
+[
+  {
+    "case_id": "T114-Q07-same_facts_triples-r1",
+    "required_fact_coverage": 1.0,
+    "all_required_facts_present": true,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q07-F1",
+        "matched_alias": "PureLink RNA Mini kit"
+      },
+      {
+        "fact_id": "Q07-F2",
+        "matched_alias": "TruSeq Stranded mRNA Library Prep Kit"
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q07-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q05-budget_ordered-r1",
+    "required_fact_coverage": 0.5,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q05-F1",
+        "matched_alias": "detected_gene_rows=17953"
+      },
+      {
+        "fact_id": "Q05-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q05-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q01-budget_ordered-r1",
+    "required_fact_coverage": 0.3333333333333333,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q01-F1",
+        "matched_alias": "每组两个生物学重复"
+      },
+      {
+        "fact_id": "Q01-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q01-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q01-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q01-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q01-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q03-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q03-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F3",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F4",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q03-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q08-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q08-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q08-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q08-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q02-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q02-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q02-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q04-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q04-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q04-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q04-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q04-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q04-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q08-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q08-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q08-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q08-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q09-budget_ordered-r1",
+    "required_fact_coverage": 0.3333333333333333,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q09-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q09-F2",
+        "matched_alias": "GRCh37/hg19"
+      },
+      {
+        "fact_id": "Q09-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q09-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q12-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q12-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q12-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q11-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q11-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q11-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q11-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q07-budget_query_ranked-r1",
+    "required_fact_coverage": 1.0,
+    "all_required_facts_present": true,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q07-F1",
+        "matched_alias": "PureLink RNA Mini kit"
+      },
+      {
+        "fact_id": "Q07-F2",
+        "matched_alias": "TruSeq Stranded mRNA Library Prep Kit"
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q07-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q08-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q08-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q08-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q08-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q09-same_facts_text-r1",
+    "required_fact_coverage": 0.3333333333333333,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q09-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q09-F2",
+        "matched_alias": "GRCh37/hg19"
+      },
+      {
+        "fact_id": "Q09-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q09-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q03-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q03-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F3",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F4",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q03-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q06-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q06-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q06-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q02-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q02-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q02-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q02-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q02-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q02-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q05-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q05-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q05-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q05-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q09-same_facts_triples-r1",
+    "required_fact_coverage": 0.3333333333333333,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q09-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q09-F2",
+        "matched_alias": "GRCh37/hg19"
+      },
+      {
+        "fact_id": "Q09-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q09-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q05-same_facts_text-r1",
+    "required_fact_coverage": 1.0,
+    "all_required_facts_present": true,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q05-F1",
+        "matched_alias": "detected_gene_rows=17953"
+      },
+      {
+        "fact_id": "Q05-F2",
+        "matched_alias": "count_matrix_gene_rows=25369"
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q05-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q12-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q12-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q12-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q12-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q12-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q12-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q06-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q06-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q06-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q10-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q10-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q10-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q03-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q03-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F3",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F4",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q03-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q04-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q04-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q04-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q01-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q01-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q01-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q04-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q04-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q04-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q04-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q12-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q12-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q12-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q12-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q09-budget_query_ranked-r1",
+    "required_fact_coverage": 0.3333333333333333,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q09-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q09-F2",
+        "matched_alias": "GRCh37/hg19"
+      },
+      {
+        "fact_id": "Q09-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q09-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q10-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q10-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q10-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q07-budget_ordered-r1",
+    "required_fact_coverage": 1.0,
+    "all_required_facts_present": true,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q07-F1",
+        "matched_alias": "PureLink RNA Mini kit"
+      },
+      {
+        "fact_id": "Q07-F2",
+        "matched_alias": "TruSeq Stranded mRNA Library Prep Kit"
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q07-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q11-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q11-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q11-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q11-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q01-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q01-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q01-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q01-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q11-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q11-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q11-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q11-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q08-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q08-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q08-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q08-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q10-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q10-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q10-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q07-same_facts_text-r1",
+    "required_fact_coverage": 1.0,
+    "all_required_facts_present": true,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q07-F1",
+        "matched_alias": "PureLink RNA Mini kit"
+      },
+      {
+        "fact_id": "Q07-F2",
+        "matched_alias": "TruSeq Stranded mRNA Library Prep Kit"
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q07-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q05-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q05-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q05-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q05-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q10-same_facts_text-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q10-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q10-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q10-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q03-budget_query_ranked-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q03-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F3",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-F4",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q03-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q03-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q06-same_facts_triples-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q06-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q06-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q06-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q06-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F2",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-F3",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q06-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q06-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q02-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q02-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q02-X1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q02-X2",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  },
+  {
+    "case_id": "T114-Q11-budget_ordered-r1",
+    "required_fact_coverage": 0.0,
+    "all_required_facts_present": false,
+    "forbidden_fact_hit": false,
+    "facts": [
+      {
+        "fact_id": "Q11-F1",
+        "matched_alias": null
+      },
+      {
+        "fact_id": "Q11-F2",
+        "matched_alias": null
+      }
+    ],
+    "forbidden_facts": [
+      {
+        "fact_id": "Q11-X1",
+        "matched_alias": null
+      }
+    ],
+    "metric_limit": "lexical presence only; no entailment, polarity, or sample-pairing guarantee"
+  }
+]

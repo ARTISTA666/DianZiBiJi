@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.766645+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "ubc2021-02 RFP plasmid retransformation",
+    "experiment_type": "plasmid_transformation",
+    "experiment_date": "2021-07-05",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "- Re-transforming RFP to get more stock of pSB1C3-RFP plasmid we got from 2019 iGEM, since we have to remove the backbone from it via PCR and are running low on our stock. Re-transforming instead of picking a colony again because the RFP plates have been out for ~a month so are probably bad by now. This was confirmed by re-picking and miniprepping, resulted in low yield.\n- 5 transformations: 2 with 2019 RFP plasmid that was left out (118ng/ul) (Plates labelled 1 and 2, used 1ul and 2ul) 2 with 2019 RFP plasmid (17ng/ul) (Plates labelled 3 and 4, used 5ul and 12ul). 1 with 2017 RFP plasmid (10pg/ul) (Plate labelled 5, used 1 ul).\n- Transformation #5 used fresh SOC instead of supernatant to resuspend\n- Only 4 LB + CM plates are left, should make more asap!"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 6,
+    "project_id": 1,
+    "template_id": null,
+    "title": "ubc2021-02 RFP plasmid retransformation",
+    "experiment_type": "plasmid_transformation",
+    "experiment_date": "2021-07-05",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 6,
+    "created_at": "2026-10-10T15:52:29.200519Z",
+    "updated_at": "2026-10-10T15:52:29.200519Z"
+  }
+}

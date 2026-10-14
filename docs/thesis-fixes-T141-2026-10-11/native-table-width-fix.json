@@ -1,0 +1,56 @@
+{
+  "task": "T141 native WPS three-table width repair",
+  "input_sha256": "4478983abb4bade1e594da7f2995c8648d49b3b65f5ea676b19a3b4e05816567",
+  "output_sha256": "973e236c6df3146221bec74406fecc11ad9cd43c017a6468e327e78c2146f571",
+  "changes": [
+    {
+      "first_case": "B01",
+      "rows": 5,
+      "old_grid": [
+        1900,
+        7200,
+        1530
+      ],
+      "new_grid": [
+        1500,
+        5800,
+        1204
+      ],
+      "new_width_twips": 8504,
+      "all_other_table_xml_unchanged": true
+    },
+    {
+      "first_case": "B05",
+      "rows": 5,
+      "old_grid": [
+        1900,
+        7200,
+        1530
+      ],
+      "new_grid": [
+        1500,
+        5800,
+        1204
+      ],
+      "new_width_twips": 8504,
+      "all_other_table_xml_unchanged": true
+    },
+    {
+      "first_case": "R01",
+      "rows": 4,
+      "old_grid": [
+        1900,
+        7200,
+        1530
+      ],
+      "new_grid": [
+        1500,
+        5800,
+        1204
+      ],
+      "new_width_twips": 8504,
+      "all_other_table_xml_unchanged": true
+    }
+  ],
+  "only_document_xml_part_changed": true
+}

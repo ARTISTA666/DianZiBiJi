@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:29.678977+00:00",
+  "path": "/notes/7/kg/extract",
+  "method": "POST",
+  "request": {
+    "rebuild": true
+  },
+  "status": 200,
+  "response": {
+    "id": 35,
+    "project_id": 1,
+    "note_id": 7,
+    "triggered_by": 1,
+    "status": "completed",
+    "extracted_entities": 4,
+    "extracted_relations": 3,
+    "message": "Knowledge graph extraction completed",
+    "created_at": "2026-10-10T15:52:29.682618Z"
+  }
+}

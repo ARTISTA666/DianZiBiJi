@@ -1,0 +1,50 @@
+{
+  "task": "T148",
+  "captured_at": "2026-10-12T14:15:45.384682+00:00",
+  "project": "eln-t148-e2e",
+  "images": {
+    "backend": {
+      "image": "sha256:60a283bface6eec959ea264122a5c80a6958537ba2922965b1d1572ea063ea53",
+      "configured_image": "eln-backend-t148-20261012"
+    },
+    "frontend": {
+      "image": "sha256:e5bdaf016250574ab0490709039b86404f1f3cc6316dfc935587fdebf9005f5e",
+      "configured_image": "eln-frontend-t148-20261012"
+    },
+    "db": {
+      "image": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+      "configured_image": "pgvector/pgvector:pg16"
+    }
+  },
+  "source_manifests": {
+    "backend-build-inputs.json": "0d9aea45a8a0d6236b4df8629d6089be396e2c04fd2c7a6daede5a350400d852",
+    "frontend-build-inputs.json": "89840c6367451ac539bbe7aa5234e0c76efb3d3c7ad139ad0bb9eace7d13fa48"
+  },
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "processor": "arm",
+    "cpu_count": "10",
+    "memory_bytes": "17179869184"
+  },
+  "embedding": "hash mode from owned backend; no remote embeddings",
+  "rate_limits": {
+    "read_per_minute": 10000,
+    "write_per_minute": 2000
+  },
+  "fixture": {
+    "project_id": 8,
+    "note_id": 11,
+    "synthetic": true,
+    "before": {
+      "notes": 1,
+      "versions": 1,
+      "fixture_versions": 1,
+      "note_audits": 1,
+      "server_version": "16.14 (Debian 16.14-1.pgdg12+1)",
+      "database": "eln_e2e"
+    }
+  },
+  "request_mix": "60% reads, 20% create draft, 20% patch one draft; no approval or heavy upload",
+  "scope": "Finite local container CRUD smoke, no capacity or production SLA conclusion"
+}

@@ -1,0 +1,443 @@
+{
+  "utc": "2026-10-10T15:52:29.554127+00:00",
+  "path": "/notes/27/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 3,
+    "entities": [
+      {
+        "id": 116,
+        "project_id": 3,
+        "entity_type": "project",
+        "label": "T136 regression",
+        "normalized_label": "t136 regression",
+        "natural_key": "project:project:3",
+        "source_type": "project",
+        "source_id": 3,
+        "properties": {
+          "project_id": 3
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 118,
+        "project_id": 3,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 140,
+        "project_id": 3,
+        "entity_type": "note",
+        "label": "Western Blot 蛋白表达验证",
+        "normalized_label": "western blot 蛋白表达验证",
+        "natural_key": "note:note:27",
+        "source_type": "note",
+        "source_id": 27,
+        "properties": {
+          "experiment_date": "2026-06-05",
+          "note_id": 27,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 141,
+        "project_id": 3,
+        "entity_type": "experiment_type",
+        "label": "Western Blot",
+        "normalized_label": "western blot",
+        "natural_key": "experiment_type:western blot",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "Western Blot"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 142,
+        "project_id": 3,
+        "entity_type": "instrument",
+        "label": "凝胶成像系统",
+        "normalized_label": "凝胶成像系统",
+        "natural_key": "instrument:凝胶成像系统",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 143,
+        "project_id": 3,
+        "entity_type": "instrument",
+        "label": "电泳仪",
+        "normalized_label": "电泳仪",
+        "natural_key": "instrument:电泳仪",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 144,
+        "project_id": 3,
+        "entity_type": "instrument",
+        "label": "转膜仪",
+        "normalized_label": "转膜仪",
+        "natural_key": "instrument:转膜仪",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 145,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "BCA 试剂盒",
+        "normalized_label": "bca 试剂盒",
+        "natural_key": "reagent:bca 试剂盒",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 146,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "RIPA 裂解液",
+        "normalized_label": "ripa 裂解液",
+        "natural_key": "reagent:ripa 裂解液",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 147,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "一抗",
+        "normalized_label": "一抗",
+        "natural_key": "reagent:一抗",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 148,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "二抗",
+        "normalized_label": "二抗",
+        "natural_key": "reagent:二抗",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 149,
+        "project_id": 3,
+        "entity_type": "result",
+        "label": "处理组目标蛋白表达降低。",
+        "normalized_label": "处理组目标蛋白表达降低",
+        "natural_key": "result:处理组目标蛋白表达降低",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 150,
+        "project_id": 3,
+        "entity_type": "result",
+        "label": "目标蛋白在处理组表达降低，内参条带稳定。",
+        "normalized_label": "目标蛋白在处理组表达降低 内参条带稳定",
+        "natural_key": "result:目标蛋白在处理组表达降低 内参条带稳定",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 151,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "蛋白样本 P1",
+        "normalized_label": "蛋白样本 p1",
+        "natural_key": "sample:蛋白样本 p1",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 152,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "蛋白样本 P2",
+        "normalized_label": "蛋白样本 p2",
+        "natural_key": "sample:蛋白样本 p2",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z",
+        "updated_at": "2026-10-10T15:52:29.547470Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 173,
+        "project_id": 3,
+        "source_entity_id": 116,
+        "target_entity_id": 140,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 27,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 174,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 118,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 27,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 175,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 141,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 27,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 176,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 142,
+        "relation_type": "uses_instrument",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 177,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 143,
+        "relation_type": "uses_instrument",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 178,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 144,
+        "relation_type": "uses_instrument",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 179,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 145,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 180,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 146,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 181,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 147,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 182,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 148,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 183,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 149,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 184,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 150,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 185,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 151,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      },
+      {
+        "id": 186,
+        "project_id": 3,
+        "source_entity_id": 140,
+        "target_entity_id": 152,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 27,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.547470Z"
+      }
+    ]
+  }
+}

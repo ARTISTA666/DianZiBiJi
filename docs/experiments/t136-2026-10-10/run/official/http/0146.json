@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-10T15:52:29.809683+00:00",
+  "path": "/notes/14/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 2,
+    "entities": [
+      {
+        "id": 26,
+        "project_id": 2,
+        "entity_type": "project",
+        "label": "T136 fields",
+        "normalized_label": "t136 fields",
+        "natural_key": "project:project:2",
+        "source_type": "project",
+        "source_id": 2,
+        "properties": {
+          "project_id": 2
+        },
+        "created_at": "2026-10-10T15:52:29.417684Z",
+        "updated_at": "2026-10-10T15:52:29.805185Z"
+      },
+      {
+        "id": 28,
+        "project_id": 2,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.417684Z",
+        "updated_at": "2026-10-10T15:52:29.805185Z"
+      },
+      {
+        "id": 194,
+        "project_id": 2,
+        "entity_type": "note",
+        "label": "iisc2019-02 Autoclaving and antibiotic solution preparation",
+        "normalized_label": "iisc2019 02 autoclaving and antibiotic solution preparation",
+        "natural_key": "note:note:14",
+        "source_type": "note",
+        "source_id": 14,
+        "properties": {
+          "experiment_date": "2019-04-10",
+          "note_id": 14,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.805185Z",
+        "updated_at": "2026-10-10T15:52:29.805185Z"
+      },
+      {
+        "id": 195,
+        "project_id": 2,
+        "entity_type": "experiment_type",
+        "label": "autoclaving_and_antibiotic_preparation",
+        "normalized_label": "autoclaving and antibiotic preparation",
+        "natural_key": "experiment_type:autoclaving and antibiotic preparation",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "autoclaving_and_antibiotic_preparation"
+        },
+        "created_at": "2026-10-10T15:52:29.805185Z",
+        "updated_at": "2026-10-10T15:52:29.805185Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 245,
+        "project_id": 2,
+        "source_entity_id": 26,
+        "target_entity_id": 194,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 14,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.805185Z"
+      },
+      {
+        "id": 246,
+        "project_id": 2,
+        "source_entity_id": 194,
+        "target_entity_id": 28,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 14,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.805185Z"
+      },
+      {
+        "id": 247,
+        "project_id": 2,
+        "source_entity_id": 194,
+        "target_entity_id": 195,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 14,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.805185Z"
+      }
+    ]
+  }
+}

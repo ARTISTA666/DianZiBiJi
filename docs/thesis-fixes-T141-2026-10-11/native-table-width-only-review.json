@@ -1,0 +1,85 @@
+{
+  "task": "T141 independent native export corrective table-width-only audit",
+  "utc": "2026-10-11T09:50:10.217181+00:00",
+  "baseline_word": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/pre-native-table-width.docx",
+  "baseline_word_sha256": "4478983abb4bade1e594da7f2995c8648d49b3b65f5ea676b19a3b4e05816567",
+  "current_word": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/1005-深审整改版-2026-10-11.docx",
+  "current_word_sha256": "4e86db7f88efc841f3b45af01b4e6410756188be1f921825227890979b1b39a4",
+  "changes": [
+    {
+      "table_index": 37,
+      "preceding_caption": "表 6-3a　浏览器基础流程用例与冻结运行结果",
+      "previous_grid_widths_twips": [
+        1900,
+        7200,
+        1530
+      ],
+      "current_grid_widths_twips": [
+        1500,
+        5800,
+        1204
+      ],
+      "current_total_twips": 8504,
+      "all_non_width_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 38,
+      "preceding_caption": "表 6-3b　浏览器协作与权限用例的冻结运行结果",
+      "previous_grid_widths_twips": [
+        1900,
+        7200,
+        1530
+      ],
+      "current_grid_widths_twips": [
+        1500,
+        5800,
+        1204
+      ],
+      "current_total_twips": 8504,
+      "all_non_width_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 39,
+      "preceding_caption": "表 6-3c　Rust高风险确认与幂等集成用例",
+      "previous_grid_widths_twips": [
+        1900,
+        7200,
+        1530
+      ],
+      "current_grid_widths_twips": [
+        1500,
+        5800,
+        1204
+      ],
+      "current_total_twips": 8504,
+      "all_non_width_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 107,
+      "preceding_caption": "表 D-4　追加验证与观测记录",
+      "previous_grid_widths_twips": [
+        1450,
+        9180
+      ],
+      "current_grid_widths_twips": [
+        1200,
+        7304
+      ],
+      "current_total_twips": 8504,
+      "all_non_width_table_XML_equal": true,
+      "text_equal": true
+    }
+  ],
+  "other_changed_package_parts": [],
+  "checks": {
+    "only_four_tables_changed": true,
+    "all_four_widths_total_8504": true,
+    "all_four_non_width_table_XML_equal": true,
+    "all_document_non_width_XML_equal": true,
+    "all_other_package_parts_equal": true
+  },
+  "result": "PASS"
+}

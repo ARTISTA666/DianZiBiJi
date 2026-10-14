@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-10T15:52:29.760660+00:00",
+  "path": "/notes/11/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 1,
+    "entities": [
+      {
+        "id": 1,
+        "project_id": 1,
+        "entity_type": "project",
+        "label": "T136 body",
+        "normalized_label": "t136 body",
+        "natural_key": "project:project:1",
+        "source_type": "project",
+        "source_id": 1,
+        "properties": {
+          "project_id": 1
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.755352Z"
+      },
+      {
+        "id": 3,
+        "project_id": 1,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.755352Z"
+      },
+      {
+        "id": 8,
+        "project_id": 1,
+        "entity_type": "experiment_type",
+        "label": "PCR_and_agarose_gel_electrophoresis",
+        "normalized_label": "聚合酶链反应 and agarose gel electrophoresis",
+        "natural_key": "experiment_type:聚合酶链反应 and agarose gel electrophoresis",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "PCR_and_agarose_gel_electrophoresis"
+        },
+        "created_at": "2026-10-10T15:52:29.134623Z",
+        "updated_at": "2026-10-10T15:52:29.755352Z"
+      },
+      {
+        "id": 185,
+        "project_id": 1,
+        "entity_type": "note",
+        "label": "team5863-03 PCR tests of extracted DNA samples",
+        "normalized_label": "team5863 03 聚合酶链反应 tests of extracted dna samples",
+        "natural_key": "note:note:11",
+        "source_type": "note",
+        "source_id": 11,
+        "properties": {
+          "experiment_date": "2025-06-12",
+          "note_id": 11,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.755352Z",
+        "updated_at": "2026-10-10T15:52:29.755352Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 232,
+        "project_id": 1,
+        "source_entity_id": 1,
+        "target_entity_id": 185,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 11,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.755352Z"
+      },
+      {
+        "id": 233,
+        "project_id": 1,
+        "source_entity_id": 185,
+        "target_entity_id": 3,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 11,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.755352Z"
+      },
+      {
+        "id": 234,
+        "project_id": 1,
+        "source_entity_id": 185,
+        "target_entity_id": 8,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 11,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.755352Z"
+      }
+    ]
+  }
+}

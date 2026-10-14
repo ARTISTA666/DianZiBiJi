@@ -1,0 +1,27 @@
+{
+  "decider": "root Agent",
+  "stage": "pre-output; no test notes imported",
+  "decided_utc": "2026-10-10T15:51:13.297663+00:00",
+  "draft_sha256": "ab8b98cf4f3ea4841eeb63dc3416e7f44c1935b68a1be72876e66451195c9c88",
+  "decisions": [
+    {
+      "action": "remove_relation_add_exclusion",
+      "relation": {
+        "record_id": "team5863-02",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "Incubated in 56 °C until excess ethanol dried out",
+        "evidence": "Incubated in 56 °C until excess ethanol dried out",
+        "evidence_kind": "explicit"
+      },
+      "reason": "Incubation stopping condition within sample preparation is not a separate experimental observation; apply the same endpoint boundary used for gel transparency.",
+      "product_manager_review": "Independent review message agrees with removal; review.json must be frozen before API execution."
+    }
+  ],
+  "final_relation_count": 74,
+  "other_draft_relations_and_exclusions": "retained",
+  "input_unchanged": true,
+  "review_sha256": "7566947e3a753f9fd5c7ba02e58c2ba88fd57e0bca7f7749c989ba52db2f9f5c",
+  "review_proposal_applied": true,
+  "final_reference_sha256": "7f758ab962f06f4b694bd160b41acd91e03be0969afa227811826cf8232a461f"
+}

@@ -1,0 +1,4004 @@
+{
+  "task": "T144",
+  "utc": "2026-10-11T15:12:20.778961+00:00",
+  "identity": {
+    "task": "T144",
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+    "word_sha256": "4261c0cc08263ba5bb70e97fae444fb5998a5a206d83e2ceed6b57e8cec901dc",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-wps/1005-表述精校无批注版-2026-10-11.pdf",
+    "pdf_sha256": "b6ec3b5052a06540ba1fb9ef6b2c112ffd81805539bf67572394b1cfba6f484e",
+    "pages": 100,
+    "all_A4": true,
+    "method": "WPS Office native CUA export, only candidate checked, Comments unchecked, high image quality, local directory",
+    "completion_ui": "成功输出 1 个 PDF 文档",
+    "purpose": "Internal visual verification only; user delivery Word only"
+  },
+  "page_manifest": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-page-manifest.json",
+    "sha256": "1a66c674983e4a02fb689789329ed59b48cd202fd0898f24d0c9bf4267bb36dc"
+  },
+  "coverage": {
+    "physical_pages": 100,
+    "unique_pass_pages": 100,
+    "T143_exact_SHA_inherited": 43,
+    "fresh_this_round_pages": 57,
+    "final_export_pages_freshly_viewed": [
+      13,
+      14
+    ],
+    "first_T144_export_review_bound_to_final_by_exact_SHA": 55,
+    "missing_pages": [],
+    "failed_pages": []
+  },
+  "reviews": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+      "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+      "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+      "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+      "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+    }
+  ],
+  "resolved_finding": {
+    "issue": "[56] isolated at physical14 page start in first f815 export",
+    "repair": "P230 removes 3 redundant characters; all cited text, terms, 9 citation groups and format protected",
+    "final_verification": "root actual final page13 has RGB sentence with [56] and period; final14 starts automatic evaluation sentence naturally",
+    "repair_manifest": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/citation-break-repair.json",
+      "sha256": "01ac97fbb3ebd9999fb75f6352507eae1406340a0b22c9532dc50ffd9547eead"
+    }
+  },
+  "pages": [
+    {
+      "physical_page": 1,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-001.png",
+      "png_sha256": "fa4f6eda55dbd84109fa6dc99ab67b139953b73d6fe5af7f614b8587105024e1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "cbe199cebcb9003cddc4475c916aaaab323977e97c2166e80d7dd2c7feca24e7",
+      "identical_T143": false,
+      "first_T144_png_sha256": "fa4f6eda55dbd84109fa6dc99ab67b139953b73d6fe5af7f614b8587105024e1",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+        "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+      },
+      "reviewed_page": {
+        "physical_page": 1,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-001.png",
+        "png_sha256": "fa4f6eda55dbd84109fa6dc99ab67b139953b73d6fe5af7f614b8587105024e1",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "T143_png_sha256": "cbe199cebcb9003cddc4475c916aaaab323977e97c2166e80d7dd2c7feca24e7",
+        "identical_T143": false,
+        "first_T144_png_sha256": "fa4f6eda55dbd84109fa6dc99ab67b139953b73d6fe5af7f614b8587105024e1",
+        "identical_first_T144": true,
+        "review_method": "Actual view_image(detail=original) full-page inspection",
+        "actual_viewed_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-001.png",
+        "actual_viewed_pdf_sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92",
+        "bound_to_final_by_exact_png_SHA": true,
+        "notes": "封面论文提交日期、授予学位日期及底部年月均为空；标签、横线与模板完整。",
+        "status": "PASS",
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 2,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-002.png",
+      "png_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+      "identical_T143": true,
+      "first_T144_png_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 2,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-002.png",
+        "png_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 3,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-003.png",
+      "png_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+      "identical_T143": true,
+      "first_T144_png_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 3,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-003.png",
+        "png_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 4,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-004.png",
+      "png_sha256": "4d9ad8e5fc4f94fbb6289a70798de63f6d8dbbdf67b943541dc3d7fa28f8984b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "7587301a5b07a36f208d6e1d2e6b2c8462ffcd7027222f5db5823fe5d91f0c0e",
+      "identical_T143": false,
+      "first_T144_png_sha256": "4d9ad8e5fc4f94fbb6289a70798de63f6d8dbbdf67b943541dc3d7fa28f8984b",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 4,
+        "printed_page": "I",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-004.png",
+        "png_sha256": "4d9ad8e5fc4f94fbb6289a70798de63f6d8dbbdf67b943541dc3d7fa28f8984b",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "中文摘要及关键词完整在同页；统计数字、字段前提、中文另评及图结构增益限制可读；无批注高亮、裁切或行重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 5,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-005.png",
+      "png_sha256": "fea7d1b8e5826148f856c2ca5c507457f63c7d993e1084c4f0b7f124d6bd05c0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "503b2f2165e14e4ecadf82ded04e2d9f94f3679799b7b418ce84c3d1a4f2b772",
+      "identical_T143": false,
+      "first_T144_png_sha256": "fea7d1b8e5826148f856c2ca5c507457f63c7d993e1084c4f0b7f124d6bd05c0",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 5,
+        "printed_page": "II",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-005.png",
+        "png_sha256": "fea7d1b8e5826148f856c2ca5c507457f63c7d993e1084c4f0b7f124d6bd05c0",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "英文摘要和关键词完整在同页，末行及罗马页码II清晰；段落和词间距虽受两端对齐影响，未出现裁切或重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 6,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-006.png",
+      "png_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+      "identical_T143": true,
+      "first_T144_png_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 6,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-006.png",
+        "png_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 7,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-007.png",
+      "png_sha256": "827bff8341e0e5e9c3d9dc7cf436be6770d9fff8080f1de130b62fb69e039b75",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "76d1aa2f9afd417bda08ef0cd3d8017b2296e03d15c1032abdf06222e3455b24",
+      "identical_T143": false,
+      "first_T144_png_sha256": "827bff8341e0e5e9c3d9dc7cf436be6770d9fff8080f1de130b62fb69e039b75",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+        "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+      },
+      "reviewed_page": {
+        "physical_page": 7,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-007.png",
+        "png_sha256": "827bff8341e0e5e9c3d9dc7cf436be6770d9fff8080f1de130b62fb69e039b75",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "T143_png_sha256": "76d1aa2f9afd417bda08ef0cd3d8017b2296e03d15c1032abdf06222e3455b24",
+        "identical_T143": false,
+        "first_T144_png_sha256": "827bff8341e0e5e9c3d9dc7cf436be6770d9fff8080f1de130b62fb69e039b75",
+        "identical_first_T144": true,
+        "review_method": "Actual view_image(detail=original) full-page inspection",
+        "actual_viewed_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-007.png",
+        "actual_viewed_pdf_sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92",
+        "bound_to_final_by_exact_png_SHA": true,
+        "notes": "目录完整；7.3 不足与展望65，后续页码及页脚完整。",
+        "status": "PASS",
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 8,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-008.png",
+      "png_sha256": "007dbb6b1d8b504df6b9a64fe51ee2226a5c2376a0be9f9287ea0dbd0118b1af",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "62f9076d03b5f7d1ed9010982dc42453c71ffbae068ea0f135a9a64944bb47ca",
+      "identical_T143": false,
+      "first_T144_png_sha256": "007dbb6b1d8b504df6b9a64fe51ee2226a5c2376a0be9f9287ea0dbd0118b1af",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 8,
+        "printed_page": "1",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-008.png",
+        "png_sha256": "007dbb6b1d8b504df6b9a64fe51ee2226a5c2376a0be9f9287ea0dbd0118b1af",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "第一章标题、1.1与1.2.1及文献上标完整；角色和审核/授权叙述自然，正文左右边界正常。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 9,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-009.png",
+      "png_sha256": "4b885553180e4960a469bc86837b8f6daaa8d2f74737ae44e644fab63b855577",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "2ba978359d6f8d4c5372082cc4fedfa43db145413de267f9aea0c16e43ed5010",
+      "identical_T143": false,
+      "first_T144_png_sha256": "4b885553180e4960a469bc86837b8f6daaa8d2f74737ae44e644fab63b855577",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 9,
+        "printed_page": "2",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-009.png",
+        "png_sha256": "4b885553180e4960a469bc86837b8f6daaa8d2f74737ae44e644fab63b855577",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "表1-1题注、表头和三个系统的整表同页，三条横线完整且在正文边界内；表注与1.2.2衔接正常。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 10,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-010.png",
+      "png_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+      "identical_T143": true,
+      "first_T144_png_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 10,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-010.png",
+        "png_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 11,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-011.png",
+      "png_sha256": "3b30c790803278e6abe565a93d9652439837b174607e7d148ebcd90e4bfc40b2",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "0add61e82ba5baba6087e17b124fb543590791786b334bfa03028f19c36256c6",
+      "identical_T143": false,
+      "first_T144_png_sha256": "3b30c790803278e6abe565a93d9652439837b174607e7d148ebcd90e4bfc40b2",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 11,
+        "printed_page": "4",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-011.png",
+        "png_sha256": "3b30c790803278e6abe565a93d9652439837b174607e7d148ebcd90e4bfc40b2",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "RQ1–RQ3、1.3研究内容与1.4贡献均完整；比较对象与限定条件清楚，未发现压缩造成的漏词或重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 12,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-012.png",
+      "png_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+      "identical_T143": true,
+      "first_T144_png_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 12,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-012.png",
+        "png_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 13,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-013.png",
+      "png_sha256": "6ca7f8e897e3592735a0b3b590ea7d74c8fdf7911206baa1820ba4642afb7c89",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04",
+      "identical_T143": false,
+      "first_T144_png_sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04",
+      "identical_first_T144": false,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+        "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+      },
+      "reviewed_page": {
+        "physical_page": 13,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-013.png",
+        "png_sha256": "6ca7f8e897e3592735a0b3b590ea7d74c8fdf7911206baa1820ba4642afb7c89",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "T143_png_sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04",
+        "identical_T143": false,
+        "first_T144_png_sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04",
+        "identical_first_T144": false,
+        "review_method": "Actual view_image(detail=original) full-page inspection",
+        "actual_viewed_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-013.png",
+        "actual_viewed_pdf_sha256": "b6ec3b5052a06540ba1fb9ef6b2c112ffd81805539bf67572394b1cfba6f484e",
+        "bound_to_final_by_exact_png_SHA": false,
+        "notes": "最终DPR句更简明；RGB句末[56]及句号已完整保留本页，消除原孤立跨页引文。",
+        "status": "PASS",
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 14,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-014.png",
+      "png_sha256": "47444ac8989666c4d1102bef4a4010d9b57172cd3cd9ad19741e257cc49a7d74",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "c118cebe0279f1a1afcd66ea2ffe161e2566d99938b6a5f4cbffdfdae24d41bb",
+      "identical_T143": false,
+      "first_T144_png_sha256": "f89e0a77e5095bd62c7951e12c4b17b743e0af1c7ea6e5f997b730b67c82e235",
+      "identical_first_T144": false,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+        "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+      },
+      "reviewed_page": {
+        "physical_page": 14,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-014.png",
+        "png_sha256": "47444ac8989666c4d1102bef4a4010d9b57172cd3cd9ad19741e257cc49a7d74",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "T143_png_sha256": "c118cebe0279f1a1afcd66ea2ffe161e2566d99938b6a5f4cbffdfdae24d41bb",
+        "identical_T143": false,
+        "first_T144_png_sha256": "f89e0a77e5095bd62c7951e12c4b17b743e0af1c7ea6e5f997b730b67c82e235",
+        "identical_first_T144": false,
+        "review_method": "Actual view_image(detail=original) full-page inspection",
+        "actual_viewed_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-014.png",
+        "actual_viewed_pdf_sha256": "b6ec3b5052a06540ba1fb9ef6b2c112ffd81805539bf67572394b1cfba6f484e",
+        "bound_to_final_by_exact_png_SHA": false,
+        "notes": "页首从自动评价句自然接续，[56]不再孤立；2.3至2.6内容完整，无图表或文字裁切。",
+        "status": "PASS",
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 15,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-015.png",
+      "png_sha256": "242d86789eef988946f6065c0b5364dc422e9601853d077a94a3443462557d62",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "6b319ba2c8a1ba25e6fe979a31eb7e8d20ad7e44e2f125b40ee26e1a76808731",
+      "identical_T143": false,
+      "first_T144_png_sha256": "242d86789eef988946f6065c0b5364dc422e9601853d077a94a3443462557d62",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 15,
+        "printed_page": "8",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-015.png",
+        "png_sha256": "242d86789eef988946f6065c0b5364dc422e9601853d077a94a3443462557d62",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "第三章开头及业务角色正文完整；表3-1题注、表头和六个角色的表体均同页，严格三线、无竖线、无超出正文边界。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 16,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-016.png",
+      "png_sha256": "b48b817ec3bb84f2d1871bbe2b6a626fdc7355e38bb778aea610e559b983cf3f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "a4f0e513381d92aca7ce6fe086b0e1a1eb344228302975c11feebadcd2f1efef",
+      "identical_T143": false,
+      "first_T144_png_sha256": "b48b817ec3bb84f2d1871bbe2b6a626fdc7355e38bb778aea610e559b983cf3f",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 16,
+        "printed_page": "9",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-016.png",
+        "png_sha256": "b48b817ec3bb84f2d1871bbe2b6a626fdc7355e38bb778aea610e559b983cf3f",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "图3-1标签、权限边界及箭头完整；表3-2与3-3题注/表头/全表同页，横线在正文边界内；3.3后有完整引导句。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 17,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-017.png",
+      "png_sha256": "e783453e1b76870767d3fde86dcae8714e407cb3bb5bb57532f82b17bb68a6ab",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "8229bf35809c17bcf3ea5b8823bf87fd785db00584c6d5a4ed200a6c3aa9c640",
+      "identical_T143": false,
+      "first_T144_png_sha256": "e783453e1b76870767d3fde86dcae8714e407cb3bb5bb57532f82b17bb68a6ab",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 17,
+        "printed_page": "10",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-017.png",
+        "png_sha256": "e783453e1b76870767d3fde86dcae8714e407cb3bb5bb57532f82b17bb68a6ab",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "表3-4 FR1–FR10及表3-5 NFR1–NFR6完整同页；题注/表头无跨页，性能条件与模型生成边界清楚；3.5小结未孤立。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 18,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-018.png",
+      "png_sha256": "1c22feae70f6eb41f77fec0159f1aa7b9857dbdc3d2f70b2ab2b84f5696bdf01",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "448924df920049b27a698a389e1736cfcfae2e100e541464be54ff8e7ab8ca4b",
+      "identical_T143": false,
+      "first_T144_png_sha256": "1c22feae70f6eb41f77fec0159f1aa7b9857dbdc3d2f70b2ab2b84f5696bdf01",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 18,
+        "printed_page": "11",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-018.png",
+        "png_sha256": "1c22feae70f6eb41f77fec0159f1aa7b9857dbdc3d2f70b2ab2b84f5696bdf01",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "第四章章题、4.1正文与图4-1及题注同页；架构各层、外部服务及横向约束完整可读，无裁切重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 19,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-019.png",
+      "png_sha256": "13f21d0c217eef1473676c97bbe1fc6807ec5df10589eefb7d9bbeaae71925b4",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "c028554efa6a3908c344f364e8f7b4e89c078fa218724d4e87ee4e573e59f177",
+      "identical_T143": false,
+      "first_T144_png_sha256": "13f21d0c217eef1473676c97bbe1fc6807ec5df10589eefb7d9bbeaae71925b4",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 19,
+        "printed_page": "12",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-019.png",
+        "png_sha256": "13f21d0c217eef1473676c97bbe1fc6807ec5df10589eefb7d9bbeaae71925b4",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "4.2权限变量与四行权限公式(4-1)完整；公式编号靠右，无遮挡；负责人、系统/项目授权及敏感外发边界叙述清楚。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 20,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-020.png",
+      "png_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+      "identical_T143": true,
+      "first_T144_png_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 20,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-020.png",
+        "png_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 21,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-021.png",
+      "png_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+      "identical_T143": true,
+      "first_T144_png_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 21,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-021.png",
+        "png_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 22,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-022.png",
+      "png_sha256": "95419354f6797486741ed3c7d201294fa5b479e73bb587f8c7d381b2dbb378f0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "6e148097c379f1ba2d406fa7f083b3a96cd01f613fa14f4da6182f7880c63a93",
+      "identical_T143": false,
+      "first_T144_png_sha256": "95419354f6797486741ed3c7d201294fa5b479e73bb587f8c7d381b2dbb378f0",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 22,
+        "printed_page": "15",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-022.png",
+        "png_sha256": "95419354f6797486741ed3c7d201294fa5b479e73bb587f8c7d381b2dbb378f0",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "4.4.2数据库组织文字与图4-3完整；七张表、乌鸦脚标记和图例可读，题注同页；关系源/目标补词自然。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 23,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-023.png",
+      "png_sha256": "284b4d50f13d369b037a755b0e7642f44c69bcaa5caae1ff8eddc860736fcb89",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "a6a254c33e62a63fb14814d3b6824cb7cab527dfe1de7f4c82e2e015cc1bb36f",
+      "identical_T143": false,
+      "first_T144_png_sha256": "284b4d50f13d369b037a755b0e7642f44c69bcaa5caae1ff8eddc860736fcb89",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 23,
+        "printed_page": "16",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-023.png",
+        "png_sha256": "284b4d50f13d369b037a755b0e7642f44c69bcaa5caae1ff8eddc860736fcb89",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "表4-4十二组数据库表名与附录编号全部同页，三条横线在正文边界内；4.5与计划/事实匹配说明完整。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 24,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-024.png",
+      "png_sha256": "d3d8049ec7e18d560fbbb3604d980421109122908546ad42b387685834d03575",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "9ed43b55e952ac3061188a112d50c8756bcc74f806a51fe75156e1ae1b2db480",
+      "identical_T143": false,
+      "first_T144_png_sha256": "d3d8049ec7e18d560fbbb3604d980421109122908546ad42b387685834d03575",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 24,
+        "printed_page": "17",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-024.png",
+        "png_sha256": "d3d8049ec7e18d560fbbb3604d980421109122908546ad42b387685834d03575",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "图4-4两条流程及返向虚线、题注完整；本体及角色/规范名条件可读；4.5.1/4.5.2正文没有漏字或裁切。下部留白为后续整表/图保护的布局，不判为内容丢失。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 25,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-025.png",
+      "png_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+      "identical_T143": true,
+      "first_T144_png_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 25,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-025.png",
+        "png_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 26,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-026.png",
+      "png_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+      "identical_T143": true,
+      "first_T144_png_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 26,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-026.png",
+        "png_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+          "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+        },
+        "source_page_png_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 27,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-027.png",
+      "png_sha256": "9a5825333c98fcd129efdc7c6ddf9df4511ab6921bdba3842c366de1e381f53b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "cf645a54ad05085f39b36a920f7f96aef7a9beee6e01af5b43523fc7560b36d9",
+      "identical_T143": false,
+      "first_T144_png_sha256": "9a5825333c98fcd129efdc7c6ddf9df4511ab6921bdba3842c366de1e381f53b",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 27,
+        "printed_page": "20",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-027.png",
+        "png_sha256": "9a5825333c98fcd129efdc7c6ddf9df4511ab6921bdba3842c366de1e381f53b",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "图4-6六步归一规则、自然键存在分支及两返回均完整；P629算法解释已形成完整句子，无裁切。下部留白与后页算法整页保护相邻，未误报为空白缺页。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 28,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-028.png",
+      "png_sha256": "55c4318f67268c3ce6f40508bec884ba735e599f9ae90eac78b21c8900cae40d",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "04caf2baacc13f5018b1b6a7545e374837c45bcab73bb79ff590ea31e028a38c",
+      "identical_T143": false,
+      "first_T144_png_sha256": "55c4318f67268c3ce6f40508bec884ba735e599f9ae90eac78b21c8900cae40d",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 28,
+        "printed_page": "21",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-028.png",
+        "png_sha256": "55c4318f67268c3ce6f40508bec884ba735e599f9ae90eac78b21c8900cae40d",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "算法4-1输入/输出及1–26行完整在同页，if/for缩进清楚，边框未逐行包围；公式(4-2)及两分支/经验权重限制完整可读。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 29,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-029.png",
+      "png_sha256": "54583e84e881a57f0f179a5e85bb23aae67371b8317f6f31c8c6c08440928b7d",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "8d50f02ee1745fab4e61fdf938a812102d793ebe63a54f892b8ac18ab6248977",
+      "identical_T143": false,
+      "first_T144_png_sha256": "54583e84e881a57f0f179a5e85bb23aae67371b8317f6f31c8c6c08440928b7d",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 29,
+        "printed_page": "22",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-029.png",
+        "png_sha256": "54583e84e881a57f0f179a5e85bb23aae67371b8317f6f31c8c6c08440928b7d",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "4.5.5–4.5.8与4.6均完整；仍批准来源角色、biosample/sample、覆盖率分子/分母、任务完成另验收条件清楚，无新语病或裁切。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 30,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-030.png",
+      "png_sha256": "3859b543fd3e12c7290add38105f1deb1fe645e9986334f38afc15c03519ce66",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "20c12bbc7f4096fb5da7dbf190876a890f891f919d05514b8e9e260d71b0b3b0",
+      "identical_T143": false,
+      "first_T144_png_sha256": "3859b543fd3e12c7290add38105f1deb1fe645e9986334f38afc15c03519ce66",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 30,
+        "printed_page": "23",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-030.png",
+        "png_sha256": "3859b543fd3e12c7290add38105f1deb1fe645e9986334f38afc15c03519ce66",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "图4-7及题注完整；P677两种120字符重叠与700目标上限读起来清楚，公式(4-3)分式/范数/编号完整；4.6.2自然跨页到31。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 31,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-031.png",
+      "png_sha256": "42d53029686e422977de3d2073ca43cd0bf8e490da4f94043ea71f7611fc3796",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "2fa65d4321c146ab0adf9e2259132dc6fbe5c938202f4a26bf4e28b75bbe722e",
+      "identical_T143": false,
+      "first_T144_png_sha256": "42d53029686e422977de3d2073ca43cd0bf8e490da4f94043ea71f7611fc3796",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/reviewer/native-f815-visual-19-pages.json",
+        "sha256": "a74e81105cfede7666af42ef8b78cc00ecdaf9260395ca08ae13421291da6995"
+      },
+      "reviewed_page": {
+        "physical_page": 31,
+        "printed_page": "24",
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-031.png",
+        "png_sha256": "42d53029686e422977de3d2073ca43cd0bf8e490da4f94043ea71f7611fc3796",
+        "dimensions": {
+          "width": 1415,
+          "height": 2000
+        },
+        "actual_view": {
+          "tool": "tools.view_image",
+          "detail": "original",
+          "full_page": true,
+          "inherited": false
+        },
+        "status": "PASS",
+        "observations": [
+          "承接上一页BM25叙述，k₁/b及[0,1)区间完整，未误视为文献引用；RRF与奖励公式(4-4)至(4-9)全部可读，编号靠右且无裁切；上标[79]自然。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 32,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-032.png",
+      "png_sha256": "f8ab5c5cd5d9abc10c50952c53e5389120e8d146919000013ae1cacf4f2c2638",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "52eeb617df82d1a37e4dd2105982df158db40d4e56d0fbdbf6c083520faeec15",
+      "identical_T143": false,
+      "first_T144_png_sha256": "f8ab5c5cd5d9abc10c50952c53e5389120e8d146919000013ae1cacf4f2c2638",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 32,
+        "printed_page": 25,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-032.png",
+        "sha256": "f8ab5c5cd5d9abc10c50952c53e5389120e8d146919000013ae1cacf4f2c2638",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "正文检索候选说明与4.6.4标题衔接完整；式（4-10）的双重求和、下标及role项可读，无符号缺失。",
+          "图4-8的全部节点、连线和题注同页，底部未侵入页脚。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 33,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-033.png",
+      "png_sha256": "d936a09b28bd6a48ef7aa61e288c9b66750ff1bf99b5e93a72493d3ad0142d85",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "ba1d5eada9abb24e1848b4a5f11bea17759347839dbb98dc5a143523f442c557",
+      "identical_T143": false,
+      "first_T144_png_sha256": "d936a09b28bd6a48ef7aa61e288c9b66750ff1bf99b5e93a72493d3ad0142d85",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 33,
+        "printed_page": 26,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-033.png",
+        "sha256": "d936a09b28bd6a48ef7aa61e288c9b66750ff1bf99b5e93a72493d3ad0142d85",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表4-7题注、三线、所有计分符号及公式行完整同页，长行未越出单元格。",
+          "图4-9权限及RAG流程全部可见；4.6.6标题后有正文，未形成孤立标题。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 34,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-034.png",
+      "png_sha256": "83fd0acd651020a4dab098a7b2725b1c0c9361603401a7a5ce1d812acc262a19",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "fab2a281f3fb1ca5a6bb69a8fc989e937b96bae6b488fa28588574eb20acd910",
+      "identical_T143": false,
+      "first_T144_png_sha256": "83fd0acd651020a4dab098a7b2725b1c0c9361603401a7a5ce1d812acc262a19",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 34,
+        "printed_page": 27,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-034.png",
+        "sha256": "83fd0acd651020a4dab098a7b2725b1c0c9361603401a7a5ce1d812acc262a19",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表4-8两类评审对照完整同页，表头及底线可见。",
+          "来源、引用及反馈权限说明，4.7与4.7.1正文和MCP/API路径均完整可读，无裁切重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 35,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-035.png",
+      "png_sha256": "bae6c7edacf78cfb26870034db7aeb319c66087bf1b852ceb05a5bfb0218a919",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d7f0d01c70efb6a478e6994e6e9dea41f9c78f1978850dfcb1fc0fa1193c7711",
+      "identical_T143": false,
+      "first_T144_png_sha256": "bae6c7edacf78cfb26870034db7aeb319c66087bf1b852ceb05a5bfb0218a919",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 35,
+        "printed_page": 28,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-035.png",
+        "sha256": "bae6c7edacf78cfb26870034db7aeb319c66087bf1b852ceb05a5bfb0218a919",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图4-10三条调用流程的节点、箭头及题注完整。",
+          "表4-9六类固定模板完整同页，行内换行自然，末行与底线均清楚。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 36,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-036.png",
+      "png_sha256": "aaf1b70283ae5241560c3793953ac32cdda296dd99fb74e6eb6fe187228f9e1a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "aaf1b70283ae5241560c3793953ac32cdda296dd99fb74e6eb6fe187228f9e1a",
+      "identical_T143": true,
+      "first_T144_png_sha256": "aaf1b70283ae5241560c3793953ac32cdda296dd99fb74e6eb6fe187228f9e1a",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 36,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-036.png",
+        "png_sha256": "aaf1b70283ae5241560c3793953ac32cdda296dd99fb74e6eb6fe187228f9e1a",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮真实view_image(detail=original)完整原尺寸实视",
+        "fresh_original_review": true,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-qa-pages.json",
+          "sha256": "dd9c3a36e69fd32ac6e4cb8fafbaeba574e0ecdb90d0261555d4f5ddadf1c7b1"
+        },
+        "reviewer": "qa-engineer"
+      }
+    },
+    {
+      "physical_page": 37,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-037.png",
+      "png_sha256": "dc5a67ed0eb82bf3dc6e197f8a39c45d8976abda18a9128fe0bde15be2901a21",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "16636233dcc3cfe7a00edbe0badd8fde24d5fb872277c3f4f90fc020b89af922",
+      "identical_T143": false,
+      "first_T144_png_sha256": "dc5a67ed0eb82bf3dc6e197f8a39c45d8976abda18a9128fe0bde15be2901a21",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 37,
+        "printed_page": 30,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-037.png",
+        "sha256": "dc5a67ed0eb82bf3dc6e197f8a39c45d8976abda18a9128fe0bde15be2901a21",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "高风险幂等及事务边界、提示版本和预警段落完整可读。",
+          "表4-12四类指标、分式、下标及默认阈值均完整同页，底线与页脚分离。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 38,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-038.png",
+      "png_sha256": "26a00c082d6e67c6e42fc9e960d6b9e328cef6120a97b72f11d1c14016077ac9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d451f234f511a74ba76a3847b3c28b82563ff5060da1419952725af517c4c052",
+      "identical_T143": false,
+      "first_T144_png_sha256": "26a00c082d6e67c6e42fc9e960d6b9e328cef6120a97b72f11d1c14016077ac9",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 38,
+        "printed_page": 31,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-038.png",
+        "sha256": "26a00c082d6e67c6e42fc9e960d6b9e328cef6120a97b72f11d1c14016077ac9",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "承接表4-12的符号、重抽与零值边界说明完整；角色条件文字无缺失。",
+          "4.9小结标题与正文同页，无孤立标题；章末留白未导致内容截断。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 39,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-039.png",
+      "png_sha256": "b832852fce1e79412b7e39af89489bcd3fe530248a991dac1334cca936373c91",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "e508ade88348e3a4656b0c1e607ac9509dc1f7681dd64e3d803e1e44ace0b4d2",
+      "identical_T143": false,
+      "first_T144_png_sha256": "b832852fce1e79412b7e39af89489bcd3fe530248a991dac1334cca936373c91",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 39,
+        "printed_page": 32,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-039.png",
+        "sha256": "b832852fce1e79412b7e39af89489bcd3fe530248a991dac1334cca936373c91",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "第五章章名与5.1正文完整；表5-1全部实现配置行、表头及底线同页可读。",
+          "5.2标题下有完整正文，表格前后的段落衔接自然。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 40,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-040.png",
+      "png_sha256": "93d84ed0323d41ed037ccef4031d2c0e57359180cfec058758c30756afdd52be",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "93d84ed0323d41ed037ccef4031d2c0e57359180cfec058758c30756afdd52be",
+      "identical_T143": true,
+      "first_T144_png_sha256": "93d84ed0323d41ed037ccef4031d2c0e57359180cfec058758c30756afdd52be",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 40,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-040.png",
+        "png_sha256": "93d84ed0323d41ed037ccef4031d2c0e57359180cfec058758c30756afdd52be",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮真实view_image(detail=original)完整原尺寸实视",
+        "fresh_original_review": true,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-qa-pages.json",
+          "sha256": "dd9c3a36e69fd32ac6e4cb8fafbaeba574e0ecdb90d0261555d4f5ddadf1c7b1"
+        },
+        "reviewer": "qa-engineer"
+      }
+    },
+    {
+      "physical_page": 41,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-041.png",
+      "png_sha256": "6d51e2f0fa4ab446d49e39c8ef6b31c11ce8174ad1059b28e5cfa9259d47788f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "c049a79e61bb032653fa819f6d9282e69d18bb41d51908f2851654774ff6af9b",
+      "identical_T143": false,
+      "first_T144_png_sha256": "6d51e2f0fa4ab446d49e39c8ef6b31c11ce8174ad1059b28e5cfa9259d47788f",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 41,
+        "printed_page": 34,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-041.png",
+        "sha256": "6d51e2f0fa4ab446d49e39c8ef6b31c11ce8174ad1059b28e5cfa9259d47788f",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-1、图5-2的状态截图与各自题注均完整同页，无重叠。",
+          "正文的“图5-2”在连字符处跨行，但编号文字完整；5.3标题后保留正文，未孤立。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 42,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-042.png",
+      "png_sha256": "b40166a67b5d67f36342b8605efe3db5ab78c3f17a8d8e669d9435e170ec8a30",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "87ffcb337eba4404e0b70433aa94f8c49dc7d3d26f553a034772e4802636f520",
+      "identical_T143": false,
+      "first_T144_png_sha256": "b40166a67b5d67f36342b8605efe3db5ab78c3f17a8d8e669d9435e170ec8a30",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 42,
+        "printed_page": 35,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-042.png",
+        "sha256": "b40166a67b5d67f36342b8605efe3db5ab78c3f17a8d8e669d9435e170ec8a30",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-3系统流程、图5-4笔记状态、图5-5上传及入库流程均完整同页，节点、箭头和题注清楚。",
+          "段落无覆盖、越界或末行截断；页末正文正常续到下一页。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 43,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-043.png",
+      "png_sha256": "d679c0449bc4e19c4ab677264b79122a709467f9133b43dbd46b45a7abfdc812",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d679c0449bc4e19c4ab677264b79122a709467f9133b43dbd46b45a7abfdc812",
+      "identical_T143": true,
+      "first_T144_png_sha256": "d679c0449bc4e19c4ab677264b79122a709467f9133b43dbd46b45a7abfdc812",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 43,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-043.png",
+        "png_sha256": "d679c0449bc4e19c4ab677264b79122a709467f9133b43dbd46b45a7abfdc812",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "d679c0449bc4e19c4ab677264b79122a709467f9133b43dbd46b45a7abfdc812",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 44,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-044.png",
+      "png_sha256": "336abe3b90fbc5dce9bbe3a2321a87260b623aeb5ac3fd048d4d63dfe5b58ccf",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "336abe3b90fbc5dce9bbe3a2321a87260b623aeb5ac3fd048d4d63dfe5b58ccf",
+      "identical_T143": true,
+      "first_T144_png_sha256": "336abe3b90fbc5dce9bbe3a2321a87260b623aeb5ac3fd048d4d63dfe5b58ccf",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 44,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-044.png",
+        "png_sha256": "336abe3b90fbc5dce9bbe3a2321a87260b623aeb5ac3fd048d4d63dfe5b58ccf",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "336abe3b90fbc5dce9bbe3a2321a87260b623aeb5ac3fd048d4d63dfe5b58ccf",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 45,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-045.png",
+      "png_sha256": "4aa902a8932196f0337d50ab9b34921f6c062abcce71ec422f43c30d738553fc",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "2fc01202ee73fe3b120297719d3d9a9899bfa27cf8fab565027bff8329eae5b7",
+      "identical_T143": false,
+      "first_T144_png_sha256": "4aa902a8932196f0337d50ab9b34921f6c062abcce71ec422f43c30d738553fc",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 45,
+        "printed_page": 38,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-045.png",
+        "sha256": "4aa902a8932196f0337d50ab9b34921f6c062abcce71ec422f43c30d738553fc",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-9覆盖与未匹配摘要完整，题注未分离。",
+          "表5-5草稿片段和来源[N9]、[N10]、[R1926]、[R1929]完整同页，表线与文字未裁切；5.3.5和5.3.6均有随后正文。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 46,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-046.png",
+      "png_sha256": "f82b7f953cf44c8afde1a61c7d0961cb1e6bcbe81329fcb41d3040b74bc24a77",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "8d63029487dc04e549bc804bad2ffa9a3ca836fe12c083185957a20a8ac3af3c",
+      "identical_T143": false,
+      "first_T144_png_sha256": "f82b7f953cf44c8afde1a61c7d0961cb1e6bcbe81329fcb41d3040b74bc24a77",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 46,
+        "printed_page": 39,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-046.png",
+        "sha256": "f82b7f953cf44c8afde1a61c7d0961cb1e6bcbe81329fcb41d3040b74bc24a77",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "5.3.7正文句法完整；表5-6十三项模块、简称表头及末行均在同页，三线表完整。",
+          "图5-10项目成员能力截图及题注完整，无版心外溢或重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 47,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-047.png",
+      "png_sha256": "6c10385ea5b8f8bcbe4ac996548f404127dd0fb4c6d962feead5f3eaf6e88181",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "9c62e090199cacb1ce40863e13d2127bab1ca5eeba7470191d06a63bb0fd1b4c",
+      "identical_T143": false,
+      "first_T144_png_sha256": "6c10385ea5b8f8bcbe4ac996548f404127dd0fb4c6d962feead5f3eaf6e88181",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 47,
+        "printed_page": 40,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-047.png",
+        "sha256": "6c10385ea5b8f8bcbe4ac996548f404127dd0fb4c6d962feead5f3eaf6e88181",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-11退回与修订入口节选以及图5-12资料状态截图均完整同页，各题注可读。",
+          "图5-11节选中既有上下片段的白色分隔未遮住本页文字；关联资料与审核同步的正文完整。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 48,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-048.png",
+      "png_sha256": "6e1dbe7abe87626794e3265939969baa991b686d523e43412a810ba39823d74b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "a77cef2d5a890561da9dfd8952a4312973546dc9b1ea13dd80f238b815e5e0bb",
+      "identical_T143": false,
+      "first_T144_png_sha256": "6e1dbe7abe87626794e3265939969baa991b686d523e43412a810ba39823d74b",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 48,
+        "printed_page": 41,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-048.png",
+        "sha256": "6e1dbe7abe87626794e3265939969baa991b686d523e43412a810ba39823d74b",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-13 OCR识别与人工校对、图5-14来源编号片段、图5-15预警入口均完整同页，S/G编号及题注可读。",
+          "成员核查回答依据与审计入口说明自然，底部独立盲评条件完整，未与页脚重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 49,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-049.png",
+      "png_sha256": "142abe4987692cee6505a04953ab8dce655332025db9bda9ec2360348984fedd",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "fafc8ca43a313c31b61cea1552c90915a728cef1201a47dbfab249e99120f8bc",
+      "identical_T143": false,
+      "first_T144_png_sha256": "142abe4987692cee6505a04953ab8dce655332025db9bda9ec2360348984fedd",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 49,
+        "printed_page": 42,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-049.png",
+        "sha256": "142abe4987692cee6505a04953ab8dce655332025db9bda9ec2360348984fedd",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-16审计摘要、图5-17独立盲评隔离、图5-18回答及S1来源片段均完整同页，无裁切重叠。",
+          "反馈与评分区分以及笔记编辑入口说明完整，来源截图中的引用编号清楚可见。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 50,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-050.png",
+      "png_sha256": "a83500b1e642c19b13ce0051a7dfb8f68f87abf66d295298bc4450c7ff4c32b2",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "e1534ef9f6e135a8634c2c91a5b632e5cb75f8e002e7e75af42c5e524084523c",
+      "identical_T143": false,
+      "first_T144_png_sha256": "a83500b1e642c19b13ce0051a7dfb8f68f87abf66d295298bc4450c7ff4c32b2",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 50,
+        "printed_page": 43,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-050.png",
+        "sha256": "a83500b1e642c19b13ce0051a7dfb8f68f87abf66d295298bc4450c7ff4c32b2",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图5-19编辑与本机草稿节选、图5-20修订前预警配置及各题注完整，历史截图边界说明可读。",
+          "页末固定任务草稿风险段落在逗号后正常续页；无末行截断或页脚重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 51,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-051.png",
+      "png_sha256": "5e9d4277a92345702980cbdb4c00d5f07f6e4fd7232ae98b32ffad084b68128a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "89c49ffc093b445bdccea42fee5a180608761281c688e75a352589eed54201d4",
+      "identical_T143": false,
+      "first_T144_png_sha256": "5e9d4277a92345702980cbdb4c00d5f07f6e4fd7232ae98b32ffad084b68128a",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 51,
+        "printed_page": 44,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-051.png",
+        "sha256": "5e9d4277a92345702980cbdb4c00d5f07f6e4fd7232ae98b32ffad084b68128a",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "页首完整承接上一页并明确“不能据此形成跨笔记因果结论”，限定条件未被分页拆失。",
+          "图5-21草稿结论和图5-22三类来源计数片段、题注完整同页；正文N/F/R计数与待实证含义均清楚。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 52,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-052.png",
+      "png_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+      "identical_T143": true,
+      "first_T144_png_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 52,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-052.png",
+        "png_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 53,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-053.png",
+      "png_sha256": "7577a4d25920ec99e36358cba4cb159a600fa358084a40dd65d59498be41bf56",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "49cf8b436be705d7a5580319277d45001097747fee40c8a720701c3545cf447a",
+      "identical_T143": false,
+      "first_T144_png_sha256": "7577a4d25920ec99e36358cba4cb159a600fa358084a40dd65d59498be41bf56",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 53,
+        "printed_page": 46,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-053.png",
+        "sha256": "7577a4d25920ec99e36358cba4cb159a600fa358084a40dd65d59498be41bf56",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "第六章章名及6.1标题后均有正文；历史Python批次、当前Rust补验和冻结条件的区分完整可读。",
+          "表6-1及表6-2题注、表头、全部行和底线同页可见；长数据集规模说明未裁切。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 54,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-054.png",
+      "png_sha256": "453cf48a287f163e6477a898288ec659491e1f4325b3b2dc09972822f09faa4c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "0762ee0453a5ec3fc4e4d4e094cd3953ccf37386d2cba06084232e7158855ee7",
+      "identical_T143": false,
+      "first_T144_png_sha256": "453cf48a287f163e6477a898288ec659491e1f4325b3b2dc09972822f09faa4c",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 54,
+        "printed_page": 47,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-054.png",
+        "sha256": "453cf48a287f163e6477a898288ec659491e1f4325b3b2dc09972822f09faa4c",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图6-1的坐标轴、15/10/10数值、项目标签与题注完整同页。",
+          "6.2标题后有两行完整正文；下方为下一页整表预留的留白，未形成孤立标题或丢失正文。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 55,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-055.png",
+      "png_sha256": "1e7ada7aee70df16448c1e180729f35a9784818e61adf159770e536f9ce517a9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "283956f3df375201018faa884d8b9d5f0c692c149d7f143bf4f62a1a87bda0ff",
+      "identical_T143": false,
+      "first_T144_png_sha256": "1e7ada7aee70df16448c1e180729f35a9784818e61adf159770e536f9ce517a9",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 55,
+        "printed_page": 48,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-055.png",
+        "sha256": "1e7ada7aee70df16448c1e180729f35a9784818e61adf159770e536f9ce517a9",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表6-3五项测试设计与结果全部完整同页；长文本换行清楚，表头和底线完整。",
+          "表6-3a的B01—B04全部行及底线同页，题注未分离；模型桩与生成质量评价边界说明可读。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 56,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-056.png",
+      "png_sha256": "bde59420642482c6cf4f4821779d8d3011c5507f239053ef72107deca79eecc6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "1541ae15a89492630e400ef04a22d3fac4c4e2f5effd1834953dcb6d06475a82",
+      "identical_T143": false,
+      "first_T144_png_sha256": "bde59420642482c6cf4f4821779d8d3011c5507f239053ef72107deca79eecc6",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-20-pages.json",
+        "sha256": "0461458a557e7f64c3390b328edd1f5065dde00963b7d46be353642788a7fc24"
+      },
+      "reviewed_page": {
+        "page": 56,
+        "printed_page": 49,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-056.png",
+        "sha256": "bde59420642482c6cf4f4821779d8d3011c5507f239053ef72107deca79eecc6",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表6-3b的B05—B08和表6-3c的R01—R03均完整同页，表头、三线及长英文状态字段无缺失。",
+          "NFR6正文的工作者、请求数、p95和吞吐表述以及逐请求明细局限完整；页尾留白正常，无裁切。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 57,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-057.png",
+      "png_sha256": "6bc4b79f6053d18f0470b14af29c62db4352915d199b0db363e3d983980f0f75",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "336098c15f084498fbedacc5a7a3498d4455b456a3b3080e31c0a3b528464d79",
+      "identical_T143": false,
+      "first_T144_png_sha256": "6bc4b79f6053d18f0470b14af29c62db4352915d199b0db363e3d983980f0f75",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+        "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+      },
+      "reviewed_page": {
+        "physical_page": 57,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-057.png",
+        "png_sha256": "6bc4b79f6053d18f0470b14af29c62db4352915d199b0db363e3d983980f0f75",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "T143_png_sha256": "336098c15f084498fbedacc5a7a3498d4455b456a3b3080e31c0a3b528464d79",
+        "identical_T143": false,
+        "first_T144_png_sha256": "6bc4b79f6053d18f0470b14af29c62db4352915d199b0db363e3d983980f0f75",
+        "identical_first_T144": true,
+        "review_method": "Actual view_image(detail=original) full-page inspection",
+        "actual_viewed_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-057.png",
+        "actual_viewed_pdf_sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92",
+        "bound_to_final_by_exact_png_SHA": true,
+        "notes": "表6-4全部8个指标行及表头、4列与10个OMML公式(6-1)至(6-10)在同页完整清晰；横线和上下标未裁切，表下说明可读。",
+        "status": "PASS",
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 58,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-058.png",
+      "png_sha256": "35d6b2081f5e5ee146c173102b9c8ceb303855161358839f7f778fd6cce7a6a7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "83918efe2962a671a6ddbea4a479aed1e14523013da83a114e91aa6eb1d7bb78",
+      "identical_T143": false,
+      "first_T144_png_sha256": "35d6b2081f5e5ee146c173102b9c8ceb303855161358839f7f778fd6cce7a6a7",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/root-final-visual-review.json",
+        "sha256": "336bb70abd4f1e232c3b7f79f6e95329a3446b1be7f6dee234cf4b765d715b11"
+      },
+      "reviewed_page": {
+        "physical_page": 58,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-058.png",
+        "png_sha256": "35d6b2081f5e5ee146c173102b9c8ceb303855161358839f7f778fd6cce7a6a7",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "T143_png_sha256": "83918efe2962a671a6ddbea4a479aed1e14523013da83a114e91aa6eb1d7bb78",
+        "identical_T143": false,
+        "first_T144_png_sha256": "35d6b2081f5e5ee146c173102b9c8ceb303855161358839f7f778fd6cce7a6a7",
+        "identical_first_T144": true,
+        "review_method": "Actual view_image(detail=original) full-page inspection",
+        "actual_viewed_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-058.png",
+        "actual_viewed_pdf_sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92",
+        "bound_to_final_by_exact_png_SHA": true,
+        "notes": "方法、统计和6.4标题/引入完整，无重叠遮挡。",
+        "status": "PASS",
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 59,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-059.png",
+      "png_sha256": "1f81c9ad4de613ff5a7374a96053f0febab140197dc0d8a83cbb936d320fe083",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "1f81c9ad4de613ff5a7374a96053f0febab140197dc0d8a83cbb936d320fe083",
+      "identical_T143": true,
+      "first_T144_png_sha256": "1f81c9ad4de613ff5a7374a96053f0febab140197dc0d8a83cbb936d320fe083",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 59,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-059.png",
+        "png_sha256": "1f81c9ad4de613ff5a7374a96053f0febab140197dc0d8a83cbb936d320fe083",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮真实view_image(detail=original)完整原尺寸实视",
+        "fresh_original_review": true,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/native-final-d6cd-a615-visual-qa-pages.json",
+          "sha256": "dd9c3a36e69fd32ac6e4cb8fafbaeba574e0ecdb90d0261555d4f5ddadf1c7b1"
+        },
+        "reviewer": "qa-engineer"
+      }
+    },
+    {
+      "physical_page": 60,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-060.png",
+      "png_sha256": "94ac54d086db4da09227f7a704ea6bef12c0da62eff587fd41b0e815abdf5166",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "8217ebb27bbdc05f25b07df9ae920ffa2e6580e204ee366d72c05b961e1284b0",
+      "identical_T143": false,
+      "first_T144_png_sha256": "94ac54d086db4da09227f7a704ea6bef12c0da62eff587fd41b0e815abdf5166",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 60,
+        "printed_page": 53,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-060.png",
+        "sha256": "94ac54d086db4da09227f7a704ea6bef12c0da62eff587fd41b0e815abdf5166",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表6-6全部八项指标、题注、表头和底线完整同页，百分比、分母与Token数可读。",
+          "图6-2四种题型的全部柱、数值、图例、轴标签和题注完整；图前后的McNemar说明与结果分析无裁切重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 61,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-061.png",
+      "png_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+      "identical_T143": true,
+      "first_T144_png_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 61,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-061.png",
+        "png_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 62,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-062.png",
+      "png_sha256": "0f8935c83daa74d243b454257ec00397f45b78cb5fea8cb47f9aecbb19b98eea",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "0f8935c83daa74d243b454257ec00397f45b78cb5fea8cb47f9aecbb19b98eea",
+      "identical_T143": true,
+      "first_T144_png_sha256": "0f8935c83daa74d243b454257ec00397f45b78cb5fea8cb47f9aecbb19b98eea",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 62,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-062.png",
+        "png_sha256": "0f8935c83daa74d243b454257ec00397f45b78cb5fea8cb47f9aecbb19b98eea",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮真实view_image(detail=original)完整原尺寸实视",
+        "fresh_original_review": true,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/backend/native-final-d6cd-a615-visual-7-pages.json",
+          "sha256": "5935917cbd0437d09295d46776c1d6cd19c47aaac4cb142fe5e544dc7f03c7a5"
+        },
+        "reviewer": "backend-engineer"
+      }
+    },
+    {
+      "physical_page": 63,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-063.png",
+      "png_sha256": "0db182a0171ceea6fa8eb1adac2dca4b31ab77f6d0ee21bb0a4f96ac46c37e51",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "d38d4cafac7e4aeed25f60a3bbb896ba96ab99f81657a32f2c05576d9dc0ef5a",
+      "identical_T143": false,
+      "first_T144_png_sha256": "0db182a0171ceea6fa8eb1adac2dca4b31ab77f6d0ee21bb0a4f96ac46c37e51",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 63,
+        "printed_page": 56,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-063.png",
+        "sha256": "0db182a0171ceea6fa8eb1adac2dca4b31ab77f6d0ee21bb0a4f96ac46c37e51",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表6-8五种方法、全部结果列、长表头和底线完整同页，微平均说明段落自然。",
+          "图6-5共同14题的四条结果、分母、历史批次条件与描述性比较限定完整可读，未与正文或页脚重叠。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 64,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-064.png",
+      "png_sha256": "c257922efbb8128aff3d7e2e29013477b53f1fcb3415506b36cc16a3c5f60d67",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "c257922efbb8128aff3d7e2e29013477b53f1fcb3415506b36cc16a3c5f60d67",
+      "identical_T143": true,
+      "first_T144_png_sha256": "c257922efbb8128aff3d7e2e29013477b53f1fcb3415506b36cc16a3c5f60d67",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 64,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-064.png",
+        "png_sha256": "c257922efbb8128aff3d7e2e29013477b53f1fcb3415506b36cc16a3c5f60d67",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮真实view_image(detail=original)完整原尺寸实视",
+        "fresh_original_review": true,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/backend/native-final-d6cd-a615-visual-7-pages.json",
+          "sha256": "5935917cbd0437d09295d46776c1d6cd19c47aaac4cb142fe5e544dc7f03c7a5"
+        },
+        "reviewer": "backend-engineer"
+      }
+    },
+    {
+      "physical_page": 65,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-065.png",
+      "png_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+      "identical_T143": true,
+      "first_T144_png_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 65,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-065.png",
+        "png_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 66,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-066.png",
+      "png_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+      "identical_T143": true,
+      "first_T144_png_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 66,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-066.png",
+        "png_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 67,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-067.png",
+      "png_sha256": "4dcf1ef538b8c2a5ccc1a107c3e8f57fd1c9b91d7231ab61847a92327fbc94ab",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "4dcf1ef538b8c2a5ccc1a107c3e8f57fd1c9b91d7231ab61847a92327fbc94ab",
+      "identical_T143": true,
+      "first_T144_png_sha256": "4dcf1ef538b8c2a5ccc1a107c3e8f57fd1c9b91d7231ab61847a92327fbc94ab",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 67,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-067.png",
+        "png_sha256": "4dcf1ef538b8c2a5ccc1a107c3e8f57fd1c9b91d7231ab61847a92327fbc94ab",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+          "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+        },
+        "source_page_png_sha256": "4dcf1ef538b8c2a5ccc1a107c3e8f57fd1c9b91d7231ab61847a92327fbc94ab",
+        "T142_page_status": "pass"
+      }
+    },
+    {
+      "physical_page": 68,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-068.png",
+      "png_sha256": "dccddc7178621af4c5b87780568ed980e19330aa28d532d5cb0c1f464b757b04",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "87b8cd17eb5a5e5f3ec6e381fd256ddcd2e935a6232eaa9ef75350f27419abb4",
+      "identical_T143": false,
+      "first_T144_png_sha256": "dccddc7178621af4c5b87780568ed980e19330aa28d532d5cb0c1f464b757b04",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 68,
+        "printed_page": 61,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-068.png",
+        "sha256": "dccddc7178621af4c5b87780568ed980e19330aa28d532d5cb0c1f464b757b04",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表6-12四种配置的全部行、表头和底线完整同页，统计单位和Token纳入范围说明完整。",
+          "bootstrap与符号翻转检验文字、上标[83]/[84]、种子、差值与p值可读；页末句子正常续至下一页。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 69,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-069.png",
+      "png_sha256": "0a15e10e6dc9eb096873b574d18c9e495eb7f267875df9e66d6f3998f60263da",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "c29eaa6d6e83201316179a361d555ef5a43e22f21ab8c1adf9afa01dcfa63232",
+      "identical_T143": false,
+      "first_T144_png_sha256": "0a15e10e6dc9eb096873b574d18c9e495eb7f267875df9e66d6f3998f60263da",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 69,
+        "printed_page": 62,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-069.png",
+        "sha256": "0a15e10e6dc9eb096873b574d18c9e495eb7f267875df9e66d6f3998f60263da",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "页首承接前页“尚不能”句，完整保留不能单独归因与未达到显著性标准的限定。",
+          "表6-13八项任务、两列通过/计划结果和底线完整同页；补测及抽取方法段落可读，最后一行正常续页。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 70,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-070.png",
+      "png_sha256": "c7ed743b70efaabe826b215bc22c186425747bf02815ebd59ce6025f240dd67c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "8f461626102aa489f93bf9d4a1c81ba4fba58f5f4bec55d8be3223a30cf5134c",
+      "identical_T143": false,
+      "first_T144_png_sha256": "c7ed743b70efaabe826b215bc22c186425747bf02815ebd59ce6025f240dd67c",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 70,
+        "printed_page": 63,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-070.png",
+        "sha256": "c7ed743b70efaabe826b215bc22c186425747bf02815ebd59ce6025f240dd67c",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "页首“配。”承接上页“完全匹”后形成完整句，无正文缺失。",
+          "表6-14三个条件及TP/FP/FN、精确率、召回率、F1均完整同页；英文错误例、限定段落与6.7小结可读，未越版心。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 71,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-071.png",
+      "png_sha256": "46fb3c0453949978c16d63a1daf605dba0eb7867269dc26a683881a57835bdfb",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "92f581dc9067a446aeef2666892eabce6b4d8c43dda7e3ca3337097a8deb2372",
+      "identical_T143": false,
+      "first_T144_png_sha256": "46fb3c0453949978c16d63a1daf605dba0eb7867269dc26a683881a57835bdfb",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 71,
+        "printed_page": 64,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-071.png",
+        "sha256": "46fb3c0453949978c16d63a1daf605dba0eb7867269dc26a683881a57835bdfb",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "第七章章名、7.1和7.2标题及其正文均完整，无孤立标题。",
+          "工作总结与三项贡献文字可读；统计结论、独立收益未证实及数据库事务的外部调用边界均完整显示。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 72,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-072.png",
+      "png_sha256": "4966b582c271c0cd32c0a8ee8801c02bba7a5dba5929af2ad40ad53a2ef3185f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "577229890ca44c4e8dab64dda374e4c72c329feca7b28779092b692865deb560",
+      "identical_T143": false,
+      "first_T144_png_sha256": "4966b582c271c0cd32c0a8ee8801c02bba7a5dba5929af2ad40ad53a2ef3185f",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 72,
+        "printed_page": 65,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-072.png",
+        "sha256": "4966b582c271c0cd32c0a8ee8801c02bba7a5dba5929af2ad40ad53a2ef3185f",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "7.3四项不足与展望段落完整，revision、非赢家样本名、评价受范围影响与维护信号等句子自然可读。",
+          "正文及页脚无重叠裁切，章末正常留白，无孤立标题或图表分页问题。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 73,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-073.png",
+      "png_sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+      "identical_T143": true,
+      "first_T144_png_sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 73,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-073.png",
+        "png_sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 74,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-074.png",
+      "png_sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+      "identical_T143": true,
+      "first_T144_png_sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 74,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-074.png",
+        "png_sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 75,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-075.png",
+      "png_sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+      "identical_T143": true,
+      "first_T144_png_sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 75,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-075.png",
+        "png_sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 76,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-076.png",
+      "png_sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+      "identical_T143": true,
+      "first_T144_png_sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 76,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-076.png",
+        "png_sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 77,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-077.png",
+      "png_sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+      "identical_T143": true,
+      "first_T144_png_sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 77,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-077.png",
+        "png_sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 78,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-078.png",
+      "png_sha256": "b87a2c341f8b06f911c3272affd9002a03d874478a7fc8082f23264bdf8ed9d6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "e362baf2bcaee244561f20503842ca7772571fc9cd9c2719e04d2c3b58527bdc",
+      "identical_T143": false,
+      "first_T144_png_sha256": "b87a2c341f8b06f911c3272affd9002a03d874478a7fc8082f23264bdf8ed9d6",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 78,
+        "printed_page": 71,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-078.png",
+        "sha256": "b87a2c341f8b06f911c3272affd9002a03d874478a7fc8082f23264bdf8ed9d6",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "附录A标题和说明完整，Q05/Q20的†及统计纳入边界清楚。",
+          "表A-1全部Q01—Q20题目、类型、题注、表头和三线完整同页，长题目换行未裁切。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 79,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-079.png",
+      "png_sha256": "9b408f89ea3801b63a512da3bd53e09b74fdebd469d50f9fe9030ed13c0f1e9b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "18a672ba47cbefcfa0eb9aff9816e00123b0a3ea691545561aa46691e2f57e65",
+      "identical_T143": false,
+      "first_T144_png_sha256": "9b408f89ea3801b63a512da3bd53e09b74fdebd469d50f9fe9030ed13c0f1e9b",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 79,
+        "printed_page": 72,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-079.png",
+        "sha256": "9b408f89ea3801b63a512da3bd53e09b74fdebd469d50f9fe9030ed13c0f1e9b",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "附录B、B.1及B.2标题均有随后内容，参考关系构成与来源说明完整。",
+          "表B-1(a)十二项PCR关系及目标实体、题注、表头和底线完整同页，58°C等文字可读。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 80,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-080.png",
+      "png_sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+      "identical_T143": true,
+      "first_T144_png_sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 80,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-080.png",
+        "png_sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 81,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-081.png",
+      "png_sha256": "b3f00e4134a6de2c47d6507ed1e5550d6f56291503a513bbaa5fdcfcc42e68ce",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "e418d12b617bbf6bce114962710b1ead0c23eed43199ea5a5b281a204fc718d2",
+      "identical_T143": false,
+      "first_T144_png_sha256": "b3f00e4134a6de2c47d6507ed1e5550d6f56291503a513bbaa5fdcfcc42e68ce",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 81,
+        "printed_page": 74,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-081.png",
+        "sha256": "b3f00e4134a6de2c47d6507ed1e5550d6f56291503a513bbaa5fdcfcc42e68ce",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表B-1(d)序号39—52全部行、qPCR标题、长结果与底线完整同页。",
+          "B.3及表B-2字段约束说明完整同页，英文SQL属性、默认值、组合键、向量维度与末段均可读，无裁切。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 82,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-082.png",
+      "png_sha256": "7fddfe3ca318b89da0ed4803d8dfbdd6afb8dc86fb92fbb7161187d0ca8ec7b4",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "7fddfe3ca318b89da0ed4803d8dfbdd6afb8dc86fb92fbb7161187d0ca8ec7b4",
+      "identical_T143": true,
+      "first_T144_png_sha256": "7fddfe3ca318b89da0ed4803d8dfbdd6afb8dc86fb92fbb7161187d0ca8ec7b4",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 82,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-082.png",
+        "png_sha256": "7fddfe3ca318b89da0ed4803d8dfbdd6afb8dc86fb92fbb7161187d0ca8ec7b4",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "7fddfe3ca318b89da0ed4803d8dfbdd6afb8dc86fb92fbb7161187d0ca8ec7b4",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 83,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-083.png",
+      "png_sha256": "85f548ebce9cd21e5c78d57638599dc680678aa89f356a83c71d5a57980ca854",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "85f548ebce9cd21e5c78d57638599dc680678aa89f356a83c71d5a57980ca854",
+      "identical_T143": true,
+      "first_T144_png_sha256": "85f548ebce9cd21e5c78d57638599dc680678aa89f356a83c71d5a57980ca854",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 83,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-083.png",
+        "png_sha256": "85f548ebce9cd21e5c78d57638599dc680678aa89f356a83c71d5a57980ca854",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "85f548ebce9cd21e5c78d57638599dc680678aa89f356a83c71d5a57980ca854",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 84,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-084.png",
+      "png_sha256": "22184acc2b45ed32ad5ff1ab6a3e55019404babd29abcfce20c74e921a168f49",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "22184acc2b45ed32ad5ff1ab6a3e55019404babd29abcfce20c74e921a168f49",
+      "identical_T143": true,
+      "first_T144_png_sha256": "22184acc2b45ed32ad5ff1ab6a3e55019404babd29abcfce20c74e921a168f49",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 84,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-084.png",
+        "png_sha256": "22184acc2b45ed32ad5ff1ab6a3e55019404babd29abcfce20c74e921a168f49",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "22184acc2b45ed32ad5ff1ab6a3e55019404babd29abcfce20c74e921a168f49",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 85,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-085.png",
+      "png_sha256": "a5c248439616626e7dc5aeb5d76190e24e62d20d5a426ce2926da8008132604d",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "a5c248439616626e7dc5aeb5d76190e24e62d20d5a426ce2926da8008132604d",
+      "identical_T143": true,
+      "first_T144_png_sha256": "a5c248439616626e7dc5aeb5d76190e24e62d20d5a426ce2926da8008132604d",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 85,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-085.png",
+        "png_sha256": "a5c248439616626e7dc5aeb5d76190e24e62d20d5a426ce2926da8008132604d",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "a5c248439616626e7dc5aeb5d76190e24e62d20d5a426ce2926da8008132604d",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 86,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-086.png",
+      "png_sha256": "7596da1250738cbfc40e6ec30538f633833b56fd75db0c451d1d299c94c01fb8",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "7596da1250738cbfc40e6ec30538f633833b56fd75db0c451d1d299c94c01fb8",
+      "identical_T143": true,
+      "first_T144_png_sha256": "7596da1250738cbfc40e6ec30538f633833b56fd75db0c451d1d299c94c01fb8",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 86,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-086.png",
+        "png_sha256": "7596da1250738cbfc40e6ec30538f633833b56fd75db0c451d1d299c94c01fb8",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "7596da1250738cbfc40e6ec30538f633833b56fd75db0c451d1d299c94c01fb8",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 87,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-087.png",
+      "png_sha256": "70e467a52f2ba9683262821da8273ebc0b2914e5e7e5a97af64e060b0a3abe7b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "70e467a52f2ba9683262821da8273ebc0b2914e5e7e5a97af64e060b0a3abe7b",
+      "identical_T143": true,
+      "first_T144_png_sha256": "70e467a52f2ba9683262821da8273ebc0b2914e5e7e5a97af64e060b0a3abe7b",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 87,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-087.png",
+        "png_sha256": "70e467a52f2ba9683262821da8273ebc0b2914e5e7e5a97af64e060b0a3abe7b",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "70e467a52f2ba9683262821da8273ebc0b2914e5e7e5a97af64e060b0a3abe7b",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 88,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-088.png",
+      "png_sha256": "7d6958153b86f354efe768ca4214f2fdf489e455e9f8b1efb2d4fc486b7bf6e5",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "7d6958153b86f354efe768ca4214f2fdf489e455e9f8b1efb2d4fc486b7bf6e5",
+      "identical_T143": true,
+      "first_T144_png_sha256": "7d6958153b86f354efe768ca4214f2fdf489e455e9f8b1efb2d4fc486b7bf6e5",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 88,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-088.png",
+        "png_sha256": "7d6958153b86f354efe768ca4214f2fdf489e455e9f8b1efb2d4fc486b7bf6e5",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "7d6958153b86f354efe768ca4214f2fdf489e455e9f8b1efb2d4fc486b7bf6e5",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 89,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-089.png",
+      "png_sha256": "1c678718be7768cfb4fa5e3aabada130ab5f56b2937998d201c77a09f0519d88",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "1c678718be7768cfb4fa5e3aabada130ab5f56b2937998d201c77a09f0519d88",
+      "identical_T143": true,
+      "first_T144_png_sha256": "1c678718be7768cfb4fa5e3aabada130ab5f56b2937998d201c77a09f0519d88",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 89,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-089.png",
+        "png_sha256": "1c678718be7768cfb4fa5e3aabada130ab5f56b2937998d201c77a09f0519d88",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "1c678718be7768cfb4fa5e3aabada130ab5f56b2937998d201c77a09f0519d88",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 90,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-090.png",
+      "png_sha256": "5ade261927c886d97783c1a719cc63c333124b1651832bd07a889f4d26405034",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "5ade261927c886d97783c1a719cc63c333124b1651832bd07a889f4d26405034",
+      "identical_T143": true,
+      "first_T144_png_sha256": "5ade261927c886d97783c1a719cc63c333124b1651832bd07a889f4d26405034",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 90,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-090.png",
+        "png_sha256": "5ade261927c886d97783c1a719cc63c333124b1651832bd07a889f4d26405034",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "5ade261927c886d97783c1a719cc63c333124b1651832bd07a889f4d26405034",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 91,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-091.png",
+      "png_sha256": "16ce4bbe55932d255cc3f316072971259855d5c9322a6ee75e695932fc2ccc4a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "16ce4bbe55932d255cc3f316072971259855d5c9322a6ee75e695932fc2ccc4a",
+      "identical_T143": true,
+      "first_T144_png_sha256": "16ce4bbe55932d255cc3f316072971259855d5c9322a6ee75e695932fc2ccc4a",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 91,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-091.png",
+        "png_sha256": "16ce4bbe55932d255cc3f316072971259855d5c9322a6ee75e695932fc2ccc4a",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "16ce4bbe55932d255cc3f316072971259855d5c9322a6ee75e695932fc2ccc4a",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 92,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-092.png",
+      "png_sha256": "4258260315015898d244e480e62018cb422bfeacf077859dddfdc7ef4bb101c1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "4258260315015898d244e480e62018cb422bfeacf077859dddfdc7ef4bb101c1",
+      "identical_T143": true,
+      "first_T144_png_sha256": "4258260315015898d244e480e62018cb422bfeacf077859dddfdc7ef4bb101c1",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 92,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-092.png",
+        "png_sha256": "4258260315015898d244e480e62018cb422bfeacf077859dddfdc7ef4bb101c1",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "4258260315015898d244e480e62018cb422bfeacf077859dddfdc7ef4bb101c1",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 93,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-093.png",
+      "png_sha256": "1a1ab8ba4e166ce70b595d6f23c438a4be81b3e35873149fc161f2e336118519",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "1a1ab8ba4e166ce70b595d6f23c438a4be81b3e35873149fc161f2e336118519",
+      "identical_T143": true,
+      "first_T144_png_sha256": "1a1ab8ba4e166ce70b595d6f23c438a4be81b3e35873149fc161f2e336118519",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 93,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-093.png",
+        "png_sha256": "1a1ab8ba4e166ce70b595d6f23c438a4be81b3e35873149fc161f2e336118519",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "1a1ab8ba4e166ce70b595d6f23c438a4be81b3e35873149fc161f2e336118519",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 94,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-094.png",
+      "png_sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+      "identical_T143": true,
+      "first_T144_png_sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 94,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-094.png",
+        "png_sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 95,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-095.png",
+      "png_sha256": "66650d2925193965deb6aef1b3d7ba8f29e12926244268f360e9ff75eda7ebda",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "5e66b75d1d2cda5d076cbe720815eff524834db8a5b7a860ada71f0c13e4b6b6",
+      "identical_T143": false,
+      "first_T144_png_sha256": "66650d2925193965deb6aef1b3d7ba8f29e12926244268f360e9ff75eda7ebda",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 95,
+        "printed_page": 88,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-095.png",
+        "sha256": "66650d2925193965deb6aef1b3d7ba8f29e12926244268f360e9ff75eda7ebda",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "附录D、D.1及D.2标题与说明完整，文献[80]上标括号及编号可见。",
+          "表D-1三个文件及SHA前16位、表D-2七项附件清单完整同页；URL与附件路径正常换行，未越版心或遮挡。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 96,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-096.png",
+      "png_sha256": "1e7f0009124cfb52ff5d776fbba63801a11b949af506149e59d3f4824d2b073a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "1e7f0009124cfb52ff5d776fbba63801a11b949af506149e59d3f4824d2b073a",
+      "identical_T143": true,
+      "first_T144_png_sha256": "1e7f0009124cfb52ff5d776fbba63801a11b949af506149e59d3f4824d2b073a",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 96,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-096.png",
+        "png_sha256": "1e7f0009124cfb52ff5d776fbba63801a11b949af506149e59d3f4824d2b073a",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮真实view_image(detail=original)完整原尺寸实视",
+        "fresh_original_review": true,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/backend/native-final-d6cd-a615-visual-7-pages.json",
+          "sha256": "5935917cbd0437d09295d46776c1d6cd19c47aaac4cb142fe5e544dc7f03c7a5"
+        },
+        "reviewer": "backend-engineer"
+      }
+    },
+    {
+      "physical_page": 97,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-097.png",
+      "png_sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+      "identical_T143": true,
+      "first_T144_png_sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 97,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-097.png",
+        "png_sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 98,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-098.png",
+      "png_sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+      "identical_T143": true,
+      "first_T144_png_sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Inherited T143 final reviewed PNG by exact SHA equality; not newly viewed this round",
+      "fresh_this_round": false,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-times-T143-2026-10-11/qa/native-final-d6cd-a615-visual-100-closure.json",
+        "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19"
+      },
+      "T143_reviewed_page": {
+        "physical_page": 98,
+        "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-098.png",
+        "png_sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "PASS",
+        "findings": [],
+        "coverage_method": "本轮PNG与T142最终实视证据逐字节相同，按SHA承接该页已完成原尺寸审查",
+        "fresh_original_review": false,
+        "source_review": {
+          "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+          "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+        },
+        "source_page_png_sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+        "T142_page_status": "PASS"
+      }
+    },
+    {
+      "physical_page": 99,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-099.png",
+      "png_sha256": "0d07ed46d8e4f88d80796238b5fecc368e4d7ad0159077b2e65c76d544112d55",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "95e8c10d77f959cd6be0aac49f8a50a40655fc7c0d85883e13152685fbded0c5",
+      "identical_T143": false,
+      "first_T144_png_sha256": "0d07ed46d8e4f88d80796238b5fecc368e4d7ad0159077b2e65c76d544112d55",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 99,
+        "printed_page": 92,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-099.png",
+        "sha256": "0d07ed46d8e4f88d80796238b5fecc368e4d7ad0159077b2e65c76d544112d55",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "图D-6第二页SOP文本节选中的F35—F37标题、步骤、数值及题注完整。",
+          "D.4说明及表D-3三个历史测试批次全部行、四列表头、底线完整同页，旧身份与当前结果分列说明可读。"
+        ],
+        "findings": []
+      }
+    },
+    {
+      "physical_page": 100,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render-v2/page-100.png",
+      "png_sha256": "e94686197798d921f26bcc2465cca44f857a9f14282f5487def8bcad113943e4",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "T143_png_sha256": "aa33395b60fe9c084550a1b2e3f62908b70c43ce65d34a925cd5cc6e3d75c975",
+      "identical_T143": false,
+      "first_T144_png_sha256": "e94686197798d921f26bcc2465cca44f857a9f14282f5487def8bcad113943e4",
+      "identical_first_T144": true,
+      "status": "PASS",
+      "coverage_method": "Actual full-page original view in this round; final binding by exact PNG SHA where original first export used",
+      "fresh_this_round": true,
+      "source_review": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/backend/native-f815-visual-additional-13-pages.json",
+        "sha256": "206866ebcff573ce49ccd34ab8245adb9add8e47260b445e50c933b026845235"
+      },
+      "reviewed_page": {
+        "page": 100,
+        "printed_page": 93,
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-final-render/page-100.png",
+        "sha256": "e94686197798d921f26bcc2465cca44f857a9f14282f5487def8bcad113943e4",
+        "dimensions": [
+          1415,
+          2000
+        ],
+        "status": "pass",
+        "actual_original_view": true,
+        "view_tool": "tools.view_image",
+        "view_detail": "original",
+        "observations": [
+          "表D-4九个历史/追加批次的全部行、题注、表头和底线完整同页，长revision及运行状态正常换行。",
+          "T139检查与事务/外部调用/SSE边界、浏览器重启、短负载限制及T141整改记录均完整可读；末行未截断，底线与页脚分离。"
+        ],
+        "findings": []
+      }
+    }
+  ],
+  "result": "PASS_ALL_100_PAGES",
+  "limits": [
+    "43 inherited pages are byte-identical to T143 reviewed PNGs; no claim newly viewed.",
+    "55 pages actually viewed on first native T144 export are byte-identical to final; final13/14 freshly viewed.",
+    "No new research data or product tests created."
+  ]
+}

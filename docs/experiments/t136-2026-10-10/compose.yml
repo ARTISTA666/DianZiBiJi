@@ -1,0 +1,50 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: t136
+      POSTGRES_USER: t136
+      POSTGRES_PASSWORD: t136-local-db-only
+    volumes:
+      - t136_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U t136 -d t136"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  backend:
+    image: eln-backend-t114:2026-10-01
+    pull_policy: never
+    environment:
+      APP_ENV: development
+      POSTGRES_DB: t136
+      POSTGRES_USER: t136
+      POSTGRES_PASSWORD: t136-local-db-only
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      BOOTSTRAP_ADMIN_USERNAME: t136-admin
+      BOOTSTRAP_ADMIN_PASSWORD: t136-local-admin-only
+      SECRET_KEY: t136-local-isolated-test-secret-2026
+      SEED_DEMO_DATA: "false"
+      ALLOW_SENSITIVE_EXTERNAL_AI: "false"
+      STORAGE_ROOT: /storage
+      DEEPSEEK_API_KEY: ""
+      DEEPSEEK_API_BASE_URL: http://127.0.0.1:9
+      EMBEDDING_API_URL: http://127.0.0.1:9
+      GLOBAL_RATE_LIMIT_READ_PER_MINUTE: "10000"
+      GLOBAL_RATE_LIMIT_WRITE_PER_MINUTE: "2000"
+    ports:
+      - "127.0.0.1:18036:8000"
+    volumes:
+      - t136_storage:/storage
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8000/ready"]
+      interval: 2s
+      timeout: 5s
+      retries: 45
+volumes:
+  t136_db:
+  t136_storage:

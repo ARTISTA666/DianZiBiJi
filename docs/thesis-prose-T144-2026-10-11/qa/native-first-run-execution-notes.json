@@ -1,0 +1,33 @@
+{
+  "task": "T144 independent native QA execution notes",
+  "runs": [
+    {
+      "script": "check-native-toc.py",
+      "exit_code": 0,
+      "report": "native-df765-f815-toc-review.json",
+      "report_result": "FAIL_ONE_WORD_CACHE",
+      "detail": "7.3 Word cache64 while actual PDF printed65. Reported to root; original FAIL retained."
+    },
+    {
+      "script": "check-native-table-coordinates.py",
+      "exit_code": 0,
+      "report": "native-df765-f815-table-coordinate-review.json",
+      "report_result": "PASS",
+      "wide_rules": 298,
+      "violations": 0
+    },
+    {
+      "script": "check-table-same-page.py",
+      "exit_code": 0,
+      "report": "native-df765-f815-table-same-page-review.json",
+      "report_result": "97_PASS_1_EXTRACTION_AMBIGUITY_PENDING_VISUAL"
+    },
+    {
+      "script": "check_pdf_citations.py",
+      "attempt": 1,
+      "exit_code": 1,
+      "error": "StopIteration: baseline heading is 附录 A with space, so narrow 附录A prefix did not match. Read-only script corrected by whitespace-normalizing heading match; no PDF/Word changes or failed citation findings were produced."
+    }
+  ],
+  "scope": "Preserves first execution diagnostics; does not overwrite original reports or claim visual completion."
+}

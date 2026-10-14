@@ -1,0 +1,257 @@
+{
+  "task": "T141 independent last five-table position-only Word and actual native PDF rule audit",
+  "utc": "2026-10-11T10:07:32.173076+00:00",
+  "input": {
+    "baseline_word": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/reviewed-a9e89-before-indent.docx",
+    "baseline_word_sha256": "a9e89d3c4a6a258d2c3e13f246271c227e06ed933f7be39eb71cf9f0df6a8b75",
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/1005-深审整改版-2026-10-11.docx",
+    "word_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-wps/1005-深审整改版-2026-10-11.pdf",
+    "pdf_sha256": "bfd769f53d297732793833d8a5c46df5dae32c6dd02869a0ca0168dd3dfa9165"
+  },
+  "allowed_mutation": "仅五表tblPr/tblInd的w:w属性0→140；全部文本、字号、网格宽度、节点数量、其他XML属性和所有其他ZIP部分保留比较。",
+  "changes": [
+    {
+      "table_index": 24,
+      "old_indent_twips": "0",
+      "new_indent_twips": "140",
+      "all_other_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 32,
+      "old_indent_twips": "0",
+      "new_indent_twips": "140",
+      "all_other_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 33,
+      "old_indent_twips": "0",
+      "new_indent_twips": "140",
+      "all_other_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 48,
+      "old_indent_twips": "0",
+      "new_indent_twips": "140",
+      "all_other_table_XML_equal": true,
+      "text_equal": true
+    },
+    {
+      "table_index": 106,
+      "old_indent_twips": "0",
+      "new_indent_twips": "140",
+      "all_other_table_XML_equal": true,
+      "text_equal": true
+    }
+  ],
+  "other_changed_package_parts": [],
+  "actual_PDF_rule_positions": [
+    {
+      "table_index": 24,
+      "caption": "表 4-10",
+      "physical_page": 36,
+      "printed_page": 29,
+      "body_left_right_pt": [
+        79.4,
+        515.9
+      ],
+      "actual_three_horizontal_rules": [
+        {
+          "x0": 83.4,
+          "x1": 508.6,
+          "top": 239.76999999999998,
+          "bottom": 239.76999999999998,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 83.4,
+          "x1": 508.6,
+          "top": 358.77,
+          "bottom": 358.77,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 83.4,
+          "x1": 508.6,
+          "top": 258.40999999999997,
+          "bottom": 258.40999999999997,
+          "linewidth": 0.72
+        }
+      ],
+      "three_rules_found": true,
+      "all_rules_inside_body": true,
+      "body_clearance_left_right_pt": [
+        4.0,
+        7.3
+      ]
+    },
+    {
+      "table_index": 32,
+      "caption": "表 5-5",
+      "physical_page": 45,
+      "printed_page": 38,
+      "body_left_right_pt": [
+        79.4,
+        515.9
+      ],
+      "actual_three_horizontal_rules": [
+        {
+          "x0": 83.4,
+          "x1": 508.6,
+          "top": 348.72,
+          "bottom": 348.72,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 83.4,
+          "x1": 508.6,
+          "top": 532.72,
+          "bottom": 532.72,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 83.4,
+          "x1": 508.6,
+          "top": 367.36,
+          "bottom": 367.36,
+          "linewidth": 0.72
+        }
+      ],
+      "three_rules_found": true,
+      "all_rules_inside_body": true,
+      "body_clearance_left_right_pt": [
+        4.0,
+        7.3
+      ]
+    },
+    {
+      "table_index": 33,
+      "caption": "表 5-6",
+      "physical_page": 46,
+      "printed_page": 39,
+      "body_left_right_pt": [
+        79.4,
+        515.9
+      ],
+      "actual_three_horizontal_rules": [
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 163.76999999999998,
+          "bottom": 163.76999999999998,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 442.12,
+          "bottom": 442.12,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 194.06000000000006,
+          "bottom": 194.06000000000006,
+          "linewidth": 0.72
+        }
+      ],
+      "three_rules_found": true,
+      "all_rules_inside_body": true,
+      "body_clearance_left_right_pt": [
+        3.5,
+        7.8
+      ]
+    },
+    {
+      "table_index": 48,
+      "caption": "表 6-11a",
+      "physical_page": 67,
+      "printed_page": 60,
+      "body_left_right_pt": [
+        79.4,
+        515.9
+      ],
+      "actual_three_horizontal_rules": [
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 329.92,
+          "bottom": 329.92,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 418.12,
+          "bottom": 418.12,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 348.41,
+          "bottom": 348.41,
+          "linewidth": 0.72
+        }
+      ],
+      "three_rules_found": true,
+      "all_rules_inside_body": true,
+      "body_clearance_left_right_pt": [
+        3.5,
+        7.8
+      ]
+    },
+    {
+      "table_index": 106,
+      "caption": "表 D-3",
+      "physical_page": 99,
+      "printed_page": 92,
+      "body_left_right_pt": [
+        79.4,
+        515.9
+      ],
+      "actual_three_horizontal_rules": [
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 407.77,
+          "bottom": 407.77,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 512.77,
+          "bottom": 512.77,
+          "linewidth": 1.44
+        },
+        {
+          "x0": 82.9,
+          "x1": 508.1,
+          "top": 426.26,
+          "bottom": 426.26,
+          "linewidth": 0.72
+        }
+      ],
+      "three_rules_found": true,
+      "all_rules_inside_body": true,
+      "body_clearance_left_right_pt": [
+        3.5,
+        7.8
+      ]
+    }
+  ],
+  "checks": {
+    "exact_five_authorized_table_indices": true,
+    "each_indent_0_to140": true,
+    "all_non_indent_XML_equal": true,
+    "all_other_package_parts_byte_equal": true,
+    "all_five_actual_native_rules_within_body": true
+  },
+  "result": "PASS",
+  "scope": "核实际PDF的15条指定三线表横线，非仅从Word网格宽度推断版心。"
+}

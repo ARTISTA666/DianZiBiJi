@@ -1,0 +1,216 @@
+{
+  "task": "T139 system E2E v6 independent final result review",
+  "captured_at_utc": "2026-10-11T07:42:40.887470+00:00",
+  "snapshot_revision": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+  "status": "FAILED_ONE_ADMIN_NAVIGATION_RACE",
+  "runner_exit_code": 1,
+  "runner_exit_code_source": "Root owner reported natural exit 1; final log confirms 1 failed, 8 passed",
+  "playwright_stats": {
+    "startTime": "2026-10-11T07:38:26.964Z",
+    "duration": 136284.488,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "independent_counts": {
+    "total_cases": 9,
+    "passed": 8,
+    "failed": 1,
+    "not_run": 0,
+    "interrupted": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "真实课题组四项目全员协作与 AI 验收",
+      "source_file": "real-lab-acceptance.spec.ts",
+      "line": 265,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 66778,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "登录并完成笔记审批",
+      "source_file": "system.spec.ts",
+      "line": 131,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 4194,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
+      "source_file": "system.spec.ts",
+      "line": 161,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 5674,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "独立评价人只能在盲评页面提交评价",
+      "source_file": "system.spec.ts",
+      "line": 226,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 5405,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "系统管理员完成账号、小组和审计闭环",
+      "source_file": "system.spec.ts",
+      "line": 248,
+      "project": "chromium",
+      "status": "failed",
+      "duration_ms": 6447,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "项目负责人、记录员和审核人完成退回修订审批闭环",
+      "source_file": "user-journeys.spec.ts",
+      "line": 105,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 16349,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "笔记附件必须关联笔记并在资料页保留关联关系",
+      "source_file": "user-journeys.spec.ts",
+      "line": 175,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 3980,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "多角色完成 AI 资料、图谱、问答与报告协作闭环",
+      "source_file": "user-journeys.spec.ts",
+      "line": 212,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 12916,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    },
+    {
+      "name": "只读成员只能查阅，不能看到写入或项目管理操作",
+      "source_file": "user-journeys.spec.ts",
+      "line": 275,
+      "project": "chromium",
+      "status": "passed",
+      "duration_ms": 7199,
+      "attempts": 1,
+      "retry_indexes": [
+        0
+      ]
+    }
+  ],
+  "restart_probe": {
+    "status": "NOT_EXECUTED",
+    "output_json_exists": false,
+    "reason": "run-system-e2e.sh exits 1 at the failed Playwright branch before restart probe invocation"
+  },
+  "load_probe": {
+    "status": "NOT_EXECUTED",
+    "output_json_exists": false,
+    "reason": "run-system-e2e.sh exits 1 at the failed Playwright branch before restart and load probe invocations"
+  },
+  "failure": {
+    "scenario": "系统管理员完成账号、小组和审计闭环",
+    "location": "system.spec.ts:299 -> login helper:39",
+    "cause": "Logout-triggered navigation overlapped with an immediate explicit login helper goto; trace-confirmed ERR_ABORTED",
+    "minimum_fix_owner": "root",
+    "root_repair_for_next_round": "Await logout POST 200, plain /login networkidle and visible account input; log in on the loaded page without a second goto. Keep all business assertions and original timeouts.",
+    "final_managed_user_empty_project_assertions_reached": false
+  },
+  "identity_review": {
+    "expected_revision_matches_snapshot_and_runtime": true,
+    "backend_container_and_image_oci_and_ready_verified": true,
+    "frontend_oci_revision_label_available": false,
+    "frontend_tracked_build_input_count": 102,
+    "frontend_build_input_all_match_final_commit": true,
+    "frontend_build_input_matches_validated8d45_runtime_input": true,
+    "frontend_build_aggregate_sha256": "ed5fd615491f533d7246fdc02177e88c46dc46875b08919a3bc5e80797f27b48"
+  },
+  "evidence_files": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v6/results.json",
+      "sha256": "0364141b2a7ff9180378cdc4b498ee783e0347cd9bc36b9234ef8a48bbb7351a"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v6/compose.log",
+      "sha256": "b969b48cf44b861c677f96814ffe8c5d51bd2d6ecc163fa6d3c11902329881a1"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/system-e2e-final-v6.log",
+      "sha256": "6edabce1cf6e6b5d8192308430aa5e9896f100087e1b87ed03bb7feb4443ed12"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/snapshot-input-v6.json",
+      "sha256": "87020f1f632ae38f657475bd96979c4b06ad51731a3f475b2d151fbbd4e4c95f"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v6-runtime-identity.json",
+      "sha256": "a29dd9924743fa30b67f0bb0f91fcb10210d400ee7eaf01a0d15acf4e67cb789"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v6-frontend-build-input.json",
+      "sha256": "df0985698698eb7b6bb728afb60c69f69d6543eb7e0a6d3f9a9d9493aea5d9f7"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v6-admin-investigation.json",
+      "sha256": "ca9b523451c4f0dc4c813e07b91b91e08c94b265ef04b93b064ea7cf0b912cd7"
+    }
+  ],
+  "archived_failure_artifacts": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v6/artifacts/system-系统管理员完成账号、小组和审计闭环-chromium/error-context.md",
+      "sha256": "b3e09712a549acc3e231a4a2d6fad2fb5eb4c34f36243f4feafabdf0ac7207d0",
+      "matches_investigation_capture": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v6/artifacts/system-系统管理员完成账号、小组和审计闭环-chromium/test-failed-1.png",
+      "sha256": "2753c93379b9368c7b09e64d92972b4efe7d4d4f2370975b6180a29240df47e4",
+      "matches_investigation_capture": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v6/artifacts/system-系统管理员完成账号、小组和审计闭环-chromium/trace.zip",
+      "sha256": "95d462a26053968ff6d813e8a2fea9189086e34af4e7390214d0f253da675868",
+      "matches_investigation_capture": true
+    }
+  ],
+  "result_boundaries": [
+    "The full system E2E gate did not pass in v6",
+    "Eight passed cases remain observations from this v6 run; they are not combined with another run to manufacture nine passes",
+    "No restart or load probe result may be claimed for v6",
+    "Earlier failures and frozen snapshots are preserved; no original result was overwritten",
+    "Static preflight no-deterministic-mismatch was not a runtime guarantee",
+    "This review read only safe trace/network/source fields and made no product, timeout, configuration or Compose change"
+  ]
+}

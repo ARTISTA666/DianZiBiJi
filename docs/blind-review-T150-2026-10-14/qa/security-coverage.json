@@ -1,0 +1,906 @@
+{
+  "task": "T150",
+  "checked_date": "2026-10-14",
+  "verification_status": "READ_ONLY_COVERAGE_AUDIT",
+  "basis": "只核对现有代码/测试/历史运行证据，不启动测试、网络、服务或新实验；报告未见材料不等于漏洞。",
+  "rust_test_input_binding": {
+    "tested_count": 65,
+    "current_matching_count": 65,
+    "all_tested_inputs_unchanged": true,
+    "files": [
+      {
+        "path": "backend/Cargo.lock",
+        "t148_tested_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "current_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "matches": true
+      },
+      {
+        "path": "backend/Cargo.toml",
+        "t148_tested_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "current_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "matches": true
+      },
+      {
+        "path": "backend/rust-toolchain.toml",
+        "t148_tested_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "current_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "matches": true
+      },
+      {
+        "path": "backend/sql/0001_initial.sql",
+        "t148_tested_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+        "current_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+        "matches": true
+      },
+      {
+        "path": "backend/src/ai_provider.rs",
+        "t148_tested_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+        "current_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "t148_tested_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+        "current_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/agent_suggestion.rs",
+        "t148_tested_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+        "current_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "t148_tested_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "current_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/audit.rs",
+        "t148_tested_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+        "current_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/auth.rs",
+        "t148_tested_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+        "current_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/files.rs",
+        "t148_tested_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "current_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/groups.rs",
+        "t148_tested_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+        "current_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/kg_blueprint.rs",
+        "t148_tested_sha256": "0fc840194750a702e13dcebf4d4cd610c39537f36bda32e9d441b76848d64d0d",
+        "current_sha256": "0fc840194750a702e13dcebf4d4cd610c39537f36bda32e9d441b76848d64d0d",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "t148_tested_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "current_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/maturity.rs",
+        "t148_tested_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+        "current_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/mcp.rs",
+        "t148_tested_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "current_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/mod.rs",
+        "t148_tested_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+        "current_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/notes.rs",
+        "t148_tested_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "current_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/ocr.rs",
+        "t148_tested_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+        "current_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/project_alert.rs",
+        "t148_tested_sha256": "ff6b8eabffc1a00bc0b5c5ae0c6f3f72ecd44528f77b5c7005db285d4d52fcdc",
+        "current_sha256": "ff6b8eabffc1a00bc0b5c5ae0c6f3f72ecd44528f77b5c7005db285d4d52fcdc",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/projects.rs",
+        "t148_tested_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "current_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/rag/blind.rs",
+        "t148_tested_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+        "current_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/rag/experiments.rs",
+        "t148_tested_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+        "current_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/rag/mod.rs",
+        "t148_tested_sha256": "883cc3179713aa79de642fce612d589a9a2b88108819e8e9f4233b99d778a739",
+        "current_sha256": "883cc3179713aa79de642fce612d589a9a2b88108819e8e9f4233b99d778a739",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/search.rs",
+        "t148_tested_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+        "current_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/templates.rs",
+        "t148_tested_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+        "current_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+        "matches": true
+      },
+      {
+        "path": "backend/src/api/users.rs",
+        "t148_tested_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+        "current_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+        "matches": true
+      },
+      {
+        "path": "backend/src/audit.rs",
+        "t148_tested_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+        "current_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+        "matches": true
+      },
+      {
+        "path": "backend/src/config.rs",
+        "t148_tested_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+        "current_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+        "matches": true
+      },
+      {
+        "path": "backend/src/db.rs",
+        "t148_tested_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+        "current_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+        "matches": true
+      },
+      {
+        "path": "backend/src/embedding.rs",
+        "t148_tested_sha256": "f6f52ef103da27ef3dbadfe1572a467147ba972fd60bf0bb25e458e21675d6b5",
+        "current_sha256": "f6f52ef103da27ef3dbadfe1572a467147ba972fd60bf0bb25e458e21675d6b5",
+        "matches": true
+      },
+      {
+        "path": "backend/src/error.rs",
+        "t148_tested_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+        "current_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+        "matches": true
+      },
+      {
+        "path": "backend/src/kg_blueprint.rs",
+        "t148_tested_sha256": "2c18fe0453cbc679537162bb845710681bb2047230324920fd4bb2120c77c429",
+        "current_sha256": "2c18fe0453cbc679537162bb845710681bb2047230324920fd4bb2120c77c429",
+        "matches": true
+      },
+      {
+        "path": "backend/src/knowledge_graph.rs",
+        "t148_tested_sha256": "cefe3c340499ce326994448d43e98dd88b8621e3db2d974b75acd8cecff6dd1b",
+        "current_sha256": "cefe3c340499ce326994448d43e98dd88b8621e3db2d974b75acd8cecff6dd1b",
+        "matches": true
+      },
+      {
+        "path": "backend/src/lib.rs",
+        "t148_tested_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+        "current_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+        "matches": true
+      },
+      {
+        "path": "backend/src/main.rs",
+        "t148_tested_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+        "current_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/agent.rs",
+        "t148_tested_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+        "current_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/file.rs",
+        "t148_tested_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+        "current_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/kg_blueprint.rs",
+        "t148_tested_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+        "current_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/knowledge_graph.rs",
+        "t148_tested_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+        "current_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/mod.rs",
+        "t148_tested_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+        "current_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/note.rs",
+        "t148_tested_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+        "current_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/pagination.rs",
+        "t148_tested_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+        "current_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/project.rs",
+        "t148_tested_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+        "current_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/project_alert.rs",
+        "t148_tested_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+        "current_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/rag.rs",
+        "t148_tested_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+        "current_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/search.rs",
+        "t148_tested_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+        "current_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/user.rs",
+        "t148_tested_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+        "current_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+        "matches": true
+      },
+      {
+        "path": "backend/src/models/validation.rs",
+        "t148_tested_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+        "current_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+        "matches": true
+      },
+      {
+        "path": "backend/src/ocr.rs",
+        "t148_tested_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+        "current_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+        "matches": true
+      },
+      {
+        "path": "backend/src/permissions.rs",
+        "t148_tested_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+        "current_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+        "matches": true
+      },
+      {
+        "path": "backend/src/project_alert.rs",
+        "t148_tested_sha256": "c266e3d62fe9e8a20ea8dfd3c20ead7819d514a86dffb0e4d6911cc1a98eb2e8",
+        "current_sha256": "c266e3d62fe9e8a20ea8dfd3c20ead7819d514a86dffb0e4d6911cc1a98eb2e8",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/bm25.rs",
+        "t148_tested_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+        "current_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/chunk.rs",
+        "t148_tested_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+        "current_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/citations.rs",
+        "t148_tested_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+        "current_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/graph.rs",
+        "t148_tested_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+        "current_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/index.rs",
+        "t148_tested_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "current_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/mod.rs",
+        "t148_tested_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+        "current_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/retrieval.rs",
+        "t148_tested_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+        "current_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+        "matches": true
+      },
+      {
+        "path": "backend/src/rag/snapshot.rs",
+        "t148_tested_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+        "current_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+        "matches": true
+      },
+      {
+        "path": "backend/src/security.rs",
+        "t148_tested_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+        "current_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+        "matches": true
+      },
+      {
+        "path": "backend/src/state.rs",
+        "t148_tested_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+        "current_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+        "matches": true
+      },
+      {
+        "path": "docker-compose.test-db.yml",
+        "t148_tested_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "current_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "matches": true
+      },
+      {
+        "path": "scripts/ops/docker-compose-with-revision.sh",
+        "t148_tested_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "current_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "matches": true
+      },
+      {
+        "path": "scripts/ops/run-rust-db-tests.sh",
+        "t148_tested_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "current_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "matches": true
+      }
+    ],
+    "no_new_tests_run": true,
+    "historical_test_log_sha256": "60655217b46b69d404998fffe7070db579901aacb3ad1acaf3da27c5d9e1d8ef",
+    "historical_qa_json_sha256": "492329a83776bb80a9a329bde76ca8cacbaf47b6c3472b7d759b000b4df8917d"
+  },
+  "coverage_rows": [
+    {
+      "id": "S01",
+      "report_section": "5.3",
+      "check": "威胁模型与攻击者能力",
+      "evidence_level": "资料缺口",
+      "sources": [],
+      "existing_passing_test_log_matches": [],
+      "verified_scope": "已检索现有安全/运维文档及相关测试。",
+      "not_established": "未找到完整资产、信任边界、攻击者能力和威胁假设的专项模型；当前材料不能证明系统性威胁覆盖。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S02",
+      "report_section": "5.3",
+      "check": "跨项目IDOR",
+      "evidence_level": "实现+绑定历史数据库测试",
+      "sources": [
+        "backend/src/api/search.rs",
+        "backend/src/api/agent_suggestion.rs",
+        "backend/src/api/kg_blueprint.rs",
+        "backend/src/api/agent_runtime.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 172,
+          "text": "test api::search::tests::test_search_reindex_and_project_boundary ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 34,
+          "text": "test api::agent_suggestion::tests::test_suggestion_requires_project_access ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 63,
+          "text": "test api::kg_blueprint::tests::test_blueprint_idempotent_and_permission_boundaries ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 24,
+          "text": "test api::agent_runtime::tests::t139_confirmation_registration_and_execution_reject_cross_project_note ... ok"
+        }
+      ],
+      "verified_scope": "指定检索、建议、蓝图及待确认笔记路线的项目权限/对象边界已有通过记录。",
+      "not_established": "尚无全部资源类型×角色×端点IDOR矩阵，不外推为系统全部对象已覆盖。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S03",
+      "report_section": "5.3",
+      "check": "Token重放",
+      "evidence_level": "实现+绑定历史测试",
+      "sources": [
+        "backend/src/security.rs",
+        "backend/src/api/auth.rs",
+        "backend/src/api/users.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 57,
+          "text": "test api::auth::tests::test_login_me_logout_revokes_presented_token ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 188,
+          "text": "test api::users::tests::test_update_user_role_change_permanently_revokes_existing_token ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 191,
+          "text": "test api::users::tests::test_update_user_status_change_permanently_revokes_existing_token ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 298,
+          "text": "test security::tests::test_access_token_rejects_expired_token ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 297,
+          "text": "test security::tests::test_access_token_rejects_algorithm_confusion ... ok"
+        }
+      ],
+      "verified_scope": "注销、角色/状态变更使已有Token失效，过期/算法混淆拒绝已测。",
+      "not_established": "没有证明仍有效的被窃Token跨设备重放检测或专门的重放攻击套件。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S04",
+      "report_section": "5.3",
+      "check": "并发确认与幂等",
+      "evidence_level": "实现+绑定历史测试",
+      "sources": [
+        "backend/src/api/agent_runtime.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 19,
+          "text": "test api::agent_runtime::tests::confirmed_action_executes_once_and_same_key_replays_cached_result ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 20,
+          "text": "test api::agent_runtime::tests::expired_or_consumed_pending_actions_cannot_be_confirmed ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 26,
+          "text": "test api::agent_runtime::tests::t139_pending_key_binds_parameters_and_preserves_expiry ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 21,
+          "text": "test api::agent_runtime::tests::high_risk_tool_waits_for_confirmation_and_rejection_blocks_execution ... ok"
+        }
+      ],
+      "verified_scope": "参数绑定、同key复用已缓存结果、过期/已消费拒绝、高风险操作等待确认；事务内锁待确认行。",
+      "not_established": "这些既有测试不构成全部并发确认竞态专项证明；外部AI或嵌入调用不在数据库原子回滚边界内。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S05",
+      "report_section": "5.3",
+      "check": "TOCTOU",
+      "evidence_level": "实现+绑定历史数据库测试",
+      "sources": [
+        "backend/src/api/projects.rs",
+        "backend/src/api/ocr.rs",
+        "backend/src/api/agent_runtime.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 127,
+          "text": "test api::projects::tests::test_update_project_rechecks_reviewer_roles_after_user_lock_wait ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 126,
+          "text": "test api::projects::tests::test_update_project_rechecks_manager_after_lock_wait ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 125,
+          "text": "test api::projects::tests::test_update_project_rechecks_disabled_actor_after_project_lock_wait ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 124,
+          "text": "test api::projects::tests::test_update_project_rechecks_current_super_admin_role_after_project_lock_wait ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 120,
+          "text": "test api::projects::tests::test_project_membership_lock_serializes_mutations ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 104,
+          "text": "test api::ocr::tests::test_confirm_serializes_with_a_new_extraction_for_the_same_file ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 27,
+          "text": "test api::agent_runtime::tests::t139_submit_requires_current_write_permission_and_active_project ... ok"
+        }
+      ],
+      "verified_scope": "锁等待后重读身份/权限、项目成员变更串行化、同文件OCR新提取与确认串行化，以及确认执行时当前写权限已覆盖。",
+      "not_established": "限定这些已测路径；尚无全部业务写入口统一TOCTOU攻击矩阵。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S06",
+      "report_section": "5.3",
+      "check": "恶意上传",
+      "evidence_level": "静态实现+基础上传流程测试",
+      "sources": [
+        "backend/src/api/files.rs",
+        "backend/src/ocr.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 60,
+          "text": "test api::files::tests::test_file_upload_review_download_and_archive ... ok"
+        }
+      ],
+      "verified_scope": "上传大小限额、服务端UUID文件名和受限扩展名；基础上传审核下载归档流程有通过记录。",
+      "not_established": "未找到恶意文件样本集、杀毒、压缩炸弹或全格式解析攻击测试。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S07",
+      "report_section": "5.3",
+      "check": "OCR/PDF解析器安全",
+      "evidence_level": "静态实现+限定功能测试",
+      "sources": [
+        "backend/src/ocr.rs",
+        "backend/src/api/ocr.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 246,
+          "text": "test ocr::tests::test_text_limit_reports_truncation ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 105,
+          "text": "test api::ocr::tests::test_ocr_extraction_requires_write_permission ... ok"
+        }
+      ],
+      "verified_scope": "pdftotext/tesseract直接参数启动，无shell拼接；120秒超时及kill-on-drop，提取文本截断；OCR写权限已有通过记录。",
+      "not_established": "不证明解析器漏洞抵抗；未见模糊测试、恶意PDF语料、解析器隔离/CVE版本核验的专项材料。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S08",
+      "report_section": "5.3",
+      "check": "提示注入",
+      "evidence_level": "提示模板单元测试",
+      "sources": [
+        "backend/src/api/rag/mod.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 163,
+          "text": "test api::rag::tests::test_rag_prompt_marks_project_context_as_untrusted_evidence ... ok"
+        }
+      ],
+      "verified_scope": "提示模板将项目内容标为不可信证据，模板断言通过。",
+      "not_established": "模板断言不证明真实模型抵抗间接提示注入；未见对抗请求集及真实响应攻击效果评测。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S09",
+      "report_section": "5.3",
+      "check": "RAG越权数据外泄",
+      "evidence_level": "项目边界+敏感外发策略测试",
+      "sources": [
+        "backend/src/api/rag/mod.rs",
+        "backend/src/permissions.rs",
+        "backend/src/config.rs",
+        "backend/src/api/kg_blueprint.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 172,
+          "text": "test api::search::tests::test_search_reindex_and_project_boundary ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 170,
+          "text": "test api::rag::tests::test_sensitive_project_blocks_external_rag_and_agent_calls_by_default ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 248,
+          "text": "test permissions::tests::test_sensitive_project_requires_explicit_external_ai_opt_in ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 204,
+          "text": "test config::tests::test_sensitive_external_ai_is_disabled_by_default_and_explicitly_configurable ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 71,
+          "text": "test api::kg_blueprint::tests::test_t148_blueprint_sensitive_external_policy ... ok"
+        }
+      ],
+      "verified_scope": "项目过滤及敏感项目默认禁止外部AI策略；指定敏感调用403和外部mock零调用已有通过记录。",
+      "not_established": "没有攻击驱动DLP、敏感字段识别准确性、已授权项目内容最小化或所有外发链路穷尽证明。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S10",
+      "report_section": "5.3",
+      "check": "审计防篡改",
+      "evidence_level": "审计写入/访问实现+测试",
+      "sources": [
+        "backend/src/audit.rs",
+        "backend/src/api/audit.rs",
+        "backend/src/api/kg_blueprint.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 54,
+          "text": "test api::audit::tests::test_project_audit_logs_require_manager_and_hide_blind_reviewers ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 66,
+          "text": "test api::kg_blueprint::tests::test_t148_blueprint_audit_can_recover_full_and_sent_input ... ok"
+        }
+      ],
+      "verified_scope": "操作审计持久化、访问权限，以及蓝图完整输入/实发输入追溯已有通过记录。",
+      "not_established": "参数化写入和访问权限不等于防篡改；未见WORM、哈希链或数据库管理员篡改检测证据。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S11",
+      "report_section": "5.3",
+      "check": "密钥管理",
+      "evidence_level": "配置保护单元测试",
+      "sources": [
+        "backend/src/config.rs",
+        ".env.example"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 206,
+          "text": "test config::tests::test_settings_rejects_unsafe_production_defaults ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 31,
+          "text": "test api::agent_runtime::tests::trace_redaction_removes_secrets_and_limits_untrusted_text ... ok"
+        }
+      ],
+      "verified_scope": "不安全生产默认配置拒绝与运行轨迹秘密脱敏已有通过记录。",
+      "not_established": "未见生产KMS/密钥轮换、撤销、授权审计或跨环境密钥治理实施记录。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S12",
+      "report_section": "5.3",
+      "check": "备份与恢复",
+      "evidence_level": "既有历史演练+脚本守卫源码",
+      "sources": [
+        "docs/operations/backup-restore.md",
+        "docs/system-evidence/restore-drill-latest.json",
+        "scripts/ops/test_backup_restore_guards.py"
+      ],
+      "existing_passing_test_log_matches": [],
+      "verified_scope": "2026-08-09隔离恢复材料记录27张表、39个文件；脚本守卫源码含显式替换确认、dump篡改、路径穿越/链接拒绝。T148脚本总集613通过日志未逐项列名，不能把逐项源码断言表述为本次新通过。",
+      "not_established": "历史unversioned备份不代表当前Rust43表灾备复验；未见当前异地副本、加密实施、实测生产RPO/RTO及整机故障恢复证据。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S13",
+      "report_section": "5.3",
+      "check": "删除与保留策略",
+      "evidence_level": "文档计划/归档语义",
+      "sources": [
+        "docs/operations/backup-restore.md",
+        "backend/src/api/files.rs",
+        "backend/src/api/notes.rs"
+      ],
+      "existing_passing_test_log_matches": [],
+      "verified_scope": "运维文档定义备份7日/4周/6月保留计划，业务有归档状态。",
+      "not_established": "归档不等于物理删除；备份保留计划不证明执行。未见完整业务数据保留、物理删除、备份擦除及责任流程。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S14",
+      "report_section": "5.3",
+      "check": "依赖漏洞扫描",
+      "evidence_level": "既有npm结果+CI指令",
+      "sources": [
+        "docs/system-evidence/npm-audit-latest.json",
+        ".github/workflows/ci.yml"
+      ],
+      "existing_passing_test_log_matches": [],
+      "verified_scope": "存有npm零漏洞结果；CI规定npm audit --omit=dev --audit-level=low。",
+      "not_established": "该结果没有时间/lock绑定，不能当当前依赖无漏洞证明；未见Rust依赖、镜像/系统组件全面扫描结果。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S15",
+      "report_section": "5.3",
+      "check": "部署基线",
+      "evidence_level": "既有静态门禁+配置测试",
+      "sources": [
+        "docs/system-evidence/reverse-proxy-latest.json",
+        "deploy/nginx.conf.template",
+        "backend/src/config.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 206,
+          "text": "test config::tests::test_settings_rejects_unsafe_production_defaults ... ok"
+        }
+      ],
+      "verified_scope": "2026-07-28静态反代门禁记录TLS1.2/1.3、HTTP跳转、HSTS、请求标识及body限额；生产配置拒绝测试通过。",
+      "not_established": "静态模板通过不证明真实公网部署TLS、安全头、端口隔离、补丁和主机加固已实施。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S16",
+      "report_section": "5.3",
+      "check": "外部模型失败",
+      "evidence_level": "模拟上游超时+回滚测试",
+      "sources": [
+        "backend/src/embedding.rs",
+        "backend/src/api/rag/mod.rs",
+        "backend/src/ai_provider.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 225,
+          "text": "test embedding::tests::t148_remote_timeout_bounds_missing_headers_and_stalled_body ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 148,
+          "text": "test api::rag::tests::t148_rebuild_total_budget_rolls_back_and_releases_locks ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 68,
+          "text": "test api::kg_blueprint::tests::test_t148_blueprint_invalid_model_output_keeps_response_identity_on_fallback ... ok"
+        }
+      ],
+      "verified_scope": "缺header/停滞body远端嵌入超时、rebuild总预算回滚与锁释放、蓝图不合格输出降级保留响应身份已有通过记录。",
+      "not_established": "不证明所有真实模型故障/长时弱网恢复或所有AI任务端到端总时限；本次未重跑外部接口。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S17",
+      "report_section": "5.3",
+      "check": "重复计费",
+      "evidence_level": "数据库幂等+范围边界",
+      "sources": [
+        "backend/src/api/agent_runtime.rs",
+        "backend/src/ai_provider.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 19,
+          "text": "test api::agent_runtime::tests::confirmed_action_executes_once_and_same_key_replays_cached_result ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 23,
+          "text": "test api::agent_runtime::tests::t139_all_confirmed_domain_writes_roll_back_on_key_failure ... ok"
+        }
+      ],
+      "verified_scope": "数据库域写入幂等/事务失败回滚已测。",
+      "not_established": "数据库幂等不等于外部供应商计费幂等；事务重试可重复外部调用，未见供应商请求幂等或计费对账专项证明。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    },
+    {
+      "id": "S18",
+      "report_section": "5.3",
+      "check": "敏感数据外发与跨境",
+      "evidence_level": "敏感项目默认封锁+待人工政策",
+      "sources": [
+        "backend/src/permissions.rs",
+        "backend/src/config.rs",
+        "backend/src/api/rag/mod.rs",
+        "backend/src/api/kg_blueprint.rs"
+      ],
+      "existing_passing_test_log_matches": [
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 170,
+          "text": "test api::rag::tests::test_sensitive_project_blocks_external_rag_and_agent_calls_by_default ... ok"
+        },
+        {
+          "log": "docs/project-optimization-T148-2026-10-12/qa/rust-test.log",
+          "line": 71,
+          "text": "test api::kg_blueprint::tests::test_t148_blueprint_sensitive_external_policy ... ok"
+        }
+      ],
+      "verified_scope": "敏感项目默认不向外部模型发送；授权策略有实现及通过记录。",
+      "not_established": "没有证明数据地域、供应商保留/训练条款、跨境合规与知情授权；需实际机构政策和责任人审查。",
+      "closure_status": "部分覆盖；待专项补验证据",
+      "absence_is_not_a_vulnerability": true
+    }
+  ],
+  "conclusion": "指定安全控制已在绑定源码的T148测试中验证；导师5.3清单仍含专项证据缺口，不能宣称完成系统安全认证或全部威胁覆盖。"
+}

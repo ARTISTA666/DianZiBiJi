@@ -1,0 +1,77 @@
+{
+  "task": "T146",
+  "reviewer": "qa-engineer independent read-only",
+  "utc": "2026-10-11T16:10:10.229922+00:00",
+  "word_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+  "pdf_sha256": "945b5d41ed367fe5d3006b7ab47e4c97aa2e9e390f1af9d9917ce5e93aa27415",
+  "changed_pages": [
+    4,
+    5,
+    38
+  ],
+  "pages": [
+    {
+      "physical_page": 4,
+      "printed_page": "I",
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/native-render/page-004.png",
+      "png_sha256": "ba5c861e29ed4556af7ac635e6b5a6d05851540834045b5a0e4641ee381906b1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "actual_original_size_view": true,
+      "method": "tools.view_image detail=original; final 4,5,38 and old38 were actually viewed in this QA turn",
+      "checks": [
+        "中文五段摘要完整，关键词与摘要同在物理4页。",
+        "证据数值及自然正文/结构化字段/合成回归边界可读；p=0.0938未达0.05、中文需另评及独立图结构增益未确证等限制完整。",
+        "无溢页、丢字、裁切、重叠或批注高亮。"
+      ],
+      "result": "PASS",
+      "findings": []
+    },
+    {
+      "physical_page": 5,
+      "printed_page": "II",
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/native-render/page-005.png",
+      "png_sha256": "c1efe022fcf5a260cbfdf1c1299fcd6aafdbe8796c6d196437258505ef7c4b59",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "actual_original_size_view": true,
+      "method": "tools.view_image detail=original; final 4,5,38 and old38 were actually viewed in this QA turn",
+      "checks": [
+        "英文五段摘要及两行关键词完整在物理5页，未溢至6页。",
+        "方法在工程贡献前，与中文次序一致；approved状态、高风险确认及幂等约束可读。",
+        "统计值与不确定性限制完整，正文及关键词没有重叠或裁切。"
+      ],
+      "result": "PASS",
+      "findings": []
+    },
+    {
+      "physical_page": 38,
+      "printed_page": "31",
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/native-render/page-038.png",
+      "png_sha256": "9f4ac138253822fa158b506cea4051c33517fe06a4451875e99898c45ed3193e",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "actual_original_size_view": true,
+      "method": "tools.view_image detail=original; final 4,5,38 and old38 were actually viewed in this QA turn",
+      "checks": [
+        "实际原尺寸实看新38及旧38，正文、符号和4.9小结清楚完整。",
+        "微小字形与位置差异单独核证，不含图片；没有换行变化、丢字、重叠或裁切。"
+      ],
+      "result": "PASS",
+      "findings": []
+    }
+  ],
+  "page38_diagnostic": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/qa/native-final-0b38-945b-page38-glyph-difference-review.json",
+    "sha256": "7bde59cfc2de652b344673a3a6f7157d4cb2757e43f987439619e0ee1042344c"
+  },
+  "result": "PASS",
+  "findings": [],
+  "limits": "仅这三页本轮重新实视；另外97页在单独逐SHA承接报告中核验，不假称本轮重新查看。"
+}

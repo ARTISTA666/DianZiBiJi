@@ -1,0 +1,708 @@
+{
+  "status": "frozen-evidence",
+  "owner": "Codex root",
+  "task": "T-114",
+  "verified_at_utc": "2026-10-01T10:33:31.072072+00:00",
+  "document": "/Users/yusong/Downloads/new/full-system/docs/毕业论文-补充验证与批注修订稿-T114-2026-10-01.docx",
+  "document_sha256_independently_recomputed": "3be347db706020e1d1d0f2caee54768d7da8ae602a08489d825dddbbc03954cd",
+  "page_count": 82,
+  "all_pages_actually_viewed_at_original_resolution": true,
+  "unique_page_coverage": 82,
+  "clipping_or_overlap_or_missing_glyph_blockers": 0,
+  "nonblocking_advisories": [
+    {
+      "physical_page": 27,
+      "description": "引导段后留白；保持完整流程图、图题与原论述顺序。"
+    }
+  ],
+  "root_acceptance": "accepted_with_one_nonblocking_layout_advisory",
+  "author_and_supervisor_acceptance": "pending",
+  "reports": [
+    {
+      "file": "visual-qa-delivery-01.json",
+      "sha256": "aa15a34eb3cfcb13c2ae78ce1f8302b302fc402fde771a528a7d0c1142253d10",
+      "inspected_pages": 28,
+      "range": [
+        1,
+        28
+      ]
+    },
+    {
+      "file": "visual-qa-delivery-02.json",
+      "sha256": "60ccb2c5865f083dd019f6f326385f1a702a515ae4b2e66ac71295865d8cc570",
+      "inspected_pages": 28,
+      "range": [
+        29,
+        56
+      ]
+    },
+    {
+      "file": "visual-qa-delivery-03.json",
+      "sha256": "ce88311d01fcf28d7ba2a985fd8af353aac06fdb08816d10f431429988c0d60b",
+      "inspected_pages": 26,
+      "range": [
+        57,
+        82
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "physical_page": 1,
+      "sha256": "594eed330cd021f44fba0a14cae93891eab2fe50c82b3c5fe3e76755c98fbdde",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 2,
+      "sha256": "0a72a090ac78a924d47a95dff897bec8e2f541c91ac01eb0308889db13e33ed3",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 3,
+      "sha256": "6b2b1ff10edf0df629fee2a7dce7d0324149a5bcaa126d7e188bbf4460aee556",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 4,
+      "sha256": "45706b21a175d6304e71ad509946984167582be1359ac98710f91a982449eec4",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 5,
+      "sha256": "15b2f903ae96ff9d831d793e693cd088e4d59b9456a259de6715ca2fd9c6bba9",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 6,
+      "sha256": "7e177afe23d0a8f6d6f8330736e1a01275cdb9538af8c5613d0eb663ed859b0e",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 7,
+      "sha256": "0a98a7eacca3c219cbaae2e24eebdb358281c550a2832fc8a39fa37924dd1fcd",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 8,
+      "sha256": "50a102ed3352a5357ae172b483f2cebf8e1b66a72834789e5fdf9886daa34c71",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 9,
+      "sha256": "0bfe66884ac54904ad9333ad4db2bbf0603f193b1312b02b30bfa59b6a98985c",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 10,
+      "sha256": "fbf90a222fefeed83f62e115c862483378d9c3c3dc0834ec8c2b6b1ea49770a9",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 11,
+      "sha256": "9fd0a4f971d6c6eaa2854e5a1a63c9e6893f55c8f5ae53065a90edce89c65706",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 12,
+      "sha256": "a7850c7fca6e1c6158d348f91df40a57830c2ce27a17efc538e5aa51e65b79aa",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 13,
+      "sha256": "0068159339c03e9fc574cc1718749f5b07396ea9519d828c8c1cc4e5f0121520",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 14,
+      "sha256": "065c3ad8053321afeeca35e42c318c2472e87c1cc2828926fb7e64059980b782",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 15,
+      "sha256": "05a37584fcf29e606a85240cd5ce7b28488a91c2d36a58ede0d13c01f6f0bd90",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 16,
+      "sha256": "e026759863fd2fb433e78adde0acb93ed9168bc1b5efd5e7c8172f23acf72c02",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 17,
+      "sha256": "4060fb075e5d3e6952d6fb2d8c075565788c382b69f3d1f4c7b38d5d3dcd54e1",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 18,
+      "sha256": "2f9e76d62982750817257f18fe20028f8186aa38bb087af6cfc91cad3da99bcb",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 19,
+      "sha256": "a4e3c430777c6fd6771f0c128e2d5e3dab2b509fa115ba1a99ecbd24ef3bb116",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 20,
+      "sha256": "ca339d031a6d19aedcc8615f78f8e3908ad6483defa9d41dbe32e51511f44361",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 21,
+      "sha256": "0c33777131e1c307909582b66c5f8066d68789ce45adc26078c5895cbe8f0883",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 22,
+      "sha256": "b2fb56d39869ff9fdc79a25eb24f35ec0cfd51cd8a3f2598ee88e3550c37714a",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 23,
+      "sha256": "b2132cd782c9632060907583d373939941c7b958470f8644e71be7fdc9d384d8",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 24,
+      "sha256": "7eed2bd7064d95cfbb105e44a9475c334b85b1d82112521a34397a8fedf1596c",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 25,
+      "sha256": "46de0f55d835bb6b5a6148db6c6b70309af2ddc1d2190079adeced678de65eeb",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 26,
+      "sha256": "a2ac08014ebab81dff98921441741e5300475dad13a63a07c26e378821f272e2",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 27,
+      "sha256": "cfc9636b5a906d0e14d16d9cf922a8343a8056ccdf741e47cba7f8a9f4aadcb2",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "advisory",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 28,
+      "sha256": "9a81358be69c46b6b6b8cc6f47bfa6f594cdf4fb3eb5c9bc1a9257c1f9ed7c2a",
+      "source_report": "visual-qa-delivery-01.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 29,
+      "sha256": "3bf34b7366e9cb0c7816ab5b5fd5d189e212d3259ebc052aa9262d5e1cd7c7cc",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 30,
+      "sha256": "0937ae8f8d1c504a154aaef2102ff81987dc293ce9d0155d4d629c422d51c145",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 31,
+      "sha256": "91d2fd8cb396411293ff81ccd49480504df80082fc6b15f192920cfb244a11be",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 32,
+      "sha256": "5422902908319697d83f9bb62d00a13da4fee02ef1db6fb97f8cc7cec2d35cfa",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 33,
+      "sha256": "f2233d6ba91fd61c6511c440f1f03e01736ae801efbddd6c8fc74a87e8aa2a54",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 34,
+      "sha256": "73774363b51521b40ebcbec80fb8c968937394391319daef85682f2849155ec8",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 35,
+      "sha256": "5fcb222f5a9ea3d98c464ae7867a9ae762d30a8516ba063abab2baf029eeb1a7",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 36,
+      "sha256": "2e5e327002a7ed98204a03f75b5091e4d507ceb483f7a9d17c95d8a48675e73d",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 37,
+      "sha256": "cd5bf6caf1f75aa79e66fed0f2299b2e4a1bc8fe84a943bd725e14c5a64916db",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 38,
+      "sha256": "9d191b448cce786d3412d4b98524e013413959e05a7b8ba5c0f946d911b46f08",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 39,
+      "sha256": "7444728ba6c11e1a479d91292ea86854c2829008c0f79da542eca91689e67b19",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 40,
+      "sha256": "0fcb3b885137ca8941acc8bf7e56b2595ee197f1b5214e023946dd2eed4f429a",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 41,
+      "sha256": "ce19325c7f96d9bbbd982754f0bc6dfb1432724e09df9a2319f91b19830069a6",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 42,
+      "sha256": "71f32ad23ea7f591e5c19e15c672cd52d56dd6af02405153b85c57663a37759c",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 43,
+      "sha256": "9b7491029d4a7e298c189b96b5c5ebd548308c47b1a1090d340e428b27035eb4",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 44,
+      "sha256": "74c9a2ddbc83eb8c93e3b6385a74899d956c91618aac1d7e7354fc114c907ada",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 45,
+      "sha256": "bf82ebbb83fec4666352655f7d92ee7f445e46723aef648708eb8a447a281e32",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 46,
+      "sha256": "b86ef2d45dfcee05c1f5f8c6903f16186970524c42c7a43b267dd2d91754ca12",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 47,
+      "sha256": "901b2262fe7545d068862e6fac5da937970ae264741840815007ba6a9ecf15c4",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 48,
+      "sha256": "28cc414951fc904dcf6271a7f2f52834358db9e442dbd4a42a69d6dfa44a2254",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 49,
+      "sha256": "e90db9ec137226d8a68b81fd085aa3d52b3533652febd20a9ec445a8ace027d5",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 50,
+      "sha256": "d4de81b40388f590ef37d6f6b29a6cfc2efb97946a04bb322e803ed41d1cebc8",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 51,
+      "sha256": "598a966dab989a828c12368da4fa3cd02e35a3253f0568682aff1b88975908c6",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 52,
+      "sha256": "e066efee3d8287b1fe9bce6e31c1371b1355042d69b5c5c50bb855c37f5200a2",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 53,
+      "sha256": "f5a9524c214db77488786bf2942664cfbf4ff7759211f9f1987cbd6666164672",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 54,
+      "sha256": "dc081b133d982803e1060f9e3735bb2caa4a9f9b433647878f43ce42a2598371",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 55,
+      "sha256": "7861d4d5eec0f19f0ea3baebbea13af1cd5c264c309b8591e0bcadbc314e0a01",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 56,
+      "sha256": "af6a21ad63b66d873523985ab97b5400e78ca0f086e5328ebac40837b60d063a",
+      "source_report": "visual-qa-delivery-02.json",
+      "status": "passed",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 57,
+      "sha256": "23db28bb59dc7378606803891d708f4c00274c1c60ae89a5d99f3457914839cf",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 58,
+      "sha256": "2bf27280c29020ab473678db5bf972d2a4f66de332182067b744625ed4f31f2d",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 59,
+      "sha256": "36911e35f99b861fc02155236e472daa35d76665c8838f34626d58e8ed39beb7",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 60,
+      "sha256": "483b0949b4f02f839f760e8755383f4095c79050693a4a38475d01db31c190cd",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 61,
+      "sha256": "1ba98502e6b6c4b469fe708ff47f112c093a309707f349d4ccc96ed56e1c9d97",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 62,
+      "sha256": "35782e7c8b3170043697f82522f0a6623d2d9f07c16e6bbfe4241207cef5b7b4",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 63,
+      "sha256": "1decc65220b4f01f40bfd8937dc56cdf56840b82035848f039cb83ebf2a0460f",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 64,
+      "sha256": "28e7709840264b15931a450a2d0781d33b4a8c0373fc4402c40e4e44f022e522",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 65,
+      "sha256": "6d2cedcac71d50827eca9230ee287bc29fb91ee6dfef11d3b51cbc77631b2564",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 66,
+      "sha256": "2e51defef7236d1d65d2660bfd2e603111c791b87eab1f5d62a057e1598c6416",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 67,
+      "sha256": "86e9bbfa51b2fbfdf93e1c8341d78525686fd67fd985447d12d28685d85fb061",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 68,
+      "sha256": "a617f616c4c89ab7227c4f46cd51411d750f0a9ca7a7bb1bdfed998ed35445ef",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 69,
+      "sha256": "eebee183fa458850e9b7ed4c242edfcaaf25e489524fbea7c7b203a9729ddb77",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 70,
+      "sha256": "c133ae1cd2dc530c7b6f55de1fafbb91d70a1ffd4b5819340693733c6a7c1e89",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 71,
+      "sha256": "5d160f83c896724264e72ddae2ebc74f71b77662fe2773db93ae1567325196e7",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 72,
+      "sha256": "68d3a5f08e490540aa45003135e3bc106f08d05c48573d6ff6d58abff2d1a17d",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 73,
+      "sha256": "d40167eefc28ecd39cedffa578e0f3ac152797994c05732dc83650fd02f40c0b",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 74,
+      "sha256": "54431fb9ccf7ef9d0dc6e1beab02a0808ead24493f324a1329a15d4ab7c49950",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 75,
+      "sha256": "2ddfa8df48461fc6b88ea69b12227714f7b47bd028f19a354a940ad18c485712",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 76,
+      "sha256": "b0699fa38e09b59ca04ce546380acc6f688391956dbbe3de91deb033f6ff523d",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 77,
+      "sha256": "b6fb1127ec8ccc63e2263ac821b221a962a053e5f14077b966b92a843b543a9c",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 78,
+      "sha256": "ec7e50e01bf33c4fcefa14b84f118e7d7e53943378fba5103d673fc7bfc5da07",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 79,
+      "sha256": "61c31072eedf78a2a5e1011469dcdbae2a7b1aacdcc73661e331cdc62fa6b494",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 80,
+      "sha256": "3482d53ed5d30897d7c5e6cacf20bcb1f768f37444013a683fe4985a27b52302",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 81,
+      "sha256": "f9123514d994650f9f5b74d7e5e46ac305bb6bb34109090713ba0792e48556ba",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    },
+    {
+      "physical_page": 82,
+      "sha256": "e1c85f76ee1d96527bf4e3f1a5d94f60c9d27ca9627c2a3b3208a1534050671c",
+      "source_report": "visual-qa-delivery-03.json",
+      "status": "pass",
+      "actually_viewed": true,
+      "inspection_detail": "original"
+    }
+  ],
+  "render_pdf_and_pngs_are_internal_local_only": true
+}

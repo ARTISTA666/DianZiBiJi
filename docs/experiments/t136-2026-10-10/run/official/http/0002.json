@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-10T15:52:28.411892+00:00",
+  "path": "/auth/login",
+  "method": "POST",
+  "request": {
+    "username": "t136-admin",
+    "password": "REDACTED"
+  },
+  "status": 200,
+  "response": {
+    "authenticated": true
+  }
+}

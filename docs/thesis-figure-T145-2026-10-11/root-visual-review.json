@@ -1,0 +1,34 @@
+{
+  "task": "T145",
+  "identity": {
+    "task": "T145",
+    "utc": "2026-10-11T15:28:29.681499+00:00",
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/1005-图6-5说明删除版-2026-10-11.docx",
+    "word_sha256": "b9336e8dfef93921f2ff4fc4291c4465c91facaa23b5040c6cc74005959438bf",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/native-wps/1005-图6-5说明删除版-2026-10-11.pdf",
+    "pdf_sha256": "e12ca56e79e001488e12a6b46225ab384c47c7e12bda526908e6a3b859cb3482",
+    "pages": 100,
+    "all_A4": true,
+    "method": "WPS native CUA export, candidate only, comments unchecked, high image quality, local directory",
+    "completion_ui": "成功输出 1 个 PDF 文档",
+    "purpose": "Internal layout validation only; user delivery Word only"
+  },
+  "physical_page": 63,
+  "printed_page": 56,
+  "png": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/native-render/page-063.png",
+  "png_sha256": "9dab6b67d77fb6e36e3d8ba233a01a69c1593433cf661faa39cbf01ab7a94e80",
+  "dimensions": [
+    1415,
+    2000
+  ],
+  "tool": "view_image detail original",
+  "checks": {
+    "two_bottom_note_lines_absent": true,
+    "chart_title_subtitle_all_four_method_labels_axes_and_numeric_values_complete": true,
+    "chart_not_stretched": true,
+    "figure6_5_caption_same_page": true,
+    "above_table6_8_and_prose_complete_no_overlap": true,
+    "no_crop_of_axis_label": true
+  },
+  "result": "PASS"
+}

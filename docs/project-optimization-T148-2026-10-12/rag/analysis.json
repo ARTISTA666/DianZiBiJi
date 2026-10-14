@@ -1,0 +1,199 @@
+{
+  "analyzed_at": "2026-10-12T14:02:15.865794+00:00",
+  "planned_cases": 48,
+  "persisted_cases": 48,
+  "successful_cases": 48,
+  "failed_cases": 0,
+  "not_run_cases": [],
+  "unit": "question",
+  "comparisons": {
+    "same_facts_triples_minus_same_facts_text": {
+      "paired_question_ids": [
+        "T114-Q01",
+        "T114-Q02",
+        "T114-Q03",
+        "T114-Q04",
+        "T114-Q05",
+        "T114-Q06",
+        "T114-Q07",
+        "T114-Q08",
+        "T114-Q09",
+        "T114-Q10",
+        "T114-Q11",
+        "T114-Q12"
+      ],
+      "n_questions": 12,
+      "mean_difference": -0.08333333333333333,
+      "bootstrap_ci95": [
+        -0.25,
+        0.0
+      ],
+      "sign_flip_p": 1.0
+    },
+    "budget_query_ranked_minus_budget_ordered": {
+      "paired_question_ids": [
+        "T114-Q01",
+        "T114-Q02",
+        "T114-Q03",
+        "T114-Q04",
+        "T114-Q05",
+        "T114-Q06",
+        "T114-Q07",
+        "T114-Q08",
+        "T114-Q09",
+        "T114-Q10",
+        "T114-Q11",
+        "T114-Q12"
+      ],
+      "n_questions": 12,
+      "mean_difference": -0.06944444444444443,
+      "bootstrap_ci95": [
+        -0.16666666666666666,
+        0.0
+      ],
+      "sign_flip_p": 0.5
+    }
+  },
+  "semantic_primary_outcome_computed": false,
+  "thesis_sync": false,
+  "evidence_level": "retrospective development control using previously frozen public GEO-derived records; no independent held-out claim",
+  "arm_summary": {
+    "same_facts_text": {
+      "mean_lexical_coverage": 0.19444444444444445,
+      "successful_cases": 12,
+      "estimated_content_tokens": [
+        3242,
+        3237,
+        3233,
+        3243,
+        3239,
+        3240,
+        3233,
+        3239,
+        3232,
+        3237,
+        3228,
+        3241
+      ],
+      "provider_prompt_tokens": [
+        3248,
+        3246,
+        3237,
+        3238,
+        3245,
+        3242,
+        3244,
+        3247,
+        3233,
+        3244,
+        3238,
+        3242
+      ]
+    },
+    "same_facts_triples": {
+      "mean_lexical_coverage": 0.1111111111111111,
+      "successful_cases": 12,
+      "estimated_content_tokens": [
+        3110,
+        3105,
+        3101,
+        3111,
+        3107,
+        3108,
+        3101,
+        3107,
+        3100,
+        3105,
+        3096,
+        3109
+      ],
+      "provider_prompt_tokens": [
+        3106,
+        3115,
+        3101,
+        3112,
+        3110,
+        3112,
+        3105,
+        3114,
+        3106,
+        3116,
+        3110,
+        3113
+      ]
+    },
+    "budget_ordered": {
+      "mean_lexical_coverage": 0.18055555555555555,
+      "successful_cases": 12,
+      "estimated_content_tokens": [
+        1535,
+        1533,
+        1529,
+        1536,
+        1535,
+        1536,
+        1529,
+        1535,
+        1528,
+        1533,
+        1524,
+        1534
+      ],
+      "provider_prompt_tokens": [
+        1540,
+        1540,
+        1534,
+        1540,
+        1533,
+        1539,
+        1541,
+        1534,
+        1538,
+        1541,
+        1538,
+        1529
+      ]
+    },
+    "budget_query_ranked": {
+      "mean_lexical_coverage": 0.1111111111111111,
+      "successful_cases": 12,
+      "estimated_content_tokens": [
+        1535,
+        1527,
+        1523,
+        1530,
+        1526,
+        1529,
+        1534,
+        1519,
+        1529,
+        1534,
+        1525,
+        1535
+      ],
+      "provider_prompt_tokens": [
+        1532,
+        1535,
+        1524,
+        1539,
+        1534,
+        1539,
+        1540,
+        1540,
+        1534,
+        1530,
+        1531,
+        1528
+      ]
+    }
+  },
+  "limits": [
+    "Alias coverage does not verify semantic entailment, sample binding or citation correctness",
+    "Budget is offline estimated message content; API counts include framing and may differ",
+    "Equal cap does not imply equal consumed tokens",
+    "Encoding comparison preserves all canonical facts but token lengths differ",
+    "Prior questions and snapshots reused; no independent generalization",
+    "One run does not establish repeatability; repeated cases never increase question n",
+    "No graph topology causal claim and no human evaluation"
+  ]
+}

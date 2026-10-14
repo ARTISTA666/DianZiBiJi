@@ -1,0 +1,55 @@
+{
+  "task": "T146",
+  "reviewer": "root",
+  "word_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+  "pdf_sha256": "945b5d41ed367fe5d3006b7ab47e4c97aa2e9e390f1af9d9917ce5e93aa27415",
+  "changed_pages_actually_viewed": [
+    {
+      "physical_page": 4,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/native-render/page-004.png",
+      "png_sha256": "ba5c861e29ed4556af7ac635e6b5a6d05851540834045b5a0e4641ee381906b1",
+      "status": "PASS",
+      "method": "Actual view_image detail=original full-page inspection",
+      "notes": "摘要与关键词完整留在印刷I页；无溢出、遮挡或缺字。"
+    },
+    {
+      "physical_page": 5,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/native-render/page-005.png",
+      "png_sha256": "c1efe022fcf5a260cbfdf1c1299fcd6aafdbe8796c6d196437258505ef7c4b59",
+      "status": "PASS",
+      "method": "Actual view_image detail=original full-page inspection",
+      "notes": "英文摘要与两行关键词完整留在印刷II页；无溢出、遮挡或缺字。"
+    },
+    {
+      "physical_page": 38,
+      "png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/native-render/page-038.png",
+      "png_sha256": "9f4ac138253822fa158b506cea4051c33517fe06a4451875e99898c45ed3193e",
+      "status": "PASS",
+      "method": "Actual view_image detail=original full-page inspection",
+      "notes": "与T145旧38页分别实视，文字和版面一致；保留原文与公式格式。"
+    }
+  ],
+  "remaining_97_pages": "Exact native PNG SHA inheritance from sealed T145 visual review, independently verified in baseline and comparison",
+  "page38_pixel_diff": {
+    "bbox": [
+      338,
+      393,
+      1080,
+      423
+    ],
+    "changed_pixels": 4162,
+    "of_pixels": 2830000
+  },
+  "mandatory_render_docx": {
+    "output": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/diagnostic-render",
+    "completed": true,
+    "diagnostic_pages": 89,
+    "actually_viewed": [
+      4,
+      5
+    ],
+    "limitation": "Generic renderer omits source Chinese glyphs on page4; native WPS PDF/PNG is the authoritative 100-page visual acceptance. Native page4 separately inspected and complete."
+  },
+  "native_all_100_visual_coverage": "97 identical reviewed pages plus actual original-size inspection of pages4,5,38",
+  "result": "PASS"
+}

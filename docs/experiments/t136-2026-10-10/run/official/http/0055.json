@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:28.974156+00:00",
+  "path": "/notes/13/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 13,
+    "project_id": 2,
+    "template_id": null,
+    "title": "iisc2019-01 Buffer and medium preparation",
+    "experiment_type": "reagent_and_medium_preparation",
+    "experiment_date": "2019-04-09",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 13,
+    "created_at": "2026-10-10T15:52:29.402485Z",
+    "updated_at": "2026-10-10T15:52:29.409198Z"
+  }
+}

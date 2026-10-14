@@ -1,0 +1,675 @@
+{
+  "task": "T142 native no-comments export visual audit; retained table-position failure snapshot",
+  "recorded_utc": "2026-10-11T10:55:35.587784+00:00",
+  "word_sha256": "b45dc34c37785fb2b9f522885c0b5aa51992eb6048684691875a9f714a2fe489",
+  "pdf_sha256": "b3d843ba74f04fee742cca77dc2b7ac2a592aaf57fbc71b8b9c0730db90cd271",
+  "manifest_sha256": "20b9d763c5881e122ed5681c50982e5fc3193543778b6a07e0a731e7dfce55a0",
+  "reviewed_pages": 33,
+  "fresh_original_size_pages": [
+    68,
+    73
+  ],
+  "exact_PNG_inheritance_pages": [
+    69,
+    70,
+    71,
+    72,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100
+  ],
+  "coordinate_report": {
+    "file": "table-rules-native-before-alignment-b3d-coordinate-review.json",
+    "sha256": "8507dd6617b20ac8a5d186fac05822521e06bf65a57ac3a024e91a8005225c67"
+  },
+  "pages": [
+    {
+      "page": 68,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-068.png",
+      "sha256": "87b8cd17eb5a5e5f3ec6e381fd256ddcd2e935a6232eaa9ef75350f27419abb4",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 68,
+      "printed_page": 61,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "fresh original-size view",
+      "inherited_from_report": null,
+      "observation": "表6-12、所有统计解释与[83][84][85]完整；新原尺寸复看确认蓝色批注高亮消失。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 69,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-069.png",
+      "sha256": "9f890e8cd8258b17754264cec9fde77c362690ad014628dafd9998dbafae6daa",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 69,
+      "printed_page": 62,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "表6-13八任务、角色以及12个自然输入说明完整同页。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 70,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-070.png",
+      "sha256": "8f461626102aa489f93bf9d4a1c81ba4fba58f5f4bec55d8be3223a30cf5134c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 70,
+      "printed_page": 63,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "表6-14三条件完整同页，6.7标题和结语完整。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 71,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-071.png",
+      "sha256": "92f581dc9067a446aeef2666892eabce6b4d8c43dda7e3ca3337097a8deb2372",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 71,
+      "printed_page": 64,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "第七章7.1/7.2与7.3开头正常连续，无裁切；7.3续至下一页。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 72,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-072.png",
+      "sha256": "577229890ca44c4e8dab64dda374e4c72c329feca7b28779092b692865deb560",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 72,
+      "printed_page": 65,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "第七章限制与后续方向完整，无重叠。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 73,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-073.png",
+      "sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 73,
+      "printed_page": 66,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "fresh original-size view",
+      "inherited_from_report": null,
+      "observation": "致谢全文完整；新原尺寸复看确认蓝色批注高亮和末尾标记均消失。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 74,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-074.png",
+      "sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 74,
+      "printed_page": 67,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "参考文献1–19完整，书目编号正常基线。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 75,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-075.png",
+      "sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 75,
+      "printed_page": 68,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "参考文献20–41完整，书目编号正常基线。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 76,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-076.png",
+      "sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 76,
+      "printed_page": 69,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "参考文献42–67完整，书目编号正常基线。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 77,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-077.png",
+      "sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 77,
+      "printed_page": 70,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "参考文献68–85完整，书目编号正常基线。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 78,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-078.png",
+      "sha256": "e362baf2bcaee244561f20503842ca7772571fc9cd9c2719e04d2c3b58527bdc",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 78,
+      "printed_page": 71,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "附录A表A-1全部20个Q01–Q20完整，Q05/Q20脚注可读。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 79,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-079.png",
+      "sha256": "18a672ba47cbefcfa0eb9aff9816e00123b0a3ea691545561aa46691e2f57e65",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 79,
+      "printed_page": 72,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "表B-1(a)关系1–12完整同页。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 80,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-080.png",
+      "sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 80,
+      "printed_page": 73,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "表B-1(b)关系13–24与(c)25–38两表完整同页。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 81,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-081.png",
+      "sha256": "d17c0f35902ce6020ebce8ff91092d34bb3c36c67abe10c17f698c9b9fb87cba",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 81,
+      "printed_page": 74,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "表B-1(d)关系39–52及表B-2分类约束符号完整；43表430字段说明完整。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 82,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-082.png",
+      "sha256": "e2b2fcd8841b0487ecf1100cabd61af327c7d4445de81e3f25221fa4b1c49ce7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 82,
+      "printed_page": 75,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "G01–G18公共字段定义、B-3用户和B-4课题组完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 83,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-083.png",
+      "sha256": "563d3e85a63f3a21feae1753cf8b0985f5f06ed3c1ad58fb87eeb03d395e294b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 83,
+      "printed_page": 76,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-5至B-10六表完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 84,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-084.png",
+      "sha256": "44c7ea8bc99f90bab28b007bc522323a8b8796f8def3bc48acdaeb9c1eb814f1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 84,
+      "printed_page": 77,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-11至B-14四表完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 85,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-085.png",
+      "sha256": "8ae4d2f27648659b80fe479a68f2511426769cbc819579df816e146fedfb49a9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 85,
+      "printed_page": 78,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-15至B-17三表完整同页，长默认值在单元格内换行。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 86,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-086.png",
+      "sha256": "7fa00b64f74fd00f5c9808e98a479939fccc055dc22485cfd400a593551cdc93",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 86,
+      "printed_page": 79,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-18至B-20三表完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 87,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-087.png",
+      "sha256": "f7ce765f7f6e1e8cacbcdf6f17709c34e6ec0f5c96f93230558da9e91bfd502b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 87,
+      "printed_page": 80,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-21至B-24四表完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 88,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-088.png",
+      "sha256": "bd4537765d9682b786650d786b98d2ca5f1719c370e1a84aac6160ccc360c671",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 88,
+      "printed_page": 81,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-25至B-27三表完整同页，大问答日志表无缺行。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 89,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-089.png",
+      "sha256": "95f3ec903eb6ae3708084e25f3046af6e41377db83ccd0c80575ffdbc0a54e0c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 89,
+      "printed_page": 82,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-28至B-30三表完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 90,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-090.png",
+      "sha256": "c691e8d42ef4c0261cd6793436e6ff978f55c0ab79fe0638196027de986e0cd4",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 90,
+      "printed_page": 83,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-31至B-34四表完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 91,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-091.png",
+      "sha256": "0bb31e1e34a7485bba24b9ac53e482756d89feee0212126e995f4cdbc35802b1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 91,
+      "printed_page": 84,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-35至B-38四表完整同页，prompt_version默认值换行完整。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 92,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-092.png",
+      "sha256": "48f9b027351f1a5ee5111b3439fe6b64993d9f964d3ffbe14ca22a8e68a98779",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 92,
+      "printed_page": 85,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-39至B-42四表完整同页，CK/UQ约束可读。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 93,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-093.png",
+      "sha256": "37eb4f1dd57563c28f946709a72ad133c40f370c611d52f037f5ac54b99c4c96",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 93,
+      "printed_page": 86,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "B-43至B-45三表完整同页，43业务表与两迁移版本表区分完整。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    },
+    {
+      "page": 94,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-094.png",
+      "sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 94,
+      "printed_page": 87,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "附录C表C-1全部12工具、C-2六模板完整同页。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 95,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-095.png",
+      "sha256": "f425eb0fd17d25c55e5a792861b1f8f04c5045286bfbe08eb51599762f05af84",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 95,
+      "printed_page": 88,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "附录D表D-1/D-2完整同页，[80]引文呈上标。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 96,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-096.png",
+      "sha256": "f8a59852ff6cbed002862697caa3f2b4ba9991f52008c3e3f5f8cdf33403c30e",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 96,
+      "printed_page": 89,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "三份公开来源沿革与图D-1原始笔记完整可读。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 97,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-097.png",
+      "sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 97,
+      "printed_page": 90,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "图D-2、D-3两条原始笔记的标题/日期/字段/内容完整可读。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 98,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-098.png",
+      "sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 98,
+      "printed_page": 91,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "图D-4原始笔记、D-5 SOP前四步骤完整可读。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 99,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-099.png",
+      "sha256": "2fae0dff002efe09b030a68a17086f6570bdddd89dd71af557ec4e80669cf34e",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 99,
+      "printed_page": 92,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "图D-6 SOP后三步骤及D-3历史汇总三行完整同页。",
+      "findings": [],
+      "status": "PASS"
+    },
+    {
+      "page": 100,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-no-comments-render/page-100.png",
+      "sha256": "d313c2a9533067e5de8ea94dba82764d40436dc39848245c377528a52ad55ff3",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "physical_page": 100,
+      "printed_page": 93,
+      "actually_viewed": true,
+      "view_detail": "original",
+      "review_method": "inherited from actually viewed first-export identical PNG SHA",
+      "inherited_from_report": "native-first-export-visual-68-100.json",
+      "observation": "D-4验证批次表九行、历史/T139/T141边界说明完整同页。",
+      "findings": [
+        "独立PDF矢量坐标发现表格横线x76.4（D4为75.9）左于正文79.4pt；需仅缩进修正，详见坐标报告。"
+      ],
+      "status": "BLOCKED_STRICT_TABLE_RULE_MARGIN"
+    }
+  ],
+  "result": "BLOCKED_STRICT_TABLE_RULE_MARGIN",
+  "scope": "All 33 pages have real original-size review coverage; pixel-identical pages inherit that coverage. All content completeness findings are independent of later vector rule-boundary failures. This snapshot is not delivery acceptance."
+}

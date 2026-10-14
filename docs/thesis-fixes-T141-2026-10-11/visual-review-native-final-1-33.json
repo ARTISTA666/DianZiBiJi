@@ -1,0 +1,544 @@
+{
+  "task": "T141",
+  "identity": "reviewed_snapshot",
+  "reviewed_utc": "2026-10-11T09:47:58.051849+00:00",
+  "input": {
+    "word_path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/1005-深审整改版-2026-10-11.docx",
+    "word_sha256_of_pdf_source": "4478983abb4bade1e594da7f2995c8648d49b3b65f5ea676b19a3b4e05816567",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-wps/1005-深审整改版-2026-10-11.pdf",
+    "pdf_sha256": "509b5b914071d764c58e2165d1dc502ae89b56244553bf87114cc5b86748c2fe",
+    "physical_pages": 100,
+    "renderer": "原生WPS导出，经pdftoppm生成PNG",
+    "render_dir": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render"
+  },
+  "scope": {
+    "assigned_pages": [
+      1,
+      33
+    ],
+    "individually_viewed_count": 33,
+    "missing": [],
+    "older_renderer_inherited": false
+  },
+  "result": "fail",
+  "summary": {
+    "pass": 29,
+    "fail": 4,
+    "failed_pages": [
+      4,
+      9,
+      10,
+      28
+    ],
+    "blocking_issue": "导出包含蓝紫色批注高亮/标记；主审已定位WPS导出批注默认勾选，待无批注重新导出后验证变化页。"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "printed_page": null,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-1.png",
+      "sha256": "cbe199cebcb9003cddc4475c916aaaab323977e97c2166e80d7dd2c7feca24e7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "封面中英文题名、作者模板字段及日期完整，英文题名两行未越界。"
+      ]
+    },
+    {
+      "page": 2,
+      "printed_page": null,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-2.png",
+      "sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "原创性声明标题、正文、签名与日期完整，页下留白属于声明页布局。"
+      ]
+    },
+    {
+      "page": 3,
+      "printed_page": null,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-3.png",
+      "sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "版权使用授权、保密条件及签名日期完整，无页边截断。"
+      ]
+    },
+    {
+      "page": 4,
+      "printed_page": "I",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-4.png",
+      "sha256": "41e5bf666dd9a907faa0e461bff26a28752b4dc0d4ede21fba1a51f4f738849c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "fail",
+      "observations": [
+        "中文摘要与关键词完整，页码I清晰。",
+        "摘要第三段整段蓝紫背景；“审计查询。”与摘要末段各有蓝紫椭圆批注标记，阻止交付版式通过。"
+      ]
+    },
+    {
+      "page": 5,
+      "printed_page": "II",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-5.png",
+      "sha256": "d9d8402f3b35d30faef87ae95d7c04f046829c31b0ff2c4ae80300fdbc5ce14d",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "英文摘要各段与两行关键词完整，密排仍可读，页脚未裁切。"
+      ]
+    },
+    {
+      "page": 6,
+      "printed_page": "III",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-6.png",
+      "sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "目录第一页至4.7.3完整，长标题、点引线和页码列均在版心内。"
+      ]
+    },
+    {
+      "page": 7,
+      "printed_page": "IV",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-7.png",
+      "sha256": "76d1aa2f9afd417bda08ef0cd3d8017b2296e03d15c1032abdf06222e3455b24",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "目录第二页至D.4完整；6.4=51、6.5.2=52、6.5.4=57缓存清晰并与PDF实际标题页对应。"
+      ]
+    },
+    {
+      "page": 8,
+      "printed_page": 1,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-8.png",
+      "sha256": "437a94d11daf33001e4b32786f16cbd4c45289a00051cf78369ec0cbf8ad3ed5",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "第一章各层级标题均带正文；末行“材料合”跨页为正常段落续排。"
+      ]
+    },
+    {
+      "page": 9,
+      "printed_page": 2,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-9.png",
+      "sha256": "1b7c06dfc7a529c3f9ea5b3088ddf97bf5f0f9a94217176d29e556ed68bdaddb",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "fail",
+      "observations": [
+        "表1-1标题与三条数据完整同页，严格三线表。",
+        "页末“实验记录还需限定项目与审核状态…”两行蓝紫背景；[11,12,13]段末蓝紫椭圆标记，阻止交付版式通过。"
+      ]
+    },
+    {
+      "page": 10,
+      "printed_page": 3,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-10.png",
+      "sha256": "dda02f991fac417706d09c2b5e64cb679c83e824d055cded51e725954d3f09e9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "fail",
+      "observations": [
+        "1.2.3、1.2.4、1.2.5标题均有正文，问题引入接下页正常。",
+        "1.2.3标题末有蓝紫椭圆批注标记，阻止交付版式通过。"
+      ]
+    },
+    {
+      "page": 11,
+      "printed_page": 4,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-11.png",
+      "sha256": "155f66227034502a3a511f73a3604b81fc3a5d88a20d1a50f73c5fa946e0d427",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "RQ1–RQ3、研究目标与贡献内容完整，标题没有孤立。"
+      ]
+    },
+    {
+      "page": 12,
+      "printed_page": 5,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-12.png",
+      "sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图1-1框线、标签与箭头完整，caption同页；1.5标题带正文。"
+      ]
+    },
+    {
+      "page": 13,
+      "printed_page": 6,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-13.png",
+      "sha256": "32477ba778216090de1ad57919eeaaba92ce951225782e2a04ec4506cf1b96fe",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "第二章标题与2.1/2.2正文、引文完整；页末续排正常。"
+      ]
+    },
+    {
+      "page": 14,
+      "printed_page": 7,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-14.png",
+      "sha256": "8eb1cef654206febe0b3e524ead08ed0f72d62609b1a5b9d039177d4bbcb037b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "2.3–2.6标题均带正文，MCP日期和协议版本文字清晰。"
+      ]
+    },
+    {
+      "page": 15,
+      "printed_page": 8,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-15.png",
+      "sha256": "6b319ba2c8a1ba25e6fe979a31eb7e8d20ad7e44e2f125b40ee26e1a76808731",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表3-1六角色完整、三线规范；图3-1全部权限节点及caption同页，原尺寸小字可读。"
+      ]
+    },
+    {
+      "page": 16,
+      "printed_page": 9,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-16.png",
+      "sha256": "a4f0e513381d92aca7ce6fe086b0e1a1eb344228302975c11feebadcd2f1efef",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表3-2与表3-3数据和标题完整同页，三线规范；3.3标题带引入正文。"
+      ]
+    },
+    {
+      "page": 17,
+      "printed_page": 10,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-17.png",
+      "sha256": "fa4091b207ee59044e36df8e0742429053e07410fff542d319b763fb6e82ad0b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表3-4的FR1–FR10与表3-5的NFR1–NFR6完整同页，均三线表。",
+        "FR2/FR3/FR6压缩后审核、两级五能力、项目范围及仅审核建图来源条件清晰；3.5小结未孤立。"
+      ]
+    },
+    {
+      "page": 18,
+      "printed_page": 11,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-18.png",
+      "sha256": "8f50eb44c9c91a7ee4f6926a648773f207f66fcf1e749de143c222a17db07bd7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图4-1架构所有模块、外部服务边界注释与caption完整同页。"
+      ]
+    },
+    {
+      "page": 19,
+      "printed_page": 12,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-19.png",
+      "sha256": "bd79dc2679cebc3386d4199d65f3cfcf64235c3344bc9612fc35aeef16ef113b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "公式4-1四类能力逻辑均清晰，编号没有碰撞；权限段落完整。"
+      ]
+    },
+    {
+      "page": 20,
+      "printed_page": 13,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-20.png",
+      "sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表4-1六角色完整、三线规范；图4-2十三模块及caption完整，小字号原尺寸可读。"
+      ]
+    },
+    {
+      "page": 21,
+      "printed_page": 14,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-21.png",
+      "sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表4-2与表4-3所有数据与caption完整同页，三线规范；4.4/4.4.1均带正文。"
+      ]
+    },
+    {
+      "page": 22,
+      "printed_page": 15,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-22.png",
+      "sha256": "e19d8b6b7db46ec3a9863141457e2947f873980c60cdabb88cc7f6364f5828d3",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图4-3数据库关系图全部七实体、乌鸦脚、图例与caption完整同页，未超版心。"
+      ]
+    },
+    {
+      "page": 23,
+      "printed_page": 16,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-23.png",
+      "sha256": "63d49ec713d9a37f2d4a58fa3fc9a78729026eb242a6ddd41ece694d32bc37f1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表4-4十二分类和全部表名完整同页，严格三线；4.5标题和计划/事实界限正文完整。"
+      ]
+    },
+    {
+      "page": 24,
+      "printed_page": 17,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-24.png",
+      "sha256": "9ed43b55e952ac3061188a112d50c8756bcc74f806a51fe75156e1ae1b2db480",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图4-4两路径框线、箭头、人工验收边界及caption完整同页；4.5.1/4.5.2均带正文。"
+      ]
+    },
+    {
+      "page": 25,
+      "printed_page": 18,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-25.png",
+      "sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表4-5十三类实体与表4-6十二类关系全部完整同页，严格三线，字段来源和角色含义可读。"
+      ]
+    },
+    {
+      "page": 26,
+      "printed_page": 19,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-26.png",
+      "sha256": "b540b34ced239f475b04ff150940458c9f57d0e90a87cfd6bf02b373bc832d75",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图4-5审核流程各节点、箭头、caption完整同页；抽取规则正文无截断。"
+      ]
+    },
+    {
+      "page": 27,
+      "printed_page": 20,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-27.png",
+      "sha256": "cf645a54ad05085f39b36a920f7f96aef7a9beee6e01af5b43523fc7560b36d9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图4-6六步规范化、判定菱形、输出与caption完整同页；术语解释正文完整。"
+      ]
+    },
+    {
+      "page": 28,
+      "printed_page": 21,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-28.png",
+      "sha256": "c079b0baae96a5264ae30b65c7b7db43cccdfa61427bfaf63e1e9bf71d683135",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "fail",
+      "observations": [
+        "算法4-1标题、输入输出与26步骤全部完整同页；仅顶底及标题/输入输出边界横线，无逐行或竖线。",
+        "公式4-2两分支及经验权重说明完整，编号可读。",
+        "算法第9行右花括号后蓝紫椭圆批注标记，阻止交付版式通过。"
+      ]
+    },
+    {
+      "page": 29,
+      "printed_page": 22,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-29.png",
+      "sha256": "8d50f02ee1745fab4e61fdf938a812102d793ebe63a54f892b8ac18ab6248977",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "4.5.5–4.5.8和4.6标题均带完整正文；biosample登录号与物理sample的区别、角色与仍批准来源条件清楚。"
+      ]
+    },
+    {
+      "page": 30,
+      "printed_page": 23,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-30.png",
+      "sha256": "db2a92903dc3af4a03a8f9bfb9d522b44960268887c2fc0ff22960f2686ae627",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "图4-7完整同页、caption正常；公式4-3及BM25说明无裁切，页尾行未碰页脚。"
+      ]
+    },
+    {
+      "page": 31,
+      "printed_page": 24,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-31.png",
+      "sha256": "4e610b1402213652356e265126fce599d363321b282c0b10298d9d85883d5052",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "公式4-4至4-9分数、下标、集合、逻辑符号和编号完整清晰；文本说明及文件限额条件均可读。"
+      ]
+    },
+    {
+      "page": 32,
+      "printed_page": 25,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-32.png",
+      "sha256": "3fb3ce7cb4c0e481a8474b97e486c1d09c74649bb619317ab6104c3a407361ee",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "公式4-10双求和、上下限及编号完整；图4-8普通/增强分支、箭头、实验变量和caption完整同页。"
+      ]
+    },
+    {
+      "page": 33,
+      "printed_page": 26,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/native-final-render/page-33.png",
+      "sha256": "ba1d5eada9abb24e1848b4a5f11bea17759347839dbb98dc5a143523f442c557",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "review_method": "tools.view_image(detail=original)，逐页查看完整原尺寸，非拼图、非缩略图",
+      "result": "pass",
+      "observations": [
+        "表4-7全部符号及公式完整，三线规范；图4-9所有流程节点和caption完整同页；4.6.6标题有正文。"
+      ]
+    }
+  ],
+  "limits": [
+    "仅审阅物理1–33页，不能代表全100页。",
+    "当时PDF仍为509b5b…；写报告时主路径Word已变为973e236…（主审正在修三表宽度），此报告不将新Word与旧PDF混绑。",
+    "无Word或源代码编辑，无实验/测试重跑。",
+    "下一版只能继承SHA完全相同的PNG；变化页须重新原尺寸查看。"
+  ]
+}

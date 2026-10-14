@@ -1,0 +1,279 @@
+{
+  "status": "read_only_failure_analysis",
+  "owner": "code-reviewer",
+  "task": "T139",
+  "run": "system-e2e-final-v2",
+  "reviewed_at": "2026-10-11",
+  "scope": "只读核对原始v2日志、三份错误上下文及完整截图、real-lab trace实际响应、主仓测试定义、stub和引用校验生产分支；未修改测试或生产代码，未自行重跑。 已只读复核最终c6de4c4相对原clean快照的三测试文件差异，类型union纳入；仅更新本调查JSON。",
+  "raw_result": {
+    "passed": 0,
+    "failed": 3,
+    "did_not_run": 6,
+    "flaky": 0,
+    "classification": "FAIL, not PASS",
+    "playwright_stats": {
+      "startTime": "2026-10-11T06:52:15.624Z",
+      "duration": 91840.697,
+      "expected": 0,
+      "skipped": 6,
+      "unexpected": 3,
+      "flaky": 0
+    }
+  },
+  "input_sha256": {
+    "agent-work/t139-2026-10-11/validation/system-e2e-final-v2.log": "11f8c8859ed77c06a48d1cc358d44171cc2a907141bd2c8e1cf69b78daee90d2",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/results.json": "1da8362c7218962d7cc212a5d13777b588a05fb79dd21c51ce8015bff74f7bea",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/compose.log": "3daac495c3f8236e1060b2d0558055a31d77caed381d6194e19d31ffcae2f4d0",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/error-context.md": "2242d2ab9d4cb573911c223dbb3aada91050eeeeeeedfdf2863b6cef7b38e673",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/test-failed-1.png": "b6c7023e8bc5a9d5df23b1d88e633be2db30cd0bd79209604fb235b2e9df2c2f",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/trace.zip": "591618159ce44010b3581b90c12092e2bae30883669eb6af6e40c532cb4f1f53",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-登录并完成笔记审批-chromium/error-context.md": "754575925bf8afc160590e1d7184a215ec65d56e4ce9997b07f0da0608a2b697",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-登录并完成笔记审批-chromium/test-failed-1.png": "125a2208255b7ef5da919083a340a4c55068a1041dfcc5213f8d70f3460dc9d5",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-登录并完成笔记审批-chromium/trace.zip": "423d51911d2da86867bcd127d95e6169b9d8fb0edff5d0439c801ea7aa59483e",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/error-context.md": "c84f4b7c81aa7c65db6c02edac2f358c1e06341bb6c4a6c40de2a71f2c75f572",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/test-failed-1.png": "81fbaf2b9fe0e9c5944fd6fee3523dc5d57f6bc01b0fc47ce91aa987dd50640c",
+    "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/trace.zip": "56668d7c9ee0d33e5157c7337bbb8dae00e1c03da7874354e9be08e8f74d0e14"
+  },
+  "real_lab_actual_response": {
+    "http_status": 200,
+    "rag_mode": "kg_enhanced_rag",
+    "citation_audit": {
+      "passed": false,
+      "citation_count": 0,
+      "invalid_citations": [],
+      "has_evidence": true,
+      "message": "回答没有引用任何已检索证据，需要人工复核。",
+      "repair_attempted": true
+    },
+    "fallback_reason": "needs_review",
+    "sources_count": 1,
+    "graph_context_count": 1,
+    "answer_prefix": "需要人工复核"
+  },
+  "failures": [
+    {
+      "id": "E01",
+      "test": "real-lab-acceptance.spec.ts:253",
+      "failed_at": "frontend/e2e/real-lab-acceptance.spec.ts:193",
+      "classification": "stale_UI_text_anchor",
+      "confidence": "high",
+      "fact": "固定stub首轮和修复轮均返回不含[S]/[G]标记的同一回答；实际HTTP200响应audit完整，有资料和图谱证据，但引用数为0，修复已尝试，最终needs_review。截图显示来源链接及未引用检索证据→降级needs_review。测试等待/引用校验/旧文案超时。",
+      "product_regression_judgment": "本次失败未证明功能回归，引用门禁与失败展示按当前语义工作；仍必须重跑全部场景后才能验收端到端。",
+      "semantic_assertions_to_keep": [
+        "等待本次POST /projects/<id>/rag/query响应，断言HTTP200、citation_audit存在、passed=false、has_evidence=true、citation_count=0、repair_attempted=true和fallback_reason=needs_review。",
+        "断言回答显示需要人工复核和未引用检索证据，而非引用校验通过；不能仅删除原断言或宽松允许任意状态。",
+        "保留非空检索来源与当前项目资料页file锚点链接断言。",
+        "后续报告草稿仍断言待人工复核及引用未完全通过提示；原v2失败前尚未执行该部分。"
+      ],
+      "source_locations": [
+        "frontend/e2e/llm_stub.py:27",
+        "docker-compose.e2e.yml:43",
+        "frontend/src/lib/citations.tsx:175-201",
+        "backend/src/api/rag/mod.rs:1061-1102"
+      ]
+    },
+    {
+      "id": "E02",
+      "test": "system.spec.ts:130",
+      "failed_at": "frontend/e2e/system.spec.ts:51",
+      "classification": "ambiguous_project_text_locator",
+      "confidence": "high",
+      "fact": "项目列表同时提供待审批横幅中的项目link与项目卡button，getByText exact解析到两个元素，strict模式在click前失败。",
+      "product_regression_judgment": "定位器歧义，未执行本测试的审批按钮操作，不能据此判断审批业务失败或通过。",
+      "semantic_assertions_to_keep": [
+        "精确getByRole(button,{name:PROJECT_NAME,exact:true})选择项目卡，必要时限定项目列表容器；不要用first()掩盖歧义。",
+        "进入后断言/projects/<已创建projectId> URL及当前项目标题；保留审批结果、纯LLM与结构化查询后续行为断言。"
+      ]
+    },
+    {
+      "id": "E03",
+      "test": "user-journeys.spec.ts:104",
+      "failed_at": "frontend/e2e/user-journeys.spec.ts:47",
+      "classification": "ambiguous_project_text_locator",
+      "confidence": "high",
+      "fact": "审核人登录后待审批横幅与项目卡同时含相同项目名，getByText exact strict歧义；记录员创建及提审此前已执行，审核人退回步骤未到达。",
+      "product_regression_judgment": "定位器歧义，当前证据不证明退回/修订/再批准功能回归或通过。",
+      "semantic_assertions_to_keep": [
+        "精确项目card button并断言正确projectId URL。",
+        "保留退回、作者修订与重提审、审核人批准的状态转移断言；保持各角色权限及只读限制验收，不能因定位失败跳过流程。"
+      ]
+    }
+  ],
+  "limits": [
+    "本轮为固定模型stub验证，不能用于评价真实模型事实质量。",
+    "6个未运行项由serial前序失败造成，不是通过。",
+    "浏览器新tool.failed/already_completed/running→waiting消费分支本轮尚无真实E2E覆盖；后台真实工具与SSE replay验证另有记录。",
+    "后续重跑须另起结果，不覆盖本轮原始失败身份。"
+  ],
+  "production_changes_required_for_these_failures": false,
+  "acceptance": "修复测试锚点后重新执行全9项并核对保留的语义断言；在此之前E2E验收未通过。",
+  "preserved_original_v2_inputs": [
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/results.json",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/results.json",
+      "sha256": "1da8362c7218962d7cc212a5d13777b588a05fb79dd21c51ce8015bff74f7bea",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/compose.log",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/compose.log",
+      "sha256": "3daac495c3f8236e1060b2d0558055a31d77caed381d6194e19d31ffcae2f4d0",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/error-context.md",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/error-context.md",
+      "sha256": "2242d2ab9d4cb573911c223dbb3aada91050eeeeeeedfdf2863b6cef7b38e673",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/test-failed-1.png",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/test-failed-1.png",
+      "sha256": "b6c7023e8bc5a9d5df23b1d88e633be2db30cd0bd79209604fb235b2e9df2c2f",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/trace.zip",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/real-lab-acceptance-真实课题组四项目全员协作与-AI-验收-chromium/trace.zip",
+      "sha256": "591618159ce44010b3581b90c12092e2bae30883669eb6af6e40c532cb4f1f53",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-登录并完成笔记审批-chromium/error-context.md",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/system-登录并完成笔记审批-chromium/error-context.md",
+      "sha256": "754575925bf8afc160590e1d7184a215ec65d56e4ce9997b07f0da0608a2b697",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-登录并完成笔记审批-chromium/test-failed-1.png",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/system-登录并完成笔记审批-chromium/test-failed-1.png",
+      "sha256": "125a2208255b7ef5da919083a340a4c55068a1041dfcc5213f8d70f3460dc9d5",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-登录并完成笔记审批-chromium/trace.zip",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/system-登录并完成笔记审批-chromium/trace.zip",
+      "sha256": "423d51911d2da86867bcd127d95e6169b9d8fb0edff5d0439c801ea7aa59483e",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/error-context.md",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/error-context.md",
+      "sha256": "c84f4b7c81aa7c65db6c02edac2f358c1e06341bb6c4a6c40de2a71f2c75f572",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/test-failed-1.png",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/test-failed-1.png",
+      "sha256": "81fbaf2b9fe0e9c5944fd6fee3523dc5d57f6bc01b0fc47ce91aa987dd50640c",
+      "matches_reviewed_v2_sha256": true
+    },
+    {
+      "original_path": "agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/trace.zip",
+      "preserved_path": "agent-work/t139-2026-10-11/validation/e2e-failed-v2/artifacts/user-journeys-项目负责人、记录员和审核人完成退回修订审批闭环-chromium/trace.zip",
+      "sha256": "56668d7c9ee0d33e5157c7337bbb8dae00e1c03da7874354e9be08e8f74d0e14",
+      "matches_reviewed_v2_sha256": true
+    }
+  ],
+  "final_test_fix_review": {
+    "status": "PASS_read_only_diff_contract_review_not_system_acceptance",
+    "reviewed_utc": "2026-10-11T06:59:40.998628+00:00",
+    "before_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+    "semantic_anchor_revision": "4e585a98c8898ccfff20017e043e970c8115b0e7",
+    "final_revision": "c6de4c4d219e535bd25e794495070d191e7baa1c",
+    "final_delta_from_pre_e2e": [
+      "frontend/e2e/real-lab-acceptance.spec.ts",
+      "frontend/e2e/system.spec.ts",
+      "frontend/e2e/user-journeys.spec.ts"
+    ],
+    "production_source_changes_in_this_delta": false,
+    "diff_stats": "3 files changed, 19 insertions, 5 deletions",
+    "before_clean_evidence": {
+      "primary_three_test_files_pre_edit_status_recorded": "",
+      "isolated_pre_e2e_snapshot_clean_status_recorded": "",
+      "historical_status_source": "QA baseline.json and archived snapshot-input-pre-e2e-anchors.json; before file bytes independently compared with both committed snapshots. Historical worktree cleanliness is recorded evidence, not re-observed retroactively."
+    },
+    "current_isolated_clean_status_observed": "",
+    "file_byte_verification": [
+      {
+        "path": "frontend/e2e/system.spec.ts",
+        "before_sha256": "41b717d6869d1bc1bc1bc9d4f55d275ef5fead9578599d7cc323c4c511d0d6f4",
+        "before_baseline_copy_matches_record": true,
+        "before_copy_matches_primary_HEAD": true,
+        "before_copy_matches_pre_e2e_snapshot": true,
+        "final_sha256": "bed27d9da3ea1b95c1245c912f8f550dcd930201aef0b2688ac39da495178b5b",
+        "main_matches_isolated_copy_and_commit": true,
+        "matches_final_manifest": true
+      },
+      {
+        "path": "frontend/e2e/user-journeys.spec.ts",
+        "before_sha256": "77dd5c8f63777e5981bc4e794ef336fb0f2bb99b61dd20513e04b2dad223fa93",
+        "before_baseline_copy_matches_record": true,
+        "before_copy_matches_primary_HEAD": true,
+        "before_copy_matches_pre_e2e_snapshot": true,
+        "final_sha256": "d87a2b7f3b9a9ce6aceb0c16ea4bc9c040985801ab584db8cd8a0ab69d2627e4",
+        "main_matches_isolated_copy_and_commit": true,
+        "matches_final_manifest": true
+      },
+      {
+        "path": "frontend/e2e/real-lab-acceptance.spec.ts",
+        "before_sha256": "216c01f9eea78259aa83be26b2f6bb9ccc937171efc7b1e1a94a42907601ec29",
+        "before_baseline_copy_matches_record": true,
+        "before_copy_matches_primary_HEAD": true,
+        "before_copy_matches_pre_e2e_snapshot": true,
+        "final_sha256": "be3f284006cc602a452fa3e076a0442163d9b62858ee661c8896afefae8f8d5f",
+        "main_matches_isolated_copy_and_commit": true,
+        "matches_final_manifest": true
+      }
+    ],
+    "semantic_assertions_preserved": [
+      {
+        "location": "frontend/e2e/system.spec.ts:50-53",
+        "result": "PASS",
+        "detail": "角色为button的项目卡精确名称，并新增实际projectId URL断言；后续审批、OCR、评价与管理场景无删除或跳过。"
+      },
+      {
+        "location": "frontend/e2e/user-journeys.spec.ts:46-49",
+        "result": "PASS",
+        "detail": "角色为button的项目卡精确名称，并新增实际projectId URL断言；退回、修订、重提审、批准、附件及只读场景无删除或跳过。"
+      },
+      {
+        "location": "frontend/e2e/real-lab-acceptance.spec.ts:191-211",
+        "result": "PASS",
+        "detail": "点击前等待本项目本次POST响应，HTTP成功校验；响应必须passed=false/has_evidence=true/citation_count=0、needs_review、非空来源且匹配预期文件名；UI要求确切降级badge、状态及S1资料锚点与响应file_id一致；报告待复核与引用未通过断言保留。"
+      },
+      {
+        "location": "frontend/e2e/real-lab-acceptance.spec.ts:2,70-72",
+        "result": "PASS",
+        "detail": "checkedJson入参改为APIResponse | Response，仅补足浏览器响应类型；共同ok/text/json方法及HTTP成功断言不变。"
+      }
+    ],
+    "skips_or_scenarios_removed": false,
+    "new_assertions_weakened": false,
+    "static_evidence": {
+      "read_logs": [
+        "tsc-e2e-final.log",
+        "eslint-final.log",
+        "playwright-list-final.log"
+      ],
+      "tsc_and_eslint_logs": "无诊断输出；parent/QA记录退出成功。本审查未自行重跑。",
+      "playwright_test_inventory": "9 tests in 3 files，与原始v2总数一致。"
+    },
+    "nonblocking_limit": "最终测试未单独断言repair_attempted=true；原始trace确有此字段，当前精确降级状态、来源与链接断言足以覆盖此次旧文案锚点失效。不能据本测试单独证明未来修复尝试机制一直发生。",
+    "new_input_sha256": {
+      "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/baseline.json": "bc340b0b56758495b2a9f57f3b7b4ec11962778dd0c4ea7d51149418f905e020",
+      "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/tsc-e2e-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/eslint-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/playwright-list-final.log": "65b9a4a2cc47e5c25fa7764c65631852a50ff24b4700c5ee6b1972ba13950dec",
+      "agent-work/t139-2026-10-11/validation/snapshot-input-pre-e2e-anchors.json": "41e95b9353ac8b9db670bd5393566b8fe0bd96656d76b8a81998c788dea770a5",
+      "agent-work/t139-2026-10-11/validation/snapshot-input.json": "2627f5e2aa9952ac5878c88800864941d1ddf0f0dbb3b8e8d3aaeaf729f8f166",
+      "agent-work/t139-2026-10-11/validation/system-e2e-final-v3.log": "2dde8addb7243edf0a5a7d3db6843304bf7d83312ad6c8d270f7b2e6823634e2"
+    },
+    "rerun_status": {
+      "v2": "原始0 passed / 3 failed / 6 did not run，始终记FAIL。",
+      "v3": "parent主动在构建阶段停止，报告exit130；日志没有测试结果，不能记PASS/FAIL测试运行。",
+      "v4": "parent于最终c6de4c4快照运行中，本次差异审查不预判结果。"
+    },
+    "product_regression_judgment": "原始三项失败证据支持旧文案锚点与项目名定位歧义；实际audit字段齐备且needs_review降级符合固定无引用stub场景。修正仅涉及测试文件并强化语义断言，未通过改产品来迎合测试。最终系统功能是否全部通过仍取决于v4全部9项重跑。"
+  }
+}

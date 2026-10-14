@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-10T15:52:28.939138+00:00",
+  "path": "/notes/12/approve",
+  "method": "POST",
+  "request": {
+    "comment": "T136 isolated functional test"
+  },
+  "status": 200,
+  "response": {
+    "id": 12,
+    "project_id": 1,
+    "template_id": null,
+    "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+    "experiment_type": "PCR_optimization_and_gel_electrophoresis",
+    "experiment_date": "2025-06-26",
+    "owner_user_id": 1,
+    "status": "approved",
+    "current_version_id": 12,
+    "created_at": "2026-10-10T15:52:29.361648Z",
+    "updated_at": "2026-10-10T15:52:29.374714Z"
+  }
+}

@@ -1,0 +1,282 @@
+[
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/legacy/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/legacy/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/ops/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/legacy/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/legacy/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/ops/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/legacy/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/legacy/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/ops/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/legacy/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/legacy/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/ops/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/legacy/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/legacy/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/ops/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/legacy/tests/security_vectors.json",
+    "class": "jwt",
+    "reason": "Committed deterministic security regression vector, including expired/tampered tokens; not a captured session"
+  },
+  {
+    "path": "backend/legacy/tests/test_migrations.py",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/api/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/config.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/rag/mod.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "backend/src/state.rs",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  },
+  {
+    "path": "scripts/ops/run-rust-db-tests.sh",
+    "class": "credential_url",
+    "reason": "Reviewed literal in cfg(test), offline migration test, CI disposable Postgres service, or isolated DB test wrapper; no production environment or provider key"
+  }
+]

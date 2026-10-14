@@ -1,0 +1,182 @@
+{
+  "task": "T141 independent final chapter6 paragraph numeric-difference inventory",
+  "utc": "2026-10-11T10:06:43.979798+00:00",
+  "baseline_word": "/Users/yusong/Desktop/1005-审核问题修订版-2026-10-11.docx",
+  "baseline_word_sha256": "ac0378e5419b3e4f94d23921b65c74c30784635e7b50de137f0e1c4c5948c3cb",
+  "current_word": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/1005-深审整改版-2026-10-11.docx",
+  "current_word_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948",
+  "stage": "FINAL_INPUT",
+  "matched_body_paragraphs": 83,
+  "numeric_differences": [
+    {
+      "para_id": "19789C63",
+      "baseline_text": "为评估系统在知识抽取、问答检索与任务生成上的表现，表6-4汇总各实验使用的指标、含义、计算方式与用途，并在相应指标行内给出式（6-1）至式（6-10）。其中，证据覆盖率、McNemar检验和三项RAGAS指标分别对应式（6-6）、式（6-7）及式（6-8）至式（6-10）。",
+      "current_text": "表6-4汇总实验指标及式（6-1）至式（6-10）。",
+      "baseline_numeric_tokens": [
+        "6",
+        "4",
+        "6",
+        "1",
+        "6",
+        "10",
+        "6",
+        "6",
+        "6",
+        "7",
+        "6",
+        "8",
+        "6",
+        "10"
+      ],
+      "current_numeric_tokens": [
+        "6",
+        "4",
+        "6",
+        "1",
+        "6",
+        "10"
+      ]
+    },
+    {
+      "para_id": "65E9F9DE",
+      "baseline_text": "图谱增强模式的上下文由资料片段与序列化关系文本组成。归档自动评分采用DeepSeek flash档评判模型；为检查模型评判的自偏好[78]，独立GPT子代理对20题成对实验的40条回答与实际上下文进行结构化语义评判，结果见第6.6节。语义评价采用自定义的主张支持、参考事实覆盖、上下文相关性和引用支持四项指标。",
+      "current_text": "图谱增强上下文由资料片段与序列化关系组成。归档自动评分采用DeepSeek flash档模型；另由GPT子代理评价20题的40条回答，补充不同模型的评判视角[82]。两者指标不同，不能据此检验或排除自偏好。GPT采用主张支持、参考要点覆盖、上下文相关性和引用支持四项自定义指标。",
+      "baseline_numeric_tokens": [
+        "78",
+        "20",
+        "40",
+        "6.6"
+      ],
+      "current_numeric_tokens": [
+        "20",
+        "40",
+        "82"
+      ]
+    },
+    {
+      "para_id": "15130E67",
+      "baseline_text": "完整编号检测查找回答中以S或G开头、方括号完整配对的引用标记。S对应该回答的来源资料列表，G对应关系列表，后面的数字表示列表中从1开始的序号。每条回答至少要有一个完整编号；检测到的所有标记都须由S或G加一个十进制数字序号构成，且序号位于对应列表范围内。[S2-S6]、[G1-G10]这类范围引用不合格。按此规则，普通RAG的合格回答为17/20（85.00%），图谱增强模式为15/20（75.00%）。",
+      "current_text": "完整编号检测要求每条回答至少有一个[S数字]或[G数字]，所有序号均须在对应资料或关系列表范围内；[S2-S6]、[G1-G10]等范围不合格。普通RAG合格17/20（85.00%），增强模式15/20（75.00%）。",
+      "baseline_numeric_tokens": [
+        "1",
+        "2",
+        "6",
+        "1",
+        "10",
+        "17",
+        "20",
+        "85.00",
+        "15",
+        "20",
+        "75.00"
+      ],
+      "current_numeric_tokens": [
+        "2",
+        "6",
+        "1",
+        "10",
+        "17",
+        "20",
+        "85.00",
+        "15",
+        "20",
+        "75.00"
+      ]
+    },
+    {
+      "para_id": "18557F87",
+      "baseline_text": "图 6-5　四种对照方法任务完成率",
+      "current_text": "图 6-5　共同14题的历史任务完成率（描述性比较）",
+      "baseline_numeric_tokens": [
+        "6",
+        "5"
+      ],
+      "current_numeric_tokens": [
+        "6",
+        "5",
+        "14"
+      ]
+    },
+    {
+      "para_id": "0F91C594",
+      "baseline_text": "四名GPT子代理各评10条，共40条归档回答，每条评价一次；评判包移除方法名与RAGAS分数。输入变换先将起止同为S或G且顺序有效的范围引用展开为单个标记，再统一为E编号。Q08普通RAG的[S2-S6]、Q14图谱增强的[G1-G10]、Q18图谱增强的[S1-S6]及[G1-G10]涉及3条回答、4处范围。引用支持率评价的是这一变换后的语义支持，原始回答的格式检查仍将范围引用判为不合格。评价沿用6.3节的事后参考规则，事实覆盖与任务完成的原始计数不随引用展开改变。表6-11按问题宏平均，无可评分引用的项按缺失处理。",
+      "current_text": "四名GPT子代理各评10条，共40条，每条一次；输入移除方法名与RAGAS分数。先展开合法的同类S/G范围，再统一为E编号：Q08普通、Q14增强、Q18增强共3条回答、4处范围。引用支持评的是变换后文本，原格式检查仍将范围判为不合格。评判包只传资料snippet，文件名与chunk_id留在溯源记录中，未送入评判上下文；Q02、Q03两种模式的正确来源标识因而有被误判无支持的实例。冻结分数保留，其支持判定受此信息丢失限制。",
+      "baseline_numeric_tokens": [
+        "10",
+        "40",
+        "08",
+        "2",
+        "6",
+        "14",
+        "1",
+        "10",
+        "18",
+        "1",
+        "6",
+        "1",
+        "10",
+        "3",
+        "4",
+        "6.3",
+        "6",
+        "11"
+      ],
+      "current_numeric_tokens": [
+        "10",
+        "40",
+        "08",
+        "14",
+        "18",
+        "3",
+        "4",
+        "02",
+        "03"
+      ]
+    }
+  ],
+  "removed_nonempty_body_paragraphs": [
+    {
+      "para_id": "657A5A80",
+      "old_text": "图 6-7　四类固定任务的来源规模、总 Token 数与响应时延"
+    }
+  ],
+  "baseline_body_paragraphs_without_stable_ids": [
+    {
+      "para_id": null,
+      "old_text": "对一跳关系与资料检索配置，先求同题覆盖率差值，再计算10道事实题的差值均值。采用问题级配对bootstrap[82]，每次从10个差值中有放回地抽取10个并求均值，重复10000次，随机种子固定为20261001114；以重采样均值分布的2.5%和97.5%分位点经线性插值形成95%百分位区间。同时采用题级精确双侧符号翻转检验[83]，在各题差值符号可交换的零假设下，完整枚举2^10=1024种符号组合，以差值之和的绝对值为统计量，将不小于观测统计量的组合比例作为p值。30条事实题回答按问题归并，三次生成作为同题内重复。",
+      "identity_note": "No baseline stable paraId; this is not evidence of deletion. Check current text/value presence independently.",
+      "current_text_equal_except_citation_renumbering": true,
+      "current_matching_text": "对一跳关系与资料检索配置，先求同题覆盖率差值，再计算10道事实题的差值均值。采用问题级配对bootstrap[83]，每次从10个差值中有放回地抽取10个并求均值，重复10000次，随机种子固定为20261001114；以重采样均值分布的2.5%和97.5%分位点经线性插值形成95%百分位区间。同时采用题级精确双侧符号翻转检验[84]，在各题差值符号可交换的零假设下，完整枚举2^10=1024种符号组合，以差值之和的绝对值为统计量，将不小于观测统计量的组合比例作为p值。30条事实题回答按问题归并，三次生成作为同题内重复。",
+      "checked_current_word_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948"
+    },
+    {
+      "para_id": null,
+      "old_text": "一跳关系比资料检索的覆盖差为27.78个百分点，95%自助重采样区间为3.89至55.00个百分点。未舍入题级差值依次为-2/9、0、1、0、1/2、1/3、1、1/6、0、0，其均值为5/18；1024种符号组合中有96种达到或超过观测统计量，故p=96/1024=0.09375，报告为p=0.0938（n=10），未达到0.05阈值。显著性判断以符号翻转检验为依据；百分位bootstrap区间描述覆盖差，其构造与主检验不同。",
+      "identity_note": "No baseline stable paraId; this is not evidence of deletion. Check current text/value presence independently.",
+      "current_text_equal_except_citation_renumbering": true,
+      "current_matching_text": "一跳关系比资料检索的覆盖差为27.78个百分点，95%自助重采样区间为3.89至55.00个百分点。未舍入题级差值依次为-2/9、0、1、0、1/2、1/3、1、1/6、0、0，其均值为5/18；1024种符号组合中有96种达到或超过观测统计量，故p=96/1024=0.09375，报告为p=0.0938（n=10），未达到0.05阈值。显著性判断以符号翻转检验为依据；百分位bootstrap区间描述覆盖差，其构造与主检验不同。",
+      "checked_current_word_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948"
+    },
+    {
+      "para_id": null,
+      "old_text": "相对全文笔记与全部三元组的差值为-15.56和-18.89个百分点。两项次要比较构成预先固定的比较族，按Holm方法[84]校正：两项原始p均为0.2500，升序排列后依次乘以2和1，再取累积最大值，得到两项Holm校正p均为0.5000。在该内部制定题集上，这些探索性题级差值同时反映上下文规模、信息量与检索组织的差异。",
+      "identity_note": "No baseline stable paraId; this is not evidence of deletion. Check current text/value presence independently.",
+      "current_text_equal_except_citation_renumbering": true,
+      "current_matching_text": "相对全文笔记与全部三元组的差值为-15.56和-18.89个百分点。两项次要比较构成预先固定的比较族，按Holm方法[85]校正：两项原始p均为0.2500，升序排列后依次乘以2和1，再取累积最大值，得到两项Holm校正p均为0.5000。在该内部制定题集上，这些探索性题级差值同时反映上下文规模、信息量与检索组织的差异。",
+      "checked_current_word_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948"
+    }
+  ],
+  "manual_numeric_diff_assessment": {
+    "19789C63": "Equation cross-reference repetition shortened; no experimental value changed.",
+    "65E9F9DE": "Authorized narrower self-preference claim,20 questions/40 answers retained; citation renumbered.",
+    "15130E67": "Removed ordinal index explanation1; original17/20,15/20 and85/75% unchanged.",
+    "18557F87": "Caption now explicitly identifies historical common14-question subset.",
+    "0F91C594": "Authorized metadata disclosure,Q02/Q03 added; retained40 answers,10 per judge,3 answers/4 ranges. Repeated range spellings omitted.",
+    "657A5A80": "Duplicated fixed-task chart/caption removed for compression; corresponding historical result table6-9 numerics are separately protected."
+  },
+  "final_differences_exactly_match_previous_independently_assessed_inventory": true,
+  "new_unassessed_numeric_differences": [],
+  "historical_numeric_value_rewrite_found": false,
+  "scope": "Paragraph numeric tokens include citation numbers and cross-reference numbers; differences require human interpretation. Table results are verified separately by stable paragraph IDs and numeric-array equality.",
+  "result": "PASS"
+}

@@ -1,0 +1,116 @@
+{
+  "task": "T139 system E2E v6 runtime identity",
+  "utc": "2026-10-11T07:39:08.029870+00:00",
+  "status": "BACKEND_REVISION_VERIFIED_FRONTEND_OCI_LABEL_ABSENT",
+  "expected_revision": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+  "snapshot_revision_observed": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+  "snapshot_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/snapshot-input.json",
+  "snapshot_manifest_sha256": "87020f1f632ae38f657475bd96979c4b06ad51731a3f475b2d151fbbd4e4c95f",
+  "services": [
+    {
+      "container_id": "01cae769c4b5d167337199c4f6f904eac3e78cff440a2eaf4e0fa7b6e22f1b99",
+      "name": "/eln-e2e-backend-1",
+      "image_id": "sha256:be4b5773fb356869443dea828abce16209b8680dc00bd1f3834d6b01bea0ac7a",
+      "image_name": "eln-backend-e2e",
+      "state": "running",
+      "health_status": "healthy",
+      "compose_project": "eln-e2e",
+      "compose_service": "backend",
+      "compose_working_dir": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo",
+      "compose_config_files": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/docker-compose.e2e.yml",
+      "container_oci_revision": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+      "inspected_image_id": "sha256:be4b5773fb356869443dea828abce16209b8680dc00bd1f3834d6b01bea0ac7a",
+      "image_oci_revision": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+      "oci_revision_matches_expected": true,
+      "image_id_matches_container": true
+    },
+    {
+      "container_id": "53108064f6530f086db5f7d086bfad19fde4baea41535704ec81af5dfa228357",
+      "name": "/eln-e2e-frontend-1",
+      "image_id": "sha256:9e76a86165a0cef97148f4ffd741eb8ab0c9ed1a99332d689ae8657189e46369",
+      "image_name": "eln-frontend-e2e",
+      "state": "running",
+      "health_status": null,
+      "compose_project": "eln-e2e",
+      "compose_service": "frontend",
+      "compose_working_dir": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo",
+      "compose_config_files": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/docker-compose.e2e.yml",
+      "container_oci_revision": null,
+      "inspected_image_id": "sha256:9e76a86165a0cef97148f4ffd741eb8ab0c9ed1a99332d689ae8657189e46369",
+      "image_oci_revision": null,
+      "oci_revision_matches_expected": false,
+      "image_id_matches_container": true
+    }
+  ],
+  "backend_http": [
+    {
+      "url": "http://127.0.0.1:18000/ready",
+      "http_status": 200,
+      "duration_ms": 24.355,
+      "non_sensitive_fields": {
+        "status": "ready",
+        "checks": {
+          "database": "ok",
+          "storage": "ok"
+        },
+        "revision": "4f660060ba6012266d7e8fa8470000c0ee423cd6"
+      },
+      "selected_response_headers": {
+        "Content-Type": "application/json",
+        "X-Backend-Runtime": "axum"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:18000/health",
+      "http_status": 200,
+      "duration_ms": 3.474,
+      "non_sensitive_fields": {
+        "status": "ok"
+      },
+      "selected_response_headers": {
+        "Content-Type": "application/json",
+        "X-Backend-Runtime": "axum"
+      }
+    }
+  ],
+  "frontend_http_ready": {
+    "url": "http://127.0.0.1:13000/login",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "body_recorded": false
+  },
+  "identity_comparison": {
+    "backend_image_revision_matches_final_commit": true,
+    "backend_container_revision_matches_final_commit": true,
+    "backend_ready_revision_matches_final_commit": true,
+    "both_container_image_ids_stable_during_capture": true,
+    "both_compose_project_labels_match": true,
+    "both_compose_working_dir_match_snapshot": true,
+    "frontend_image_revision_available": false,
+    "frontend_image_revision_matches_final_commit": null,
+    "frontend_build_input_all_match_final_commit": true,
+    "frontend_build_input_unchanged_from_prior_validated_runtime_input": true,
+    "snapshot_manifest_revision_matches_final_commit": true,
+    "snapshot_git_revision_matches_final_commit": true
+  },
+  "frontend_build_context_input": {
+    "manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v6-frontend-build-input.json",
+    "manifest_sha256": "df0985698698eb7b6bb728afb60c69f69d6543eb7e0a6d3f9a9d9493aea5d9f7",
+    "aggregate_sha256": "ed5fd615491f533d7246fdc02177e88c46dc46875b08919a3bc5e80797f27b48",
+    "tracked_file_count": 102,
+    "all_match_commit": true,
+    "all_match_validated8d45_runtime_input": true
+  },
+  "frontend_dockerfile": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/Dockerfile",
+    "sha256": "e12ba017cb15e517c881db37b9175246c0d257f4af08f73dbde3575f65ab4f40",
+    "defines_oci_revision_label": false
+  },
+  "limitation": "Frontend Dockerfile has no OCI revision label. Its 102 tracked build-context files match final commit and prior validated runtime source; Compose image ID/provenance are captured. This does not independently attest compiled frontend image contents through OCI revision.",
+  "read_only_scope": [
+    "Selected Docker ID/state/Compose/OCI revision fields only; no environment or secrets",
+    "GET backend /ready and /health; frontend /login status only",
+    "No Compose mutation or product source change",
+    "Identity capture does not claim E2E scenario PASS"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.792602+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+    "experiment_type": "Golden_Gate_assembly",
+    "experiment_date": "2021-07-06",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "- Transforming RFP Constructs\n- Moved 5 transformation plates from 37C room to 4C room (as per instructed by Janella)\n- Golden Gate Assembly of psicA and golden gate compatible RFP construct (x2 duplicates)\n1. IDT psicA gene fragment preparation\n- Added 25 uL to make 10 ng/uL of psicA\n- Incubated for ~10 minutes at 60 degrees celsius to ensure the solvent comes in contact with the tiny pellet.\n2. Golden Gate Assembly Reaction:\n- 0.5 uL of T4 ligase\n- 1 uL BsaI\n- 2 uL 10X T4 Buffer\n- 2 uL 10X BSA Buffer\n- 6 uL psicA insert + 0.5 uL of DNA amplicon\n- Fix volume to 20 uL using H2O\n3. Incubated Golden Gate Assembly reaction at 37 degrees celsius for 1hr"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 7,
+    "project_id": 1,
+    "template_id": null,
+    "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+    "experiment_type": "Golden_Gate_assembly",
+    "experiment_date": "2021-07-06",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 7,
+    "created_at": "2026-10-10T15:52:29.225775Z",
+    "updated_at": "2026-10-10T15:52:29.225775Z"
+  }
+}

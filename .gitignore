@@ -68,3 +68,38 @@ docs/experiments/confirmatory-review-completion-latest.md
 # Agent video recordings
 agent-work/reports/**/*.mp4
 agent-work/reports/**/*.webm
+
+# Local research workspace per AGENTS.md; canonical evidence stays in docs/.
+# Existing tracked AI/process records remain tracked; do not exclude by outcome.
+/agent-work/*
+!/agent-work/README.md
+!/agent-work/LOG.md
+!/agent-work/MANIFEST.md
+!/agent-work/thesis-agents/
+/.playwright-cli/
+/.freebuff/
+/docs/thesis-cleanup-T135-2026-10-10/render-final-v2/*.png
+/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/*.png
+/docs/thesis-cleanup-T135-2026-10-10/render-final/*.png
+/docs/thesis-cleanup-T135-2026-10-10/render-stage1/*.png
+/docs/thesis-cleanup-T135-2026-10-10/render-stage2/*.png
+/docs/thesis-cleanup-T135-2026-10-10/render-stage3/*.png
+/docs/thesis-cleanup-T135-2026-10-10/render-stage4/*.png
+/docs/thesis-cleanup-T135-2026-10-10/source-media/*.png
+/docs/thesis-revision-T134-2026-10-09/render-final-v2/*.png
+/docs/thesis-revision-T134-2026-10-09/render-final-v3/*.png
+/docs/thesis-revision-T134-2026-10-09/render-final-v4/*.png
+/docs/thesis-revision-T134-2026-10-09/render-final-v5/*.png
+/docs/thesis-revision-T134-2026-10-09/render-final/*.png
+/docs/thesis-revision-T134-2026-10-09/render-first/*.png
+/docs/thesis-revision-T134-2026-10-09/render-font-test/*.png
+/docs/thesis-revision-T134-2026-10-09/render-fourth/*.png
+/docs/thesis-revision-T134-2026-10-09/render-second/*.png
+/docs/thesis-revision-T134-2026-10-09/render-source/*.png
+/docs/thesis-revision-T134-2026-10-09/render-third/*.png
+/docs/毕业论文-导师评价深化修订副本-2026-09-24.pages
+/docs/答辩材料/答辩PPT-可编辑版.pptx
+/docs/答辩材料/答辩PPT-图片版.pptx
+/data/real/
+# Original local E2E JWT retained locally; publish the labeled .public-redacted.json copy.
+/docs/thesis-fixes-T139-2026-10-11/e2e-failed-v4-results.json

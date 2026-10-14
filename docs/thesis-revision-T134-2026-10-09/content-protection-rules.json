@@ -1,0 +1,41 @@
+{
+  "baseline": "/Users/yusong/Desktop/1005-修改.docx",
+  "review_scope": "只读审计独立Word修订副本；基线为接受原导师修订后的正文；不以生成脚本自报作为唯一保护证据",
+  "expected_source_counts": {
+    "zip_parts": 74,
+    "oMath": 48,
+    "drawing": 48,
+    "table": 104,
+    "section_properties": 3,
+    "field_characters": 603,
+    "field_instructions": 201,
+    "bookmark_starts": 186,
+    "bookmark_ends": 186,
+    "comment_references": 16,
+    "comment_range_starts": 6,
+    "comment_range_ends": 6,
+    "comment_ids": ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"],
+    "range_ids": ["1","2","6","9","13","15"]
+  },
+  "gates": [
+    {"id":"ZIP","criterion":"源与目标全部ZIP条目存在；除word/document.xml与word/settings.xml外，各部件SHA256完全相同。"},
+    {"id":"MEDIA","criterion":"48个图片部件、48个drawing及其关系引用保持一致，图片字节与drawing规范化XML均不变。"},
+    {"id":"MATH","criterion":"全部48个m:oMath在接受导师格式修订后逐一规范化XML相同；不得只比数量。新增内容只能为编号标签。"},
+    {"id":"COMMENTS","criterion":"comments.xml、commentsExtended.xml、people.xml等部件原样；16个commentReference每ID恰一次，6对range每ID各一次，不出现新增编号复制ID10等重复。"},
+    {"id":"BOOKMARKS","criterion":"186对bookmark ID与名称不丢失、不重复；未经授权移动的书签或域需要报告。改写段落中的锚点可扩为整段。"},
+    {"id":"FIELDS","criterion":"603个fldChar、201个instrText及域结构保持一致；TOC更新如另行授权，则独立列明。"},
+    {"id":"TABLES","criterion":"104个表、各表行/列与单元格结构不变；已有数据单元格文本保持，新增公式编号只增段落。"},
+    {"id":"UNTOUCHED","criterion":"按changes.json允许变动索引与新增段落定位；所有非授权原段落对接受导师修订后基线逐段比较文本与规范化XML，仅红highlight移除属于授权全局样式变化。"},
+    {"id":"NUMBERS","criterion":"全部实验数、单位、p值、百分比、数据量、日期、模型/接口标识与原文对应；允许的变化单列为公式编号顺延、伪代码行号顺延、新增统计计算说明及核正文献元数据。"},
+    {"id":"CITATIONS","criterion":"原引文编号不随正文改写漂移；新增统计引用与书目有对应；公式交叉引用6-6改6-7并新增至6-10。"},
+    {"id":"ALGORITHM","criterion":"原24行展开为26行，仅首个inline if拆为3行与行号后移2，其余各行剥离编号/缩进后的语义串完全相同。"},
+    {"id":"REVISIONS","criterion":"导师原31个ins、14个del、17个rPrChange、1个pPrChange正确接受，原del中的ID15三类marker保留；目标无残留修订元素。"},
+    {"id":"LANGUAGE","criterion":"摘要角色/实现路径/证据边界、红色文字、ok日志解释、致谢删除符合逐条意见；p=0.0938未改为显著，不将100%泛化。"},
+    {"id":"LAYOUT","criterion":"独立文字审计不能替代渲染；根agent逐页查新增综述/统计段、表6-4、算法缩进、摘要及致谢，并检查中文缺字、图表分页和编号对齐。"}
+  ],
+  "script_findings": [
+    {"severity":"fix-before-build","location":"新增公式编号deepcopy(ps[1272])循环","issue":"源P1272含commentReference ID10，deepcopy+rightnumber+settext将其复制到四个新编号段。","required_fix":"复制后清除commentRangeStart、commentRangeEnd、commentReference、bookmarkStart、bookmarkEnd再写编号。"},
+    {"severity":"verified","location":"已知replace目标","issue":"语言/摘要/算法/测试说明/公式交叉引用目标均不含OMML、drawing、hyperlink或field；数学所在1296/1306/1307/1309仅addnext编号。"},
+    {"severity":"verify-later","location":"文献与统计JSON待交付","issue":"需检查新增replace目标是否含数学/图/域，重写前再次核对；不得因settext全清子元素而损坏非文本对象。"}
+  ]
+}

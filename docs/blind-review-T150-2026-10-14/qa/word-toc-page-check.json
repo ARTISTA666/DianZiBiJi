@@ -1,0 +1,2113 @@
+{
+  "task": "T150",
+  "source_docx_sha256": "ebe61a107576280f153a41a8ad5fa4edd565decd83fb4d4cbd2c0863a984bb15",
+  "pdf_sha256": "f47ee881851c4c23d4e39035589af45d2499c7d64df80023f6abaa4f183c3a1e",
+  "pdf_pages": 101,
+  "method": "Extracted TOC cached values from physical pages 6/7 and exact normalized heading-line text from all non-TOC PDF pages; visual layout conclusions recorded separately. Printed page convention directly observed in pages 36—70 and initial PDF pages.",
+  "entries": [
+    {
+      "title": "摘　要",
+      "cached_page": "I",
+      "matches": [
+        {
+          "physical_page": 4,
+          "printed_page": "I",
+          "matching_lines": [
+            "摘　要"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 59,
+      "old_page": "I",
+      "new_page": "I",
+      "old_full_paragraph": "摘　要I",
+      "new_full_paragraph": "摘　要I",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "Abstract",
+      "cached_page": "II",
+      "matches": [
+        {
+          "physical_page": 5,
+          "printed_page": "II",
+          "matching_lines": [
+            "Abstract"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 60,
+      "old_page": "II",
+      "new_page": "II",
+      "old_full_paragraph": "AbstractII",
+      "new_full_paragraph": "AbstractII",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第一章 绪论",
+      "cached_page": "1",
+      "matches": [
+        {
+          "physical_page": 8,
+          "printed_page": "1",
+          "matching_lines": [
+            "第一章 绪论"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 61,
+      "old_page": "1",
+      "new_page": "1",
+      "old_full_paragraph": "第一章 绪论1",
+      "new_full_paragraph": "第一章 绪论1",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.1 研究背景及意义",
+      "cached_page": "1",
+      "matches": [
+        {
+          "physical_page": 8,
+          "printed_page": "1",
+          "matching_lines": [
+            "1.1 研究背景及意义"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 62,
+      "old_page": "1",
+      "new_page": "1",
+      "old_full_paragraph": "1.1 研究背景及意义1",
+      "new_full_paragraph": "1.1 研究背景及意义1",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.2 国内外研究现状",
+      "cached_page": "1",
+      "matches": [
+        {
+          "physical_page": 8,
+          "printed_page": "1",
+          "matching_lines": [
+            "1.2 国内外研究现状"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 63,
+      "old_page": "1",
+      "new_page": "1",
+      "old_full_paragraph": "1.2 国内外研究现状1",
+      "new_full_paragraph": "1.2 国内外研究现状1",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.2.1 电子实验笔记系统研究现状",
+      "cached_page": "1",
+      "matches": [
+        {
+          "physical_page": 8,
+          "printed_page": "1",
+          "matching_lines": [
+            "1.2.1 电子实验笔记系统研究现状"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 64,
+      "old_page": "1",
+      "new_page": "1",
+      "old_full_paragraph": "1.2.1 电子实验笔记系统研究现状1",
+      "new_full_paragraph": "1.2.1 电子实验笔记系统研究现状1",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.2.2 大语言模型与 RAG 技术研究现状",
+      "cached_page": "2",
+      "matches": [
+        {
+          "physical_page": 9,
+          "printed_page": "2",
+          "matching_lines": [
+            "1.2.2 大语言模型与 RAG 技术研究现状"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 65,
+      "old_page": "2",
+      "new_page": "2",
+      "old_full_paragraph": "1.2.2 大语言模型与 RAG 技术研究现状2",
+      "new_full_paragraph": "1.2.2 大语言模型与 RAG 技术研究现状2",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.2.3 知识图谱在科研数据管理中的应用现状",
+      "cached_page": "3",
+      "matches": [
+        {
+          "physical_page": 10,
+          "printed_page": "3",
+          "matching_lines": [
+            "1.2.3 知识图谱在科研数据管理中的应用现状"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 66,
+      "old_page": "3",
+      "new_page": "3",
+      "old_full_paragraph": "1.2.3 知识图谱在科研数据管理中的应用现状3",
+      "new_full_paragraph": "1.2.3 知识图谱在科研数据管理中的应用现状3",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.2.4 智能体与工具调用技术研究现状",
+      "cached_page": "3",
+      "matches": [
+        {
+          "physical_page": 10,
+          "printed_page": "3",
+          "matching_lines": [
+            "1.2.4 智能体与工具调用技术研究现状"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 67,
+      "old_page": "3",
+      "new_page": "3",
+      "old_full_paragraph": "1.2.4 智能体与工具调用技术研究现状3",
+      "new_full_paragraph": "1.2.4 智能体与工具调用技术研究现状3",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.2.5 小结与研究问题",
+      "cached_page": "3",
+      "matches": [
+        {
+          "physical_page": 10,
+          "printed_page": "3",
+          "matching_lines": [
+            "1.2.5 小结与研究问题"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 68,
+      "old_page": "3",
+      "new_page": "3",
+      "old_full_paragraph": "1.2.5 小结与研究问题3",
+      "new_full_paragraph": "1.2.5 小结与研究问题3",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.3 研究目标及研究内容",
+      "cached_page": "4",
+      "matches": [
+        {
+          "physical_page": 11,
+          "printed_page": "4",
+          "matching_lines": [
+            "1.3 研究目标及研究内容"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 69,
+      "old_page": "4",
+      "new_page": "4",
+      "old_full_paragraph": "1.3 研究目标及研究内容4",
+      "new_full_paragraph": "1.3 研究目标及研究内容4",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.4 研究贡献",
+      "cached_page": "4",
+      "matches": [
+        {
+          "physical_page": 11,
+          "printed_page": "4",
+          "matching_lines": [
+            "1.4 研究贡献"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 70,
+      "old_page": "4",
+      "new_page": "4",
+      "old_full_paragraph": "1.4 研究贡献4",
+      "new_full_paragraph": "1.4 研究贡献4",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "1.5 论文组织结构",
+      "cached_page": "5",
+      "matches": [
+        {
+          "physical_page": 12,
+          "printed_page": "5",
+          "matching_lines": [
+            "1.5 论文组织结构"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 71,
+      "old_page": "5",
+      "new_page": "5",
+      "old_full_paragraph": "1.5 论文组织结构5",
+      "new_full_paragraph": "1.5 论文组织结构5",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第二章 相关理论与技术",
+      "cached_page": "6",
+      "matches": [
+        {
+          "physical_page": 13,
+          "printed_page": "6",
+          "matching_lines": [
+            "第二章 相关理论与技术"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 72,
+      "old_page": "6",
+      "new_page": "6",
+      "old_full_paragraph": "第二章 相关理论与技术6",
+      "new_full_paragraph": "第二章 相关理论与技术6",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "2.1 电子实验笔记与科研数据管理",
+      "cached_page": "6",
+      "matches": [
+        {
+          "physical_page": 13,
+          "printed_page": "6",
+          "matching_lines": [
+            "2.1 电子实验笔记与科研数据管理"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 73,
+      "old_page": "6",
+      "new_page": "6",
+      "old_full_paragraph": "2.1 电子实验笔记与科研数据管理6",
+      "new_full_paragraph": "2.1 电子实验笔记与科研数据管理6",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "2.2 大语言模型与检索增强生成技术",
+      "cached_page": "6",
+      "matches": [
+        {
+          "physical_page": 13,
+          "printed_page": "6",
+          "matching_lines": [
+            "2.2 大语言模型与检索增强生成技术"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 74,
+      "old_page": "6",
+      "new_page": "6",
+      "old_full_paragraph": "2.2 大语言模型与检索增强生成技术6",
+      "new_full_paragraph": "2.2 大语言模型与检索增强生成技术6",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "2.3 知识图谱与实体关系建模",
+      "cached_page": "7",
+      "matches": [
+        {
+          "physical_page": 14,
+          "printed_page": "7",
+          "matching_lines": [
+            "2.3 知识图谱与实体关系建模"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 75,
+      "old_page": "7",
+      "new_page": "7",
+      "old_full_paragraph": "2.3 知识图谱与实体关系建模7",
+      "new_full_paragraph": "2.3 知识图谱与实体关系建模7",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "2.4 智能体与工具调用机制",
+      "cached_page": "7",
+      "matches": [
+        {
+          "physical_page": 14,
+          "printed_page": "7",
+          "matching_lines": [
+            "2.4 智能体与工具调用机制"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 76,
+      "old_page": "7",
+      "new_page": "7",
+      "old_full_paragraph": "2.4 智能体与工具调用机制7",
+      "new_full_paragraph": "2.4 智能体与工具调用机制7",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "2.5 系统开发相关技术",
+      "cached_page": "7",
+      "matches": [
+        {
+          "physical_page": 14,
+          "printed_page": "7",
+          "matching_lines": [
+            "2.5 系统开发相关技术"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 77,
+      "old_page": "7",
+      "new_page": "7",
+      "old_full_paragraph": "2.5 系统开发相关技术7",
+      "new_full_paragraph": "2.5 系统开发相关技术7",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "2.6 本章小结",
+      "cached_page": "7",
+      "matches": [
+        {
+          "physical_page": 14,
+          "printed_page": "7",
+          "matching_lines": [
+            "2.6 本章小结"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 78,
+      "old_page": "7",
+      "new_page": "7",
+      "old_full_paragraph": "2.6 本章小结7",
+      "new_full_paragraph": "2.6 本章小结7",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第三章 需求分析",
+      "cached_page": "8",
+      "matches": [
+        {
+          "physical_page": 15,
+          "printed_page": "8",
+          "matching_lines": [
+            "第三章 需求分析"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 79,
+      "old_page": "8",
+      "new_page": "8",
+      "old_full_paragraph": "第三章 需求分析8",
+      "new_full_paragraph": "第三章 需求分析8",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "3.1 科研实验记录业务场景与角色分析",
+      "cached_page": "8",
+      "matches": [
+        {
+          "physical_page": 15,
+          "printed_page": "8",
+          "matching_lines": [
+            "3.1 科研实验记录业务场景与角色分析"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 80,
+      "old_page": "8",
+      "new_page": "8",
+      "old_full_paragraph": "3.1 科研实验记录业务场景与角色分析8",
+      "new_full_paragraph": "3.1 科研实验记录业务场景与角色分析8",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "3.2 系统问题场景分析",
+      "cached_page": "9",
+      "matches": [
+        {
+          "physical_page": 16,
+          "printed_page": "9",
+          "matching_lines": [
+            "3.2 系统问题场景分析"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 81,
+      "old_page": "9",
+      "new_page": "9",
+      "old_full_paragraph": "3.2 系统问题场景分析9",
+      "new_full_paragraph": "3.2 系统问题场景分析9",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "3.3 系统功能需求分析",
+      "cached_page": "9",
+      "matches": [
+        {
+          "physical_page": 17,
+          "printed_page": "10",
+          "matching_lines": [
+            "3.3 系统功能需求分析"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 82,
+      "old_page": "9",
+      "new_page": "10",
+      "old_full_paragraph": "3.3 系统功能需求分析9",
+      "new_full_paragraph": "3.3 系统功能需求分析10",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "3.4 系统非功能需求",
+      "cached_page": "10",
+      "matches": [
+        {
+          "physical_page": 17,
+          "printed_page": "10",
+          "matching_lines": [
+            "3.4 系统非功能需求"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": true,
+      "paragraph_index": 83,
+      "old_page": "10",
+      "new_page": "10",
+      "old_full_paragraph": "3.4 系统非功能需求10",
+      "new_full_paragraph": "3.4 系统非功能需求10",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "3.5 本章小结",
+      "cached_page": "10",
+      "matches": [
+        {
+          "physical_page": 18,
+          "printed_page": "11",
+          "matching_lines": [
+            "3.5 本章小结"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 84,
+      "old_page": "10",
+      "new_page": "11",
+      "old_full_paragraph": "3.5 本章小结10",
+      "new_full_paragraph": "3.5 本章小结11",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第四章 系统设计",
+      "cached_page": "11",
+      "matches": [
+        {
+          "physical_page": 19,
+          "printed_page": "12",
+          "matching_lines": [
+            "第四章 系统设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 85,
+      "old_page": "11",
+      "new_page": "12",
+      "old_full_paragraph": "第四章 系统设计11",
+      "new_full_paragraph": "第四章 系统设计12",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.1 系统总体架构设计",
+      "cached_page": "11",
+      "matches": [
+        {
+          "physical_page": 19,
+          "printed_page": "12",
+          "matching_lines": [
+            "4.1 系统总体架构设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 86,
+      "old_page": "11",
+      "new_page": "12",
+      "old_full_paragraph": "4.1 系统总体架构设计11",
+      "new_full_paragraph": "4.1 系统总体架构设计12",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.2 用户角色与权限设计",
+      "cached_page": "12",
+      "matches": [
+        {
+          "physical_page": 20,
+          "printed_page": "13",
+          "matching_lines": [
+            "4.2 用户角色与权限设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 87,
+      "old_page": "12",
+      "new_page": "13",
+      "old_full_paragraph": "4.2 用户角色与权限设计12",
+      "new_full_paragraph": "4.2 用户角色与权限设计13",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.3 系统功能模块设计",
+      "cached_page": "13",
+      "matches": [
+        {
+          "physical_page": 21,
+          "printed_page": "14",
+          "matching_lines": [
+            "4.3 系统功能模块设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 88,
+      "old_page": "13",
+      "new_page": "14",
+      "old_full_paragraph": "4.3 系统功能模块设计13",
+      "new_full_paragraph": "4.3 系统功能模块设计14",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.4 数据库设计",
+      "cached_page": "14",
+      "matches": [
+        {
+          "physical_page": 22,
+          "printed_page": "15",
+          "matching_lines": [
+            "4.4 数据库设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 89,
+      "old_page": "14",
+      "new_page": "15",
+      "old_full_paragraph": "4.4 数据库设计14",
+      "new_full_paragraph": "4.4 数据库设计15",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.4.1 数据存储与服务依赖",
+      "cached_page": "14",
+      "matches": [
+        {
+          "physical_page": 22,
+          "printed_page": "15",
+          "matching_lines": [
+            "4.4.1 数据存储与服务依赖"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 90,
+      "old_page": "14",
+      "new_page": "15",
+      "old_full_paragraph": "4.4.1 数据存储与服务依赖14",
+      "new_full_paragraph": "4.4.1 数据存储与服务依赖15",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.4.2 数据组织与表结构",
+      "cached_page": "15",
+      "matches": [
+        {
+          "physical_page": 23,
+          "printed_page": "16",
+          "matching_lines": [
+            "4.4.2 数据组织与表结构"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 91,
+      "old_page": "15",
+      "new_page": "16",
+      "old_full_paragraph": "4.4.2 数据组织与表结构15",
+      "new_full_paragraph": "4.4.2 数据组织与表结构16",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5 实验知识图谱构建方法",
+      "cached_page": "16",
+      "matches": [
+        {
+          "physical_page": 24,
+          "printed_page": "17",
+          "matching_lines": [
+            "4.5 实验知识图谱构建方法"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 92,
+      "old_page": "16",
+      "new_page": "17",
+      "old_full_paragraph": "4.5 实验知识图谱构建方法16",
+      "new_full_paragraph": "4.5 实验知识图谱构建方法17",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.1 实验知识图谱总体设计",
+      "cached_page": "17",
+      "matches": [
+        {
+          "physical_page": 25,
+          "printed_page": "18",
+          "matching_lines": [
+            "4.5.1 实验知识图谱总体设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 93,
+      "old_page": "17",
+      "new_page": "18",
+      "old_full_paragraph": "4.5.1 实验知识图谱总体设计17",
+      "new_full_paragraph": "4.5.1 实验知识图谱总体设计18",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.2 实验记录实体定义",
+      "cached_page": "17",
+      "matches": [
+        {
+          "physical_page": 25,
+          "printed_page": "18",
+          "matching_lines": [
+            "4.5.2 实验记录实体定义"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 94,
+      "old_page": "17",
+      "new_page": "18",
+      "old_full_paragraph": "4.5.2 实验记录实体定义17",
+      "new_full_paragraph": "4.5.2 实验记录实体定义18",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.3 实验知识关系定义",
+      "cached_page": "18",
+      "matches": [
+        {
+          "physical_page": 26,
+          "printed_page": "19",
+          "matching_lines": [
+            "4.5.3 实验知识关系定义"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 95,
+      "old_page": "18",
+      "new_page": "19",
+      "old_full_paragraph": "4.5.3 实验知识关系定义18",
+      "new_full_paragraph": "4.5.3 实验知识关系定义19",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.4 基于实验笔记内容的实体关系抽取方法",
+      "cached_page": "19",
+      "matches": [
+        {
+          "physical_page": 27,
+          "printed_page": "20",
+          "matching_lines": [
+            "4.5.4 基于实验笔记内容的实体关系抽取方法"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 96,
+      "old_page": "19",
+      "new_page": "20",
+      "old_full_paragraph": "4.5.4 基于实验笔记内容的实体关系抽取方法19",
+      "new_full_paragraph": "4.5.4 基于实验笔记内容的实体关系抽取方法20",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.5 审核状态驱动的知识图谱更新机制",
+      "cached_page": "22",
+      "matches": [
+        {
+          "physical_page": 30,
+          "printed_page": "23",
+          "matching_lines": [
+            "4.5.5 审核状态驱动的知识图谱更新机制"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 97,
+      "old_page": "22",
+      "new_page": "23",
+      "old_full_paragraph": "4.5.5 审核状态驱动的知识图谱更新机制22",
+      "new_full_paragraph": "4.5.5 审核状态驱动的知识图谱更新机制23",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.6 资料审核与知识入库机制",
+      "cached_page": "22",
+      "matches": [
+        {
+          "physical_page": 30,
+          "printed_page": "23",
+          "matching_lines": [
+            "4.5.6 资料审核与知识入库机制"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 98,
+      "old_page": "22",
+      "new_page": "23",
+      "old_full_paragraph": "4.5.6 资料审核与知识入库机制22",
+      "new_full_paragraph": "4.5.6 资料审核与知识入库机制23",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.7 实验知识图谱可视化与关联检索",
+      "cached_page": "22",
+      "matches": [
+        {
+          "physical_page": 30,
+          "printed_page": "23",
+          "matching_lines": [
+            "4.5.7 实验知识图谱可视化与关联检索"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 99,
+      "old_page": "22",
+      "new_page": "23",
+      "old_full_paragraph": "4.5.7 实验知识图谱可视化与关联检索22",
+      "new_full_paragraph": "4.5.7 实验知识图谱可视化与关联检索23",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.5.8 计划知识点管理与覆盖匹配",
+      "cached_page": "22",
+      "matches": [
+        {
+          "physical_page": 30,
+          "printed_page": "23",
+          "matching_lines": [
+            "4.5.8 计划知识点管理与覆盖匹配"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 100,
+      "old_page": "22",
+      "new_page": "23",
+      "old_full_paragraph": "4.5.8 计划知识点管理与覆盖匹配22",
+      "new_full_paragraph": "4.5.8 计划知识点管理与覆盖匹配23",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6 融合知识图谱的智能问答方法",
+      "cached_page": "22",
+      "matches": [
+        {
+          "physical_page": 30,
+          "printed_page": "23",
+          "matching_lines": [
+            "4.6 融合知识图谱的智能问答方法"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 101,
+      "old_page": "22",
+      "new_page": "23",
+      "old_full_paragraph": "4.6 融合知识图谱的智能问答方法22",
+      "new_full_paragraph": "4.6 融合知识图谱的智能问答方法23",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6.1 项目级 RAG 知识库构建与分块",
+      "cached_page": "23",
+      "matches": [
+        {
+          "physical_page": 31,
+          "printed_page": "24",
+          "matching_lines": [
+            "4.6.1 项目级 RAG 知识库构建与分块"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 102,
+      "old_page": "23",
+      "new_page": "24",
+      "old_full_paragraph": "4.6.1 项目级 RAG 知识库构建与分块23",
+      "new_full_paragraph": "4.6.1 项目级 RAG 知识库构建与分块24",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6.2 词法检索与 BM25 倒排索引",
+      "cached_page": "23",
+      "matches": [
+        {
+          "physical_page": 31,
+          "printed_page": "24",
+          "matching_lines": [
+            "4.6.2 词法检索与 BM25 倒排索引"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 103,
+      "old_page": "23",
+      "new_page": "24",
+      "old_full_paragraph": "4.6.2 词法检索与 BM25 倒排索引23",
+      "new_full_paragraph": "4.6.2 词法检索与 BM25 倒排索引24",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6.3 混合检索的 RRF 融合",
+      "cached_page": "24",
+      "matches": [
+        {
+          "physical_page": 32,
+          "printed_page": "25",
+          "matching_lines": [
+            "4.6.3 混合检索的 RRF 融合"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 104,
+      "old_page": "24",
+      "new_page": "25",
+      "old_full_paragraph": "4.6.3 混合检索的 RRF 融合24",
+      "new_full_paragraph": "4.6.3 混合检索的 RRF 融合25",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6.4 融合知识图谱的检索增强策略",
+      "cached_page": "25",
+      "matches": [
+        {
+          "physical_page": 33,
+          "printed_page": "26",
+          "matching_lines": [
+            "4.6.4 融合知识图谱的检索增强策略"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 105,
+      "old_page": "25",
+      "new_page": "26",
+      "old_full_paragraph": "4.6.4 融合知识图谱的检索增强策略25",
+      "new_full_paragraph": "4.6.4 融合知识图谱的检索增强策略26",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6.5 权限约束下的问答执行流程",
+      "cached_page": "26",
+      "matches": [
+        {
+          "physical_page": 34,
+          "printed_page": "27",
+          "matching_lines": [
+            "4.6.5 权限约束下的问答执行流程"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 106,
+      "old_page": "26",
+      "new_page": "27",
+      "old_full_paragraph": "4.6.5 权限约束下的问答执行流程26",
+      "new_full_paragraph": "4.6.5 权限约束下的问答执行流程27",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.6.6 问答来源、审计与评价记录",
+      "cached_page": "26",
+      "matches": [
+        {
+          "physical_page": 34,
+          "printed_page": "27",
+          "matching_lines": [
+            "4.6.6 问答来源、审计与评价记录"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 107,
+      "old_page": "26",
+      "new_page": "27",
+      "old_full_paragraph": "4.6.6 问答来源、审计与评价记录26",
+      "new_full_paragraph": "4.6.6 问答来源、审计与评价记录27",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.7 固定任务型智能辅助与工具调用设计",
+      "cached_page": "27",
+      "matches": [
+        {
+          "physical_page": 35,
+          "printed_page": "28",
+          "matching_lines": [
+            "4.7 固定任务型智能辅助与工具调用设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 108,
+      "old_page": "27",
+      "new_page": "28",
+      "old_full_paragraph": "4.7 固定任务型智能辅助与工具调用设计27",
+      "new_full_paragraph": "4.7 固定任务型智能辅助与工具调用设计28",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.7.1 MCP 接口与会话助手实现",
+      "cached_page": "27",
+      "matches": [
+        {
+          "physical_page": 35,
+          "printed_page": "28",
+          "matching_lines": [
+            "4.7.1 MCP 接口与会话助手实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 109,
+      "old_page": "27",
+      "new_page": "28",
+      "old_full_paragraph": "4.7.1 MCP 接口与会话助手实现27",
+      "new_full_paragraph": "4.7.1 MCP 接口与会话助手实现28",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.7.2 固定任务模板设计",
+      "cached_page": "28",
+      "matches": [
+        {
+          "physical_page": 36,
+          "printed_page": "29",
+          "matching_lines": [
+            "4.7.2 固定任务模板设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 110,
+      "old_page": "28",
+      "new_page": "29",
+      "old_full_paragraph": "4.7.2 固定任务模板设计28",
+      "new_full_paragraph": "4.7.2 固定任务模板设计29",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.7.3 工具注册与风险分级",
+      "cached_page": "29",
+      "matches": [
+        {
+          "physical_page": 37,
+          "printed_page": "30",
+          "matching_lines": [
+            "4.7.3 工具注册与风险分级"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 111,
+      "old_page": "29",
+      "new_page": "30",
+      "old_full_paragraph": "4.7.3 工具注册与风险分级29",
+      "new_full_paragraph": "4.7.3 工具注册与风险分级30",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.7.4 高风险操作的人工确认与幂等控制",
+      "cached_page": "30",
+      "matches": [
+        {
+          "physical_page": 38,
+          "printed_page": "31",
+          "matching_lines": [
+            "4.7.4 高风险操作的人工确认与幂等控制"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 112,
+      "old_page": "30",
+      "new_page": "31",
+      "old_full_paragraph": "4.7.4 高风险操作的人工确认与幂等控制30",
+      "new_full_paragraph": "4.7.4 高风险操作的人工确认与幂等控制31",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.7.5 提示版本管理",
+      "cached_page": "30",
+      "matches": [
+        {
+          "physical_page": 38,
+          "printed_page": "31",
+          "matching_lines": [
+            "4.7.5 提示版本管理"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 113,
+      "old_page": "30",
+      "new_page": "31",
+      "old_full_paragraph": "4.7.5 提示版本管理30",
+      "new_full_paragraph": "4.7.5 提示版本管理31",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.8 项目指标评估与人工干预",
+      "cached_page": "30",
+      "matches": [
+        {
+          "physical_page": 38,
+          "printed_page": "31",
+          "matching_lines": [
+            "4.8 项目指标评估与人工干预"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 114,
+      "old_page": "30",
+      "new_page": "31",
+      "old_full_paragraph": "4.8 项目指标评估与人工干预30",
+      "new_full_paragraph": "4.8 项目指标评估与人工干预31",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "4.9 本章小结",
+      "cached_page": "31",
+      "matches": [
+        {
+          "physical_page": 39,
+          "printed_page": "32",
+          "matching_lines": [
+            "4.9 本章小结"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 115,
+      "old_page": "31",
+      "new_page": "32",
+      "old_full_paragraph": "4.9 本章小结31",
+      "new_full_paragraph": "4.9 本章小结32",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第五章 系统实现",
+      "cached_page": "32",
+      "matches": [
+        {
+          "physical_page": 40,
+          "printed_page": "33",
+          "matching_lines": [
+            "第五章 系统实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 116,
+      "old_page": "32",
+      "new_page": "33",
+      "old_full_paragraph": "第五章 系统实现32",
+      "new_full_paragraph": "第五章 系统实现33",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.1 系统实现环境",
+      "cached_page": "32",
+      "matches": [
+        {
+          "physical_page": 40,
+          "printed_page": "33",
+          "matching_lines": [
+            "5.1 系统实现环境"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 117,
+      "old_page": "32",
+      "new_page": "33",
+      "old_full_paragraph": "5.1 系统实现环境32",
+      "new_full_paragraph": "5.1 系统实现环境33",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.2 实验数据集",
+      "cached_page": "32",
+      "matches": [
+        {
+          "physical_page": 40,
+          "printed_page": "33",
+          "matching_lines": [
+            "5.2 实验数据集"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 118,
+      "old_page": "32",
+      "new_page": "33",
+      "old_full_paragraph": "5.2 实验数据集32",
+      "new_full_paragraph": "5.2 实验数据集33",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3 系统功能实现",
+      "cached_page": "34",
+      "matches": [
+        {
+          "physical_page": 42,
+          "printed_page": "35",
+          "matching_lines": [
+            "5.3 系统功能实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 119,
+      "old_page": "34",
+      "new_page": "35",
+      "old_full_paragraph": "5.3 系统功能实现34",
+      "new_full_paragraph": "5.3 系统功能实现35",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.1 实验笔记审核与知识更新实现",
+      "cached_page": "35",
+      "matches": [
+        {
+          "physical_page": 43,
+          "printed_page": "36",
+          "matching_lines": [
+            "5.3.1 实验笔记审核与知识更新实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 120,
+      "old_page": "35",
+      "new_page": "36",
+      "old_full_paragraph": "5.3.1 实验笔记审核与知识更新实现35",
+      "new_full_paragraph": "5.3.1 实验笔记审核与知识更新实现36",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.2 资料向量化与检索实现",
+      "cached_page": "36",
+      "matches": [
+        {
+          "physical_page": 44,
+          "printed_page": "37",
+          "matching_lines": [
+            "5.3.2 资料向量化与检索实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 121,
+      "old_page": "36",
+      "new_page": "37",
+      "old_full_paragraph": "5.3.2 资料向量化与检索实现36",
+      "new_full_paragraph": "5.3.2 资料向量化与检索实现37",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.3 图谱增强问答与可视化实现",
+      "cached_page": "36",
+      "matches": [
+        {
+          "physical_page": 44,
+          "printed_page": "37",
+          "matching_lines": [
+            "5.3.3 图谱增强问答与可视化实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 122,
+      "old_page": "36",
+      "new_page": "37",
+      "old_full_paragraph": "5.3.3 图谱增强问答与可视化实现36",
+      "new_full_paragraph": "5.3.3 图谱增强问答与可视化实现37",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.4 固定任务与工具调用实现",
+      "cached_page": "37",
+      "matches": [
+        {
+          "physical_page": 45,
+          "printed_page": "38",
+          "matching_lines": [
+            "5.3.4 固定任务与工具调用实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 123,
+      "old_page": "37",
+      "new_page": "38",
+      "old_full_paragraph": "5.3.4 固定任务与工具调用实现37",
+      "new_full_paragraph": "5.3.4 固定任务与工具调用实现38",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.5 权限与审计实现",
+      "cached_page": "38",
+      "matches": [
+        {
+          "physical_page": 46,
+          "printed_page": "39",
+          "matching_lines": [
+            "5.3.5 权限与审计实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 124,
+      "old_page": "38",
+      "new_page": "39",
+      "old_full_paragraph": "5.3.5 权限与审计实现38",
+      "new_full_paragraph": "5.3.5 权限与审计实现39",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.6 计划覆盖功能实现",
+      "cached_page": "38",
+      "matches": [
+        {
+          "physical_page": 46,
+          "printed_page": "39",
+          "matching_lines": [
+            "5.3.6 计划覆盖功能实现"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 125,
+      "old_page": "38",
+      "new_page": "39",
+      "old_full_paragraph": "5.3.6 计划覆盖功能实现38",
+      "new_full_paragraph": "5.3.6 计划覆盖功能实现39",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.3.7 代表操作与模块对应",
+      "cached_page": "39",
+      "matches": [
+        {
+          "physical_page": 47,
+          "printed_page": "40",
+          "matching_lines": [
+            "5.3.7 代表操作与模块对应"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 126,
+      "old_page": "39",
+      "new_page": "40",
+      "old_full_paragraph": "5.3.7 代表操作与模块对应39",
+      "new_full_paragraph": "5.3.7 代表操作与模块对应40",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "5.4 本章小结",
+      "cached_page": "45",
+      "matches": [
+        {
+          "physical_page": 53,
+          "printed_page": "46",
+          "matching_lines": [
+            "5.4 本章小结"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 127,
+      "old_page": "45",
+      "new_page": "46",
+      "old_full_paragraph": "5.4 本章小结45",
+      "new_full_paragraph": "5.4 本章小结46",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第六章 系统测试与实验结果分析",
+      "cached_page": "46",
+      "matches": [
+        {
+          "physical_page": 54,
+          "printed_page": "47",
+          "matching_lines": [
+            "第六章 系统测试与实验结果分析"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 128,
+      "old_page": "46",
+      "new_page": "47",
+      "old_full_paragraph": "第六章 系统测试与实验结果分析46",
+      "new_full_paragraph": "第六章 系统测试与实验结果分析47",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.1 测试环境与数据集",
+      "cached_page": "46",
+      "matches": [
+        {
+          "physical_page": 54,
+          "printed_page": "47",
+          "matching_lines": [
+            "6.1 测试环境与数据集"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 129,
+      "old_page": "46",
+      "new_page": "47",
+      "old_full_paragraph": "6.1 测试环境与数据集46",
+      "new_full_paragraph": "6.1 测试环境与数据集47",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.2 功能与安全测试",
+      "cached_page": "47",
+      "matches": [
+        {
+          "physical_page": 55,
+          "printed_page": "48",
+          "matching_lines": [
+            "6.2 功能与安全测试"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 130,
+      "old_page": "47",
+      "new_page": "48",
+      "old_full_paragraph": "6.2 功能与安全测试47",
+      "new_full_paragraph": "6.2 功能与安全测试48",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.3 实验设计与评价指标",
+      "cached_page": "50",
+      "matches": [
+        {
+          "physical_page": 58,
+          "printed_page": "51",
+          "matching_lines": [
+            "6.3 实验设计与评价指标"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 131,
+      "old_page": "50",
+      "new_page": "51",
+      "old_full_paragraph": "6.3 实验设计与评价指标50",
+      "new_full_paragraph": "6.3 实验设计与评价指标51",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.4 多角色协作流程验证",
+      "cached_page": "51",
+      "matches": [
+        {
+          "physical_page": 60,
+          "printed_page": "53",
+          "matching_lines": [
+            "6.4 多角色协作流程验证"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 132,
+      "old_page": "51",
+      "new_page": "53",
+      "old_full_paragraph": "6.4 多角色协作流程验证51",
+      "new_full_paragraph": "6.4 多角色协作流程验证53",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5 归档实验分析",
+      "cached_page": "52",
+      "matches": [
+        {
+          "physical_page": 60,
+          "printed_page": "53",
+          "matching_lines": [
+            "6.5 归档实验分析"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 133,
+      "old_page": "52",
+      "new_page": "53",
+      "old_full_paragraph": "6.5 归档实验分析52",
+      "new_full_paragraph": "6.5 归档实验分析53",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5.1 实验一：知识图谱抽取质量评价",
+      "cached_page": "52",
+      "matches": [
+        {
+          "physical_page": 60,
+          "printed_page": "53",
+          "matching_lines": [
+            "6.5.1 实验一：知识图谱抽取质量评价"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 134,
+      "old_page": "52",
+      "new_page": "53",
+      "old_full_paragraph": "6.5.1 实验一：知识图谱抽取质量评价52",
+      "new_full_paragraph": "6.5.1 实验一：知识图谱抽取质量评价53",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照",
+      "cached_page": "52",
+      "matches": [
+        {
+          "physical_page": 60,
+          "printed_page": "53",
+          "matching_lines": [
+            "6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 135,
+      "old_page": "52",
+      "new_page": "53",
+      "old_full_paragraph": "6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照52",
+      "new_full_paragraph": "6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照53",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5.3 实验三：多方法对照实验",
+      "cached_page": "55",
+      "matches": [
+        {
+          "physical_page": 63,
+          "printed_page": "56",
+          "matching_lines": [
+            "6.5.3 实验三：多方法对照实验"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 136,
+      "old_page": "55",
+      "new_page": "56",
+      "old_full_paragraph": "6.5.3 实验三：多方法对照实验55",
+      "new_full_paragraph": "6.5.3 实验三：多方法对照实验56",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5.4 实验四：固定任务生成功能验证",
+      "cached_page": "57",
+      "matches": [
+        {
+          "physical_page": 66,
+          "printed_page": "59",
+          "matching_lines": [
+            "6.5.4 实验四：固定任务生成功能验证"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 137,
+      "old_page": "57",
+      "new_page": "59",
+      "old_full_paragraph": "6.5.4 实验四：固定任务生成功能验证57",
+      "new_full_paragraph": "6.5.4 实验四：固定任务生成功能验证59",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5.5 实验五：计划覆盖与预警机制验证",
+      "cached_page": "58",
+      "matches": [
+        {
+          "physical_page": 66,
+          "printed_page": "59",
+          "matching_lines": [
+            "6.5.5 实验五：计划覆盖与预警机制验证"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 138,
+      "old_page": "58",
+      "new_page": "59",
+      "old_full_paragraph": "6.5.5 实验五：计划覆盖与预警机制验证58",
+      "new_full_paragraph": "6.5.5 实验五：计划覆盖与预警机制验证59",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.5.6 自动评价补充",
+      "cached_page": "58",
+      "matches": [
+        {
+          "physical_page": 66,
+          "printed_page": "59",
+          "matching_lines": [
+            "6.5.6 自动评价补充"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 139,
+      "old_page": "58",
+      "new_page": "59",
+      "old_full_paragraph": "6.5.6 自动评价补充58",
+      "new_full_paragraph": "6.5.6 自动评价补充59",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.6 Rust 补充实验与业务验证",
+      "cached_page": "59",
+      "matches": [
+        {
+          "physical_page": 67,
+          "printed_page": "60",
+          "matching_lines": [
+            "6.6 Rust 补充实验与业务验证"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 140,
+      "old_page": "59",
+      "new_page": "60",
+      "old_full_paragraph": "6.6 Rust补充实验与业务验证59",
+      "new_full_paragraph": "6.6 Rust补充实验与业务验证60",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "6.7 本章小结",
+      "cached_page": "63",
+      "matches": [
+        {
+          "physical_page": 71,
+          "printed_page": "64",
+          "matching_lines": [
+            "6.7 本章小结"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 141,
+      "old_page": "63",
+      "new_page": "64",
+      "old_full_paragraph": "6.7 本章小结63",
+      "new_full_paragraph": "6.7 本章小结64",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "第七章 总结与展望",
+      "cached_page": "64",
+      "matches": [
+        {
+          "physical_page": 72,
+          "printed_page": "65",
+          "matching_lines": [
+            "第七章 总结与展望"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 142,
+      "old_page": "64",
+      "new_page": "65",
+      "old_full_paragraph": "第七章 总结与展望64",
+      "new_full_paragraph": "第七章 总结与展望65",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "7.1 工作总结",
+      "cached_page": "64",
+      "matches": [
+        {
+          "physical_page": 72,
+          "printed_page": "65",
+          "matching_lines": [
+            "7.1 工作总结"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 143,
+      "old_page": "64",
+      "new_page": "65",
+      "old_full_paragraph": "7.1 工作总结64",
+      "new_full_paragraph": "7.1 工作总结65",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "7.2 研究贡献",
+      "cached_page": "64",
+      "matches": [
+        {
+          "physical_page": 72,
+          "printed_page": "65",
+          "matching_lines": [
+            "7.2 研究贡献"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 144,
+      "old_page": "64",
+      "new_page": "65",
+      "old_full_paragraph": "7.2 研究贡献64",
+      "new_full_paragraph": "7.2 研究贡献65",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "7.3 不足与展望",
+      "cached_page": "65",
+      "matches": [
+        {
+          "physical_page": 73,
+          "printed_page": "66",
+          "matching_lines": [
+            "7.3 不足与展望"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 145,
+      "old_page": "65",
+      "new_page": "66",
+      "old_full_paragraph": "7.3 不足与展望65",
+      "new_full_paragraph": "7.3 不足与展望66",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "致谢",
+      "cached_page": "66",
+      "matches": [
+        {
+          "physical_page": 74,
+          "printed_page": "67",
+          "matching_lines": [
+            "致谢"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 146,
+      "old_page": "66",
+      "new_page": "67",
+      "old_full_paragraph": "致谢66",
+      "new_full_paragraph": "致谢67",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "参考文献",
+      "cached_page": "67",
+      "matches": [
+        {
+          "physical_page": 75,
+          "printed_page": "68",
+          "matching_lines": [
+            "参考文献"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 147,
+      "old_page": "67",
+      "new_page": "68",
+      "old_full_paragraph": "参考文献67",
+      "new_full_paragraph": "参考文献68",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "附录 A　RAG 对照实验问题清单",
+      "cached_page": "71",
+      "matches": [
+        {
+          "physical_page": 79,
+          "printed_page": "72",
+          "matching_lines": [
+            "附录 A　RAG 对照实验问题清单"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 148,
+      "old_page": "71",
+      "new_page": "72",
+      "old_full_paragraph": "附录 A　RAG 对照实验问题清单71",
+      "new_full_paragraph": "附录 A　RAG 对照实验问题清单72",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "附录 B　知识图谱抽取参考关系集",
+      "cached_page": "72",
+      "matches": [
+        {
+          "physical_page": 80,
+          "printed_page": "73",
+          "matching_lines": [
+            "附录 B　知识图谱抽取参考关系集"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 149,
+      "old_page": "72",
+      "new_page": "73",
+      "old_full_paragraph": "附录 B　知识图谱抽取参考关系集72",
+      "new_full_paragraph": "附录 B　知识图谱抽取参考关系集73",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "B.1 参考集构成与匹配判定",
+      "cached_page": "72",
+      "matches": [
+        {
+          "physical_page": 80,
+          "printed_page": "73",
+          "matching_lines": [
+            "B.1 参考集构成与匹配判定"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 150,
+      "old_page": "72",
+      "new_page": "73",
+      "old_full_paragraph": "B.1 参考集构成与匹配判定72",
+      "new_full_paragraph": "B.1 参考集构成与匹配判定73",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "B.2 参考关系完整清单",
+      "cached_page": "72",
+      "matches": [
+        {
+          "physical_page": 80,
+          "printed_page": "73",
+          "matching_lines": [
+            "B.2 参考关系完整清单"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 151,
+      "old_page": "72",
+      "new_page": "73",
+      "old_full_paragraph": "B.2 参考关系完整清单72",
+      "new_full_paragraph": "B.2 参考关系完整清单73",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "B.3 数据分类与完整表结构设计",
+      "cached_page": "74",
+      "matches": [
+        {
+          "physical_page": 82,
+          "printed_page": "75",
+          "matching_lines": [
+            "B.3 数据分类与完整表结构设计"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 152,
+      "old_page": "74",
+      "new_page": "75",
+      "old_full_paragraph": "B.3 数据分类与完整表结构设计74",
+      "new_full_paragraph": "B.3 数据分类与完整表结构设计75",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "附录 C　智能体工具规格与任务模板清单",
+      "cached_page": "87",
+      "matches": [
+        {
+          "physical_page": 95,
+          "printed_page": "88",
+          "matching_lines": [
+            "附录 C　智能体工具规格与任务模板清单"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 153,
+      "old_page": "87",
+      "new_page": "88",
+      "old_full_paragraph": "附录 C　智能体工具规格与任务模板清单87",
+      "new_full_paragraph": "附录 C　智能体工具规格与任务模板清单88",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "附录 D　实验附件与数据完整性清单",
+      "cached_page": "88",
+      "matches": [
+        {
+          "physical_page": 96,
+          "printed_page": "89",
+          "matching_lines": [
+            "附录 D　实验附件与数据完整性清单"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 154,
+      "old_page": "88",
+      "new_page": "89",
+      "old_full_paragraph": "附录 D　实验附件与数据完整性清单88",
+      "new_full_paragraph": "附录 D　实验附件与数据完整性清单89",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "D.1 GSE111619 数据文件完整性",
+      "cached_page": "88",
+      "matches": [
+        {
+          "physical_page": 96,
+          "printed_page": "89",
+          "matching_lines": [
+            "D.1 GSE111619 数据文件完整性"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 155,
+      "old_page": "88",
+      "new_page": "89",
+      "old_full_paragraph": "D.1 GSE111619 数据文件完整性88",
+      "new_full_paragraph": "D.1 GSE111619 数据文件完整性89",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "D.2 实验附件归档清单",
+      "cached_page": "88",
+      "matches": [
+        {
+          "physical_page": 96,
+          "printed_page": "89",
+          "matching_lines": [
+            "D.2 实验附件归档清单"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 156,
+      "old_page": "88",
+      "new_page": "89",
+      "old_full_paragraph": "D.2 实验附件归档清单88",
+      "new_full_paragraph": "D.2 实验附件归档清单89",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "D.3 项目一样本原文展示",
+      "cached_page": "89",
+      "matches": [
+        {
+          "physical_page": 97,
+          "printed_page": "90",
+          "matching_lines": [
+            "D.3 项目一样本原文展示"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 157,
+      "old_page": "89",
+      "new_page": "90",
+      "old_full_paragraph": "D.3 项目一样本原文展示89",
+      "new_full_paragraph": "D.3 项目一样本原文展示90",
+      "last_text_node_is_exact_page": true
+    },
+    {
+      "title": "D.4 测试运行与性能观测记录",
+      "cached_page": "92",
+      "matches": [
+        {
+          "physical_page": 100,
+          "printed_page": "93",
+          "matching_lines": [
+            "D.4 测试运行与性能观测记录"
+          ]
+        }
+      ],
+      "match_count": 1,
+      "page_agrees": false,
+      "paragraph_index": 158,
+      "old_page": "92",
+      "new_page": "93",
+      "old_full_paragraph": "D.4 测试运行与性能观测记录92",
+      "new_full_paragraph": "D.4 测试运行与性能观测记录93",
+      "last_text_node_is_exact_page": true
+    }
+  ],
+  "entry_count": 100,
+  "agree_count": 24,
+  "mismatch_count": 76,
+  "unmatched_or_ambiguous": []
+}

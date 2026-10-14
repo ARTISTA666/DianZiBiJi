@@ -1,0 +1,170 @@
+{
+  "task": "T146",
+  "review_type": "压缩英文摘要快速只读复审",
+  "semantic_result": "pass",
+  "blocking_semantic_findings": [],
+  "identity": {
+    "word_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/1005-摘要语句精校版-2026-10-11.docx",
+    "word_sha256": "ea02e66e51db22f88e80b0f66b354841ffe7e48182e6b31f5c6ae1df8d13a548",
+    "draft_path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/draft-replacements.json",
+    "draft_sha256": "073bf5fe88aef03d6b78ab9aad81c71edfd4f74f5b52f3f6398d8a15190811f9",
+    "word_abstract_matches_draft": true,
+    "baseline_sha256": "b9336e8dfef93921f2ff4fc4291c4465c91facaa23b5040c6cc74005959438bf",
+    "paragraph_indexing": "word/document.xml //w:p零基索引"
+  },
+  "english_size": {
+    "words": 329,
+    "characters": 2659,
+    "paragraphs": 5
+  },
+  "quantity_checks": {
+    "paragraph_index": 55,
+    "counts": {
+      "eight": 2,
+      "four": 1,
+      "Four": 1
+    },
+    "expected": {
+      "eight": 2,
+      "four": 1,
+      "Four": 1
+    },
+    "result": "pass",
+    "meaning": "两项归档八例/测试、四条合成样例与四组Rust配置全部保留。"
+  },
+  "literal_digit_checks": [
+    {
+      "target_index": 44,
+      "baseline_index": 44,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 45,
+      "baseline_index": 45,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 46,
+      "baseline_index": 46,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 47,
+      "baseline_index": 47,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 48,
+      "baseline_index": 48,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 51,
+      "baseline_index": 51,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 52,
+      "baseline_index": 52,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 53,
+      "baseline_index": 54,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 54,
+      "baseline_index": 53,
+      "literal_digit_tokens_identical": true
+    },
+    {
+      "target_index": 55,
+      "baseline_index": 55,
+      "literal_digit_tokens_identical": true
+    }
+  ],
+  "condition_checks": [
+    {
+      "paragraphs": [
+        45,
+        52
+      ],
+      "result": "pass",
+      "observation": "批准和退回两种审核动作保持。"
+    },
+    {
+      "paragraphs": [
+        46,
+        53,
+        54
+      ],
+      "result": "pass",
+      "observation": "After note approval、Approved documents、approved knowledge均保留审核通过准入；规则为映射依据，系统映射对象与关系。"
+    },
+    {
+      "paragraphs": [
+        47,
+        53,
+        54
+      ],
+      "result": "pass",
+      "observation": "项目授权约束工具/证据访问，human confirmation限定high-risk calls，idempotency约束写入，审核与审计流程保持。"
+    },
+    {
+      "paragraphs": [
+        48,
+        55
+      ],
+      "result": "pass",
+      "observation": "natural-prose content-relation extraction与correct-field mapping条件不同；四条合成样例及Rust实现身份保留；中文须另行评价。"
+    },
+    {
+      "paragraphs": [
+        48,
+        55
+      ],
+      "result": "pass",
+      "observation": "prototype、两个完成数与两个引用格式/范围合格数保持；semantic support仍不确定，没有把格式合规升级为语义支持。"
+    },
+    {
+      "paragraphs": [
+        48,
+        55
+      ],
+      "result": "pass",
+      "observation": "One-hop-augmented与document-only配置保留，数字和次序不变；p=0.0938高于0.05；覆盖/Token耗用低于两个对照；取舍限定本题集，图结构独立增益未证。"
+    },
+    {
+      "paragraphs": [
+        44,
+        45,
+        46,
+        47,
+        48,
+        51,
+        52,
+        53,
+        54,
+        55
+      ],
+      "result": "pass",
+      "observation": "中英文五段顺序仍一致，未见压缩产生的新机制或量化事实。"
+    }
+  ],
+  "minimal_language_suggestion": {
+    "paragraph_index": 55,
+    "before": "citation-format and scope checks passed 17/20 and 15/20 answers, respectively.",
+    "after": "17/20 and 15/20 answers passed citation-format and scope checks, respectively.",
+    "reason": "让答案成为通过格式与范围检查的主体；checks passed answers的主宾语方向不够自然。数值意义当前仍可辨，此建议只修英文表达。",
+    "words_before": 10,
+    "words_after": 10,
+    "characters_before": 78,
+    "characters_after": 78,
+    "numeric_order_unchanged": true,
+    "semantic_strength_unchanged": true,
+    "blocking": false
+  },
+  "no_other_suggestions": true,
+  "boundary": "未扩写摘要，未修改Word/代码/旧材料；未运行测试或网络。版面由根线程另验。本报告只绑定ea02快照，后续若根采用等长建议将产生新Word身份。"
+}

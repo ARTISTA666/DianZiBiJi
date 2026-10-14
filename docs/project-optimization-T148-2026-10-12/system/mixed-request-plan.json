@@ -1,0 +1,41 @@
+[
+  {
+    "path": "/projects"
+  },
+  {
+    "path": "/projects/8/notes?limit=20"
+  },
+  {
+    "path": "/projects/8/rag/status"
+  },
+  {
+    "method": "POST",
+    "path": "/projects/8/notes",
+    "json": {
+      "title": "T148 synthetic draft",
+      "experiment_type": "T148 synthetic",
+      "fixed_fields_json": {
+        "sample": [
+          "T148-A, atomic sample",
+          "T148-B"
+        ],
+        "reagents": [
+          "T148 synthetic reagent"
+        ]
+      },
+      "content_json": {
+        "text": "Synthetic evidence fixture for bounded request validation."
+      }
+    }
+  },
+  {
+    "method": "PATCH",
+    "path": "/notes/11",
+    "json": {
+      "content_json": {
+        "text": "T148 synthetic updated draft"
+      },
+      "change_summary": "T148 bounded smoke"
+    }
+  }
+]

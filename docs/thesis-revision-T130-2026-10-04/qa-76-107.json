@@ -1,0 +1,1750 @@
+{
+  "schema_version": "t130-pages-76-107-qa-v1",
+  "owner": "code-reviewer",
+  "completed_at": "2026-10-04T12:17:26.685743+08:00",
+  "candidate_path": "/private/tmp/advisor-T130-20261004/candidate.docx",
+  "candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+  "source_sha256": "11268ba5ee190c89e08cfb0b32010219920d2d8d7186f7e24384d9270a895556",
+  "total_physical_pages": 107,
+  "scope_pages": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107
+  ],
+  "personally_viewed_this_round": [
+    103,
+    104,
+    107
+  ],
+  "inherited_exact_hash_pages": [
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    105,
+    106
+  ],
+  "inspection_method": "Every changed page personally viewed via tools.view_image detail=original at 1414×2000; unchanged pages reused only after SHA-256 equality to T129 render-v8 and validation of prior original-size inspection report. No montage replaces personal inspection.",
+  "all_pages_passed": true,
+  "issues": [],
+  "pages": [
+    {
+      "physical_page": 76,
+      "printed_page": 69,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-76.png",
+      "final_png_sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-76.png",
+        "sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-76.png",
+        "T129_final_png_sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-76.png",
+          "sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "参考文献15–31完整清晰。"
+    },
+    {
+      "physical_page": 77,
+      "printed_page": 70,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-77.png",
+      "final_png_sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-77.png",
+        "sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-77.png",
+        "T129_final_png_sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-77.png",
+          "sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "参考文献32–49完整清晰。"
+    },
+    {
+      "physical_page": 78,
+      "printed_page": 71,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-78.png",
+      "final_png_sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-78.png",
+        "sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-78.png",
+        "T129_final_png_sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-78.png",
+          "sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "参考文献50–68完整清晰。"
+    },
+    {
+      "physical_page": 79,
+      "printed_page": 72,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-79.png",
+      "final_png_sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-79.png",
+        "sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-79.png",
+        "T129_final_png_sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-79.png",
+          "sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "参考文献69–81完整清晰；新增文献81及DOI完整。"
+    },
+    {
+      "physical_page": 80,
+      "printed_page": 73,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-80.png",
+      "final_png_sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-80.png",
+        "sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-80.png",
+        "T129_final_png_sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-80.png",
+          "sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "附录A表A1的Q01–Q20全部完整，Q05与Q20标记清楚。"
+    },
+    {
+      "physical_page": 81,
+      "printed_page": 74,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-81.png",
+      "final_png_sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-81.png",
+        "sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-81.png",
+        "T129_final_png_sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-81.png",
+          "sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "附录B表B1a的PCR用例1–12完整；合成参考答案边界说明明确。"
+    },
+    {
+      "physical_page": 82,
+      "printed_page": 75,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-82.png",
+      "final_png_sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-82.png",
+        "sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-82.png",
+        "T129_final_png_sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-82.png",
+          "sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "表B1b细胞用例13–24完整。"
+    },
+    {
+      "physical_page": 83,
+      "printed_page": 76,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-83.png",
+      "final_png_sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-83.png",
+        "sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-83.png",
+        "T129_final_png_sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-83.png",
+          "sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "表B1c的WB用例25–38完整。"
+    },
+    {
+      "physical_page": 84,
+      "printed_page": 77,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-84.png",
+      "final_png_sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-84.png",
+        "sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-84.png",
+        "T129_final_png_sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-84.png",
+          "sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "表B1d的qPCR用例39–52完整。"
+    },
+    {
+      "physical_page": 85,
+      "printed_page": 78,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-85.png",
+      "final_png_sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-85.png",
+        "sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-85.png",
+        "T129_final_png_sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-85.png",
+          "sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "B2字段说明、43张表与430字段说明完整。"
+    },
+    {
+      "physical_page": 86,
+      "printed_page": 79,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-86.png",
+      "final_png_sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-86.png",
+        "sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-86.png",
+        "T129_final_png_sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-86.png",
+          "sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B3–B6完整。"
+    },
+    {
+      "physical_page": 87,
+      "printed_page": 80,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-87.png",
+      "final_png_sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-87.png",
+        "sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-87.png",
+        "T129_final_png_sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-87.png",
+          "sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B7–B9完整。"
+    },
+    {
+      "physical_page": 88,
+      "printed_page": 81,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-88.png",
+      "final_png_sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-88.png",
+        "sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-88.png",
+        "T129_final_png_sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-88.png",
+          "sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B10–B12完整。"
+    },
+    {
+      "physical_page": 89,
+      "printed_page": 82,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-89.png",
+      "final_png_sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-89.png",
+        "sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-89.png",
+        "T129_final_png_sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-89.png",
+          "sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B13–B15完整。"
+    },
+    {
+      "physical_page": 90,
+      "printed_page": 83,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-90.png",
+      "final_png_sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-90.png",
+        "sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-90.png",
+        "T129_final_png_sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-90.png",
+          "sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B16–B17完整。"
+    },
+    {
+      "physical_page": 91,
+      "printed_page": 84,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-91.png",
+      "final_png_sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-91.png",
+        "sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-91.png",
+        "T129_final_png_sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-91.png",
+          "sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B18–B19完整。"
+    },
+    {
+      "physical_page": 92,
+      "printed_page": 85,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-92.png",
+      "final_png_sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-92.png",
+        "sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-92.png",
+        "T129_final_png_sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-92.png",
+          "sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B20–B22完整。"
+    },
+    {
+      "physical_page": 93,
+      "printed_page": 86,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-93.png",
+      "final_png_sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-93.png",
+        "sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-93.png",
+        "T129_final_png_sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-93.png",
+          "sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B23–B24完整。"
+    },
+    {
+      "physical_page": 94,
+      "printed_page": 87,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-94.png",
+      "final_png_sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-94.png",
+        "sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-94.png",
+        "T129_final_png_sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-94.png",
+          "sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B25–B26完整。"
+    },
+    {
+      "physical_page": 95,
+      "printed_page": 88,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-95.png",
+      "final_png_sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-95.png",
+        "sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-95.png",
+        "T129_final_png_sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-95.png",
+          "sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B27–B28完整。"
+    },
+    {
+      "physical_page": 96,
+      "printed_page": 89,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-96.png",
+      "final_png_sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-96.png",
+        "sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-96.png",
+        "T129_final_png_sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-96.png",
+          "sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B29–B30完整。"
+    },
+    {
+      "physical_page": 97,
+      "printed_page": 90,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-97.png",
+      "final_png_sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-97.png",
+        "sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-97.png",
+        "T129_final_png_sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-97.png",
+          "sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B31–B33完整。"
+    },
+    {
+      "physical_page": 98,
+      "printed_page": 91,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-98.png",
+      "final_png_sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-98.png",
+        "sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-98.png",
+        "T129_final_png_sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-98.png",
+          "sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B34–B35完整。"
+    },
+    {
+      "physical_page": 99,
+      "printed_page": 92,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-99.png",
+      "final_png_sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-99.png",
+        "sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-99.png",
+        "T129_final_png_sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-99.png",
+          "sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B36–B38完整。"
+    },
+    {
+      "physical_page": 100,
+      "printed_page": 93,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-100.png",
+      "final_png_sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-100.png",
+        "sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-100.png",
+        "T129_final_png_sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-100.png",
+          "sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B39–B41完整。"
+    },
+    {
+      "physical_page": 101,
+      "printed_page": 94,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-101.png",
+      "final_png_sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-101.png",
+        "sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-101.png",
+        "T129_final_png_sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-101.png",
+          "sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "旧表B42–B45完整。"
+    },
+    {
+      "physical_page": 102,
+      "printed_page": 95,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-102.png",
+      "final_png_sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-102.png",
+        "sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-102.png",
+        "T129_final_png_sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-102.png",
+          "sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "附录C1与C2全部完整，12项工具范围和6项模板状态可读。"
+    },
+    {
+      "physical_page": 103,
+      "printed_page": 96,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-103.png",
+      "final_png_sha256": "898f3e25b716a400bbde6d34e34006a424905b60bc86fdf6b40f1aeb55bc6470",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": true,
+      "personally_viewed_source": {
+        "render": "T130/render-final",
+        "path": "/private/tmp/advisor-T130-20261004/render-final/page-103.png",
+        "sha256": "898f3e25b716a400bbde6d34e34006a424905b60bc86fdf6b40f1aeb55bc6470",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": null,
+      "observation": "D.1数据完整性表与D.2归档清单完整清晰；附件单元格已删“盲评表与解盲键”，其他行及页底T114批次说明完整，无裁切重叠。"
+    },
+    {
+      "physical_page": 104,
+      "printed_page": 97,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-104.png",
+      "final_png_sha256": "1185be37491b30986e7c24b6a2eccd8c97f566e5df9e7c84c5bfa01557d506c8",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": true,
+      "personally_viewed_source": {
+        "render": "T130/render-final",
+        "path": "/private/tmp/advisor-T130-20261004/render-final/page-104.png",
+        "sha256": "1185be37491b30986e7c24b6a2eccd8c97f566e5df9e7c84c5bfa01557d506c8",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": null,
+      "observation": "附录样本节现为D.3；已删除原人工盲评待执行协议。种子与历史上下文重现来源边界、PCR图D-1及来源行完整清晰，同页无裁切。"
+    },
+    {
+      "physical_page": 105,
+      "printed_page": 98,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-105.png",
+      "final_png_sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-105.png",
+        "sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-105.png",
+        "T129_final_png_sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-105.png",
+          "sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "细胞图D2与WB图D3完整清晰，结构化字段与正文记录及代码来源可读。"
+    },
+    {
+      "physical_page": 106,
+      "printed_page": 99,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-106.png",
+      "final_png_sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": false,
+      "personally_viewed_source": {
+        "render": "render-v7",
+        "path": "/private/tmp/advisor-T129-20261003/render-v7/page-106.png",
+        "sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": {
+        "basis": "Exact PNG SHA-256 equality, independently recomputed.",
+        "T129_report_path": "/private/tmp/advisor-T129-20261003/final-pages-76-107-qa.json",
+        "T129_report_sha256": "22e8e3d0488ca5faf9963b7b42c9514624acfc4ea06042af2afcbddb49d628b3",
+        "T129_final_render_path": "/private/tmp/advisor-T129-20261003/render-v8/page-106.png",
+        "T129_final_png_sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+        "original_personal_inspection_source": {
+          "render": "render-v7",
+          "path": "/private/tmp/advisor-T129-20261003/render-v7/page-106.png",
+          "sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+          "detail": "original",
+          "inspection_date": "2026-10-04"
+        }
+      },
+      "observation": "qPCR图D4与历史SOP第一部分图D5的F6、F7、F33、F34完整清晰；历史上下文重现标注明确。"
+    },
+    {
+      "physical_page": 107,
+      "printed_page": 100,
+      "final_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-107.png",
+      "final_png_sha256": "083432af63ba469e4b0be22376c6e349c31b30046d617a117771b346edd5f402",
+      "width": 1414,
+      "height": 2000,
+      "result": "pass",
+      "issues": [],
+      "personally_viewed_this_round": true,
+      "personally_viewed_source": {
+        "render": "T130/render-final",
+        "path": "/private/tmp/advisor-T130-20261004/render-final/page-107.png",
+        "sha256": "083432af63ba469e4b0be22376c6e349c31b30046d617a117771b346edd5f402",
+        "detail": "original",
+        "inspection_date": "2026-10-04"
+      },
+      "exact_hash_reuse": null,
+      "observation": "测试记录节现为D.4；图D-6的F35–F37、表D-3全部三批记录、Rust命令与3条真实测试输出及600请求性能观测同页完整，无底部裁切或重叠。"
+    }
+  ],
+  "full_107_page_SHA_comparison": [
+    {
+      "physical_page": 1,
+      "T129_render_v8_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "T130_final_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 2,
+      "T129_render_v8_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "T130_final_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 3,
+      "T129_render_v8_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "T130_final_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 4,
+      "T129_render_v8_sha256": "a2ecc524d23c5ad8181fad4b577a05b735daa8fad089e576ba03cda4925c016e",
+      "T130_final_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 5,
+      "T129_render_v8_sha256": "21406fb1f6ba314a400fc10fc42e933965d46a8eee4b9cf31b4a8de77f0a8b33",
+      "T130_final_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 6,
+      "T129_render_v8_sha256": "3957c1d28b3ac8a662d18f9deffa9fd4b10f616c1f172710bcf92b519b7dfc06",
+      "T130_final_sha256": "3957c1d28b3ac8a662d18f9deffa9fd4b10f616c1f172710bcf92b519b7dfc06",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 7,
+      "T129_render_v8_sha256": "48438f6d1deaa9e0cff72c789b9fe8dc5f55d928cad0888dae9f83f3328831cb",
+      "T130_final_sha256": "dd2b4d12626f33cecea2f0891311eaa8bd50e293cff6bbee20e41e63060d40d2",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 8,
+      "T129_render_v8_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "T130_final_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 9,
+      "T129_render_v8_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "T130_final_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 10,
+      "T129_render_v8_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "T130_final_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 11,
+      "T129_render_v8_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "T130_final_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 12,
+      "T129_render_v8_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "T130_final_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 13,
+      "T129_render_v8_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "T130_final_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 14,
+      "T129_render_v8_sha256": "8ac558d2502878654ac210ca66d2e50d4663fa568dbb22170648af55eed21257",
+      "T130_final_sha256": "8ac558d2502878654ac210ca66d2e50d4663fa568dbb22170648af55eed21257",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 15,
+      "T129_render_v8_sha256": "ab49de93815006879bdc04691fc74c57129ae55624aed51a6d8090b37ecaff41",
+      "T130_final_sha256": "ab49de93815006879bdc04691fc74c57129ae55624aed51a6d8090b37ecaff41",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 16,
+      "T129_render_v8_sha256": "b9cebe7777331f93ba2d4870f5d42ab2dd0f3e53d3ae5614b30d1002e4cf7ba7",
+      "T130_final_sha256": "b9cebe7777331f93ba2d4870f5d42ab2dd0f3e53d3ae5614b30d1002e4cf7ba7",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 17,
+      "T129_render_v8_sha256": "adc9b3e41abc7674bbf4cb6b4eb33fa278f4c601225d23e84f522f52cb4cd944",
+      "T130_final_sha256": "adc9b3e41abc7674bbf4cb6b4eb33fa278f4c601225d23e84f522f52cb4cd944",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 18,
+      "T129_render_v8_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "T130_final_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 19,
+      "T129_render_v8_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "T130_final_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 20,
+      "T129_render_v8_sha256": "18c7c606e43c0dea05832840c3fdc60162a69ba23a8e600575ef41e601bf458b",
+      "T130_final_sha256": "18c7c606e43c0dea05832840c3fdc60162a69ba23a8e600575ef41e601bf458b",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 21,
+      "T129_render_v8_sha256": "3a9a9f5a45302b81cb0bcc67e1bfe6fb7c0187875fff0ff1eaf54eb391795747",
+      "T130_final_sha256": "3a9a9f5a45302b81cb0bcc67e1bfe6fb7c0187875fff0ff1eaf54eb391795747",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 22,
+      "T129_render_v8_sha256": "4ae8d111ecdfca056ed0faff24b1cff587bb8d69af0efc8e74b1702d35ec0060",
+      "T130_final_sha256": "4ae8d111ecdfca056ed0faff24b1cff587bb8d69af0efc8e74b1702d35ec0060",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 23,
+      "T129_render_v8_sha256": "2f2b3e898ee9fdd3810e58e99a8e75d6ef100d3a3dcc45b9388fb151204b1faa",
+      "T130_final_sha256": "2f2b3e898ee9fdd3810e58e99a8e75d6ef100d3a3dcc45b9388fb151204b1faa",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 24,
+      "T129_render_v8_sha256": "7a8558743d06b80c3df04e8557fa912063c9271023365144048bb7160f005bb3",
+      "T130_final_sha256": "7a8558743d06b80c3df04e8557fa912063c9271023365144048bb7160f005bb3",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 25,
+      "T129_render_v8_sha256": "10549f3d237d95167171d15cc63b2b4962c41611b3143fbeed2d639248afa4fe",
+      "T130_final_sha256": "10549f3d237d95167171d15cc63b2b4962c41611b3143fbeed2d639248afa4fe",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 26,
+      "T129_render_v8_sha256": "e144690c833e7cd00b43174f05a011c5bfa7884fc843d917ac44d7593dfe600c",
+      "T130_final_sha256": "e144690c833e7cd00b43174f05a011c5bfa7884fc843d917ac44d7593dfe600c",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 27,
+      "T129_render_v8_sha256": "dcdb28a1fdec499abd50d050f51fa557cae1395864ea36c9c4afcbbcec8d840f",
+      "T130_final_sha256": "dcdb28a1fdec499abd50d050f51fa557cae1395864ea36c9c4afcbbcec8d840f",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 28,
+      "T129_render_v8_sha256": "08cba44662c2dafbdc83f7331a54e449e657ffe689c803687158c9b09df16bfb",
+      "T130_final_sha256": "08cba44662c2dafbdc83f7331a54e449e657ffe689c803687158c9b09df16bfb",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 29,
+      "T129_render_v8_sha256": "cf44104ff6c3e7317cc8dc60b731408def868716e8b64fab74f547f681ce8cc6",
+      "T130_final_sha256": "cf44104ff6c3e7317cc8dc60b731408def868716e8b64fab74f547f681ce8cc6",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 30,
+      "T129_render_v8_sha256": "798ab961d861489ce2b1e0a47c7a1371d915bd3d0f5d329394a40b1876a1950a",
+      "T130_final_sha256": "798ab961d861489ce2b1e0a47c7a1371d915bd3d0f5d329394a40b1876a1950a",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 31,
+      "T129_render_v8_sha256": "ce32513b0bf12331340beb4058725650fb71e986ed81e3e2e26ef162bed9c711",
+      "T130_final_sha256": "ce32513b0bf12331340beb4058725650fb71e986ed81e3e2e26ef162bed9c711",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 32,
+      "T129_render_v8_sha256": "c38c0d88a56fdcf01de3cf012a1d4a19b1fae7343bfc8e1a96cf4a1a837e0fb0",
+      "T130_final_sha256": "c38c0d88a56fdcf01de3cf012a1d4a19b1fae7343bfc8e1a96cf4a1a837e0fb0",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 33,
+      "T129_render_v8_sha256": "0ee9464d867814255527459306dd7b23ce4b07ab17de8310016e1b32cfd41b85",
+      "T130_final_sha256": "0ee9464d867814255527459306dd7b23ce4b07ab17de8310016e1b32cfd41b85",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 34,
+      "T129_render_v8_sha256": "d551fb04c3b7a50f17737ce571f6981c10b2dbba5a02fb3508ce162ce00bc860",
+      "T130_final_sha256": "d551fb04c3b7a50f17737ce571f6981c10b2dbba5a02fb3508ce162ce00bc860",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 35,
+      "T129_render_v8_sha256": "4b45567eaf21ed6838dd70dd0c0dd9a89781fd6803279a410cca196be6e491f4",
+      "T130_final_sha256": "4b45567eaf21ed6838dd70dd0c0dd9a89781fd6803279a410cca196be6e491f4",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 36,
+      "T129_render_v8_sha256": "db6cc5538f2efe8991fab55fe11d97c9877874d2a6d23c594d12a6b57f0ee0be",
+      "T130_final_sha256": "db6cc5538f2efe8991fab55fe11d97c9877874d2a6d23c594d12a6b57f0ee0be",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 37,
+      "T129_render_v8_sha256": "876e7b3bedbddcc79a5df53f86c042e811ffddaa6200914b154f864fb69f4c38",
+      "T130_final_sha256": "876e7b3bedbddcc79a5df53f86c042e811ffddaa6200914b154f864fb69f4c38",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 38,
+      "T129_render_v8_sha256": "6a3e390e6b88a53307e683985ed5c0f55f114508f83420b052509ee2fac1c757",
+      "T130_final_sha256": "6a3e390e6b88a53307e683985ed5c0f55f114508f83420b052509ee2fac1c757",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 39,
+      "T129_render_v8_sha256": "eedb666cf3b39bf19b5f6a8c61a23c22ab3058f35f62801a19342ee4ff955ff8",
+      "T130_final_sha256": "eedb666cf3b39bf19b5f6a8c61a23c22ab3058f35f62801a19342ee4ff955ff8",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 40,
+      "T129_render_v8_sha256": "c6dda960c4c6504a90f53a8b458be9822b08ffba00a35a07e4bf9e4541046d16",
+      "T130_final_sha256": "c6dda960c4c6504a90f53a8b458be9822b08ffba00a35a07e4bf9e4541046d16",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 41,
+      "T129_render_v8_sha256": "9910e11ca50a69663918167b43c88cf4d1541246bb2eb0e51c0a1703f6a067a8",
+      "T130_final_sha256": "9910e11ca50a69663918167b43c88cf4d1541246bb2eb0e51c0a1703f6a067a8",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 42,
+      "T129_render_v8_sha256": "99fbcdf7d21cac7e4d15e9a23ca20439a1f624936a2101f9af02950ef1d62db5",
+      "T130_final_sha256": "99fbcdf7d21cac7e4d15e9a23ca20439a1f624936a2101f9af02950ef1d62db5",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 43,
+      "T129_render_v8_sha256": "d04500b1d04ec58dbc1ebf44b037d9312163bb03e54b37e0f9323de73d364033",
+      "T130_final_sha256": "d04500b1d04ec58dbc1ebf44b037d9312163bb03e54b37e0f9323de73d364033",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 44,
+      "T129_render_v8_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+      "T130_final_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 45,
+      "T129_render_v8_sha256": "de135f103a1fbca86409e4892e703ca251365a305ef680979e4c458f240a3d49",
+      "T130_final_sha256": "de135f103a1fbca86409e4892e703ca251365a305ef680979e4c458f240a3d49",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 46,
+      "T129_render_v8_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+      "T130_final_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 47,
+      "T129_render_v8_sha256": "f1c2e22229f268cea083944ff238806d12e3e510ec5183241a8476c902ea54ed",
+      "T130_final_sha256": "f1c2e22229f268cea083944ff238806d12e3e510ec5183241a8476c902ea54ed",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 48,
+      "T129_render_v8_sha256": "c71776ce9906b97aad6a74a332612635443d5ec5ce03050b1e1888ee9da979f1",
+      "T130_final_sha256": "c71776ce9906b97aad6a74a332612635443d5ec5ce03050b1e1888ee9da979f1",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 49,
+      "T129_render_v8_sha256": "6d86ee6663d6930f022ceff14b1b7bfdbc8f1a0f77737ae19c3eb0b705b4ec19",
+      "T130_final_sha256": "6d86ee6663d6930f022ceff14b1b7bfdbc8f1a0f77737ae19c3eb0b705b4ec19",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 50,
+      "T129_render_v8_sha256": "387fcdd77586594d1331332a94d9d0886973e0826a11c234e940e336e41ed685",
+      "T130_final_sha256": "387fcdd77586594d1331332a94d9d0886973e0826a11c234e940e336e41ed685",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 51,
+      "T129_render_v8_sha256": "66c2184b1eb30f33f620463a5d8d3d64723cbf3f0d172931cc425bcfa7b705b6",
+      "T130_final_sha256": "66c2184b1eb30f33f620463a5d8d3d64723cbf3f0d172931cc425bcfa7b705b6",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 52,
+      "T129_render_v8_sha256": "bb80ee257d9f9c418563041d547e073e5992de4199fda07f1c6f68fe2fa8c3f9",
+      "T130_final_sha256": "a4773a72d181801f6dd8b937d56cf1d4a8c0495f1a909fefc1c94bda636cdefd",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 53,
+      "T129_render_v8_sha256": "82bf9a7e71050a5156c8c028966693fe60c52890473656a0052d6b3206090f3b",
+      "T130_final_sha256": "05155f2d919fee0e3420a0e97ade59f05d70dcfb3bda5cc7c91e3266673c1a6d",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 54,
+      "T129_render_v8_sha256": "d4c4c5472fb690d505a89d2cc1958b2ef37137d9aeb1219eb8a978efffc22825",
+      "T130_final_sha256": "9fd3c0666794adfa72894f111af93dadc748cb7df73805ebe6fc62ab8953b9c1",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 55,
+      "T129_render_v8_sha256": "4304f10eadb29613fa52713fc0cdd8518db9d6d2f450f99a9e7e9668c2a2fa0d",
+      "T130_final_sha256": "99a2e917945f34857311d9808599c17f4d3a061885905cb3254c06dd22bbbd15",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 56,
+      "T129_render_v8_sha256": "0f0860d5f1a74d3a3dc768a3608015b5aef46c0d6aafc25a6284eca47f0d6078",
+      "T130_final_sha256": "0f0860d5f1a74d3a3dc768a3608015b5aef46c0d6aafc25a6284eca47f0d6078",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 57,
+      "T129_render_v8_sha256": "de65e9062c73698ce9a69d87b7eabfce22aa7a1e3cae0b730195b3703b553d89",
+      "T130_final_sha256": "c0313ce8ea1520b891d0a87006a7857e3f577f9027289ba7e478983beabbc7a0",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 58,
+      "T129_render_v8_sha256": "f4580b4ff5042ca9f922b95ce886bdc7c6f81cb012e336ee452d19afb6c8a0a4",
+      "T130_final_sha256": "f4580b4ff5042ca9f922b95ce886bdc7c6f81cb012e336ee452d19afb6c8a0a4",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 59,
+      "T129_render_v8_sha256": "7031053852d2d0bb44750e472f97a1062389f25b5e2c285de52729e8f044ee8e",
+      "T130_final_sha256": "7031053852d2d0bb44750e472f97a1062389f25b5e2c285de52729e8f044ee8e",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 60,
+      "T129_render_v8_sha256": "f77ae60c7ea019b9ff5739a1bb7beafea85aaa54418b88207ca0b4fbd45a986a",
+      "T130_final_sha256": "f77ae60c7ea019b9ff5739a1bb7beafea85aaa54418b88207ca0b4fbd45a986a",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 61,
+      "T129_render_v8_sha256": "1cf6dbbffc2e2d3b9a048a46fa0fecc8faaaea664471330dca667bffe6df4154",
+      "T130_final_sha256": "1cf6dbbffc2e2d3b9a048a46fa0fecc8faaaea664471330dca667bffe6df4154",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 62,
+      "T129_render_v8_sha256": "b6b14a7a6b73ad44ae51aee2e9565c61ad65cbd7ce45c078030bf1b326f38001",
+      "T130_final_sha256": "b6b14a7a6b73ad44ae51aee2e9565c61ad65cbd7ce45c078030bf1b326f38001",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 63,
+      "T129_render_v8_sha256": "f03027c064685864249c7b9ab9664e653e8f660b880392f4aba4fa8ee8c09a0f",
+      "T130_final_sha256": "f03027c064685864249c7b9ab9664e653e8f660b880392f4aba4fa8ee8c09a0f",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 64,
+      "T129_render_v8_sha256": "fdf65e8ee093502a8d666f9936ad315536cbaa98086ef813826f3aa066b69d76",
+      "T130_final_sha256": "fdf65e8ee093502a8d666f9936ad315536cbaa98086ef813826f3aa066b69d76",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 65,
+      "T129_render_v8_sha256": "4b45b5c4b0e9ce6fd2dd40b16309ab988d754688aa18d2dab3c1397009f9af73",
+      "T130_final_sha256": "4b45b5c4b0e9ce6fd2dd40b16309ab988d754688aa18d2dab3c1397009f9af73",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 66,
+      "T129_render_v8_sha256": "bcd23b6ed4762e897a1a4dd661843b5b8884211f88cff128ee66ebed88029b6a",
+      "T130_final_sha256": "bcd23b6ed4762e897a1a4dd661843b5b8884211f88cff128ee66ebed88029b6a",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 67,
+      "T129_render_v8_sha256": "2d5385d55bc5d73c99e018f3f965a2a10e28521b19ab0e92c75f0d93593f0423",
+      "T130_final_sha256": "2d5385d55bc5d73c99e018f3f965a2a10e28521b19ab0e92c75f0d93593f0423",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 68,
+      "T129_render_v8_sha256": "2ca8e6c4c87eae753de33b33d09e263f45af08c866e9d27b250d111671a3afe4",
+      "T130_final_sha256": "552f5228a445d2796bb206121cc569e7424087a1ff836452c47cb4e223cba5d9",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 69,
+      "T129_render_v8_sha256": "4419833f67a29b86739b767b9b98d6181148dad8e6439fa8310edd7085e74e13",
+      "T130_final_sha256": "04db759e9cd49297d5cc3b2514c9fff69e71eb6a46ed977e8e3156cb76ac829b",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 70,
+      "T129_render_v8_sha256": "a3a88eb84df937bf682de7014aa68550167a41766f876d19e38e3cfaf9b776d8",
+      "T130_final_sha256": "a3a88eb84df937bf682de7014aa68550167a41766f876d19e38e3cfaf9b776d8",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 71,
+      "T129_render_v8_sha256": "4d38d363903b44ed00473b1a531abd31f3d98e92f430c8a9f356340f9c7095d9",
+      "T130_final_sha256": "c5ef219b27c09798ca78968ea3b55e88e475808f63d25a1693cae8b20af72101",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 72,
+      "T129_render_v8_sha256": "f1e6d38f5a11854a6168486df1ee68a31716da9588801587fbd729fdcf6da784",
+      "T130_final_sha256": "9464bd5491878444acdd9b7c9306b4f3a74d410bd6163f5936f0556a772b823b",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 73,
+      "T129_render_v8_sha256": "60553e82504fda3a053ce220a4ad1712094a354874373c11c3bf64f7f75710d5",
+      "T130_final_sha256": "9d4a7977dfb034689ba7c59205894da1b9cebd6d549fcbaa54bc4a8ab409d1b2",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 74,
+      "T129_render_v8_sha256": "f399c13e059595135a32a68742534633e61f076ff57b4d7f0bf27c777ce9c331",
+      "T130_final_sha256": "f399c13e059595135a32a68742534633e61f076ff57b4d7f0bf27c777ce9c331",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 75,
+      "T129_render_v8_sha256": "ee78fe38ac02c32b94084799cf4287d3fe5e329f6983da3fac0b7ab19a0cf760",
+      "T130_final_sha256": "ee78fe38ac02c32b94084799cf4287d3fe5e329f6983da3fac0b7ab19a0cf760",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 76,
+      "T129_render_v8_sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+      "T130_final_sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 77,
+      "T129_render_v8_sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+      "T130_final_sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 78,
+      "T129_render_v8_sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+      "T130_final_sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 79,
+      "T129_render_v8_sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+      "T130_final_sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 80,
+      "T129_render_v8_sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+      "T130_final_sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 81,
+      "T129_render_v8_sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+      "T130_final_sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 82,
+      "T129_render_v8_sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+      "T130_final_sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 83,
+      "T129_render_v8_sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+      "T130_final_sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 84,
+      "T129_render_v8_sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+      "T130_final_sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 85,
+      "T129_render_v8_sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+      "T130_final_sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 86,
+      "T129_render_v8_sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+      "T130_final_sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 87,
+      "T129_render_v8_sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+      "T130_final_sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 88,
+      "T129_render_v8_sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+      "T130_final_sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 89,
+      "T129_render_v8_sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+      "T130_final_sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 90,
+      "T129_render_v8_sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+      "T130_final_sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 91,
+      "T129_render_v8_sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+      "T130_final_sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 92,
+      "T129_render_v8_sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+      "T130_final_sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 93,
+      "T129_render_v8_sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+      "T130_final_sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 94,
+      "T129_render_v8_sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+      "T130_final_sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 95,
+      "T129_render_v8_sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+      "T130_final_sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 96,
+      "T129_render_v8_sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+      "T130_final_sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 97,
+      "T129_render_v8_sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+      "T130_final_sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 98,
+      "T129_render_v8_sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+      "T130_final_sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 99,
+      "T129_render_v8_sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+      "T130_final_sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 100,
+      "T129_render_v8_sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+      "T130_final_sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 101,
+      "T129_render_v8_sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+      "T130_final_sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 102,
+      "T129_render_v8_sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+      "T130_final_sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 103,
+      "T129_render_v8_sha256": "8a0b9b9ee23df385f0d33f33e13449c6e1b9362f18d200a5c814cdaea8c0a5a8",
+      "T130_final_sha256": "898f3e25b716a400bbde6d34e34006a424905b60bc86fdf6b40f1aeb55bc6470",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 104,
+      "T129_render_v8_sha256": "2b7cf427bbfba95bec1fbe9da79cf5c5fb26b7d2c81fdc57d495c5bdda48668f",
+      "T130_final_sha256": "1185be37491b30986e7c24b6a2eccd8c97f566e5df9e7c84c5bfa01557d506c8",
+      "byte_identical": false
+    },
+    {
+      "physical_page": 105,
+      "T129_render_v8_sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+      "T130_final_sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 106,
+      "T129_render_v8_sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+      "T130_final_sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+      "byte_identical": true
+    },
+    {
+      "physical_page": 107,
+      "T129_render_v8_sha256": "fadd7cf65716defb1fd47dba5d38bc38f4df2e0343037c17cb46847d688bd7ef",
+      "T130_final_sha256": "083432af63ba469e4b0be22376c6e349c31b30046d617a117771b346edd5f402",
+      "byte_identical": false
+    }
+  ],
+  "native_editor_qa": "not_verified",
+  "notes": [
+    "Structural protected-data acceptance is in protected-audit.json and binds this same final DOCX SHA.",
+    "No WPS/Microsoft Word native-editor acceptance is asserted."
+  ]
+}

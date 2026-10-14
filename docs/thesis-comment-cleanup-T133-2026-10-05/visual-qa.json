@@ -1,0 +1,711 @@
+{
+  "task": "T133",
+  "output_sha256": "75690450e47df0580e8eb8ee466d80f2b0aafe6c5ddf3c151f010f112331c9f4",
+  "pdf_sha256": "7a6bd6a67b6675b6f5790ff59825efd6abb7fd835e4beb79ed66e7dcffb40350",
+  "physical_pages": 99,
+  "direct_original_page_count": 1,
+  "exact_png_inherited_page_count": 98,
+  "blocking_findings": [],
+  "author_changes_retained": true,
+  "wps_native_pagination_verified": false,
+  "prior_qa_checksums": {
+    "final-qa-1-33.json": "99dad394cce42e7e5aaeae15b6f979735d9ab0e662038fd91415423705505037",
+    "final-qa-34-66.json": "9c47bb8a1df34519684072327944205961f8d1ac38fdb142d5f9b2afcec18f5b",
+    "final-qa-67-99.json": "b3f9ed2232f177332c3e659331b75ddbed77b1e43eefd0e06e014f886b15dbfa"
+  },
+  "pages": [
+    {
+      "physical_page": 1,
+      "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 2,
+      "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 3,
+      "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 4,
+      "png_sha256": "8fed94c2cf535dc81356c46954f05f91f42fc3f0167442e0fdadbf8234eec39c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 5,
+      "png_sha256": "03cc987624e358dff0254c541b5821a39440c2a244823b42a0de6a53ac7bd530",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 6,
+      "png_sha256": "a62228da6e4fe87cd10318c97e124bfbc59040ba28151c577c2cb98309c070a3",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 7,
+      "png_sha256": "07d37548f3446118eef44a508373b524b2026dbc0fb5bdf9d42f8a0ff328646f",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 8,
+      "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 9,
+      "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 10,
+      "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 11,
+      "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 12,
+      "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 13,
+      "png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 14,
+      "png_sha256": "968e6464dc770f4c3030847bfe24a046cb7eea3cdbe16daaa667f4db2e968f8d",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 15,
+      "png_sha256": "087b74729a51866fe8123e7fcec7786264a6a4bd546a4b1fcaeaff5406184400",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 16,
+      "png_sha256": "5bba69778fd380772417be39e3e95b0a692419c95030b858bcadd20e29b66087",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 17,
+      "png_sha256": "c51de21c45e12601d4d6cb87e9ae3d559fe48435f06ce96b31030edd7befeb0e",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 18,
+      "png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 19,
+      "png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 20,
+      "png_sha256": "eeb7dc7f6c5ae0a5d8915a26b4fa8a1869599aa4a842b3b04735f9ddec17db26",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 21,
+      "png_sha256": "2fb90a29ade0acf7f4df5b6a69e0849a689cb0eeaf150feab142778a19b75143",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 22,
+      "png_sha256": "f484e0496590457cc40436e71e3d995d911044f79a14b90aba8ebf68f77cd9a2",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 23,
+      "png_sha256": "64de4f0fbffd1efed8a5bb710563c56f40a9033d3cdca8171b8930b26d59d862",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 24,
+      "png_sha256": "a0ffab69df5f8cc4a0259710c3b71033566c673813a9fb5062e767e26ed07b92",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 25,
+      "png_sha256": "35f246a5dc10b82bc99a205ffff3d9b1bb80593f31a7f5a9b628e68da076c07a",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 26,
+      "png_sha256": "e71d90895949a06393dd59d8ad5f69b6abdbada19555880feff168c95135e52a",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 27,
+      "png_sha256": "d5b34603681fe51b2f5659f07f71b5c3df81e1fbed59ee0804d3c9762097f36e",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 28,
+      "png_sha256": "9f6e08146bb865833f0ad10def30117a47984829578ebf8e2dfe1b6422b8c798",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 29,
+      "png_sha256": "8bba62ebec96c8000344e5c74cabf92c0395605bf741a9601440a192c2318d5e",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 30,
+      "png_sha256": "92dde6c10a579a258f8615f4aa2d1f6615226decac533a6812869656f57be0f8",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 31,
+      "png_sha256": "083b646f81d14ba026c13d35aa904f8aec9e9610d26384f87c848ca27bee8e17",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 32,
+      "png_sha256": "0a21d99f52c948bff8d3c320e93876d1320d629293cb2a1aa0101b72fb2fc060",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 33,
+      "png_sha256": "5e852d59a624de3dd492f8b417e0988fd0c6332979edba3792d96800544f5418",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-1-33.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 34,
+      "png_sha256": "5faf06d99936c783d2cfb9db5f00df092a94c01bc638457cac060ce7e53800ed",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 35,
+      "png_sha256": "b58b6cd53656b4973e6f43ec3bee3d5a420fd8fc0606543841665bd5eceb153e",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 36,
+      "png_sha256": "eb638b9740945a684f4dd5f5d2bfe83a2d12764bb49ee5ac28e2292c6c9bf503",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 37,
+      "png_sha256": "abf92a0abb45af06ab0b510538e078574a8ae3d41bad0a979ac61ea1b7bf4eb4",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 38,
+      "png_sha256": "3092f32cb4e93ace2fe2a1be0d774d2e002e60665d5f56a3ea6d2044beb330c0",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 39,
+      "png_sha256": "33e0aa4e36a38c31d71181a9b10f5889581aaaeaf1d88f1a68a2b7c3519ad525",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 40,
+      "png_sha256": "fa577afe1acb7d0634b81ea47c16a3817dfd75bfc9497127c9d2423c2f595e4f",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 41,
+      "png_sha256": "70613cfb7e72d36f35747bdf78081f35394bfc2b1cf9fc882207a5185b573313",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass_with_existing_source_limit"
+    },
+    {
+      "physical_page": 42,
+      "png_sha256": "cb13b146968a15e981041217ec6374ef049826043ab6a2f3a30e69457977302b",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 43,
+      "png_sha256": "13a9eb9519ba19c74216a8e0d168b86871829fc35d8d58ad2d53a2e6d75af85d",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 44,
+      "png_sha256": "d4999cc878454e49c63466e00cab557346d1fbdc9fa01d7e79b49e709dd59189",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass_with_existing_source_limit"
+    },
+    {
+      "physical_page": 45,
+      "png_sha256": "d46a54253eb8c1c62ffe1834fba1f02c172449a92fec8a1ac9d32cef6b6fc256",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass_with_existing_source_limit"
+    },
+    {
+      "physical_page": 46,
+      "png_sha256": "196a4694e6c7fdfd4ef9cbd2c22f4d9a27474d2664255c95d61733f7b59079f1",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 47,
+      "png_sha256": "73f8876250b78843b33e3d5c02bbb8b3a96beab251cebb6085e608600f2da68a",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 48,
+      "png_sha256": "f6725309315320f06d043258887aa407c91008da2e4e6497d0ca21129cebb4af",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 49,
+      "png_sha256": "8678894c0b9c4bb5cba16e964136487c78a3218480494b485ffa0a8a79402ebe",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 50,
+      "png_sha256": "f36d48f8c581fb71c661e4d9c25b2d78a5622af60a5d2d1d7b89aff15fd7f7fa",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 51,
+      "png_sha256": "565ec31475616bc85617a7df3a66580efc3bf40be4d2d6f2b4e39934178d9fcc",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 52,
+      "png_sha256": "5b9a70b45db5a765704c22befd95a9e918a57b183853ebeeb0c8a1367b92161f",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 53,
+      "png_sha256": "96f18ab9cd39554f1becc412c9a13aa734d4b45ae68975ed183dd55dc827f03f",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 54,
+      "png_sha256": "8ea62d047abf0e6aa359945de3a9dde11ce47dfa03351e5122cf7dd9db94176c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 55,
+      "png_sha256": "3a74d45c2780f9ffe9b409b81ded492fdfecfc8bfbaa2ec11a5610d75cc0c7bc",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 56,
+      "png_sha256": "8ce0bd95cca3f9fec9c1a01a75ecd2a6af62f857481aaf7587e5b43148a81c0c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 57,
+      "png_sha256": "47f507e4c6fa525140fee7757d265ee9bf640ac3752a5bbb72b7adb1921ce2f8",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 58,
+      "png_sha256": "8473d69350f8652890ad8c216c143b1750fc3e1d41b2ab51be32a7c75b96983c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 59,
+      "png_sha256": "81d6f88db0fdd145ebcd2027322492294b9590e9149dd91708c1b1a040cecd52",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 60,
+      "png_sha256": "fc72b8acce98b3d5d608bf40f8260f9903d0cc0815695a35e95166d7e1c50c97",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 61,
+      "png_sha256": "eb2c2696bf9e4ee3c925d265904d8d33d1a4cfc4cf4f380847842e2031926d25",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 62,
+      "png_sha256": "555746e4e539725a58b9fe7bba5533b6ce4f611b57c5f4d057088b14f1d0eb03",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 63,
+      "png_sha256": "87f9d77500513ae608c113c22826fdad1b2235e32c34bd56b4417b734361dcc1",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 64,
+      "png_sha256": "f055510c923862b6e86d8a17f2a9195e20f8f6d286399f5a4a2f6090ced2065d",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 65,
+      "png_sha256": "d0c1d2fb7c88f663ffd44bbcc3d8d06f0d6ee740c698989d19b503400b977939",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 66,
+      "png_sha256": "38cb22ea82e288b5911f38aea2f93fb5dfd24d31c51154dc20a66ab3cd35ba5b",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-34-66.json",
+      "result": "pass_with_existing_source_limit"
+    },
+    {
+      "physical_page": 67,
+      "png_sha256": "690274de30719a9c792d41fb67f22e5cd40698183ea53307255768d1452aceee",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 68,
+      "png_sha256": "74419da208f6b529276c870111190db9b798eaaab111037148ff815ed5cf1018",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 69,
+      "png_sha256": "6ba8cc07c576239179ed9c1b4a9a2fba5715ce35788b2be9325bedb268d64896",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 70,
+      "png_sha256": "61ea7da74520e25e4948ee1aa649247f3ba6c7fa19b9dc0a07d30d584d58b3b8",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 71,
+      "png_sha256": "8ec006314cfc85d43074c2890b3dced0d0c924f747c14c9c7898d1bb9bce60ed",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 72,
+      "png_sha256": "400bc5a8d527064b5178260fa00f416b91b204e44ebc0189d2376ae9950b619d",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 73,
+      "png_sha256": "e2844f7edfdb824117630ff528bb948f1f9029a983d2f375e2c10a5f04d244d3",
+      "inspection": "root direct view_image detail=original; entire page inspected",
+      "result": "pass",
+      "notes": "作者最新致谢五段及三位导师/刘燕/刘辉/陆一松/末尾诗句保持；完整同页，无裁切、拥挤或页脚冲突。"
+    },
+    {
+      "physical_page": 74,
+      "png_sha256": "cf7d4e09c063fc2680258c98f0dc32c4beef83da4ea2411cfd4dea8ca0f83bc0",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 75,
+      "png_sha256": "720e73929f47809c1ef9cc0c2e3c047ef2355f57affd65d4a059a1e51f618ad4",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 76,
+      "png_sha256": "b74abfff6f413441b5f9966b1725ad5ed1be16edca7f33e89bc3388daa8e705c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 77,
+      "png_sha256": "efc8841b601c428a463801e24047799031adb2716580bf37b0481f04e24d1a86",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 78,
+      "png_sha256": "6e6072e87effb6d596bcdd8c3de25a5e3700b43bbfa81c2883b6dd285dba37bf",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 79,
+      "png_sha256": "7c5458a24e3e391fd6ef8fc4c2bbafdf90c88da47b309a0721c1a3694de08db1",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 80,
+      "png_sha256": "c26fb2e28e553b3552fe0291f9ffea16d65279940854fe3de0f5196d46141aea",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 81,
+      "png_sha256": "5558b986ca791ecc52bf8551ff507a870d04df479ff8df6132faff633b476ba2",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 82,
+      "png_sha256": "3bf27e578f79dba36beea35ddfb7094bf179a7c89b3a10ae02cc7765462c11ce",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 83,
+      "png_sha256": "a9dc37af6c98a2af48740a16f639642a005b686e5adc2439c6231e0fd37596cf",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 84,
+      "png_sha256": "bae1fe8f45c321ac69dc6d01a0c5f809e29beef553b72f5663e83b4a4868d99b",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 85,
+      "png_sha256": "3a7f04e86d34856f9dcdcee03776ab0f1b819fccec62fcd940b0857a54db77bb",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 86,
+      "png_sha256": "b601602853ec28bbdecc211657c913f19b369e1e5eace8ffe59b844354b74bae",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 87,
+      "png_sha256": "013bcd612be8693fbe4323f843dd49be5b5e3d8b0969f326a3bf58a8ca65d495",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 88,
+      "png_sha256": "11d432bba4c6902ebd3b8b865e30252f32ef2bdcb1c8161d25b2f7c3b169b144",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 89,
+      "png_sha256": "53b3c93fc7d727e8f9015b499fe74c9f932b6fd2bc3822d2871988adfa878923",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 90,
+      "png_sha256": "f767479177f55668e0c3471ea47f65052d3c16b9e1f6d8945bc4806c5dfdd430",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 91,
+      "png_sha256": "5aea9f92c9a589849c319984f9b5abd45971c57b45aa34ebc7a3bd1d449de441",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 92,
+      "png_sha256": "d576f85e5af1b62bb842cc443ca459bcc662fcc2e5c2f77a5ee5b68ed8515513",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 93,
+      "png_sha256": "cbfebc5d90d9f4f600da7120d9c00907d2ff64967c67d226ca7db35b5bfaded5",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 94,
+      "png_sha256": "f94882892a6b9b801cec2c85dda4fc79b5a66e1d1529f65ea51278042ece91e1",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 95,
+      "png_sha256": "2b34f383369bed39e6db69c4f765ef9efccb94a41768e6077e42aed99a9c3a16",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 96,
+      "png_sha256": "206eb9d798605b9898f877e73e7ffa9718ace935af0d1359a6bfc66dc82efec8",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 97,
+      "png_sha256": "fdbd27649d9d623c39803fee1d7f138ee1bdfd040db85130b33095d3f2e4070c",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 98,
+      "png_sha256": "df71afe4ebf99ad3e3fad3a75d697a1413e7ec2670254f535bc68d4239c54291",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    },
+    {
+      "physical_page": 99,
+      "png_sha256": "463c8498ad20386124658eed3af7335ab87288e781c6493c90e6fdcb5a38a7b8",
+      "inspection": "exact PNG SHA inheritance from T132 direct-original visual QA",
+      "prior_qa": "final-qa-67-99.json",
+      "result": "pass"
+    }
+  ]
+}

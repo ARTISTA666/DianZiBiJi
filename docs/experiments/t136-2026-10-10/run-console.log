@@ -1,0 +1,98 @@
+{
+  "body": {
+    "content": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 74,
+      "precision": null,
+      "recall": 0.0,
+      "f1": 0.0,
+      "note_count": 12,
+      "exact_note_count": 2
+    },
+    "metadata": {
+      "tp": 36,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "note_count": 12,
+      "exact_note_count": 12
+    },
+    "all": {
+      "tp": 36,
+      "fp": 0,
+      "fn": 74,
+      "precision": 1.0,
+      "recall": 0.32727272727272727,
+      "f1": 0.4931506849315068,
+      "note_count": 12,
+      "exact_note_count": 2
+    }
+  },
+  "fields": {
+    "content": {
+      "tp": 73,
+      "fp": 3,
+      "fn": 1,
+      "precision": 0.9605263157894737,
+      "recall": 0.9864864864864865,
+      "f1": 0.9733333333333334,
+      "note_count": 12,
+      "exact_note_count": 11
+    },
+    "metadata": {
+      "tp": 36,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "note_count": 12,
+      "exact_note_count": 12
+    },
+    "all": {
+      "tp": 109,
+      "fp": 3,
+      "fn": 1,
+      "precision": 0.9732142857142857,
+      "recall": 0.990909090909091,
+      "f1": 0.9819819819819819,
+      "note_count": 12,
+      "exact_note_count": 11
+    }
+  },
+  "regression": {
+    "content": {
+      "tp": 40,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.975609756097561,
+      "recall": 1.0,
+      "f1": 0.9876543209876543,
+      "note_count": 4,
+      "exact_note_count": 3
+    },
+    "metadata": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "note_count": 4,
+      "exact_note_count": 4
+    },
+    "all": {
+      "tp": 52,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.9811320754716981,
+      "recall": 1.0,
+      "f1": 0.9904761904761905,
+      "note_count": 4,
+      "exact_note_count": 3
+    }
+  }
+}

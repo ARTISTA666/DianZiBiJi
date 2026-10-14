@@ -1,0 +1,130 @@
+[
+  {
+    "short_report_id": "bbe72eb",
+    "full_commit": "bbe72eb722ac200bf2628dad58a1b5092729af08",
+    "exists_in_repositories": [
+      "main",
+      "T139",
+      "T141"
+    ],
+    "first_source_repository": "main",
+    "commit_metadata": [
+      "bbe72eb722ac200bf2628dad58a1b5092729af08",
+      "01ae3b44769ceda3274be8a9fcceb6813b35395f",
+      "2026-08-25T19:03:57+08:00",
+      "2026-08-25T19:03:57+08:00",
+      "style: cargo fmt 统一 monitor_expired_pending_actions 日志宏换行"
+    ],
+    "source_archive": "code-snapshots/bbe72eb722ac200bf2628dad58a1b5092729af08.tar.gz",
+    "archive_sha256": "02c4ef58002c1bd0b6928a91f841ceaacccbc13e6e5051e403bc97e349c9f8d9",
+    "archive_bytes": 865679,
+    "archive_file_count": 349,
+    "archive_scope": "white-listed runtime source/config/tests only; complete history kept separately private-local"
+  },
+  {
+    "short_report_id": "fb87ce38",
+    "full_commit": "fb87ce38c08aa3444759a47adda56e491ad05db2",
+    "exists_in_repositories": [
+      "main",
+      "T139",
+      "T141"
+    ],
+    "first_source_repository": "main",
+    "commit_metadata": [
+      "fb87ce38c08aa3444759a47adda56e491ad05db2",
+      "944e626df9cbba2191cf8bae6360b0a7ea0d07f5",
+      "2026-09-14T13:12:28+08:00",
+      "2026-09-14T13:12:28+08:00",
+      "[证据线] feat(thesis): 盲审攻击点降级轮(T-043,持窗后释放)——作者转来 20 条严苛盲审意见,落地 17 条不改事实的措辞/口径修正:①摘要中英[每项事实都有引用]改[事实可回溯+引用范围逐条审计](消表6-7 90%/85%矛盾)、p=0.0020 全位置加[事后规则化评价下,描述性参考]、F1 首报原始 99.05%+修复后回归 100% 分列两版、[复现了同一方向]改[方向一致的观察]+补充内部诊断批次口径;②普通 RAG 公平性:摘要与 6.4 明示语料上限边界,6.6.3+7.4 补两后续对照臂(笔记全文序列化 RAG、三元组序列化无图结构 RAG),主张收缩为一跳注入机制效应;③思维链时间线全文更名执行轨迹时间线(5.5 节命名理由段+图 5-12 题注改+截图旧称注记),前端 AgentAssistant 标签同步改名;④蓝图缺口[下一步指引]降格[待覆盖知识点提示],4.6.8 规则一加名义覆盖口径界定(同名实体≠任务完成);⑤规则二重写:人工修正走独立 PATCH 接口不参与优先级比较(对照 kg_blueprint.rs 代码事实),100 为保留位下界;⑥4.6.5 补[先清后建]旧边清理机制(对照 clear_note_graph:DELETE by source_id+孤儿实体回收+APPROVED 读取兜底,论文原无此交代,代码本就正确);⑦色板矛盾:22 类对照代码修正为 23,4.6.7+1.5 补 17/23 超集与九类实体八类关系映射+sample/experiment_type 兜底色与 instrument 同值缺口如实报;⑧[AI 自主推进]12 处统一加[预设边界内]限定,1.2.4 补控制权分配界定;⑨[两批独立证据]改[主批次+补充内部诊断批次方向一致](1779/1812);⑩RAGAS faithfulness 0.533 去[总体忠于]积极定性;⑪6.8 [真实使用流程]改[场景化端到端流程验证]+E2E [验收]限定;⑫可复现主张分层:3.2+6.1 明示证据层(全批次可审计)/环境层(仅绑定 revision 批次)两层次;⑬Q17 加严格口径=协议缺陷、批次内保留但降权;⑭摘要+3.2 权限改[逻辑隔离维度+系统角色显式例外](对照 permissions.rs PI 豁免)。136 页,0 错误 0 缺字 0 undefined,引文号 118 零变化,悬空节引用 0,旧表述残留清零,数字对账全溯源(消失仅 22 类误记),judge 28 页目验(108/109 表头重复报告经文本层+像素复核证伪为幻觉)。前端 lint/typecheck/build 全绿。PDF=docs/…2026-09-14.pdf 本地不入库"
+    ],
+    "source_archive": "code-snapshots/fb87ce38c08aa3444759a47adda56e491ad05db2.tar.gz",
+    "archive_sha256": "7fe256fd0934341b9b5c10d1b9190273b91bd560508914fbb77c6a6d58934dd9",
+    "archive_bytes": 987497,
+    "archive_file_count": 382,
+    "archive_scope": "white-listed runtime source/config/tests only; complete history kept separately private-local"
+  },
+  {
+    "short_report_id": "b6cd3a24",
+    "full_commit": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "exists_in_repositories": [
+      "main",
+      "T139",
+      "T141"
+    ],
+    "first_source_repository": "main",
+    "commit_metadata": [
+      "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+      "21c165b2a2309c5aae5b3aee08fca8405fdf8deb",
+      "2026-10-01T14:27:09+08:00",
+      "2026-10-01T14:27:09+08:00",
+      "feat(frontend): 日记支持多图片展示与左右轮播切换功能"
+    ],
+    "source_archive": "code-snapshots/b6cd3a24f6edb5bdf971d8d76cc7635139b32954.tar.gz",
+    "archive_sha256": "bc81e3ffaaadc3f7094130ce9457a6292069542e306c251c52b57d6b43fa3207",
+    "archive_bytes": 1008321,
+    "archive_file_count": 395,
+    "archive_scope": "white-listed runtime source/config/tests only; complete history kept separately private-local"
+  },
+  {
+    "short_report_id": "0268b88a",
+    "full_commit": "0268b88a949a78a72198ec80542c6306ed7f71cc",
+    "exists_in_repositories": [
+      "T139",
+      "T141"
+    ],
+    "first_source_repository": "T139",
+    "commit_metadata": [
+      "0268b88a949a78a72198ec80542c6306ed7f71cc",
+      "24c3d797c4aab953e10d55b308a8247f73032448",
+      "2026-10-11T15:55:34+08:00",
+      "2026-10-11T15:55:34+08:00",
+      "[证据线] test(probe): 等待实验租约到期"
+    ],
+    "source_archive": "code-snapshots/0268b88a949a78a72198ec80542c6306ed7f71cc.tar.gz",
+    "archive_sha256": "3aa783a152b80e252b563beea54a34673f74a9b321a5d363229d772617ab9b87",
+    "archive_bytes": 1019984,
+    "archive_file_count": 395,
+    "archive_scope": "white-listed runtime source/config/tests only; complete history kept separately private-local"
+  },
+  {
+    "short_report_id": "6d52a600",
+    "full_commit": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+    "exists_in_repositories": [
+      "T139",
+      "T141"
+    ],
+    "first_source_repository": "T139",
+    "commit_metadata": [
+      "6d52a600ae1cc882cdad6e620205595b291ebe95",
+      "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+      "2026-10-11T14:35:58+08:00",
+      "2026-10-11T14:35:58+08:00",
+      "[证据线] T139 isolated validation snapshot"
+    ],
+    "source_archive": "code-snapshots/6d52a600ae1cc882cdad6e620205595b291ebe95.tar.gz",
+    "archive_sha256": "3400beb1bc61db35450fa8423e07d3225c75ac45ca66df74b3e1e723d7b212c8",
+    "archive_bytes": 1019100,
+    "archive_file_count": 395,
+    "archive_scope": "white-listed runtime source/config/tests only; complete history kept separately private-local"
+  },
+  {
+    "short_report_id": "9548e83d",
+    "full_commit": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+    "exists_in_repositories": [
+      "T141"
+    ],
+    "first_source_repository": "T141",
+    "commit_metadata": [
+      "9548e83d4f887630385e2b818292e2b8a5afbf36",
+      "0268b88a949a78a72198ec80542c6306ed7f71cc",
+      "2026-10-11T17:06:12+08:00",
+      "2026-10-11T17:06:12+08:00",
+      "[证据线] T141 independent Rust validation input"
+    ],
+    "source_archive": "code-snapshots/9548e83d4f887630385e2b818292e2b8a5afbf36.tar.gz",
+    "archive_sha256": "de8fd9b488c1a50df8fab3d59f8aabf0a9a7585ec3afe683e1319f94fb2104e8",
+    "archive_bytes": 1026002,
+    "archive_file_count": 395,
+    "archive_scope": "white-listed runtime source/config/tests only; complete history kept separately private-local"
+  }
+]

@@ -1,0 +1,204 @@
+{
+  "status": "reviewed_replacement_snapshot",
+  "owner": "code-reviewer",
+  "task": "T139",
+  "reviewed_at": "2026-10-11",
+  "scope": "只读复核替换JSON的主张与证据边界，并核对生产源码SHA与已完成的独立代码审查记录；不构成最终Word应用审计或全页验收。",
+  "inputs": {
+    "agent-work/t139-2026-10-11/paper/root-replacements.json": "732cf6731027c58e447113615e235f121f77b98e14f4f596d6d0a3ae043587bf",
+    "agent-work/t139-2026-10-11/paper/replacements-proposed.json": "0893cbacbcda8320de5f8252df08110527661f2d939e5eb443e79ed1d8e654bb",
+    "agent-work/t139-2026-10-11/paper/comparison-proposed.json": "1c2a0cf6fa34a954fa864ee99b87fcd437a3266dc812629df70645f077ec7513",
+    "agent-work/t139-2026-10-11/paper/capability-comparison-proposed.json": "d4785a4b6f221d217f5c6ed003c33b259499fe4b5ce6b1a4399eeeb388c4bebb"
+  },
+  "baseline_review": "docs/论文最新稿挑刺审核-T138-2026-10-11.md",
+  "result": "pass",
+  "new_findings": [],
+  "checks": [
+    {
+      "issue": "R01",
+      "result": "pass",
+      "observation": "摘要、RQ1、方法和结论统一限定字段、明确类型标记及领域规则输入；英文正文F1=0未推广为中文正文也失败；字段与合成回归结果保持独立。"
+    },
+    {
+      "issue": "R02",
+      "result": "pass",
+      "observation": "RQ2与贡献改为证据组织对照；保留74.44%、46.67%及p=0.0938，明确未达到显著性标准，呈现全文笔记/全部三元组相对一跳的覆盖与成本取舍，未宣称图结构独立增益。"
+    },
+    {
+      "issue": "R03",
+      "result": "pass",
+      "observation": "openBIS与eLabFTW能力比较只列已确认能力；工程贡献定位为业务审核、授权与知识利用衔接，未以未提及功能推断竞品缺失。原84条引用保留并新增官方[85]。"
+    },
+    {
+      "issue": "R04",
+      "result": "pass",
+      "observation": "指标及界面改为匹配实体最近更新间隔；明确重抽会复位和无匹配实体取0，未覆盖比例另算；图5-20保留原截图并明示修订前标签。"
+    },
+    {
+      "issue": "R05",
+      "result": "pass",
+      "observation": "同键异参拒绝，同键同参复用存储摘要、真实状态和剩余有效期，不延长时间；完成动作不再接受批准，与低风险结果缓存分开表述。"
+    },
+    {
+      "issue": "R06",
+      "result": "pass",
+      "observation": "业务DB变化、领域审计、执行键和确认完成状态限定为同一DB事务提交；外部嵌入请求与费用明确不在事务内，不主张外部exactly-once或展示事件原子提交。"
+    },
+    {
+      "issue": "R07",
+      "result": "pass",
+      "observation": "批准执行重核当前执行权限；仅具体主张提审核验笔记实际项目的当前写权限及活动状态，未扩展至本轮未修改的成员/归档管理策略。"
+    },
+    {
+      "issue": "R08",
+      "result": "pass",
+      "observation": "笔记及资料高风险动作在登记和执行核验实际项目与固定项目一致，与已受审冻结代码一致。"
+    },
+    {
+      "issue": "R09",
+      "result": "pass",
+      "observation": "表6-3区分当前隔离PostgreSQL审核门禁回归与历史浏览器/Rust批次；模型桩测试明确仅验证来源隔离，不评价生成质量。当前全量检查结果由主线/QA另填附录D.4。"
+    },
+    {
+      "issue": "R10",
+      "result": "pass",
+      "observation": "保留76.32%=87/(87+27)，将27次非赢家样本名命中解释为冻结规则输出惩罚，不解释为27项错误事实，也不据此认定图谱事实可靠性更好。"
+    },
+    {
+      "issue": "R11",
+      "result": "pass",
+      "observation": "3条回答4处同通道顺序有效范围先展开再E匿名化；原格式口径保持不合格，语义支持解释条件于变换，主张/引用支持区间跨零。"
+    },
+    {
+      "issue": "R12",
+      "result": "pass",
+      "observation": "保留历史汇总数字与运行身份，同时明确原逐请求日志缺失，现存附件不能复算p95或逐项核对request-id，未重建虚构明细。"
+    },
+    {
+      "issue": "C1",
+      "result": "pass",
+      "observation": "补列2026-07-13五方法历史批次bge-small-zh-v1.5、512维和unversioned，未套用当前环境。"
+    },
+    {
+      "issue": "C2",
+      "result": "pass",
+      "observation": "4行改为范围语法违规，明确归档未发现编号越界，数字冻结。"
+    },
+    {
+      "issue": "C3",
+      "result": "pass",
+      "observation": "科研数据管理统引收窄为[31-35]，保留[36]供RAG讨论。"
+    }
+  ],
+  "frozen_source_check": {
+    "backend/src/api/agent_runtime.rs": {
+      "sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+      "matches_independent_review": true
+    },
+    "backend/src/api/mcp.rs": {
+      "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "matches_independent_review": true
+    },
+    "backend/src/api/notes.rs": {
+      "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "matches_independent_review": true
+    },
+    "backend/src/api/files.rs": {
+      "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "matches_independent_review": true
+    },
+    "backend/src/api/projects.rs": {
+      "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "matches_independent_review": true
+    },
+    "backend/src/api/knowledge_graph.rs": {
+      "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "matches_independent_review": true
+    },
+    "backend/src/api/rag/mod.rs": {
+      "sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "matches_independent_review": true
+    },
+    "backend/src/rag/index.rs": {
+      "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "matches_independent_review": true
+    },
+    "frontend/src/lib/api.ts": {
+      "sha256": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+      "matches_independent_review": true
+    },
+    "frontend/src/components/shared/AgentAssistant.tsx": {
+      "sha256": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47",
+      "matches_independent_review": true
+    }
+  },
+  "remaining_acceptance": [
+    "最终Word应用结果及TOC需由主线核对。",
+    "最终渲染仅可继承完全相同PNG SHA的逐页视觉审核；修改后页9需重看。",
+    "当前全量回归的代码身份及实际结果需按QA证据填写附录D.4，不以本文件替代测试执行。"
+  ],
+  "incremental_reviews": [
+    {
+      "reviewed_at": "2026-10-11",
+      "p": 3617,
+      "result": "pass",
+      "previous_input_sha256": "c5e960b6b69fbe91478da06d7c0fe88e71f36ee38d24b5d647e6bd7dd8413506",
+      "reviewed_input_sha256": "561d80b0e7c6eccce77ec07250e19a7d8e8124b59f1f2e5dbd033bea015457f1",
+      "scope": "仅审查新增一段换序，不重审既已受审的54条替换。",
+      "observation": "首句仅将测试日期移至Rust完整revision之后；独立数据库、新卷、关闭种子导入、管理员角色、接口执行与附件含义均保持。",
+      "verification": {
+        "date_unchanged": "2026年10月10日",
+        "full_revision_unchanged": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+        "digit_token_multiset_identical": true,
+        "counts_unchanged": [
+          3,
+          28,
+          165,
+          201,
+          174
+        ],
+        "http_status_unchanged": 200,
+        "times_unchanged": [
+          "23:52:28",
+          "23:52:30"
+        ],
+        "text_after_first_sentence_identical": true
+      },
+      "formatting_notes": "[85]仅左对齐的格式修正与原84条文本保持说明不影响证据含义；本项不替代最终PNG视觉验收。"
+    },
+    {
+      "reviewed_utc": "2026-10-11T07:02:47.739881+00:00",
+      "p": 847,
+      "result": "pass",
+      "previous_input_sha256": "561d80b0e7c6eccce77ec07250e19a7d8e8124b59f1f2e5dbd033bea015457f1",
+      "reviewed_input_sha256": "684ff0e260665c054e9a3f34a1ba2ea25b648c2c5c0684ddb8c8f4059f76b730",
+      "scope": "仅复核R06一处外部调用措辞澄清；将该句反向替换可精确恢复前次输入SHA，其余55条内容未变。",
+      "observation": "不属于数据库事务改为不受数据库回滚保证，消除外部嵌入实际在持锁事务期间执行而非时间上在事务之外的歧义；数字、原子DB效果范围、失败后可能再次调用的边界保持。",
+      "verification": {
+        "reverse_single_phrase_recreates_previous_sha256": true,
+        "digit_token_multiset_identical": true,
+        "replacement_count": 55
+      },
+      "remaining_acceptance": "最终Word须由builder重生；任何PNG SHA变化页需重新视觉检查。"
+    },
+    {
+      "reviewed_utc": "2026-10-11T07:18:36.896757+00:00",
+      "p": 847,
+      "result": "pass",
+      "previous_input_sha256": "684ff0e260665c054e9a3f34a1ba2ea25b648c2c5c0684ddb8c8f4059f76b730",
+      "reviewed_input_sha256": "732cf6731027c58e447113615e235f121f77b98e14f4f596d6d0a3ae043587bf",
+      "scope": "仅核验P847末句缩短；反向替换精确恢复上一版输入SHA，其余55条无变动。",
+      "old_sentence": "系统内助手在调用方未提供标识时按会话轮次与工具步骤补入。",
+      "new_sentence": "标识缺省时，系统内助手按会话轮次与工具步骤补入。",
+      "observation": "标识缺省与调用方未提供标识含义一致；执行主体仍是系统内助手，补入依据仍是会话轮次与工具步骤；幂等、确认、DB回滚与外部费用边界未改变。",
+      "verification": {
+        "reverse_single_sentence_recreates_previous_sha256": true,
+        "digit_token_multiset_identical": true,
+        "replacement_count": 55,
+        "mechanism_unchanged": true
+      },
+      "remaining_acceptance": "render-final第40页需以新SHA重新原尺寸视觉检查，本项不作新图验收。"
+    }
+  ],
+  "reviewed_replacement_count": 55
+}

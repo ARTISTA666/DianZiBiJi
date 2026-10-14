@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-10T15:52:28.786180+00:00",
+  "path": "/notes/6/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 1,
+    "entities": [
+      {
+        "id": 1,
+        "project_id": 1,
+        "entity_type": "project",
+        "label": "T136 body",
+        "normalized_label": "t136 body",
+        "natural_key": "project:project:1",
+        "source_type": "project",
+        "source_id": 1,
+        "properties": {
+          "project_id": 1
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.212401Z"
+      },
+      {
+        "id": 3,
+        "project_id": 1,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.212401Z"
+      },
+      {
+        "id": 13,
+        "project_id": 1,
+        "entity_type": "note",
+        "label": "ubc2021-02 RFP plasmid retransformation",
+        "normalized_label": "ubc2021 02 rfp plasmid retransformation",
+        "natural_key": "note:note:6",
+        "source_type": "note",
+        "source_id": 6,
+        "properties": {
+          "experiment_date": "2021-07-05",
+          "note_id": 6,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.212401Z",
+        "updated_at": "2026-10-10T15:52:29.212401Z"
+      },
+      {
+        "id": 14,
+        "project_id": 1,
+        "entity_type": "experiment_type",
+        "label": "plasmid_transformation",
+        "normalized_label": "plasmid transformation",
+        "natural_key": "experiment_type:plasmid transformation",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "plasmid_transformation"
+        },
+        "created_at": "2026-10-10T15:52:29.212401Z",
+        "updated_at": "2026-10-10T15:52:29.212401Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 16,
+        "project_id": 1,
+        "source_entity_id": 1,
+        "target_entity_id": 13,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 6,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.212401Z"
+      },
+      {
+        "id": 17,
+        "project_id": 1,
+        "source_entity_id": 13,
+        "target_entity_id": 3,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 6,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.212401Z"
+      },
+      {
+        "id": 18,
+        "project_id": 1,
+        "source_entity_id": 13,
+        "target_entity_id": 14,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 6,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.212401Z"
+      }
+    ]
+  }
+}

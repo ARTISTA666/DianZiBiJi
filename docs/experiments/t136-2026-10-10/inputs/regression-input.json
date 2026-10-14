@@ -1,0 +1,180 @@
+{
+  "source": "current Rust seed fields preserved in T129 snapshot; known development/regression examples",
+  "notes": [
+    {
+      "title": "PCR 条件优化实验",
+      "experiment_type": "PCR",
+      "experiment_date": "2026-06-03",
+      "fixed_fields": {
+        "reagents": "Taq DNA Polymerase、dNTP、MgCl2、模板 DNA",
+        "instrument": "PCR Thermal Cycler",
+        "sample": "样本 A、样本 B",
+        "result": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。"
+      },
+      "content_text": "试剂: Taq DNA Polymerase、dNTP、MgCl2\n仪器: PCR Thermal Cycler\n样本: 样本 A、样本 B\n结果: 58℃ 条件下条带清晰。",
+      "identity": "当前 Rust 系统种子；非真人实验数据；非历史原始界面截图",
+      "source": "backend/src/db.rs:1110–1159"
+    },
+    {
+      "title": "细胞活力检测实验",
+      "experiment_type": "细胞培养",
+      "experiment_date": "2026-06-04",
+      "fixed_fields": {
+        "reagents": "CCK-8、PBS、DMEM 培养基",
+        "instrument": "酶标仪、CO2 培养箱",
+        "sample": "处理组细胞、对照组细胞",
+        "result": "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。"
+      },
+      "content_text": "试剂: CCK-8、PBS、DMEM 培养基\n仪器: 酶标仪、CO2 培养箱\n样本: 处理组细胞、对照组细胞\n结果: 细胞活力下降约 18%。",
+      "identity": "当前 Rust 系统种子；非真人实验数据；非历史原始界面截图",
+      "source": "backend/src/db.rs:1110–1159"
+    },
+    {
+      "title": "Western Blot 蛋白表达验证",
+      "experiment_type": "Western Blot",
+      "experiment_date": "2026-06-05",
+      "fixed_fields": {
+        "reagents": "RIPA 裂解液、BCA 试剂盒、一抗、二抗",
+        "instrument": "电泳仪、转膜仪、凝胶成像系统",
+        "sample": "蛋白样本 P1、蛋白样本 P2",
+        "result": "目标蛋白在处理组表达降低，内参条带稳定。"
+      },
+      "content_text": "试剂: RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器: 电泳仪、转膜仪、凝胶成像系统\n样本: 蛋白样本 P1、蛋白样本 P2\n结果: 处理组目标蛋白表达降低。",
+      "identity": "当前 Rust 系统种子；非真人实验数据；非历史原始界面截图",
+      "source": "backend/src/db.rs:1110–1159"
+    },
+    {
+      "title": "qPCR 定量验证实验",
+      "experiment_type": "PCR",
+      "experiment_date": "2026-05-28",
+      "fixed_fields": {
+        "reagents": "SYBR Green Master Mix、cDNA 模板、引物对、无酶水",
+        "instrument": "荧光定量 PCR 仪、微量分光光度计",
+        "sample": "cDNA 样本 1、cDNA 样本 2、阴性对照",
+        "result": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。"
+      },
+      "content_text": "试剂: SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器: 荧光定量 PCR 仪、微量分光光度计\n样本: cDNA 样本 1、2、阴性对照\n结果: 目标基因差异表达约 2.3 倍。",
+      "identity": "当前 Rust 系统种子；非真人实验数据；非历史原始界面截图",
+      "source": "backend/src/db.rs:1110–1159"
+    }
+  ],
+  "reference": {
+    "PCR 条件优化实验": {
+      "has_note": [
+        "PCR 条件优化实验"
+      ],
+      "created_by": [
+        "系统管理员"
+      ],
+      "has_experiment_type": [
+        "PCR"
+      ],
+      "uses_reagent": [
+        "Taq DNA Polymerase",
+        "dNTP",
+        "MgCl2",
+        "模板 DNA"
+      ],
+      "uses_instrument": [
+        "PCR Thermal Cycler"
+      ],
+      "uses_sample": [
+        "样本 A",
+        "样本 B"
+      ],
+      "produces_result": [
+        "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。",
+        "58℃ 条件下条带清晰。"
+      ]
+    },
+    "细胞活力检测实验": {
+      "has_note": [
+        "细胞活力检测实验"
+      ],
+      "created_by": [
+        "系统管理员"
+      ],
+      "has_experiment_type": [
+        "细胞培养"
+      ],
+      "uses_reagent": [
+        "CCK-8",
+        "PBS",
+        "DMEM 培养基"
+      ],
+      "uses_instrument": [
+        "酶标仪",
+        "CO2 培养箱"
+      ],
+      "uses_sample": [
+        "处理组细胞",
+        "对照组细胞"
+      ],
+      "produces_result": [
+        "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。",
+        "细胞活力下降约 18%。"
+      ]
+    },
+    "Western Blot 蛋白表达验证": {
+      "has_note": [
+        "Western Blot 蛋白表达验证"
+      ],
+      "created_by": [
+        "系统管理员"
+      ],
+      "has_experiment_type": [
+        "Western Blot"
+      ],
+      "uses_reagent": [
+        "RIPA 裂解液",
+        "BCA 试剂盒",
+        "一抗",
+        "二抗"
+      ],
+      "uses_instrument": [
+        "电泳仪",
+        "转膜仪",
+        "凝胶成像系统"
+      ],
+      "uses_sample": [
+        "蛋白样本 P1",
+        "蛋白样本 P2"
+      ],
+      "produces_result": [
+        "目标蛋白在处理组表达降低，内参条带稳定。",
+        "处理组目标蛋白表达降低。"
+      ]
+    },
+    "qPCR 定量验证实验": {
+      "has_note": [
+        "qPCR 定量验证实验"
+      ],
+      "created_by": [
+        "系统管理员"
+      ],
+      "has_experiment_type": [
+        "PCR"
+      ],
+      "uses_reagent": [
+        "SYBR Green Master Mix",
+        "cDNA 模板",
+        "引物对",
+        "无酶水"
+      ],
+      "uses_instrument": [
+        "荧光定量 PCR 仪",
+        "微量分光光度计"
+      ],
+      "uses_sample": [
+        "cDNA 样本 1",
+        "cDNA 样本 2",
+        "阴性对照"
+      ],
+      "produces_result": [
+        "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。",
+        "目标基因差异表达约 2.3 倍。"
+      ]
+    }
+  },
+  "expected_count": 52
+}

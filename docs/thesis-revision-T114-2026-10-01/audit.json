@@ -1,0 +1,569 @@
+{
+  "task": "T-114",
+  "source": "/Users/yusong/Downloads/new/full-system/docs/毕业论文-新增批注深度修订稿-T113-2026-10-01.docx",
+  "source_sha256": "1fd1aa00b8b0d8ff3b0592794fb50bf91e711a517e84f7176f8b51364f79eb4a",
+  "historical_T113_delivery_sha256": "4e9953f9367cfba4241999f718e75c0a35bda5e54ffd1d0d817e11cce999b953",
+  "output": "/Users/yusong/Downloads/new/full-system/docs/毕业论文-补充验证与批注修订稿-T114-2026-10-01.docx",
+  "output_sha256": "3be347db706020e1d1d0f2caee54768d7da8ae602a08489d825dddbbc03954cd",
+  "output_size": 3115395,
+  "page_count": 82,
+  "toc_entries": 98,
+  "native_math_count": 30,
+  "reference_count": 80,
+  "comment_count": 32,
+  "table_counts": {
+    "baseline": 44,
+    "final": 51
+  },
+  "media_count": 28,
+  "media_unchanged_byte_count": 26,
+  "changed_media": [
+    "word/media/image10.png",
+    "word/media/image11.png"
+  ],
+  "changed_package_parts": [
+    "word/comments.xml",
+    "word/document.xml",
+    "word/footnotes.xml",
+    "word/media/image10.png",
+    "word/media/image11.png"
+  ],
+  "checks": {
+    "source_current_unchanged": true,
+    "all_native_math_canonical_xml_unchanged": true,
+    "all_80_reference_entries_unchanged": true,
+    "all_32_comment_ids_attributes_original_text_prefix_preserved": true,
+    "anchor_commentRangeStart": true,
+    "anchor_commentRangeEnd": true,
+    "anchor_commentReference": true,
+    "media_only_two_equation_labels_changed": true,
+    "41_of_44_original_tables_exact_xml_unchanged": true,
+    "historical_experimental_result_tables_unchanged": true,
+    "all_98_toc_entries_match_final_render": true,
+    "main_markdown_equals_git_head": true,
+    "only_expected_package_parts_changed": true
+  },
+  "all_checks_passed": true,
+  "comment_anchor_counts": {
+    "commentRangeStart": {
+      "source": 25,
+      "final": 25,
+      "same_ids_order": true
+    },
+    "commentRangeEnd": {
+      "source": 25,
+      "final": 25,
+      "same_ids_order": true
+    },
+    "commentReference": {
+      "source": 32,
+      "final": 32,
+      "same_ids_order": true
+    }
+  },
+  "table_preservation": [
+    {
+      "source_table_index": 0,
+      "unchanged": true,
+      "source_text_prefix": "学 科、专业：电子信息研 究 方 向：作 者 姓 名：导师及职称：论文提交日期：2026 年 8 月 29 日授予学位日"
+    },
+    {
+      "source_table_index": 1,
+      "unchanged": true,
+      "source_text_prefix": "角色权限作用域系统用户与全局角色管理项目创建与全局统计项目内读写、审核与评价项目成员与配置管理系统管理员全系统、全部项目"
+    },
+    {
+      "source_table_index": 2,
+      "unchanged": true,
+      "source_text_prefix": "关注问题需求约束实验记录分散且非结构化只有已审核笔记可进入结构化处理；每个实体和关系必须保留来源跨项目访问须受授权约束资"
+    },
+    {
+      "source_table_index": 3,
+      "unchanged": true,
+      "source_text_prefix": "生物医学场景原始记录形态AI 处理目标对应功能模块PCR 条件优化实验类型、样本、试剂、退火温度、扩增结果识别样本、试剂"
+    },
+    {
+      "source_table_index": 4,
+      "unchanged": true,
+      "source_text_prefix": "编号功能需求对应场景FR1实验笔记支持创建、编辑、提交、审核、退回、归档和作废；内容变更保存完整字段与正文快照、变更说明"
+    },
+    {
+      "source_table_index": 5,
+      "unchanged": true,
+      "source_text_prefix": "编号需求要求NFR1安全性身份认证、项目权限后端统一校验，敏感项目数据默认不外发NFR2可追溯性关键业务与 AI 操作留"
+    },
+    {
+      "source_table_index": 6,
+      "unchanged": false,
+      "source_text_prefix": "（4-1）"
+    },
+    {
+      "source_table_index": 7,
+      "unchanged": true,
+      "source_text_prefix": "角色可执行的关键操作被拦截的操作系统管理员账号启停、全局角色、项目创建、全局统计、任意项目运维无（业务操作仍受项目活动状"
+    },
+    {
+      "source_table_index": 8,
+      "unchanged": true,
+      "source_text_prefix": "模块核心职责与其他模块的关系用户与项目管理账号启停、系统角色、项目创建、成员与项目授权管理维护业务操作的用户、项目和授权"
+    },
+    {
+      "source_table_index": 9,
+      "unchanged": true,
+      "source_text_prefix": "功能链路用户操作涉及数据类别笔记审核与知识构建成员编写并提交笔记，审核人员审批；通过后构建图谱笔记、版本、审核记录、实体"
+    },
+    {
+      "source_table_index": 10,
+      "unchanged": true,
+      "source_text_prefix": "实体类型含义主要来源项目科研项目或实验项目项目表实验笔记项目下的单条实验记录实验笔记表实验人员实验记录创建者或相关人员用"
+    },
+    {
+      "source_table_index": 11,
+      "unchanged": true,
+      "source_text_prefix": "关系类型源实体目标实体含义包含笔记项目实验笔记项目下包含某条实验笔记创建者实验笔记用户实验笔记由某用户创建关联附件实验笔"
+    },
+    {
+      "source_table_index": 12,
+      "unchanged": false,
+      "source_text_prefix": "项目处理规则输入已审核笔记 n、其当前版本的字段 F 与正文 C、关联附件标识 A；在调用方事务内执行。输出本次写入或复"
+    },
+    {
+      "source_table_index": 13,
+      "unchanged": true,
+      "source_text_prefix": "（4-2）"
+    },
+    {
+      "source_table_index": 14,
+      "unchanged": false,
+      "source_text_prefix": "（4-3）"
+    },
+    {
+      "source_table_index": 15,
+      "unchanged": true,
+      "source_text_prefix": "符号含义​关系  相对问题  的综合相关性得分​关系类型与来源匹配分：Iₜ、Iₙ、Iₑ 分别表示关系类型命中问题预定义类"
+    },
+    {
+      "source_table_index": 16,
+      "unchanged": true,
+      "source_text_prefix": "对比项审计记录评价记录产生方式系统自动记录用户人工提交记录内容操作者、时间、动作、对象、参数与结果摘要质量评分（1-5）"
+    },
+    {
+      "source_table_index": 17,
+      "unchanged": true,
+      "source_text_prefix": "任务名称输入范围生成方式输出结构追溯与约束实验总结按可选日期范围选取已审核笔记及对应关系；另选项目内已审核知识资料服务端"
+    },
+    {
+      "source_table_index": 18,
+      "unchanged": true,
+      "source_text_prefix": "示例部分规范内容任务与输入范围任务类型：实验总结；日期：2026-06-03 至 2026-06-05；输入：已审核笔记"
+    },
+    {
+      "source_table_index": 19,
+      "unchanged": true,
+      "source_text_prefix": "工具名称（中文）功能所需项目能力风险等级需人工确认笔记检索按关键词检索已审核笔记读取只读否资料检索检索项目已入库资料读取"
+    },
+    {
+      "source_table_index": 20,
+      "unchanged": true,
+      "source_text_prefix": "指标语义缺省警告/严重阈值审批堵转时长最老待审笔记的等待小时数72 / 168 小时退回率近 10 条审批动作的退回占比"
+    },
+    {
+      "source_table_index": 21,
+      "unchanged": true,
+      "source_text_prefix": "类别组件或参数项配置与说明技术栈后端Rust 1.88.0 + Axum 0.8.4，提供业务接口技术栈数据访问SQLx"
+    },
+    {
+      "source_table_index": 22,
+      "unchanged": true,
+      "source_text_prefix": "项目研究场景已审核笔记数知识文档数主要实验类型项目一论文核心内部测试项目157PCR、细胞培养/活力检测、Western"
+    },
+    {
+      "source_table_index": 23,
+      "unchanged": true,
+      "source_text_prefix": "笔记（实验类型，日期）结构化字段要点PCR 条件优化实验（PCR，2026-06-03）试剂：Taq DNA Polym"
+    },
+    {
+      "source_table_index": 24,
+      "unchanged": true,
+      "source_text_prefix": "参数取值参数取值分块长度700 字符向量维度1024分块重叠120 字符向量候选上限30资料证据条数6融合方法倒数排名融"
+    },
+    {
+      "source_table_index": 25,
+      "unchanged": true,
+      "source_text_prefix": "字段实验总结草稿节选标题实验总结草稿生成范围2026-06-03 至 2026-06-05输入来源实验笔记3条、资料7份"
+    },
+    {
+      "source_table_index": 26,
+      "unchanged": true,
+      "source_text_prefix": "类别配置本地硬件MacBook Air（设备型号 Mac17,3），Apple M5 十核 CPU，16 GB 统一内存"
+    },
+    {
+      "source_table_index": 27,
+      "unchanged": true,
+      "source_text_prefix": "数据集用途规模项目一合成语料关系抽取核对、问答对照与补充基线抽取用4条固定笔记；历史问答用15条已审核笔记、7份SOP提"
+    },
+    {
+      "source_table_index": 28,
+      "unchanged": true,
+      "source_text_prefix": "测试内容测试设计与过程测试结果图谱审核门禁（1 项集成测试）围绕笔记审核状态设置集成测试，检查未审核笔记是否会进入抽取与"
+    },
+    {
+      "source_table_index": 29,
+      "unchanged": true,
+      "source_text_prefix": "指标含义计算方式/公式用途精确率 P输出关系中与参考集匹配的比例见式（6-1）关系抽取：衡量误抽程度召回率 R参考关系在"
+    },
+    {
+      "source_table_index": 30,
+      "unchanged": true,
+      "source_text_prefix": "（6-1）（6-2）（6-3）（6-4）（6-5）（6-6）"
+    },
+    {
+      "source_table_index": 31,
+      "unchanged": true,
+      "source_text_prefix": "批次TPFPFN精确率召回率F1修复前521098.1132%100.0000%99.0476%修复后5200100.0"
+    },
+    {
+      "source_table_index": 32,
+      "unchanged": true,
+      "source_text_prefix": "指标普通 RAG图谱增强 RAG任务完成数（/20）414任务完成率20.0000%70.0000%平均响应耗时（ms）"
+    },
+    {
+      "source_table_index": 33,
+      "unchanged": true,
+      "source_text_prefix": "题集口径与方法规则化完成数（完成/题数）平均响应时延（ms；n）说明全题集：裸模型2/20（10.0000%）5854."
+    },
+    {
+      "source_table_index": 34,
+      "unchanged": true,
+      "source_text_prefix": "方法事实覆盖率（微平均）封闭集精确命中率精确率F1平均耗时裸大语言模型0.0000%0.0000%0.0000%0.00"
+    },
+    {
+      "source_table_index": 35,
+      "unchanged": true,
+      "source_text_prefix": "任务来源笔记来源资料图谱关系总 Token响应耗时实验总结373821919844 ms周报373820718791 m"
+    },
+    {
+      "source_table_index": 36,
+      "unchanged": true,
+      "source_text_prefix": "批次模式忠实度上下文精确率上下文召回有效样本实验二（20题成对）普通 RAG0.60600.26670.0500各20实"
+    },
+    {
+      "source_table_index": 37,
+      "unchanged": true,
+      "source_text_prefix": "编号问题类型实验问题Q01资料事实型PCR 条件优化实验的退火温度优化依据是什么？Q02资料事实型PCR 体系配置和循环"
+    },
+    {
+      "source_table_index": 38,
+      "unchanged": true,
+      "source_text_prefix": "序号笔记源实体关系目标实体1PCR 条件优化论文内部测试项目包含笔记PCR 条件优化实验2PCR 条件优化PCR 条件优"
+    },
+    {
+      "source_table_index": 39,
+      "unchanged": true,
+      "source_text_prefix": "数据域主要数据表作用用户与组织users、groups、group_members用户、课题组和成员关系项目权限proj"
+    },
+    {
+      "source_table_index": 40,
+      "unchanged": true,
+      "source_text_prefix": "工具权限范围审计动作笔记检索project:read, notes:read搜索已审核笔记资料检索project:rea"
+    },
+    {
+      "source_table_index": 41,
+      "unchanged": true,
+      "source_text_prefix": "模板中文标签状态experiment_summary实验总结已完成归档生成功能验证weekly_report周报已完成归"
+    },
+    {
+      "source_table_index": 42,
+      "unchanged": true,
+      "source_text_prefix": "文件类型SHA-256（前 16 位）GSE111619_family.soft.gzSOFT 元数据（gzip）fbf"
+    },
+    {
+      "source_table_index": 43,
+      "unchanged": true,
+      "source_text_prefix": "附件内容对应实验问答实验原始记录（40 条）、答案规则与逐题判定、盲评表与解盲键实验二补充基线与复现批次记录实验三多方法"
+    }
+  ],
+  "historical_result_tables": [
+    {
+      "caption": "表 6-4　评价指标与计算方式",
+      "same": true
+    },
+    {
+      "caption": "表 6-5　知识图谱抽取质量结果",
+      "same": true
+    },
+    {
+      "caption": "表 6-6　20 题成对实验总体结果",
+      "same": true
+    },
+    {
+      "caption": "表 6-7　项目一基础对照：20 题全题集与 Q06—Q19 共同子集",
+      "same": true
+    },
+    {
+      "caption": "表 6-8　扩展对照：五种方法（GSE111619 语料，12 题 × 3 次重复）",
+      "same": true
+    },
+    {
+      "caption": "表 6-8 的事实覆盖率按命中规定事实数除以规定事实总数计算微平均；封闭集精确命中要求全部规定事实命中且无禁止事实。精确率以规定事实命中数除以规定事实与禁止事实的总命中数，F1 据此计算。图谱增强与项目 RAG 的 36 次配对记录中，27 次覆盖改善、9 次持平；逐次覆盖比例之差的宏平均为 +0.6389，与表中微平均覆盖率之差属于不同口径。本表描述的是题目事实清单中的覆盖与命中情况。",
+      "same": true
+    },
+    {
+      "caption": "表 6-8 和图 6-6 集中展示扩展题集的描述性结果，原始记录与批次审计见附录 D。",
+      "same": true
+    },
+    {
+      "caption": "表 6-9　固定任务生成结果",
+      "same": true
+    },
+    {
+      "caption": "表 6-10　RAGAS 自动评价结果",
+      "same": true
+    }
+  ],
+  "root_changes": {
+    "task": "T-114",
+    "source_sha256": "1fd1aa00b8b0d8ff3b0592794fb50bf91e711a517e84f7176f8b51364f79eb4a",
+    "output_file": "/Users/yusong/Downloads/new/full-system/docs/毕业论文-补充验证与批注修订稿-T114-2026-10-01.docx",
+    "source_current_comments": 32,
+    "changes": [
+      {
+        "body_paragraph_index": 100,
+        "before": "模型上下文协议（Model Context Protocol，MCP）由 Anthropic 发布为开放协议，用于规范模型应用与外部工具、资源和提示模板之间的连接。客户端按协议发现服务端能力，再提交工具名称与参数发起调用。本文采用 2025-06-18 版接口规范实现 MCP 服务端，具体项目授权、参数校验和风险控制由业务服务完成。",
+        "after": "模型上下文协议（Model Context Protocol，MCP）由 Anthropic 于2024年11月25日发布为开放协议，用于规范模型应用与外部工具、资源和提示模板之间的连接。客户端按协议发现服务端能力，再提交工具名称与参数发起调用。本文采用 2025-06-18 版接口规范实现 MCP 服务端，具体项目授权、参数校验和风险控制由业务服务完成。协议发布与规范来源见附录D。",
+        "reason": "将MCP来源并入正文与附录，移除页底小字注。"
+      },
+      {
+        "kind": "equation_number",
+        "number": "4-3",
+        "native_math_preserved": true,
+        "source_body_paragraph_index": 226
+      },
+      {
+        "kind": "equation_number",
+        "number": "4-4",
+        "native_math_preserved": true,
+        "source_body_paragraph_index": 227
+      },
+      {
+        "kind": "equation_number",
+        "number": "4-5",
+        "native_math_preserved": true,
+        "source_body_paragraph_index": 229
+      },
+      {
+        "kind": "equation_number",
+        "number": "4-6",
+        "native_math_preserved": true,
+        "source_body_paragraph_index": 231
+      },
+      {
+        "body_paragraph_index": 237,
+        "before": "系统按式（4-3）为项目内关系评分：",
+        "after": "系统按式（4-7）为项目内关系评分：",
+        "reason": "关系计分公式顺延至4-7，正文引用同步，数学内容不变。"
+      },
+      {
+        "body_paragraph_index": 240,
+        "before": "关系筛选分三步进行。先根据问题中的“试剂”“仪器”“样本”“结果”等词确定关系类型；出现类型提示时仅保留对应关系。再查找问题词项命中的实体，命中时保留与这些实体或其相连笔记直接关联的候选关系。最后按式（4-3）计分，保留得分大于 0 且不低于默认阈值 1.0 的关系，并按得分、置信度和关系编号依次排序。系统按来源、关系类型与角色分组选择代表关系，普通查询默认最多注入 10 条；“全部、哪些、多少”等集合查询的上限放宽至不少于 30 条。",
+        "after": "关系筛选分三步进行。先根据问题中的“试剂”“仪器”“样本”“结果”等词确定关系类型；出现类型提示时仅保留对应关系。再查找问题词项命中的实体，命中时保留与这些实体或其相连笔记直接关联的候选关系。最后按式（4-7）计分，保留得分大于 0 且不低于默认阈值 1.0 的关系，并按得分、置信度和关系编号依次排序。系统按来源、关系类型与角色分组选择代表关系，普通查询默认最多注入 10 条；“全部、哪些、多少”等集合查询的上限放宽至不少于 30 条。",
+        "reason": "关系计分公式顺延至4-7，正文引用同步，数学内容不变。"
+      },
+      {
+        "kind": "algorithm_format",
+        "before": [
+          "项目处理规则",
+          "输入已审核笔记 n、其当前版本的字段 F 与正文 C、关联附件标识 A；在调用方事务内执行。",
+          "输出本次写入或复用的实体集合 E、关系集合 R，以及抽取运行记录。",
+          "1重建时删除来源为笔记 n 的旧关系，回收符合清理条件的无关联实体。",
+          "2建立或复用项目、笔记、创建者、实验类型与附件实体；建立对应基础关系，置信度取 1.0。",
+          "3递归遍历 F 与 C 的结构化字段；按字段名映射对象类型和关系类型，读取字段值作为候选术语。",
+          "4展开字段与正文为文本，匹配“试剂：”“仪器：”“样本：”“结果：”等类别标记，将匹配内容加入候选集。",
+          "5试剂、仪器与样本按逗号、顿号、分号或换行切分；结果仅按分号或换行切分，保留句内内容。",
+          "6对术语合并空白、转换全角字符、小写化、处理标点并匹配同义词表，得到规范名。",
+          "7按“实体类型、规范名”对本次候选集去重，合并同一对象的角色属性。",
+          "8对每个候选对象，按项目内自然键查找实体；复用并更新已有实体，或新建实体，加入 E。",
+          "9按“项目、源实体、目标实体、关系类型”查找或创建关系；记录来源笔记、抽取方法与角色属性，置信度取 0.7，加入 R。",
+          "10写入抽取运行记录，保存实体数、关系数和完成状态；调用方结束事务。"
+        ],
+        "after": [
+          "输入： 已审核笔记 n、其当前版本的字段 F 与正文 C、关联附件标识 A；在调用方事务内执行。",
+          "输出： 本次写入或复用的实体集合 E、关系集合 R，以及抽取运行记录。",
+          "1: 重建时删除来源为笔记 n 的旧关系，回收符合清理条件的无关联实体。",
+          "2: 建立或复用项目、笔记、创建者、实验类型与附件实体；建立对应基础关系，置信度取 1.0。",
+          "3: 递归遍历 F 与 C 的结构化字段；按字段名映射对象类型和关系类型，读取字段值作为候选术语。",
+          "4: 展开字段与正文为文本，匹配“试剂：”“仪器：”“样本：”“结果：”等类别标记，将匹配内容加入候选集。",
+          "5: 试剂、仪器与样本按逗号、顿号、分号或换行切分；结果仅按分号或换行切分，保留句内内容。",
+          "6: 对术语合并空白、转换全角字符、小写化、处理标点并匹配同义词表，得到规范名。",
+          "7: 按“实体类型、规范名”对本次候选集去重，合并同一对象的角色属性。",
+          "8: 对每个候选对象，按项目内自然键查找实体；复用并更新已有实体，或新建实体，加入 E。",
+          "9: 按“项目、源实体、目标实体、关系类型”查找或创建关系；记录来源笔记、抽取方法与角色属性，置信度取 0.7，加入 R。",
+          "10: 写入抽取运行记录，保存实体数、关系数和完成状态；调用方结束事务。"
+        ],
+        "technical_steps_unchanged": true
+      },
+      {
+        "body_paragraph_index": 254,
+        "before": "固定任务由服务端按模板筛选已审核证据，再调用模型生成文本；证据读取和处理流程由服务端控制。REST 接口包括 POST /api/agents/generate 和 GET /projects/{project_id}/agents/runs；MCP 的 create_report_draft 也调用同一生成服务。上下文预算、温度和最大输出长度随配置统一管理（见 5.1 节），生成结果与来源编号一并保存。",
+        "after": "固定任务由服务端按模板筛选已审核证据，再调用模型生成文本；证据读取和处理流程由服务端控制。用户可在项目报告页选择任务类型及生成范围，生成后展开草稿核对正文和来源。上下文预算、温度和最大输出长度随配置统一管理（见5.1节），生成结果与来源编号一并保存。",
+        "reason": "删去正文冗余接口路径；解释用户入口，检查段落分页。"
+      },
+      {
+        "body_paragraph_index": 323,
+        "before": "实验总结草稿的节选按标题、输入范围、实验事实和关系依据分栏展示如下。",
+        "after": "项目报告页以任务卡片展示生成记录，卡片显示标题（无标题时显示任务类型）、状态和草稿正文预览；展开后按标题、段落与列表显示草稿正文，并列出来源笔记、资料和图谱依据的数量。下表按标题、输入范围、实验事实和关系依据整理草稿节选，便于论文中核对内容。",
+        "reason": "依据当前前端reports页面解释实际展示与论文节选的对应关系。"
+      },
+      {
+        "body_paragraph_index": 35,
+        "before": "归档记录显示，8 个浏览器端到端场景及高风险确认与幂等模块的 8 项测试均通过。四条合成种子笔记的关系抽取与作者构建的 52 条参考关系集进行字符串集合比对，修复后逐条一致。历史 Python 原型的 20 题问答对照中，普通检索增强生成与图谱增强模式的规则化任务完成数分别为 4/20 和 14/20；统一复核归档回答的引用编号格式及数组范围，合格回答分别为 17/20 和 15/20。本次评价以小规模合成语料、作者参考关系集、事后答案规则和单次运行记录为依据；参考关系的独立人工验证与引用语义支持度评价尚待开展。",
+        "after": "归档记录显示，8 个浏览器端到端场景及高风险确认与幂等模块的 8 项测试均通过。四条合成种子笔记的关系抽取与作者构建的 52 条参考关系集进行字符串集合比对，修复后逐条一致。历史 Python 原型的 20 题问答对照中，普通检索增强生成与图谱增强模式的规则化任务完成数分别为 4/20 和 14/20；统一复核归档回答的引用编号格式及数组范围，合格回答分别为 17/20 和 15/20。本次评价以小规模合成语料、作者参考关系集、事后答案规则和单次运行记录为依据；新增GPT语义补评、前置规则复测及角色接口验证见第6.6节；参考关系的独立人工验证仍待开展。",
+        "reason": "摘要与已完成补验一致，保留人工验证边界。"
+      },
+      {
+        "body_paragraph_index": 42,
+        "before": "Archived records show that eight browser end-to-end scenarios and eight tests of high-risk confirmation and idempotency passed. Relation extraction from four synthetic seed notes matched 52 author-defined reference relations after correction in a string-set comparison. In the historical Python prototype, ordinary retrieval-augmented generation and graph-enhanced generation completed 4/20 and 14/20 questions under the rule-based measure. A unified offline check of citation-marker syntax and array bounds passed 17/20 and 15/20 archived answers, respectively. The evaluation uses small-scale synthetic data, author-defined reference relations, retrospective answer rules, and single-run records; independent human validation of the reference relations and assessment of semantic support for citations remain pending.",
+        "after": "Archived records show that eight browser end-to-end scenarios and eight tests of high-risk confirmation and idempotency passed. Relation extraction from four synthetic seed notes matched 52 author-defined reference relations after correction in a string-set comparison. In the historical Python prototype, ordinary retrieval-augmented generation and graph-enhanced generation completed 4/20 and 14/20 questions under the rule-based measure. A unified offline check of citation-marker syntax and array bounds passed 17/20 and 15/20 archived answers, respectively. The evaluation uses small-scale synthetic data, author-defined reference relations, retrospective answer rules, and single-run records; supplementary GPT semantic review, prospective-rule retesting, and role-based API simulation are reported in Section 6.6. Independent human validation of the reference relations remains pending.",
+        "reason": "英文摘要同步实际评价状态。"
+      },
+      {
+        "body_paragraph_index": 349,
+        "before": "题目 Q01—Q20 见附录 A。Q05 询问资料同步状态，提供的证据中没有同步台账，规定要点为“无法确认”；Q20 询问下一步复核建议。两题均计入任务完成率，事实证据覆盖率以其余 18 题为分母。该批次的要点与别名组在回答生成后、统计前整理，本节据此开展归档回答的回顾性核对；运行前冻结规则的重测安排见第 7.3 节。",
+        "after": "题目 Q01—Q20 见附录 A。Q05 询问资料同步状态，提供的证据中没有同步台账，规定要点为“无法确认”；Q20 询问下一步复核建议。两题均计入任务完成率，事实证据覆盖率以其余 18 题为分母。该批次的要点与别名组在回答生成后、统计前整理，本节据此开展归档回答的回顾性核对；运行前冻结规则的补测结果见第6.6节。",
+        "reason": "指向已执行的前置规则补测，不改旧规则及旧结果。"
+      },
+      {
+        "body_paragraph_index": 353,
+        "before": "图谱增强模式的上下文由资料片段与序列化关系文本组成。归档自动评分采用 DeepSeek flash 档评判模型；为检查模型评判的自偏好风险[78]，后续交叉评分方案另引入 GPT 评判模型，并保留两者的独立输出，具体步骤见第 7.3 节。",
+        "after": "图谱增强模式的上下文由资料片段与序列化关系文本组成。归档自动评分采用DeepSeek flash档评判模型；为检查模型评判的自偏好风险[78]，本次由独立GPT会话子代理对同一40条旧回答与实际上下文进行结构化语义评判，结果见第6.6节。新增指标为自定义主张支持、参考事实覆盖、上下文相关性和引用支持；其评分定义与历史RAGAS不同，分别报告。",
+        "reason": "将GPT补验由计划改为已执行，明确自定义指标与RAGAS的区别。"
+      },
+      {
+        "body_paragraph_index": 421,
+        "before": "结果分析：实验二图谱增强模式的上下文召回由 0.0500 增至 0.5150，忠实度由 0.6060 降至 0.5332。两项评分分别反映参考要点进入上下文的程度和回答陈述获得证据支持的程度：本批次关系注入扩大了事实召回范围，生成阶段仍需要约束回答陈述与来源的一致性。后续交叉评分将围绕这两个维度检查具体分歧案例。",
+        "after": "结果分析：实验二图谱增强模式的上下文召回由 0.0500 增至 0.5150，忠实度由 0.6060 降至 0.5332。两项评分分别反映参考要点进入上下文的程度和回答陈述获得证据支持的程度：本批次关系注入扩大了事实召回范围，生成阶段仍需要约束回答陈述与来源的一致性。本次独立GPT补评进一步核对回答主张与具体来源，结果见第6.6节。",
+        "reason": "更新实际已完成的GPT评价状态。"
+      },
+      {
+        "body_paragraph_index": 422,
+        "before": "6.6 本章小结",
+        "after": "6.7 本章小结",
+        "reason": "新增补充验证一节，本章小结顺延。"
+      },
+      {
+        "body_paragraph_index": 423,
+        "before": "归档功能验证记录中，8 个浏览器端到端场景及高风险确认与幂等模块的 8 项测试通过，分项证据见表 6-3。关系抽取修复前与 52 条作者参考关系比对的 F1 为 99.0476%，修复后集合一致。Python 原型20题对照的要点完成数由 4 增至 14，平均响应耗时增加 103.2000 ms；引用编号格式与数组范围复核的合格数分别为 17/20 与 15/20。多方法对照呈现各批次的覆盖与开销，四类固定任务保存了范围受控的生成草稿及来源，计划样例形成了可重算指标与跨模块状态记录。结果为知识组织、关系证据补充和受控辅助流程提供了具体工程验证，下一阶段的独立质量评价与补测安排见第七章。",
+        "after": "归档功能验证记录中，8 个浏览器端到端场景及高风险确认与幂等模块的 8 项测试通过，分项证据见表 6-3。关系抽取修复前与 52 条作者参考关系比对的 F1 为 99.0476%，修复后集合一致。Python 原型20题对照的要点完成数由 4 增至 14，平均响应耗时增加 103.2000 ms；引用编号格式与数组范围复核的合格数分别为 17/20 与 15/20。多方法对照呈现各批次的覆盖与开销，四类固定任务保存了范围受控的生成草稿及来源，计划样例形成了可重算指标与跨模块状态记录。结果为知识组织、关系证据补充和受控辅助流程提供了具体工程验证，新增独立GPT补评、前置规则复测及角色接口操作见第6.6节；独立研究者复核和部署期评价见第七章。",
+        "reason": "本章小结区分已执行补验与待执行独立人类评价。"
+      },
+      {
+        "body_paragraph_index": 434,
+        "before": "评价材料以内部编制的合成语料和公开数据派生语料为主。主问答对照采用小规模封闭题集，答案要点在生成后整理，因此现有统计用于回顾性分析。关系参考集覆盖四条规范化笔记，尚缺独立复核签名，制定过程与系统输出的独立性也未完整记录；多角色流程材料保存的是权限账号和事件，实际操作者、人数及操作过程仍需补录。后续将由未参与生成与题集编写的研究者完成关系复核和方法隐藏评价，分别报告事实正确、引用支持与草稿质量；两名评价者还需报告一致率。",
+        "after": "评价材料由内部合成语料和公开数据派生语料构成。旧20题的事后要点核对与新12题的前置规则复测分别报告；新题仍由AI依据来源编制，尚未取得独立研究者金标准。52条关系参考集覆盖四条规范化笔记，独立复核签名和制定过程的独立性仍需补齐。第6.6节的四个GPT角色真实操作了隔离接口，真人参与者为0；后续由未参与生成与制题的研究者复核关系、事实和引用，分别保留判断与评价者一致率。",
+        "reason": "以实际完成的补验取代未执行计划，保留独立研究者与真人边界。"
+      },
+      {
+        "body_paragraph_index": 435,
+        "before": "下一轮问答对照应在当前 Rust 系统上运行，预先锁定问题、参考事实、匹配规则、语料、图谱、提示和上下文预算，并绑定代码及运行镜像。现有20题批次仅运行一次，图谱增强使用了修复前图谱，已知误抽关系进入 3 道题的上下文；补充基线的数据快照也与该批次不同。重测采用修复后图谱，在同一语料上比较资料检索、完整笔记文本、序列化三元组与一跳关系增强，分别考察新增事实和关系组织的作用；按问题统计重复生成结果，并将集合列举、跨题指代等任务条件写入运行前规则。",
+        "after": "当前Rust检索结果上的四臂复测已在运行前锁定问题、参考事实、语料、图谱、提示、预算、评分与代码镜像身份，并按问题汇总三次生成（见第6.6节）。首批参数兼容失败和全量修正批单独保留。旧20题仅运行一次，使用修复前图谱且3题含已知误抽关系，其统计继续作为历史记录；新批使用当前图谱和同源语料，不与旧批合并。进一步评价需扩大来源、任务类型与独立制题范围，再检验集合列举、指代和关系聚合。",
+        "reason": "前置规则实验已实际完成，旧20题数字及其局限不变。"
+      },
+      {
+        "body_paragraph_index": 437,
+        "before": "后续先完善中文实体短语匹配、集合计数与按笔记连接的分组聚合，再比较有限多跳扩展与 GraphRAG、LightRAG 等方法。自动评价保留 DeepSeek 评分，并拟增加独立 GPT 评判：两者使用相同匿名问题、回答、证据和评分定义，分别保存逐项判断，再核查分歧；这项交叉评分尚未执行。扩展批次中项目 RAG 与词法检索 RAG 因评判服务中断未获得有效分数，图谱增强组均值依据部分有效样本，重评时须完整记录成功与失败单元格。固定任务将增加逐结论的证据支持度、关键事实完整性及结构可用性评价。",
+        "after": "后续完善中文实体短语匹配、集合计数与按笔记连接的分组聚合，再比较有限多跳扩展与GraphRAG、LightRAG等方法。旧40条回答的独立GPT补评已完成，逐项证据与差值见第6.6节；其自定义指标与历史DeepSeek RAGAS分别报告，尚无两模型同一评分定义下的一致性比较。扩展批次的项目RAG与词法检索RAG仍缺有效自动分数，重评须记录全部成功与失败单元格。固定任务还需增加逐结论支持、关键事实完整性和结构可用性评价。",
+        "reason": "准确说明GPT评判已执行且跨指标一致性及固定任务质量尚待执行。"
+      },
+      {
+        "body_paragraph_index": 436,
+        "before": "当前一跳关系检索对实体关系明确的问题提供直接证据，对指代、时间约束与关系聚合仍需补充处理。自动评分中，参考要点召回增加，回答受证据支持的比例下降，改进重点是同时控制检索覆盖和生成陈述的一致性。",
+        "after": "当前一跳关系检索对实体关系明确的问题提供直接证据，对指代、时间约束与关系聚合仍需补充处理。历史RAGAS评分中，参考要点召回增加，回答受证据支持的比例下降，改进重点是同时控制检索覆盖和生成陈述的一致性。",
+        "reason": "标明此处指历史RAGAS，而非新增GPT自定义评分。"
+      },
+      {
+        "body_paragraph_index": 548,
+        "before": "人工盲评由未参与答案生成的研究者独立完成。评价者阅读匿名问题、回答及对应证据，逐项判断事实正确性和引用支持度，再给出 1—5 分综合质量评分及理由；全部评价提交后才按解盲键统计模式结果。两名评价者应报告一致率或 Cohen’s kappa，保留各自原始判断与分歧处理记录。已有表格为待执行协议，人工结果以实际完成、可签核的评价记录为依据；模型自动评分单独归档。应检查回答或证据中的 [G] 标记可能造成的模式泄露，并记录处理方式。",
+        "after": "人工盲评由未参与答案生成的研究者独立完成。评价者阅读匿名问题、回答及对应证据，逐项判断事实正确性和引用支持度，再给出 1—5 分综合质量评分及理由；全部评价提交后才按解盲键统计模式结果。两名评价者应报告一致率或 Cohen’s kappa，保留各自原始判断与分歧处理记录。已有表格为待执行协议，人工结果以实际完成、可签核的评价记录为依据；模型自动评分单独归档。应检查回答或证据中的 [G] 标记可能造成的模式泄露，并记录处理方式。第6.6节的GPT会话评判与角色模拟已单独归档；本协议仍用于未来由独立研究者实际完成的人工评价。",
+        "reason": "更新附录协议状态，避免将GPT模拟登记为人工实证。"
+      }
+    ],
+    "new_section_paragraphs": [
+      "为补充评判模型与前置规则证据，2026年10月1日开展三个相互区分的验证批次：旧40条回答的GPT交叉评判、当前Rust检索结果上的四臂补测，以及GPT角色对真实业务接口的操作验证。生成回答仍使用DeepSeek官方接口，评判和角色决策由独立Codex GPT会话子代理完成，实际模型API标识未披露，记录为会话内评审。各批保留冻结输入、原始响应、判定理由及失败，GPT角色参与人数不计入真人研究。",
+      "旧回答补评复用第6.5.2节20道题的两组归档回答和当时上下文，方法名与旧分数从评判包移除，来源统一为E编号；关系文本形式仍可能提示来源类别。四名GPT子代理各判10条，共40条有效判断，每条只判一次。表6-11按问题宏平均；无可评分引用的回答缺失该项，不记为零。该补评沿用旧事后参考规则，因此仍属于回顾性分析。",
+      "参考事实覆盖的题级配对增量为44.17个百分点，95%自助重采样区间为17.08至68.75个百分点；主张支持增量为3.87个百分点，区间为−5.63至14.74个百分点。引用支持以两组都有有效引用的15题配对，增量为0.22个百分点，区间为−20.00至17.78个百分点，不能用表中不同有效样本的均值直接相减。旧批次显示图谱上下文覆盖更多参考事实，主张和引用支持差异尚不明确；每条由单名子代理评判，仅3题的两臂由同一评价者判断，17题跨评价者，尺度差异未校准，也未产生同一案例的评价者一致率。",
+      "新补测依据公开GSE111619来源制定12道题，并在首次生成前锁定31项规则，其中10道含事实题有27项必需事实，2道纯资料不足题有4项拒答与范围条件。题集由AI依据来源编制，未取得独立研究者金标准。独立Rust实例导入4份资料、批准4条派生笔记，冻结234个资料块、39个实体与100条关系。四臂共用同题文档片段，分别不加补充、加全部笔记、加全部三元组、加实际一跳关系；全文与三元组由冻结适配器组装，再直接调用DeepSeek，并非生产接口原生提供四种模式。文档预算4000字符、补充预算16000字符，题序和三次重复预先固定。",
+      "首批适配器漏传生产接口已有的思考模式关闭参数，144次请求仅55条取得有效最终回答，89条失败，原记录全部保留。登记操作修正后，保持题目、上下文及语义规则不变，完整重跑144条；修正批全部成功，返回模型字段均为deepseek-flash，请求名称为deepseek-v4-flash。该操作修正发生在观察首批服务失败之后，补测属于前置规则的内部复测。新回答由另外三名独立GPT子代理按实体、样本、字段与实际证据逐项判断，每条均保留连续原文依据。",
+      "事实覆盖和严格成功率先在同题三次重复内平均，再汇总10道事实题；正确拒答单列2道纯资料不足题，每臂6条回答。每臂全部36条生成均参与耗用统计。预定主比较一跳关系相对资料检索的覆盖差为27.78个百分点，95%自助重采样区间为3.89至55.00个百分点，题级符号翻转检验p=0.0938（n=10），按预定检验未达到0.05阈值。次比较相对资料＋全文笔记为-15.56个百分点，Holm校正p=0.5000；相对资料＋全部三元组为-18.89个百分点，Holm校正p=0.5000。上下文规模与所含事实不同，以上差值共同反映新增信息和检索组织，不能单独归因为图结构。",
+      "事实覆盖只计实体和字段绑定正确、实际上下文支持的必需事实；事实题严格成功要求全部预定事实获支持且未触发禁止断言；纯资料不足题另按拒答与范围规则判断。四臂均未触发预定禁止事实，两个纯资料不足题均正确拒答；该冻结语义定义不以引用格式或漏引作为成功门槛，不等同于引用审核通过或整答零错误。一跳关系的事实覆盖低于全文笔记和全部三元组，而耗用更少，当前材料支持其覆盖与成本之间的取舍。",
+      "GPT角色验证设记录者、审批者、只读成员及非成员四种角色，分别操作隔离项目的真实Rust接口，任务规则预先冻结。三条记录均完成创建提审、说明来源字段缺漏后退回、补齐来源并形成版本2、再次提审及批准；初稿与退回事件可回查。原24场中18场通过，六次普通RAG问答因项目未入库知识资料返回409，未调用DeepSeek。补齐同源资料并另行冻结后，按原六条问答和三条只读创建请求完整执行9场，结果单列于表6-13，未将原失败回填。",
+      "资料入库补测按原规则通过8/9。六次查询均返回DeepSeek回答，其中事实问答第一次因fallback为needs_review、引用审核未通过而失败；另外两次事实问答通过。三次资料不足回答未虚构抗体参数，满足原不足规则，但均标记needs_review、引用审核未通过，且部分措辞不严谨；其成功不代表整答或引用全部合格。四个响应记录内部引用修复，因此可确认六次查询API请求，上游模型调用总次数未暴露。",
+      "这些操作核验了批准版本的保留、普通RAG资料入库前置条件、问答来源核查及项目读写权限。实际生成与完整响应保存在补验附件中；GPT角色模拟不提供真人满意度、使用负担或长期采用率的证据，前端与MCP的可用性仍需另行观察。"
+    ],
+    "new_result_tables": [
+      "6-11",
+      "6-12",
+      "6-13"
+    ],
+    "main_markdown_untouched": true
+  },
+  "layout_fixes": {
+    "english_abstract_paragraphs": 6,
+    "english_full_text_preserved": true,
+    "line_points": 18,
+    "original_math_children_preserved": 4,
+    "equation_4_1_separate_paragraphs": 4,
+    "images_corrected": [
+      10,
+      11
+    ],
+    "figure_patch_audit": "figure-patch-audit.json",
+    "algorithm_comment_exactness_fix": true
+  },
+  "figure_patch": {
+    "method": "Re-render existing editable SVG text patch at original coordinates; follow T111 author instruction to preserve original figures and limit changes to necessary labels.",
+    "entries": [
+      {
+        "n": 10,
+        "name": "rag_comparison",
+        "x": 925,
+        "y": 363,
+        "w": 385,
+        "h": 36,
+        "dimensions": [
+          1441,
+          890
+        ],
+        "changed_pixels": 137,
+        "outside_patch_changed_pixels": 0,
+        "source_sha256": "0437a30f1a9c9ba66dec03a9eb76f90321aa8cdefe8e48aaf3aa8eca744dba1e",
+        "output_sha256": "6f12d647ea5d672b0a8d988826a03e4a54ed842b2ba774ad42a6acdc6856add0",
+        "old": "（4-3）",
+        "new": "（4-7）",
+        "original_shapes_arrows_other_labels_preserved": true
+      },
+      {
+        "n": 11,
+        "name": "rag_permissions",
+        "x": 1030,
+        "y": 51,
+        "w": 248,
+        "h": 27,
+        "dimensions": [
+          1299,
+          467
+        ],
+        "changed_pixels": 80,
+        "outside_patch_changed_pixels": 0,
+        "source_sha256": "a9589a15df95dbd5b0428c8c2ec3194fb5b3880779ffb2e6cd633a01ebef9fdd",
+        "output_sha256": "81670438d1c50937495eec5d4526c23b949a0c96bfc3f4a9b3460abf3bc030de",
+        "old": "（4-3）",
+        "new": "（4-7）",
+        "original_shapes_arrows_other_labels_preserved": true
+      }
+    ]
+  },
+  "media_zip_entry_count": 29,
+  "media_unchanged_zip_entry_count": 27,
+  "media_zip_directory_entry_count": 1,
+  "media_count_definition": "Actual image files; excludes word/media/ directory entry. 29 ZIP media entries include one directory."
+}

@@ -1,0 +1,3639 @@
+P0000 [] [phys:1] 分类号：TP391
+P0001 [] [phys:] 
+P0002 [] [phys:] 
+P0003 [] [phys:] 
+P0004 [] [phys:] 安徽师范大学
+P0005 [] [phys:] 硕 士 学 位 论 文
+P0006 [] [phys:1] 面向科研实验记录的智能电子实验笔记系统设计与实现
+P0007 [] [phys:1] Design and Implementation of an Intelligent Electronic Laboratory Notebook System for Scientific Experiment Records
+P0008 [] [phys:] 学 科、专业：
+P0009 [] [phys:] 电子信息
+P0010 [] [phys:] 研 究 方 向：
+P0011 [] [phys:] 
+P0012 [] [phys:] 作 者 姓 名：
+P0013 [] [phys:] 
+P0014 [] [phys:] 导师及职称：
+P0015 [] [phys:] 
+P0016 [] [phys:] 论文提交日期：
+P0017 [] [phys:1] 2026 年 8 月 29 日
+P0018 [] [phys:] 授予学位日期：
+P0019 [] [phys:] 2026 年 9 月
+P0020 [] [phys:] 
+P0021 [] [phys:] 
+P0022 [] [phys:] 
+P0023 [] [phys:] 
+P0024 [] [phys:1,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111] 安徽师范大学硕士学位论文
+P0025 [] [phys:1] （二〇二六年九月）
+P0026 [] [phys:] 
+P0027 [] [phys:2] 安徽师范大学学位论文独创性声明
+P0028 [] [phys:2] 本人郑重声明：所呈交的学位论文是本人在导师的指导下独立进行研究工作所取得的成果。尽我所知，除文中已经注明引用的内容外，本论文不包含任何其他个人或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体，均已在文中以明确方式标明。本人完全意识到本声明的法律后果由本人承担。
+P0029 [] [phys:] 
+P0030 [] [phys:] 
+P0031 [] [phys:] 
+P0032 [] [phys:] 
+P0033 [] [phys:2] 论文作者签名：　　　　　　　　　签字日期：　　　　年　　月　　日
+P0034 [] [phys:] 
+P0035 [] [phys:3] 安徽师范大学学位论文版权使用授权书
+P0036 [] [phys:3] 本学位论文作者完全了解安徽师范大学有关保留、使用学位论文的规定，即：学校有权保留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅；学校可以将学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。（保密的学位论文在解密后适用本授权书）
+P0037 [] [phys:] 
+P0038 [] [phys:] 
+P0039 [] [phys:] 
+P0040 [] [phys:3] 学位论文作者签名：　　　　　　　　导 师 签 名：　　　　　　　　
+P0041 [] [phys:3] 签字日期：　　　　年　　月　　日　　　签字日期：　　　　年　　月　　日
+P0042 [] [phys:] 
+P0043 [heading 1] [phys:] 摘　要
+P0044 [First Paragraph] [phys:4] 高校课题组需要保存实验目的、条件、材料、操作过程与结果，并支持团队协作、过程追溯和成果复用。纸质记录本与个人文档分散保存，增加了记录查阅、版本核对和成员交接的难度，记录中的实验对象也难以得到结构化利用。针对这些问题，本文以实验记录统一管理、审核与来源核对为目标，设计并实现一套具有项目权限、审核流程和来源追溯能力的智能电子实验笔记系统。
+P0045 [Body Text] [phys:4] 系统面向高校课题组成员、审核人员和项目负责人，由管理员维护账号与全局权限。成员可编写笔记、保存版本并上传附件和知识文档；审核人员可批准记录或退回修改；项目负责人管理成员及权限。资料审核后归档，扫描件经光学字符识别与人工校对后可入库。系统还提供知识图谱与来源浏览、项目问答与评价、固定任务生成、计划覆盖核对、按需预警和审计查询。
+P0046 [Body Text] [phys:4] 系统以Next.js构建界面，Rust/Axum实现接口，PostgreSQL/pgvector保存记录与向量，DeepSeek完成生成。审核后依据结构化字段、明确类型标记及领域规则映射对象与关系，更新带来源的图谱；计划预期独立保存，与已审核知识匹配。资料经审核、分块和向量化后参与项目内混合检索。固定任务按模板组织证据，会话工具受项目授权，高风险调用经人工确认，写入受幂等约束，并记录来源与操作日志。
+P0047 [Body Text] [phys:4] 本文工程贡献包括：（1）审核驱动的知识更新与计划覆盖核对，以审核状态控制知识进入，匹配独立计划与已审核知识；（2）资料片段与直接关系联合检索及来源回查，比较不同证据组织方式的事实覆盖与生成成本；（3）项目权限、人工确认与幂等约束下的智能辅助，使生成与工具写入遵循授权、审核与审计规则。
+P0048 [Body Text] [phys:4] 归档8个浏览器端到端场景及8项确认与幂等测试均通过。12条公开英文日记的自然正文抽取F1为0.00%，正确字段映射F1为97.33%；四条合成样例在当前Rust的内容关系回归F1为98.77%，中文自然正文需另行评价。早期20题普通与图谱增强问答完成数为4/20和14/20，原始引用格式及范围合格数为17/20和15/20，语义支持改善仍不确定。Rust四组配置生成144条回答，一跳关系与资料检索的事实覆盖率为74.44%和46.67%，题级p=0.0938，未达到0.05阈值。一跳关系覆盖低于全文笔记和全部三元组、Token耗用较少，呈现本题集的覆盖与成本取舍，尚未确证图结构的独立增益。角色接口验证核对业务约束。
+P0049 [Body Text] [phys:4] 关键词：电子实验笔记；科研数据管理；知识图谱；检索增强生成；智能辅助
+P0050 [heading 1] [phys:5,6] Abstract
+P0051 [First Paragraph] [phys:5] University research groups retain experimental objectives, conditions, materials, procedures, and results for collaboration and reuse. Paper notebooks and scattered files hinder record checking, version management, and handovers. This thesis designs and implements an electronic laboratory notebook with unified records, project permissions, review workflows, and verifiable sources.
+P0052 [Body Text] [phys:5] Members edit and version notes, upload materials, and correct scanned records; reviewers approve records; project leaders manage membership and permissions; administrators maintain accounts and global access. Features include document archiving, graph and source browsing, project question answering and evaluation, fixed-task generation, plan-coverage checks, on-demand alerts, and audit queries.
+P0053 [Body Text] [phys:5] This thesis makes three engineering contributions: (1) review-driven knowledge updates and plan-coverage checks that match separately stored plans and reviewed knowledge; (2) joint retrieval of document passages and direct relations with source verification, comparing fact coverage and generation cost; and (3) AI assistance with project authorization, human confirmation, idempotency, and audit records.
+P0054 [Body Text] [phys:5] Next.js and Rust/Axum provide interfaces and APIs; PostgreSQL/pgvector stores records and embeddings; DeepSeek supports generation. After approval, structured fields, explicit type markers, and domain rules are mapped into source-linked graph relations. Approved documents support project-scoped hybrid retrieval, and templates organize task evidence. Tools require project authorization, high-risk calls require confirmation, and writes use idempotency. Sources and operations are logged.
+P0055 [Body Text] [phys:5] Archived tests passed eight browser scenarios and eight confirmation and idempotency tests. On 12 public English diaries, natural-prose extraction yielded F1=0.00%, while mapping correct structured fields yielded F1=97.33%; content-relation regression on four synthetic notes yielded 98.77% in Rust. Chinese prose requires separate evaluation. Ordinary and graph-enhanced prototype retrieval completed 4/20 and 14/20 questions, with original citation checks passing 17/20 and 15/20; semantic support gains remain uncertain. Four Rust configurations produced 144 answers. One-hop relations and documents achieved 74.44% and 46.67% fact coverage (question-level p=0.0938, above 0.05). The one-hop configuration had lower coverage and token use than full notes or all triples. This descriptive coverage–cost tradeoff does not establish an independent benefit of graph structure. Role-based API checks assessed workflow constraints.
+P0056 [Body Text] [phys:5] Key words: Electronic Laboratory Notebook; Research Data Management; Knowledge Graph; Retrieval-Augmented Generation; Intelligent Assistance
+P0057 [TOC Heading] [phys:] 目　录
+P0058 [toc 2] [phys:] 
+P0059 [toc 1] [phys:] 摘　要I
+P0060 [toc 1] [phys:] AbstractII
+P0061 [toc 1] [phys:] 第一章 绪论1
+P0062 [toc 2] [phys:] 1.1 研究背景及意义1
+P0063 [toc 2] [phys:8] 1.2 国内外研究现状1
+P0064 [toc 3] [phys:] 1.2.1 电子实验笔记系统研究现状1
+P0065 [toc 3] [phys:] 1.2.2 大语言模型与 RAG 技术研究现状2
+P0066 [toc 3] [phys:] 1.2.3 知识图谱在科研数据管理中的应用现状3
+P0067 [toc 3] [phys:] 1.2.4 智能体与工具调用技术研究现状4
+P0068 [toc 3] [phys:] 1.2.5 小结与研究问题5
+P0069 [toc 2] [phys:] 1.3 研究目标及研究内容5
+P0070 [toc 2] [phys:] 1.4 研究贡献6
+P0071 [toc 2] [phys:] 1.5 论文组织结构6
+P0072 [toc 1] [phys:] 第二章 相关理论与技术7
+P0073 [toc 2] [phys:] 2.1 电子实验笔记与科研数据管理7
+P0074 [toc 2] [phys:] 2.2 大语言模型与检索增强生成技术7
+P0075 [toc 2] [phys:] 2.3 知识图谱与实体关系建模8
+P0076 [toc 2] [phys:] 2.4 智能体与工具调用机制8
+P0077 [toc 2] [phys:] 2.5 系统开发相关技术8
+P0078 [toc 2] [phys:] 2.6 本章小结8
+P0079 [toc 1] [phys:] 第三章 需求分析9
+P0080 [toc 2] [phys:] 3.1 科研实验记录业务场景与角色分析9
+P0081 [toc 2] [phys:] 3.2 系统问题场景分析10
+P0082 [toc 2] [phys:] 3.3 系统功能需求分析11
+P0083 [toc 2] [phys:] 3.4 系统非功能需求11
+P0084 [toc 2] [phys:] 3.5 本章小结12
+P0085 [toc 1] [phys:] 第四章 系统设计13
+P0086 [toc 2] [phys:] 4.1 系统总体架构设计13
+P0087 [toc 2] [phys:] 4.2 用户角色与权限设计14
+P0088 [toc 2] [phys:] 4.3 系统功能模块设计15
+P0089 [toc 2] [phys:] 4.4 数据库设计16
+P0090 [toc 3] [phys:] 4.4.1 数据存储与服务依赖16
+P0091 [toc 3] [phys:] 4.4.2 数据组织与表结构17
+P0092 [toc 2] [phys:] 4.5 实验知识图谱构建方法18
+P0093 [toc 3] [phys:] 4.5.1 实验知识图谱总体设计19
+P0094 [toc 3] [phys:] 4.5.2 实验记录实体定义19
+P0095 [toc 3] [phys:] 4.5.3 实验知识关系定义20
+P0096 [toc 3] [phys:] 4.5.4 基于实验笔记内容的实体关系抽取方法20
+P0097 [toc 3] [phys:] 4.5.5 审核状态驱动的知识图谱更新机制23
+P0098 [toc 3] [phys:] 4.5.6 资料审核与知识入库机制23
+P0099 [toc 3] [phys:] 4.5.7 实验知识图谱可视化与关联检索23
+P0100 [toc 3] [phys:] 4.5.8 计划知识点管理与覆盖匹配23
+P0101 [toc 2] [phys:] 4.6 融合知识图谱的智能问答方法24
+P0102 [toc 3] [phys:] 4.6.1 项目级 RAG 知识库构建与分块24
+P0103 [toc 3] [phys:] 4.6.2 词法检索与 BM25 倒排索引25
+P0104 [toc 3] [phys:] 4.6.3 混合检索的 RRF 融合25
+P0105 [toc 3] [phys:] 4.6.4 融合知识图谱的检索增强策略26
+P0106 [toc 3] [phys:] 4.6.5 权限约束下的问答执行流程28
+P0107 [toc 3] [phys:] 4.6.6 问答来源、审计与评价记录28
+P0108 [toc 2] [phys:] 4.7 固定任务型智能辅助与工具调用设计29
+P0109 [toc 3] [phys:] 4.7.1 MCP 接口与会话助手实现29
+P0110 [toc 3] [phys:] 4.7.2 固定任务模板设计30
+P0111 [toc 3] [phys:] 4.7.3 工具注册与风险分级32
+P0112 [toc 3] [phys:] 4.7.4 高风险操作的人工确认与幂等控制33
+P0113 [toc 3] [phys:] 4.7.5 提示版本管理33
+P0114 [toc 2] [phys:] 4.8 项目指标评估与人工干预33
+P0115 [toc 2] [phys:] 4.9 本章小结34
+P0116 [toc 1] [phys:] 第五章 系统实现35
+P0117 [toc 2] [phys:] 5.1 系统实现环境35
+P0118 [toc 2] [phys:] 5.2 实验数据集35
+P0119 [toc 2] [phys:] 5.3 系统功能实现38
+P0120 [toc 3] [phys:] 5.3.1 实验笔记审核与知识更新实现38
+P0121 [toc 3] [phys:] 5.3.2 资料向量化与检索实现39
+P0122 [toc 3] [phys:] 5.3.3 图谱增强问答与可视化实现39
+P0123 [toc 3] [phys:] 5.3.4 固定任务与工具调用实现41
+P0124 [toc 3] [phys:] 5.3.5 权限与审计实现43
+P0125 [toc 3] [phys:] 5.3.6 计划覆盖功能实现43
+P0126 [toc 3] [phys:] 5.3.7 代表操作与模块对应43
+P0127 [toc 2] [phys:] 5.4 本章小结51
+P0128 [toc 1] [phys:] 第六章 系统测试与实验结果分析52
+P0129 [toc 2] [phys:] 6.1 测试环境与数据集52
+P0130 [toc 2] [phys:] 6.2 功能与安全测试53
+P0131 [toc 2] [phys:] 6.3 实验设计与评价指标57
+P0132 [toc 2] [phys:] 6.4 多角色协作流程验证59
+P0133 [toc 2] [phys:] 6.5 归档实验分析59
+P0134 [toc 3] [phys:] 6.5.1 实验一：知识图谱抽取质量评价59
+P0135 [toc 3] [phys:] 6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照60
+P0136 [toc 3] [phys:] 6.5.3 实验三：多方法对照实验62
+P0137 [toc 3] [phys:] 6.5.4 实验四：固定任务生成功能验证65
+P0138 [toc 3] [phys:] 6.5.5 实验五：计划覆盖与预警机制验证65
+P0139 [toc 3] [phys:] 6.5.6 自动评价补充66
+P0140 [toc 3] [phys:] 6.6 Rust补充实验与业务验证67
+P0141 [toc 3] [phys:] 6.7 本章小结71
+P0142 [toc 1] [phys:] 第七章 总结与展望72
+P0143 [toc 2] [phys:] 7.1 工作总结72
+P0144 [toc 2] [phys:] 7.2 研究贡献72
+P0145 [toc 2] [phys:] 7.3 不足与展望72
+P0146 [toc 1] [phys:] 致谢74
+P0147 [toc 1] [phys:] 参考文献75
+P0148 [toc 1] [phys:] 附录 A　RAG 对照实验问题清单81
+P0149 [toc 1] [phys:] 附录 B　知识图谱抽取参考关系集82
+P0150 [toc 2] [phys:] B.1 参考集构成与匹配判定82
+P0151 [toc 2] [phys:] B.2 参考关系完整清单82
+P0152 [toc 2] [phys:] B.3 数据分类与完整表结构设计84
+P0153 [toc 1] [phys:] 附录 C　智能体工具规格与任务模板清单97
+P0154 [toc 1] [phys:] 附录 D　实验附件与数据完整性清单98
+P0155 [toc 2] [phys:] D.1 GSE111619 数据文件完整性98
+P0156 [toc 2] [phys:] D.2 实验附件归档清单98
+P0157 [toc 2] [phys:] D.3 项目一样本原文展示99
+P0158 [toc 2] [phys:] D.4 测试运行与性能观测记录102
+P0159 [toc 1] [phys:] 
+P0160 [] [phys:] 
+P0161 [heading 1] [phys:] 第一章 绪论
+P0162 [heading 2] [phys:6,8] 1.1 研究背景及意义
+P0163 [First Paragraph] [phys:8] 科研实验记录是科研活动的原始凭证。一份完整的实验笔记需要保存实验目的、实验条件、使用材料、操作过程、观察结果与异常情况，它既是复查实验过程、定位问题原因的依据，也是课题组成员之间交接工作、撰写论文与阶段总结时反复查阅的资料。
+P0164 [Body Text] [phys:8] 纸质记录本、个人 Word 文档和本地文件夹分散保存记录，造成四类问题：实验条件与结果来源需反复翻查；修改缺少版本对应，误改、漏改难以追踪；成员交接依赖个人资料；试剂、仪器、样本和结果分散于自然语言，难以按对象及其关系检索。
+P0165 [Body Text] [phys:8] 电子实验笔记系统（Electronic Laboratory Notebook，ELN）将实验记录、附件资料与协作流程集中到统一平台进行管理。已有实践表明，ELN能够改善科研数据的保存、共享与追溯[1-3]，国内科研机构也已开展相关部署[4]。openBIS已提供访问控制，eLabFTW已提供读写权限、版本记录以及复核或签名操作[2,85]。本文关注这些基础能力与知识利用流程的衔接：如何以审核状态控制记录进入图谱和检索证据，如何在问答中回查原始依据，以及如何使大模型辅助操作服从当前项目的授权与确认规则。
+P0166 [Body Text] [phys:8] 本课题在统一管理实验记录的基础上，组织、检索和追溯已审核实验知识，并在项目权限与业务审核约束下提供智能辅助。
+P0167 [heading 2] [phys:6,8] 1.2 国内外研究现状
+P0168 [heading 3] [phys:6,8] 1.2.1 电子实验笔记系统研究现状
+P0169 [First Paragraph] [phys:8] 围绕实验记录、样本与原始数据分散保存的问题，Barillari等开发了openBIS ELN-LIMS，将实验笔记、材料信息及原始和分析数据纳入同一数据库，并通过网页界面提供录入、检索与访问控制[2]。该系统使记录与实验材料、数据文件能够相互关联。Schröder与Biskup基于DokuWiki开发LabInform ELN，通过表单、页面模板和交叉引用组织样本与测量记录，并采用无需数据库后端的部署方式[5]。eLabFTW 6.0官方文档还列出条目读写权限、Review与Sign请求、正文修订及变更记录[85]。这些工作表明，记录组织、权限和复核追溯已有实现基础；本文在此基础上考察审核状态与图谱更新、问答来源和工具写入的衔接。
+P0170 [First Paragraph] [phys:9] 除系统开发外，研究者也关注 ELN 的实施条件。Higgins 等提出了学术环境中选择和实施 ELN 的工作框架[7]；Vandendorpe 等将产品选择、试用、人员培训、敏感数据处理及备份归档等经验归纳为实施规则[6]。这些工作表明，ELN 的实际收益取决于其与实验流程、人员习惯及数据管理制度的衔接。Buonsanti 从材料合成实践出发，讨论了电子记录对实验步骤、表征数据检索和研究人员间知识交接的帮助，同时指出领域术语组织与使用推广仍有困难[3]。这些工作主要总结实施条件和实践经验。
+P0171 [First Paragraph] [phys:9] 在应用验证方面，Chen 等在科学实验课程中引入 ELN，结合学生反馈和课程成绩考察使用效果；学生认可其对数据保存和实验报告整理的帮助，但研究未发现课程成绩随之改善[8]。国内方面，中国科学院介绍的电子实验记录本应用将实验数据采集、规范化管理与溯源结合，提供了科研机构部署 ELN 的实践案例[4]。教学研究与机构应用报道分别提供了使用体验和部署经验。
+P0172 [Body Text] [phys:9] 已有ELN工作为记录集中管理、材料与数据关联、权限和复核追溯提供了基础。本文面向课题组实验记录的问答与业务辅助，采用结构化字段、正文中的明确类型标记及领域规则组织实验对象，基于审核通过的当前版本处理，并保留项目和笔记来源，并将其接入检索与工具调用流程。本文贡献在于这些业务约束与知识利用的具体结合；自然叙述中的隐含关系抽取仍需独立验证。
+P0173 [caption] [phys:9] 表 1-1　代表性ELN能力与本文具体实现的比较
+P0174 [Compact] [phys:] 系统
+P0175 [Compact] [phys:9] 已确认的管理能力
+P0176 [Compact] [phys:9] 与本文研究的关系
+P0177 [Compact] [phys:8,9,82] openBIS ELN-LIMS
+P0178 [Compact] [phys:9] 实验记录、材料及原始和分析数据关联，网页录入、检索和访问控制[2]
+P0179 [Compact] [phys:9] 记录关联与权限已有实现基础；本文考察这些约束向项目问答和工具执行的传递。
+P0180 [Compact] [phys:8,9] eLabFTW 6.0
+P0181 [Compact] [phys:9] 条目读写权限、Review与Sign请求、正文修订和变更记录[85]
+P0182 [Compact] [phys:9] 复核、版本和追溯已有实现基础；本文将审核状态与知识准入、来源回查衔接。
+P0183 [Compact] [phys:] 本文系统
+P0184 [Compact] [phys:9] 记录版本、项目授权、审核流程、资料归档及操作日志
+P0185 [Compact] [phys:9] 字段与标记规则建图、资料与一跳关系联合检索、独立计划覆盖核对，以及带来源和确认约束的辅助。
+P0186 [Body Text] [phys:9] 表中仅列已核实的代表性能力，并非穷尽功能清单；本文评价审核、授权与知识利用的具体联动，不由官方资料未提及某功能推断产品缺少该功能。
+P0187 [heading 3] [phys:6,9] 1.2.2 大语言模型与 RAG 技术研究现状
+P0188 [First Paragraph] [phys:9] 针对语言模型仅依赖参数知识时难以访问和更新外部事实的问题，Lewis 等提出 RAG，将预训练生成模型与稠密检索得到的维基百科文本结合，并比较按序列和按词元组织检索信息的生成方式[9]。该方法在所测试的知识密集型任务中改善了开放域问答表现，说明检索资料能够为生成过程补充事实依据，其验证对象主要是开放域文本任务。Gao 等和 Gupta 等分别梳理了 RAG 的检索、增强与生成流程、架构演进及应用方向[10-11]，国内李子骏等也总结了面向知识密集型任务的模型与检索协同方法[13]。这些综述提供了方法选择的比较框架。
+P0189 [First Paragraph] [phys:10] 针对固定检索可能引入无关上下文的问题，Asai 等提出 Self-RAG，通过训练模型生成反思标记，判断何时检索，并评估资料相关性、回答支持程度与生成质量[14]。其在所测试任务中的事实性和引用表现有所改善，但需要专门的模型训练。针对评价环节，Es 等提出 RAGAS，以自动评价方法分别考察检索资料的相关性、回答对资料的忠实程度及生成质量，降低反复比较 RAG 流水线的评价成本[15]。这类指标能够辅助方法比较，仍需与具体任务的人工判断结合。
+P0190 [First Paragraph] [phys:10] Zhou 等从事实性、鲁棒性、公平性、透明性、问责性和隐私六个方面组织 RAG 可信性研究，并建立相应评价基准[12]。该研究指出，外部资料带来的收益仍取决于检索内容是否适当以及模型是否正确使用资料。因此，RAG 的研究问题已经从补充外部知识延伸到检索质量、证据利用和可信性评价。
+P0191 [Body Text] [phys:10] 上述工作为本文的文本检索与回答评价提供了依据。对于实验记录，资料相关性之外还需识别试剂、仪器、样本与结果的直接关系，并限定检索可使用的项目和审核状态。本文据此在普通文本 RAG 的基础上补充对象关系证据，以对照实验考察任务完成情况与检索代价。
+P0192 [heading 3] [phys:6,10] 1.2.3 知识图谱在科研数据管理中的应用现状
+P0193 [First Paragraph] [phys:10] Hogan 等和 Ji 等分别梳理了知识图谱的表示、构建、补全、质量管理与应用方法，为从分散资料中组织实体关系提供了研究框架[16-17]。在构建方法方面，Trajanoska 等以可持续发展相关文本为对象，比较大语言模型与预训练关系抽取模型的实体关系提取效果，说明大语言模型可以用于自动构建领域图谱[18]。Lairgi 等提出 iText2KG，将文档整理、实体关系提取与图谱整合分为增量处理步骤，并通过语义匹配减少不同文档中的实体和关系重复[20]。这些工作降低了非结构化文本转为图谱的处理负担。
+P0194 [First Paragraph] [phys:10] 面向材料科学，Bai 等利用大语言模型从框架材料文献摘要中抽取实体关系，构建 KG-FM，并结合图查询支持材料信息检索和问答[19]。该工作将分散文献中的材料、性质与应用信息组织起来，并保留文献来源，展示了图谱支持专业知识获取的用途。其数据来自发表文献，本文需要处理的则是具有项目归属、审核状态和修订过程的实验笔记，二者的知识更新条件有所不同。
+P0195 [First Paragraph] [phys:10] 在问答方法方面，Linders 与 Tomczak 提出 KG-RAG，通过问题分解、图谱多跳检索和显式推理处理需要关联多个事实的问题；其在所测多跳问答任务中取得改进，但单跳任务表现略有下降[21]。Edge 等的 GraphRAG 面向整个资料集合的全局问题，通过实体关系图和预生成的社区摘要汇总主题，提高了所测全局问答的覆盖广度与多样性[23]。Guo 等的 LightRAG 则结合图结构与向量检索，采用实体与关系的双层检索，并提供新资料的增量更新方式[24]。Ma 等进一步按问答类型和图谱参与方式归纳相关研究，为不同任务选择图谱增强方案提供了比较依据[22]。这些方法分别采用多跳推理、全局主题汇总以及实体与关系检索，具有不同的查询范围与构建方式。
+P0196 [Body Text] [phys:11] 已有研究说明，图谱能够关联跨记录对象，并为部分关系查询和全局问答提供补充证据。本文结合 ELN 的记录审核与修订流程，组织带项目范围和来源记录的一跳直接关系，考察这一较小范围的信息补充是否有助于科研问答。图谱随业务状态更新、实体限定于所属项目以及关系来源回查，是本文场景中的实施与验证要求。
+P0197 [heading 3] [phys:6,11] 1.2.4 智能体与工具调用技术研究现状
+P0198 [First Paragraph] [phys:11] 针对语言模型难以通过单次生成完成需要外部信息和连续操作的任务，Yao 等提出 ReAct，将推理过程与工具行动交替组织，使模型能够从外部检索结果中更新判断与行动计划，并在所测试的问答和交互任务中改善任务表现[25]。Schick 等提出 Toolformer，通过少量示例和自监督训练，使模型学习何时调用工具、选择工具参数以及利用返回结果，在若干任务中提高了模型的零样本表现[26]。前者强调任务执行过程的组织，后者强调工具调用能力的学习。Wang 等的综述从规划、记忆、行动及应用评价等方面总结了自主智能体的构建方法与挑战[27]。
+P0199 [First Paragraph] [phys:11] 在科研应用中，Bran 等开发 ChemCrow，将大语言模型与化学检索、性质计算和合成相关工具结合，用于化学问题求解和实验规划；专家评价显示，工具补充有助于提高部分复杂任务的回答质量[28]。该系统已纳入安全检查，并在启动合成前请求用户许可，表明科研智能体研究同时重视工具能力与执行约束。Boiko 等开发 Coscientist，通过互联网和设备文档检索、代码执行及实验自动化模块，将自然语言任务转为实验规划和操作，并演示了化学合成与反应优化等任务[29]。这些研究展示了工具调用参与科研流程的可行性。
+P0200 [Body Text] [phys:11] 从通用智能体到科研工具系统，已有工作逐步将模型能力扩展到可执行流程，并对安全检查和人工介入进行探索。本文关注的课题组记录管理还包含项目成员权限、记录审核和业务状态变更，因此需将每次工具执行与具体项目授权绑定，控制重复写入，为高风险操作保留人工确认并记录审计信息。这些要求共同构成本文智能辅助流程的执行约束。
+P0201 [heading 3] [phys:6,12] 1.2.5 小结与研究问题
+P0202 [First Paragraph] [phys:12] 综合上述研究，ELN已形成记录、材料与数据集中管理及权限、追溯的实践，RAG和知识图谱提供了外部资料检索及对象关系组织的方法，智能体研究展示了工具参与科研任务的可行性。本文结合项目范围、记录审核状态与科研任务流程，考察规则输入下的知识组织、不同证据组织方式的问答表现以及项目权限下的受控辅助，提出三个研究问题（Research Question，RQ）：
+P0203 [Body Text] [phys:12] （1）RQ1（知识组织）：在项目权限与业务审核约束下，如何将含结构化字段、明确类型标记或领域规则可识别内容的已审核记录及其业务元数据，组织为可检索、可追溯的结构化知识？
+P0204 [Body Text] [phys:12] （2）RQ2（检索增强）：在同一资料基础上，补充检索得到的一跳实验对象关系，相对仅用资料、补充全文笔记或补充全部三元组的方式，在科研问答的事实覆盖、证据支持与生成成本上呈现何种差异？
+P0205 [Body Text] [phys:12] （3）RQ3（受控辅助）：如何在项目权限约束下提供大模型智能辅助（问答、固定任务生成、工具调用），并保证其操作可审计、可人工干预？
+P0206 [Body Text] [phys:12] 固定任务生成、高风险工具确认、计划知识点管理与预警作为工程辅助功能，在第六章进行功能与机制验证。
+P0207 [heading 2] [phys:6,12] 1.3 研究目标及研究内容
+P0208 [First Paragraph] [phys:12] 针对上述研究问题，本文的总体研究目标是：设计并实现一个面向科研实验记录的智能电子实验笔记系统，实现实验记录的统一管理与受控智能辅助，使实验知识可组织、可检索、可追溯。具体研究内容如下：
+P0209 [Body Text] [phys:12] （1）建立面向科研实验记录的统一管理机制：实现实验笔记的创建、版本管理、提交审核与归档全生命周期管理，以及项目成员与附件资料的统一组织；
+P0210 [Body Text] [phys:12] （2）实现实验知识的结构化组织与可追溯检索：依据已审核笔记中的结构化字段、明确类型标记及领域规则映射实验对象与关系，构建带来源标识的项目级知识图谱，实现资料与图谱相结合的混合检索；
+P0211 [Body Text] [phys:12] （3）实现基于项目知识的智能问答：在项目权限约束下提供资料检索问答与图谱增强问答，回答标注来源编号，支持逐项核对；
+P0212 [Body Text] [phys:12] （4）实现权限与审核约束下的智能辅助功能：提供实验总结、周报等固定任务的模板化生成与受控的工具调用，高风险操作经人工确认后执行；
+P0213 [heading 2] [phys:] 1.4 研究贡献
+P0214 [First Paragraph] [phys:13] 本文针对知识更新、关系检索和辅助操作控制问题，将已有ELN管理能力与知识利用流程结合，形成以下工程贡献：
+P0215 [Body Text] [phys:13] （1）构建审核驱动的知识更新与计划覆盖核对机制。以结构化字段、明确类型标记及领域规则为输入，组织已审核笔记的对象关系与业务元数据，基于审核通过的当前版本处理，并保存项目和笔记来源；将计划预期知识独立保存，并按类型与规范名同实际知识匹配，形成可回查来源的未覆盖清单。
+P0216 [Body Text] [phys:13] （2）设计资料片段与直接关系联合检索及来源回查方法。将向量、词法检索获得的资料片段与已审核笔记中的一跳对象关系共同组织为问答上下文，以来源编号连接回答、关系和原始记录；通过仅用资料、补充全文笔记和补充全部三元组的对照，评价其事实覆盖与生成成本。
+P0217 [Body Text] [phys:13] （3）建立项目权限、人工确认与幂等约束下的受控辅助流程。固定任务读取已审核证据，会话工具按项目权限调用业务服务；高风险操作经人工确认，请求标识避免重复写入，运行与审计记录保存操作过程。
+P0218 [Body Text] [phys:13] 本文研究检索、图表示和模型调用方法在科研实验记录业务流程中的组合与约束。
+P0219 [heading 2] [phys:6,13] 1.5 论文组织结构
+P0220 [First Paragraph] [phys:13] 全文共七章。第一章分析背景、现状并提出研究问题与目标；第二章介绍相关理论与技术；第三章开展需求分析；第四章阐述系统设计；第五章说明系统实现；第六章报告系统测试与实验结果；第七章总结全文并讨论不足与展望。
+P0221 [Captioned Figure] [phys:] 
+P0222 [Image Caption] [phys:13] 图 1-1　论文结构与章节支撑关系
+P0223 [heading 1] [phys:6,14] 第二章 相关理论与技术
+P0224 [First Paragraph] [phys:14] 本章介绍电子实验笔记、检索增强生成、知识图谱、智能体与开发技术，为系统设计提供基础。
+P0225 [heading 2] [phys:6,14] 2.1 电子实验笔记与科研数据管理
+P0226 [First Paragraph] [phys:14] 电子实验笔记是传统实验笔记的数字化扩展，用于记录过程、保存数据、团队共享和长期追溯，较普通文档更强调实验对象、流程状态、附件、版本和审计信息。科研数据管理覆盖数据产生、保存、整理、共享和复用的全生命周期。FAIR 指 Findable、Accessible、Interoperable 和 Reusable，即可发现、可访问、可互操作和可复用[1]。我国《科学数据管理办法》明确了科学数据采集汇交、保存、共享利用和安全管理要求[30]；国内研究讨论了全生命周期、高校服务、平台建设、FAIR 实践和管理体系[31-35]。
+P0227 [Body Text] [phys:14] 在实施层面，已有工作较多讨论身份认证、数据导出、版本控制、备份与人员培训等机制[6-7]。同时，科研数据管理研究探讨了数据生命周期、机构协同与长期维护[37-40]。我国科学技术研究档案管理与科研诚信制度，也对过程材料的真实性与责任追溯提出了明确规范[41-43]。上述研究确立了实验记录管理在版本留痕、审核确认与操作记录方面的基本要求，这些要求将作为第三章需求分析与第四章系统设计的依据。
+P0228 [heading 2] [phys:6,14] 2.2 大语言模型与检索增强生成技术
+P0229 [First Paragraph] [phys:14] 大语言模型通过大规模语料训练获得文本理解与生成能力。Transformer 以自注意力提高序列建模效率[44]，大规模预训练模型表现出少样本学习能力。国内专著和综述梳理了基础架构、预训练与对齐、知识增强及社会影响[45-47]。模型在理解、生成、推理和工具使用方面持续进步，但可靠性、事实性和可控性仍限制应用[48]，通用模型直接回答领域问题易出现事实错误。
+P0230 [Body Text] [phys:14] 检索增强生成（RAG）先检索外部资料，再把命中片段输入生成模型[9-11,49]。相关综述将索引、检索、增强和生成作为主要环节，讨论知识覆盖与证据利用[13,36]。稠密段落检索（Dense Passage Retrieval，DPR）通过两个编码器分别将问题与候选段落转换为向量，再按向量相似度检索相关段落[50]。Self-RAG 和 Corrective RAG 分别关注自反思判断与检索后修正[14,51]。RAG 评价需区分检索相关性、回答忠实性、答案相关性和资源开销[12,52]。RAGAS、RAGBench 及 ARES 提供自动指标、标注基准和评判模型等评价方式[15,53-54]，RGB 考察噪声、拒答、信息整合与反事实稳健性[55]。自动评价仍需结合领域人工核验[52,56]；外部资料接入还涉及敏感信息、提示攻击和输出可信性风险[57]。
+P0231 [heading 2] [phys:6,15] 2.3 知识图谱与实体关系建模
+P0232 [First Paragraph] [phys:15] 知识图谱以实体、关系和属性表示对象联系。国内研究涵盖定义、构建、表示、推理和更新[58-65]，Hogan 等和 Ji 等综述了构建及应用[16-17]。LLM 与图谱结合的研究讨论表示、推理、补全与构建边界[66-67]，模型驱动的抽取与增量更新也是研究热点[18-20]。知识图谱问答关注关系证据的高效检索与答案组织[21-22]。GraphSearch 以智能体工作流结合文本语义与图关系检索[79]；综述按图索引、图引导检索和图增强生成梳理方法[80]。实验记录中结构化字段与自由正文并存、对象命名不规范的影响将在第四章讨论。
+P0233 [heading 2] [phys:6,15] 2.4 智能体与工具调用机制
+P0234 [First Paragraph] [phys:15] ReAct 范式通过交替组织推理思考与工具调用行动，给出自主交互路径[25]。Toolformer 验证了语言模型通过自监督学习掌握 API 调用能力的可行性[26]。相关综述归纳了智能体在目标规划、工作记忆与工具执行等方面的能力框架[27]。在专业科研领域，已有语言模型与计算化学模拟工具结合[28]以及驱动自主化学合成与分析实验流程的智能系统实践[29]。科研记录管理场景对模型自动化操作的可靠性与合规性要求较高，如何在权限与审核约束下组织模型的工具调用，是第四章系统设计需要解决的问题。
+P0235 [Body Text] [phys:15] 模型上下文协议（Model Context Protocol，MCP）由 Anthropic 于2024年11月25日发布为开放协议，用于规范模型应用与外部工具、资源和提示模板之间的连接。客户端按协议发现服务端能力，再提交工具名称与参数发起调用。本文采用 2025-06-18 版接口规范实现 MCP 服务端，具体项目授权、参数校验和风险控制由业务服务完成。协议发布与规范来源见附录D。
+P0236 [heading 2] [phys:6,15] 2.5 系统开发相关技术
+P0237 [First Paragraph] [phys:15] 后端采用 Rust/Axum，以 SQLx 访问 PostgreSQL；pgvector 使向量与业务记录可在同库按项目查询；前端基于 Next.js。解析、嵌入和生成服务独立调用，记录各阶段结果与错误。
+P0238 [heading 2] [phys:] 2.6 本章小结
+P0239 [First Paragraph] [phys:15] 本章明确技术分工：笔记保存版本，图谱组织关系，RAG检索证据，MCP约定工具调用；业务系统负责权限、确认、幂等及审计，抽取与回答需核验。第三章据此分析需求。
+P0240 [heading 1] [phys:] 第三章 需求分析
+P0241 [First Paragraph] [phys:16] 本章从课题组业务场景与角色出发，分析功能和非功能需求。
+P0242 [heading 2] [phys:6,16] 3.1 科研实验记录业务场景与角色分析
+P0243 [First Paragraph] [phys:16] 系统按项目组织实验记录与成员授权。普通成员填写记录，审核人员审查，项目负责人管理本项目成员和业务，系统管理员维护全局账号与配置；两级授权范围分别定义。
+P0244 [First Paragraph] [phys:16] 成员填写实验目的、日期、类型、步骤、材料、仪器、样本和结果，并上传实验图片、原始数据、报告或协议。记录提交审核后，通过者进入知识提取；不通过者退回修改，保留审核意见与版本历史。
+P0245 [Body Text] [phys:16] 项目集中管理方案、标准操作规程（Standard Operating Procedure，SOP）指南和检测报告；外部资料经审核后进入向量知识库。记录创建、审核、入库、查询与生成均保存操作者、时间及目标编号。
+P0246 [Body Text] [phys:16] 项目能力按读取、写入、审核、管理和评价统一校验，各角色边界见表3-1。
+P0247 [caption] [phys:16] 表 3-1　用户角色与权限需求
+P0248 [Compact] [phys:] 角色
+P0249 [Compact] [phys:] 权限作用域
+P0250 [Compact] [phys:16] 系统用户与全局角色管理
+P0251 [Compact] [phys:16] 项目创建与全局统计
+P0252 [Compact] [phys:16] 项目内读写、审核与评价
+P0253 [Compact] [phys:16] 项目成员与配置管理
+P0254 [Compact] [phys:] 系统管理员
+P0255 [Compact] [phys:16] 全系统、全部项目
+P0256 [Compact] [phys:] 是
+P0257 [Compact] [phys:] 是
+P0258 [Compact] [phys:] 全部（全局）
+P0259 [Compact] [phys:] 可管理任意项目
+P0260 [Compact] [phys:] 课题组负责人
+P0261 [Compact] [phys:16] 全部非敏感项目；敏感项目按成员授权
+P0262 [Compact] [phys:] 否
+P0263 [Compact] [phys:] 否
+P0264 [Compact] [phys:16] 只读（非敏感项目）；敏感项目按授权
+P0265 [Compact] [phys:] 否
+P0266 [Compact] [phys:] 项目负责人
+P0267 [Compact] [phys:] 负责的项目
+P0268 [Compact] [phys:] 否
+P0269 [Compact] [phys:] 否
+P0270 [Compact] [phys:16] 读取、写入、审核、评价
+P0271 [Compact] [phys:] 仅限负责的项目
+P0272 [Compact] [phys:] 审核人员
+P0273 [Compact] [phys:] 被授权项目
+P0274 [Compact] [phys:] 否
+P0275 [Compact] [phys:] 否
+P0276 [Compact] [phys:16] 读取、审核；评价须另行授权
+P0277 [Compact] [phys:] 否
+P0278 [Compact] [phys:] 普通成员
+P0279 [Compact] [phys:] 被授权项目
+P0280 [Compact] [phys:] 否
+P0281 [Compact] [phys:] 否
+P0282 [Compact] [phys:16] 读取、写入、生成
+P0283 [Compact] [phys:] 否
+P0284 [Compact] [phys:] 只读成员
+P0285 [Compact] [phys:] 被授权项目
+P0286 [Compact] [phys:] 否
+P0287 [Compact] [phys:] 否
+P0288 [Compact] [phys:] 仅读取
+P0289 [Compact] [phys:] 否
+P0290 [Captioned Figure] [phys:] 
+P0291 [Image Caption] [phys:17] 图 3-1　系统级与项目级权限边界示意
+P0292 [heading 2] [phys:6,17] 3.2 系统问题场景分析
+P0293 [First Paragraph] [phys:17] 表3-2归纳记录交接、审核知识利用、依据核对与安全辅助四类问题；表3-3将生物医学场景映射到处理目标与功能模块。
+P0294 [caption] [phys:17] 表 3-2　问题场景与需求约束对应
+P0295 [Compact] [phys:] 关注问题
+P0296 [Compact] [phys:] 需求约束
+P0297 [Compact] [phys:17] 实验记录分散且非结构化
+P0298 [Compact] [phys:17] 只有已审核笔记可进入结构化处理；每个实体和关系必须保留来源
+P0299 [Compact] [phys:17] 跨项目访问须受授权约束
+P0300 [Compact] [phys:17] 资料、实体、关系、问答日志和生成记录均按项目隔离
+P0301 [Compact] [phys:17] 普通检索难以表达实验对象关系
+P0302 [Compact] [phys:17] 问答需要在资料片段之外补充可编号的关系证据
+P0303 [Compact] [phys:17] AI 回答难以复核
+P0304 [Compact] [phys:17] 每次调用必须保存来源、模型配置与运行信息，回答标注来源编号
+P0305 [caption] [phys:17] 表 3-3　业务场景与 AI 处理目标映射
+P0306 [Compact] [phys:] 科研业务场景
+P0307 [Compact] [phys:] 原始记录形态
+P0308 [Compact] [phys:] AI 处理目标
+P0309 [Compact] [phys:] 对应功能模块
+P0310 [Compact] [phys:] PCR 条件优化
+P0311 [Compact] [phys:17] 实验类型、样本、试剂、退火温度、扩增结果
+P0312 [Compact] [phys:17] 识别样本、试剂、条件和结果，回答条件依据及结果来源
+P0313 [Compact] [phys:17] 知识图谱抽取、RAG 问答
+P0314 [Compact] [phys:17,43,88,90] Western Blot 蛋白表达验证
+P0315 [Compact] [phys:17] 抗体/试剂、仪器、处理组、表达变化结论
+P0316 [Compact] [phys:17] 结构化试剂、仪器和结果关系，支持来源追溯
+P0317 [Compact] [phys:17] 知识图谱抽取、图谱可视化、图谱增强 RAG
+P0318 [Compact] [phys:17] CCK-8/细胞活力检测
+P0319 [Compact] [phys:17] 细胞处理条件、检测步骤、读数要求、统计结论
+P0320 [Compact] [phys:17] 检索资料事实，关联处理组、仪器和实验结论
+P0321 [Compact] [phys:17] 资料审核入库、向量检索、图谱关系注入
+P0322 [Compact] [phys:17] 生物医学项目阶段复盘
+P0323 [Compact] [phys:17] 多条已审核笔记、知识文档、图谱关系和问答记录
+P0324 [Compact] [phys:17] 汇总指定时间范围内实验进展，生成可核验草稿
+P0325 [Compact] [phys:] 固定任务型生成
+P0326 [Compact] [phys:17] 生物医学实验来源追溯
+P0327 [Compact] [phys:17] 资料块、图谱关系、模型输入输出和审计日志
+P0328 [Compact] [phys:17] 保存每次问答的证据链，区分资料不足、关系不足和生成失败
+P0329 [Compact] [phys:] 问答日志与审计
+P0330 [Body Text] [phys:18] 表3-3前三行描述具体实验及其资料利用，后两行描述同类生物医学项目的管理与追溯活动。阶段复盘汇总上述实验记录；来源追溯核对实验结论所依据的笔记、资料与调用日志。
+P0331 [heading 2] [phys:6,18] 3.3 系统功能需求分析
+P0332 [First Paragraph] [phys:18] 功能需求编号为FR（functional requirement，功能需求），其行为约束与对应场景见表3-4。
+P0333 [caption] [phys:18] 表 3-4　系统功能需求清单
+P0334 [Compact] [phys:] 编号
+P0335 [Compact] [phys:] 功能需求
+P0336 [Compact] [phys:] 对应场景
+P0337 [Compact] [phys:] FR1
+P0338 [Compact] [phys:18] 实验笔记支持创建、编辑、提交、审核、退回、归档和作废；内容变更保存完整字段与正文快照、变更说明、变更人和时间，审核动作保存审核人、结论和意见。
+P0339 [Compact] [phys:] 记录管理
+P0340 [Compact] [phys:] FR2
+P0341 [Compact] [phys:18] 实验笔记与资料支持在线审核和状态流转；知识文档须审核通过后方可进入分块、向量化和检索流程。
+P0342 [Compact] [phys:] 记录管理
+P0343 [Compact] [phys:] FR3
+P0344 [Compact] [phys:18] 区分系统级与项目级权限；按读取、写入、审核、管理和评价能力授权，项目相关功能均按项目范围校验。
+P0345 [Compact] [phys:] 记录管理
+P0346 [Compact] [phys:] FR4
+P0347 [Compact] [phys:18] 支持笔记附件与知识文档的上传、审核、下载和归档；纸质记录扫描件支持 光学字符识别（Optical Character Recognition，OCR）文本抽取与人工校对。
+P0348 [Compact] [phys:] 记录管理
+P0349 [Compact] [phys:] FR5
+P0350 [Compact] [phys:18] 审核通过的知识文档可分块并向量入库；支持知识库初始化、状态查询和问答，记录入库失败原因并显示待入库、已入库和失败数量。
+P0351 [Compact] [phys:] 知识利用
+P0352 [Compact] [phys:] FR6
+P0353 [Compact] [phys:18] 仅从审核通过的笔记构建项目级实验知识图谱，组织实验对象及其关系并保留来源，图谱更新受审核状态约束。
+P0354 [Compact] [phys:] 知识利用
+P0355 [Compact] [phys:] FR7
+P0356 [Compact] [phys:18] 支持按实体和关系查看项目图谱、关联关系与来源，供人工核对；提供面向问答的图谱关系检索。
+P0357 [Compact] [phys:] 知识利用
+P0358 [Compact] [phys:] FR8
+P0359 [Compact] [phys:18] 基于已审核项目资料提供知识库问答；图谱增强问答补充实验对象关系；回答返回来源资料片段或关系编号，问答评价按项目授权并记录评分与反馈。
+P0360 [Compact] [phys:] 智能问答
+P0361 [Compact] [phys:] FR9
+P0362 [Compact] [phys:18] 支持实验总结、周报、阶段报告和图谱概览等固定任务生成，限定输入范围与输出格式并保存生成依据；会话工具按项目权限过滤，高风险操作需人工确认。
+P0363 [Compact] [phys:] 受控辅助
+P0364 [Compact] [phys:] FR10
+P0365 [Compact] [phys:18] 具备项目写入权限的成员可导入计划书或组会纪要；系统解析预期知识点，与已审核记录实体匹配并列出未覆盖项，支持按需触发状态预警。
+P0366 [Compact] [phys:] 受控辅助
+P0367 [heading 2] [phys:6,18] 3.4 系统非功能需求
+P0368 [First Paragraph] [phys:18] 系统需满足安全、可追溯、可维护、可用性和性能观察要求。身份认证及项目权限在后端统一校验；网络安全等级保护、个人信息保护、数据安全和密码应用等标准与法律为设计提供参考[68-74]。版本、审核、问答、评价和审计记录应支持按项目、用户与时间查询。接口按业务组织，前后端职责分离并统一响应格式。性能观察分别记录检索、读写与模型生成时延，同时记录对应语料、配置和模型服务耗时。表 3-5 汇总非功能需求。
+P0369 [caption] [phys:19] 表 3-5　系统非功能需求清单
+P0370 [Compact] [phys:] 编号
+P0371 [Compact] [phys:] 需求
+P0372 [Compact] [phys:] 要求
+P0373 [Compact] [phys:] NFR1
+P0374 [Compact] [phys:] 安全性
+P0375 [Compact] [phys:19] 身份认证、项目权限后端统一校验，敏感项目数据默认不外发
+P0376 [Compact] [phys:] NFR2
+P0377 [Compact] [phys:] 可追溯性
+P0378 [Compact] [phys:19] 业务操作与 AI 调用留痕，支持按项目、用户、时间查询
+P0379 [Compact] [phys:] NFR3
+P0380 [Compact] [phys:] 可维护性
+P0381 [Compact] [phys:19] 接口按业务组织，前后端职责分离，统一响应格式
+P0382 [Compact] [phys:] NFR4
+P0383 [Compact] [phys:] 可用性
+P0384 [Compact] [phys:19] 页面可读、操作反馈明确，操作满足交互使用需要
+P0385 [Compact] [phys:] NFR5
+P0386 [Compact] [phys:] 权限隔离
+P0387 [Compact] [phys:19] 统一权限判定覆盖项目相关功能，防止跨项目越权
+P0388 [Compact] [phys:] NFR6
+P0389 [Compact] [phys:] 性能
+P0390 [Compact] [phys:19] 基础只读接口拟按10个并发工作者、持续至少60 s验收，响应p95≤2 s、吞吐≥5请求/s；记录请求混合、数据规模与版本。模型生成另报耗时及Token，不套用基础接口阈值
+P0391 [heading 2] [phys:] 3.5 本章小结
+P0392 [First Paragraph] [phys:19] 本章提出十项功能需求和六项非功能需求；NFR6区分基础接口的并发、响应与吞吐验收目标及模型生成的耗时观测。性能测试见6.2节，第四章据此开展系统设计。
+P0393 [heading 1] [phys:] 第四章 系统设计
+P0394 [First Paragraph] [phys:20] 本章围绕审核准入、项目隔离与来源标识，设计系统架构、功能与数据组织，以及知识构建、联合检索、受控工具调用和预警机制。
+P0395 [heading 2] [phys:6,20] 4.1 系统总体架构设计
+P0396 [First Paragraph] [phys:20] 系统采用前后端分离架构，前端基于 Next.js 提供用户界面；后端采用 Rust 语言与 Axum 框架实现业务接口，通过 SQLx 访问 PostgreSQL 数据库；文档向量由 PostgreSQL 的 pgvector 扩展统一存储；智能问答与文本生成接入 DeepSeek 大模型服务。项目授权、审核状态和操作日志三项约束贯穿各层。
+P0397 [Body Text] [phys:20] 图4-1展示界面、接口权限、领域服务、存储和外部处理组件，以及业务、图谱、资料向量与运行记录的依赖。
+P0398 [Captioned Figure] [phys:] 
+P0399 [Image Caption] [phys:20] 图 4-1　系统总体架构
+P0400 [Body Text] [phys:21] 后端接口层校验身份与项目权限，领域层处理业务、抽取、检索与生成，数据层保存对象、证据及审计。两种问答模式共用资料检索和调用流程，图谱增强模式另注入关系。
+P0401 [Body Text] [phys:21] 除数据库与生成模型外，系统还使用资料解析组件和嵌入服务。审核通过的图片资料经 OCR 提取文本，识别结果须经人工校对确认后才能进入知识库；资料文本随后转换为嵌入向量。外部 AI 调用前，系统同时检查项目是否敏感及部署配置是否允许敏感项目外发；敏感项目在未获配置授权时被拒绝调用。
+P0402 [heading 2] [phys:6,21] 4.2 用户角色与权限设计
+P0403 [First Paragraph] [phys:21] 权限分为系统级和项目级：前者保护账号管理、全局审计与项目创建接口，其余业务按项目授权执行。
+P0404 [Body Text] [phys:21] 下列权限变量取 0 或 1。a 表示系统管理员；o 表示用户是 owner_user_id 指定的项目负责人；h 表示该用户的项目成员角色为 OWNER；r、w、v、m 分别表示项目成员的读取、写入、审核和管理授权。g 表示课题组负责人读取非敏感项目的条件成立；x 表示用户被指定为项目审核人；active(p) 表示项目处于活动状态。
+P0405 [Body Text] [phys:21] 项目负责人身份 o 与成员角色 h 分别参与权限判定。成员角色 h 可授予管理能力；读取权限则按项目负责人身份、读取授权等条件另行判断。各项判定如下：
+P0406 [] [phys:21] read(p,u) = a ∨ o ∨ r ∨ gwrite(p,u) = active(p) ∧ (a ∨ w)review(p,u) = active(p) ∧ (a ∨ v ∨ m ∨ x)manage(p,u) = a ∨ o ∨ h ∨ m
+P0407 [] [phys:] （4-1）
+P0408 [Body Text] [phys:21] 系统创建项目时会为项目负责人授予相应成员能力，因此负责人写入和审核仍受项目活动状态及成员授权约束；指定审核人通过 x 纳入审核判断。课题组负责人的读取豁免仅适用于非敏感项目，不扩展到写入、审核或管理。评价还须具备评价或管理授权。表 4-1 汇总各角色的操作与拦截规则。
+P0409 [caption] [phys:22] 表 4-1　用户角色能力矩阵
+P0410 [Compact] [phys:] 角色
+P0411 [Compact] [phys:] 可执行的操作
+P0412 [Compact] [phys:] 被拦截的操作
+P0413 [Compact] [phys:] 系统管理员
+P0414 [Compact] [phys:22] 账号启停、全局角色、项目创建、全局统计、任意项目运维
+P0415 [Compact] [phys:22] 无（业务操作仍受项目活动状态约束）
+P0416 [Compact] [phys:22] 课题组负责人（系统级）
+P0417 [Compact] [phys:22] 读取全部非敏感项目
+P0418 [Compact] [phys:22] 写入、审核、成员管理；敏感项目不适用读取豁免
+P0419 [Compact] [phys:] 项目负责人
+P0420 [Compact] [phys:22] 本项目成员与权限管理、索引重建；获审核授权后审核
+P0421 [Compact] [phys:22] 创建/停用系统用户、修改全局角色、访问未授权项目
+P0422 [Compact] [phys:] 审核人员
+P0423 [Compact] [phys:] 审核笔记与资料
+P0424 [Compact] [phys:22] 项目成员管理、系统管理
+P0425 [Compact] [phys:] 普通成员
+P0426 [Compact] [phys:22] 创建/编辑笔记、上传附件、发起问答、创建固定任务生成
+P0427 [Compact] [phys:22] 未经授权时审核、评价或管理成员
+P0428 [Compact] [phys:] 只读成员
+P0429 [Compact] [phys:22] 查看项目内容、查看生成历史
+P0430 [Compact] [phys:22] 写入、审核、评价、生成
+P0431 [heading 2] [phys:6,22] 4.3 系统功能模块设计
+P0432 [First Paragraph] [phys:22] 图4-2展示四类业务下的十三项模块及子功能，以及各模块的协作关系。
+P0433 [Captioned Figure] [phys:] 
+P0434 [Image Caption] [phys:22] 图 4-2　系统功能模块图
+P0435 [caption] [phys:23] 表 4-2　系统功能模块与职责
+P0436 [Compact] [phys:] 模块
+P0437 [Compact] [phys:] 职责
+P0438 [Compact] [phys:23] 与其他模块的关系
+P0439 [Compact] [phys:] 用户与项目管理
+P0440 [Compact] [phys:23] 账号启停、系统角色、项目创建、成员与项目授权管理
+P0441 [Compact] [phys:23] 维护业务操作的用户、项目和授权范围
+P0442 [Compact] [phys:] 实验记录管理
+P0443 [Compact] [phys:23] 笔记创建、版本快照、提交审核、状态流转
+P0444 [Compact] [phys:23] 已审核字段与正文用于图谱抽取；记录供固定任务取数
+P0445 [Compact] [phys:] 资料管理
+P0446 [Compact] [phys:23] 附件及知识文档上传、审核、文本抽取、分块与向量化
+P0447 [Compact] [phys:23] 已审核知识文档进入检索证据范围；图片需OCR与校对
+P0448 [Compact] [phys:] 知识图谱
+P0449 [Compact] [phys:23] 实体关系抽取、规范化、重建、可视化与来源查看
+P0450 [Compact] [phys:23] 以已审核笔记为来源；为问答提供直接关系证据
+P0451 [Compact] [phys:] 检索增强问答
+P0452 [Compact] [phys:23] 词法与向量检索、排名融合、关系注入、回答生成
+P0453 [Compact] [phys:23] 调用模型服务，保存资料与关系来源编号
+P0454 [Compact] [phys:] 智能辅助
+P0455 [Compact] [phys:23] 实验总结、周报、阶段报告、图谱概览及会话式工具调用
+P0456 [Compact] [phys:23] 使用项目证据生成草稿；高风险工具经用户确认
+P0457 [Compact] [phys:] 计划覆盖与预警
+P0458 [Compact] [phys:23] 解析计划知识点、覆盖匹配、按需指标评估、告警处置
+P0459 [Compact] [phys:23] 计划数据独立保存，与已审核图谱匹配后提示未覆盖项
+P0460 [Compact] [phys:] 权限与审核
+P0461 [Compact] [phys:23] 身份认证、项目权限判定、审核状态与敏感项目外发控制
+P0462 [Compact] [phys:23] 为业务模块统一校验操作与证据使用权限
+P0463 [Compact] [phys:] 审计与评价
+P0464 [Compact] [phys:23] 操作日志、模型调用记录、问答人工评价
+P0465 [Compact] [phys:23] 保存业务与AI调用轨迹，支撑来源核查和质量反馈
+P0466 [Body Text] [phys:23] 系统按笔记审核、资料入库与受控辅助三条链路协作，用户操作及数据对应见表4-3；具体处理流程见4.5～4.7节。
+P0467 [caption] [phys:23] 表 4-3　功能链路与数据对应
+P0468 [Compact] [phys:] 功能链路
+P0469 [Compact] [phys:] 用户操作
+P0470 [Compact] [phys:] 涉及数据类别
+P0471 [Compact] [phys:23] 笔记审核与知识构建
+P0472 [Compact] [phys:23] 成员编写并提交笔记，审核人员审批；通过后构建图谱
+P0473 [Compact] [phys:23] 笔记、版本、审核记录、实体、关系、审计日志
+P0474 [Compact] [phys:23] 资料入库与项目问答
+P0475 [Compact] [phys:23] 上传并审核资料，必要时 OCR 校对；问答时检索当前项目资料
+P0476 [Compact] [phys:23] 文件、文本、资料块与向量、问答来源及日志
+P0477 [Compact] [phys:23] 受控辅助与计划核对
+P0478 [Compact] [phys:23] 选择固定任务或调用工具；高风险操作确认；导入计划并按需评估
+P0479 [Compact] [phys:23] 任务草稿、待确认动作、计划知识点、预警与审计记录
+P0480 [heading 2] [phys:6,23] 4.4 数据库设计
+P0481 [heading 3] [phys:6,23] 4.4.1 数据存储与服务依赖
+P0482 [First Paragraph] [phys:23] PostgreSQL统一保存业务、图谱与审计数据，pgvector保存资料嵌入向量；资料块通过关联字段保持项目、来源文件与审核状态一致，检索按项目过滤。服务依赖见图4-1。
+P0483 [heading 3] [phys:6,24] 4.4.2 数据组织与表结构
+P0484 [First Paragraph] [phys:24] 数据库按业务职责分为十二组，共包含41张业务与运行时表及2张版本维护表，分类与完整表名见表4-4，字段与约束见附录B.3。图4-3采用乌鸦脚表示七张表的主要外键关系，线端标记分别给出最小和最大关联数。项目成员连接用户与项目，成员表以id为主键，项目编号与用户编号组合唯一；每条笔记对应一个项目和一个创建者，每个版本对应一条笔记。项目负责人外键允许为空，因此一个项目可关联零或一个负责人；其余图示外键非空。用户、项目、笔记或实体可暂时没有对应子记录。图谱关系的源、目标外键分别连接实体，两个角色独立表示。
+P0485 [Captioned Figure] [phys:] 
+P0486 [Image Caption] [phys:24] 图 4-3　数据库表关系图
+P0487 [caption] [phys:25] 表 4-4　数据分类与数据库表
+P0488 [Compact] [phys:] 数据域
+P0489 [Compact] [phys:] 数据库表
+P0490 [Compact] [phys:] 附录表号
+P0491 [Compact] [phys:] 用户与组织
+P0492 [Compact] [phys:25] users、groups、group_members、group_projects
+P0493 [Compact] [phys:] B-3—B-6
+P0494 [Compact] [phys:] 项目权限
+P0495 [Compact] [phys:25] projects、project_members、project_reviewers
+P0496 [Compact] [phys:] B-7—B-9
+P0497 [Compact] [phys:] 实验记录
+P0498 [Compact] [phys:25] experiment_templates、experiment_notes、note_versions、note_approvals、search_documents
+P0499 [Compact] [phys:25] B-10—B-14
+P0500 [Compact] [phys:] 附件资料
+P0501 [Compact] [phys:25] files、file_ocr_results
+P0502 [Compact] [phys:25] B-15—B-16
+P0503 [Compact] [phys:] 检索知识库
+P0504 [Compact] [phys:25] project_rag_datasets、rag_file_syncs、rag_document_chunks
+P0505 [Compact] [phys:25] B-17—B-19
+P0506 [Compact] [phys:] 知识图谱
+P0507 [Compact] [phys:25] kg_entities、kg_relations、kg_extraction_runs、kg_blueprint_nodes、kg_blueprint_edges、kg_blueprint_documents
+P0508 [Compact] [phys:25] B-20—B-25
+P0509 [Compact] [phys:] 问答实验
+P0510 [Compact] [phys:25] ai_query_logs、ai_query_evaluations、ai_experiment_runs、ai_blind_review_batches
+P0511 [Compact] [phys:25] B-26—B-29
+P0512 [Compact] [phys:] 固定任务生成
+P0513 [Compact] [phys:25,100] agent_generation_runs
+P0514 [Compact] [phys:] B-30
+P0515 [Compact] [phys:] 审计追溯
+P0516 [Compact] [phys:25,100] audit_logs
+P0517 [Compact] [phys:] B-31
+P0518 [Compact] [phys:] 智能体运行时
+P0519 [Compact] [phys:25] mcp_personal_access_tokens、mcp_http_sessions、agent_sessions、agent_turns、agent_events、agent_messages、agent_steps、agent_pending_actions、tool_execution_keys
+P0520 [Compact] [phys:25] B-32—B-40
+P0521 [Compact] [phys:] 预警与建议反馈
+P0522 [Compact] [phys:25] project_alert_thresholds、project_alerts、agent_suggestion_feedback
+P0523 [Compact] [phys:25] B-41—B-43
+P0524 [Compact] [phys:] 数据库维护
+P0525 [Compact] [phys:25] alembic_version、rust_schema_versions
+P0526 [Compact] [phys:25] B-44—B-45
+P0527 [Body Text] [phys:25] 资料块的向量列建立分层可导航小世界（Hierarchical Navigable Small World，HNSW）余弦距离索引，用于按向量距离检索邻近资料块。
+P0528 [heading 2] [phys:6,25] 4.5 实验知识图谱构建方法
+P0529 [Body Text] [phys:25] 知识组织包括已审核记录建图和计划覆盖核对：前者抽取当前笔记版本的对象关系，经规范化与项目内查重后保存来源；后者用计划知识点匹配图谱对象，识别记录缺口。
+P0530 [Body Text] [phys:25] 计划知识点及预期关系独立保存，不进入实验事实关系集。例如“试剂：PBS”被规范化为试剂类“磷酸盐缓冲液”；同项目图谱中类型、规范名均匹配时标记覆盖并展示记录。两条路径见图4-4。
+P0531 [Captioned Figure] [phys:] 
+P0532 [Image Caption] [phys:26] 图 4-4　实验知识图谱构建与计划覆盖总体流程
+P0533 [heading 3] [phys:6,26] 4.5.1 实验知识图谱总体设计
+P0534 [First Paragraph] [phys:26] 图谱以实体节点和有向关系组织实验对象。例如，笔记“PCR 条件优化实验”中记载的试剂“Taq DNA Polymerase”通过“使用试剂”（uses_reagent）关系与笔记节点相连，方向为“实验笔记→试剂”，表示该记录涉及该试剂。实体与关系按项目保存；实体保留显示名与规范名，关系保留来源类型、来源笔记编号与置信度，可回查原笔记。定义见表4-5、4-6，抽取仅使用已审核笔记。
+P0535 [heading 3] [phys:6,26] 4.5.2 实验记录实体定义
+P0536 [First Paragraph] [phys:26] 九类实体及其含义、来源见表 4-5。
+P0537 [caption] [phys:26] 表 4-5　实体类型定义
+P0538 [Compact] [phys:] 实体类型
+P0539 [Compact] [phys:] 含义
+P0540 [Compact] [phys:] 主要来源
+P0541 [Compact] [phys:] 项目
+P0542 [Compact] [phys:26] 科研项目或实验项目
+P0543 [Compact] [phys:] 项目表
+P0544 [Compact] [phys:] 实验笔记
+P0545 [Compact] [phys:26] 项目下的单条实验记录
+P0546 [Compact] [phys:] 实验笔记表
+P0547 [Compact] [phys:] 实验人员
+P0548 [Compact] [phys:26] 实验记录创建者或相关人员
+P0549 [Compact] [phys:] 用户表
+P0550 [Compact] [phys:] 附件资料
+P0551 [Compact] [phys:26] 实验附件或项目知识文档
+P0552 [Compact] [phys:] 文件表
+P0553 [Compact] [phys:] 实验类型
+P0554 [Compact] [phys:26] PCR、Western Blot、细胞培养等分类
+P0555 [Compact] [phys:] 笔记字段
+P0556 [Compact] [phys:] 试剂
+P0557 [Compact] [phys:26] 实验中使用的试剂、材料或药品
+P0558 [Compact] [phys:26] 结构化字段或文本抽取
+P0559 [Compact] [phys:] 仪器
+P0560 [Compact] [phys:26] 实验中使用的仪器或设备
+P0561 [Compact] [phys:26] 结构化字段或文本抽取
+P0562 [Compact] [phys:] 样本
+P0563 [Compact] [phys:26] 实验样本、样品或处理组
+P0564 [Compact] [phys:26] 结构化字段或文本抽取
+P0565 [Compact] [phys:] 实验结果
+P0566 [Compact] [phys:26] 实验观察、结果或结论
+P0567 [Compact] [phys:26] 结构化字段或文本抽取
+P0568 [heading 3] [phys:6,27] 4.5.3 实验知识关系定义
+P0569 [caption] [phys:27] 表 4-6　关系类型定义
+P0570 [Compact] [phys:] 关系类型
+P0571 [Compact] [phys:] 源实体
+P0572 [Compact] [phys:] 目标实体
+P0573 [Compact] [phys:] 含义
+P0574 [Compact] [phys:] 包含笔记
+P0575 [Compact] [phys:] 项目
+P0576 [Compact] [phys:] 实验笔记
+P0577 [Compact] [phys:27] 项目下包含某条实验笔记
+P0578 [Compact] [phys:] 创建者
+P0579 [Compact] [phys:] 实验笔记
+P0580 [Compact] [phys:] 用户
+P0581 [Compact] [phys:27] 实验笔记由某用户创建
+P0582 [Compact] [phys:] 关联附件
+P0583 [Compact] [phys:] 实验笔记
+P0584 [Compact] [phys:] 附件资料
+P0585 [Compact] [phys:27] 笔记关联某个附件或资料
+P0586 [Compact] [phys:] 实验类型
+P0587 [Compact] [phys:] 实验笔记
+P0588 [Compact] [phys:] 实验类型
+P0589 [Compact] [phys:27] 笔记属于某类实验
+P0590 [Compact] [phys:] 使用试剂
+P0591 [Compact] [phys:] 实验笔记
+P0592 [Compact] [phys:] 试剂
+P0593 [Compact] [phys:27] 实验过程中使用某种试剂
+P0594 [Compact] [phys:] 使用仪器
+P0595 [Compact] [phys:] 实验笔记
+P0596 [Compact] [phys:] 仪器
+P0597 [Compact] [phys:27] 实验过程中使用某种仪器
+P0598 [Compact] [phys:] 使用样本
+P0599 [Compact] [phys:] 实验笔记
+P0600 [Compact] [phys:] 样本
+P0601 [Compact] [phys:27] 实验过程中使用某类样本
+P0602 [Compact] [phys:] 产生结果
+P0603 [Compact] [phys:] 实验笔记
+P0604 [Compact] [phys:] 实验结果
+P0605 [Compact] [phys:27] 笔记产生某项结果或结论
+P0606 [heading 3] [phys:6,27] 4.5.4 基于实验笔记内容的实体关系抽取方法
+P0607 [First Paragraph] [phys:27] 已审核笔记当前版本的字段、正文与附件标识按图4-5和算法4-1处理。本文采用规则型映射，主要依赖结构化字段、正文中的明确类型标记及领域规则；自然叙述的内容关系抽取能力另在6.6节评价。附件仅建立笔记—文件关联，其正文解析与向量入库另按4.5.6执行。
+P0608 [Captioned Figure] [phys:] 
+P0609 [Image Caption] [phys:27] 图 4-5　审核状态约束下的知识图谱构建流程
+P0610 [Body Text] [phys:27] 图 4-5 按审核结果区分流程：审核通过的笔记进入图谱抽取与写入，草稿或退回状态的笔记不触发图谱更新。
+P0611 [Body Text] [phys:27] 先建立项目、笔记、创建者、实验类型和附件骨干实体及基础关系；再递归读取结构化字段，并匹配正文中的“试剂：”“仪器：”“样本：”“结果：”等类型标记。冒号是类型名与内容的分隔符，半角“:”与全角“：”均可识别。例如“试剂：Taq DNA Polymerase、dNTP”将冒号后的两个名称作为试剂候选，而不是把“试剂：”作为实体。试剂、仪器和样本按逗号、顿号、分号或换行切分，结果仅按分号和换行切分，合并候选后去重。
+P0612 [Body Text] [phys:28] 候选术语合并空白、转换全角字符、统一英文大小写并将标点换为空白，再按同义词表归一。业务对象按标识查重，抽取对象按“项目编号、实体类型、规范名”查重；命中则复用并更新属性，否则创建。流程及写入规则见图4-6、算法4-1。
+P0613 [Captioned Figure] [phys:] 
+P0614 [Image Caption] [phys:28] 图 4-6　实体规范化流程图
+P0615 [First Paragraph] [phys:28] 算法中，BasicEdges 按业务记录建立项目—笔记、笔记—创建者、笔记—实验类型及笔记—附件关系；创建者存在、实验类型非空时才生成相应关系。RecursiveFields 递归遍历字段与正文，ClassifyKey 依据既有字段映射识别实体和关系类型，SplitValue 按分隔符拆分条目；结果句仅按分号或换行拆分。MatchMarkers 与 MatchDomainRules 分别匹配对象标记和领域规则。Normalize 统一字符、空白、标点与同义词，MergeByKey 按实体类型和规范名合并候选及角色。UpsertEntity 与 UpsertRelation 在项目范围内按自然键写入或复用对象，保留来源笔记与角色信息；抽取运行记录写入后由调用方提交事务。
+P0616 [First Paragraph] [phys:29] 算法 4-1　已审核笔记的实体关系抽取与写入
+P0617 [Body Text] [phys:29] 输入：已审核笔记 n、当前版本字段 F 和正文 C、关联附件 A、重建标志 rebuild；调用方已开启事务。
+P0618 [Body Text] [phys:29] 输出：实体集合 E、关系集合 R、抽取运行记录 U。
+P0619 [Body Text] [phys:29] 1:if rebuild then
+P0620 [Body Text] [phys:29] 2:ClearNoteGraph(n.id)
+P0621 [Body Text] [phys:] 3:end if
+P0622 [Body Text] [phys:] 4:E ← ∅; R ← ∅; T ← ∅
+P0623 [Body Text] [phys:29] 5:p ← UpsertEntity(project, n.project_id)
+P0624 [Body Text] [phys:29] 6:e_n ← UpsertEntity(note, n.id); E ← {p, e_n}
+P0625 [Body Text] [phys:29] 7:B ← BasicEdges(n, A, p, e_n)
+P0626 [Body Text] [phys:29] 8:for (u, v, ρ) in B do
+P0627 [Body Text] [phys:] 9:E ← E ∪ {u, v}
+P0628 [Body Text] [phys:] 10:R ← R ∪ {UpsertRelation(u, v, ρ, 1.0)}
+P0629 [Body Text] [phys:29] 11:end for
+P0630 [Body Text] [phys:29] 12:for (k, v) in RecursiveFields(F, C) do
+P0631 [Body Text] [phys:] 13:if ClassifyKey(k) ≠ ∅ then
+P0632 [Body Text] [phys:] 14:T ← T ∪ SplitValue(v, ClassifyKey(k))
+P0633 [Body Text] [phys:29] 15:end if
+P0634 [Body Text] [phys:29] 16:end for
+P0635 [Body Text] [phys:29] 17:x ← FlattenText(F, C)
+P0636 [Body Text] [phys:] 18:T ← T ∪ MatchMarkers(x) ∪ MatchDomainRules(x)
+P0637 [Body Text] [phys:29] 19:T ← MergeByKey(T, type, Normalize(label))
+P0638 [Body Text] [phys:29] 20:for t in T do
+P0639 [Body Text] [phys:29] 21:e ← UpsertEntity(n.project_id, t.type, t.label)
+P0640 [Body Text] [phys:29] 22:r ← UpsertRelation(e_n, e, t.relation, 0.7, t.roles)
+P0641 [Body Text] [phys:] 23:E ← E ∪ {e}; R ← R ∪ {r}
+P0642 [Body Text] [phys:29] 24:end for
+P0643 [Body Text] [phys:29] 25:U ← RecordRun(n, |E|, |R|, completed)
+P0644 [Body Text] [phys:29] 26:return E, R, U
+P0645 [First Paragraph] [phys:29] 实体同时保存原始显示名与规范名，分别用于界面展示和查重匹配。关系置信度采用经验设定：由业务记录直接确定的基础关系取1.0，由结构化字段或正文规则抽取的对象关系取0.7，如式（4-2）所示。基础关系包括项目—笔记、笔记—创建者、笔记—实验类型和笔记—附件。
+P0646 [] [phys:] c(r)=1.0,r 为基础关系0.7,r 由字段或正文规则抽取
+P0647 [] [phys:] （4-2）
+P0648 [Body Text] [phys:30] 这两个数值为来源类型的经验权重，仅在关系相关性得分相同时参与排序。确定性规则便于回查来源，对省略中心词、深层隐含关系及同义句式的覆盖仍有限。
+P0649 [heading 3] [phys:6,30] 4.5.5 审核状态驱动的知识图谱更新机制
+P0650 [First Paragraph] [phys:30] 草稿创建、更新与提交待审均不更新图谱；审核通过后读取当前版本并抽取，未审核假设仍保留在笔记流程内。免审项目提交即视为通过并触发抽取。
+P0651 [Body Text] [phys:30] 审核通过时按重建模式“先清后建”：删除该笔记旧关系、回收无边引用的孤立实体，再抽取最新审核版本。退回修订后重新通过亦如此；读取侧过滤非已审核笔记来源的边。
+P0652 [heading 3] [phys:6,30] 4.5.6 资料审核与知识入库机制
+P0653 [First Paragraph] [phys:30] 知识文档上传后进入项目审核；通过后按类型抽取文本，图片或扫描件经OCR与人工校对。文本按段落和窗口规则分块、向量化，与项目、文件、审核状态及内容哈希一并保存；记录入库或失败状态及错误。问答仅检索审核通过且已入库的块，返回块编号、文件编号与片段供核对。
+P0654 [heading 3] [phys:6,30] 4.5.7 实验知识图谱可视化与关联检索
+P0655 [First Paragraph] [phys:30] 图谱画布以颜色区分实体类型，项目与笔记节点采用固定较大尺寸，其他节点按直接关联数量放大；有向连线表示关系。悬停或选中时突出直接关联并显示标签，详情抽屉提供节点及来源入口。问答则按词项与关系类型评分，将靠前的直接关系加入上下文，方法见4.6.4。
+P0656 [heading 3] [phys:6,30] 4.5.8 计划知识点管理与覆盖匹配
+P0657 [First Paragraph] [phys:30] 计划覆盖以已审核图谱为参照。具备项目写入权限的成员导入课题立项书、任务书或组会纪要等计划文本，解析预期实体与关系并独立保存，模型异常时回退规则抽取；按类型和规范名与已审核实体精确匹配，匹配表示已有记录涉及该计划点，任务完成按验收要求判定。同项目、类型、规范名的有效节点按来源优先级增量合并，数值越小优先级越高：新节点插入，已有节点按优先级更新，项目负责人可作废。名义覆盖率为已匹配有效计划点数占全部有效计划点数的比例；未覆盖清单用于建议、图谱高亮与预警。
+P0658 [heading 2] [phys:6,31] 4.6 融合知识图谱的智能问答方法
+P0659 [First Paragraph] [phys:31] 系统离线构建项目资料块与向量索引，在线按权限执行词法和向量混合检索；图谱增强模式补充本项目已审核关系。回答带来源编号并留存审计，整体流程见图4-7。
+P0660 [Captioned Figure] [phys:] 
+P0661 [Image Caption] [phys:31] 图 4-7　项目级检索增强问答总体流程
+P0662 [heading 3] [phys:6,31] 4.6.1 项目级 RAG 知识库构建与分块
+P0663 [First Paragraph] [phys:31] 系统将审核通过的项目知识文档抽取为文本，并统一换行、去除首尾空白。分块时先按空行划分段落，将短段落依次合并，聚合内容超过700个字符时输出当前块并开始下一块。超过700个字符的长段落使用滑动窗口，优先在窗口内最后一个句末标点处截断；没有句末标点时按窗口边界截断，下一窗口保留最多120个字符的重叠并保证起点前进。最后在后续块前附加前一基础块末尾最多120个字符，以保留跨块语境。因此，700是基础块的目标长度上限，附加重叠后的入库块可以超过该长度。
+P0664 [First Paragraph] [phys:31] 资料块经嵌入模型编码后，与块正文、内容哈希、字符数、文件编号和项目编号一起保存。向量列建立HNSW余弦距离索引。在线检索时，问题由同一嵌入模型编码为向量，仅从当前项目已审核、已入库且索引版本有效的资料块中，按余弦距离由小到大选取候选。实现将余弦相似度小于0的值置为0，向量得分如式（4-3）所示。
+P0665 [First Paragraph] [phys:31] v(d,q)=max(0,q·d‖q‖2‖d‖2)
+P0666 [Body Text] [phys:] （4-3）
+P0667 [First Paragraph] [phys:32] q、d分别表示问题与资料块的嵌入向量，点积衡量向量方向一致性，‖·‖₂表示向量的二范数；v(d,q)为非负向量得分。数据库余弦距离为1−cos(q,d)，距离越小，相似度越高。
+P0668 [heading 3] [phys:6,32] 4.6.2 词法检索与 BM25 倒排索引
+P0669 [First Paragraph] [phys:32] BM25（Best Matching 25）是一种根据查询词频、词项稀有程度和文档长度计算相关性得分的词法排序方法[75]。向量检索用于召回语义相关资料，BM25 通道补充实验缩写、编号和列名等精确词项的匹配。每次检索读取当前项目的活跃资料块，构建词频与文档频率统计，再对问题分词后评分。连续拉丁字母、数字和符号序列作为词元，连续汉字串整体保留，并生成中文二元组补充词频。实现取k1=1.2、b=0.75；分子中的 2.2 为k1+1，得分经ss+1映射到 [0,1) 区间。
+P0670 [Body Text] [phys:32] 查询侧另设同义词展开表（覆盖 PCR、WB、ELISA、CCK-8、DMEM、FBS、PBS 等常用缩写），仅用于扩展词法查询词项。对含编号、列名等触发词或“数字+多少/最高/最低”结构的查询，判定其偏重精确词项匹配，后续融合阶段提高词法通道权重。
+P0671 [heading 3] [phys:6,32] 4.6.3 混合检索的 RRF 融合
+P0672 [First Paragraph] [phys:32] 系统采用倒数排名融合（Reciprocal Rank Fusion，RRF）合并向量与词法检索结果[76]。两路各取至多 30 个候选，合并资料块编号后，在合并候选集内分别按向量得分和 BM25 得分排序。RRF 使用名次而不是原始得分尺度进行融合，名次从 1 起算，平滑常数取 60；普通查询的两路权重均为 1，偏重编号、列名或数值匹配的查询取向量权重 0.25、词法权重 0.75。融合分及其归一化计算如下。
+P0673 [First Paragraph] [phys:32] R(d,q) =αv60 +rv(d)+αl60 +rl(d)
+P0674 [Body Text] [phys:] （4-4）
+P0675 [First Paragraph] [phys:32] Rnorm(d,q) =R(d,q)maxc∈CR(c,q)
+P0676 [Body Text] [phys:] （4-5）
+P0677 [Body Text] [phys:32] 式中 d 为候选资料块，C 为两路合并后的候选集，rv、rl分别为 d 在向量和词法排序中的名次，αv、αl为通道权重。归一化分再叠加词项命中奖励：偏重精确匹配的查询按问题与资料块（含文件名）的共同词元数奖励，每个共同词元加 0.02、最高 0.12；资料块正文包含完整问题串时加 0.15，文件名包含完整问题串时加 0.10。完整问题串匹配先去除问题首尾空白并统一大小写，最终检索得分截断至 1。系统随后依次执行相关性筛选和同一文件数量限制，具体判定如下。
+P0678 [First Paragraph] [phys:33] btoken=Ie·min(0.02·|Tq∩Td|, 0.12)
+P0679 [Body Text] [phys:] （4-6）
+P0680 [First Paragraph] [phys:33] bexact= 0.15·Ic+ 0.10·If
+P0681 [Body Text] [phys:] （4-7）
+P0682 [First Paragraph] [phys:33] S(d,q) = min(1,Rnorm(d,q) +btoken+bexact)
+P0683 [Body Text] [phys:] （4-8）
+P0684 [First Paragraph] [phys:33] 其中Ie表示查询是否偏重精确词项，Ic、If分别表示完整问题串是否命中正文、文件名；条件成立取 1，否则取 0。Tq 为问题词元集合，Td 为资料块正文与文件名的词元集合。相关性筛选使用原始通道得分 v(d)、l(d)，而不是归一化后的 RRF 分：至少一路达到阈值才保留候选，候选的最终检索得分还须大于 0。词法单通道模式直接比较 BM25 映射分与阈值。
+P0685 [First Paragraph] [phys:33] keep(d) = I(v(d) ≥ θ ∨ l(d) ≥ θ),   θ = 0.15
+P0686 [Body Text] [phys:] （4-9）
+P0687 [First Paragraph] [phys:33] 通过相关性筛选后，系统按最终检索得分降序遍历候选；每个文件已选满 3 块时跳过其后续候选，普通查询取默认前 6 块，集合查询按配置放宽至最多 12 块。选中的资料块依次分配 [S1]…[Sn]，并保存资料块、文件与内容哈希，供回答引用和来源核对。
+P0688 [heading 3] [phys:6,33] 4.6.4 融合知识图谱的检索增强策略
+P0689 [First Paragraph] [phys:33] 图谱增强模式在资料片段之外注入已审核笔记的直接对象关系，用于回答结果来源、试剂使用等问题。两模式共享的检索流程及新增关系步骤见图4-8，实验配置见第六章。
+P0690 [Body Text] [phys:33] 系统按式（4-10）为项目内关系评分：
+P0691 [] [phys:] score(r,q)=B(r,q)+t∈T(q)j=16w(t,hj(r))+role(r,q)
+P0692 [] [phys:] （4-10）
+P0693 [Body Text] [phys:33] 式中T(q)为小写化问题词元集合；hj(r)为关系r的第j项文本，j=1～6依次对应源标签、目标标签、源实体类型、目标实体类型、关系类型及其中文名称，重复项仍计分。B、w、role分别为类型与来源、词元与文本、角色的匹配分，定义见表4-7。I(条件)为指示函数，条件成立取1，否则取0；B中的It、In、Ie依次表示类型命中、源实体为笔记、来源为笔记抽取。例如，“PCR使用了哪些试剂”命中“使用试剂”类型加3.0分，来自笔记抽取再加0.3分；词元与文本全等加3.0分，非全等且互为子串加1.0分。
+P0694 [Captioned Figure] [phys:] 
+P0695 [Image Caption] [phys:34] 图 4-8　普通 RAG 与图谱增强 RAG 对照流程
+P0696 [caption] [phys:34] 表 4-7　评分公式符号说明
+P0697 [Compact] [phys:] 符号
+P0698 [Compact] [phys:] 含义
+P0699 [Compact] [phys:] score(r,q)​
+P0700 [Compact] [phys:34] 关系 r 相对问题 q 的综合相关性得分
+P0701 [Compact] [phys:] B(r,q)​
+P0702 [Compact] [phys:34] 关系类型与来源匹配分：B(r,q)=3.0It+0.2In+0.3Ie
+P0703 [Compact] [phys:34] It、In、Ie 分别表示关系类型命中问题预定义类型、源实体为笔记实体、关系来自笔记抽取；条件成立取 1，否则取 0。
+P0704 [Compact] [phys:] w(t,h)​
+P0705 [Compact] [phys:34] 词元与标签匹配分：问题词元 t 与关系文本 h（实体名、类型、标签）全等计 3.0 分，互为子串计 1.0 分，即 3.0 I(t=h)+1.0 I(t≠h ∧ (t⊂h ∨ h⊂t))
+P0706 [Compact] [phys:] role(r,q)​
+P0707 [Compact] [phys:34] 角色匹配分：关系属性中与小写化问题串匹配的每个条目计 4.0 分（单项最高），即 4.0k​I(条目k命中q)
+P0708 [Body Text] [phys:34] 关系筛选分三步进行。先根据问题中的“试剂”“仪器”“样本”“结果”等词确定关系类型；出现类型提示时仅保留对应关系。再查找问题词项命中的实体，命中时保留与这些实体或其相连笔记直接关联的候选关系。最后按式（4-10）计分，保留得分大于 0 且不低于默认阈值 1.0 的关系，并按得分、置信度和关系编号依次排序。系统按来源、关系类型与角色分组选择代表关系，普通查询默认最多注入 10 条；“全部、哪些、多少”等集合查询的上限放宽至不少于 30 条。
+P0709 [heading 3] [phys:6,35] 4.6.5 权限约束下的问答执行流程
+P0710 [First Paragraph] [phys:35] 问答先校验项目权限与本地数据集，再混合检索；普通模式使用资料块，增强模式另加入直接关系。编号证据与问题输入模型后，保存回答、来源、配置、Token和耗时；上游失败则返回错误并保存失败日志（图4-9）。
+P0711 [Captioned Figure] [phys:] 
+P0712 [Image Caption] [phys:35] 图 4-9　权限约束下的项目级 RAG 问答流程
+P0713 [heading 3] [phys:6,35] 4.6.6 问答来源、审计与评价记录
+P0714 [First Paragraph] [phys:35] 系统自动保存审计流水，非盲评价由授权用户提交，两类记录见表4-8。
+P0715 [caption] [phys:35] 表 4-8　审计记录与评价记录对比
+P0716 [Compact] [phys:] 对比项
+P0717 [Compact] [phys:] 审计记录
+P0718 [Compact] [phys:] 评价记录
+P0719 [Compact] [phys:] 产生方式
+P0720 [Compact] [phys:] 系统自动记录
+P0721 [Compact] [phys:] 用户人工提交
+P0722 [Compact] [phys:] 记录内容
+P0723 [Compact] [phys:35] 操作者、时间、动作、对象、参数与结果摘要
+P0724 [Compact] [phys:35] 质量评分（1-5）、事实准确性判断、可追溯性判断、文字反馈
+P0725 [Compact] [phys:] 覆盖范围
+P0726 [Compact] [phys:35] 全部业务与 AI 操作
+P0727 [Compact] [phys:35] 问答结果（按人按条去重）
+P0728 [Compact] [phys:] 主要用途
+P0729 [Compact] [phys:35] 行为追溯、责任定位、安全核查
+P0730 [Compact] [phys:35] 回答质量评估、改进依据
+P0731 [Body Text] [phys:35] 问答审计保存用户、项目、时间、证据编号、模型配置、回答、Token、耗时及错误/回退信息。资料片段按得分编号为[S1]～[Sn]，关系为[G1]～[Gm]；点击编号可定位证据并回查来源笔记。引用审计校验编号格式和范围；回答的事实支持另由人工核验判定。
+P0732 [Body Text] [phys:35] 问答结果保留原始问题、回答正文、所选模式、资料引用、图谱关系及运行信息，便于回查证据。前端在回答下方提供“有帮助／没帮助”轻反馈入口，提交时核验项目读权限及非盲访问条件，并将反馈写入审计日志。1～5分非盲评价通过后端接口提交，需评价或管理能力，评分记录独立保存。独立盲评另按评价者与项目的访问隔离规则控制，相关入口见5.3.7节。
+P0733 [heading 2] [phys:6,36] 4.7 固定任务型智能辅助与工具调用设计
+P0734 [heading 3] [phys:6,36] 4.7.1 MCP 接口与会话助手实现
+P0735 [First Paragraph] [phys:36] 本系统按开放的 MCP 协议实现外部工具接口 /api/mcp，采用 Streamable HTTP 传输和 JSON-RPC 2.0 消息，接口声明协议版本为 2025-06-18。客户端先通过 initialize 建立会话，通过 tools/list 查询完整注册清单，再通过 tools/call 提交工具名称与参数；令牌范围和项目权限在调用执行阶段核验。POST 同时支持资源与提示模板查询，GET 建立服务端事件流，DELETE 结束会话。图4-10展示三条业务调用流程，外部工具的执行权限核验发生在实际调用阶段。MCP 提供工具发现与调用的消息约定，业务执行由本系统的 Rust 服务完成。
+P0736 [Body Text] [phys:36] 系统内会话助手使用另一条调用入口：它向 DeepSeek 的 OpenAI 兼容 Chat Completions 接口发送对话和按当前项目授权筛选的工具定义，模型在 tool_calls 中返回函数名与参数。后端复用 MCP 工具注册表，核对参数、项目授权及风险等级；以笔记或资料为目标的高风险动作，在登记及批准执行前均核对对象实际项目与本次固定项目一致。高风险调用登记为待确认动作，批准执行时再次核验当前执行权限；提审要求笔记实际项目的当前写权限及活动状态。两条入口共享业务工具及执行规则，外部 MCP 客户端调用工具时还需通过访问令牌范围校验。默认生成模型为 deepseek-v4-flash，可由配置覆盖。
+P0737 [Body Text] [phys:36] 固定任务由服务端按模板读取已审核证据并调用模型，用户在报告页选择类型与范围后核对草稿及来源。上下文预算、温度和输出长度统一配置（5.1节），结果与来源编号一并保存。
+P0738 [Captioned Figure] [phys:] 
+P0739 [Image Caption] [phys:37] 图 4-10　三类智能辅助调用流程
+P0740 [heading 3] [phys:6,37] 4.7.2 固定任务模板设计
+P0741 [First Paragraph] [phys:37] 六类固定任务的输入与输出见表 4-9。实验总结、阶段报告按可选日期读取已审核笔记及关系，未指定则不限日期；周报默认读取截至当前日的近一周；图谱概览使用项目代表关系。资料按项目、审核状态及任务类型选取，不按笔记日期过滤。本文验证范围为实验总结、周报、阶段报告和图谱概览；各任务共用权限校验、审核过滤、受限调用与留痕。
+P0742 [caption] [phys:38] 表 4-9　固定任务生成设计
+P0743 [Compact] [phys:] 任务名称
+P0744 [Compact] [phys:] 输入范围
+P0745 [Compact] [phys:] 生成方式
+P0746 [Compact] [phys:] 输出结构
+P0747 [Compact] [phys:] 追溯与约束
+P0748 [Compact] [phys:] 实验总结
+P0749 [Compact] [phys:38] 按可选日期范围选取已审核笔记及对应关系；另选项目内已审核知识资料
+P0750 [Compact] [phys:38] 服务端按模板组织记录与相关资料后调用模型
+P0751 [Compact] [phys:38] 实验记录概览、主要结论、关系依据、资料来源、后续事项
+P0752 [Compact] [phys:38] 结论标注直接支持的笔记或关系编号；输出为草稿
+P0753 [Compact] [phys:] 周报
+P0754 [Compact] [phys:38] 按周日期范围选取已审核笔记及对应关系；另选项目内已审核知识资料
+P0755 [Compact] [phys:38] 未指定范围时补入截至当前日期的近一周；按模板调用模型
+P0756 [Compact] [phys:38] 本周记录、主要结果、异常、下周计划
+P0757 [Compact] [phys:38] 说明证据不足之处，保留来源编号
+P0758 [Compact] [phys:] 项目阶段报告
+P0759 [Compact] [phys:38] 按可选阶段日期选取已审核笔记及对应关系；另选项目内已审核知识资料
+P0760 [Compact] [phys:38] 聚合笔记内容与方案资料，按阶段模板调用模型
+P0761 [Compact] [phys:38] 阶段目标、实验进展、风险、后续安排
+P0762 [Compact] [phys:38] 阶段结论逐项对应记录；方案边界对应资料来源
+P0763 [Compact] [phys:] 图谱概览
+P0764 [Compact] [phys:38] 项目内已审核关系及其端点、类型和来源
+P0765 [Compact] [phys:38] 筛选代表性关系组织概览正文，再调用模型
+P0766 [Compact] [phys:38] 实验对象与关系、来源笔记概览
+P0767 [Compact] [phys:38] 关系正文不混入计划预期条目；不推断未知事实
+P0768 [Compact] [phys:] 文献综述草稿
+P0769 [Compact] [phys:38] 项目内已审核且正文已入库的知识资料；按实验类型分组的已审核笔记及代表性关系
+P0770 [Compact] [phys:38] 按主题组织资料正文、笔记主题和关系，再调用综述模板
+P0771 [Compact] [phys:38] 分主题的方法与结果比较、一致性与差异、证据不足项
+P0772 [Compact] [phys:38] 资料方法与适用条件使用[F]；[N]说明项目自身实验；当前为模板定义阶段
+P0773 [Compact] [phys:] 实验异常检测
+P0774 [Compact] [phys:38] 可选日期范围内已审核笔记的字段、正文及对应关系
+P0775 [Compact] [phys:38] 逐条组织数值结果、缺失字段与单位信息，调用模型辅助识别疑似异常
+P0776 [Compact] [phys:38] 逐记录列出疑似异常、原因、记录编号与需人工确认项
+P0777 [Compact] [phys:38] 每条事实紧邻对应[N]；缺少单位或验证条件须人工确认；当前为模板定义阶段
+P0778 [Body Text] [phys:38] 表4-9及固定任务输出中的[N]、[F]、[R]分别标识实验笔记（note）、资料文件（file）和图谱关系（relation），使用时在字母后附该记录的数据库编号，如[N9]、[F3]、[R1936]，用于来源回查。其中[F]引用资料内容，[N]引用项目自身记录，[R]引用直接关系。
+P0779 [Body Text] [phys:38] 表4-10给出早期原型归档中的实验总结样例，批次配置见6.1节。日期范围为2026-06-03至2026-06-05，输入含3条已审核笔记、7份资料及38条图谱关系。[N9]、[N10]分别回查笔记9、10，[R1936]回查关系1936。
+P0780 [caption] [phys:39] 表 4-10　实验总结模板示例与来源映射
+P0781 [Body Text] [phys:] 示例部分
+P0782 [Body Text] [phys:] 规范内容
+P0783 [Body Text] [phys:] 任务与输入范围
+P0784 [Body Text] [phys:39] 任务类型：实验总结；日期：2026-06-03 至 2026-06-05；输入：已审核笔记3条、资料7份、图谱关系38条
+P0785 [Body Text] [phys:] 引用规则
+P0786 [Body Text] [phys:39] 每条结论只引用直接支持它的来源编号，笔记用[N]、资料用[F]、关系用[R]
+P0787 [Body Text] [phys:] 输出章节
+P0788 [Body Text] [phys:39] 实验记录概览；主要结论；图谱依据；资料来源；后续事项
+P0789 [Body Text] [phys:] 来源映射例
+P0790 [Body Text] [phys:39] PCR笔记事实对应[N9]；相关结果关系对应[R1936]
+P0791 [heading 3] [phys:7,39] 4.7.3 工具注册与风险分级
+P0792 [First Paragraph] [phys:39] 表4-11列出系统注册的十二个业务工具，各工具封装Rust业务服务，并登记名称、参数、权限、风险与审计动作。会话助手按项目权限筛选工具；外部MCP调用核对令牌范围与项目授权。只读工具返回查询结果，草稿写入以请求标识防重，高风险审核、审批、索引重建和成员变更须人工确认。
+P0793 [caption] [phys:39] 表 4-11　MCP 工具清单
+P0794 [Compact] [phys:] 工具名称
+P0795 [Compact] [phys:] 功能
+P0796 [Compact] [phys:] 所需项目能力
+P0797 [Compact] [phys:] 风险等级
+P0798 [Compact] [phys:] 需人工确认
+P0799 [Compact] [phys:] 笔记检索
+P0800 [Compact] [phys:39] 按关键词检索已审核笔记
+P0801 [Compact] [phys:] 读取
+P0802 [Compact] [phys:] 只读
+P0803 [Compact] [phys:] 否
+P0804 [Compact] [phys:] 资料检索
+P0805 [Compact] [phys:39] 检索项目已入库资料
+P0806 [Compact] [phys:] 读取
+P0807 [Compact] [phys:] 只读
+P0808 [Compact] [phys:] 否
+P0809 [Compact] [phys:] 图谱查询
+P0810 [Compact] [phys:39] 查询项目知识图谱实体与关系
+P0811 [Compact] [phys:] 读取
+P0812 [Compact] [phys:] 只读
+P0813 [Compact] [phys:] 否
+P0814 [Compact] [phys:] 成员查询
+P0815 [Compact] [phys:39] 查看项目成员列表
+P0816 [Compact] [phys:] 读取
+P0817 [Compact] [phys:] 只读
+P0818 [Compact] [phys:] 否
+P0819 [Compact] [phys:] 任务模板查询
+P0820 [Compact] [phys:39] 列举可用的固定任务
+P0821 [Compact] [phys:] 读取
+P0822 [Compact] [phys:] 只读
+P0823 [Compact] [phys:] 否
+P0824 [Compact] [phys:] 创建草稿笔记
+P0825 [Compact] [phys:] 生成笔记草稿
+P0826 [Compact] [phys:] 写入
+P0827 [Compact] [phys:] 低
+P0828 [Compact] [phys:] 否
+P0829 [Compact] [phys:] 创建报告草稿
+P0830 [Compact] [phys:] 生成报告草稿
+P0831 [Compact] [phys:] 写入
+P0832 [Compact] [phys:] 低
+P0833 [Compact] [phys:] 否
+P0834 [Compact] [phys:] 提交笔记审核
+P0835 [Compact] [phys:] 将笔记提交审核
+P0836 [Compact] [phys:] 写入
+P0837 [Compact] [phys:] 高
+P0838 [Compact] [phys:] 是
+P0839 [Compact] [phys:] 审批笔记
+P0840 [Compact] [phys:] 通过或退回笔记
+P0841 [Compact] [phys:] 审核
+P0842 [Compact] [phys:] 高
+P0843 [Compact] [phys:] 是
+P0844 [Compact] [phys:] 资料审核决定
+P0845 [Compact] [phys:] 通过或驳回资料
+P0846 [Compact] [phys:] 审核
+P0847 [Compact] [phys:] 高
+P0848 [Compact] [phys:] 是
+P0849 [Compact] [phys:] 重建索引
+P0850 [Compact] [phys:39] 重建项目检索索引
+P0851 [Compact] [phys:] 管理
+P0852 [Compact] [phys:] 高
+P0853 [Compact] [phys:] 是
+P0854 [Compact] [phys:] 变更成员权限
+P0855 [Compact] [phys:39] 修改项目成员或权限
+P0856 [Compact] [phys:] 管理
+P0857 [Compact] [phys:] 高
+P0858 [Compact] [phys:] 是
+P0859 [Body Text] [phys:39] 风险等级取系统注册时的三档标识（只读、低、高）：只读档不改动任何数据，低档只新增草稿类记录，高档涉及状态流转、索引重建与成员权责变更。两个低档工具与全部高档工具都要求附带请求标识，只有高档工具额外进入人工确认队列。各工具的权限范围与审计动作对照见附录 C。
+P0860 [heading 3] [phys:7,40] 4.7.4 高风险操作的人工确认与幂等控制
+P0861 [First Paragraph] [phys:40] 系统以用户、工具名和请求标识识别重复操作，并保存参数摘要。同一标识但参数不同的请求被拒绝。报告草稿等已实现缓存的低风险写入在参数一致时返回首次结果，生成失败后清理预留标识以允许重试。高风险动作先登记为待确认项；同键同参复用已有动作，并返回存储的摘要、实际状态及剩余有效期，不重新延长时间。已完成动作不再接受批准，复用动作标识不等同于低风险缓存结果。批准执行时，业务数据库变化、业务审计、执行键及确认完成状态在同一事务中提交；执行键登记失败时整体回滚。该原子边界覆盖提审、笔记与资料审核、成员权限修改和项目索引重建的数据库效果。嵌入等外部调用的请求与费用不受数据库回滚保证，失败后可能再次调用。标识缺省时，系统内助手按会话轮次与工具步骤补入。
+P0862 [Body Text] [phys:40] 待确认动作由授权用户批准或拒绝，批准时核对状态、有效期、参数摘要、对象项目及当前执行权限。拒绝、过期及已消费动作不能再次执行；相同参数的完成重试显示已有动作状态，重复批准返回冲突。队列状态、执行结果和步骤写入审计记录。
+P0863 [heading 3] [phys:7,40] 4.7.5 提示版本管理
+P0864 [First Paragraph] [phys:40] 系统为各类模型输入提示登记版本号，并与运行日志一并保存，便于从运行记录回查当时使用的提示内容。历史批次与当前版本分别登记，版本清单见附录 D。
+P0865 [heading 2] [phys:7,40] 4.8 项目指标评估与人工干预
+P0866 [First Paragraph] [phys:40] 按需预警评估计算待审等待、近10次审批退回比例、匹配实体最近更新间隔和未覆盖比例，与警告/严重阈值比较（表 4-12）。同项目同指标仅保留一条未确认、未自动消解的告警，重复评估更新数值与级别；指标降至警告阈值以下时，下次评估自动消解。成员可查看，管理者可确认、备注和调阈值。
+P0867 [caption] [phys:41] 表 4-12　预警指标与默认阈值
+P0868 [Compact] [phys:] 指标
+P0869 [Compact] [phys:] 计算方法
+P0870 [Compact] [phys:41] 缺省警告/严重阈值
+P0871 [Compact] [phys:] 审批堵转时长
+P0872 [Compact] [phys:41] H=t−minn∈Sun3600；S 为空时 H=0；单位小时
+P0873 [Compact] [phys:41] 72 / 168 小时
+P0874 [Compact] [phys:] 退回率
+P0875 [Compact] [phys:41] R=Nreturn|A|；A 为空时 R=0
+P0876 [Compact] [phys:] 0.3 / 0.5
+P0877 [Compact] [phys:40,41,56,80] 匹配实体最近更新间隔
+P0878 [Compact] [phys:41] D=t−maxe∈Mue86400；M 为空时 D=0；单位天
+P0879 [Compact] [phys:] 14 / 30 天
+P0880 [Compact] [phys:] 进展偏差率
+P0881 [Compact] [phys:41] P=|U||B|；B 为空时 P=0
+P0882 [Compact] [phys:] 0.7 / 0.9
+P0883 [Body Text] [phys:41] 式中，t 为评估时刻；S 为待审笔记集合，un 为笔记最后更新时间；A 为按审批时间和编号降序选取的最近至多 10 条审批动作，Nreturn 为其中的退回动作数，不足 10 条时以实际动作数为分母，时间差按秒计。
+P0884 [Body Text] [phys:41] B 为排除已作废节点后的有效计划点集合；M 为按项目、实体类型和规范名与 B 匹配的图谱实体集合，ue 为实体最后更新时间；U 为 B 中未找到匹配实体的计划点集合。第三项取 M 中最近一次实体维护距今的间隔，重抽旧笔记也会刷新该时间；即使未新增覆盖，间隔仍可复位，因此不用于判断新增覆盖是否停滞。四项指标在对应集合为空时均取 0；完全无匹配实体时，第三项为0，未覆盖比例另按 U 与 B 计算。
+P0885 [Body Text] [phys:41] 预警指标的名称受白名单约束；项目未设置自定义阈值时按全局默认值评估。触发评估与查看告警只需项目读权限，人工确认告警与调整阈值要求管理权限；除纯查看外，其余操作都会写入审计日志。
+P0886 [heading 2] [phys:] 4.9 本章小结
+P0887 [First Paragraph] [phys:41] 本章完成系统架构、数据与功能设计，明确审核驱动的知识组织、联合检索、受控工具调用及按需预警；第五章说明实现。
+P0888 [heading 1] [phys:] 第五章 系统实现
+P0889 [First Paragraph] [phys:42] 本章说明实现环境与数据来源，并介绍业务功能；测试与结果见第六章。
+P0890 [heading 2] [phys:7,42] 5.1 系统实现环境
+P0891 [First Paragraph] [phys:42] 软件组件、部署环境与生成参数见表5-1；检索参数见表5-4。
+P0892 [caption] [phys:42] 表 5-1　系统实现环境与参数
+P0893 [Compact] [phys:] 类别
+P0894 [Compact] [phys:] 组件或参数项
+P0895 [Compact] [phys:] 配置与说明
+P0896 [Compact] [phys:] 技术栈
+P0897 [Compact] [phys:] 后端
+P0898 [Compact] [phys:42] Rust 1.88.0 + Axum 0.8.4，提供业务接口
+P0899 [Compact] [phys:] 技术栈
+P0900 [Compact] [phys:] 数据访问
+P0901 [Compact] [phys:42] SQLx 0.8.6，Rust 数据库访问库
+P0902 [Compact] [phys:] 技术栈
+P0903 [Compact] [phys:] 数据库
+P0904 [Compact] [phys:42] PostgreSQL 16 + pgvector，业务记录与向量同库存储
+P0905 [Compact] [phys:] 技术栈
+P0906 [Compact] [phys:] 前端
+P0907 [Compact] [phys:42] Next.js 16.3.0、React 19.2.6，科研工作台
+P0908 [Compact] [phys:] 技术栈
+P0909 [Compact] [phys:] 图谱可视化
+P0910 [Compact] [phys:42] Canvas 前端渲染与交互
+P0911 [Compact] [phys:] 技术栈
+P0912 [Compact] [phys:] 对话模型
+P0913 [Compact] [phys:42] DeepSeek；默认 deepseek-v4-flash，可由配置覆盖
+P0914 [Compact] [phys:] 技术栈
+P0915 [Compact] [phys:] 嵌入模型
+P0916 [Compact] [phys:42] BAAI/bge-m3，1024 维
+P0917 [Compact] [phys:] 技术栈
+P0918 [Compact] [phys:] 文档解析
+P0919 [Compact] [phys:42] Poppler + Tesseract，PDF/图片文本抽取
+P0920 [Compact] [phys:] 技术栈
+P0921 [Compact] [phys:] 身份认证
+P0922 [Compact] [phys:42] JSON Web Token（JWT）+ bcrypt
+P0923 [Compact] [phys:] 软件环境
+P0924 [Compact] [phys:] 操作系统
+P0925 [Compact] [phys:42,59] macOS 26.6（ARM64）/ Linux 容器
+P0926 [Compact] [phys:] 软件环境
+P0927 [Compact] [phys:] 运行时
+P0928 [Compact] [phys:42] Rust 1.88.0；Node.js 24（容器主版本）
+P0929 [Compact] [phys:] 软件环境
+P0930 [Compact] [phys:] 容器与浏览器
+P0931 [Compact] [phys:42] Docker / Docker Compose；Chrome
+P0932 [Compact] [phys:] 硬件环境
+P0933 [Compact] [phys:] 处理器
+P0934 [Compact] [phys:42] Apple M5 十核 CPU（MacBook Air）
+P0935 [Compact] [phys:] 硬件环境
+P0936 [Compact] [phys:] 内存与存储
+P0937 [Compact] [phys:42] 16 GB 统一内存；内置 SSD，APFS 容器约 494.3 GB
+P0938 [Compact] [phys:] 网络环境
+P0939 [Compact] [phys:] 外部服务
+P0940 [Compact] [phys:42] 可访问 DeepSeek 接口与嵌入服务
+P0941 [Compact] [phys:] 生成参数
+P0942 [Compact] [phys:] 项目问答
+P0943 [Compact] [phys:42] 温度 0.1，最大输出 1800 Token
+P0944 [Compact] [phys:] 生成参数
+P0945 [Compact] [phys:] 固定任务
+P0946 [Compact] [phys:42] 温度 0.1，最大输出 2200 Token；证据上下文预算 18000 字符；资料预览 600 字符；来源文件上限 12 份
+P0947 [heading 2] [phys:7,42] 5.2 实验数据集
+P0948 [First Paragraph] [phys:42] 开发与归档实验数据由按预设场景编制的合成记录和公开数据派生记录组成。合成记录用于贯通笔记审核、图谱抽取、检索和生成流程，三项目归档规模见表 5-2。其中项目一的四条规范化种子笔记同时保存结构化字段与正文，试剂、仪器、样本、数值和结果均为系统测试输入。图片资料由 OCR 流程处理，图谱与问答实验采用文本与字段输入。另取公开英文实验日记进行关系抽取补充测试，见6.6节。
+P0949 [caption] [phys:43] 表 5-2　实验数据列表
+P0950 [Compact] [phys:] 项目
+P0951 [Compact] [phys:] 研究场景
+P0952 [Compact] [phys:] 已审核笔记数
+P0953 [Compact] [phys:] 知识文档数
+P0954 [Compact] [phys:] 主要实验类型
+P0955 [Compact] [phys:] 项目一
+P0956 [Compact] [phys:] 测试项目
+P0957 [Compact] [phys:] 15
+P0958 [Compact] [phys:] 7
+P0959 [Compact] [phys:43] PCR、细胞培养/活力检测、Western Blot、qPCR
+P0960 [Compact] [phys:] 项目二
+P0961 [Compact] [phys:43] 乳腺癌外泌体 miRNA 标志物筛选
+P0962 [Compact] [phys:] 10
+P0963 [Compact] [phys:] 2
+P0964 [Compact] [phys:43] 外泌体提取、miRNA 筛选与验证
+P0965 [Compact] [phys:] 项目三
+P0966 [Compact] [phys:43] 抗肿瘤小分子靶点验证与药效评价
+P0967 [Compact] [phys:] 10
+P0968 [Compact] [phys:] 2
+P0969 [Compact] [phys:43] SPR、MTT、流式分析、PDX 药效
+P0970 [Compact] [phys:] 合计
+P0971 [Compact] [phys:] 
+P0972 [Compact] [phys:] 35
+P0973 [Compact] [phys:] 11
+P0974 [Compact] [phys:] 
+P0975 [Body Text] [phys:43] 三个测试项目以生物医学实验场景编制测试记录，知识文档采用短文本标准操作规程（Standard Operating Procedure，SOP）提要，试剂、仪器、样本及结果保存在笔记字段与正文中。另选用美国国家生物技术信息中心的基因表达综合数据库（NCBI Gene Expression Omnibus，GEO）公开系列 GSE111619，该系列包含 H226 细胞对照与 p63 靶向 shRNA 条件下的 Poly(A)+ RNA-seq 数据[77]。数据整理脚本先核对样本登录号与计数矩阵列的对应关系，再读取公开元数据、计算计数摘要，并按样本生成 4 条结构化笔记。笔记保存样本、材料、仪器、处理条件与计数结果，作为公开数据派生的检索测试输入；源文件、派生笔记及校验信息见附录 D。
+P0976 [caption] [phys:43] 表 5-3　预置测试笔记结构化样例
+P0977 [Compact] [phys:43] 笔记（实验类型，日期）
+P0978 [Compact] [phys:] 结构化字段要点
+P0979 [Compact] [phys:43] PCR 条件优化实验（PCR，2026-06-03）
+P0980 [Compact] [phys:43] 试剂：Taq DNA Polymerase、dNTP、MgCl2、模板 DNA；仪器：PCR Thermal Cycler；样本：样本 A、样本 B；结果：退火温度 58℃ 时扩增条带最清晰，非特异性条带减少
+P0981 [Compact] [phys:43] 细胞活力检测实验（细胞培养，2026-06-04）
+P0982 [Compact] [phys:43] 试剂：CCK-8、PBS、DMEM 培养基；仪器：酶标仪、CO2 培养箱；样本：处理组细胞、对照组细胞；结果：处理组细胞活力较对照组下降约 18%，重复孔结果稳定
+P0983 [Compact] [phys:43] Western Blot 蛋白表达验证（Western Blot，2026-06-05）
+P0984 [Compact] [phys:43] 试剂：RIPA 裂解液、BCA 试剂盒、一抗、二抗；仪器：电泳仪、转膜仪、凝胶成像系统；样本：蛋白样本 P1、蛋白样本 P2；结果：目标蛋白在处理组表达降低，内参条带稳定
+P0985 [Compact] [phys:43] qPCR 定量验证实验（PCR，2026-05-28）
+P0986 [Compact] [phys:43] 试剂：SYBR Green Master Mix、cDNA 模板、引物对、无酶水；仪器：荧光定量 PCR 仪、微量分光光度计；样本：cDNA 样本 1、cDNA 样本 2、阴性对照；结果：目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰
+P0987 [Body Text] [phys:43] 表5-3列出项目一四条合成笔记的字段。初始化程序将预设试剂、仪器、样本和结果写入fixed_fields_json，将叙述写入content_json并保存版本，再写入已审核状态及对应审核记录，构建测试图谱。表内字段为输入，关系由4.5.4节算法4-1形成。
+P0988 [Body Text] [phys:44] 图5-1展示已审核实验笔记详情与审核记录，图5-2展示笔记列表及审核状态。
+P0989 [Captioned Figure] [phys:] 
+P0990 [Image Caption] [phys:44] 图 5-1　已审核实验笔记详情与审核记录
+P0991 [Captioned Figure] [phys:] 
+P0992 [Image Caption] [phys:44] 图 5-2　实验笔记列表与审核状态
+P0993 [heading 2] [phys:7,45] 5.3 系统功能实现
+P0994 [First Paragraph] [phys:45] 图5-3展示笔记审核触发知识更新、资料审核入库和权限约束下的检索问答，对应第四章的设计。
+P0995 [Captioned Figure] [phys:] 
+P0996 [Image Caption] [phys:45] 图 5-3　系统处理总流程图
+P0997 [heading 3] [phys:7,45] 5.3.1 实验笔记审核与知识更新实现
+P0998 [First Paragraph] [phys:45] 笔记以草稿、已提交、已通过、已退回、已归档、已作废六种状态流转（图 5-4）。每次内容变更自动保存完整版本快照；审核通过后，系统在同一事务内触发该笔记的知识图谱抽取，保证“通过审核的记录才进入知识层”。
+P0999 [Captioned Figure] [phys:] 
+P1000 [Image Caption] [phys:45] 图 5-4　实验笔记状态流转
+P1001 [Body Text] [phys:45] 附件分为笔记附件与知识文档两类，上传时记录文件名、类型、大小与内容哈希，单文件上限 50 MB。笔记附件用于关联实验记录；知识文档经审核后进入文本解析与向量入库流程，其中图片资料的 OCR 文本须经人工校对确认后入库（图 5-5）。
+P1002 [Captioned Figure] [phys:] 
+P1003 [Image Caption] [phys:46] 图 5-5　附件资料审核与向量入库流水线
+P1004 [Body Text] [phys:46] 图 5-5 中的“状态”指 rag_file_syncs 表记录的向量同步状态：pending 表示同步处理中，synced 表示分块与向量已入库，failed 表示本次同步失败，stale 表示索引需重建。资料审核状态另由 files 表记录，UPLOADED、APPROVED、REJECTED、ARCHIVED 分别表示已上传待审核、审核通过、审核未通过和已归档；图片文本的 OCR 校对状态 pending_review 和 confirmed 分别表示待人工校对与已确认，只有审核通过且图片文本已确认的知识文档才进入向量入库流程。
+P1005 [heading 3] [phys:7,46] 5.3.2 资料向量化与检索实现
+P1006 [First Paragraph] [phys:46] 资料处理和检索分别对应4.6.1节的资料分块与向量化、4.6.2节的BM25词法检索以及4.6.3节的RRF融合排序；实现参数见表5-4。
+P1007 [caption] [phys:46] 表 5-4　检索参数配置
+P1008 [Compact] [phys:] 参数
+P1009 [Compact] [phys:] 取值
+P1010 [Compact] [phys:] 参数
+P1011 [Compact] [phys:] 取值
+P1012 [Compact] [phys:] 分块长度
+P1013 [Compact] [phys:] 700 字符
+P1014 [Compact] [phys:] 向量维度
+P1015 [Compact] [phys:] 1024
+P1016 [Compact] [phys:] 分块重叠
+P1017 [Compact] [phys:] 120 字符
+P1018 [Compact] [phys:] 向量候选上限
+P1019 [Compact] [phys:] 30
+P1020 [Compact] [phys:] 资料证据条数
+P1021 [Compact] [phys:] 6
+P1022 [Compact] [phys:] 融合方法
+P1023 [Compact] [phys:46] 倒数排名融合（RRF）
+P1024 [heading 3] [phys:7,46] 5.3.3 图谱增强问答与可视化实现
+P1025 [First Paragraph] [phys:46] 问答接口按4.6.1～4.6.5实现检索与权限校验，将资料和关系分别编号为[S]和[G]后输入模型，保存回答、来源、检索配置及模型用量，供引用审计与人工评价。
+P1026 [Captioned Figure] [phys:] 
+P1027 [Image Caption] [phys:47] 图 5-6　项目二知识图谱全景
+P1028 [Captioned Figure] [phys:] 
+P1029 [Image Caption] [phys:47] 图 5-7　图谱一跳局部聚焦
+P1030 [First Paragraph] [phys:47] 后端按项目权限返回图谱实体、关系及来源，前端使用画布渲染。图 5-6 展示项目二的全景视图：实验笔记与项目节点统一使用靛蓝色，以突出记录枢纽；试剂为橙色、仪器为灰色、结果为天蓝色、生物样本为蓝绿色、人员为紫色、文件为青色，其余类别由图例标识。项目与笔记节点采用固定的较大尺寸，其他节点按相连关系数量放大，并设置尺寸上下限。颜色和大小用于辨认类别与连接数量。图 5-7 展示局部图谱，支持实体或关系类型筛选；悬停突出节点的一跳邻居，单击锁定节点并查看属性与来源。
+P1031 [heading 3] [phys:7,48] 5.3.4 固定任务与工具调用实现
+P1032 [First Paragraph] [phys:48] 固定任务与会话调用按4.7节实现，草稿保存笔记、资料及关系三类来源。图5-8、5-9分别展示生成页面与计划覆盖核对界面。
+P1033 [Captioned Figure] [phys:] 
+P1034 [Image Caption] [phys:48] 图 5-8　固定任务智能生成页面
+P1035 [Captioned Figure] [phys:] 
+P1036 [Image Caption] [phys:49] 图 5-9　计划覆盖与未匹配项展示
+P1037 [Body Text] [phys:49] 报告页任务卡片显示标题（缺省时显示任务类型）、状态与草稿预览；展开后显示正文结构和三类来源数量。下表按标题、范围、实验事实与关系依据整理草稿节选。
+P1038 [Table Caption] [phys:50] 表 5-5　实验总结草稿节选
+P1039 [Block Text] [phys:] 字段
+P1040 [Block Text] [phys:50,57] 实验总结草稿节选
+P1041 [Block Text] [phys:] 标题
+P1042 [Block Text] [phys:] 实验总结草稿
+P1043 [Block Text] [phys:] 生成范围
+P1044 [Block Text] [phys:38,39,50] 2026-06-03 至 2026-06-05
+P1045 [Block Text] [phys:] 输入来源
+P1046 [Block Text] [phys:50] 实验笔记3条、资料7份、图谱关系38条
+P1047 [Block Text] [phys:50] 笔记事实[N9]
+P1048 [Block Text] [phys:50] PCR条件优化实验（2026-06-03）：试剂为Taq DNA Polymerase、dNTP、MgCl2、模板DNA；58℃时扩增条带最清晰，非特异性条带减少
+P1049 [Block Text] [phys:50] 笔记事实[N10]
+P1050 [Block Text] [phys:50] 细胞活力检测实验（2026-06-04）：处理组细胞活力较对照组下降约18%，重复孔结果稳定
+P1051 [Block Text] [phys:] 关系依据
+P1052 [Block Text] [phys:50] [R1926] 项目—包含笔记→PCR条件优化实验；[R1929] PCR条件优化实验—使用试剂→Taq DNA Polymerase
+P1053 [heading 3] [phys:7,50] 5.3.5 权限与审计实现
+P1054 [First Paragraph] [phys:50] 接口统一校验身份与项目能力，保存口令哈希并设置令牌有效期；敏感项目外发同时受项目属性和部署配置限制。笔记审核、资料入库、问答、生成、预警处置及计划作废均记录操作者、项目和动作。
+P1055 [heading 3] [phys:7,50] 5.3.6 计划覆盖功能实现
+P1056 [Body Text] [phys:50] 计划解析、来源优先级合并、作废和精确匹配按4.5.8实现；计划预期知识与审核图谱分别保存。页面显示匹配比例、未匹配条目和建议，用于核对记录涉及的知识点；任务完成按验收要求人工判定。
+P1057 [heading 3] [phys:7,50] 5.3.7 代表操作与模块对应
+P1058 [Body Text] [phys:50] 表5-6将图4-2中的十三个子模块与代表操作及界面对应。以下通过截图说明各模块的操作入口与状态。
+P1059 [caption] [phys:51] 表 5-6　功能模块与代表操作对应
+P1060 [] [phys:] 子模块
+P1061 [] [phys:] 代表流程与状态
+P1062 [] [phys:] 图示
+P1063 [] [phys:] 用户与项目权限
+P1064 [] [phys:51] 登录后选项目；管理者配置成员能力，后端逐项授权
+P1065 [] [phys:] 5-10
+P1066 [] [phys:] 实验笔记
+P1067 [] [phys:51] 编写保存版本，提交审核；退回修订后再次提审
+P1068 [] [phys:51] 5-1、5-2、5-11、5-19
+P1069 [] [phys:] 资料与附件
+P1070 [] [phys:51] 上传并关联笔记，审核后下载或归档
+P1071 [] [phys:] 5-12
+P1072 [] [phys:] 文档解析与入库
+P1073 [] [phys:51] 图片OCR，人工校对确认，审核后分块同步
+P1074 [] [phys:51] 5-5、5-12、5-13
+P1075 [] [phys:] 知识实体
+P1076 [] [phys:51] 已审核笔记抽取并按类型及规范名归一，回查来源
+P1077 [] [phys:] 5-6、5-7
+P1078 [] [phys:] 知识关系
+P1079 [] [phys:51] 连接实体并保存关系类型、来源笔记及置信度
+P1080 [] [phys:] 5-6、5-7
+P1081 [] [phys:] 图谱展示
+P1082 [] [phys:51] 全景浏览，按类型筛选，锁定节点及一跳邻居
+P1083 [] [phys:] 5-6、5-7
+P1084 [] [phys:] 计划知识点
+P1085 [] [phys:51] 计划导入解析、来源合并，与审核实体核对未覆盖项
+P1086 [] [phys:51] 5-9、5-23
+P1087 [] [phys:] 智能问答
+P1088 [] [phys:51] 选检索模式、提问，沿S/G编号核查资料和关系
+P1089 [] [phys:] 5-14
+P1090 [] [phys:] 固定任务生成
+P1091 [] [phys:51] 选择任务和范围，核对草稿正文及N/F/R来源
+P1092 [] [phys:51] 5-8、5-21、5-22
+P1093 [] [phys:] 效果评价
+P1094 [] [phys:51] 当前会话收集有帮助／没帮助轻反馈；非盲评分接口另行授权，独立盲评另受访问隔离
+P1095 [] [phys:51] 5-17、5-18
+P1096 [] [phys:] 预警管理
+P1097 [] [phys:51] 按需评估阈值、确认并备注，指标下降时下次评估消解
+P1098 [] [phys:51] 5-15、5-20
+P1099 [] [phys:] 审计与日志
+P1100 [] [phys:51] 按项目查操作记录，展开用户、动作、工具与风险摘要
+P1101 [] [phys:] 5-16
+P1102 [Body Text] [phys:51] 管理者在项目成员页分配读、写、审、评、管能力（图5-10）；记录者编写笔记时保存版本，审核人可退回并填写意见，记录者修改后再次提交。图5-11展示版本2及退回意见。
+P1103 [Captioned Figure] [phys:] 
+P1104 [Image Caption] [phys:52] 图 5-10　项目成员角色与能力配置
+P1105 [Captioned Figure] [phys:] 
+P1106 [Image Caption] [phys:52] 图 5-11　笔记版本与退回修订入口
+P1107 [Body Text] [phys:52] 资料页将文件上传、笔记关联、审核与同步状态并列展示（图5-12）。图片先抽取OCR文本，人工对照原文修正并确认，审核通过后才进入知识库（图5-13）。
+P1108 [Captioned Figure] [phys:] 
+P1109 [Image Caption] [phys:53] 图 5-12　资料上传关联与审核入库状态
+P1110 [Captioned Figure] [phys:] 
+P1111 [Image Caption] [phys:53] 图 5-13　OCR识别文本与人工校对确认
+P1112 [Body Text] [phys:53] 问答返回后，成员可沿资料S编号与关系G编号核查依据，查看证据不足提示（图5-14）；预警由成员按需评估，管理者确认并备注，阈值与处置规则见4.8节（图5-15）。
+P1113 [Captioned Figure] [phys:] 
+P1114 [Image Caption] [phys:53] 图 5-14　图谱增强问答的来源编号与不足说明
+P1115 [Captioned Figure] [phys:] 
+P1116 [Image Caption] [phys:54] 图 5-15　按需预警与确认处置入口
+P1117 [Body Text] [phys:54] 审计页按项目展示操作记录，展开后可核对调用工具、风险与完成状态（图5-16）。独立盲评要求评价者无项目读权限，当前管理员被该入口拒绝（图5-17）。
+P1118 [Captioned Figure] [phys:] 
+P1119 [Image Caption] [phys:54] 图 5-16　项目工具调用的审计摘要
+P1120 [Captioned Figure] [phys:] 
+P1121 [Image Caption] [phys:54] 图 5-17　独立盲评入口的访问隔离
+P1122 [Body Text] [phys:55] 问答完成后，会话在回答下方提供“有帮助／没帮助”入口，收集效果轻反馈。反馈经项目读权限及非盲访问条件校验后记录为审计事件，与后端保留的1～5分非盲评分记录及独立盲评流程分别处理。图5-18展示该轻反馈入口。
+P1123 [Captioned Figure] [phys:] 
+P1124 [Image Caption] [phys:55] 图 5-18　当前会话的问答轻反馈入口
+P1125 [Body Text] [phys:55] 在图5-11的笔记详情中打开编辑窗口，可修改标题、模板、实验日期与内容，并恢复自动保存的本机草稿（图5-19）。图中显示“成员实验记录A”的v2内容。
+P1126 [Captioned Figure] [phys:] 
+P1127 [Image Caption] [phys:56] 图 5-19　实验笔记内容编辑与本机草稿提示
+P1128 [Body Text] [phys:56] 预警阈值配置支持审批停滞、退回率、匹配实体最近更新间隔和进展偏差四类指标，可设置警告与紧急阈值及启用状态，并衔接图5-15的告警查看与处置入口。图5-20保留修订前的界面截图，其中“蓝图停滞”现已改名为“匹配实体最近更新间隔”；当前界面同时提示重抽可重新计时、无匹配实体取0的计算边界。
+P1129 [Captioned Figure] [phys:] 
+P1130 [Image Caption] [phys:56] 图 5-20　修订前四类预警指标的分级阈值配置
+P1131 [Body Text] [phys:57] 图5-21展示项目1的固定任务草稿。综合结论按条目组织，以[N]、[R]标识关联输入记录。
+P1132 [Captioned Figure] [phys:] 
+P1133 [Image Caption] [phys:57] 图 5-21　固定任务实验总结草稿节选
+P1134 [Body Text] [phys:57] 图5-22显示同一任务的完成状态、生成时间与来源编号：N类笔记4条、F类资料2条、R类关系24条，供回查草稿输入。表5-5则对应项目10的另一任务。
+P1135 [Captioned Figure] [phys:] 
+P1136 [Image Caption] [phys:57] 图 5-22　生成草稿的三类来源计数与编号
+P1137 [Body Text] [phys:57] 选择项目10的“TRIzol试剂”，可查看“待实证（缺口）”状态、项目计划书来源、优先级与规划描述，并沿来源历史回查计划书（图5-23）。待实证表示该知识点尚无相应记录支持。
+P1138 [Captioned Figure] [phys:] 
+P1139 [Image Caption] [phys:58] 图 5-23　计划未覆盖条目的属性与来源追溯
+P1140 [heading 2] [phys:] 5.4 本章小结
+P1141 [First Paragraph] [phys:58] 本章说明实现环境、测试数据及各类功能实现，并按十三个子模块列出代表流程与界面；第六章报告验证结果。
+P1142 [heading 1] [phys:7,59] 第六章 系统测试与实验结果分析
+P1143 [First Paragraph] [phys:59] 本章报告功能与安全验证，并分析关系抽取、问答、固定任务和计划覆盖的归档及补充实验。
+P1144 [heading 2] [phys:7,59] 6.1 测试环境与数据集
+P1145 [First Paragraph] [phys:59] 系统采用Rust后端、Next.js前端及PostgreSQL 16与pgvector，运行与模型配置见表6-1。功能测试检查审核、项目访问、高风险确认与审计；归档实验和当前Rust补验分别见6.5、6.6节，附件列于附录D。
+P1146 [caption] [phys:59] 表 6-1　本地系统实现与验证配置
+P1147 [Compact] [phys:] 类别
+P1148 [Compact] [phys:] 配置
+P1149 [Compact] [phys:] 本地硬件
+P1150 [Compact] [phys:59] MacBook Air，Apple M5 十核 CPU，16 GB 统一内存，内置 SSD（APFS 容器约 494.3 GB）
+P1151 [Compact] [phys:] 操作系统
+P1152 [Compact] [phys:42,59] macOS 26.6（ARM64）/ Linux 容器
+P1153 [Compact] [phys:] 被测系统
+P1154 [Compact] [phys:59] Rust 后端与 Next.js 前端
+P1155 [Compact] [phys:] 数据库
+P1156 [Compact] [phys:42,59] PostgreSQL 16 + pgvector
+P1157 [Compact] [phys:] 生成模型
+P1158 [Compact] [phys:59] DeepSeek 对话模型（deepseek-v4-flash），温度 0.1
+P1159 [Compact] [phys:] 嵌入模型
+P1160 [Compact] [phys:59] bge-m3（1024 维）
+P1161 [Compact] [phys:] 检索融合
+P1162 [Compact] [phys:59] 倒数排名融合（RRF，常数 60）
+P1163 [Compact] [phys:] 测试工具
+P1164 [Compact] [phys:59] Rust 单元与集成测试、Playwright 浏览器端到端场景
+P1165 [Body Text] [phys:59] 批次配置：6.5节的关系核验、20题问答及固定任务取自迁移前的Python原型；问答生成和自动评判使用DeepSeek flash档、温度0.1，嵌入模型为bge-small-zh-v1.5（512维）。表6-8的五方法12题×3次对照为2026年7月13日内部历史批次，同样采用bge-small-zh-v1.5（512维），配置快照的app_revision为unversioned，未绑定代码revision，只作归档描述性比较，不套用表6-1的当前环境。6.6节报告当前Rust检索、关系抽取与接口验证；关系抽取补充测试采用独立PostgreSQL/pgvector数据库，通过Rust接口完成笔记提交、审核与建图，未调用生成或嵌入模型。2026年8月28日Rust安全测试及legacy/SQLite pytest摘要详见附录D.4。
+P1166 [Body Text] [phys:59] 各数据集用途与规模见表6-2。合成语料的生成过程见5.2节；公开英文日记的来源与选材过程见6.6节及附录D.2；问题、参考关系及运行记录见附录A、B、D。
+P1167 [caption] [phys:60] 表 6-2　实验数据集
+P1168 [Compact] [phys:] 数据集
+P1169 [Compact] [phys:] 用途
+P1170 [Compact] [phys:] 规模
+P1171 [Compact] [phys:] 项目一语料
+P1172 [Compact] [phys:60] 关系抽取核对、问答对照与补充基线
+P1173 [Compact] [phys:60] 抽取用4条固定笔记；历史问答用15条已审核笔记、7份SOP提要、20题
+P1174 [Compact] [phys:] 三项目语料
+P1175 [Compact] [phys:60] 功能验证与权限边界走查
+P1176 [Compact] [phys:60] 35条笔记、11份资料
+P1177 [Compact] [phys:60] GSE111619派生诊断语料
+P1178 [Compact] [phys:60] 五种方法的检索诊断
+P1179 [Compact] [phys:60] 4条自动生成笔记、12题；每方法重复3次
+P1180 [Compact] [phys:43,60,74] 公开英文实验日记
+P1181 [Compact] [phys:60] 当前Rust正文抽取与正确字段映射对照
+P1182 [Compact] [phys:60] 3份PDF、12个日记单元；74条内容参考关系；每条构造正文与字段两个配对条件
+P1183 [Body Text] [phys:60] 附录D.3展示PCR、细胞活力、Western Blot及qPCR四条固定合成笔记和七份SOP提要。历史问答批次共使用15条笔记。
+P1184 [Captioned Figure] [phys:] 
+P1185 [Image Caption] [phys:60] 图 6-1　三项目已审核实验笔记数量分布
+P1186 [heading 2] [phys:7,60] 6.2 功能与安全测试
+P1187 [First Paragraph] [phys:60] 功能与安全测试以Rust后端和Playwright浏览器场景为对象，检查审核门禁、来源记录、证据范围、访问控制、人工确认、防重与异常查询。表6-3区分当前整改回归与历史运行结果；当前回归的代码身份、命令及结果见附录D.4，角色权限与问答接口的既有验证见第6.6节。
+P1188 [caption] [phys:61] 表 6-3　功能与安全测试设计、过程及结果
+P1189 [Compact] [phys:] 测试内容
+P1190 [Compact] [phys:] 测试设计与过程
+P1191 [Compact] [phys:] 测试结果
+P1192 [Compact] [phys:61] 图谱审核门禁（1 项集成测试）
+P1193 [Compact] [phys:61] 分别构造草稿、待审、退回和归档笔记，并保留其旧图谱关系，检查单笔记抽取、笔记图谱读取和项目重建是否按当前批准状态排除这些来源。
+P1194 [Compact] [phys:61] 当前隔离PostgreSQL集成测试通过：四种状态均被排除，直接抽取与读取被拒，项目重建未新增其抽取记录。
+P1195 [Compact] [phys:61] 固定任务的证据范围（1 项集成测试）
+P1196 [Compact] [phys:61] 在批准笔记之外构造四种未批准状态及残留图谱关系，逐一运行实验总结、周报、阶段报告和图谱概览，核对保存的实际可见笔记与关系来源。
+P1197 [Compact] [phys:61] 当前隔离PostgreSQL集成测试通过：四类固定任务均未将上述笔记或其残留关系作为可见生成证据。该测试验证来源隔离，使用模型桩，不评价生成质量。
+P1198 [Compact] [phys:61] 访问控制与安全边界（8 个端到端场景；3 类账号、2 个项目走查）
+P1199 [Compact] [phys:61] 通过浏览器端到端场景及多角色、多项目走查，检查跨项目访问、归档索引、敏感项目外发和只读账号写操作。
+P1200 [Compact] [phys:61] 8 个浏览器场景均通过；3 类账号、2 个项目的走查记录显示未授权访问及外发被拒，只读成员不能评价或创建生成记录。
+P1201 [Compact] [phys:61] 高风险确认、权限与事务回滚（当前补充回归）
+P1202 [Compact] [phys:61] 检查同键参数绑定、真实状态与剩余有效期、跨项目目标、当前写权限及项目活动状态；通过执行键故障注入检查业务数据库变化、审计与确认状态的整体回滚。
+P1203 [Compact] [phys:61] 当前隔离数据库回归通过，涵盖提审、笔记与资料审核、成员权限修改和项目索引重建的数据库效果；外部嵌入请求与费用不在该事务保证内。历史模块8项结果另列于表6-3c。
+P1204 [Compact] [phys:61] 上游异常记录（1 项单元测试）
+P1205 [Compact] [phys:61] 检查失败查询记录是否被排除在评价流程之外。
+P1206 [Compact] [phys:61] 已编写单元测试用例；上游调用失败后的状态与错误信息写入列入专项测试。
+P1207 [Body Text] [phys:61] 浏览器测试以预设模型响应替代外部服务输出，使审核、权限和确认流程可按固定输入重复检查；回答内容质量由第 6.6 节的问答实验另行评价。
+P1208 [Body Text] [phys:61] 表6-3a—6-3c保留既有批次：浏览器结果来自2026年8月10日冻结运行，操作步骤按同名测试定义列出；Rust结果来自8月28日运行。表6-3中的当前整改回归在2026年10月11日独立运行，代码身份与结果见附录D.4，两批记录分开解释。
+P1209 [caption] [phys:62] 表 6-3a　浏览器基础流程用例与冻结运行结果
+P1210 [] [phys:] 用例
+P1211 [] [phys:] 前置条件
+P1212 [] [phys:] 操作步骤
+P1213 [] [phys:] 预期结果
+P1214 [] [phys:] 实际结果
+P1215 [] [phys:62] B01 登录与笔记审批
+P1216 [] [phys:62] 管理员账号、待审笔记已建立
+P1217 [] [phys:62] 登录、选项目、填写审批意见并通过
+P1218 [] [phys:62] 笔记审核完成，审批列表状态更新
+P1219 [] [phys:62] 通过（1999 ms）
+P1220 [] [phys:62] B02 图片OCR到问答入库
+P1221 [] [phys:62] 项目资料库与图片夹具可用
+P1222 [] [phys:62] 上传并审核图片、提取文本、人工校对确认、入库、提问、准备五方法题集
+P1223 [] [phys:62] 资料完成校对及入库，问答与实验流程完成
+P1224 [] [phys:62] 通过（7300 ms）
+P1225 [] [phys:62] B03 独立评价入口限制
+P1226 [] [phys:62] 独立评价账号及待评题目已建立
+P1227 [] [phys:62] 登录评价账号、进入盲评、填写评价并提交
+P1228 [] [phys:62] 只能见盲评入口，评价保存，项目笔记入口不可见
+P1229 [] [phys:62] 通过（4693 ms）
+P1230 [] [phys:62] B04 账号、小组与审计
+P1231 [] [phys:] 系统管理员登录
+P1232 [] [phys:62] 创建账号、小组，配置成员，查询管理动作的审计
+P1233 [] [phys:62] 可查看账号、小组、成员状态与审计记录
+P1234 [] [phys:62] 通过（5289 ms）
+P1235 [caption] [phys:62] 表 6-3b　浏览器协作与权限用例的冻结运行结果
+P1236 [] [phys:] 用例
+P1237 [] [phys:] 前置条件
+P1238 [] [phys:] 操作步骤
+P1239 [] [phys:] 预期结果
+P1240 [] [phys:] 实际结果
+P1241 [] [phys:62] B05 退回—修订—批准
+P1242 [] [phys:62] 负责人、记录员、审核人分别具有对应权限
+P1243 [] [phys:62] 建项目并授权、记录员提审、审核人退回、记录员修订再提审、审核人批准
+P1244 [] [phys:62] 保留修订版本及退回意见，最终笔记已审核
+P1245 [] [phys:62] 通过（13633 ms）
+P1246 [] [phys:62] B06 AI资料协作流程
+P1247 [] [phys:62] 记录员、审核人、负责人账号及图片夹具可用
+P1248 [] [phys:62] 分角色上传、审核校对、入库、重建图谱、问答并生成报告
+P1249 [] [phys:62] 资料状态、图谱及回答/报告流程完成
+P1250 [] [phys:62] 通过（12526 ms）
+P1251 [] [phys:62] B07 只读成员界面限制
+P1252 [] [phys:62] 成员仅有项目读权限
+P1253 [] [phys:62] 查看笔记、资料、图谱与报告，访问设置入口
+P1254 [] [phys:62] 可查阅；新建、编辑、审核、图谱写入、生成与设置操作受限制
+P1255 [] [phys:62] 通过（5759 ms）
+P1256 [] [phys:62] B08 四项目与MCP流程
+P1257 [] [phys:62] 四个测试项目、角色账号和固定LLM桩已准备
+P1258 [] [phys:62] 跨项目创建审核笔记、上传审核资料、入库问答与草稿、MCP工具发现及检索
+P1259 [] [phys:62] 相应流程完成；独立评价与只读入口符合权限约束
+P1260 [] [phys:62] 通过（52477 ms）
+P1261 [caption] [phys:63] 表 6-3c　Rust高风险确认与幂等集成用例
+P1262 [] [phys:] 用例
+P1263 [] [phys:] 前置条件
+P1264 [] [phys:] 操作步骤
+P1265 [] [phys:] 预期结果
+P1266 [] [phys:] 实际结果
+P1267 [] [phys:63] R01 高风险待确认与拒绝阻断
+P1268 [] [phys:63] MCP有效账号与高风险review_note工具；隔离测试库
+P1269 [] [phys:63] 调用高风险工具，拒绝待确认动作，再尝试确认
+P1270 [] [phys:63] 进入confirmation_required而不执行；拒绝后再确认409；执行键未落库
+P1271 [] [phys:] 通过（ok）
+P1272 [] [phys:63] R02 确认执行与幂等防重
+P1273 [] [phys:63] DRAFT笔记、待确认动作及幂等键
+P1274 [] [phys:63] 确认动作、同键重放、完成后再确认、同键异参确认
+P1275 [] [phys:63] DRAFT到APPROVED只执行一次；同键返回缓存；重复确认与异参复用拒绝
+P1276 [] [phys:] 通过（ok）
+P1277 [] [phys:63] R03 过期和已完成动作限制
+P1278 [] [phys:63] 过期待确认动作及已完成动作
+P1279 [] [phys:63] 对过期动作approve/reject，对完成动作再次确认
+P1280 [] [phys:63] 均返回409，动作不能重复执行
+P1281 [] [phys:] 通过（ok）
+P1282 [Body Text] [phys:63] 按NFR6在本地小规模数据集上开展限速只读接口观测：2026年10月3日，版本fb87ce38，10项目、46笔记、44文件；10个工作者各以约1请求/s循环访问/health、/ready、/projects。当次汇总记载墙时60.01074 s，三个端点各200次，共600次均成功；吞吐9.99821请求/s，整体p95为13.376 ms，最大17.724 ms，端点p95依次为11.484、12.713、13.570 ms，按当次统计达到p95≤2 s及吞吐≥5请求/s的基础目标。附录D.4现存附件仅保留当次汇总，未留逐请求明细，无法据其独立复算p95或逐项核对请求标识。
+P1283 [heading 2] [phys:7,64] 6.3 实验设计与评价指标
+P1284 [caption] [phys:64] 表 6-4　评价指标与计算方式
+P1285 [Compact] [phys:] 指标
+P1286 [Compact] [phys:] 含义
+P1287 [Compact] [phys:] 计算方式/公式
+P1288 [Compact] [phys:] 用途
+P1289 [Compact] [phys:] 精确率 P
+P1290 [Compact] [phys:64] 输出关系中与参考集匹配的比例
+P1291 [Compact] [phys:64] P=TPTP+FP（6-1）
+P1292 [Compact] [phys:64] 关系抽取：衡量误抽程度
+P1293 [Compact] [phys:] 召回率 R
+P1294 [Compact] [phys:64] 参考关系在输出中被匹配的比例
+P1295 [Compact] [phys:64] R=TPTP+FN（6-2）
+P1296 [Compact] [phys:64] 关系抽取：衡量遗漏程度
+P1297 [Compact] [phys:] F1
+P1298 [Compact] [phys:64] 精确率与召回率的调和平均
+P1299 [Compact] [phys:64] F1=2PRP+R（6-3）
+P1300 [Compact] [phys:64] 关系抽取：参考集匹配的综合指标
+P1301 [Compact] [phys:64] 规则化任务完成率 C
+P1302 [Compact] [phys:64] 回答覆盖全部答案要点的题目比例
+P1303 [Compact] [phys:] C=i=1NciN（6-4）
+P1304 [Compact] [phys:64] 主问答与多方法对照：问答任务完成情况
+P1305 [Compact] [phys:] 平均响应耗时
+P1306 [Compact] [phys:] 每题平均耗时
+P1307 [Compact] [phys:] x=i=1NxiN（6-5）
+P1308 [Compact] [phys:] 开销评估
+P1309 [Compact] [phys:] 证据覆盖率
+P1310 [Compact] [phys:64] 检索证据是否包含全部答案要点
+P1311 [Compact] [phys:] E=i∈Qfei|Qf|（6-6）
+P1312 [Compact] [phys:64] eᵢ=1表示证据命中第i题全部要点组；Q_f为有效且可核对的事实型题集，本批次18题。
+P1313 [Compact] [phys:] 分析收益来源
+P1314 [Compact] [phys:64] McNemar 检验[81]
+P1315 [Compact] [phys:64] 配对二元结果差异检验
+P1316 [Compact] [phys:] p=min{1,2k=0min(b,c)C(b+c,k)2b+c}
+P1317 [Compact] [phys:] （6-7）
+P1318 [Compact] [phys:64] 配对差异的描述性参考
+P1319 [Compact] [phys:64] RAGAS 忠实度/上下文召回/上下文精确率
+P1320 [Compact] [phys:64] 回答陈述支持比例、参考陈述覆盖比例、相关上下文排序
+P1321 [Compact] [phys:64] 忠实度：F=Na,sNa（6-8）
+P1322 [Compact] [phys:64] 上下文召回：Rc=Nr,sNr（6-9）
+P1323 [Compact] [phys:] 上下文精确率：
+P1324 [Compact] [phys:] pk=i=1kvik， Pc=k=1Kpkvkk=1Kvk+10−10
+P1325 [Compact] [phys:] （6-10）
+P1326 [Compact] [phys:64] Nₐ、Nᵣ为回答、参考答案陈述总数，s表示受上下文支持；K为上下文条数，vₖ为第k条上下文有助于参考答案的0/1判定，pₖ为前k条的相关比例。
+P1327 [Compact] [phys:64] 补充评价（主问答与多方法对照）
+P1328 [First Paragraph] [phys:65] 为评估系统在知识抽取、问答检索与任务生成上的表现，表6-4汇总各实验使用的指标、含义、计算方式与用途，并在相应指标行内给出式（6-1）至式（6-10）。其中，证据覆盖率、McNemar检验和三项RAGAS指标分别对应式（6-6）、式（6-7）及式（6-8）至式（6-10）。
+P1329 [Body Text] [phys:65] 表中 TP、FP、FN 分别表示与参考集匹配、参考集之外额外抽出、参考集内未被抽出的关系数；cᵢ 表示第 i 题是否覆盖全部规定答案要点，xᵢ 表示该题的响应耗时。规则化任务完成率通过不区分大小写的子串匹配计算：回答须命中全部要点组，每组命中任一别名即可。证据覆盖率采用相同要点，核对资料文件名与片段，以及关系源标签、目标标签、关系名称及类型拼接后的文本。两个指标分别用于描述归档回答和检索证据中的要点覆盖。
+P1330 [Body Text] [phys:65] Q01—Q20是比较普通RAG与图谱增强RAG回答表现的20道测试问题，按资料事实、实验对象关系、过程追溯和综合总结四类各设置5题，完整清单见附录A。Q05询问资料同步状态，提供的证据中没有同步台账，规定要点为“无法确认”；Q20询问下一步复核建议。两题均计入任务完成率，事实证据覆盖率以其余18题为分母。本批次采用回答生成后、统计前整理的要点与别名组进行回顾性评分；第6.6节采用运行前固定的评分规则。
+P1331 [Body Text] [phys:65] McNemar双侧精确检验[81]按同一问题配对两种模式的二元结果。其中b、c分别为仅增强模式完成、仅普通模式完成的题数；一致配对时p=1。式（6-7）中C(b+c,k)表示组合数。该精确条件检验基于不一致配对的二项分布，小样本下可能较保守[81]。本批次采用回顾性答案要点进行配对判定。
+P1332 [Body Text] [phys:65] 归档关系核验使用四条合成笔记的52条参考关系（附录B-1），以“笔记标题、关系类型、目标标签”组成字符串集合键，去重后按集合交、差统计TP、FP、FN，结果见表6-5。当前Rust补充测试将试剂使用、仪器使用、样本使用和结果产生四类内容关系，与项目包含笔记、笔记创建者、笔记实验类型三类元数据关系分别计分；旧参考集相应分为40条内容关系与12条元数据关系。补充测试以“记录编号、源实体类型、源标签、源身份、关系类型、目标实体类型、目标标签、目标身份”构成有方向的集合键；标签统一NFKC、大小写与连续空白，保留标点，不作同义词替换。无预测时精确率未定义；F1直接按2TP/(2TP+FP+FN)计算，参考非空而预测为空时为0；参考与预测皆空的记录单独列出。表6-14报告内容关系的微平均精确率、召回率和F1。
+P1333 [Body Text] [phys:65] 主问答批次的参考答案由回顾性要点与别名组拼接，扩展批次由题目预设事实标签拼接；两类问答参考均用于对应批次的自动评分，关系抽取另使用前述参考关系集。
+P1334 [Body Text] [phys:66] 图谱增强模式的上下文由资料片段与序列化关系文本组成。归档自动评分采用DeepSeek flash档评判模型；为检查模型评判的自偏好[78]，独立GPT子代理对20题成对实验的40条回答与实际上下文进行结构化语义评判，结果见第6.6节。语义评价采用自定义的主张支持、参考事实覆盖、上下文相关性和引用支持四项指标。
+P1335 [heading 2] [phys:7,66] 6.4 多角色协作流程验证
+P1336 [First Paragraph] [phys:66] 本节比较四种权限身份下提交审核、知识更新和告警处置的状态变化，依据角色操作、审批事件与审计日志分析协作流程。
+P1337 [Body Text] [phys:66] 本案例采用“乳腺癌外泌体miRNA课题”（运行库项目编号10）在2026年9月7日的计划解析结果、合成种子笔记与审计日志。计划导入后形成15个计划知识点；随后14分钟内，2条种子笔记完成提交与审核，图谱更新后的精确匹配覆盖由0项增至1项。语义关联清单涉及Western Blot、CD63和TSG101共3项，系统精确匹配项为Western Blot。项目负责人账号完成告警确认与处理；走查中发现阈值输入引起告警静默，并完成修复。
+P1338 [Body Text] [phys:66] 关系与来源核查界面见图5-6、5-7，问答与生成结果见6.5节。
+P1339 [heading 2] [phys:7,66] 6.5 归档实验分析
+P1340 [First Paragraph] [phys:66] 各批次身份与配置见附录D。百分数、自动评分及0～1比例保留两位小数，平均耗时与平均数保留一位；检验概率保留原统计精度，整数计数保持整数。
+P1341 [heading 3] [phys:7,66] 6.5.1 实验一：知识图谱抽取质量评价
+P1342 [First Paragraph] [phys:66] 实验目的：核对迁移前Python原型在四条已审核合成种子笔记上的输出与内部参考集的一致程度。实验步骤：按第6.3节的归档集合键，将52条参考关系与修复前53条输出逐项比对；识别额外关系后，用同一参考集核验修复后输出，按集合交、差统计TP、FP、FN并计算精确率、召回率与F1。当前Rust上的旧样例回归与新来源正文测试另见6.6节。
+P1343 [caption] [phys:66] 表 6-5　迁移前Python原型的固定样例关系核验结果
+P1344 [Compact] [phys:] 批次
+P1345 [Compact] [phys:] TP
+P1346 [Compact] [phys:] FP
+P1347 [Compact] [phys:] FN
+P1348 [Compact] [phys:] 精确率
+P1349 [Compact] [phys:] 召回率
+P1350 [Compact] [phys:] F1
+P1351 [Compact] [phys:] 修复前
+P1352 [Compact] [phys:] 52
+P1353 [Compact] [phys:] 1
+P1354 [Compact] [phys:] 0
+P1355 [Compact] [phys:] 98.11%
+P1356 [Compact] [phys:] 100.00%
+P1357 [Compact] [phys:] 99.05%
+P1358 [Compact] [phys:] 修复后
+P1359 [Compact] [phys:] 52
+P1360 [Compact] [phys:] 0
+P1361 [Compact] [phys:] 0
+P1362 [Compact] [phys:] 100.00%
+P1363 [Compact] [phys:] 100.00%
+P1364 [Compact] [phys:] 100.00%
+P1365 [Body Text] [phys:66] 归档修复前输出将正文“cDNA样本1、2”中的“2”单独识别为样本；修复后保存的输出不再包含该额外关系，与52条内部参考关系一致，TP=52、FP=0、FN=0，三个指标均为100.00%。这些结果对应同一固定合成样本及原型批次。当前Rust回归再次出现裸数字样本，具体结果与新来源测试见表6-14。图6-1展示三个合成测试项目的已审核笔记规模。
+P1366 [heading 3] [phys:7,67] 6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照
+P1367 [First Paragraph] [phys:67] 实验目的：在相同资料证据上增加一跳关系文本，比较任务完成、事实覆盖与响应开销（RQ2）。表6-6使用早期原型20题成对记录，四类问题各5题，两模式各运行一次，增强模式额外注入一跳关系。问题见附录A，按6.3节回顾性要点匹配40条回答，并重算耗时、Token及引用编号；当前Rust四组配置的12题三次重复、144条回答见6.6节表6-12。
+P1368 [caption] [phys:67] 表 6-6　20 题成对实验总体结果
+P1369 [Compact] [phys:] 指标
+P1370 [Compact] [phys:] 普通 RAG
+P1371 [Compact] [phys:] 图谱增强 RAG
+P1372 [Compact] [phys:67] 任务完成数（/20）
+P1373 [Compact] [phys:] 4
+P1374 [Compact] [phys:] 14
+P1375 [Compact] [phys:] 任务完成率
+P1376 [Compact] [phys:] 20.00%
+P1377 [Compact] [phys:] 70.00%
+P1378 [Compact] [phys:67] 平均响应耗时（ms）
+P1379 [Compact] [phys:] 2116.7
+P1380 [Compact] [phys:] 2219.9
+P1381 [Compact] [phys:67] 响应耗时中位数（ms）
+P1382 [Compact] [phys:] 1908.5
+P1383 [Compact] [phys:] 2120.5
+P1384 [Compact] [phys:] 平均资料来源数
+P1385 [Compact] [phys:] 6.0
+P1386 [Compact] [phys:] 6.0
+P1387 [Compact] [phys:67] 包含 [S 或 [G 子串的回答比例
+P1388 [Compact] [phys:67] 90.00%（18/20）
+P1389 [Compact] [phys:67] 85.00%（17/20）
+P1390 [Compact] [phys:67,68,75] 平均总 Token
+P1391 [Compact] [phys:] 567.5
+P1392 [Compact] [phys:] 893.2
+P1393 [Compact] [phys:67] 编号格式与数组范围合格比例
+P1394 [Compact] [phys:67] 85.00%（17/20）
+P1395 [Compact] [phys:67] 75.00%（15/20）
+P1396 [Body Text] [phys:67] 该20题配对实验中，图谱增强比普通RAG多完成10题，单独由普通RAG完成的题数为零。按回顾性要点计算的McNemar精确检验值为p=0.0020，配对计数与计算规则见附件。图6-2按资料事实型、实验对象关系型、过程追溯型、综合总结型展示两模式结果。
+P1397 [Captioned Figure] [phys:] 
+P1398 [Image Caption] [phys:68] 图 6-2　分题型任务完成率
+P1399 [Body Text] [phys:68] 关系型问题的提高最多，试剂、仪器与样本依据可由图谱直接提供；追溯型也有提高，综合总结仍受一跳注入限制。证据覆盖、完成比例与耗时见图6-3。
+P1400 [Captioned Figure] [phys:] 
+P1401 [Image Caption] [phys:68] 图 6-3　证据覆盖率、任务完成率与响应时延
+P1402 [Body Text] [phys:68] 证据覆盖分解：在 18 个事实型问题上，两模式的资料证据各自完整覆盖 3/18 题，图谱关系单独覆盖 9/18 题，与资料合并后覆盖 12/18 题，最终回答完成数分别为 3 和 12。证据覆盖与回答结果同向变化，支持把本批次的收益解释为必要事实得到召回。失败案例包括：中文短语匹配不足导致目标关系未进入上下文；集合列举类问题受图谱召回条数上限限制；跨题指代（“这三项实验”）因各题独立运行而无法解析；“实验类型—试剂/仪器”组合问题需要沿笔记的多跳连接与分组聚合。
+P1403 [Body Text] [phys:68] 在同一20题成对记录上计算响应耗时及Token，并重放关系候选，比较不同阈值的筛选结果。普通模式与增强模式的平均耗时分别为2116.7 ms和2219.9 ms，成对平均差为103.2 ms、成对中位差为2.5 ms；平均总Token分别为567.5和893.2。最低图谱得分为1.0时有19/20题获得非空关系，升至4.0时有8题关系被全部过滤；将抽取置信度阈值在0.5～1.0范围内调整未改变本批次的关系排序，见图6-4。筛选结果用于选择后续同条件实验的阈值范围。
+P1404 [Captioned Figure] [phys:] 
+P1405 [Image Caption] [phys:69] 图 6-4　图谱最低得分阈值敏感性
+P1406 [Body Text] [phys:69] 引用子串检测区分大小写，检查回答中的“[S”或“[G”：普通模式为18/20（90.00%），增强模式为17/20（85.00%）。完整编号检测同时检查编号格式与列表范围。
+P1407 [Body Text] [phys:69] 完整编号检测查找回答中以S或G开头、方括号完整配对的引用标记。S对应该回答的来源资料列表，G对应关系列表，后面的数字表示列表中从1开始的序号。每条回答至少要有一个完整编号；检测到的所有标记都须由S或G加一个十进制数字序号构成，且序号位于对应列表范围内。[S2-S6]、[G1-G10]这类范围引用不合格。按此规则，普通RAG的合格回答为17/20（85.00%），图谱增强模式为15/20（75.00%）。
+P1408 [Body Text] [phys:69] 编号检测评价引用是否缺失、格式是否正确以及是否落在来源列表范围内。第7.3节列出结论证据支持度与回答信息量的后续评价安排。
+P1409 [heading 3] [phys:7,69] 6.5.3 实验三：多方法对照实验
+P1410 [First Paragraph] [phys:69] 实验目的：比较裸大语言模型、资料检索、关系增强与直接数据库查询在不同题集上的完成率和开销。实验步骤：普通RAG与图谱增强RAG于2026年6月11日各运行20题，裸模型与直接SQL查询于2026年8月25日补充运行；SQL对应Q06—Q19共14题。表6-7分列20题全题集与14题共同子集的结果。两个运行日期的项目一数据分别为15条和4条已审核笔记，补充查询时Q15、Q18、Q19的部分要点已不在数据中。GSE111619扩展对照采用12题、每方法3次重复，形成每方法36次记录；分析时以12道问题为题集规模。
+P1411 [caption] [phys:70] 表 6-7　项目一基础对照：20 题全题集与 Q06—Q19 共同子集
+P1412 [Compact] [phys:] 题集口径与方法
+P1413 [Compact] [phys:70] 规则化完成数（完成/题数）
+P1414 [Compact] [phys:70] 平均响应时延（ms；n）
+P1415 [Compact] [phys:] 说明
+P1416 [Compact] [phys:] 全题集：裸模型
+P1417 [Compact] [phys:70] 2/20（10.00%）
+P1418 [Compact] [phys:70] 5854.9（n=20）
+P1419 [Compact] [phys:] 不提供项目资料
+P1420 [Compact] [phys:70] 全题集：普通 RAG
+P1421 [Compact] [phys:70] 4/20（20.00%）
+P1422 [Compact] [phys:70] 2116.7（n=20）
+P1423 [Compact] [phys:70] 项目 SOP 资料检索
+P1424 [Compact] [phys:70] 全题集：图谱增强 RAG
+P1425 [Compact] [phys:70] 14/20（70.00%）
+P1426 [Compact] [phys:70] 2219.9（n=20）
+P1427 [Compact] [phys:70] 增加一跳关系证据
+P1428 [Compact] [phys:] 共同集：裸模型
+P1429 [Compact] [phys:70] 1/14（7.14%）
+P1430 [Compact] [phys:70] 5697.5（n=14）
+P1431 [Compact] [phys:] 不提供项目资料
+P1432 [Compact] [phys:70] 共同集：普通 RAG
+P1433 [Compact] [phys:70] 0/14（0.00%）
+P1434 [Compact] [phys:70] 2153.6（n=14）
+P1435 [Compact] [phys:70] 项目 SOP 资料检索
+P1436 [Compact] [phys:70] 共同集：图谱增强 RAG
+P1437 [Compact] [phys:70] 8/14（57.14%）
+P1438 [Compact] [phys:70] 2047.3（n=14）
+P1439 [Compact] [phys:70] 增加一跳关系证据
+P1440 [Compact] [phys:70] 共同集：直接 SQL
+P1441 [Compact] [phys:70] 11/14（78.57%）
+P1442 [Compact] [phys:70] 43.9（n=14）
+P1443 [Compact] [phys:70] 输出数据库记录，不生成自然语言回答
+P1444 [caption] [phys:70] 表 6-8　扩展对照：五种方法（GSE111619 语料，12 题 × 3 次重复）
+P1445 [Compact] [phys:] 方法
+P1446 [Compact] [phys:70] 事实覆盖率（微平均）
+P1447 [Compact] [phys:70,71] 封闭集精确命中率
+P1448 [Compact] [phys:] 封闭集精确率
+P1449 [Compact] [phys:] 封闭集F1
+P1450 [Compact] [phys:] 平均耗时
+P1451 [Compact] [phys:] 裸大语言模型
+P1452 [Compact] [phys:] 0.00%
+P1453 [Compact] [phys:] 0.00%
+P1454 [Compact] [phys:] 0.00%
+P1455 [Compact] [phys:] 0.00%
+P1456 [Compact] [phys:70] 1831.7 ms
+P1457 [Compact] [phys:] 词法检索 RAG
+P1458 [Compact] [phys:] 42.71%
+P1459 [Compact] [phys:] 22.22%
+P1460 [Compact] [phys:] 83.67%
+P1461 [Compact] [phys:] 56.55%
+P1462 [Compact] [phys:70] 3803.6 ms
+P1463 [Compact] [phys:] 项目 RAG
+P1464 [Compact] [phys:] 30.21%
+P1465 [Compact] [phys:] 8.33%
+P1466 [Compact] [phys:] 90.63%
+P1467 [Compact] [phys:] 45.31%
+P1468 [Compact] [phys:70] 2058.4 ms
+P1469 [Compact] [phys:] 结构化查询
+P1470 [Compact] [phys:] 90.63%
+P1471 [Compact] [phys:] 66.67%
+P1472 [Compact] [phys:] 76.32%
+P1473 [Compact] [phys:] 82.86%
+P1474 [Compact] [phys:] 8.6 ms
+P1475 [Compact] [phys:] 图谱增强 RAG
+P1476 [Compact] [phys:] 90.63%
+P1477 [Compact] [phys:] 83.33%
+P1478 [Compact] [phys:] 100.00%
+P1479 [Compact] [phys:] 95.08%
+P1480 [Compact] [phys:70] 3061.6 ms
+P1481 [Body Text] [phys:70] 表6-8采用微平均：汇总回答命中的规定事实数与规定事实总数后求比例；宏平均先算每条回答比例再求均值。12题各重复3次，共36条回答，累计核对96项次规定事实；项目RAG与图谱增强分别命中29、87次，即29/96和87/96。封闭集精确命中要求全部规定事实命中且无预设禁止词命中；封闭集精确率为规定事实命中数除以规定事实与禁止词命中数之和，封闭集F1据此计算。禁止词命中是冻结规则的输出约束，不等同于事实错误。36次配对中27次覆盖改善、9次持平，覆盖比例差的宏平均为+0.64。
+P1482 [Captioned Figure] [phys:] 
+P1483 [Image Caption] [phys:71] 图 6-5　四种对照方法任务完成率
+P1484 [Captioned Figure] [phys:] 
+P1485 [Image Caption] [phys:71] 图 6-6　五种方法的事实覆盖率、封闭集精确命中率与F1
+P1486 [Body Text] [phys:71] 扩展对照采用单一公开项目的内部题集，运行记录、事实标签和自动评分明细见附件。按原始回答计算，词法检索通道有4行使用范围式引用，不符合单个来源标记的格式要求；归档检查未发现编号越界。独立评价安排见第7.3节。
+P1487 [Body Text] [phys:71] 在该扩展题集中，图谱增强与结构化查询的事实覆盖相同，前者封闭集命中更高，后者耗时更低（表6-8）。结构化查询的87次规定事实命中和27次禁止词命中得到87/(87+27)=76.32%的封闭集精确率；27次均为H03—H05各三次回答中出现的非赢家样本名，原回答同时列出正确比较数值与赢家。例如H03第1次列出四个样本的总计数，并正确指出GSM3035185最高，为53924761且属于Control组。题目未要求隐藏其他样本，因此这部分处罚反映冻结规则对比较明细的约束，不能解释为27项错误事实，也不能据此认定图谱回答具有事实可靠性优势。本表仅描述该历史批次的规则计分结果。
+P1488 [heading 3] [phys:7,72] 6.5.4 实验四：固定任务生成功能验证
+P1489 [First Paragraph] [phys:72] 实验目的：评价实验总结、周报、阶段报告与图谱概览按模板读取已审核证据、生成草稿并保存来源的能力。实验步骤：采用2026年6月11日四类固定任务各一次生成记录，提示版本为agent-v3-deepseek-grounded-ids，分析完成状态、来源笔记、资料、图谱关系数量及Token、耗时。该批次采用早期固定任务实现；当前Rust的agent-v10工具和权限机制见第四、五章。
+P1490 [caption] [phys:72] 表 6-9　固定任务生成结果
+P1491 [Compact] [phys:] 任务
+P1492 [Compact] [phys:] 来源笔记
+P1493 [Compact] [phys:] 来源资料
+P1494 [Compact] [phys:] 图谱关系
+P1495 [Compact] [phys:] 总 Token
+P1496 [Compact] [phys:] 响应耗时
+P1497 [Compact] [phys:] 实验总结
+P1498 [Compact] [phys:] 3
+P1499 [Compact] [phys:] 7
+P1500 [Compact] [phys:] 38
+P1501 [Compact] [phys:] 2191
+P1502 [Compact] [phys:] 9844 ms
+P1503 [Compact] [phys:] 周报
+P1504 [Compact] [phys:] 3
+P1505 [Compact] [phys:] 7
+P1506 [Compact] [phys:] 38
+P1507 [Compact] [phys:] 2071
+P1508 [Compact] [phys:] 8791 ms
+P1509 [Compact] [phys:] 阶段报告
+P1510 [Compact] [phys:] 15
+P1511 [Compact] [phys:] 7
+P1512 [Compact] [phys:] 40
+P1513 [Compact] [phys:] 4187
+P1514 [Compact] [phys:] 14033 ms
+P1515 [Compact] [phys:] 图谱概览
+P1516 [Compact] [phys:] 15
+P1517 [Compact] [phys:] 7
+P1518 [Compact] [phys:] 40
+P1519 [Compact] [phys:] 1391
+P1520 [Compact] [phys:] 4924 ms
+P1521 [Captioned Figure] [phys:] 
+P1522 [Image Caption] [phys:72] 图 6-7　四类固定任务的来源规模、总 Token 数与响应时延
+P1523 [Body Text] [phys:72] 四类任务均完成模板生成并保存已审核来源。实验总结与周报按选定笔记组装，阶段报告与图谱概览按项目全量已审核笔记组装。
+P1524 [heading 3] [phys:7,72] 6.5.5 实验五：计划覆盖与预警机制验证
+P1525 [First Paragraph] [phys:72] 实验目的：评价计划解析、覆盖匹配、预警指标与建议来源。实验步骤：依据既有运行记录，按指标定义计算预警数值并与系统评估值比较；分析计划解析与覆盖匹配过程；比较未覆盖清单驱动建议与静态建议。
+P1526 [Body Text] [phys:73] 实验结果：三项预警指标分别为审批堵转时长0.0小时、退回率0.10与未覆盖比例0.93。按原始计数计算所得数值与系统记录的舍入值一致。两轮计划解析产生13+2个节点、12+2条边，未出现合并冲突。首次覆盖检查为0/15；两条种子笔记审核通过后，系统精确匹配为1/15，即Western Blot，覆盖率为0.07。
+P1527 [Body Text] [phys:73] 语义关联清单涉及Western Blot、CD63、TSG101共3项，其中anti-CD63、anti-TSG101为抗体，计划中的CD63、TSG101为蛋白靶标，系统按类型与规范名匹配时区分二者。清单驱动的规则建议保存3个引用，静态规则建议的引用数为0。
+P1528 [heading 3] [phys:7,73] 6.5.6 自动评价补充
+P1529 [First Paragraph] [phys:73] RAGAS的参考答案由答案要点与可接受别名组成，用于覆盖核对。例如第1题询问PCR退火温度优化依据，参考含“58℃/58°C”“条带最清晰/条带清晰”“非特异性”三组要点。原型批次的要点在生成后整理，扩展批次由生成前固定事实标签构造。表6-10按有效样本求均值，缺失与失败单列。
+P1530 [caption] [phys:73] 表 6-10　RAGAS 自动评价结果
+P1531 [Compact] [phys:] 批次
+P1532 [Compact] [phys:] 模式
+P1533 [Compact] [phys:] 忠实度
+P1534 [Compact] [phys:] 上下文精确率
+P1535 [Compact] [phys:] 上下文召回
+P1536 [Compact] [phys:] 有效样本
+P1537 [Compact] [phys:73] 实验二（20题成对）
+P1538 [Compact] [phys:] 普通 RAG
+P1539 [Compact] [phys:] 0.61
+P1540 [Compact] [phys:] 0.27
+P1541 [Compact] [phys:] 0.05
+P1542 [Compact] [phys:] 各20
+P1543 [Compact] [phys:73] 实验二（20题成对）
+P1544 [Compact] [phys:] 图谱增强 RAG
+P1545 [Compact] [phys:] 0.53
+P1546 [Compact] [phys:] 0.24
+P1547 [Compact] [phys:] 0.52
+P1548 [Compact] [phys:] 各20
+P1549 [Compact] [phys:] 实验三扩展
+P1550 [Compact] [phys:] 图谱增强 RAG
+P1551 [Compact] [phys:] 0.82
+P1552 [Compact] [phys:] 0.78
+P1553 [Compact] [phys:] 1.00
+P1554 [Compact] [phys:73] 依次为29、4、31（共36）
+P1555 [Compact] [phys:] 实验三扩展
+P1556 [Compact] [phys:] 项目 RAG
+P1557 [Compact] [phys:] 未评测
+P1558 [Compact] [phys:] 未评测
+P1559 [Compact] [phys:] 未评测
+P1560 [Compact] [phys:] 0／36
+P1561 [Compact] [phys:] 实验三扩展
+P1562 [Compact] [phys:] 词法检索 RAG
+P1563 [Compact] [phys:] 未评测
+P1564 [Compact] [phys:] 未评测
+P1565 [Compact] [phys:] 未评测
+P1566 [Compact] [phys:] 0／36
+P1567 [Body Text] [phys:73] 归档自动评分采用RAGAS v0.4.3和DeepSeek flash档评判模型。表6-10按有效样本计算均值，并列出各指标的有效样本数；项目RAG与词法检索RAG未评测。图谱增强组上下文精确率有4个有效样本。回答相关性需要嵌入模型参与，本批次采用上述三项指标。
+P1568 [Body Text] [phys:73] 实验二增强组的上下文召回由0.05升至0.52，忠实度由0.61降至0.53，精确率由0.27降至0.24。召回衡量参考事实在上下文中的覆盖，忠实度衡量回答陈述的支持。第11题追问“58℃条带最清晰”的来源，G1、G2来自PCR笔记，G3—G10来自质粒测序、ELISA等记录，相关与不相关关系并存。第7题的样本B[G2]、样本A[G3]与关系一致，但第7、11题自动忠实度均为0。忠实度下降的具体原因尚待分析；GPT语义评价见6.6节。
+P1569 [heading 3] [phys:7,74] 6.6 Rust补充实验与业务验证
+P1570 [Body Text] [phys:74] 本节报告当前Rust检索证据下四组配置的144条回答、四种操作角色的接口验证，以及公开英文实验日记的关系抽取补充测试，并对20题归档回答进行语义评价。问答由DeepSeek官方接口生成，语义评判、模拟角色决策及新日记参考标注由会话内GPT子代理辅助完成。各项输入、响应与判定记录见附录D。
+P1571 [Body Text] [phys:74] 四名GPT子代理各评10条，共40条归档回答，每条评价一次；评判包移除方法名与RAGAS分数。输入变换先将起止同为S或G且顺序有效的范围引用展开为单个标记，再统一为E编号。Q08普通RAG的[S2-S6]、Q14图谱增强的[G1-G10]、Q18图谱增强的[S1-S6]及[G1-G10]涉及3条回答、4处范围。引用支持率评价的是这一变换后的语义支持，原始回答的格式检查仍将范围引用判为不合格。评价沿用6.3节的事后参考规则，事实覆盖与任务完成的原始计数不随引用展开改变。表6-11按问题宏平均，无可评分引用的项按缺失处理。
+P1572 [caption] [phys:74] 表 6-11　20题成对实验的GPT语义评价
+P1573 [Body Text] [phys:] 指标
+P1574 [Body Text] [phys:] 普通RAG
+P1575 [Body Text] [phys:] 图谱增强RAG
+P1576 [Body Text] [phys:] 主张支持率
+P1577 [Body Text] [phys:74] 83.08%（n=20）
+P1578 [Body Text] [phys:74] 86.95%（n=20）
+P1579 [Body Text] [phys:] 参考事实覆盖率
+P1580 [Body Text] [phys:74] 29.17%（n=20）
+P1581 [Body Text] [phys:74] 73.33%（n=20）
+P1582 [Body Text] [phys:] 上下文相关比例
+P1583 [Body Text] [phys:74] 9.17%（n=20）
+P1584 [Body Text] [phys:74] 24.78%（n=20）
+P1585 [Body Text] [phys:] 引用支持率
+P1586 [Body Text] [phys:74] 64.81%（n=18）
+P1587 [Body Text] [phys:74] 66.86%（n=17）
+P1588 [Body Text] [phys:74] 表6-11a给出题级配对差值及区间。引用支持均值各含18题和17题，差值采用共同的15题。覆盖与上下文相关性为正向差值，主张及引用支持区间跨零，尚不支持语义支持获得稳定改善的结论；引用支持结果还须结合上述范围展开条件解释。3题由同一代理评价两种回答，其余17题跨代理。
+P1589 [caption] [phys:74] 表 6-11a　GPT语义评价的题级配对差值
+P1590 [] [phys:] 指标
+P1591 [] [phys:] 配对题数
+P1592 [] [phys:74] 增强减普通（百分点）
+P1593 [] [phys:74] 描述性95%区间
+P1594 [] [phys:] 主张支持率
+P1595 [] [phys:] 20
+P1596 [] [phys:] +3.87
+P1597 [] [phys:74] [−5.63, 14.74]
+P1598 [] [phys:] 参考事实覆盖率
+P1599 [] [phys:] 20
+P1600 [] [phys:] +44.17
+P1601 [] [phys:74] [17.08, 68.75]
+P1602 [] [phys:] 上下文相关比例
+P1603 [] [phys:] 20
+P1604 [] [phys:] +15.61
+P1605 [] [phys:74] [2.68, 28.12]
+P1606 [] [phys:] 引用支持率
+P1607 [] [phys:] 15
+P1608 [] [phys:] +0.22
+P1609 [] [phys:74] [−20.00, 17.78]
+P1610 [Body Text] [phys:74] 差值按逐题配对求均值，区间采用5000次问题级配对bootstrap。
+P1611 [Body Text] [phys:75] Rust问答验证依据公开 GSE111619 来源制定 12 道题，并在首次生成前锁定 31 项规则，其中 10 道含事实题有 27 项必需事实，2 道纯资料不足题有 4 项拒答与范围条件。独立 Rust 实例导入 4 份资料、批准 4 条派生笔记，冻结 234 个资料块、39 个实体与 100 条关系。实验设置四组对照方法，共用每道题的资料片段，分别只使用资料片段、补充全部笔记、补充全部三元组、补充检索得到的一跳关系。其中全文笔记与全部三元组由冻结的测试适配器组装，四组均直接调用 DeepSeek。文档预算为 4000 字符，补充预算为 16000 字符；题序和三次重复预先固定。
+P1612 [Body Text] [phys:75] 在上述题目、上下文与语义规则下，共获得12道题×4组方法×3次重复，即144条有效最终回答。请求关闭思考模式，模型请求名称为deepseek-v4-flash，返回模型字段均为deepseek-flash。三名独立GPT评审代理分工完成评价，按实体、样本、字段与实际证据逐项判断。
+P1613 [caption] [phys:75] 表 6-12　基于Rust检索证据的四种上下文配置问答结果
+P1614 [Body Text] [phys:] 方法
+P1615 [Body Text] [phys:] 事实覆盖率
+P1616 [Body Text] [phys:] 严格成功率
+P1617 [Body Text] [phys:75] 纯不足题正确拒答
+P1618 [Body Text] [phys:67,68,75] 平均总Token
+P1619 [Body Text] [phys:] 资料检索
+P1620 [Body Text] [phys:] 46.67%
+P1621 [Body Text] [phys:] 26.67%
+P1622 [Body Text] [phys:] 100.00%
+P1623 [Body Text] [phys:] 1767.1
+P1624 [Body Text] [phys:] 资料＋全文笔记
+P1625 [Body Text] [phys:] 90.00%
+P1626 [Body Text] [phys:] 90.00%
+P1627 [Body Text] [phys:] 100.00%
+P1628 [Body Text] [phys:] 3614.2
+P1629 [Body Text] [phys:75] 资料＋全部三元组
+P1630 [Body Text] [phys:] 93.33%
+P1631 [Body Text] [phys:] 90.00%
+P1632 [Body Text] [phys:] 100.00%
+P1633 [Body Text] [phys:] 6112.3
+P1634 [Body Text] [phys:] 资料＋一跳关系
+P1635 [Body Text] [phys:] 74.44%
+P1636 [Body Text] [phys:] 60.00%
+P1637 [Body Text] [phys:] 100.00%
+P1638 [Body Text] [phys:] 2665.3
+P1639 [Body Text] [phys:75] 当前Rust证据下的语义评价以问题为统计单位。每条事实题回答的事实覆盖率为获得实际检索证据支持且实体、字段绑定正确的必需事实数除以该题必需事实总数；全部必需事实均获支持且未肯定断言预设禁止事实时，严格成功记为1，否则记为0。事实覆盖与严格成功率先在同题三次重复内平均，再汇总10道事实题；拒答单列2道纯不足题，每组6条回答，耗用统计每组全部36条生成。
+P1640 [Body Text] [phys:75] 对一跳关系与资料检索配置，先求同题覆盖率差值，再计算10道事实题的差值均值。采用问题级配对bootstrap[82]，每次从10个差值中有放回地抽取10个并求均值，重复10000次，随机种子固定为20261001114；以重采样均值分布的2.5%和97.5%分位点经线性插值形成95%百分位区间。同时采用题级精确双侧符号翻转检验[83]，在各题差值符号可交换的零假设下，完整枚举2^10=1024种符号组合，以差值之和的绝对值为统计量，将不小于观测统计量的组合比例作为p值。30条事实题回答按问题归并，三次生成作为同题内重复。
+P1641 [Body Text] [phys:75] 一跳关系比资料检索的覆盖差为27.78个百分点，95%自助重采样区间为3.89至55.00个百分点。未舍入题级差值依次为-2/9、0、1、0、1/2、1/3、1、1/6、0、0，其均值为5/18；1024种符号组合中有96种达到或超过观测统计量，故p=96/1024=0.09375，报告为p=0.0938（n=10），未达到0.05阈值。显著性判断以符号翻转检验为依据；百分位bootstrap区间描述覆盖差，其构造与主检验不同。
+P1642 [Body Text] [phys:76] 相对全文笔记与全部三元组的差值为-15.56和-18.89个百分点。两项次要比较构成预先固定的比较族，按Holm方法[84]校正：两项原始p均为0.2500，升序排列后依次乘以2和1，再取累积最大值，得到两项Holm校正p均为0.5000。在该内部制定题集上，这些探索性题级差值同时反映上下文规模、信息量与检索组织的差异。
+P1643 [Body Text] [phys:76] 四组均未触发预定禁止事实，两个纯不足题均正确拒答。引用格式采用单独审核。一跳关系的事实覆盖低于全文笔记及全部三元组，Token耗用更少，呈现本题集中的覆盖与成本取舍。全文笔记与全部三元组同样补充了资料中未覆盖的实验信息；上述比较同时改变信息量和组织方式，尚不能将覆盖变化单独归因于图结构。主比较与两项次要比较均未达到相应显著性标准，因此本文将其作为对证据组织方式的描述性观察。
+P1644 [Body Text] [phys:76] GPT模拟记录者、审批者、只读成员与非成员，操作隔离项目的Rust接口。三条记录均完成创建提审、因来源缺漏退回、补齐来源形成版本2、再提审及批准。原24场通过18场；当时只有三条批准笔记，资料未入库，六次问答返回409。在资料入库后的固定数据上，按原六条问答及三条只读创建请求补测9场，结果分列于表6-13。
+P1645 [caption] [phys:76] 表 6-13　角色真实接口验证
+P1646 [Body Text] [phys:] 任务
+P1647 [Body Text] [phys:] 原轮通过/计划
+P1648 [Body Text] [phys:76] 资料入库补测通过/计划
+P1649 [Body Text] [phys:] 创建并提审
+P1650 [Body Text] [phys:] 3/3
+P1651 [Body Text] [phys:] —
+P1652 [Body Text] [phys:] 审核退回
+P1653 [Body Text] [phys:] 3/3
+P1654 [Body Text] [phys:] —
+P1655 [Body Text] [phys:] 修改并再提审
+P1656 [Body Text] [phys:] 3/3
+P1657 [Body Text] [phys:] —
+P1658 [Body Text] [phys:] 批准修订
+P1659 [Body Text] [phys:] 3/3
+P1660 [Body Text] [phys:] —
+P1661 [Body Text] [phys:] 样本条件问答
+P1662 [Body Text] [phys:] 0/3
+P1663 [Body Text] [phys:] 2/3
+P1664 [Body Text] [phys:76] 抗体参数资料不足问答
+P1665 [Body Text] [phys:] 0/3
+P1666 [Body Text] [phys:] 3/3
+P1667 [Body Text] [phys:] 只读写入拒绝
+P1668 [Body Text] [phys:] 3/3
+P1669 [Body Text] [phys:] 3/3
+P1670 [Body Text] [phys:] 非成员读取拒绝
+P1671 [Body Text] [phys:] 3/3
+P1672 [Body Text] [phys:] —
+P1673 [Body Text] [phys:76] 补测通过8/9。六次查询均返回DeepSeek回答，第一次事实问答因fallback=needs_review且未通过引用审核而失败，其余两次通过；三次资料不足回答符合原不足规则，均返回needs_review且未通过引用审核。四个响应记录了内部引用修复。
+P1674 [Body Text] [phys:76] 关系抽取补充测试于2026年10月10日在当前Rust后端执行。从三份公开iGEM英文实验日记按PDF阅读顺序各取最先四个合格的已执行日期单元，正文长度为60—2500字符、至少记有两个明确实验事实；最终12条共6735字符。仅修复排版空白，保留英文原文。参考标注、复核与操作终点边界裁决均由GPT子代理在读取系统输出前完成，形成74条内容关系：试剂39条、仪器2条、样本27条、结果6条。
+P1675 [Body Text] [phys:77] 每条日记设置两个配对条件：正文条件仅提供原文，固定字段为空；字段条件正文为空，将参考标签直接填入正确字段数组，用于检验已知标签的关系映射。另以原四条合成笔记及其40条内容参考关系作回归。协议、输入、参考与评分代码在首次导入前冻结；测试期间保持抽取规则不变。三个项目共28条笔记分别经过创建、提交、批准与单笔记建图，再逐条重建一次。字段对照不计为系统自动提取字段的成绩，配对条件和重建也不增加独立日记数量。
+P1676 [Body Text] [phys:77] 表6-14只统计四类内容关系。新日记中10条含目标参考关系，2条仅含目标schema外的操作；正文条件未抽出74条参考中的任何一条，10条正例均不完全匹配。字段条件有9条正例完全匹配，加上两条空参考共11/12；旧样例回归完全匹配3/4。
+P1677 [caption] [phys:77] 表 6-14　当前Rust关系抽取补充测试的内容关系结果
+P1678 [Compact] [phys:] 输入条件
+P1679 [Compact] [phys:] TP
+P1680 [Compact] [phys:] FP
+P1681 [Compact] [phys:] FN
+P1682 [Compact] [phys:] 精确率
+P1683 [Compact] [phys:] 召回率
+P1684 [Compact] [phys:] F1
+P1685 [Compact] [phys:77] 自然正文（12条）
+P1686 [Compact] [phys:] 0
+P1687 [Compact] [phys:] 0
+P1688 [Compact] [phys:] 74
+P1689 [Compact] [phys:] —
+P1690 [Compact] [phys:] 0.00%
+P1691 [Compact] [phys:] 0.00%
+P1692 [Compact] [phys:77] 正确字段对照（12条）
+P1693 [Compact] [phys:] 73
+P1694 [Compact] [phys:] 3
+P1695 [Compact] [phys:] 1
+P1696 [Compact] [phys:] 96.05%
+P1697 [Compact] [phys:] 98.65%
+P1698 [Compact] [phys:] 97.33%
+P1699 [Compact] [phys:77] 旧样例回归（4条）
+P1700 [Compact] [phys:] 40
+P1701 [Compact] [phys:] 1
+P1702 [Compact] [phys:] 0
+P1703 [Compact] [phys:] 97.56%
+P1704 [Compact] [phys:] 100.00%
+P1705 [Compact] [phys:] 98.77%
+P1706 [Body Text] [phys:77] 正文、字段及回归条件的三类元数据关系分别匹配36/36、36/36和12/12，均无误抽或漏抽；这84条关系由笔记属性及业务身份建立，另行统计。旧样例若合并七类关系，当前Rust回归为TP=52、FP=1、FN=0，精确率98.11%、召回率100.00%、F1为99.05%。正文条件无预测，精确率以“—”表示未定义。28条笔记重建后的关系集合均与首次输出一致。
+P1707 [Body Text] [phys:77] 字段条件的误差集中在一条样本：plates from Madina, Taylor, and Janella’s transformation on July 5th被按逗号拆为三个标签，产生3条误抽并漏掉完整名称。旧qPCR样例的正文“cDNA样本1、2、阴性对照”再次产生裸数字“2”，增加1条误抽；完整的“cDNA样本2”已由固定字段提供。
+P1708 [Body Text] [phys:77] 本批英文自然日记采用叙述式表达，没有触发当前实现依赖的试剂、仪器、样本与结果标签规则。结果表明，预先整理字段后的映射与自然正文抽取具有不同表现；固定样例的归档100.00%不能用于估计自然正文抽取能力。本轮参考为AI辅助标注，测试范围为上述12条英文日记，中文自然正文需另行评价。
+P1709 [heading 3] [phys:] 6.7 本章小结
+P1710 [First Paragraph] [phys:78] 本章报告功能与安全验证、归档实验及Rust补充测试。公开英文日记的自然正文未抽出目标内容关系，正确字段对照与旧样例回归分别出现名称切分错误；元数据建图保持一致。问答、固定任务与计划覆盖实验分别分析任务完成、证据支持和业务约束。
+P1711 [heading 1] [phys:7,79] 第七章 总结与展望
+P1712 [heading 2] [phys:] 7.1 工作总结
+P1713 [First Paragraph] [phys:79] 本文在ELN记录、权限、版本和审核等已有管理能力基础上，实现了审核状态与项目图谱、资料检索及辅助操作的衔接，并保存问答来源和日志。知识组织采用结构化字段、明确类型标记及领域规则，补测支持规则输入下的字段和元数据映射；本批英文自然正文的目标关系全部漏抽。该结果不能推广为所有自然语言记录的表现，中文自然正文仍待独立评价。
+P1714 [Body Text] [phys:79] 早期原型中，一跳关系注入增加了要点完成数，在关系型与追溯型问题上较明显；词项、列举、指代和聚合仍有不足。范围展开后的语义评价显示，主张及引用支持的配对区间跨零，支持改善仍不确定。当前Rust四组对照中，一跳关系相对资料检索的事实覆盖较高，但题级主检验未达到显著性标准；相对全文笔记与全部三元组，其事实覆盖较低、Token耗用较少，两项次要比较也未达到显著性标准。这些结果呈现内部题集中的覆盖与成本取舍，尚未确证图结构的独立增益。
+P1715 [heading 2] [phys:] 7.2 研究贡献
+P1716 [Body Text] [phys:79] （1）构建审核驱动的知识更新与计划覆盖核对机制。在字段、类型标记及领域规则输入条件下，关联项目、已审核笔记来源和独立计划，按类型与规范名生成覆盖清单，提供审核状态与知识利用流程衔接的具体实现。
+P1717 [Body Text] [phys:79] （2）设计资料与直接关系联合检索及来源回查方法，以编号和图谱交互连接回答与记录，并设置全文笔记及全部三元组对照，分析事实覆盖与生成成本。其贡献是受业务约束的证据组织和来源回查实现，现有结果尚不足以证明图结构相对其他信息补充方式的独立收益。
+P1718 [Body Text] [phys:79] （3）实现受控辅助：固定任务读取已审核证据，工具按固定项目及当前授权执行，高风险动作经人工确认；业务数据库变化、审计、执行键和确认完成状态统一提交，运行与审计记录支持回查。该事务保证限定于数据库效果，外部嵌入请求及费用仍可能在失败重试时重复。
+P1719 [heading 2] [phys:7,79] 7.3 不足与展望
+P1720 [First Paragraph] [phys:79] （1）改进抽取与标注。12条英文日记的74条AI参考关系中，自然正文条件全部漏抽，正确字段条件仍有名称切分错误。现有知识组织依赖结构化字段、明确类型标记及领域规则，通用自然正文抽取目标尚未实现。后续完善规则，另取中英文记录，经人工复核参考后分别验证，不将本批英文结果推广至中文记录。
+P1721 [Body Text] [phys:80] （2）扩充样本并统一评价。旧20题单次生成、事后评分，修复前3题含误抽关系；新12题各重复三次。历史五方法批次未绑定代码revision，只作归档描述性比较；其封闭集计分含非赢家样本名的输出惩罚。GPT为未经校准的单次评价，与DeepSeek RAGAS指标不同，旧20题的引用支持还条件于范围展开；另两种RAG尚未自动评分。后续统一指标，扩充题集并开展多模型重复评价，报告一致性与失败。
+P1722 [Body Text] [phys:80] （3）改进复杂检索与证据支持。一跳检索难以处理指代、时间、计数与聚合，归档评价中召回提高而忠实度下降。后续完善中文匹配、分组聚合与固定任务逐结论核验，在相同语料、预算和规则下比较有限多跳、GraphRAG及LightRAG。
+P1723 [Body Text] [phys:80] （4）补充异常处理与性能评价。继续对合并冲突、主动推送、跨项目数量隔离和上游失败写入开展专项测试，完善优先级、预警与事件记录。匹配实体最近更新间隔已明确为维护时间信号；若需评价新增计划覆盖的停滞，应另定义覆盖变化事件与零覆盖计时起点，并在明确规模和并发条件下重新观测性能。
+P1724 [heading 1] [phys:] 致谢
+P1725 [Body Text] [phys:81] 论文完成之际，谨向在学习与研究过程中给予我帮助的人表达感谢。首先感谢陆洲和孙明斋两位老师在选题、研究设计与论文写作中给予的指导。围绕电子实验笔记系统展开研究时，我反复梳理研究问题、系统设计与论证依据之间的关系。在这一过程中，我逐渐认识到，工程类论文既要说明系统做了什么，也要交代设计所回应的需求，以及已有材料能够支持怎样的结论。两位导师的指导伴随这一思考和写作过程，在此致以诚挚谢意。
+P1726 [Body Text] [phys:81] 感谢学院相关老师和导员刘燕在学习与研究过程中提供的帮助。研究工作需要持续积累知识，也需要学习如何把具体问题说清楚、把不同方法的适用范围辨明白。论文写作中的每一次回顾，都让我更加重视严谨表达、审慎判断和对问题本身的关注。老师们给予的帮助与启发，是我完成这一阶段学习的重要支持。
+P1727 [Body Text] [phys:81] 感谢刘辉、陆一松等同学在学术交流中的支持。交流使我有机会从不同角度梳理研究思路与论文表达。感谢大家在学习和研究中的相互陪伴，这份支持使论文写作过程不再只是独自面对问题与修改。
+P1728 [Body Text] [phys:81] 感谢家人的理解与陪伴。完成研究和论文需要持续投入时间，也难免经历挫折。家人的支持使我能够安心完成这一阶段的学习与写作。最后，感谢所有曾关心和帮助过我的人。
+P1729 [Body Text] [phys:81] 最后，写在学生时代的最后一句：会当凌绝顶，一览众山小。
+P1730 [heading 1] [phys:] 参考文献
+P1731 [First Paragraph] [phys:82] [1] Wilkinson M D, Dumontier M, Aalbersberg I J, et al. The FAIR Guiding Principles for scientific data management and stewardship[J]. Scientific Data, 2016, 3: 160018.
+P1732 [Body Text] [phys:82] [2] Barillari C, Ottoz D S M, Fuentes-Serna J M, et al. openBIS ELN-LIMS: an open-source database for academic laboratories[J]. Bioinformatics, 2016, 32(4): 638-640.
+P1733 [Body Text] [phys:82] [3] Buonsanti R. Electronic Lab Notebooks for Materials Synthesis[J]. Chemistry of Materials, 2023, 35(3): 805-806. DOI: 10.1021/acs.chemmater.3c00019.
+P1734 [Body Text] [phys:82] [4] 中国科学院. “电子实验记录本”应用解决科学实验数据规范和溯源问题[EB/OL]. 2023.
+P1735 [Body Text] [phys:82] [5] Schröder M, Biskup T. LabInform ELN: A Lightweight and Flexible Electronic Laboratory Notebook for Academic Research Based on the Open-Source Software DokuWiki[EB/OL]. ChemRxiv, 2023.
+P1736 [Body Text] [phys:82] [6] Vandendorpe J, Adam B, Wilbrandt J, et al. Ten Simple Rules for Implementing Electronic Lab Notebooks (ELNs)[J]. PLOS Computational Biology, 2024, 20(6): e1012170.
+P1737 [Body Text] [phys:82] [7] Higgins S G, Nogiwa-Valdez A A, Stevens M M. Considerations for Implementing Electronic Laboratory Notebooks in an Academic Research Environment[J]. Nature Protocols, 2022, 17: 179-189.
+P1738 [Body Text] [phys:82] [8] Chen S H, Garcia C B, Lazear E, et al. Implementation of electronic lab notebooks (ELNs) in science laboratory classes[J]. Discover Education, 2024, 3(1): 70.
+P1739 [Body Text] [phys:82] [9] Lewis P, Perez E, Piktus A, et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks[C]//Advances in Neural Information Processing Systems. 2020, 33: 9459-9474.
+P1740 [Body Text] [phys:82] [10] Gao Y, Xiong Y, Gao X, et al. Retrieval-Augmented Generation for Large Language Models: A Survey[EB/OL]. arXiv:2312.10997, 2023.
+P1741 [Body Text] [phys:82] [11] Gupta S, Ranjan R, Singh S N. A Comprehensive Survey of Retrieval-Augmented Generation (RAG): Evolution, Current Landscape and Future Directions[EB/OL]. arXiv:2410.12837, 2024.
+P1742 [Body Text] [phys:82] [12] Zhou Y, Liu Y, Li X, et al. Trustworthiness in Retrieval-Augmented Generation Systems: A Survey[EB/OL]. arXiv:2409.10102v1, 2024.
+P1743 [Body Text] [phys:82] [13] 李子骏, 肖辉, 李雪峰. 面向知识密集型任务的检索增强生成技术综述[J]. 微电子学与计算机, 2025, 42(10): 48-65.
+P1744 [Body Text] [phys:82] [14] Asai A, Wu Z, Wang Y, et al. Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection[C]//ICLR. 2024.
+P1745 [Body Text] [phys:83] [15] Es S, James J, Espinosa Anke L, et al. RAGAS: Automated Evaluation of Retrieval Augmented Generation[C]//EACL 2024 Demo.
+P1746 [Body Text] [phys:83] [16] Hogan A, Blomqvist E, Cochez M, et al. Knowledge Graphs[J]. ACM Computing Surveys, 2021, 54(4): 1-37.
+P1747 [Body Text] [phys:83] [17] Ji S, Pan S, Cambria E, et al. A Survey on Knowledge Graphs: Representation, Acquisition, and Applications[J]. IEEE Transactions on Neural Networks and Learning Systems, 2021, 33(2): 494-514.
+P1748 [Body Text] [phys:83] [18] Trajanoska M, Stojanov R, Trajanov D. Enhancing Knowledge Graph Construction Using Large Language Models[EB/OL]. arXiv:2305.04676, 2023.
+P1749 [Body Text] [phys:83] [19] Bai X, He S, Li Y, et al. Construction of a Knowledge Graph for Framework Material Enabled by Large Language Models and Its Application[J]. npj Computational Materials, 2025, 11: 51. DOI: 10.1038/s41524-025-01540-6.
+P1750 [Body Text] [phys:83] [20] Lairgi Y, Moncla L, Cazabet R, Benabdeslem K, Cléau P. iText2KG: Incremental Knowledge Graphs Construction Using Large Language Models[C]//WISE 2024.
+P1751 [Body Text] [phys:83] [21] Linders J, Tomczak J M. Knowledge Graph-extended Retrieval Augmented Generation for Question Answering[EB/OL]. arXiv:2504.08893, 2025.
+P1752 [Body Text] [phys:83] [22] Ma C, Chen Y, Wu T, et al. Large Language Models Meet Knowledge Graphs for Question Answering: Synthesis and Opportunities[C]//EMNLP 2025.
+P1753 [Body Text] [phys:83] [23] Edge D, Trinh H, Cheng N, et al. From Local to Global: A Graph RAG Approach to Query-Focused Summarization[EB/OL]. arXiv:2404.16130, 2024.
+P1754 [Body Text] [phys:83] [24] Guo Z, Xia L, Yu Y, et al. LightRAG: Simple and Fast Retrieval-Augmented Generation[EB/OL]. arXiv:2410.05779, 2024.
+P1755 [Body Text] [phys:83] [25] Yao S, Zhao J, Yu D, et al. ReAct: Synergizing Reasoning and Acting in Language Models[EB/OL]. arXiv:2210.03629, 2022.
+P1756 [Body Text] [phys:83] [26] Schick T, Dwivedi-Yu J, Dessì R, et al. Toolformer: Language Models Can Teach Themselves to Use Tools[C]//NeurIPS. 2023.
+P1757 [Body Text] [phys:83] [27] Wang L, Ma C, Feng X, et al. A Survey on Large Language Model based Autonomous Agents[J]. Frontiers of Computer Science, 2024, 18: 186345.
+P1758 [Body Text] [phys:83] [28] Bran A M, Cox S, Schilter O, et al. Augmenting large language models with chemistry tools[J]. Nature Machine Intelligence, 2024, 6: 525-535.
+P1759 [Body Text] [phys:83] [29] Boiko D A, MacKnight R, Kline B, et al. Autonomous chemical research with large language models[J]. Nature, 2023, 624: 570-578.
+P1760 [Body Text] [phys:83] [30] 国务院办公厅. 科学数据管理办法：国办发〔2018〕17 号[Z]. 2018.
+P1761 [Body Text] [phys:84] [31] 黎建辉, 沈志宏, 孟小峰. 科学大数据管理：概念、技术与系统[J]. 计算机研究与发展, 2017, 54(2): 235-248.
+P1762 [Body Text] [phys:84] [32] 唐燕花. 高校科研数据管理服务实践研究及建议[J]. 图书情报工作, 2016, 60(24): 130-138.
+P1763 [Body Text] [phys:84] [33] 刘兹恒, 曾丽莹. 我国高校科研数据管理与共享平台调研与比较分析[J]. 情报资料工作, 2017(6): 90-95.
+P1764 [Body Text] [phys:84] [34] 宋佳, 温亮明, 李洋. 科学数据共享 FAIR 原则：背景、内容及实践[J]. 情报资料工作, 2021, 42(1): 57-68.
+P1765 [Body Text] [phys:84] [35] 邢文明, 洪芳林, 李晓妍. 科学数据管理体系的二维视角——《科学数据管理办法》解读[J]. 图书情报工作, 2019, 63(23): 30-37.
+P1766 [Body Text] [phys:84] [36] 袁乐, 刘绍华, 王禹, 等. 大语言模型检索增强生成优化技术研究综述[J]. 计算机学报, 2026, 49(2): 383-423.
+P1767 [Body Text] [phys:84] [37] David R, Rybina A, Burel J M, et al. “Be Sustainable”: EOSC-Life Recommendations for Implementation of FAIR Principles in Life Science Data Handling[J]. The EMBO Journal, 2023, 42: e115008.
+P1768 [Body Text] [phys:84] [38] Groth P, Cousijn H, Clark T, et al. FAIR Data Reuse – the Path through Data Citation[J]. Data Intelligence, 2020, 2(1-2): 27-35.
+P1769 [Body Text] [phys:84] [39] Ashiq M, Usmani M H, Naeem M. A Systematic Literature Review on Research Data Management Practices and Services[J]. Global Knowledge, Memory and Communication, 2022, 71(8/9): 649-671.
+P1770 [Body Text] [phys:84] [40] Donner E K. Research Data Management Systems and the Organization of Universities and Research Institutes: A Systematic Literature Review[J]. Journal of Librarianship and Information Science, 2023, 55(1): 3-25.
+P1771 [Body Text] [phys:84] [41] 国家档案局, 科学技术部. 科学技术研究档案管理规定：国家档案局令第 15 号[Z]. 2020.
+P1772 [Body Text] [phys:84] [42] 中共中央办公厅, 国务院办公厅. 关于进一步加强科研诚信建设的若干意见[Z]. 2018.
+P1773 [Body Text] [phys:84] [43] 科技部等二十二部门. 科研失信行为调查处理规则：国科发监〔2022〕221 号[Z]. 2022.
+P1774 [Body Text] [phys:84] [44] Vaswani A, Shazeer N, Parmar N, et al. Attention Is All You Need[C]//NeurIPS. 2017.
+P1775 [Body Text] [phys:84] [45] 赵鑫, 李军毅, 周昆, 等. 大语言模型[M]. 北京: 高等教育出版社, 2024.
+P1776 [Body Text] [phys:84] [46] 陈慧敏, 刘知远, 孙茂松. 大语言模型时代的社会机遇与挑战[J]. 计算机研究与发展, 2024, 61(5): 1094-1103.
+P1777 [Body Text] [phys:84] [47] 韩毅, 刘扬, 金连文. 知识增强型预训练语言模型综述[J]. 计算机科学与探索, 2022, 16(7): 1439-1461.
+P1778 [Body Text] [phys:84] [48] Zhao W X, Zhou K, Li J, et al. A Survey of Large Language Models[EB/OL]. arXiv:2303.18223, 2023.
+P1779 [Body Text] [phys:85] [49] Gao S, Yen H, Yu M. Enabling Large Language Models to Generate Text with Citations[C]//EMNLP 2023.
+P1780 [Body Text] [phys:85] [50] Karpukhin V, Oguz B, Min S, et al. Dense Passage Retrieval for Open-Domain Question Answering[C]//EMNLP 2020.
+P1781 [Body Text] [phys:85] [51] Yan S Q, Gu J C, Zhu Y, et al. Corrective Retrieval Augmented Generation[EB/OL]. arXiv:2401.15884, 2024.
+P1782 [Body Text] [phys:85] [52] Yu H, Gan A, Zhang K, et al. Evaluation of Retrieval-Augmented Generation: A Survey[C]//CCF BigData 2024.
+P1783 [Body Text] [phys:85] [53] Friel R, Belyi M, Sanyal A. RAGBench: Explainable Benchmark for Retrieval-Augmented Generation Systems[EB/OL]. arXiv:2407.11005, 2024.
+P1784 [Body Text] [phys:85] [54] Saad-Falcon J, Khattab O, Potts C, et al. ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems[C]//NAACL 2024.
+P1785 [Body Text] [phys:85] [55] Chen J, Lin H, Han X, et al. Benchmarking Large Language Models in Retrieval-Augmented Generation[C]//AAAI 2024.
+P1786 [Body Text] [phys:85] [56] Gan A, Yu H, Zhang K, et al. Retrieval Augmented Generation Evaluation in the Era of Large Language Models: A Comprehensive Survey[EB/OL]. arXiv:2504.14891, 2025.
+P1787 [Body Text] [phys:85] [57] 姜毅, 王艺璇, 方浜毅, 等. 大语言模型安全与隐私风险综述[J]. 计算机研究与发展, 2025, 62(8): 1979-2018.
+P1788 [Body Text] [phys:85] [58] 刘峤, 李杨, 段宏, 等. 知识图谱构建技术综述[J]. 计算机研究与发展, 2016, 53(3): 582-600.
+P1789 [Body Text] [phys:85] [59] 漆桂林, 高桓, 吴天星. 知识图谱研究进展[J]. 情报工程, 2017, 3(1): 4-25.
+P1790 [Body Text] [phys:85] [60] 官赛萍, 靳小龙, 贾岩涛, 等. 面向知识图谱的知识推理研究进展[J]. 软件学报, 2018, 29(6): 1607-1625.
+P1791 [Body Text] [phys:85] [61] 张吉祥, 张祥森, 武长旭, 等. 知识图谱构建技术综述[J]. 计算机工程, 2022, 48(3): 23-37.
+P1792 [Body Text] [phys:85] [62] 杭婷婷, 冯钧, 陆佳民. 知识图谱构建技术：分类、调查与未来方向[J]. 计算机科学, 2021, 48(8): 1-11.
+P1793 [Body Text] [phys:85] [63] 田玲, 周东浩, 崔秀清, 等. 知识图谱综述——表示、构建、推理与知识超图理论[J]. 计算机应用, 2021, 41(8): 2161-2186.
+P1794 [Body Text] [phys:85] [64] 王萌, 王昊奋, 李博涵, 等. 新一代知识图谱关键技术综述[J]. 计算机研究与发展, 2022, 59(9): 1947-1962.
+P1795 [Body Text] [phys:85] [65] 王昊奋, 漆桂林, 陈华钧. 知识图谱：方法、实践与应用[M]. 北京: 电子工业出版社, 2019.
+P1796 [Body Text] [phys:85] [66] Pan S, Luo L, Wang Y, et al. Unifying Large Language Models and Knowledge Graphs: A Roadmap[J]. IEEE TKDE, 2024, 36(7): 3580-3599.
+P1797 [Body Text] [phys:85] [67] Zhu Y, Wang X, Chen J, et al. LLMs for Knowledge Graph Construction and Reasoning: Recent Capabilities and Future Opportunities[J]. World Wide Web, 2024, 27: 58.
+P1798 [Body Text] [phys:86] [68] 国家市场监督管理总局, 国家标准化管理委员会. GB/T 22239—2019 信息安全技术 网络安全等级保护基本要求[S]. 2019.
+P1799 [Body Text] [phys:86] [69] 国家市场监督管理总局, 国家标准化管理委员会. GB/T 25070—2019 信息安全技术 网络安全等级保护安全设计技术要求[S]. 2019.
+P1800 [Body Text] [phys:86] [70] 国家市场监督管理总局, 国家标准化管理委员会. GB/T 35273—2020 信息安全技术 个人信息安全规范[S]. 2020.
+P1801 [Body Text] [phys:86] [71] 国家市场监督管理总局, 国家标准化管理委员会. GB/T 37988—2019 信息安全技术 数据安全能力成熟度模型[S]. 2019.
+P1802 [Body Text] [phys:86] [72] 国家市场监督管理总局, 国家标准化管理委员会. GB/T 39786—2021 信息安全技术 信息系统密码应用基本要求[S]. 2021.
+P1803 [Body Text] [phys:86] [73] 全国人民代表大会常务委员会. 中华人民共和国数据安全法[Z]. 2021.
+P1804 [Body Text] [phys:86] [74] 全国人民代表大会常务委员会. 中华人民共和国个人信息保护法[Z]. 2021.
+P1805 [Body Text] [phys:86] [75] Robertson S, Zaragoza H. The probabilistic relevance framework: BM25 and beyond[J]. Foundations and Trends in Information Retrieval, 2009, 3(4): 333-389.
+P1806 [Body Text] [phys:86] [76] Cormack G V, Clarke C L A, Büttcher S. Reciprocal rank fusion outperforms condorcet and individual rank learning methods[C]//SIGIR 2009.
+P1807 [Body Text] [phys:86] [77] NCBI Gene Expression Omnibus (GEO). GSE111619: Poly(A)+ RNA-seq from H226 cells expressing doxycycline-inducible control and p63-targeting shRNAs[EB/OL]. https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE111619 [2026-09-27].
+P1808 [Body Text] [phys:86] [78] Zheng L, Chiang W L, Sheng Y, et al. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena[C]//NeurIPS 2023 Datasets and Benchmarks Track.
+P1809 [Body Text] [phys:86] [79] Yang C, Wu X, Lin Y, et al. GraphSearch: An Agentic Deep Searching Workflow for Graph Retrieval-Augmented Generation[EB/OL]. arXiv:2509.22009, 2025.
+P1810 [Body Text] [phys:86] [80] Peng B, Zhu Y, Liu Y, et al. Graph Retrieval-Augmented Generation: A Survey[EB/OL]. arXiv:2408.08921, 2024.
+P1811 [Body Text] [phys:86] [81] Fagerland M W, Lydersen S, Laake P. The McNemar test for binary matched-pairs data: mid-p and asymptotic are better than exact conditional[J]. BMC Medical Research Methodology, 2013, 13: 91. DOI: 10.1186/1471-2288-13-91.
+P1812 [Body Text] [phys:86] [82] Efron B. Bootstrap Methods: Another Look at the Jackknife[J]. The Annals of Statistics, 1979, 7(1): 1-26. DOI:10.1214/aos/1176344552.
+P1813 [Body Text] [phys:86] [83] Ernst M D. Permutation Methods: A Basis for Exact Inference[J]. Statistical Science, 2004, 19(4): 676-685. DOI:10.1214/088342304000000396.
+P1814 [Body Text] [phys:86] [84] Holm S. A Simple Sequentially Rejective Multiple Test Procedure[J]. Scandinavian Journal of Statistics, 1979, 6(2): 65-70.
+P1815 [Body Text] [phys:87] [85] eLabFTW. Experiments: eLabFTW Documentation, version 6.0[EB/OL]. https://doc.elabftw.net/docs/usage/user-guide/experiments/ [2026-10-11].
+P1816 [heading 1] [phys:7,88] 附录 A　RAG 对照实验问题清单
+P1817 [First Paragraph] [phys:88] 本附录给出对照实验（实验二）使用的 20 个问题，完整清单见表 A-1。每个问题分别由普通 RAG 和图谱增强 RAG 回答，共形成 40 条配对记录。规则化任务完成判定依据每题答案要点机械计算。表中 Q05 与 Q20 的 † 表示仅不纳入证据覆盖率分析，仍计入 20 题任务完成率。
+P1818 [caption] [phys:88] 表 A-1　RAG 对照实验问题清单
+P1819 [Compact] [phys:] 编号
+P1820 [Compact] [phys:] 问题类型
+P1821 [Compact] [phys:] 实验问题
+P1822 [Compact] [phys:] Q01
+P1823 [Compact] [phys:] 资料事实型
+P1824 [Compact] [phys:88] PCR 条件优化实验的退火温度优化依据是什么？
+P1825 [Compact] [phys:] Q02
+P1826 [Compact] [phys:] 资料事实型
+P1827 [Compact] [phys:88] PCR 体系配置和循环条件主要来自哪份资料？
+P1828 [Compact] [phys:] Q03
+P1829 [Compact] [phys:] 资料事实型
+P1830 [Compact] [phys:88] CCK-8 检测步骤和读数要求主要来自哪份资料？
+P1831 [Compact] [phys:] Q04
+P1832 [Compact] [phys:] 资料事实型
+P1833 [Compact] [phys:88] 细胞活力检测实验中读数和统计应关注什么？
+P1834 [Compact] [phys:] Q05†
+P1835 [Compact] [phys:] 资料事实型
+P1836 [Compact] [phys:88] 项目资料库中哪些资料已经同步到知识库？
+P1837 [Compact] [phys:] Q06
+P1838 [Compact] [phys:] 实验对象关系型
+P1839 [Compact] [phys:88] PCR 条件优化实验使用了哪些试剂？
+P1840 [Compact] [phys:] Q07
+P1841 [Compact] [phys:] 实验对象关系型
+P1842 [Compact] [phys:88] PCR 条件优化实验使用了哪些样本？
+P1843 [Compact] [phys:] Q08
+P1844 [Compact] [phys:] 实验对象关系型
+P1845 [Compact] [phys:88] 细胞活力检测实验使用了哪些试剂和仪器？
+P1846 [Compact] [phys:] Q09
+P1847 [Compact] [phys:] 实验对象关系型
+P1848 [Compact] [phys:88] Western Blot 蛋白表达验证使用了哪些试剂？
+P1849 [Compact] [phys:] Q10
+P1850 [Compact] [phys:] 实验对象关系型
+P1851 [Compact] [phys:88] Western Blot 蛋白表达验证使用了哪些仪器？
+P1852 [Compact] [phys:] Q11
+P1853 [Compact] [phys:] 过程追溯型
+P1854 [Compact] [phys:88] 退火温度 58℃ 条带最清晰这一结果来自哪条实验笔记？
+P1855 [Compact] [phys:] Q12
+P1856 [Compact] [phys:] 过程追溯型
+P1857 [Compact] [phys:88] 处理组细胞活力下降约 18% 这一结论来自哪条实验笔记？
+P1858 [Compact] [phys:] Q13
+P1859 [Compact] [phys:] 过程追溯型
+P1860 [Compact] [phys:88] 处理组目标蛋白表达降低这一结果来自哪条实验笔记？
+P1861 [Compact] [phys:] Q14
+P1862 [Compact] [phys:] 过程追溯型
+P1863 [Compact] [phys:88] 三条实验笔记分别由谁创建？
+P1864 [Compact] [phys:] Q15
+P1865 [Compact] [phys:] 过程追溯型
+P1866 [Compact] [phys:88] 当前项目包含哪些已审核实验笔记？
+P1867 [Compact] [phys:] Q16
+P1868 [Compact] [phys:] 综合总结型
+P1869 [Compact] [phys:88] 2026 年 6 月 3 日至 6 月 5 日项目完成了哪些实验？
+P1870 [Compact] [phys:] Q17
+P1871 [Compact] [phys:] 综合总结型
+P1872 [Compact] [phys:88] 这三项实验分别产生了哪些主要结果？
+P1873 [Compact] [phys:] Q18
+P1874 [Compact] [phys:] 综合总结型
+P1875 [Compact] [phys:88] 项目中涉及的主要试剂可按实验类型如何归纳？
+P1876 [Compact] [phys:] Q19
+P1877 [Compact] [phys:] 综合总结型
+P1878 [Compact] [phys:88] 项目中涉及的主要仪器可按实验类型如何归纳？
+P1879 [Compact] [phys:] Q20†
+P1880 [Compact] [phys:] 综合总结型
+P1881 [Compact] [phys:88] 根据当前实验记录，项目下一步可重点复核哪些结果？
+P1882 [heading 1] [phys:7,89] 附录 B　知识图谱抽取参考关系集
+P1883 [heading 2] [phys:7,89] B.1 参考集构成与匹配判定
+P1884 [First Paragraph] [phys:89] 本附录列出迁移前Python原型核验所用的四条合成笔记及52条参考关系，其中40条为内容关系、12条为元数据关系；对应结果见表6-5。当前Rust沿用这些参考概念并分别计分，逐字计算标签取自冻结附件；新日记参考及逐条判定见6.6节和附录D.2。各表题注标明笔记与源实体；首行源实体为“论文内部测试项目”，其余关系以题注中的笔记为源实体。
+P1885 [heading 2] [phys:7,89] B.2 参考关系完整清单
+P1886 [caption] [phys:89] 表 B-1(a)　PCR 条件优化（源实体：PCR 条件优化实验）
+P1887 [Compact] [phys:] 序号
+P1888 [Compact] [phys:] 关系
+P1889 [Compact] [phys:] 目标实体
+P1890 [Compact] [phys:] 1
+P1891 [Compact] [phys:] 包含笔记
+P1892 [Compact] [phys:17,26,43,50,88,89] PCR 条件优化实验
+P1893 [Compact] [phys:] 2
+P1894 [Compact] [phys:] 创建者
+P1895 [Compact] [phys:] 系统管理员
+P1896 [Compact] [phys:] 3
+P1897 [Compact] [phys:] 实验类型
+P1898 [Compact] [phys:] PCR
+P1899 [Compact] [phys:] 4
+P1900 [Compact] [phys:] 使用试剂
+P1901 [Compact] [phys:26,27,43,50,89] Taq DNA Polymerase
+P1902 [Compact] [phys:] 5
+P1903 [Compact] [phys:] 使用试剂
+P1904 [Compact] [phys:] dNTP
+P1905 [Compact] [phys:] 6
+P1906 [Compact] [phys:] 使用试剂
+P1907 [Compact] [phys:] MgCl2
+P1908 [Compact] [phys:] 7
+P1909 [Compact] [phys:] 使用试剂
+P1910 [Compact] [phys:] 模板 DNA
+P1911 [Compact] [phys:] 8
+P1912 [Compact] [phys:] 使用仪器
+P1913 [Compact] [phys:43,89] PCR Thermal Cycler
+P1914 [Compact] [phys:] 9
+P1915 [Compact] [phys:] 使用样本
+P1916 [Compact] [phys:] 样本 A
+P1917 [Compact] [phys:] 10
+P1918 [Compact] [phys:] 使用样本
+P1919 [Compact] [phys:] 样本 B
+P1920 [Compact] [phys:] 11
+P1921 [Compact] [phys:] 产生结果
+P1922 [Compact] [phys:43,89] 退火温度 58℃ 时扩增条带最清晰，非特异性条带减少
+P1923 [Compact] [phys:] 12
+P1924 [Compact] [phys:] 产生结果
+P1925 [Compact] [phys:89] 58℃ 条件下条带清晰
+P1926 [caption] [phys:90] 表 B-1(b)　细胞活力检测（源实体：细胞活力检测实验）
+P1927 [Compact] [phys:] 序号
+P1928 [Compact] [phys:] 关系
+P1929 [Compact] [phys:] 目标实体
+P1930 [Compact] [phys:] 13
+P1931 [Compact] [phys:] 包含笔记
+P1932 [Compact] [phys:43,50,88,90] 细胞活力检测实验
+P1933 [Compact] [phys:] 14
+P1934 [Compact] [phys:] 创建者
+P1935 [Compact] [phys:] 系统管理员
+P1936 [Compact] [phys:] 15
+P1937 [Compact] [phys:] 实验类型
+P1938 [Compact] [phys:] 细胞培养
+P1939 [Compact] [phys:] 16
+P1940 [Compact] [phys:] 使用试剂
+P1941 [Compact] [phys:] CCK-8
+P1942 [Compact] [phys:] 17
+P1943 [Compact] [phys:] 使用试剂
+P1944 [Compact] [phys:] PBS
+P1945 [Compact] [phys:] 18
+P1946 [Compact] [phys:] 使用试剂
+P1947 [Compact] [phys:] DMEM 培养基
+P1948 [Compact] [phys:] 19
+P1949 [Compact] [phys:] 使用仪器
+P1950 [Compact] [phys:] 酶标仪
+P1951 [Compact] [phys:] 20
+P1952 [Compact] [phys:] 使用仪器
+P1953 [Compact] [phys:] CO2 培养箱
+P1954 [Compact] [phys:] 21
+P1955 [Compact] [phys:] 使用样本
+P1956 [Compact] [phys:] 处理组细胞
+P1957 [Compact] [phys:] 22
+P1958 [Compact] [phys:] 使用样本
+P1959 [Compact] [phys:] 对照组细胞
+P1960 [Compact] [phys:] 23
+P1961 [Compact] [phys:] 产生结果
+P1962 [Compact] [phys:43,50,90] 处理组细胞活力较对照组下降约 18%，重复孔结果稳定
+P1963 [Compact] [phys:] 24
+P1964 [Compact] [phys:] 产生结果
+P1965 [Compact] [phys:88,90] 细胞活力下降约 18%
+P1966 [caption] [phys:90] 表 B-1(c)　Western Blot（源实体：Western Blot 蛋白表达验证）
+P1967 [Compact] [phys:] 序号
+P1968 [Compact] [phys:] 关系
+P1969 [Compact] [phys:] 目标实体
+P1970 [Compact] [phys:] 25
+P1971 [Compact] [phys:] 包含笔记
+P1972 [Compact] [phys:17,43,88,90] Western Blot 蛋白表达验证
+P1973 [Compact] [phys:] 26
+P1974 [Compact] [phys:] 创建者
+P1975 [Compact] [phys:] 系统管理员
+P1976 [Compact] [phys:] 27
+P1977 [Compact] [phys:] 实验类型
+P1978 [Compact] [phys:17,26,43,60,66,73,88,90,108] Western Blot
+P1979 [Compact] [phys:] 28
+P1980 [Compact] [phys:] 使用试剂
+P1981 [Compact] [phys:] RIPA 裂解液
+P1982 [Compact] [phys:] 29
+P1983 [Compact] [phys:] 使用试剂
+P1984 [Compact] [phys:] BCA 试剂盒
+P1985 [Compact] [phys:] 30
+P1986 [Compact] [phys:] 使用试剂
+P1987 [Compact] [phys:] 一抗
+P1988 [Compact] [phys:] 31
+P1989 [Compact] [phys:] 使用试剂
+P1990 [Compact] [phys:] 二抗
+P1991 [Compact] [phys:] 32
+P1992 [Compact] [phys:] 使用仪器
+P1993 [Compact] [phys:] 电泳仪
+P1994 [Compact] [phys:] 33
+P1995 [Compact] [phys:] 使用仪器
+P1996 [Compact] [phys:] 转膜仪
+P1997 [Compact] [phys:] 34
+P1998 [Compact] [phys:] 使用仪器
+P1999 [Compact] [phys:] 凝胶成像系统
+P2000 [Compact] [phys:] 35
+P2001 [Compact] [phys:] 使用样本
+P2002 [Compact] [phys:] 蛋白样本 P1
+P2003 [Compact] [phys:] 36
+P2004 [Compact] [phys:] 使用样本
+P2005 [Compact] [phys:] 蛋白样本 P2
+P2006 [Compact] [phys:] 37
+P2007 [Compact] [phys:] 产生结果
+P2008 [Compact] [phys:43,90] 目标蛋白在处理组表达降低，内参条带稳定
+P2009 [Compact] [phys:] 38
+P2010 [Compact] [phys:] 产生结果
+P2011 [Compact] [phys:88,90] 处理组目标蛋白表达降低
+P2012 [caption] [phys:91] 表 B-1(d)　qPCR 定量验证（源实体：qPCR 定量验证实验）
+P2013 [Compact] [phys:] 序号
+P2014 [Compact] [phys:] 关系
+P2015 [Compact] [phys:] 目标实体
+P2016 [Compact] [phys:] 39
+P2017 [Compact] [phys:] 包含笔记
+P2018 [Compact] [phys:43,91] qPCR 定量验证实验
+P2019 [Compact] [phys:] 40
+P2020 [Compact] [phys:] 创建者
+P2021 [Compact] [phys:] 系统管理员
+P2022 [Compact] [phys:] 41
+P2023 [Compact] [phys:] 实验类型
+P2024 [Compact] [phys:] PCR
+P2025 [Compact] [phys:] 42
+P2026 [Compact] [phys:] 使用试剂
+P2027 [Compact] [phys:43,91] SYBR Green Master Mix
+P2028 [Compact] [phys:] 43
+P2029 [Compact] [phys:] 使用试剂
+P2030 [Compact] [phys:] cDNA 模板
+P2031 [Compact] [phys:] 44
+P2032 [Compact] [phys:] 使用试剂
+P2033 [Compact] [phys:] 引物对
+P2034 [Compact] [phys:] 45
+P2035 [Compact] [phys:] 使用试剂
+P2036 [Compact] [phys:] 无酶水
+P2037 [Compact] [phys:] 46
+P2038 [Compact] [phys:] 使用仪器
+P2039 [Compact] [phys:43,91] 荧光定量 PCR 仪
+P2040 [Compact] [phys:] 47
+P2041 [Compact] [phys:] 使用仪器
+P2042 [Compact] [phys:] 微量分光光度计
+P2043 [Compact] [phys:] 48
+P2044 [Compact] [phys:] 使用样本
+P2045 [Compact] [phys:] cDNA 样本 1
+P2046 [Compact] [phys:] 49
+P2047 [Compact] [phys:] 使用样本
+P2048 [Compact] [phys:] cDNA 样本 2
+P2049 [Compact] [phys:] 50
+P2050 [Compact] [phys:] 使用样本
+P2051 [Compact] [phys:] 阴性对照
+P2052 [Compact] [phys:] 51
+P2053 [Compact] [phys:] 产生结果
+P2054 [Compact] [phys:43,91] 目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰
+P2055 [Compact] [phys:] 52
+P2056 [Compact] [phys:] 产生结果
+P2057 [Compact] [phys:91] 目标基因差异表达约 2.3 倍
+P2058 [heading 2] [phys:7,91] B.3 数据分类与完整表结构设计
+P2059 [caption] [phys:91,92] 表 B-2　数据分类与字段约束符号说明
+P2060 [Compact] [phys:] 分类或符号
+P2061 [Compact] [phys:] 含义
+P2062 [Compact] [phys:] 数据域与表号
+P2063 [Compact] [phys:91] 数据域及B-3—B-45表名对应见表4-4。
+P2064 [Compact] [phys:91] NN、NULL、PK、UQ
+P2065 [Compact] [phys:91] NN为非空，NULL为可空；PK为主键，UQ为唯一约束。同表多个PK字段共同组成表后列明的组合主键。
+P2066 [Compact] [phys:] FKn、C
+P2067 [Compact] [phys:91] FKn指向表B-n的id字段，C表示ON DELETE CASCADE；未标C的外键采用NO ACTION。只有实际数据库外键才标FK。
+P2068 [Compact] [phys:91] DF、SEQ、ID
+P2069 [Compact] [phys:91] DF=值表示数据库默认值，SEQ表示序列自增，ID表示GENERATED BY DEFAULT AS IDENTITY；未列DF表示无显式DEFAULT（ID仍自增）。可空字段未提供值时可为NULL。
+P2070 [Compact] [phys:] DF=SEQ
+P2071 [Compact] [phys:91] DF=SEQ对应nextval序列；integer列序列名为public.<表名>_id_seq，bigserial自动创建序列。其余DF保留实际取值，省略由字段类型已说明的SQL类型转换。
+P2072 [Compact] [phys:91] UQ(...)、PK(...)、CK(...)
+P2073 [Compact] [phys:91] UQ(...)、PK(...)与CK(...)分别列出组合唯一、组合主键及CHECK条件；WHERE表示该唯一索引仅对满足条件的记录生效。
+P2074 [Compact] [phys:91] integer、bigint等
+P2075 [Compact] [phys:91] integer、bigint为32、64位整数；timestamptz含时区。vector(d)的d取EMBEDDING_DIMENSION：基线1024，默认512，bge-m3为1024。
+P2076 [Compact] [phys:91] 逻辑引用与兼容表
+P2077 [Compact] [phys:91] “逻辑”表示逻辑引用而无数据库外键；多态来源与目标编号无单一表外键。dify_*为兼容字段名。group_projects为兼容表，alembic_version与rust_schema_versions为维护表。
+P2078 [Compact] [phys:91] Rust后端共43张表、430个字段。G01—G18为公共字段完整定义，题注G代码表示继承对应字段的全部属性；其余逐表列出。
+P2079 [caption] [phys:92] 表 B-2　数据分类与字段约束符号说明（续：公共字段完整定义）
+P2080 [Compact] [phys:] 定义码与字段名
+P2081 [Compact] [phys:] 类型
+P2082 [Compact] [phys:] 约束与默认
+P2083 [Compact] [phys:] 含义
+P2084 [Compact] [phys:92] G01 created_at
+P2085 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2086 [Compact] [phys:92,100,102,103] NN DF=now()
+P2087 [Compact] [phys:] 创建时间
+P2088 [Compact] [phys:] G02 id
+P2089 [Compact] [phys:] integer
+P2090 [Compact] [phys:92] NN PK DF=SEQ
+P2091 [Compact] [phys:] 编号
+P2092 [Compact] [phys:92] G03 updated_at
+P2093 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2094 [Compact] [phys:92,100,102,103] NN DF=now()
+P2095 [Compact] [phys:] 更新时间
+P2096 [Compact] [phys:92] G04 project_id
+P2097 [Compact] [phys:] integer
+P2098 [Compact] [phys:] NN FK7
+P2099 [Compact] [phys:] 项目编号
+P2100 [Compact] [phys:92] G05 user_id
+P2101 [Compact] [phys:] integer
+P2102 [Compact] [phys:] NN FK3
+P2103 [Compact] [phys:] 用户编号
+P2104 [Compact] [phys:92] G06 created_by
+P2105 [Compact] [phys:] integer
+P2106 [Compact] [phys:] NN FK3
+P2107 [Compact] [phys:] 创建用户编号
+P2108 [Compact] [phys:] G07 id
+P2109 [Compact] [phys:] integer
+P2110 [Compact] [phys:] NN PK ID
+P2111 [Compact] [phys:] 编号
+P2112 [Compact] [phys:92] G08 project_id
+P2113 [Compact] [phys:] integer
+P2114 [Compact] [phys:] NN FK7 C
+P2115 [Compact] [phys:] 项目编号
+P2116 [Compact] [phys:92] G09 status
+P2117 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2118 [Compact] [phys:] NN
+P2119 [Compact] [phys:] 业务状态
+P2120 [Compact] [phys:] G10 id
+P2121 [Compact] [phys:] uuid
+P2122 [Compact] [phys:] NN PK
+P2123 [Compact] [phys:] 编号
+P2124 [Compact] [phys:92] G11 session_id
+P2125 [Compact] [phys:] uuid
+P2126 [Compact] [phys:] NN FK34 C
+P2127 [Compact] [phys:] 智能体会话编号
+P2128 [Compact] [phys:92] G12 note_id
+P2129 [Compact] [phys:] integer
+P2130 [Compact] [phys:] NN FK11
+P2131 [Compact] [phys:] 笔记编号
+P2132 [Compact] [phys:92] G13 completed_at
+P2133 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2134 [Compact] [phys:] NULL
+P2135 [Compact] [phys:] 完成时间
+P2136 [Compact] [phys:92] G14 project_id
+P2137 [Compact] [phys:] integer
+P2138 [Compact] [phys:] NULL FK7
+P2139 [Compact] [phys:] 项目编号
+P2140 [Compact] [phys:92] G15 user_id
+P2141 [Compact] [phys:] integer
+P2142 [Compact] [phys:] NN FK3 C
+P2143 [Compact] [phys:] 用户编号
+P2144 [Compact] [phys:92] G16 expires_at
+P2145 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2146 [Compact] [phys:] NN
+P2147 [Compact] [phys:] 有效期截止时间
+P2148 [Compact] [phys:] G17 id
+P2149 [Compact] [phys:91,92] bigserial
+P2150 [Compact] [phys:92] NN PK DF=SEQ
+P2151 [Compact] [phys:] 编号
+P2152 [Compact] [phys:92] G18 arguments_hash
+P2153 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2154 [Compact] [phys:] NN
+P2155 [Compact] [phys:] 工具参数哈希
+P2156 [Compact] [phys:92] filecategory：NOTE_ATTACHMENT、KNOWLEDGE_DOCUMENT。
+P2157 [Compact] [phys:92] filestatus：UPLOADED、APPROVED、REJECTED、ARCHIVED。
+P2158 [Compact] [phys:92] notestatus：DRAFT、SUBMITTED、APPROVED、RETURNED、ARCHIVED、VOIDED。
+P2159 [Compact] [phys:92] projectrole：OWNER、REVIEWER、MEMBER、VIEWER。
+P2160 [Compact] [phys:92] projectstatus：ACTIVE、ARCHIVED。
+P2161 [Compact] [phys:92] userrole：SUPER_ADMIN、PI、GROUP_LEADER、PROJECT_OWNER、REVIEWER、MEMBER。
+P2162 [Compact] [phys:92] userstatus：ACTIVE、DISABLED。
+P2163 [caption] [phys:92] 表 B-3　用户账户表（users）；公共字段：G02、G01、G03
+P2164 [Compact] [phys:] 字段名
+P2165 [Compact] [phys:] 类型
+P2166 [Compact] [phys:] 约束与默认
+P2167 [Compact] [phys:] 含义
+P2168 [Compact] [phys:92] username
+P2169 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2170 [Compact] [phys:] NN UQ
+P2171 [Compact] [phys:] 登录用户名
+P2172 [Compact] [phys:92] password_hash
+P2173 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2174 [Compact] [phys:] NN
+P2175 [Compact] [phys:] 密码哈希
+P2176 [Compact] [phys:92] display_name
+P2177 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2178 [Compact] [phys:] NN
+P2179 [Compact] [phys:] 显示名称
+P2180 [Compact] [phys:] email
+P2181 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2182 [Compact] [phys:] NULL
+P2183 [Compact] [phys:] 邮箱
+P2184 [Compact] [phys:] role
+P2185 [Compact] [phys:92] userrole
+P2186 [Compact] [phys:] NN
+P2187 [Compact] [phys:] 全局角色
+P2188 [Compact] [phys:] status
+P2189 [Compact] [phys:92] userstatus
+P2190 [Compact] [phys:] NN
+P2191 [Compact] [phys:] 账户状态
+P2192 [Compact] [phys:92] auth_version
+P2193 [Compact] [phys:] integer
+P2194 [Compact] [phys:] NN DF=0
+P2195 [Compact] [phys:92] 认证版本（旧令牌失效）
+P2196 [caption] [phys:93] 表 B-4　课题组表（groups）；公共字段：G02、G01、G03
+P2197 [Compact] [phys:] 字段名
+P2198 [Compact] [phys:] 类型
+P2199 [Compact] [phys:] 约束与默认
+P2200 [Compact] [phys:] 含义
+P2201 [Compact] [phys:] name
+P2202 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2203 [Compact] [phys:] NN UQ
+P2204 [Compact] [phys:] 名称
+P2205 [Compact] [phys:93,97] description
+P2206 [Compact] [phys:] text
+P2207 [Compact] [phys:] NULL
+P2208 [Compact] [phys:] 描述
+P2209 [Compact] [phys:93] leader_user_id
+P2210 [Compact] [phys:] integer
+P2211 [Compact] [phys:] NULL FK3
+P2212 [Compact] [phys:93] 课题组负责人编号
+P2213 [caption] [phys:93] 表 B-5　课题组成员表（group_members）；公共字段：G02、G05、G01
+P2214 [Compact] [phys:] 字段名
+P2215 [Compact] [phys:] 类型
+P2216 [Compact] [phys:] 约束与默认
+P2217 [Compact] [phys:] 含义
+P2218 [Compact] [phys:93] group_id
+P2219 [Compact] [phys:] integer
+P2220 [Compact] [phys:] NN FK4
+P2221 [Compact] [phys:] 课题组编号
+P2222 [Compact] [phys:93] group_role
+P2223 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2224 [Compact] [phys:] NN
+P2225 [Compact] [phys:] 组内角色
+P2226 [caption] [phys:93] 表 B-6　课题组项目关联表（group_projects）；公共字段：G02、G04、G01
+P2227 [Compact] [phys:] 字段名
+P2228 [Compact] [phys:] 类型
+P2229 [Compact] [phys:] 约束与默认
+P2230 [Compact] [phys:] 含义
+P2231 [Compact] [phys:93] group_id
+P2232 [Compact] [phys:] integer
+P2233 [Compact] [phys:] NN FK4
+P2234 [Compact] [phys:] 课题组编号
+P2235 [caption] [phys:93] 表 B-7　科研项目表（projects）；公共字段：G02、G01、G03
+P2236 [Compact] [phys:] 字段名
+P2237 [Compact] [phys:] 类型
+P2238 [Compact] [phys:] 约束与默认
+P2239 [Compact] [phys:] 含义
+P2240 [Compact] [phys:] name
+P2241 [Compact] [phys:93,95,98,101] varchar(160)
+P2242 [Compact] [phys:] NN UQ
+P2243 [Compact] [phys:] 名称
+P2244 [Compact] [phys:93,97] description
+P2245 [Compact] [phys:] text
+P2246 [Compact] [phys:] NULL
+P2247 [Compact] [phys:] 描述
+P2248 [Compact] [phys:93] is_sensitive
+P2249 [Compact] [phys:] boolean
+P2250 [Compact] [phys:] NN
+P2251 [Compact] [phys:] 是否含敏感资料
+P2252 [Compact] [phys:] status
+P2253 [Compact] [phys:92,93] projectstatus
+P2254 [Compact] [phys:] NN
+P2255 [Compact] [phys:] 项目状态
+P2256 [Compact] [phys:93] approval_enabled
+P2257 [Compact] [phys:] boolean
+P2258 [Compact] [phys:] NN
+P2259 [Compact] [phys:93] 是否启用笔记审核
+P2260 [Compact] [phys:21,93,94] owner_user_id
+P2261 [Compact] [phys:] integer
+P2262 [Compact] [phys:] NULL FK3
+P2263 [Compact] [phys:93,94] 负责人或所有者编号
+P2264 [caption] [phys:93] 表 B-8　项目成员授权表（project_members）；公共字段：G02、G04、G05、G01
+P2265 [Compact] [phys:] 字段名
+P2266 [Compact] [phys:] 类型
+P2267 [Compact] [phys:] 约束与默认
+P2268 [Compact] [phys:] 含义
+P2269 [Compact] [phys:93] project_role
+P2270 [Compact] [phys:92,93] projectrole
+P2271 [Compact] [phys:] NN
+P2272 [Compact] [phys:] 项目角色
+P2273 [Compact] [phys:93] can_read
+P2274 [Compact] [phys:] boolean
+P2275 [Compact] [phys:] NN
+P2276 [Compact] [phys:] 资料读取权限
+P2277 [Compact] [phys:93] can_write
+P2278 [Compact] [phys:] boolean
+P2279 [Compact] [phys:] NN
+P2280 [Compact] [phys:] 记录写入权限
+P2281 [Compact] [phys:93] can_review
+P2282 [Compact] [phys:] boolean
+P2283 [Compact] [phys:] NN
+P2284 [Compact] [phys:] 记录审核权限
+P2285 [Compact] [phys:93] can_manage
+P2286 [Compact] [phys:] boolean
+P2287 [Compact] [phys:] NN
+P2288 [Compact] [phys:] 项目管理权限
+P2289 [Compact] [phys:93] can_evaluate
+P2290 [Compact] [phys:] boolean
+P2291 [Compact] [phys:93] NN DF=false
+P2292 [Compact] [phys:] 问答评价权限
+P2293 [Compact] [phys:93] 补充约束：UQ(project_id, user_id)。
+P2294 [caption] [phys:93] 表 B-9　项目审核人表（project_reviewers）；公共字段：G02、G04、G05、G01
+P2295 [Compact] [phys:] 字段名
+P2296 [Compact] [phys:] 类型
+P2297 [Compact] [phys:] 约束与默认
+P2298 [Compact] [phys:] 含义
+P2299 [Compact] [phys:93] review_scope
+P2300 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2301 [Compact] [phys:] NN
+P2302 [Compact] [phys:] 审核范围
+P2303 [Compact] [phys:93] 补充约束：UQ(project_id, user_id)。
+P2304 [caption] [phys:94] 表 B-10　实验模板表（experiment_templates）；公共字段：G02、G01、G03
+P2305 [Compact] [phys:] 字段名
+P2306 [Compact] [phys:] 类型
+P2307 [Compact] [phys:] 约束与默认
+P2308 [Compact] [phys:] 含义
+P2309 [Compact] [phys:] name
+P2310 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2311 [Compact] [phys:] NN UQ
+P2312 [Compact] [phys:] 名称
+P2313 [Compact] [phys:94] experiment_type
+P2314 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2315 [Compact] [phys:] NN
+P2316 [Compact] [phys:] 实验类型
+P2317 [Compact] [phys:94] schema_json
+P2318 [Compact] [phys:] json
+P2319 [Compact] [phys:] NN
+P2320 [Compact] [phys:] 模板字段结构
+P2321 [Compact] [phys:94] default_content_json
+P2322 [Compact] [phys:] json
+P2323 [Compact] [phys:] NN
+P2324 [Compact] [phys:] 模板默认内容
+P2325 [Compact] [phys:94] is_active
+P2326 [Compact] [phys:] boolean
+P2327 [Compact] [phys:] NN
+P2328 [Compact] [phys:] 模板是否可用
+P2329 [caption] [phys:94] 表 B-11　实验笔记表（experiment_notes）；公共字段：G02、G04、G01、G03
+P2330 [Compact] [phys:] 字段名
+P2331 [Compact] [phys:] 类型
+P2332 [Compact] [phys:] 约束与默认
+P2333 [Compact] [phys:] 含义
+P2334 [Compact] [phys:94] template_id
+P2335 [Compact] [phys:] integer
+P2336 [Compact] [phys:] NULL
+P2337 [Compact] [phys:94] 模板编号（逻辑）
+P2338 [Compact] [phys:] title
+P2339 [Compact] [phys:94,97,98] varchar(200)
+P2340 [Compact] [phys:] NN
+P2341 [Compact] [phys:] 标题
+P2342 [Compact] [phys:94] experiment_type
+P2343 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2344 [Compact] [phys:] NN
+P2345 [Compact] [phys:] 实验类型
+P2346 [Compact] [phys:94] experiment_date
+P2347 [Compact] [phys:] date
+P2348 [Compact] [phys:] NULL
+P2349 [Compact] [phys:] 实验日期
+P2350 [Compact] [phys:21,93,94] owner_user_id
+P2351 [Compact] [phys:] integer
+P2352 [Compact] [phys:] NN FK3
+P2353 [Compact] [phys:93,94] 负责人或所有者编号
+P2354 [Compact] [phys:] status
+P2355 [Compact] [phys:92,94] notestatus
+P2356 [Compact] [phys:] NN
+P2357 [Compact] [phys:] 笔记状态
+P2358 [Compact] [phys:94] current_version_id
+P2359 [Compact] [phys:] integer
+P2360 [Compact] [phys:] NULL
+P2361 [Compact] [phys:94] 当前版本（逻辑）
+P2362 [caption] [phys:94] 表 B-12　笔记版本表（note_versions）；公共字段：G02、G12、G06、G01
+P2363 [Compact] [phys:] 字段名
+P2364 [Compact] [phys:] 类型
+P2365 [Compact] [phys:] 约束与默认
+P2366 [Compact] [phys:] 含义
+P2367 [Compact] [phys:94] version_number
+P2368 [Compact] [phys:] integer
+P2369 [Compact] [phys:] NN
+P2370 [Compact] [phys:] 版本序号
+P2371 [Compact] [phys:43,94] fixed_fields_json
+P2372 [Compact] [phys:] json
+P2373 [Compact] [phys:] NN
+P2374 [Compact] [phys:] 固定字段快照
+P2375 [Compact] [phys:43,94] content_json
+P2376 [Compact] [phys:] json
+P2377 [Compact] [phys:] NN
+P2378 [Compact] [phys:] 结构化版本内容
+P2379 [Compact] [phys:94] change_summary
+P2380 [Compact] [phys:] text
+P2381 [Compact] [phys:] NULL
+P2382 [Compact] [phys:] 修改摘要
+P2383 [Compact] [phys:94] is_locked
+P2384 [Compact] [phys:] boolean
+P2385 [Compact] [phys:] NN
+P2386 [Compact] [phys:] 是否锁定
+P2387 [caption] [phys:94] 表 B-13　笔记审核记录表（note_approvals）；公共字段：G02、G12、G01
+P2388 [Compact] [phys:] 字段名
+P2389 [Compact] [phys:] 类型
+P2390 [Compact] [phys:] 约束与默认
+P2391 [Compact] [phys:] 含义
+P2392 [Compact] [phys:94] version_id
+P2393 [Compact] [phys:] integer
+P2394 [Compact] [phys:] NN FK12
+P2395 [Compact] [phys:] 被审核版本编号
+P2396 [Compact] [phys:94] reviewer_user_id
+P2397 [Compact] [phys:] integer
+P2398 [Compact] [phys:] NN FK3
+P2399 [Compact] [phys:] 审核用户编号
+P2400 [Compact] [phys:] action
+P2401 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2402 [Compact] [phys:] NN
+P2403 [Compact] [phys:] 操作或审核动作
+P2404 [Compact] [phys:] comment
+P2405 [Compact] [phys:] text
+P2406 [Compact] [phys:] NULL
+P2407 [Compact] [phys:94,99] 审核意见或评价说明
+P2408 [caption] [phys:94] 表 B-14　笔记检索文档表（search_documents）；公共字段：G02、G04、G03
+P2409 [Compact] [phys:] 字段名
+P2410 [Compact] [phys:] 类型
+P2411 [Compact] [phys:] 约束与默认
+P2412 [Compact] [phys:] 含义
+P2413 [Compact] [phys:] note_id
+P2414 [Compact] [phys:] integer
+P2415 [Compact] [phys:94] NN UQ FK11
+P2416 [Compact] [phys:] 笔记编号
+P2417 [Compact] [phys:] title
+P2418 [Compact] [phys:94] varchar(300)
+P2419 [Compact] [phys:] NN
+P2420 [Compact] [phys:] 标题
+P2421 [Compact] [phys:94] search_text
+P2422 [Compact] [phys:] text
+P2423 [Compact] [phys:] NN
+P2424 [Compact] [phys:] 合并检索正文
+P2425 [Compact] [phys:94] source_ids
+P2426 [Compact] [phys:] text
+P2427 [Compact] [phys:] NN
+P2428 [Compact] [phys:] 检索来源编号
+P2429 [caption] [phys:95] 表 B-15　附件与知识资料表（files）；公共字段：G02、G04、G01
+P2430 [Compact] [phys:] 字段名
+P2431 [Compact] [phys:] 类型
+P2432 [Compact] [phys:] 约束与默认
+P2433 [Compact] [phys:] 含义
+P2434 [Compact] [phys:] note_id
+P2435 [Compact] [phys:] integer
+P2436 [Compact] [phys:95] NULL FK11
+P2437 [Compact] [phys:] 笔记编号
+P2438 [Compact] [phys:95] uploaded_by
+P2439 [Compact] [phys:] integer
+P2440 [Compact] [phys:] NN FK3
+P2441 [Compact] [phys:] 上传用户编号
+P2442 [Compact] [phys:95] file_category
+P2443 [Compact] [phys:92,95] filecategory
+P2444 [Compact] [phys:] NN
+P2445 [Compact] [phys:] 文件类别
+P2446 [Compact] [phys:95] original_filename
+P2447 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2448 [Compact] [phys:] NN
+P2449 [Compact] [phys:] 原始文件名
+P2450 [Compact] [phys:95] storage_path
+P2451 [Compact] [phys:95] varchar(500)
+P2452 [Compact] [phys:] NN
+P2453 [Compact] [phys:] 存储路径
+P2454 [Compact] [phys:95] mime_type
+P2455 [Compact] [phys:93,95,98,101] varchar(160)
+P2456 [Compact] [phys:] NULL
+P2457 [Compact] [phys:] 媒体类型
+P2458 [Compact] [phys:95] file_size
+P2459 [Compact] [phys:] bigint
+P2460 [Compact] [phys:] NN
+P2461 [Compact] [phys:95] 文件大小（字节）
+P2462 [Compact] [phys:95] file_hash
+P2463 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2464 [Compact] [phys:] NN
+P2465 [Compact] [phys:] 原文件哈希
+P2466 [Compact] [phys:] status
+P2467 [Compact] [phys:92,95] filestatus
+P2468 [Compact] [phys:] NN
+P2469 [Compact] [phys:] 文件审核状态
+P2470 [Compact] [phys:95] knowledge_sync_status
+P2471 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2472 [Compact] [phys:] NN
+P2473 [Compact] [phys:] 知识入库状态
+P2474 [Compact] [phys:95] knowledge_synced_at
+P2475 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2476 [Compact] [phys:] NULL
+P2477 [Compact] [phys:95] 最近知识入库时间
+P2478 [Compact] [phys:95] knowledge_sync_message
+P2479 [Compact] [phys:] text
+P2480 [Compact] [phys:] NULL
+P2481 [Compact] [phys:] 入库说明或错误
+P2482 [caption] [phys:95] 表 B-16　OCR结果与校对表（file_ocr_results）；公共字段：G02、G04、G06、G01
+P2483 [Compact] [phys:] 字段名
+P2484 [Compact] [phys:] 类型
+P2485 [Compact] [phys:] 约束与默认
+P2486 [Compact] [phys:] 含义
+P2487 [Compact] [phys:] file_id
+P2488 [Compact] [phys:] integer
+P2489 [Compact] [phys:] NN FK15
+P2490 [Compact] [phys:] 文件编号
+P2491 [Compact] [phys:95] file_hash
+P2492 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2493 [Compact] [phys:] NN
+P2494 [Compact] [phys:] 原文件哈希
+P2495 [Compact] [phys:95] raw_text
+P2496 [Compact] [phys:] text
+P2497 [Compact] [phys:] NN
+P2498 [Compact] [phys:] OCR原始文本
+P2499 [Compact] [phys:95] corrected_text
+P2500 [Compact] [phys:] text
+P2501 [Compact] [phys:] NN
+P2502 [Compact] [phys:] 人工校对文本
+P2503 [Compact] [phys:95] extraction_method
+P2504 [Compact] [phys:95,96,99,100,101] varchar(80)
+P2505 [Compact] [phys:] NN
+P2506 [Compact] [phys:] 抽取方式
+P2507 [Compact] [phys:95,96] character_count
+P2508 [Compact] [phys:] integer
+P2509 [Compact] [phys:] NN
+P2510 [Compact] [phys:] 字符数
+P2511 [Compact] [phys:95] truncated
+P2512 [Compact] [phys:] boolean
+P2513 [Compact] [phys:] NN
+P2514 [Compact] [phys:] 是否截断
+P2515 [Compact] [phys:95] review_status
+P2516 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2517 [Compact] [phys:] NN
+P2518 [Compact] [phys:95] OCR校对审核状态
+P2519 [Compact] [phys:95] reviewed_by
+P2520 [Compact] [phys:] integer
+P2521 [Compact] [phys:] NULL FK3
+P2522 [Compact] [phys:95] 校对确认用户编号
+P2523 [Compact] [phys:95] reviewed_at
+P2524 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2525 [Compact] [phys:] NULL
+P2526 [Compact] [phys:] 校对确认时间
+P2527 [caption] [phys:95] 表 B-17　项目知识库表（project_rag_datasets）；公共字段：G02、G09、G06、G01、G03
+P2528 [Compact] [phys:] 字段名
+P2529 [Compact] [phys:] 类型
+P2530 [Compact] [phys:] 约束与默认
+P2531 [Compact] [phys:] 含义
+P2532 [Compact] [phys:29,92,93,95,96,97,99,102,103] project_id
+P2533 [Compact] [phys:] integer
+P2534 [Compact] [phys:] NN UQ FK7
+P2535 [Compact] [phys:] 项目编号
+P2536 [Compact] [phys:95,96] dify_dataset_id
+P2537 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2538 [Compact] [phys:] NN
+P2539 [Compact] [phys:] 知识库标识
+P2540 [Compact] [phys:95] dify_dataset_name
+P2541 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2542 [Compact] [phys:] NN
+P2543 [Compact] [phys:] 知识库名称
+P2544 [Compact] [phys:95,98,100,101] provider
+P2545 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2546 [Compact] [phys:95] NN DF='local_deepseek'
+P2547 [Compact] [phys:] 服务提供方式
+P2548 [Compact] [phys:95] embedding_model
+P2549 [Compact] [phys:93,95,98,101] varchar(160)
+P2550 [Compact] [phys:95] NN DF='BAAI/bge-small-zh-v1.5'
+P2551 [Compact] [phys:] 嵌入模型
+P2552 [Compact] [phys:95] generation_model
+P2553 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2554 [Compact] [phys:95] NN DF='deepseek-v4-flash'
+P2555 [Compact] [phys:] 生成模型
+P2556 [caption] [phys:96] 表 B-18　知识资料同步表（rag_file_syncs）；公共字段：G02、G04、G01、G03
+P2557 [Compact] [phys:] 字段名
+P2558 [Compact] [phys:] 类型
+P2559 [Compact] [phys:] 约束与默认
+P2560 [Compact] [phys:] 含义
+P2561 [Compact] [phys:] file_id
+P2562 [Compact] [phys:] integer
+P2563 [Compact] [phys:96] NN UQ FK15
+P2564 [Compact] [phys:] 文件编号
+P2565 [Compact] [phys:95,96] dify_dataset_id
+P2566 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2567 [Compact] [phys:] NN
+P2568 [Compact] [phys:] 知识库标识
+P2569 [Compact] [phys:96] dify_document_id
+P2570 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2571 [Compact] [phys:] NULL
+P2572 [Compact] [phys:] 同步文档标识
+P2573 [Compact] [phys:95,96] sync_status
+P2574 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2575 [Compact] [phys:] NN
+P2576 [Compact] [phys:] 向量同步状态
+P2577 [Compact] [phys:95,96] sync_message
+P2578 [Compact] [phys:] text
+P2579 [Compact] [phys:] NULL
+P2580 [Compact] [phys:] 同步说明或错误
+P2581 [Compact] [phys:95,96] synced_at
+P2582 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2583 [Compact] [phys:] NULL
+P2584 [Compact] [phys:96] 最近成功同步时间
+P2585 [Compact] [phys:96] chunk_count
+P2586 [Compact] [phys:] integer
+P2587 [Compact] [phys:] NN DF=0
+P2588 [Compact] [phys:] 已生成分块数
+P2589 [Compact] [phys:96] content_hash
+P2590 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2591 [Compact] [phys:] NULL
+P2592 [Compact] [phys:] 文本内容哈希
+P2593 [Compact] [phys:96] index_version
+P2594 [Compact] [phys:95,96,99,100,101] varchar(80)
+P2595 [Compact] [phys:96] NN DF='legacy-unknown'
+P2596 [Compact] [phys:] 索引版本
+P2597 [caption] [phys:96] 表 B-19　资料分块与向量表（rag_document_chunks）；公共字段：G02、G04、G01
+P2598 [Compact] [phys:] 字段名
+P2599 [Compact] [phys:] 类型
+P2600 [Compact] [phys:] 约束与默认
+P2601 [Compact] [phys:] 含义
+P2602 [Compact] [phys:] file_id
+P2603 [Compact] [phys:] integer
+P2604 [Compact] [phys:] NN FK15
+P2605 [Compact] [phys:] 文件编号
+P2606 [Compact] [phys:96] chunk_index
+P2607 [Compact] [phys:] integer
+P2608 [Compact] [phys:] NN
+P2609 [Compact] [phys:] 文件内分块序号
+P2610 [Compact] [phys:] content
+P2611 [Compact] [phys:] text
+P2612 [Compact] [phys:] NN
+P2613 [Compact] [phys:] 分块正文
+P2614 [Compact] [phys:96] content_hash
+P2615 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P2616 [Compact] [phys:] NN
+P2617 [Compact] [phys:] 文本内容哈希
+P2618 [Compact] [phys:95,96] character_count
+P2619 [Compact] [phys:] integer
+P2620 [Compact] [phys:] NN
+P2621 [Compact] [phys:] 字符数
+P2622 [Compact] [phys:5,95,96] embedding
+P2623 [Compact] [phys:91,96] vector(d)
+P2624 [Compact] [phys:] NN
+P2625 [Compact] [phys:] 文本嵌入向量
+P2626 [Compact] [phys:96,101] metadata_json
+P2627 [Compact] [phys:] json
+P2628 [Compact] [phys:] NN
+P2629 [Compact] [phys:] 元数据
+P2630 [Compact] [phys:96] chunk_version
+P2631 [Compact] [phys:95,96,99,100,101] varchar(80)
+P2632 [Compact] [phys:96] NN DF='legacy-unknown'
+P2633 [Compact] [phys:] 分块规则版本
+P2634 [Compact] [phys:96] index_version
+P2635 [Compact] [phys:95,96,99,100,101] varchar(80)
+P2636 [Compact] [phys:96] NN DF='legacy-unknown'
+P2637 [Compact] [phys:] 索引版本
+P2638 [Compact] [phys:96] 补充约束：UQ(file_id, chunk_index)。
+P2639 [caption] [phys:96] 表 B-20　图谱实体表（kg_entities）；公共字段：G02、G04、G01、G03
+P2640 [Compact] [phys:] 字段名
+P2641 [Compact] [phys:] 类型
+P2642 [Compact] [phys:] 约束与默认
+P2643 [Compact] [phys:] 含义
+P2644 [Compact] [phys:96,97] entity_type
+P2645 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2646 [Compact] [phys:] NN
+P2647 [Compact] [phys:] 实体类型
+P2648 [Compact] [phys:] label
+P2649 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2650 [Compact] [phys:] NN
+P2651 [Compact] [phys:] 实体显示名称
+P2652 [Compact] [phys:96,97] normalized_label
+P2653 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2654 [Compact] [phys:] NN
+P2655 [Compact] [phys:] 规范化实体名
+P2656 [Compact] [phys:96] natural_key
+P2657 [Compact] [phys:96] varchar(320)
+P2658 [Compact] [phys:] NN
+P2659 [Compact] [phys:96] 项目内实体去重键
+P2660 [Compact] [phys:96,97] source_type
+P2661 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2662 [Compact] [phys:] NULL
+P2663 [Compact] [phys:] 来源对象类型
+P2664 [Compact] [phys:94,96,97] source_id
+P2665 [Compact] [phys:] integer
+P2666 [Compact] [phys:] NULL
+P2667 [Compact] [phys:] 多态来源编号
+P2668 [Compact] [phys:96,97] properties
+P2669 [Compact] [phys:] json
+P2670 [Compact] [phys:] NN
+P2671 [Compact] [phys:96,97] 实体或关系扩展属性
+P2672 [Compact] [phys:96] 补充约束：UQ(project_id, natural_key)。
+P2673 [caption] [phys:97] 表 B-21　图谱关系表（kg_relations）；公共字段：G02、G04、G01
+P2674 [Compact] [phys:] 字段名
+P2675 [Compact] [phys:] 类型
+P2676 [Compact] [phys:] 约束与默认
+P2677 [Compact] [phys:] 含义
+P2678 [Compact] [phys:97] source_entity_id
+P2679 [Compact] [phys:] integer
+P2680 [Compact] [phys:] NN FK20
+P2681 [Compact] [phys:] 源实体编号
+P2682 [Compact] [phys:97] target_entity_id
+P2683 [Compact] [phys:] integer
+P2684 [Compact] [phys:] NN FK20
+P2685 [Compact] [phys:] 目标实体编号
+P2686 [Compact] [phys:97] relation_type
+P2687 [Compact] [phys:97,100,102,103] varchar(60)
+P2688 [Compact] [phys:] NN
+P2689 [Compact] [phys:] 关系类型
+P2690 [Compact] [phys:96,97] source_type
+P2691 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2692 [Compact] [phys:] NULL
+P2693 [Compact] [phys:] 来源对象类型
+P2694 [Compact] [phys:94,96,97] source_id
+P2695 [Compact] [phys:] integer
+P2696 [Compact] [phys:] NULL
+P2697 [Compact] [phys:] 多态来源编号
+P2698 [Compact] [phys:97] confidence
+P2699 [Compact] [phys:97,102,103] double precision
+P2700 [Compact] [phys:] NN
+P2701 [Compact] [phys:] 关系置信度
+P2702 [Compact] [phys:96,97] properties
+P2703 [Compact] [phys:] json
+P2704 [Compact] [phys:] NN
+P2705 [Compact] [phys:96,97] 实体或关系扩展属性
+P2706 [Compact] [phys:97] 补充约束：UQ(project_id, source_entity_id, target_entity_id, relation_type)。
+P2707 [caption] [phys:97] 表 B-22　知识抽取运行表（kg_extraction_runs）；公共字段：G02、G04、G12、G09、G01
+P2708 [Compact] [phys:] 字段名
+P2709 [Compact] [phys:] 类型
+P2710 [Compact] [phys:] 约束与默认
+P2711 [Compact] [phys:] 含义
+P2712 [Compact] [phys:97] triggered_by
+P2713 [Compact] [phys:] integer
+P2714 [Compact] [phys:] NN FK3
+P2715 [Compact] [phys:97] 抽取触发用户编号
+P2716 [Compact] [phys:97] extracted_entities
+P2717 [Compact] [phys:] integer
+P2718 [Compact] [phys:] NN
+P2719 [Compact] [phys:] 抽取实体数
+P2720 [Compact] [phys:97] extracted_relations
+P2721 [Compact] [phys:] integer
+P2722 [Compact] [phys:] NN
+P2723 [Compact] [phys:] 抽取关系数
+P2724 [Compact] [phys:] message
+P2725 [Compact] [phys:] text
+P2726 [Compact] [phys:] NULL
+P2727 [Compact] [phys:] 运行结果说明
+P2728 [caption] [phys:97] 表 B-23　计划知识点表（kg_blueprint_nodes）；公共字段：G07、G08、G06、G01、G03
+P2729 [Compact] [phys:] 字段名
+P2730 [Compact] [phys:] 类型
+P2731 [Compact] [phys:] 约束与默认
+P2732 [Compact] [phys:] 含义
+P2733 [Compact] [phys:96,97] entity_type
+P2734 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2735 [Compact] [phys:] NN
+P2736 [Compact] [phys:] 实体类型
+P2737 [Compact] [phys:] label
+P2738 [Compact] [phys:94,97,98] varchar(200)
+P2739 [Compact] [phys:] NN
+P2740 [Compact] [phys:] 实体显示名称
+P2741 [Compact] [phys:96,97] normalized_label
+P2742 [Compact] [phys:97] varchar(240)
+P2743 [Compact] [phys:] NN
+P2744 [Compact] [phys:] 规范化实体名
+P2745 [Compact] [phys:93,97] description
+P2746 [Compact] [phys:] text
+P2747 [Compact] [phys:] NN DF=''
+P2748 [Compact] [phys:] 描述
+P2749 [Compact] [phys:] status
+P2750 [Compact] [phys:97,98,101,103] varchar(16)
+P2751 [Compact] [phys:97] NN DF='planned'
+P2752 [Compact] [phys:] 计划节点状态
+P2753 [Compact] [phys:97,98] source_kind
+P2754 [Compact] [phys:97,98,100,101,102] varchar(24)
+P2755 [Compact] [phys:97] NN DF='plan_document'
+P2756 [Compact] [phys:] 计划来源类别
+P2757 [Compact] [phys:97] source_label
+P2758 [Compact] [phys:94,97,98] varchar(200)
+P2759 [Compact] [phys:] NN DF=''
+P2760 [Compact] [phys:] 计划来源名称
+P2761 [Compact] [phys:97] priority
+P2762 [Compact] [phys:] integer
+P2763 [Compact] [phys:] NN DF=50
+P2764 [Compact] [phys:] 计划来源优先级
+P2765 [Compact] [phys:97] 补充约束：UQ(project_id, entity_type, normalized_label) WHERE status <> 'retired'。
+P2766 [caption] [phys:97] 表 B-24　计划知识关系表（kg_blueprint_edges）；公共字段：G07、G08、G01
+P2767 [Compact] [phys:] 字段名
+P2768 [Compact] [phys:] 类型
+P2769 [Compact] [phys:] 约束与默认
+P2770 [Compact] [phys:] 含义
+P2771 [Compact] [phys:97] source_node_id
+P2772 [Compact] [phys:] integer
+P2773 [Compact] [phys:] NN FK23 C
+P2774 [Compact] [phys:] 计划源节点编号
+P2775 [Compact] [phys:97] target_node_id
+P2776 [Compact] [phys:] integer
+P2777 [Compact] [phys:] NN FK23 C
+P2778 [Compact] [phys:97] 计划目标节点编号
+P2779 [Compact] [phys:97] relation_type
+P2780 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2781 [Compact] [phys:] NN
+P2782 [Compact] [phys:] 关系类型
+P2783 [Compact] [phys:] status
+P2784 [Compact] [phys:97,98,101,103] varchar(16)
+P2785 [Compact] [phys:97] NN DF='planned'
+P2786 [Compact] [phys:] 计划关系状态
+P2787 [Compact] [phys:97,98] source_kind
+P2788 [Compact] [phys:97,98,100,101,102] varchar(24)
+P2789 [Compact] [phys:97] NN DF='plan_document'
+P2790 [Compact] [phys:] 计划来源类别
+P2791 [Compact] [phys:97] priority
+P2792 [Compact] [phys:] integer
+P2793 [Compact] [phys:] NN DF=50
+P2794 [Compact] [phys:] 计划来源优先级
+P2795 [Compact] [phys:97] 补充约束：UQ(project_id, source_node_id, target_node_id, relation_type) WHERE status <> 'retired'。
+P2796 [caption] [phys:98] 表 B-25　计划文档解析记录表（kg_blueprint_documents）；公共字段：G07、G08、G06、G01
+P2797 [Compact] [phys:] 字段名
+P2798 [Compact] [phys:] 类型
+P2799 [Compact] [phys:] 约束与默认
+P2800 [Compact] [phys:] 含义
+P2801 [Compact] [phys:] title
+P2802 [Compact] [phys:94,97,98] varchar(200)
+P2803 [Compact] [phys:] NN
+P2804 [Compact] [phys:] 标题
+P2805 [Compact] [phys:97,98] source_kind
+P2806 [Compact] [phys:97,98,100,101,102] varchar(24)
+P2807 [Compact] [phys:] NN
+P2808 [Compact] [phys:] 计划来源类别
+P2809 [Compact] [phys:98] parse_mode
+P2810 [Compact] [phys:97,98,101,103] varchar(16)
+P2811 [Compact] [phys:] NN
+P2812 [Compact] [phys:] 计划解析模式
+P2813 [Compact] [phys:98] node_count
+P2814 [Compact] [phys:] integer
+P2815 [Compact] [phys:] NN DF=0
+P2816 [Compact] [phys:] 导入节点数
+P2817 [Compact] [phys:98] edge_count
+P2818 [Compact] [phys:] integer
+P2819 [Compact] [phys:] NN DF=0
+P2820 [Compact] [phys:] 导入关系数
+P2821 [Compact] [phys:] message
+P2822 [Compact] [phys:] text
+P2823 [Compact] [phys:] NN DF=''
+P2824 [Compact] [phys:] 运行结果说明
+P2825 [caption] [phys:98] 表 B-26　问答运行日志表（ai_query_logs）；公共字段：G02、G04、G05、G01
+P2826 [Compact] [phys:] 字段名
+P2827 [Compact] [phys:] 类型
+P2828 [Compact] [phys:] 约束与默认
+P2829 [Compact] [phys:] 含义
+P2830 [Compact] [phys:5,98,99] question
+P2831 [Compact] [phys:] text
+P2832 [Compact] [phys:] NN
+P2833 [Compact] [phys:] 用户问题
+P2834 [Compact] [phys:] answer
+P2835 [Compact] [phys:] text
+P2836 [Compact] [phys:] NULL
+P2837 [Compact] [phys:] 生成回答
+P2838 [Compact] [phys:98] rag_mode
+P2839 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2840 [Compact] [phys:] NN
+P2841 [Compact] [phys:] 检索模式
+P2842 [Compact] [phys:98] graph_hit_count
+P2843 [Compact] [phys:] integer
+P2844 [Compact] [phys:] NN
+P2845 [Compact] [phys:] 图谱关系命中数
+P2846 [Compact] [phys:98] source_count
+P2847 [Compact] [phys:] integer
+P2848 [Compact] [phys:] NN
+P2849 [Compact] [phys:] 资料来源数
+P2850 [Compact] [phys:98,100] response_ms
+P2851 [Compact] [phys:] integer
+P2852 [Compact] [phys:] NN
+P2853 [Compact] [phys:98,100] 响应耗时（毫秒）
+P2854 [Compact] [phys:98] conversation_id
+P2855 [Compact] [phys:93,95,98,101] varchar(160)
+P2856 [Compact] [phys:] NULL
+P2857 [Compact] [phys:98] 外部或兼容会话标识
+P2858 [Compact] [phys:98] graph_context_json
+P2859 [Compact] [phys:] json
+P2860 [Compact] [phys:] NN
+P2861 [Compact] [phys:] 问答图谱上下文
+P2862 [Compact] [phys:98] sources_json
+P2863 [Compact] [phys:] json
+P2864 [Compact] [phys:] NN
+P2865 [Compact] [phys:98] 回答资料来源列表
+P2866 [Compact] [phys:95,98,100,101] provider
+P2867 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2868 [Compact] [phys:] NN
+P2869 [Compact] [phys:] 服务提供方式
+P2870 [Compact] [phys:98,100,101] model_name
+P2871 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P2872 [Compact] [phys:] NULL
+P2873 [Compact] [phys:] 模型名称
+P2874 [Compact] [phys:98,100,101] prompt_version
+P2875 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2876 [Compact] [phys:] NN
+P2877 [Compact] [phys:] 提示词版本
+P2878 [Compact] [phys:98] retrieval_config_json
+P2879 [Compact] [phys:] json
+P2880 [Compact] [phys:] NN
+P2881 [Compact] [phys:] 检索配置快照
+P2882 [Compact] [phys:98,100,101] usage_json
+P2883 [Compact] [phys:] json
+P2884 [Compact] [phys:] NN
+P2885 [Compact] [phys:] 模型用量
+P2886 [Compact] [phys:98] fallback_reason
+P2887 [Compact] [phys:] text
+P2888 [Compact] [phys:] NULL
+P2889 [Compact] [phys:] 降级原因
+P2890 [Compact] [phys:98] error_message
+P2891 [Compact] [phys:] text
+P2892 [Compact] [phys:] NULL
+P2893 [Compact] [phys:] 调用错误
+P2894 [Compact] [phys:98,99] experiment_run_id
+P2895 [Compact] [phys:] integer
+P2896 [Compact] [phys:98] NULL FK28
+P2897 [Compact] [phys:98,99] 问答实验批次编号
+P2898 [Compact] [phys:98] experiment_case_index
+P2899 [Compact] [phys:] integer
+P2900 [Compact] [phys:] NULL
+P2901 [Compact] [phys:] 实验题目索引
+P2902 [Compact] [phys:98] experiment_repetition_index
+P2903 [Compact] [phys:] integer
+P2904 [Compact] [phys:] NULL
+P2905 [Compact] [phys:] 实验重复序号
+P2906 [Compact] [phys:98] experiment_execution_order
+P2907 [Compact] [phys:] integer
+P2908 [Compact] [phys:] NULL
+P2909 [Compact] [phys:] 实验执行顺序
+P2910 [caption] [phys:99] 表 B-27　问答评价表（ai_query_evaluations）；公共字段：G02、G01、G03
+P2911 [Compact] [phys:] 字段名
+P2912 [Compact] [phys:] 类型
+P2913 [Compact] [phys:] 约束与默认
+P2914 [Compact] [phys:] 含义
+P2915 [Compact] [phys:99] query_log_id
+P2916 [Compact] [phys:] integer
+P2917 [Compact] [phys:] NN FK26
+P2918 [Compact] [phys:] 问答日志编号
+P2919 [Compact] [phys:99] evaluator_user_id
+P2920 [Compact] [phys:] integer
+P2921 [Compact] [phys:] NN FK3
+P2922 [Compact] [phys:] 评价用户编号
+P2923 [Compact] [phys:] score
+P2924 [Compact] [phys:] integer
+P2925 [Compact] [phys:] NN
+P2926 [Compact] [phys:] 评价分数
+P2927 [Compact] [phys:99] is_accurate
+P2928 [Compact] [phys:] boolean
+P2929 [Compact] [phys:] NN
+P2930 [Compact] [phys:99] 评价者判断准确性
+P2931 [Compact] [phys:99] is_traceable
+P2932 [Compact] [phys:] boolean
+P2933 [Compact] [phys:] NN
+P2934 [Compact] [phys:99] 评价者判断可追溯性
+P2935 [Compact] [phys:] comment
+P2936 [Compact] [phys:] text
+P2937 [Compact] [phys:] NULL
+P2938 [Compact] [phys:94,99] 审核意见或评价说明
+P2939 [Compact] [phys:99] review_protocol
+P2940 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P2941 [Compact] [phys:99] NN DF='unblinded'
+P2942 [Compact] [phys:] 评价协议
+P2943 [Compact] [phys:99] 补充约束：UQ(query_log_id, evaluator_user_id)。
+P2944 [caption] [phys:99] 表 B-28　问答实验批次表（ai_experiment_runs）；公共字段：G02、G04、G06、G09、G01、G13
+P2945 [Compact] [phys:] 字段名
+P2946 [Compact] [phys:] 类型
+P2947 [Compact] [phys:] 约束与默认
+P2948 [Compact] [phys:] 含义
+P2949 [Compact] [phys:] name
+P2950 [Compact] [phys:92,95,96,99,100] varchar(255)
+P2951 [Compact] [phys:] NN
+P2952 [Compact] [phys:] 实验批次名称
+P2953 [Compact] [phys:99] questions_json
+P2954 [Compact] [phys:] json
+P2955 [Compact] [phys:] NN
+P2956 [Compact] [phys:] 实验题目列表
+P2957 [Compact] [phys:99] modes_json
+P2958 [Compact] [phys:] json
+P2959 [Compact] [phys:] NN
+P2960 [Compact] [phys:99] 实验对比模式列表
+P2961 [Compact] [phys:99] config_snapshot_json
+P2962 [Compact] [phys:] json
+P2963 [Compact] [phys:] NN
+P2964 [Compact] [phys:] 实验配置快照
+P2965 [Compact] [phys:99] summary_json
+P2966 [Compact] [phys:] json
+P2967 [Compact] [phys:] NN
+P2968 [Compact] [phys:] 实验结果汇总
+P2969 [Compact] [phys:99] total_cases
+P2970 [Compact] [phys:] integer
+P2971 [Compact] [phys:] NN
+P2972 [Compact] [phys:] 计划任务数
+P2973 [Compact] [phys:99] completed_cases
+P2974 [Compact] [phys:] integer
+P2975 [Compact] [phys:] NN
+P2976 [Compact] [phys:] 已完成任务数
+P2977 [Compact] [phys:99] failed_cases
+P2978 [Compact] [phys:] integer
+P2979 [Compact] [phys:] NN
+P2980 [Compact] [phys:] 失败任务数
+P2981 [Compact] [phys:99,101] worker_id
+P2982 [Compact] [phys:95,96,99,100,101] varchar(80)
+P2983 [Compact] [phys:] NULL
+P2984 [Compact] [phys:] 执行进程标识
+P2985 [Compact] [phys:99,101] heartbeat_at
+P2986 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2987 [Compact] [phys:] NULL
+P2988 [Compact] [phys:99,101] 最近执行心跳时间
+P2989 [Compact] [phys:99,101] lease_expires_at
+P2990 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P2991 [Compact] [phys:] NULL
+P2992 [Compact] [phys:99,101] 执行租约到期时间
+P2993 [Compact] [phys:99] 补充约束：UQ(project_id) WHERE status IN ('queued', 'running')。
+P2994 [caption] [phys:99] 表 B-29　盲评批次表（ai_blind_review_batches）；公共字段：G07、G08、G06、G01
+P2995 [Compact] [phys:] 字段名
+P2996 [Compact] [phys:] 类型
+P2997 [Compact] [phys:] 约束与默认
+P2998 [Compact] [phys:] 含义
+P2999 [Compact] [phys:98,99] experiment_run_id
+P3000 [Compact] [phys:] integer
+P3001 [Compact] [phys:99] NN UQ FK28 C
+P3002 [Compact] [phys:98,99] 问答实验批次编号
+P3003 [Compact] [phys:99] freeze_manifest_sha256
+P3004 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P3005 [Compact] [phys:] NN
+P3006 [Compact] [phys:99] 冻结清单SHA-256
+P3007 [Compact] [phys:99] reviewer_a_user_id
+P3008 [Compact] [phys:] integer
+P3009 [Compact] [phys:] NN FK3
+P3010 [Compact] [phys:] 盲评人A编号
+P3011 [Compact] [phys:99] reviewer_b_user_id
+P3012 [Compact] [phys:] integer
+P3013 [Compact] [phys:] NN FK3
+P3014 [Compact] [phys:] 盲评人B编号
+P3015 [Compact] [phys:] status
+P3016 [Compact] [phys:99,100] varchar(20)
+P3017 [Compact] [phys:99] NN DF='LOCKED'
+P3018 [Compact] [phys:] 盲评状态
+P3019 [Compact] [phys:99] unblinded_at
+P3020 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3021 [Compact] [phys:] NULL
+P3022 [Compact] [phys:] 解盲时间
+P3023 [Compact] [phys:99] unblinded_by_user_id
+P3024 [Compact] [phys:] integer
+P3025 [Compact] [phys:] NULL FK3
+P3026 [Compact] [phys:] 解盲用户编号
+P3027 [Compact] [phys:99] 补充约束：CK(reviewer_a_user_id <> reviewer_b_user_id)；CK(status IN ('LOCKED', 'UNBLINDED'))。
+P3028 [caption] [phys:100] 表 B-30　固定任务生成记录表（agent_generation_runs）；公共字段：G02、G04、G05、G09、G01
+P3029 [Compact] [phys:] 字段名
+P3030 [Compact] [phys:] 类型
+P3031 [Compact] [phys:] 约束与默认
+P3032 [Compact] [phys:] 含义
+P3033 [Compact] [phys:100] task_type
+P3034 [Compact] [phys:97,100,102,103] varchar(60)
+P3035 [Compact] [phys:] NN
+P3036 [Compact] [phys:] 固定任务类型
+P3037 [Compact] [phys:100] input_params_json
+P3038 [Compact] [phys:] json
+P3039 [Compact] [phys:] NN
+P3040 [Compact] [phys:100] 固定任务输入参数
+P3041 [Compact] [phys:] title
+P3042 [Compact] [phys:92,95,96,99,100] varchar(255)
+P3043 [Compact] [phys:] NN
+P3044 [Compact] [phys:] 标题
+P3045 [Compact] [phys:] body
+P3046 [Compact] [phys:] text
+P3047 [Compact] [phys:] NN
+P3048 [Compact] [phys:] 生成草稿正文
+P3049 [Compact] [phys:100] source_note_ids_json
+P3050 [Compact] [phys:] json
+P3051 [Compact] [phys:] NN
+P3052 [Compact] [phys:100] 生成来源笔记列表
+P3053 [Compact] [phys:100] source_file_ids_json
+P3054 [Compact] [phys:] json
+P3055 [Compact] [phys:] NN
+P3056 [Compact] [phys:100] 生成来源文件列表
+P3057 [Compact] [phys:100] source_graph_relation_ids_json
+P3058 [Compact] [phys:] json
+P3059 [Compact] [phys:] NN
+P3060 [Compact] [phys:100] 生成来源关系列表
+P3061 [Compact] [phys:95,98,100,101] provider
+P3062 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P3063 [Compact] [phys:] NN
+P3064 [Compact] [phys:] 服务提供方式
+P3065 [Compact] [phys:98,100,101] model_name
+P3066 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3067 [Compact] [phys:] NULL
+P3068 [Compact] [phys:] 模型名称
+P3069 [Compact] [phys:98,100,101] prompt_version
+P3070 [Compact] [phys:92,94,95,96,97,98,99,100] varchar(40)
+P3071 [Compact] [phys:] NN
+P3072 [Compact] [phys:] 提示词版本
+P3073 [Compact] [phys:98,100,101] usage_json
+P3074 [Compact] [phys:] json
+P3075 [Compact] [phys:] NN
+P3076 [Compact] [phys:] 模型用量
+P3077 [Compact] [phys:98,100] response_ms
+P3078 [Compact] [phys:] integer
+P3079 [Compact] [phys:] NN
+P3080 [Compact] [phys:98,100] 响应耗时（毫秒）
+P3081 [Compact] [phys:] message
+P3082 [Compact] [phys:] text
+P3083 [Compact] [phys:] NULL
+P3084 [Compact] [phys:] 运行结果说明
+P3085 [caption] [phys:100] 表 B-31　操作审计日志表（audit_logs）；公共字段：G02、G14、G01
+P3086 [Compact] [phys:] 字段名
+P3087 [Compact] [phys:] 类型
+P3088 [Compact] [phys:] 约束与默认
+P3089 [Compact] [phys:] 含义
+P3090 [Compact] [phys:100] actor_user_id
+P3091 [Compact] [phys:] integer
+P3092 [Compact] [phys:] NULL FK3
+P3093 [Compact] [phys:] 操作用户编号
+P3094 [Compact] [phys:] action
+P3095 [Compact] [phys:95,96,99,100,101] varchar(80)
+P3096 [Compact] [phys:] NN
+P3097 [Compact] [phys:] 操作或审核动作
+P3098 [Compact] [phys:100] target_type
+P3099 [Compact] [phys:95,96,99,100,101] varchar(80)
+P3100 [Compact] [phys:] NULL
+P3101 [Compact] [phys:] 审计目标类型
+P3102 [Compact] [phys:100] target_id
+P3103 [Compact] [phys:] integer
+P3104 [Compact] [phys:] NULL
+P3105 [Compact] [phys:100] 多态审计目标编号
+P3106 [Compact] [phys:100] detail_json
+P3107 [Compact] [phys:] json
+P3108 [Compact] [phys:] NN
+P3109 [Compact] [phys:] 审计详情
+P3110 [Compact] [phys:100] ip_address
+P3111 [Compact] [phys:95,96,99,100,101] varchar(80)
+P3112 [Compact] [phys:] NULL
+P3113 [Compact] [phys:] 请求IP地址
+P3114 [Compact] [phys:100] user_agent
+P3115 [Compact] [phys:92,95,96,99,100] varchar(255)
+P3116 [Compact] [phys:] NULL
+P3117 [Compact] [phys:] 请求客户端信息
+P3118 [caption] [phys:100] 表 B-32　MCP访问令牌表（mcp_personal_access_tokens）；公共字段：G10、G15、G16、G01
+P3119 [Compact] [phys:] 字段名
+P3120 [Compact] [phys:] 类型
+P3121 [Compact] [phys:] 约束与默认
+P3122 [Compact] [phys:] 含义
+P3123 [Compact] [phys:] name
+P3124 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3125 [Compact] [phys:] NN
+P3126 [Compact] [phys:] 令牌名称
+P3127 [Compact] [phys:100] token_prefix
+P3128 [Compact] [phys:97,98,100,101,102] varchar(24)
+P3129 [Compact] [phys:] NN
+P3130 [Compact] [phys:] 令牌显示前缀
+P3131 [Compact] [phys:100] token_hash
+P3132 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P3133 [Compact] [phys:] NN UQ
+P3134 [Compact] [phys:] 令牌哈希
+P3135 [Compact] [phys:100] scopes_json
+P3136 [Compact] [phys:] jsonb
+P3137 [Compact] [phys:100] NN DF='[]'
+P3138 [Compact] [phys:] 令牌授权范围
+P3139 [Compact] [phys:100] revoked_at
+P3140 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3141 [Compact] [phys:] NULL
+P3142 [Compact] [phys:] 令牌撤销时间
+P3143 [Compact] [phys:100] last_used_at
+P3144 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3145 [Compact] [phys:] NULL
+P3146 [Compact] [phys:100] 最近令牌使用时间
+P3147 [caption] [phys:100] 表 B-33　MCP HTTP会话表（mcp_http_sessions）；公共字段：G10、G15、G16、G01
+P3148 [Compact] [phys:] 字段名
+P3149 [Compact] [phys:] 类型
+P3150 [Compact] [phys:] 约束与默认
+P3151 [Compact] [phys:] 含义
+P3152 [Compact] [phys:100] protocol_version
+P3153 [Compact] [phys:99,100] varchar(20)
+P3154 [Compact] [phys:] NN
+P3155 [Compact] [phys:] MCP协议版本
+P3156 [Compact] [phys:100] last_seen_at
+P3157 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3158 [Compact] [phys:92,100,102,103] NN DF=now()
+P3159 [Compact] [phys:100] 最近HTTP会话活动
+P3160 [caption] [phys:101] 表 B-34　智能体会话表（agent_sessions）；公共字段：G10、G05、G14、G01、G03
+P3161 [Compact] [phys:] 字段名
+P3162 [Compact] [phys:] 类型
+P3163 [Compact] [phys:] 约束与默认
+P3164 [Compact] [phys:] 含义
+P3165 [Compact] [phys:] status
+P3166 [Compact] [phys:101,102,103] varchar(32)
+P3167 [Compact] [phys:] NN
+P3168 [Compact] [phys:] 业务状态
+P3169 [Compact] [phys:95,98,100,101] provider
+P3170 [Compact] [phys:95,96,99,100,101] varchar(80)
+P3171 [Compact] [phys:] NN
+P3172 [Compact] [phys:] 服务提供方式
+P3173 [Compact] [phys:98,100,101] model_name
+P3174 [Compact] [phys:93,95,98,101] varchar(160)
+P3175 [Compact] [phys:] NN
+P3176 [Compact] [phys:] 模型名称
+P3177 [Compact] [phys:98,100,101] prompt_version
+P3178 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3179 [Compact] [phys:] NN
+P3180 [Compact] [phys:] 提示词版本
+P3181 [Compact] [phys:101] source_map_json
+P3182 [Compact] [phys:] jsonb
+P3183 [Compact] [phys:101] NN DF='{}'
+P3184 [Compact] [phys:] 会话来源映射
+P3185 [Compact] [phys:98,100,101] usage_json
+P3186 [Compact] [phys:] jsonb
+P3187 [Compact] [phys:101] NN DF='{}'
+P3188 [Compact] [phys:] 模型用量
+P3189 [Compact] [phys:101] final_state_json
+P3190 [Compact] [phys:] jsonb
+P3191 [Compact] [phys:101] NN DF='{}'
+P3192 [Compact] [phys:101] 会话最终状态快照
+P3193 [Compact] [phys:101] active_turn
+P3194 [Compact] [phys:] uuid
+P3195 [Compact] [phys:] NULL
+P3196 [Compact] [phys:101] 活动回合（逻辑）
+P3197 [caption] [phys:101] 表 B-35　智能体回合表（agent_turns）；公共字段：G10、G11、G15、G09、G01、G03、G13
+P3198 [Compact] [phys:] 字段名
+P3199 [Compact] [phys:] 类型
+P3200 [Compact] [phys:] 约束与默认
+P3201 [Compact] [phys:] 含义
+P3202 [Compact] [phys:] profile
+P3203 [Compact] [phys:97,98,101,103] varchar(16)
+P3204 [Compact] [phys:101] NN DF='fast'
+P3205 [Compact] [phys:] 回合配置档位
+P3206 [Compact] [phys:98,100,101] prompt_version
+P3207 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3208 [Compact] [phys:101] NN DF='agent-orchestrator-v1'
+P3209 [Compact] [phys:] 提示词版本
+P3210 [Compact] [phys:101] input_redacted
+P3211 [Compact] [phys:] text
+P3212 [Compact] [phys:] NN
+P3213 [Compact] [phys:] 脱敏用户输入
+P3214 [Compact] [phys:101] plan_json
+P3215 [Compact] [phys:] jsonb
+P3216 [Compact] [phys:101] NN DF='{}'
+P3217 [Compact] [phys:] 回合执行计划
+P3218 [Compact] [phys:101] plan_hash
+P3219 [Compact] [phys:92,93,95,96,99,100,101] varchar(64)
+P3220 [Compact] [phys:] NULL
+P3221 [Compact] [phys:] 执行计划哈希
+P3222 [Compact] [phys:101] budget_json
+P3223 [Compact] [phys:] jsonb
+P3224 [Compact] [phys:101] NN DF='{}'
+P3225 [Compact] [phys:] 回合预算
+P3226 [Compact] [phys:98,100,101] usage_json
+P3227 [Compact] [phys:] jsonb
+P3228 [Compact] [phys:101] NN DF='{}'
+P3229 [Compact] [phys:] 模型用量
+P3230 [Compact] [phys:99,101] worker_id
+P3231 [Compact] [phys:95,96,99,100,101] varchar(80)
+P3232 [Compact] [phys:] NULL
+P3233 [Compact] [phys:] 执行进程标识
+P3234 [Compact] [phys:99,101] heartbeat_at
+P3235 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3236 [Compact] [phys:] NULL
+P3237 [Compact] [phys:99,101] 最近执行心跳时间
+P3238 [Compact] [phys:99,101] lease_expires_at
+P3239 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3240 [Compact] [phys:] NULL
+P3241 [Compact] [phys:99,101] 执行租约到期时间
+P3242 [Compact] [phys:101] 补充约束：UQ(session_id, id)。
+P3243 [caption] [phys:101] 表 B-36　智能体事件表（agent_events）；公共字段：G17、G11、G01
+P3244 [Compact] [phys:] 字段名
+P3245 [Compact] [phys:] 类型
+P3246 [Compact] [phys:] 约束与默认
+P3247 [Compact] [phys:] 含义
+P3248 [Compact] [phys:] turn_id
+P3249 [Compact] [phys:] uuid
+P3250 [Compact] [phys:101] NULL FK35 C
+P3251 [Compact] [phys:] 智能体回合编号
+P3252 [Compact] [phys:101] event_type
+P3253 [Compact] [phys:101] varchar(48)
+P3254 [Compact] [phys:] NN
+P3255 [Compact] [phys:] 会话事件类型
+P3256 [Compact] [phys:101] payload_json
+P3257 [Compact] [phys:] jsonb
+P3258 [Compact] [phys:101] NN DF='{}'
+P3259 [Compact] [phys:101] 事件负载（业务脱敏）
+P3260 [caption] [phys:101] 表 B-37　智能体消息表（agent_messages）；公共字段：G17、G11、G01
+P3261 [Compact] [phys:] 字段名
+P3262 [Compact] [phys:] 类型
+P3263 [Compact] [phys:] 约束与默认
+P3264 [Compact] [phys:] 含义
+P3265 [Compact] [phys:] role
+P3266 [Compact] [phys:97,98,100,101,102] varchar(24)
+P3267 [Compact] [phys:] NN
+P3268 [Compact] [phys:] 消息角色
+P3269 [Compact] [phys:101] content_redacted
+P3270 [Compact] [phys:] text
+P3271 [Compact] [phys:] NN
+P3272 [Compact] [phys:] 脱敏消息正文
+P3273 [Compact] [phys:96,101] metadata_json
+P3274 [Compact] [phys:] jsonb
+P3275 [Compact] [phys:101] NN DF='{}'
+P3276 [Compact] [phys:] 元数据
+P3277 [caption] [phys:102] 表 B-38　工具执行步骤表（agent_steps）；公共字段：G17、G11、G18、G13
+P3278 [Compact] [phys:] 字段名
+P3279 [Compact] [phys:] 类型
+P3280 [Compact] [phys:] 约束与默认
+P3281 [Compact] [phys:] 含义
+P3282 [Compact] [phys:] turn_id
+P3283 [Compact] [phys:] uuid
+P3284 [Compact] [phys:] NN
+P3285 [Compact] [phys:102] 回合编号（逻辑）
+P3286 [Compact] [phys:102] sequence_no
+P3287 [Compact] [phys:] integer
+P3288 [Compact] [phys:] NN
+P3289 [Compact] [phys:] 回合内步骤序号
+P3290 [Compact] [phys:102] tool_name
+P3291 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3292 [Compact] [phys:] NN
+P3293 [Compact] [phys:] 工具名称
+P3294 [Compact] [phys:] risk
+P3295 [Compact] [phys:97,98,100,101,102] varchar(24)
+P3296 [Compact] [phys:] NN
+P3297 [Compact] [phys:102] 工具动作风险等级
+P3298 [Compact] [phys:102] arguments_summary
+P3299 [Compact] [phys:] text
+P3300 [Compact] [phys:] NN
+P3301 [Compact] [phys:] 工具参数摘要
+P3302 [Compact] [phys:102] result_redacted_json
+P3303 [Compact] [phys:] jsonb
+P3304 [Compact] [phys:] NULL
+P3305 [Compact] [phys:] 脱敏工具结果
+P3306 [Compact] [phys:102] idempotency_key
+P3307 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3308 [Compact] [phys:] NULL
+P3309 [Compact] [phys:102] 重复请求幂等标识
+P3310 [Compact] [phys:] status
+P3311 [Compact] [phys:101,102,103] varchar(32)
+P3312 [Compact] [phys:] NN
+P3313 [Compact] [phys:] 业务状态
+P3314 [Compact] [phys:102] started_at
+P3315 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3316 [Compact] [phys:92,100,102,103] NN DF=now()
+P3317 [Compact] [phys:102] 工具步骤开始时间
+P3318 [Compact] [phys:102] 补充约束：UQ(session_id, turn_id, sequence_no)；UQ(session_id, tool_name, idempotency_key) WHERE idempotency_key IS NOT NULL。
+P3319 [caption] [phys:102] 表 B-39　待确认工具动作表（agent_pending_actions）；公共字段：G10、G05、G14、G18、G16、G01
+P3320 [Compact] [phys:] 字段名
+P3321 [Compact] [phys:] 类型
+P3322 [Compact] [phys:] 约束与默认
+P3323 [Compact] [phys:] 含义
+P3324 [Compact] [phys:92,101,102] session_id
+P3325 [Compact] [phys:] uuid
+P3326 [Compact] [phys:102] NULL FK34 C
+P3327 [Compact] [phys:] 智能体会话编号
+P3328 [Compact] [phys:102] tool_name
+P3329 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3330 [Compact] [phys:] NN
+P3331 [Compact] [phys:] 工具名称
+P3332 [Compact] [phys:102] arguments_json
+P3333 [Compact] [phys:] jsonb
+P3334 [Compact] [phys:] NN
+P3335 [Compact] [phys:102] 待确认动作完整参数
+P3336 [Compact] [phys:102] arguments_summary
+P3337 [Compact] [phys:] text
+P3338 [Compact] [phys:] NN
+P3339 [Compact] [phys:] 工具参数摘要
+P3340 [Compact] [phys:102] idempotency_key
+P3341 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3342 [Compact] [phys:] NN
+P3343 [Compact] [phys:102] 重复请求幂等标识
+P3344 [Compact] [phys:] status
+P3345 [Compact] [phys:101,102,103] varchar(32)
+P3346 [Compact] [phys:102] NN DF='pending'
+P3347 [Compact] [phys:] 业务状态
+P3348 [Compact] [phys:102] decided_at
+P3349 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3350 [Compact] [phys:] NULL
+P3351 [Compact] [phys:102] 人工确认或拒绝时间
+P3352 [Compact] [phys:102] 补充约束：UQ(user_id, tool_name, idempotency_key)。
+P3353 [caption] [phys:102] 表 B-40　工具幂等记录表（tool_execution_keys）；公共字段：G18、G01
+P3354 [Compact] [phys:] 字段名
+P3355 [Compact] [phys:] 类型
+P3356 [Compact] [phys:] 约束与默认
+P3357 [Compact] [phys:] 含义
+P3358 [Compact] [phys:] user_id
+P3359 [Compact] [phys:] integer
+P3360 [Compact] [phys:] NN PK FK3
+P3361 [Compact] [phys:] 用户编号
+P3362 [Compact] [phys:102] tool_name
+P3363 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3364 [Compact] [phys:] NN PK
+P3365 [Compact] [phys:] 工具名称
+P3366 [Compact] [phys:102] idempotency_key
+P3367 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3368 [Compact] [phys:] NN PK
+P3369 [Compact] [phys:102] 重复请求幂等标识
+P3370 [Compact] [phys:102] result_json
+P3371 [Compact] [phys:] jsonb
+P3372 [Compact] [phys:] NN
+P3373 [Compact] [phys:102] 幂等请求已完成结果
+P3374 [Compact] [phys:102] 补充约束：PK(user_id, tool_name, idempotency_key)。
+P3375 [caption] [phys:102] 表 B-41　项目预警阈值表（project_alert_thresholds）；公共字段：G07、G08、G01、G03
+P3376 [Compact] [phys:] 字段名
+P3377 [Compact] [phys:] 类型
+P3378 [Compact] [phys:] 约束与默认
+P3379 [Compact] [phys:] 含义
+P3380 [Compact] [phys:] metric
+P3381 [Compact] [phys:97,100,102,103] varchar(60)
+P3382 [Compact] [phys:] NN
+P3383 [Compact] [phys:] 预警指标名
+P3384 [Compact] [phys:102] warn_threshold
+P3385 [Compact] [phys:97,102,103] double precision
+P3386 [Compact] [phys:] NN
+P3387 [Compact] [phys:] 警告阈值
+P3388 [Compact] [phys:102] critical_threshold
+P3389 [Compact] [phys:97,102,103] double precision
+P3390 [Compact] [phys:] NN
+P3391 [Compact] [phys:] 严重阈值
+P3392 [Compact] [phys:] enabled
+P3393 [Compact] [phys:] boolean
+P3394 [Compact] [phys:102] NN DF=true
+P3395 [Compact] [phys:102] 阈值规则启用标志
+P3396 [Compact] [phys:102] updated_by
+P3397 [Compact] [phys:] integer
+P3398 [Compact] [phys:] NN FK3
+P3399 [Compact] [phys:] 更新用户编号
+P3400 [Compact] [phys:102] 补充约束：UQ(project_id, metric)。
+P3401 [caption] [phys:103] 表 B-42　项目预警记录表（project_alerts）；公共字段：G07、G08、G01、G03
+P3402 [Compact] [phys:] 字段名
+P3403 [Compact] [phys:] 类型
+P3404 [Compact] [phys:] 约束与默认
+P3405 [Compact] [phys:] 含义
+P3406 [Compact] [phys:] metric
+P3407 [Compact] [phys:97,100,102,103] varchar(60)
+P3408 [Compact] [phys:] NN
+P3409 [Compact] [phys:] 预警指标名
+P3410 [Compact] [phys:103] metric_value
+P3411 [Compact] [phys:97,102,103] double precision
+P3412 [Compact] [phys:] NN
+P3413 [Compact] [phys:103] 本次预警指标观测值
+P3414 [Compact] [phys:] level
+P3415 [Compact] [phys:103] varchar(12)
+P3416 [Compact] [phys:] NN
+P3417 [Compact] [phys:] 告警级别
+P3418 [Compact] [phys:] status
+P3419 [Compact] [phys:97,98,101,103] varchar(16)
+P3420 [Compact] [phys:103] NN DF='open'
+P3421 [Compact] [phys:] 预警处置状态
+P3422 [Compact] [phys:] detail
+P3423 [Compact] [phys:] text
+P3424 [Compact] [phys:] NN DF=''
+P3425 [Compact] [phys:] 预警详情
+P3426 [Compact] [phys:103] acknowledged_by
+P3427 [Compact] [phys:] integer
+P3428 [Compact] [phys:] NULL FK3
+P3429 [Compact] [phys:103] 预警确认用户编号
+P3430 [Compact] [phys:103] acknowledged_at
+P3431 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3432 [Compact] [phys:] NULL
+P3433 [Compact] [phys:] 预警确认时间
+P3434 [Compact] [phys:103] 补充约束：CK(level IN ('warn', 'critical'))；CK(status IN ('open', 'acknowledged', 'resolved'))；UQ(project_id, metric) WHERE status = 'open'。
+P3435 [caption] [phys:103] 表 B-43　建议反馈记录表（agent_suggestion_feedback）；公共字段：G07、G08
+P3436 [Compact] [phys:] 字段名
+P3437 [Compact] [phys:] 类型
+P3438 [Compact] [phys:] 约束与默认
+P3439 [Compact] [phys:] 含义
+P3440 [Compact] [phys:103] suggestion_key
+P3441 [Compact] [phys:92,93,94,95,96,98,100,101,102,103] varchar(120)
+P3442 [Compact] [phys:] NN
+P3443 [Compact] [phys:103] 项目内建议唯一标识
+P3444 [Compact] [phys:] status
+P3445 [Compact] [phys:97,98,101,103] varchar(16)
+P3446 [Compact] [phys:] NN
+P3447 [Compact] [phys:] 建议反馈状态
+P3448 [Compact] [phys:] mode
+P3449 [Compact] [phys:97,98,101,103] varchar(16)
+P3450 [Compact] [phys:] NN
+P3451 [Compact] [phys:] 反馈记录模式
+P3452 [Compact] [phys:103] related_labels
+P3453 [Compact] [phys:] text
+P3454 [Compact] [phys:] NN DF=''
+P3455 [Compact] [phys:103] 建议所涉实体名称
+P3456 [Compact] [phys:] summary
+P3457 [Compact] [phys:] text
+P3458 [Compact] [phys:] NN DF=''
+P3459 [Compact] [phys:] 建议摘要
+P3460 [Compact] [phys:103] acted_by
+P3461 [Compact] [phys:] integer
+P3462 [Compact] [phys:] NN FK3
+P3463 [Compact] [phys:] 反馈用户编号
+P3464 [Compact] [phys:103] acted_at
+P3465 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3466 [Compact] [phys:92,100,102,103] NN DF=now()
+P3467 [Compact] [phys:] 反馈时间
+P3468 [Compact] [phys:103] 补充约束：CK(status IN ('accepted', 'ignored', 'expired'))；UQ(project_id, suggestion_key)。
+P3469 [caption] [phys:103] 表 B-44　历史迁移版本表（alembic_version）
+P3470 [Compact] [phys:] 字段名
+P3471 [Compact] [phys:] 类型
+P3472 [Compact] [phys:] 约束与默认
+P3473 [Compact] [phys:] 含义
+P3474 [Compact] [phys:94,103] version_num
+P3475 [Compact] [phys:101,102,103] varchar(32)
+P3476 [Compact] [phys:] NN PK
+P3477 [Compact] [phys:103] 历史Alembic版本
+P3478 [caption] [phys:103] 表 B-45　Rust结构版本表（rust_schema_versions）
+P3479 [Compact] [phys:] 字段名
+P3480 [Compact] [phys:] 类型
+P3481 [Compact] [phys:] 约束与默认
+P3482 [Compact] [phys:] 含义
+P3483 [Compact] [phys:] version
+P3484 [Compact] [phys:] integer
+P3485 [Compact] [phys:] NN PK
+P3486 [Compact] [phys:103] Rust结构版本
+P3487 [Compact] [phys:103] applied_at
+P3488 [Compact] [phys:91,92,95,96,99,100,101,102,103] timestamptz
+P3489 [Compact] [phys:92,100,102,103] NN DF=now()
+P3490 [Compact] [phys:103] 结构版本首次应用时间
+P3491 [heading 1] [phys:7,104] 附录 C　智能体工具规格与任务模板清单
+P3492 [First Paragraph] [phys:104] 本附录列出接入 MCP 工具注册表的 12 项工具，工具名称与正文表 4-11 一一对应，其权限范围与审计动作对照见表 C-1，固定任务模板的注册与验证状态见表 C-2。表 4-11 中标为高风险的 5 项工具均需进入人工确认队列后方可执行。
+P3493 [caption] [phys:104] 表 C-1　MCP 工具权限范围与审计动作对照
+P3494 [Compact] [phys:] 工具
+P3495 [Compact] [phys:] 权限范围
+P3496 [Compact] [phys:] 审计动作
+P3497 [Compact] [phys:] 笔记检索
+P3498 [Compact] [phys:104] project:read, notes:read
+P3499 [Compact] [phys:] 搜索已审核笔记
+P3500 [Compact] [phys:] 资料检索
+P3501 [Compact] [phys:104] project:read, rag:read
+P3502 [Compact] [phys:] RAG 资料检索
+P3503 [Compact] [phys:] 图谱查询
+P3504 [Compact] [phys:104] project:read, graph:read
+P3505 [Compact] [phys:] 图谱查询
+P3506 [Compact] [phys:] 成员查询
+P3507 [Compact] [phys:104] project:read, members:read
+P3508 [Compact] [phys:] 成员读取
+P3509 [Compact] [phys:] 任务模板查询
+P3510 [Compact] [phys:104] agent:read
+P3511 [Compact] [phys:] 任务模板列举
+P3512 [Compact] [phys:] 创建草稿笔记
+P3513 [Compact] [phys:104] project:write, notes:draft
+P3514 [Compact] [phys:] 创建草稿笔记
+P3515 [Compact] [phys:] 创建报告草稿
+P3516 [Compact] [phys:104] project:write, agent:draft
+P3517 [Compact] [phys:] 创建报告草稿
+P3518 [Compact] [phys:] 提交笔记审核
+P3519 [Compact] [phys:104] project:write, notes:submit
+P3520 [Compact] [phys:] 提交笔记审核
+P3521 [Compact] [phys:] 审批笔记
+P3522 [Compact] [phys:104] project:review, notes:review
+P3523 [Compact] [phys:] 审批/退回笔记
+P3524 [Compact] [phys:] 资料审核决定
+P3525 [Compact] [phys:104] project:review, files:review
+P3526 [Compact] [phys:] 资料审核决定
+P3527 [Compact] [phys:] 重建索引
+P3528 [Compact] [phys:104] project:manage, index:rebuild
+P3529 [Compact] [phys:] 重建索引
+P3530 [Compact] [phys:] 变更成员权限
+P3531 [Compact] [phys:104] project:manage, members:write
+P3532 [Compact] [phys:] 变更成员权限
+P3533 [caption] [phys:104] 表 C-2　固定任务模板注册表
+P3534 [Compact] [phys:] 模板
+P3535 [Compact] [phys:] 中文标签
+P3536 [Compact] [phys:] 状态
+P3537 [Compact] [phys:104] experiment_summary
+P3538 [Compact] [phys:] 实验总结
+P3539 [Compact] [phys:104] 已完成生成功能验证
+P3540 [Compact] [phys:104] weekly_report
+P3541 [Compact] [phys:] 周报
+P3542 [Compact] [phys:104] 已完成生成功能验证
+P3543 [Compact] [phys:104] stage_report
+P3544 [Compact] [phys:] 项目阶段报告
+P3545 [Compact] [phys:104] 已完成生成功能验证
+P3546 [Compact] [phys:104] graph_overview
+P3547 [Compact] [phys:104] 实验过程图谱概览
+P3548 [Compact] [phys:104] 已完成生成功能验证
+P3549 [Compact] [phys:104] literature_review
+P3550 [Compact] [phys:] 文献综述草稿
+P3551 [Compact] [phys:] 模板已定义
+P3552 [Compact] [phys:104] anomaly_detection
+P3553 [Compact] [phys:] 实验异常检测
+P3554 [Compact] [phys:] 模板已定义
+P3555 [heading 1] [phys:7,105] 附录 D　实验附件与数据完整性清单
+P3556 [heading 2] [phys:7,105] D.1 GSE111619 数据文件完整性
+P3557 [First Paragraph] [phys:105] NCBI GEO 系列 GSE111619 收录 H226 细胞在对照与 p63 靶向 shRNA 条件下的 Poly(A)+ RNA-seq 数据[77]。本文将其整理为检索诊断语料，原始文件采用 SHA-256 校验；表 D-1 展示各文件校验值前 16 位。
+P3558 [caption] [phys:105] 表 D-1　GSE111619 数据文件完整性清单
+P3559 [Compact] [phys:] 文件
+P3560 [Compact] [phys:] 类型
+P3561 [Compact] [phys:105] SHA-256（前 16 位）
+P3562 [Compact] [phys:105] GSE111619_family.soft.gz
+P3563 [Compact] [phys:105] SOFT 元数据（gzip）
+P3564 [Compact] [phys:105] fbfb8aa0a5b0bee9…
+P3565 [Compact] [phys:105] GSE111619_series_matrix.txt.gz
+P3566 [Compact] [phys:105] 系列矩阵（gzip）
+P3567 [Compact] [phys:105] b8086b3dad39d112…
+P3568 [Compact] [phys:105] GSE111619_HTSeq_counts.txt.gz
+P3569 [Compact] [phys:105] 基因计数矩阵（gzip）
+P3570 [Compact] [phys:105] 662eeaa22c55beb5…
+P3571 [Body Text] [phys:105] 计数矩阵含 4 个样本列、25369 个基因行；自动生成的 4 条 RNA-Seq 结构化笔记作为检索诊断语料。
+P3572 [heading 2] [phys:7,105] D.2 实验附件归档清单
+P3573 [First Paragraph] [phys:105] 各批次实验的原始记录与评价材料见表 D-2。
+P3574 [caption] [phys:105] 表 D-2　实验附件归档清单
+P3575 [Compact] [phys:] 附件内容
+P3576 [Compact] [phys:] 对应实验
+P3577 [Compact] [phys:105] 问答实验原始记录（40 条）、答案规则与逐题判定
+P3578 [Compact] [phys:] 实验二
+P3579 [Compact] [phys:105] 补充基线与复现批次记录
+P3580 [Compact] [phys:] 实验三
+P3581 [Compact] [phys:105] 多方法扩展批次记录与自动评分明细
+P3582 [Compact] [phys:] 实验三扩展
+P3583 [Compact] [phys:105] 迁移前Python原型参考关系核验明细（修复前/后）与阈值敏感性结果
+P3584 [Compact] [phys:] 实验一
+P3585 [Compact] [phys:105] 系统安全性质测试明细
+P3586 [Compact] [phys:] 6.2
+P3587 [Compact] [phys:105] 提示词版本登记清单（历史批次与当前版本）
+P3588 [Compact] [phys:] 4.7.5
+P3589 [Compact] [phys:105] 公开英文日记、运行前参考标注、原始图谱及逐条错误
+P3590 [Compact] [phys:105] 6.6关系抽取补充测试（2026-10-10）
+P3591 [Body Text] [phys:105] MCP协议来源：Anthropic，Introducing the Model Context Protocol，2024年11月25日，https://www.anthropic.com/news/model-context-protocol；2025年6月18日版规范，https://modelcontextprotocol.io/specification/2025-06-18（访问日期：2026年10月1日）。
+P3592 [Body Text] [phys:105] 补验附件（T114，2026 年 10 月 1 日）包括：旧 40 条回答的 GPT 结构化评判、按运行前规则开展的 12 题四组方法三次复测、四种 GPT 角色的接口操作记录，以及资料入库后的 9 场操作。附件见 t114-supplement-validation-2026-10-01.md 及 t114-2026-10-01 目录。
+P3593 [Body Text] [phys:106] 关系抽取补充测试附件包括三份PDF来源与选材记录、12条原文单元、74条最终内容参考关系、56项排除记录、28组接口输入、原始及重建图谱、逐笔记计数和误抽漏抽清单。详见kg-heldout-T136-2026-10-10.md及t136-2026-10-10目录。公开来源如下，读取日期为2026年10月10日。
+P3594 [Body Text] [phys:106] IISc Bangalore 2019 Wetlab Notebook：物理第2—3页，2019年4月9日、4月10日、4月13日及5月14日，4个单元、23条内容参考关系。https://static.igem.org/mediawiki/2019/3/34/T--IISc-Bangalore--Wetlab_Notebook.pdf
+P3595 [Body Text] [phys:106] British Columbia 2021 LabNotebook：物理第1—2页，2021年6月30日、7月5日、7月6日及7月8日，4个单元、24条内容参考关系。https://static.igem.org/mediawiki/2021/4/40/T--British_Columbia--LabNotebook.pdf
+P3596 [Body Text] [phys:106] Lab Notebook（公开路径teams/5863，团队及作者未确认）：物理第2—4页，2025年5月4日、6月11日、6月12日及6月26日，4个单元、27条内容参考关系。https://static.igem.wiki/teams/5863/wetlab/notebook.pdf
+P3597 [heading 2] [phys:7,106] D.3 项目一样本原文展示
+P3598 [Body Text] [phys:106] 图D-1—D-4展示四条合成测试笔记的标题、类型、日期、字段与正文。图D-5、D-6展示2026年6月11日原型运行编号4、项目编号19检索来源中的七份SOP短提要。
+P3599 [Captioned Figure] [phys:] 
+P3600 [Image Caption] [phys:107] 图 D-1　项目一PCR固定笔记原文展示
+P3601 [Captioned Figure] [phys:] 
+P3602 [Image Caption] [phys:107] 图 D-2　项目一细胞活力固定笔记原文展示
+P3603 [Captioned Figure] [phys:] 
+P3604 [Image Caption] [phys:108] 图 D-3　项目一Western Blot固定笔记原文展示
+P3605 [Captioned Figure] [phys:] 
+P3606 [Image Caption] [phys:108] 图 D-4　项目一qPCR固定笔记原文展示
+P3607 [Captioned Figure] [phys:] 
+P3608 [Image Caption] [phys:109] 图 D-5　原型批次SOP检索来源文本（1/2）
+P3609 [Captioned Figure] [phys:] 
+P3610 [Image Caption] [phys:109] 图 D-6　原型批次SOP检索来源文本（2/2）
+P3611 [heading 2] [phys:7,109] D.4 测试运行与性能观测记录
+P3612 [Body Text] [phys:109] 表D-3列出浏览器、Rust及legacy测试的运行环境与结果。2026年8月20日的9项浏览器场景为另一批次。
+P3613 [caption] [phys:110] 表 D-3　测试运行记录
+P3614 [] [phys:] 批次
+P3615 [] [phys:] 对象及环境
+P3616 [] [phys:] 运行结果
+P3617 [] [phys:] 记录说明
+P3618 [] [phys:110] 2026-08-10
+P3619 [] [phys:110] Playwright；固定LLM桩
+P3620 [] [phys:110] 8 passed；0 skipped / unexpected / flaky；107.06 s
+P3621 [] [phys:110] validation-results.json
+P3622 [] [phys:110] 2026-08-28
+P3623 [] [phys:110] Rust 1.88.0；隔离pgvector/pg16
+P3624 [] [phys:110] agent_runtime::tests：8 passed，0 failed；其中3项为新增测试
+P3625 [] [phys:110] 基线bbe72eb
+P3626 [] [phys:110] 2026-08-28
+P3627 [] [phys:110] legacy Python pytest；SQLite
+P3628 [] [phys:110] 346 passed，11 skipped；10.43 s
+P3629 [] [phys:110] pytest运行摘要
+P3630 [Body Text] [phys:110] Rust测试命令为cargo test --locked --all-targets --no-default-features agent_runtime::tests -- --test-threads=1。三项新增测试依次为high_risk_tool_waits_for_confirmation_and_rejection_blocks_execution、confirmed_action_executes_once_and_same_key_replays_cached_result、expired_or_consumed_pending_actions_cannot_be_confirmed；模块输出为8 passed、0 failed、254 filtered out。
+P3631 [Body Text] [phys:110] 持续观测时间：2026年10月3日23:36:40—23:37:40（北京时间），首尾revision均为fb87ce38c08aa3444759a47adda56e491ad05db2，数据规模10项目、46笔记、44文件。当次汇总记载10 workers各约1请求/s，三个基础端点各200次，共600次HTTP 200，请求标识全部匹配；墙时60.01074 s。统计见6.2节。readonly-sustained-load-20261003.json仅保存当次汇总及原临时文件路径、哈希说明，未留逐请求明细，无法据其独立复算整体及分端点p95，或逐项核对请求标识。
+P3632 [Body Text] [phys:110] 关系抽取测试采用Rust版本b6cd3a24f6edb5bdf971d8d76cc7635139b32954，于2026年10月10日在独立PostgreSQL 16/pgvector数据库和新存储卷中运行，关闭种子自动导入。同一测试管理员通过接口执行创建与审批角色，核验笔记状态流转；共3个项目、28条批准笔记、165个实体、201条关系；174次接口请求全部返回HTTP 200。首次笔记导入时间为北京时间23:52:28，运行于23:52:30完成；原始图谱与完整关系键评分明细保存在对应附件。
+P3633 [Body Text] [phys:110] 2026年10月11日执行契约整改以代码基线b6cd3a24为起点，在独立干净检出中纳入11个Rust后端文件、3个前端实现文件、1个重启探针和3个浏览器验收测试文件。原关系抽取规则和既有实验快照保持，当前实现回归单独登记。
+P3634 [Body Text] [phys:110] 最终验证快照：0268b88a949a78a72198ec80542c6306ed7f71cc。
+P3635 [Body Text] [phys:110] Rust全量测试在前一验证快照6d52a600上完成；后续仅调整重启探针的脚本调用、租约回收观察窗口，以及浏览器验收测试的定位、响应类型、实验快照绑定及退出导航同步，11个后端源码及Rust依赖、工具链配置的SHA-256完全一致。Rust 1.88.0与隔离PostgreSQL 16/pgvector环境下，库测试282项、入口测试2项全部通过，库测试耗时391.58 s；格式和严格Clippy检查通过。前端lint、typecheck与生产构建通过；浏览器验收测试的ESLint、严格TypeScript与9场景清单检查通过。脚本检查在最终0268b88a快照重新执行，59个已跟踪测试文件对应546项全部通过，耗时66.82 s；执行前后脚本输入哈希相同。
+P3636 [Body Text] [phys:111] 当前集成回归核验了同键参数绑定、确认状态与有效期、固定项目与当前权限，以及执行键失败时数据库效果、领域审计及确认状态的整体回滚。四种未批准状态及残留关系均未进入四类固定任务的可见证据；重抽可重新计时而不增加覆盖。模型桩验证流程与来源隔离。外部请求及费用不受数据库回滚保证，提交后的展示事件也不属于该原子提交。嵌入调用在事务持锁期间执行，可能延长锁持有时间；本轮未测其耗时或费用上界。新增SSE异常状态完成后端集成/回放与前端静态核验，尚未完成这些异常分支的浏览器验收。
+P3637 [Body Text] [phys:111] 同一最终快照构建的隔离Docker栈通过全部9个浏览器场景，0失败、0跳过、0重试，浏览器阶段耗时140.16 s。随后对运行中实验执行SIGKILL；租约回收后状态为interrupted，探针核验1个用例仍未执行；恢复后状态为completed，已完成1个用例。重启探针及完整系统脚本通过。
+P3638 [Body Text] [phys:111] 本轮短负载使用并发10，对/health、/ready、/projects各发30次读取请求，90次均成功且请求标识回显一致，错误0；客户端汇总p95=20 ms、最大值22 ms。该脚本采用排序后最近秩p95，报告仅保留汇总、未保存逐请求延迟，因此不能由存档独立重算p95。本轮结果与历史600次运行分开，不替代其缺失的原始明细。

@@ -1,0 +1,76 @@
+{
+  "task": "T150",
+  "status": "PARTIAL_HISTORICAL_IDENTITY_RECOVERED",
+  "batches": [
+    {
+      "batch": "T114-Rust-v1/v2",
+      "runtime": "Rust Axum",
+      "code_context_revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+      "runtime_identity": "agent-work/t114-2026-10-01/rust-retest-v2/runtime-identity.json",
+      "frozen_source_manifest": "backend_source_manifest contains 65 source entries",
+      "freeze": "agent-work/t114-2026-10-01/rust-retest-v2/freeze-manifest.json",
+      "results": "agent-work/t114-2026-10-01/rust-retest-v2/results.jsonl",
+      "observations": "144 saved generation cases; 144 saved AI judgments; 40 separate supplemental AI judgments",
+      "current_source_relation": "16 current source hashes drift from historical freeze but archived b6 blobs match; do not equate current dirty source with historical deployed image"
+    },
+    {
+      "batch": "T136-public-log-KG",
+      "runtime": "Rust Axum",
+      "code_context_revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+      "freeze": "agent-work/t136-2026-10-10/freeze-manifest.json",
+      "results": "agent-work/t136-2026-10-10/run/official/observations.json",
+      "reference_identity": "AI-assisted preliminary reference: 74 relations; independent human reference pending",
+      "observations": "12 source records per condition; preserved raw graphs and original public PDFs",
+      "current_source_relation": "16 later changes recovered as b6 blobs for verification; historical code identity distinct from current source"
+    },
+    {
+      "batch": "T139-final-system-validation",
+      "runtime": "Rust + Next.js",
+      "repository": "T139",
+      "validated_revision": "0268b88a949a78a72198ec80542c6306ed7f71cc",
+      "identity": "docs/thesis-fixes-T139-2026-10-11/snapshot-input.json",
+      "result_manifest": "docs/thesis-fixes-T139-2026-10-11/final-manifest.json",
+      "caution": "final-snapshot-input.json is an earlier checkpoint; final snapshot-input.json and manifest are authoritative for final revision. Preserve both originals."
+    },
+    {
+      "batch": "T141-final-validation",
+      "runtime": "Rust + Next.js",
+      "repository": "T141",
+      "baseline_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+      "validated_revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+      "identity": "docs/thesis-fixes-T141-2026-10-11/validation-input.json",
+      "source_manifest": "docs/thesis-fixes-T141-2026-10-11/current-source-manifest.json",
+      "observations": "65 frozen source inputs match 9548; current main has 7 later source changes; do not reinterpret historical passed tests as current dirty-source validation"
+    },
+    {
+      "batch": "T148-fair-encoding-budget-controls",
+      "runtime": "offline frozen context plus external generation already recorded",
+      "code_identity": "Frozen scripts/context/facts/tokenizer with 13 SHA-bound inputs; not a new whole-repository Git commit",
+      "context_origin": "T114 publicly sourced GEO-derived frozen data reused retrospectively",
+      "freeze": "agent-work/t148-2026-10-12/rag-fair-batch/freeze-manifest.json",
+      "results": "agent-work/t148-2026-10-12/rag-fair-batch/results.jsonl",
+      "observations": "48 stored cases across four arms; primary semantic outcome uncomputed; auxiliary lexical coverage only; no human evaluation or new independent generalization"
+    },
+    {
+      "batch": "T148-bounded-latency-smokes",
+      "runtime": "Rust Axum production-shaped Docker stack",
+      "records": [
+        "docs/project-optimization-T148-2026-10-12/system/mixed-load-records.jsonl",
+        "docs/project-optimization-T148-2026-10-12/system/mixed-short-soak-records.jsonl"
+      ],
+      "observations": "200 and 350 per-attempt records; do not replace the missing historic 600-request experiment; no external-model total latency/capacity/long-term reliability claim"
+    },
+    {
+      "batch": "T150-current-source",
+      "runtime": "Rust production backend + Next.js frontend; legacy test artifacts explicitly retained as historical",
+      "code_context_revision": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+      "identity": "current-source-snapshot.json",
+      "observations": "Newly collected dirty working-tree source snapshot; not a new commit, test run or deployment"
+    }
+  ],
+  "historical_unversioned_not_recovered": [
+    "2026-06-11 historical 20-question Python batch",
+    "2026-07-13 multi-arm historical development comparison"
+  ],
+  "comparison_boundary": "Different dates, source sizes, runtime versions or retrospective judgments remain distinct; hashes and later commits do not retroactively version unversioned runs."
+}

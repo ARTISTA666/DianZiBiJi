@@ -1,0 +1,38 @@
+{
+  "utc": "2026-10-10T15:52:29.160419+00:00",
+  "path": "/projects/2/notes",
+  "method": "POST",
+  "request": {
+    "title": "ubc2021-01 Gel electrophoresis of PCR products",
+    "experiment_type": "agarose_gel_electrophoresis",
+    "experiment_date": "2021-06-30",
+    "fixed_fields_json": {
+      "reagents": [
+        "DNA ladder 1kb plus",
+        "gel stain"
+      ],
+      "instrument": [
+        "gel analyzer"
+      ],
+      "sample": [
+        "PCR products of Ryan’s primer design"
+      ],
+      "result": []
+    },
+    "content_json": {}
+  },
+  "status": 200,
+  "response": {
+    "id": 17,
+    "project_id": 2,
+    "template_id": null,
+    "title": "ubc2021-01 Gel electrophoresis of PCR products",
+    "experiment_type": "agarose_gel_electrophoresis",
+    "experiment_date": "2021-06-30",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 17,
+    "created_at": "2026-10-10T15:52:29.164340Z",
+    "updated_at": "2026-10-10T15:52:29.164340Z"
+  }
+}

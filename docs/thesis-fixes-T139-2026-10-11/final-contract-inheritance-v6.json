@@ -1,0 +1,438 @@
+{
+  "schema_version": 1,
+  "task": "T139",
+  "reviewer": "backend-engineer",
+  "status": "hash_inheritance_and_static_contract_verified",
+  "verified_at_utc": "2026-10-11T07:33:54.265733+00:00",
+  "scope": "Independent read-only verification of 11 backend files and six Rust validation configuration files, plus the five-mode E2E snapshot-binding change and pure-LLM restart request. This new result preserves original Rust execution identity and does not establish browser runtime acceptance.",
+  "identity": {
+    "actual_rust_executed_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+    "previous_inherited_revision": "9e48d93b133a62ace8207a5a274c3ce731fa2b37",
+    "newly_inherited_revision": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+    "git_parent": "9e48d93b133a62ace8207a5a274c3ce731fa2b37",
+    "primary_head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "snapshot_head": "4f660060ba6012266d7e8fa8470000c0ee423cd6",
+    "snapshot_worktree_clean": true,
+    "manifest_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/snapshot-input.json",
+    "manifest_sha256": "87020f1f632ae38f657475bd96979c4b06ad51731a3f475b2d151fbbd4e4c95f",
+    "v6_is_inheritance_not_new_rust_execution": true
+  },
+  "outcome": {
+    "backend_file_count": 11,
+    "backend_hash_mismatches": 0,
+    "configuration_count": 6,
+    "configuration_hash_mismatches": 0,
+    "original_full_rust_result_inherited": {
+      "passed": 284,
+      "library_passed": 282,
+      "main_passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "filtered_out": 0
+    },
+    "backend_code_review_hashes_matched": 8,
+    "backend_files_absent_from_original_code_review_hash_map": [
+      "backend/src/api/agents.rs",
+      "backend/src/api/project_alert.rs",
+      "backend/src/project_alert.rs"
+    ],
+    "five_mode_corpus_graph_binding": "pass_static_contract_review",
+    "pure_llm_restart_has_no_inapplicable_binding": "pass_static_contract_review",
+    "browser_result_for_v6": "not established by this review",
+    "new_sse_abnormal_states_browser_verified": false
+  },
+  "backend_file_checks": [
+    {
+      "path": "backend/src/api/agent_runtime.rs",
+      "sha256": {
+        "primary": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "snapshot_worktree": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "executed_6d52_blob": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "new_v6_blob": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "prior_v5_review": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "manifest": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887"
+      },
+      "matches": true,
+      "code_review_sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887"
+    },
+    {
+      "path": "backend/src/api/agents.rs",
+      "sha256": {
+        "primary": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "snapshot_worktree": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "executed_6d52_blob": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "new_v6_blob": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "prior_v5_review": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "manifest": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067"
+      },
+      "matches": true,
+      "code_review_sha256": null
+    },
+    {
+      "path": "backend/src/api/files.rs",
+      "sha256": {
+        "primary": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "snapshot_worktree": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "executed_6d52_blob": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "new_v6_blob": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "prior_v5_review": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "manifest": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117"
+      },
+      "matches": true,
+      "code_review_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117"
+    },
+    {
+      "path": "backend/src/api/knowledge_graph.rs",
+      "sha256": {
+        "primary": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "snapshot_worktree": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "executed_6d52_blob": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "new_v6_blob": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "prior_v5_review": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "manifest": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4"
+      },
+      "matches": true,
+      "code_review_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4"
+    },
+    {
+      "path": "backend/src/api/mcp.rs",
+      "sha256": {
+        "primary": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "snapshot_worktree": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "executed_6d52_blob": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "new_v6_blob": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "prior_v5_review": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "manifest": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3"
+      },
+      "matches": true,
+      "code_review_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3"
+    },
+    {
+      "path": "backend/src/api/notes.rs",
+      "sha256": {
+        "primary": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "snapshot_worktree": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "executed_6d52_blob": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "new_v6_blob": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "prior_v5_review": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "manifest": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69"
+      },
+      "matches": true,
+      "code_review_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69"
+    },
+    {
+      "path": "backend/src/api/project_alert.rs",
+      "sha256": {
+        "primary": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "snapshot_worktree": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "executed_6d52_blob": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "new_v6_blob": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "prior_v5_review": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "manifest": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e"
+      },
+      "matches": true,
+      "code_review_sha256": null
+    },
+    {
+      "path": "backend/src/api/projects.rs",
+      "sha256": {
+        "primary": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "snapshot_worktree": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "executed_6d52_blob": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "new_v6_blob": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "prior_v5_review": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "manifest": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985"
+      },
+      "matches": true,
+      "code_review_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985"
+    },
+    {
+      "path": "backend/src/api/rag/mod.rs",
+      "sha256": {
+        "primary": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "snapshot_worktree": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "executed_6d52_blob": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "new_v6_blob": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "prior_v5_review": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "manifest": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a"
+      },
+      "matches": true,
+      "code_review_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a"
+    },
+    {
+      "path": "backend/src/project_alert.rs",
+      "sha256": {
+        "primary": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "snapshot_worktree": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "executed_6d52_blob": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "new_v6_blob": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "prior_v5_review": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "manifest": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392"
+      },
+      "matches": true,
+      "code_review_sha256": null
+    },
+    {
+      "path": "backend/src/rag/index.rs",
+      "sha256": {
+        "primary": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "snapshot_worktree": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "executed_6d52_blob": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "new_v6_blob": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "prior_v5_review": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "manifest": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf"
+      },
+      "matches": true,
+      "code_review_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf"
+    }
+  ],
+  "configuration_file_checks": [
+    {
+      "path": "backend/Cargo.lock",
+      "sha256": {
+        "primary": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "snapshot_worktree": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "executed_6d52_blob": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "new_v6_blob": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "prior_v5_review": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "manifest": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe"
+      },
+      "matches": true
+    },
+    {
+      "path": "backend/Cargo.toml",
+      "sha256": {
+        "primary": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "snapshot_worktree": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "executed_6d52_blob": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "new_v6_blob": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "prior_v5_review": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "manifest": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e"
+      },
+      "matches": true
+    },
+    {
+      "path": "backend/rust-toolchain.toml",
+      "sha256": {
+        "primary": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "snapshot_worktree": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "executed_6d52_blob": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "new_v6_blob": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "prior_v5_review": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "manifest": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2"
+      },
+      "matches": true
+    },
+    {
+      "path": "docker-compose.test-db.yml",
+      "sha256": {
+        "primary": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "snapshot_worktree": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "executed_6d52_blob": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "new_v6_blob": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "prior_v5_review": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "manifest": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/ops/run-rust-db-tests.sh",
+      "sha256": {
+        "primary": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "snapshot_worktree": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "executed_6d52_blob": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "new_v6_blob": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "prior_v5_review": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "manifest": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec"
+      },
+      "matches": true
+    },
+    {
+      "path": "scripts/ops/docker-compose-with-revision.sh",
+      "sha256": {
+        "primary": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "snapshot_worktree": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "executed_6d52_blob": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "new_v6_blob": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "prior_v5_review": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "manifest": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d"
+      },
+      "matches": true
+    }
+  ],
+  "original_evidence": {
+    "existing_record_sha256_unchanged": {
+      "backend/final-contract-inheritance-v5.json": "e6b49203a52a7d4510ebdace9dfb6e66b7270961904e2d41340e5ff7209ff1a5",
+      "backend/final-contract-verification.json": "db05cb60477db428340c158227544a082506d14bf62aae79f0be6d71c4f9176f",
+      "backend/code-review.json": "30cad06af6a45a5d66b28628f48549ae439ecbbc296f65f2bb07eec2c716aa98",
+      "validation/rust-db-tests-full-result.json": "fa7a99359a2a17114f99a1ab3fd6ac839e17cd64a6c2f5760aa203c3ec5fdabd",
+      "validation/rust-db-tests-full.log": "f08ef866b669722218393dcbddd52aa587a426adb9c387574d0d602835cafbf2"
+    },
+    "actual_executed_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+    "actual_cargo_flags": "cargo +1.88.0 test --locked --all-targets --no-default-features -- --test-threads=1",
+    "coverage_interpretation": "R05–R08/follow-up add seven distinct test functions. R09 extends two existing functions, so it adds matrix assertions without increasing the test-function count. All nine appear once with ok in the 284-entry log. The wrapper sets TEST_DATABASE_URL, and its log confirms the isolated PostgreSQL container became healthy; this is not an env-absent skipped DB run.",
+    "no_tests_rerun": true,
+    "no_original_result_rewrite": true,
+    "no_original_log_rewrite": true
+  },
+  "e2e_delta": {
+    "changed_files_relative_to_v5": [
+      "frontend/e2e/system.spec.ts",
+      "frontend/e2e/user-journeys.spec.ts"
+    ],
+    "scenario_files": [
+      {
+        "path": "frontend/e2e/system.spec.ts",
+        "primary_and_snapshot_sha256": "4176bc407aa30774ace3111bbb40343048bf56b9f934a7701efacfcdc86b9ea2",
+        "scenario_names": [
+          "登录并完成笔记审批",
+          "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
+          "独立评价人只能在盲评页面提交评价",
+          "系统管理员完成账号、小组和审计闭环"
+        ],
+        "count": 4,
+        "names_unchanged_from_v5": true
+      },
+      {
+        "path": "frontend/e2e/user-journeys.spec.ts",
+        "primary_and_snapshot_sha256": "c6a66bb1523cde0dd832ed4144124256c67e5dffacef4d44fa112a83127041b5",
+        "scenario_names": [
+          "项目负责人、记录员和审核人完成退回修订审批闭环",
+          "笔记附件必须关联笔记并在资料页保留关联关系",
+          "多角色完成 AI 资料、图谱、问答与报告协作闭环",
+          "只读成员只能查阅，不能看到写入或项目管理操作"
+        ],
+        "count": 4,
+        "names_unchanged_from_v5": true
+      },
+      {
+        "path": "frontend/e2e/real-lab-acceptance.spec.ts",
+        "primary_and_snapshot_sha256": "be3f284006cc602a452fa3e076a0442163d9b62858ee661c8896afefae8f8d5f",
+        "scenario_names": [
+          "真实课题组四项目全员协作与 AI 验收"
+        ],
+        "count": 1,
+        "names_unchanged_from_v5": true
+      }
+    ],
+    "scenario_count": 9,
+    "names_and_counts_preserved": true,
+    "changes_reviewed": [
+      "Five-mode preparation gets /projects/${projectId}/rag/status after initialization/OCR synchronization/question answering, reads corpus_snapshot, verifies both hashes against lowercase 64-character SHA-256 regex and sends those current hash values to the same project's experiment create request.",
+      "The existing five modes remain pure_llm, bm25_rag, project_rag, structured_query and kg_enhanced_rag; questions, repetition count, randomization setting, seed and completed-status assertion remain.",
+      "The project selection helper preserves the actual projectId and exact detail-header-name checks; its default URL suffix is empty, and only the independent evaluator call now supplies /blind-review.",
+      "The journey positive graph rebuild button/toast and read-only negative graph-rebuild selector now match the current kg page's labels; the read-only assertion remains toHaveCount(0)."
+    ],
+    "five_mode_binding_contract": {
+      "validation_function": "backend/src/api/rag/experiments.rs:553",
+      "mode_requires_dataset_ref": "backend/src/api/rag/mod.rs:1741",
+      "status_hash_fields_ref": "backend/src/api/rag/mod.rs:1845",
+      "system_request_ref": "frontend/e2e/system.spec.ts:203",
+      "modes": [
+        "pure_llm",
+        "bm25_rag",
+        "project_rag",
+        "structured_query",
+        "kg_enhanced_rag"
+      ],
+      "corpus_required_by": [
+        "bm25_rag",
+        "project_rag",
+        "kg_enhanced_rag"
+      ],
+      "graph_required_by": [
+        "structured_query",
+        "kg_enhanced_rag"
+      ],
+      "bindings_are_run_level": "The backend validates any dependency across the run's modes. A mixed five-mode run needs both expected hashes even though pure_llm itself needs neither.",
+      "current_status_hashes_used": true,
+      "no_hardcoded_or_fabricated_hashes": true,
+      "no_validation_bypass_or_retry_to_replace_stale_hash": true,
+      "scope": "This proves request shape and snapshot source by static review. It does not prove live corpus/graph content, experiment completion or model quality."
+    },
+    "pure_llm_restart_probe": {
+      "path": "scripts/experiments/validate_experiment_restart.py",
+      "sha256": {
+        "primary": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6",
+        "snapshot": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6",
+        "new_blob": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6",
+        "previous_v5_blob": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6"
+      },
+      "payloads": [
+        {
+          "line": 85,
+          "modes": [
+            "pure_llm"
+          ],
+          "keys": [
+            "name",
+            "questions",
+            "modes",
+            "random_seed"
+          ],
+          "has_corpus_binding": false,
+          "has_graph_binding": false
+        }
+      ]
+    },
+    "pure_llm_contract": "For a pure_llm-only run, corpus_required=false and graph_required=false; the backend rejects supplied expected hash fields. AST review finds the restart request contains only name, questions, modes and random_seed. Probe bytes match primary, snapshot, v6 Git blob and v5 Git blob.",
+    "previous_v5_result": {
+      "evidence_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-failed-v5/results.json",
+      "stats": {
+        "expected": 4,
+        "unexpected": 2,
+        "skipped": 3,
+        "flaky": 0
+      },
+      "interpretation": "Four browser scenarios passed, two failed and three were not run in the previous serial run. That failed run is retained, and its results are not converted into v6 runtime acceptance."
+    }
+  },
+  "retained_contract_limits": {
+    "openapi_regeneration_required": false,
+    "reason": "The new v6 Git delta touches two E2E test files only; all reviewed Rust sources and configuration bytes are unchanged.",
+    "database_atomicity": "Prior core-confirmation DB transaction guarantee and exclusions remain unchanged; external provider costs/calls and post-commit event paths are not enlarged into a strict-once guarantee.",
+    "lock_timing": "Extraction/embedding may occur while confirmation transactions hold DB locks; no explicit application timeout is set on the embedding client. This check establishes no production lock-duration bound.",
+    "sse_browser_boundary": {
+      "backend_integration": "The new unavailable-confirmation test executes real Axum turns against a local mock model HTTP provider and PostgreSQL, checking expired/rejected/completed status, audit, reporting input and legacy replay event bodies. It does not validate actual remote model generated prose.",
+      "frontend_static": "api.ts subscribes tool.failed; AgentAssistant failed display and already_completed explanation are present; turn.completed/cancelled changes residual running to waiting. Static reviewer inspection plus root frontend lint/typecheck/build establish compilation/shape only.",
+      "browser_verified": false,
+      "unverified_browser_scenarios": [
+        "expired/rejected tool.failed displayed as failed through a real EventSource connection",
+        "tool.completed with status=already_completed shown as previously completed, not newly executed",
+        "turn completed/cancelled with missing tool result leaves residual running as waiting",
+        "SSE reconnect/order interaction and legacy replay presentation in the browser"
+      ],
+      "e2e_evidence_boundary": "system-e2e-final-v2 did not reach Agent scenarios because earlier UI anchor/text drift caused failures. QA is fixing existing E2E selectors independently; no completed browser verification of these new abnormal SSE branches was supplied to this review. Later general E2E success alone will not cover these branches unless it explicitly exercises them.",
+      "refs": [
+        "backend/src/api/agent_runtime.rs:724",
+        "backend/src/api/agent_runtime.rs:739",
+        "backend/src/api/agent_runtime.rs:874",
+        "backend/src/api/agent_runtime.rs:1930",
+        "frontend/src/lib/api.ts:1350",
+        "frontend/src/components/shared/AgentAssistant.tsx:351",
+        "frontend/src/components/shared/AgentAssistant.tsx:355",
+        "frontend/src/components/shared/AgentAssistant.tsx:358"
+      ]
+    },
+    "full_suite_feature_scope": "The original full suite used --no-default-features; all-features clippy is separate evidence.",
+    "no_remote_model_quality_claim": true
+  },
+  "readonly_admin_preflight": {
+    "result": "No deterministic old label/API mismatch found by static review.",
+    "anchors_checked": [
+      "admin account form/creation toast/user row/disable action",
+      "group form/leader option/member default role/member save toast",
+      "audit action filter and create_user event",
+      "independent reviewer add/remove/card/disabled permissions",
+      "confirmation/logout/empty project list"
+    ],
+    "runtime_executed": false
+  },
+  "mutations": {
+    "source_edits": false,
+    "word_edits": false,
+    "database_operations": false,
+    "tests_rerun": false,
+    "prior_records_edited": false
+  }
+}

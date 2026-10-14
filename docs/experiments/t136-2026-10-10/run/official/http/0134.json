@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-10T15:52:29.706218+00:00",
+  "path": "/notes/8/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 1,
+    "entities": [
+      {
+        "id": 1,
+        "project_id": 1,
+        "entity_type": "project",
+        "label": "T136 body",
+        "normalized_label": "t136 body",
+        "natural_key": "project:project:1",
+        "source_type": "project",
+        "source_id": 1,
+        "properties": {
+          "project_id": 1
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.700716Z"
+      },
+      {
+        "id": 3,
+        "project_id": 1,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.700716Z"
+      },
+      {
+        "id": 179,
+        "project_id": 1,
+        "entity_type": "note",
+        "label": "ubc2021-04 RFP transformation plate observations and retransformation",
+        "normalized_label": "ubc2021 04 rfp transformation plate observations and retransformation",
+        "natural_key": "note:note:8",
+        "source_type": "note",
+        "source_id": 8,
+        "properties": {
+          "experiment_date": "2021-07-08",
+          "note_id": 8,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.700716Z",
+        "updated_at": "2026-10-10T15:52:29.700716Z"
+      },
+      {
+        "id": 180,
+        "project_id": 1,
+        "entity_type": "experiment_type",
+        "label": "transformation_observation_and_retransformation",
+        "normalized_label": "transformation observation and retransformation",
+        "natural_key": "experiment_type:transformation observation and retransformation",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "transformation_observation_and_retransformation"
+        },
+        "created_at": "2026-10-10T15:52:29.700716Z",
+        "updated_at": "2026-10-10T15:52:29.700716Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 223,
+        "project_id": 1,
+        "source_entity_id": 1,
+        "target_entity_id": 179,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 8,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.700716Z"
+      },
+      {
+        "id": 224,
+        "project_id": 1,
+        "source_entity_id": 179,
+        "target_entity_id": 3,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 8,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.700716Z"
+      },
+      {
+        "id": 225,
+        "project_id": 1,
+        "source_entity_id": 179,
+        "target_entity_id": 180,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 8,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.700716Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,691 @@
+{
+  "task_id": "T137",
+  "reviewer": {
+    "identity": "/root/architect",
+    "kind": "AI Agent visual audit",
+    "human_review": false
+  },
+  "scope": {
+    "physical_pages": [
+      1,
+      35
+    ],
+    "page_count": 35,
+    "total_rendered_page_count": 106
+  },
+  "method": {
+    "image_tool": "view_image",
+    "detail": "original",
+    "every_page_actually_viewed": true,
+    "thumbnail_or_text_substitute_used": false,
+    "criteria": [
+      "文字和数学符号字形",
+      "裁切和越界",
+      "内容重叠或遮挡",
+      "表格或图片跨页截断",
+      "页眉和页脚",
+      "意外空页",
+      "标题孤行"
+    ]
+  },
+  "render_binding": {
+    "directory": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final",
+    "docx": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/1005-新测试结果同步版-2026-10-11.docx",
+      "sha256": "5fc92595fde66340a8382dedaa2789eaa3e33f7b2287dea16531f870d62ad91e",
+      "hash_basis": "Root final stable render notification; current DOCX subsequently changed, as recorded separately."
+    },
+    "pdf": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/1005-新测试结果同步版-2026-10-11.pdf",
+      "sha256": "e9d249f212d8a84699d579883ae46de15a2ff0365e17287010b0d06283b50d33",
+      "size_bytes": 7869712
+    }
+  },
+  "current_docx_changed_after_render": {
+    "observed_sha256": "1761316cda3c78f9b54675dfa0e205103bd092b67a2c914cc82b5ddff4bdc2c4",
+    "observed_size_bytes": 5003503,
+    "confirmed_by_root": true,
+    "reason": "Root shortened newly revised paragraphs 1661 and 1668 after another QA reviewer found a chapter-7 tail on physical page 77; original render-final PDF/PNGs remain the 106-page version. Subsequent render-final-v2 requires changed-page review and PNG hash inheritance evidence.",
+    "binding_state": "This report approves only the original render-final PNGs/PDF. It does not yet approve the changed DOCX rendering."
+  },
+  "result": {
+    "visual_pass": true,
+    "passed_pages": 35,
+    "failed_pages": 0,
+    "issues": [],
+    "original_template_blank_fields_preserved": true
+  },
+  "pages": [
+    {
+      "page": 1,
+      "pass": true,
+      "observation": "封面中英文题名与学位信息清晰；研究方向、作者、导师留空为原稿保留字段。无裁切或重叠。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-1.png",
+        "sha256": "b57e647e08e0f648e44e06f9e00ca8b3fa1e583ccdb2c5a30fba323421d54666",
+        "size_bytes": 128309,
+        "page": 1,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 2,
+      "pass": true,
+      "observation": "独创性声明及签名、日期空栏正常；留白为声明页原有布局。无异常空页。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-2.png",
+        "sha256": "466f18cf5110500bb3365ba8e03fb8bed94c6082427e1c27619c69cab886e9ec",
+        "size_bytes": 112401,
+        "page": 2,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 3,
+      "pass": true,
+      "observation": "版权使用授权书正文及双签名区清晰，留白正常，无遮挡。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-3.png",
+        "sha256": "d3e4627c50aed7e8c3bbbdb69ab8e47f2828b775d5c6679f6786e638ddf962a4",
+        "size_bytes": 129571,
+        "page": 3,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 4,
+      "pass": true,
+      "observation": "中文摘要单页完整，新三臂指标及p=0.0938均可读；关键词、页眉和罗马页脚I无裁切。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-4.png",
+        "sha256": "ac694b94993c408c5bdbb07c7dc43b44b9e7ea4664e358f84954171d6da79d70",
+        "size_bytes": 620362,
+        "page": 4,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 5,
+      "pass": true,
+      "observation": "英文摘要完整，新关系抽取结果与统计结论可读；关键词两行正常，页脚II与正文分离。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-5.png",
+        "sha256": "f31e5e807212c50f601b4af3f3e2c71c9e732537825ac05eb4966ec908ebbf06",
+        "size_bytes": 399599,
+        "page": 5,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 6,
+      "pass": true,
+      "observation": "目录第一页点引线及右侧页码对齐，层级缩进清晰；下方4.7.2行与页脚III分离，无拥挤裁切。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-6.png",
+        "sha256": "545d2fb1aea969c3e9a8857c8ba1cafed99fd3eb1d9fb54a5919e212a2a3643a",
+        "size_bytes": 396661,
+        "page": 6,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 7,
+      "pass": true,
+      "observation": "目录第二页6.6新标题及后续页码已显示，附录条目完整；点引线与页码无重叠，页脚IV正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-7.png",
+        "sha256": "6d18d887d85b81e9153ef60ab4c151adce7c40e9f1703831a89d21b5176e051c",
+        "size_bytes": 357866,
+        "page": 7,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 8,
+      "pass": true,
+      "observation": "第一章章名、1.1/1.2/1.2.1均与后续正文同页；续段在页底自然分页，页码1正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-8.png",
+        "sha256": "db2907e39ec345020e670296309931bf2259b7a068595dec5461eb85b8a4f744",
+        "size_bytes": 515610,
+        "page": 8,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 9,
+      "pass": true,
+      "observation": "正文续页与1.2.2小节字形清晰，无标题孤行、越界或脚注遮挡，页码2正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-9.png",
+        "sha256": "4b1a4990dba1cc82c1a45e3d4216f79490c8890c3417c0b20dd3d90bfb1ae7ab",
+        "size_bytes": 652513,
+        "page": 9,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 10,
+      "pass": true,
+      "observation": "1.2.3标题和正文清晰，引用标号可读，页底留白正常，无意外空页，页码3正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-10.png",
+        "sha256": "8dd45108970548039de507e21ddaaf8d619d7bc3a1f310c9665c78006428196f",
+        "size_bytes": 595540,
+        "page": 10,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 11,
+      "pass": true,
+      "observation": "1.2.4/1.2.5标题及三条研究问题完整同页，页底正文与页码4分离。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-11.png",
+        "sha256": "3175786411b1085116789bee32ea09d2db7cc82a7034cdcbf1de411b514d7f5e",
+        "size_bytes": 614069,
+        "page": 11,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 12,
+      "pass": true,
+      "observation": "1.3/1.4与条目正文正常排版，无孤立标题、乱码或越界，页码5正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-12.png",
+        "sha256": "fcd88c7b835f482683ae8ff0a97b70924d1135cced10f1fc5de791c565d5c3b0",
+        "size_bytes": 472419,
+        "page": 12,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 13,
+      "pass": true,
+      "observation": "图1-1结构图完整，实线/虚线及节点文字可辨；题注同页无遮挡，章末留白正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-13.png",
+        "sha256": "c956356847aec599741057aa672aab5ddeb229b3a3c1654464762530ab624ea0",
+        "size_bytes": 178513,
+        "page": 13,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 14,
+      "pass": true,
+      "observation": "第二章章名及2.1/2.2正文清晰，引用与英文术语正常；页码7位置正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-14.png",
+        "sha256": "f0bc5099645e5223c5da19b26743814dbc563dd41b31512d6a6bb9aba70dd4a3",
+        "size_bytes": 552078,
+        "page": 14,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 15,
+      "pass": true,
+      "observation": "2.3—2.6小节密度适当且标题均有后文；日期、协议版本换行正常，无裁切或重叠。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-15.png",
+        "sha256": "4c23b7ac2f33ef1d773761624f13214ddf07554a45a3e6e9b16455bb3b3d3a77",
+        "size_bytes": 537488,
+        "page": 15,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 16,
+      "pass": true,
+      "observation": "第三章与表3-1同页完整；六列权限表长标签自然换行，行线未遮字，无表格断裂。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-16.png",
+        "sha256": "53ff5431b7a4c8bca07d0c73abe996aeffa366bfef7121dbb3c0f92b047e8fe6",
+        "size_bytes": 341969,
+        "page": 16,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 17,
+      "pass": true,
+      "observation": "图3-1小字可辨，权限框与连接线完整；表3-2/3-3题注、表头和各行同页，无跨页截断。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-17.png",
+        "sha256": "79e8dcc90fc485bb025ca13da1ff8117aebf501cb39b3c9ecf661f4050c0edfd",
+        "size_bytes": 441945,
+        "page": 17,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 18,
+      "pass": true,
+      "observation": "表3-4十条功能需求完整，行内多行文字均可读；3.4标题后有两行正文，无孤行。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-18.png",
+        "sha256": "d5f9f6a24d3b855dfaedf6989c5b2e74dda0f5aa9cc3b9f5db499a702bf61419",
+        "size_bytes": 495351,
+        "page": 18,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 19,
+      "pass": true,
+      "observation": "表3-5含NFR6阈值完整，≤/≥字形正常，3.5结语与页脚12正常；章末留白非异常空页。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-19.png",
+        "sha256": "6426dfb4f1c7217168e904f3ec093a992710519b9a81401c493c28392038d70e",
+        "size_bytes": 262274,
+        "page": 19,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 20,
+      "pass": true,
+      "observation": "第四章首页与图4-1总体架构完整；框内文字、箭头、约束条及题注均无遮挡，页码13正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-20.png",
+        "sha256": "aff15b0ff95e7015b3eb193993e1978861c9d0c284e7ea9e1a3b8134d5cd4453",
+        "size_bytes": 417526,
+        "page": 20,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 21,
+      "pass": true,
+      "observation": "权限公式（4-1）各行、逻辑符号与编号清晰，正文无遮挡；4.2标题有后文，页码14正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-21.png",
+        "sha256": "fb7d52b428c174f5d6894d768d1601cccfeedcbb79d5f99ef36e383a8bb2dc3a",
+        "size_bytes": 391439,
+        "page": 21,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 22,
+      "pass": true,
+      "observation": "表4-1所有行完整，图4-2模块图文字虽较小仍可辨，框线无重叠裁切，题注与图同页。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-22.png",
+        "sha256": "d8e9affa2ddfe6d6838159c31cf3f275349a10f6148085302b4e32af38cc0346",
+        "size_bytes": 405500,
+        "page": 22,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 23,
+      "pass": true,
+      "observation": "表4-2/4-3题注与完整表格同页，4.4及4.4.1后有正文；长列文字正常换行，无越界。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-23.png",
+        "sha256": "1df1d3b71ba429a68437ef713c8ae6066dc472151cf38c86d1bfe27c51073e91",
+        "size_bytes": 468985,
+        "page": 23,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 24,
+      "pass": true,
+      "observation": "图4-3数据库关系图及乌鸦脚说明完整、字形可辨；实体框与连接线不遮文字，题注正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-24.png",
+        "sha256": "d656fe32ac8abcdb685ebd904c558adb6afdcd443d73f47148d2c4f2315096f2",
+        "size_bytes": 353898,
+        "page": 24,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 25,
+      "pass": true,
+      "observation": "表4-4各数据库名及附录表号完整，长表名正常换行；4.5标题与介绍同页，页码18正常。",
+      "observations": [
+        null
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-25.png",
+        "sha256": "24d85a55ee64beaf776241c783397475f0c96e8f14957d174e0ecdd49efae363",
+        "size_bytes": 321290,
+        "page": 25,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 26,
+      "pass": true,
+      "observations": [
+        "图4-4双流程图完整，细灰字可读，标题、正文与图注无重叠。",
+        "表4-5九类实体完整置于同页，无裁切；页眉页脚正常。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-26.png",
+        "sha256": "f2b7acd2f85782be8ea7f4c7a7dbeaef5e0a9e80333715a646db57a78b7fb4e4",
+        "size_bytes": 359317,
+        "page": 26,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 27,
+      "pass": true,
+      "observations": [
+        "表4-6关系类型完整，列内文字自然换行。",
+        "图4-5状态流程及图注完整，细字可读；4.5.4标题有后续正文，无孤行标题。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-27.png",
+        "sha256": "c0687edf7b27d50577c05020c09bd2f4fe79f6d1923f0eb8f485f5c3ff32bc11",
+        "size_bytes": 403650,
+        "page": 27,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 28,
+      "pass": true,
+      "observations": [
+        "图4-6实体复用与新建流程完整，决策、连线和标签清晰，无遮挡。",
+        "正文、图注及页脚间距正常，无裁切或乱码。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-28.png",
+        "sha256": "37d3b0603d3cd4c86a5179cf18d8848bda2cf6ac898ccefbe609bf1f4ecc0e0f",
+        "size_bytes": 346444,
+        "page": 28,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 29,
+      "pass": true,
+      "observations": [
+        "算法4-1共26行完整置于同页，编号与符号正常，无裁切。",
+        "公式（4-2）的分段括号、变量和编号可读，与页脚无重叠。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-29.png",
+        "sha256": "3df7cdabafbbaa11c3d61864f3624e71685306daa9fbac54507144860b33d8d8",
+        "size_bytes": 255235,
+        "page": 29,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 30,
+      "pass": true,
+      "observations": [
+        "4.5.5至4.5.8标题均有正文跟随，无标题孤行。",
+        "正文与页眉页脚字形正常，无重叠、裁切或意外空白。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-30.png",
+        "sha256": "5e427cc987bfb6ed96e4c7f5c4536fde54a3ea4a0b173590ab098dd2073fa88e",
+        "size_bytes": 470214,
+        "page": 30,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 31,
+      "pass": true,
+      "observations": [
+        "图4-7流程的节点、箭头和范围说明完整，细字可读，图注与图同页。",
+        "4.6及4.6.1标题有正文跟随；公式（4-3）分数、下标与编号清楚，页脚无重叠。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-31.png",
+        "sha256": "699e0783b17e49af77a48c3a77134a8191f25cf84150616455a5bdd059de70ea",
+        "size_bytes": 459893,
+        "page": 31,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 32,
+      "pass": true,
+      "observations": [
+        "4.6.2与4.6.3标题有完整正文跟随，Latin字母、数字及数学内联符号正常。",
+        "公式（4-4）与（4-5）的分数、下标及编号完整，无裁切、重叠或乱码。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-32.png",
+        "sha256": "c1f4adc4bf0a75542a979afb416a086fe24b6a2f98ad4624430740473c519f62",
+        "size_bytes": 484204,
+        "page": 32,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 33,
+      "pass": true,
+      "observations": [
+        "公式（4-6）至（4-10）的求和、集合、下标与编号完整清晰，行距正常。",
+        "4.6.4标题与后续正文同页，底部正文及页眉页脚完整，无孤行标题。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-33.png",
+        "sha256": "88a9141adbfb07cdff84d552f1ab4b6d2ee18506f2f52f37940d1dc51efe8913",
+        "size_bytes": 398435,
+        "page": 33,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 34,
+      "pass": true,
+      "observations": [
+        "图4-8全部节点、分支、虚线及图注清晰完整。",
+        "表4-7完整置于同页，长公式与符号均在表格边界内，正文和页脚无裁切或重叠。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-34.png",
+        "sha256": "d899323081a39b17c6c7a28f802f5adc90b5fff6af5c47bf4ea0041aa7915f2d",
+        "size_bytes": 364622,
+        "page": 34,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    },
+    {
+      "page": 35,
+      "pass": true,
+      "observations": [
+        "图4-9节点、回流箭头、日志栏和图注完整；4.6.5与4.6.6标题均有正文跟随。",
+        "表4-8完整置于同页，多行单元格排版正常，末段正常续至下一页，页眉页脚无异常。"
+      ],
+      "image": {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-35.png",
+        "sha256": "c1f06a8ecc36925df008cfe09a50d63646d90f7e6fec34ae5ad669fa8ce29466",
+        "size_bytes": 442819,
+        "page": 35,
+        "width_px": 1241,
+        "height_px": 1754
+      },
+      "checked_at_original_resolution": true,
+      "issues": []
+    }
+  ],
+  "recorded_at_utc": "2026-10-10 16:27:53 UTC"
+}

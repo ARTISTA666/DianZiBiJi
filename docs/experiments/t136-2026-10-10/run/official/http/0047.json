@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-10T15:52:28.908734+00:00",
+  "path": "/notes/11/approve",
+  "method": "POST",
+  "request": {
+    "comment": "T136 isolated functional test"
+  },
+  "status": 200,
+  "response": {
+    "id": 11,
+    "project_id": 1,
+    "template_id": null,
+    "title": "team5863-03 PCR tests of extracted DNA samples",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2025-06-12",
+    "owner_user_id": 1,
+    "status": "approved",
+    "current_version_id": 11,
+    "created_at": "2026-10-10T15:52:29.329875Z",
+    "updated_at": "2026-10-10T15:52:29.343472Z"
+  }
+}

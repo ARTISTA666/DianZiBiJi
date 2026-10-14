@@ -1,0 +1,9 @@
+{
+  "status": "BLOCKED_NOT_DELIVERY",
+  "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-first-wps/1005-精简与角标校正版-2026-10-11.pdf",
+  "pdf_sha256": "dd5b99404aa4f9c11f514bfe8b8e23e4eb7b47dae3f8002e15f25f5b2fe791b5",
+  "pages": 100,
+  "cause": "WPS默认勾选PDF批注输出，物4/68/73出现平面化高亮或标记。",
+  "fix": "同一未改Word b45d重新原生导出；PDF输出设置批注从1→0。",
+  "word_comments": "16批注及精确锚保留"
+}

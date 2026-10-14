@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-10T15:52:29.472721+00:00",
+  "path": "/projects/3/notes",
+  "method": "POST",
+  "request": {
+    "title": "PCR 条件优化实验",
+    "experiment_type": "PCR",
+    "experiment_date": "2026-06-03",
+    "fixed_fields_json": {
+      "reagents": "Taq DNA Polymerase、dNTP、MgCl2、模板 DNA",
+      "instrument": "PCR Thermal Cycler",
+      "sample": "样本 A、样本 B",
+      "result": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。"
+    },
+    "content_json": {
+      "text": "试剂: Taq DNA Polymerase、dNTP、MgCl2\n仪器: PCR Thermal Cycler\n样本: 样本 A、样本 B\n结果: 58℃ 条件下条带清晰。"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 25,
+    "project_id": 3,
+    "template_id": null,
+    "title": "PCR 条件优化实验",
+    "experiment_type": "PCR",
+    "experiment_date": "2026-06-03",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 25,
+    "created_at": "2026-10-10T15:52:29.477687Z",
+    "updated_at": "2026-10-10T15:52:29.477687Z"
+  }
+}

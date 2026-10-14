@@ -1,0 +1,60 @@
+{
+  "task": "T160 Rust verification",
+  "timestamp": "2026-10-14T09:31:16.071984+00:00",
+  "identity": "isolated development check of existing dirty worktree; not clean release evidence",
+  "rust_toolchain": "1.88.0",
+  "checks_exit_codes": {
+    "fmt": 0,
+    "strict_clippy": 0,
+    "original_database_script": 1,
+    "isolated_database_suite": 0,
+    "api_type_generation": 0,
+    "generated_type_comparison": 0
+  },
+  "original_script_limitation": "Refused tracked dirty checkout before database setup, as expected from revision guard. No source fix required; normal clean-commit verification is a separate release check.",
+  "isolated_test_project": "eln-t160-rust-test-db",
+  "suite_results": [
+    {
+      "passed": 321,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered_out": 0,
+      "elapsed": "278.51s"
+    },
+    {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered_out": 0,
+      "elapsed": "0.00s"
+    }
+  ],
+  "total_passed": 323,
+  "source_input_hash_changes": [],
+  "source_inputs_guarded": 77,
+  "existing_business_containers_preserved": true,
+  "existing_business_container_names": [
+    "eln-t114-backend-1",
+    "eln-t114-db-1",
+    "eln-frontend-1",
+    "eln-backend-1",
+    "eln-db-1"
+  ],
+  "isolated_project_resources_remaining": {
+    "container": [],
+    "volume": [],
+    "network": []
+  },
+  "t153_reference": {
+    "reference_manifest": "agent-work/t153-2026-10-14/final-zip-extracted/eln-source-review-T153-2026-10-14/SOURCE_MANIFEST.json",
+    "reference_manifest_sha256": "1b3b19799a9b81c0589b284fc147f66b6d0db75a0b6df885521d36abd8b38143",
+    "backend_nonlegacy_source_rows": 66,
+    "mismatches": [],
+    "rust_rs_rows": 58
+  },
+  "source_modified": false,
+  "git_stage_commit_push_performed": false,
+  "api_contract_modified": false
+}

@@ -1,0 +1,138 @@
+{
+  "task": "T139",
+  "status": "PASS",
+  "utc": "2026-10-11T08:07:06.728312+00:00",
+  "baseline_main_head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+  "main_head_unchanged": true,
+  "main_cached_diff_raw": "",
+  "local_only_validation_revision": "0268b88a949a78a72198ec80542c6306ed7f71cc",
+  "validation_checkout_clean": true,
+  "scoped_diff_check_exit_code": 0,
+  "scoped_diff_check_output": "",
+  "production_inputs_and_configuration_sha256": [
+    {
+      "path": "backend/src/api/agent_runtime.rs",
+      "sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/agents.rs",
+      "sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/files.rs",
+      "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/knowledge_graph.rs",
+      "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/mcp.rs",
+      "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/notes.rs",
+      "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/project_alert.rs",
+      "sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/projects.rs",
+      "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/rag/mod.rs",
+      "sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/project_alert.rs",
+      "sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/rag/index.rs",
+      "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/src/components/project-alerts.tsx",
+      "sha256": "6598665e59ab591982fd06e21e93a40f52ca648e331e9c2eead1ef233d2b9feb",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/src/lib/api.ts",
+      "sha256": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "scripts/experiments/validate_experiment_restart.py",
+      "sha256": "34a11cbd1d804e7e4594592d8a94346aacdce3bc5c5fefef5ba7f619c7223638",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/src/components/shared/AgentAssistant.tsx",
+      "sha256": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/e2e/system.spec.ts",
+      "sha256": "5e8f4ea3e01ef853bc87330312e30741308eef813a6a0b424d73bd47e20340e8",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/e2e/user-journeys.spec.ts",
+      "sha256": "c6a66bb1523cde0dd832ed4144124256c67e5dffacef4d44fa112a83127041b5",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/e2e/real-lab-acceptance.spec.ts",
+      "sha256": "be3f284006cc602a452fa3e076a0442163d9b62858ee661c8896afefae8f8d5f",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/Cargo.lock",
+      "sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/Cargo.toml",
+      "sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/rust-toolchain.toml",
+      "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "docker-compose.test-db.yml",
+      "sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "scripts/ops/run-rust-db-tests.sh",
+      "sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "scripts/ops/docker-compose-with-revision.sh",
+      "sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "primary_copy_committed_match": true
+    }
+  ],
+  "desktop_delivery_matches_validated_docx": true,
+  "other_existing_work_not_cleaned": true,
+  "frozen_evidence": "215 files rechecked by final protection-audit.json; historical checks and earlier failures preserved",
+  "snapshot_input_status_note": "snapshot-input.json is the immutable before-execution input record; its PENDING fields are historical and outcomes are bound by final-manifest.json."
+}

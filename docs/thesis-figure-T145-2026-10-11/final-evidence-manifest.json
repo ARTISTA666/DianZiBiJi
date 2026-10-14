@@ -1,0 +1,126 @@
+{
+  "task": "T145",
+  "status": "frozen-evidence",
+  "utc": "2026-10-11T15:33:07.402797+00:00",
+  "identity": {
+    "task": "T145",
+    "utc": "2026-10-11T15:28:29.681499+00:00",
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/1005-图6-5说明删除版-2026-10-11.docx",
+    "word_sha256": "b9336e8dfef93921f2ff4fc4291c4465c91facaa23b5040c6cc74005959438bf",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/native-wps/1005-图6-5说明删除版-2026-10-11.pdf",
+    "pdf_sha256": "e12ca56e79e001488e12a6b46225ab384c47c7e12bda526908e6a3b859cb3482",
+    "pages": 100,
+    "all_A4": true,
+    "method": "WPS native CUA export, candidate only, comments unchecked, high image quality, local directory",
+    "completion_ui": "成功输出 1 个 PDF 文档",
+    "purpose": "Internal layout validation only; user delivery Word only"
+  },
+  "desktop_delivery": {
+    "task": "T145",
+    "utc": "2026-10-11T15:30:09.609137+00:00",
+    "delivered_word": "/Users/yusong/Desktop/1005-图6-5说明删除版-2026-10-11.docx",
+    "delivered_word_sha256": "b9336e8dfef93921f2ff4fc4291c4465c91facaa23b5040c6cc74005959438bf",
+    "canonical_word": "/Users/yusong/Downloads/new/full-system/agent-work/t145-2026-10-11/1005-图6-5说明删除版-2026-10-11.docx",
+    "canonical_word_sha256": "b9336e8dfef93921f2ff4fc4291c4465c91facaa23b5040c6cc74005959438bf",
+    "identical": true,
+    "previous_desktop_word": "/Users/yusong/Desktop/1005-表述精校无批注版-2026-10-11.docx",
+    "previous_desktop_word_sha256": "4261c0cc08263ba5bb70e97fae444fb5998a5a206d83e2ceed6b57e8cec901dc"
+  },
+  "files": [
+    {
+      "relative_path": "README.md",
+      "sha256": "d9d3dbe2f73735dba0385f2fb826a24e0743ce7ed55301eb7e053174b1068dee",
+      "bytes": 1881
+    },
+    {
+      "relative_path": "changes.json",
+      "sha256": "163fdea18ea0972b26c46ce82aaa423a35f679b3b8a7dd74594b357ea018fc2d",
+      "bytes": 4227
+    },
+    {
+      "relative_path": "desktop-delivery-verification.json",
+      "sha256": "26ea6d62ef82b829a6c013237305acc7a4ea8bab76532a40cfd1f319f0079c32",
+      "bytes": 698
+    },
+    {
+      "relative_path": "native-export.json",
+      "sha256": "478f93a70270362996897e83ef589d222f4349931617b964c4bfa88dd5c6adb6",
+      "bytes": 759
+    },
+    {
+      "relative_path": "native-page-comparison.json",
+      "sha256": "c6d06aa8a010b6b09e764288c2497d81dd1f422068c394c14e9a09501a27276e",
+      "bytes": 55298
+    },
+    {
+      "relative_path": "qa/candidate-b933-native-crop-protection-review.json",
+      "sha256": "51fb08e683b8191eb8b399e7953c8d677bfb00ec994d2ceca4619ef688b8c625",
+      "bytes": 28923
+    },
+    {
+      "relative_path": "qa/figure6-5-source-location-and-crop-plan.json",
+      "sha256": "4bfdb16894ae6810ff84706ebf5a9d500de288623e902bf7cd2c2a0c2a939512",
+      "bytes": 2489
+    },
+    {
+      "relative_path": "qa/native-check-preparation.json",
+      "sha256": "e02b8da125e87741a4055b1ee92b73f6aba27dfe10f153c6f29fe370f1a77506",
+      "bytes": 2380
+    },
+    {
+      "relative_path": "qa/native-final-b933-e12-protected-input-review.json",
+      "sha256": "f9e51c017ed08f38caf9907dcc94ef444ff20b069419c14c2a24251f6ce9020e",
+      "bytes": 28567
+    },
+    {
+      "relative_path": "qa/native-final-b933-e12-toc-review.json",
+      "sha256": "af9458f1ac9a65a9f5b6f80938d858552e2ba876bb89dd852817151cc3502a2b",
+      "bytes": 65637
+    },
+    {
+      "relative_path": "qa/native-final-b933-e12-visual-100-closure-review.json",
+      "sha256": "e9384fa796e56ceda8189cb06382ab51144816329447328513f3ce7ea5929e73",
+      "bytes": 301126
+    },
+    {
+      "relative_path": "qa/native-final-b933-e12-visual-page63-review.json",
+      "sha256": "dc0af6efd83a033978bc2e08fd5ddd4ea00fc1fe5e1703400c9e6b42f3734123",
+      "bytes": 2810
+    },
+    {
+      "relative_path": "qa/protected-input-baseline.json",
+      "sha256": "262d0f971a622bbc56f61e4fb89d388047399993c879cfc7d351a0963a44d71b",
+      "bytes": 18689
+    },
+    {
+      "relative_path": "qa/qa-native-final-b933-e12-summary.json",
+      "sha256": "16da430624280b7ec4f6d23f681f4bbdd92ef809efd8e621667931553c19740b",
+      "bytes": 6198
+    },
+    {
+      "relative_path": "qa/source-protection-inventory-4261.json",
+      "sha256": "d95d43c981bf6ba3cb2f74e6a387a1f5a7329523fbf2342d9e5d8a6dc1de2d82",
+      "bytes": 3309119
+    },
+    {
+      "relative_path": "render-method-disclosure.json",
+      "sha256": "783cf97dabd1cb5b67de282346c30ccec1da7d178d4f330df551faa109dd888f",
+      "bytes": 1376
+    },
+    {
+      "relative_path": "root-visual-review.json",
+      "sha256": "fcc9bf6253e2153f68d43efcfeb755eb1081d8f84f1b8181e97d03be21b5b0fe",
+      "bytes": 1473
+    }
+  ],
+  "physical_pages": 100,
+  "fresh_visual_pages": [
+    63
+  ],
+  "T144_exact_SHA_inherited_pages": 99,
+  "old_protected_inputs": 62,
+  "delivery_format": "docx",
+  "execution_status": "complete_with_independent_internal_review",
+  "author_supervisor_acceptance": "pending",
+  "large_outputs_archived": false
+}

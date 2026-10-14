@@ -1,0 +1,58 @@
+{
+  "role": "code-reviewer (read-only independent audit)",
+  "scope": "six rebuilt appendix SVGs",
+  "source_note_json_sha256": "4be4c92f052453fdca01f3fd11561c11dfc0160614632140c6685a3eb9fec7cc",
+  "source_sop_json_sha256": "7d10e86e359c9b1330ffc105cb4bbec962a81bbcc81a66e79ee0fdbcacd79bf5",
+  "protected_fields_total": 72,
+  "figures": [
+    {
+      "figure": "project-one-note-1.svg",
+      "sha256": "1bd3cb5367632680db392f382aa6215be6ff8abdb1c499af3ef155a4b4d866c7",
+      "protected_fields": 11,
+      "missing_values": [],
+      "disclaimer_removed": true
+    },
+    {
+      "figure": "project-one-note-2.svg",
+      "sha256": "edd134d95d2fcdcd1882ccca85e87583805a4027418893b10b87ebeb8327fa6c",
+      "protected_fields": 11,
+      "missing_values": [],
+      "disclaimer_removed": true
+    },
+    {
+      "figure": "project-one-note-3.svg",
+      "sha256": "33661493142e73ec4fa7a143a840c46edb3e5542c26aebd6fb5f8a3c85fd8ff1",
+      "protected_fields": 11,
+      "missing_values": [],
+      "disclaimer_removed": true
+    },
+    {
+      "figure": "project-one-note-4.svg",
+      "sha256": "a50f7e93de8beed169d968b4558820f04c625acc7f613315f9c6ab2de2a002fb",
+      "protected_fields": 11,
+      "missing_values": [],
+      "disclaimer_removed": true
+    },
+    {
+      "figure": "project-one-sop-1.svg",
+      "sha256": "e3f6fa38921171d38470ec58da73587d2980603dfa70f31d412e090f3ca74b3b",
+      "protected_fields": 16,
+      "missing_values": [],
+      "disclaimer_removed": true
+    },
+    {
+      "figure": "project-one-sop-2.svg",
+      "sha256": "29f74432cd106f5e9b28c82b5323d58801edd25388183cbcea8b6e20072187e2",
+      "protected_fields": 12,
+      "missing_values": [],
+      "disclaimer_removed": true
+    }
+  ],
+  "pass": true,
+  "notes": [
+    "PCR field includes 模板 DNA while original body does not; original difference preserved.",
+    "qPCR original experiment_type is PCR and date 2026-05-28; preserved.",
+    "Source identity is retained by prose as 合成测试笔记 and SOP短提要.",
+    "Source JSON/evidence files unchanged."
+  ]
+}

@@ -10,6 +10,12 @@
 
 工程协作采用分工明确的多 Agent 组织与独立发布复审，分层、所有权、RACI 和门禁见 [工程 Agent 组织、分类与发布责任制（已归档）](archive/design-superseded/engineering-agent-organization.md)。
 
+## 版本、研究材料与贡献说明
+
+当前生产代码为 Rust / Next.js；论文 Markdown 包含历史稿，最新独立 Word 的身份和交付记录见[文档导航](docs/README.md)。系统测试通过不等于完成独立人工评价，也不证明作者已经能够独立解释或复现实验。
+
+本项目的代码实现、实验执行、论文写作及内部复核存在广泛 AI / 多 Agent 协作。具体范围、历史表述冲突和仍待人工确认的事项见[公开材料勘误与 AI 贡献说明](docs/公开材料口径勘误与AI贡献说明-T160-2026-10-14.md)及[未闭环清单](docs/盲审报告逐项整改与未闭环清单-T150-2026-10-14.md)。保留历史版本供核查；构造角色场景不计为真实用户研究。
+
 ## AI 架构
 
 - 文档解析：TXT/Markdown/CSV/TSV/SOFT/JSON/XML/HTML/PDF，以及上述文本格式的 gzip 压缩文件

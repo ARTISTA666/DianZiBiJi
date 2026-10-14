@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="950" viewBox="0 0 1900 950">
+<rect width="100%" height="100%" fill="white"/>
+<text x="50" y="45" font-family="Songti SC, serif" font-size="42" font-weight="bold" text-anchor="start" dominant-baseline="central">A  外部工具调用</text>
+<rect x="50" y="100" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="215" y="190.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">获取完整工具清单</text>
+<polyline points="380,190 420,190" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="420,190 400.0,180.0 400.0,200.0" fill="black"/>
+<rect x="420" y="100" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="585" y="190.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">提交工具与参数</text>
+<polyline points="750,190 790,190" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="790,190 770.0,180.0 770.0,200.0" fill="black"/>
+<rect x="790" y="100" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="955" y="165.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">检查访问令牌范围</text>
+<text x="955" y="215.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">核验参数和授权</text>
+<polyline points="1120,190 1160,190" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1160,190 1140.0,180.0 1140.0,200.0" fill="black"/>
+<rect x="1160" y="100" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="1325" y="165.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">执行非高风险工具</text>
+<text x="1325" y="215.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">高风险登记待确认</text>
+<polyline points="1490,190 1530,190" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1530,190 1510.0,180.0 1510.0,200.0" fill="black"/>
+<rect x="1530" y="100" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="1695" y="165.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">返回结果或待确认</text>
+<text x="1695" y="215.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">记录调用审计</text>
+<text x="50" y="345" font-family="Songti SC, serif" font-size="42" font-weight="bold" text-anchor="start" dominant-baseline="central">B  系统会话辅助</text>
+<rect x="50" y="400" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="215" y="490.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">发起项目内对话</text>
+<polyline points="380,490 420,490" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="420,490 400.0,480.0 400.0,500.0" fill="black"/>
+<rect x="420" y="400" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="585" y="465.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">按授权提供工具</text>
+<text x="585" y="515.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">模型提出工具调用</text>
+<polyline points="750,490 790,490" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="790,490 770.0,480.0 770.0,500.0" fill="black"/>
+<rect x="790" y="400" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="955" y="465.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">核验参数和授权</text>
+<text x="955" y="515.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">检查风险与幂等键</text>
+<polyline points="1120,490 1160,490" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1160,490 1140.0,480.0 1140.0,500.0" fill="black"/>
+<rect x="1160" y="400" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="1325" y="465.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">执行非高风险工具</text>
+<text x="1325" y="515.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">高风险登记待确认</text>
+<polyline points="1490,490 1530,490" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1530,490 1510.0,480.0 1510.0,500.0" fill="black"/>
+<rect x="1530" y="400" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="1695" y="465.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">汇报结果或待确认</text>
+<text x="1695" y="515.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">保存会话与审计</text>
+<text x="50" y="645" font-family="Songti SC, serif" font-size="42" font-weight="bold" text-anchor="start" dominant-baseline="central">C  固定任务生成</text>
+<rect x="50" y="700" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="215" y="790.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">选择任务与范围</text>
+<polyline points="380,790 420,790" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="420,790 400.0,780.0 400.0,800.0" fill="black"/>
+<rect x="420" y="700" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="585" y="765.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">筛选已审核证据</text>
+<text x="585" y="815.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">按任务模板组装</text>
+<polyline points="750,790 790,790" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="790,790 770.0,780.0 770.0,800.0" fill="black"/>
+<rect x="790" y="700" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="955" y="790.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">调用模型生成草稿</text>
+<polyline points="1120,790 1160,790" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1160,790 1140.0,780.0 1140.0,800.0" fill="black"/>
+<rect x="1160" y="700" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="1325" y="765.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">检查来源与引用</text>
+<text x="1325" y="815.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">必要时有限修订</text>
+<polyline points="1490,790 1530,790" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polygon points="1530,790 1510.0,780.0 1510.0,800.0" fill="black"/>
+<rect x="1530" y="700" width="330" height="180" fill="white" stroke="black" stroke-width="3"/>
+<text x="1695" y="765.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">保存草稿与来源</text>
+<text x="1695" y="815.0" font-family="Songti SC, serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central">供用户核对</text>
+</svg>

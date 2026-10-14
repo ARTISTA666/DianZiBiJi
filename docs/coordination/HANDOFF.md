@@ -16,7 +16,7 @@
 | 端 | 会话名（准确名） | 绝对路径 | 本轮范围 | 状态 |
 | --- | --- | --- | --- | --- |
 | Codex | 总协调（经用户转达） | 工作区根：`/Users/yusong/Downloads/new/full-system/` | 派活/审核/裁决；不直接写三端文件 | — |
-| ZCode（本会话） | 「运行项目测试新功能并录制验证视频」 | 仓库同上；stable 检出：`/Users/yusong/Downloads/full-system-stable/` | `docs/coordination/` 下 ZC 系列与 HANDOFF/README；消融勘误 `docs/experiments/innovation-ablation-2026-09-07.md`；创新点总览映射修正 | ZC-01/ZC-02 已交，**ZC-03 已完成，均待验收** |
+| ZCode（本会话） | 「运行项目测试新功能并录制验证视频」 | 仓库同上；**stable 检出已于 2026-09-10 迁移收尾时移除**（`git worktree remove`，其中两处热修早已进主线 97ffd43，运行栈已全量归主仓库 compose 管理） | `docs/coordination/` 下 ZC 系列与 HANDOFF/README；消融勘误 `docs/experiments/innovation-ablation-2026-09-07.md`；创新点总览映射修正 | ZC-01/ZC-02 已交，**ZC-03 已完成，均待验收** |
 | Antigravity | 「前端图谱样式优化」 | 仓库同上 | `docs/coordination/AG-01.md`、`AG-02.md`；`docs/innovation/图谱可视化语义映射-v1.md`（v1.1）。**第三轮已派工（AG-03-prompt.md，2026-09-07 在库）：自身文档残留结论修正 + 贡献三论文素材 + 识读实验设计草案** | AG-01/AG-02 待验收；AG-03 进行中 |
 | DeepSeek | 研究线 Harness（「桌面有一个“创新点讨论”的」） | 仓库同上 + `~/Desktop/创新点讨论-*.html` | `docs/coordination/DS-01.md`；**已获准：备份修正桌面报告、核实六来源、归档至 `agent-work/research/DS-02`——目前仍在运行，勿打扰** | DS-01 已提交待验收；DS-02 进行中 |
 | 文字线（隔离） | GPT 论文线 | `docs/毕业论文重构稿.md` | **三端均不得触碰**；单写者窗口规则见 AGENTS.md | 未参与 round-2/3 |

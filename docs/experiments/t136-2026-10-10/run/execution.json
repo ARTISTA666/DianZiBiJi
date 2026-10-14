@@ -1,0 +1,35 @@
+{
+  "task_id": "T136",
+  "written_utc": "2026-10-10T15:56:21.468707+00:00",
+  "official_command": "backend/.venv/bin/python scripts/experiments/run_t136_kg_validation.py --work agent-work/t136-2026-10-10",
+  "official_exit_code": 0,
+  "rescore_command": "backend/.venv/bin/python scripts/experiments/run_t136_kg_validation.py --work agent-work/t136-2026-10-10 --rescore",
+  "rescore_exit_code": 0,
+  "scripts_test_command": "backend/.venv/bin/python -m pytest -q scripts/*/test_*.py",
+  "scripts_test_passed": 602,
+  "scripts_test_failed": 1,
+  "new_t136_test_cases_passed": 6,
+  "unrelated_failed_test": "scripts/ops/test_backup_restore_guards.py::test_restore_accepts_regular_storage_members_before_database_checks",
+  "failure_reason": "Existing dirty tracked checkout triggers revision wrapper clean-checkout guard; stderr did not reach fake Docker fixture. No backup/restore code or protection was changed.",
+  "api_requests": 174,
+  "api_non_200_count": 0,
+  "test_note_cases": 28,
+  "rebuild_checks": 28,
+  "rebuild_counts_are_not_new_samples": true,
+  "scored_relation_scope": [
+    "has_note",
+    "created_by",
+    "has_experiment_type",
+    "uses_reagent",
+    "uses_instrument",
+    "uses_sample",
+    "produces_result"
+  ],
+  "out_of_scope_by_arm": {
+    "body": {},
+    "fields": {},
+    "regression": {}
+  },
+  "cleanup": "Stopped only eln-t136 backend/db after saving database dump; containers and isolated volumes retained. Existing services untouched.",
+  "new_source_diary_units": 12
+}

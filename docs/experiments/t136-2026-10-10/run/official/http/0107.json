@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-10T15:52:29.505487+00:00",
+  "path": "/projects/3/notes",
+  "method": "POST",
+  "request": {
+    "title": "细胞活力检测实验",
+    "experiment_type": "细胞培养",
+    "experiment_date": "2026-06-04",
+    "fixed_fields_json": {
+      "reagents": "CCK-8、PBS、DMEM 培养基",
+      "instrument": "酶标仪、CO2 培养箱",
+      "sample": "处理组细胞、对照组细胞",
+      "result": "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。"
+    },
+    "content_json": {
+      "text": "试剂: CCK-8、PBS、DMEM 培养基\n仪器: 酶标仪、CO2 培养箱\n样本: 处理组细胞、对照组细胞\n结果: 细胞活力下降约 18%。"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 26,
+    "project_id": 3,
+    "template_id": null,
+    "title": "细胞活力检测实验",
+    "experiment_type": "细胞培养",
+    "experiment_date": "2026-06-04",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 26,
+    "created_at": "2026-10-10T15:52:29.510107Z",
+    "updated_at": "2026-10-10T15:52:29.510107Z"
+  }
+}

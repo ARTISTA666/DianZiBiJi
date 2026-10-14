@@ -1,0 +1,61 @@
+{
+  "task": "T139 v7 post-exit Docker observation",
+  "captured_at_utc": "2026-10-11T07:52:11.043434+00:00",
+  "expected_v7_revision": "24c3d797c4aab953e10d55b308a8247f73032448",
+  "docker_read_command": "docker ps -a --filter label=com.docker.compose.project=eln-e2e [selected ID output only]",
+  "exit_code": 0,
+  "compose_project_containers_present": 4,
+  "selected_safe_container_identity": [
+    {
+      "container_id": "5774e16575ee93d3f9e39375594d1b466de86f34a6dfee55140fa9dbb9f92e9a",
+      "name": "/eln-e2e-frontend-1",
+      "image_id": "sha256:9e76a86165a0cef97148f4ffd741eb8ab0c9ed1a99332d689ae8657189e46369",
+      "state": "running",
+      "compose_project": "eln-e2e",
+      "compose_service": "frontend",
+      "container_oci_revision": null,
+      "matches_original_v7_browser_container_id": false
+    },
+    {
+      "container_id": "e44427e2f6ee19c798f16fe6ccf0cfcf305b2811a635de67cb3c6938f852ebc4",
+      "name": "/eln-e2e-backend-1",
+      "image_id": "sha256:71d7712728453c78e57905033346bb6ff63410b41315eb89a23005dc4aac44db",
+      "state": "running",
+      "compose_project": "eln-e2e",
+      "compose_service": "backend",
+      "container_oci_revision": "24c3d797c4aab953e10d55b308a8247f73032448",
+      "matches_original_v7_browser_container_id": false
+    },
+    {
+      "container_id": "e68faddb9873ade8e0375d4ac510f00d7a670e36dbbaa84f49502471db81800f",
+      "name": "/eln-e2e-llm-stub-1",
+      "image_id": "sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1",
+      "state": "running",
+      "compose_project": "eln-e2e",
+      "compose_service": "llm-stub",
+      "container_oci_revision": null,
+      "matches_original_v7_browser_container_id": null
+    },
+    {
+      "container_id": "c36521ba8fd51840567619f68f2b3b452573fdf404af9292feec1aecae520c83",
+      "name": "/eln-e2e-db-1",
+      "image_id": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+      "state": "running",
+      "compose_project": "eln-e2e",
+      "compose_service": "db",
+      "container_oci_revision": null,
+      "matches_original_v7_browser_container_id": null
+    }
+  ],
+  "cleanup_source": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/scripts/ops/run-system-e2e.sh",
+    "sha256": "7a7340c7f2d093385689ee27a3f7052e2f06ff50723a32c82ad3be239a3245e3",
+    "exit_trap_registered": true,
+    "cleanup_removes_project_containers_and_volumes": true
+  },
+  "original_browser_phase_identity_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/e2e-v7-runtime-identity.json",
+  "scope": "Read only selected IDs, image ID, state, Compose project/service and OCI revision. No full inspect or environment and no mutation. Observation is after v7 exit; future root reproductions are separate runs.",
+  "original_v7_backend_frontend_containers_present": false,
+  "classification": "ROOT_REPRODUCTION_CONTAINERS_DIFFERENT_FROM_ORIGINAL_V7",
+  "first_post_exit_read_before_this_manifest": "A read-only docker ps for project eln-e2e returned zero IDs immediately after root reported v7 exit; later this manifest observed newly created IDs. No old Compose log was used."
+}

@@ -1,0 +1,1307 @@
+{
+  "task_id": "T136",
+  "selector": "/root/product_manager",
+  "selection_date": "2026-10-10",
+  "selection_rule": {
+    "source_order": [
+      "iisc2019",
+      "ubc2021",
+      "team5863"
+    ],
+    "within_source_order": "PDF reading order; do not re-sort by chronological dates",
+    "quota_per_source": 4,
+    "body_character_range_inclusive": [
+      60,
+      2500
+    ],
+    "date_and_title_heading_excluded_from_body": true,
+    "eligibility": "Earliest independent self-contained dated/attributed performed lab diary units with at least two explicit reagent/instrument/sample/result facts. Executed reagent/medium preparation, autoclaving and field sample collection meet the stated rule. Exclude pure tables/images/plans and protocol-pointer-only units.",
+    "merge_rule": "Same-date same-unit continuous cross-page text merged; do not join short entries across unrelated date blocks.",
+    "score_or_output_based_selection": false,
+    "system_outputs_viewed": false,
+    "current_extraction_code_viewed": false,
+    "extraction_run": false,
+    "sources_read_for_selection": "Only supplied source-manifest.json and *-pages.json; no additional source introduced."
+  },
+  "normalization_policy": "Retain English source wording, spelling, quantities, units and omissions. IISc/team5863 use supplied pages JSON with logged PDF whitespace-only normalization. UBC uses default pdfplumber.extract_text() on original PDF physical pages 1–2 to restore missing spaces at PDF line boundaries; continuation lines joined with one space, retaining original bullet/numbered lines. All 12 bodies have identical non-whitespace character sequences to initial supplied source text. No translation, factual repair, protocol supplementation, title change, date change or selection-boundary change.",
+  "metadata_authorship": {
+    "id": "selector-assigned",
+    "source_id": "download source-manifest id, copied without renaming team5863",
+    "page_start_page_end": "physical PDF page numbers from supplied pages JSON, assigned to selected boundaries by selector",
+    "source_date": "ISO-normalized by selector from original date heading; IISc DD-MM-YYYY so 09-04-2019 is 2019-04-09",
+    "title": "team5863 original dated-heading wording retained; IISc/UBC concise English labels assigned by selector from body, not original author titles",
+    "experiment_type": "selector-assigned categorical description based only on source text",
+    "body": "PDF-extracted source English with logged whitespace-only normalization",
+    "selection_note": "selector-written reason, not source author wording",
+    "individual_authorship": "no personal author assigned; original names inside bodies retained; team5863 author/team unconfirmed"
+  },
+  "source_manifest_path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/sources/source-manifest.json",
+  "source_manifest_sha256": "9e2f3aa40d428ef6cd929e8215621b0a4ff264d0c8fb56951e6579cf16d0f390",
+  "sources": [
+    {
+      "source_id": "iisc2019",
+      "source_url": "https://static.igem.org/mediawiki/2019/3/34/T--IISc-Bangalore--Wetlab_Notebook.pdf",
+      "source_pdf_sha256_from_download_manifest": "18cf31a1a5685b96d7c27ccd6d16be09537e772cb9b21ac9767e39a1a41dbdd0",
+      "source_pdf_pages": 35,
+      "pages_json_path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/sources/iisc2019-pages.json",
+      "pages_json_sha256": "f74c7eb760f70f75ea58a91380294a808d2933d20e16211187b4a9c4c96569bf",
+      "identity": {
+        "cover_page": 1,
+        "cover_text": "LAB NOTEBOOK OF iGEM\nIISc BANGALORE, INDIA\n2019",
+        "team": "IISc BANGALORE, INDIA",
+        "year": 2019,
+        "team_basis": "explicit PDF cover text",
+        "year_basis": "explicit PDF cover text",
+        "identity": "public iGEM lab notebook"
+      },
+      "selected_ids": [
+        "iisc2019-01",
+        "iisc2019-02",
+        "iisc2019-03",
+        "iisc2019-04"
+      ],
+      "selected_count": 4,
+      "selection_scanned_through": {
+        "page": 3,
+        "heading": "14 – 05 – 2019"
+      },
+      "skipped_earlier_segments": [
+        {
+          "source_id": "iisc2019",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "Cover",
+          "original_text": "LAB NOTEBOOK OF iGEM\nIISc BANGALORE, INDIA\n2019",
+          "body_characters": 47,
+          "reason_code": "frontmatter",
+          "reason": "封面明确团队/年份，不是已执行实验日记。"
+        },
+        {
+          "source_id": "iisc2019",
+          "page_start": 2,
+          "page_end": 2,
+          "heading": "12 – 04 – 2019",
+          "original_text": " Autoclaved Eppendorf tubes\n Made DH5α competent cells.",
+          "body_characters": 57,
+          "reason_code": "body_below_60_characters",
+          "reason": "日期标题不计正文，原文正文57字符，低于60字符。具有执行性但不扩写；不跨不同日期拼接凑数。"
+        },
+        {
+          "source_id": "iisc2019",
+          "page_start": 3,
+          "page_end": 3,
+          "heading": "15 – 04 - 2019",
+          "original_text": "Creating transformant bacteria (RFP): Refer to Protocols",
+          "body_characters": 56,
+          "reason_code": "protocol_pointer_only_and_short",
+          "reason": "仅“Creating transformant bacteria (RFP): Refer to Protocols”，低于60字符且不自含；没有至少两个明确材料/仪器/样本/结果事实。"
+        }
+      ]
+    },
+    {
+      "source_id": "ubc2021",
+      "source_url": "https://static.igem.org/mediawiki/2021/4/40/T--British_Columbia--LabNotebook.pdf",
+      "source_pdf_sha256_from_download_manifest": "65ca2cd39d40dfaa92b5de8096435642e483ecaec475e13f44d412b0bb4c570d",
+      "source_pdf_pages": 27,
+      "pages_json_path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/sources/ubc2021-pages.json",
+      "pages_json_sha256": "6f14f7446909dd5ea7c617d0355f9028ab6c23d5b6b7095dbb06b60de857e3c8",
+      "identity": {
+        "cover_page": 1,
+        "cover_text": "Wet Lab Notebook - UBC iGEM\n2021/06 - 2021/10",
+        "team": "UBC iGEM",
+        "year": 2021,
+        "team_basis": "explicit first-page title; download URL names British_Columbia",
+        "year_basis": "explicit first-page date range 2021/06 - 2021/10",
+        "identity": "public iGEM wet-lab notebook"
+      },
+      "selected_ids": [
+        "ubc2021-01",
+        "ubc2021-02",
+        "ubc2021-03",
+        "ubc2021-04"
+      ],
+      "selected_count": 4,
+      "selection_scanned_through": {
+        "page": 2,
+        "heading": "2021/07/08"
+      },
+      "skipped_earlier_segments": [
+        {
+          "source_id": "ubc2021",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "Notebook title and date range",
+          "original_text": "Wet Lab Notebook - UBC iGEM\n2021/06 - 2021/10",
+          "body_characters": 45,
+          "reason_code": "frontmatter",
+          "reason": "标题及整体年月范围，不是实验日记。"
+        },
+        {
+          "source_id": "ubc2021",
+          "page_start": 2,
+          "page_end": 2,
+          "heading": "2021/07/05",
+          "original_text": "- Inoculations",
+          "body_characters": 14,
+          "reason_code": "body_below_60_characters_and_insufficient_facts",
+          "reason": "倒插条目只有“- Inoculations”，14字符，无两个明确材料/仪器/样本/结果事实。与早先同日转化记录不连续，不跨其他日期段落合并。"
+        },
+        {
+          "source_id": "ubc2021",
+          "page_start": 2,
+          "page_end": 2,
+          "heading": "2021/07/07",
+          "original_text": "- Transformation of Golden Gate Assembly construct- Transformation protocol:- https://international.neb.com/protocols/2018/10/02/transformation-protocol-for-using-neb-golden-gate-assembly-mix-e1601",
+          "body_characters": 197,
+          "reason_code": "protocol_pointer_only",
+          "reason": "仅Golden Gate construct转化名称、protocol标题和NEB外链，无自含的实际操作材料/量或结果；不补入链接内容。"
+        }
+      ]
+    },
+    {
+      "source_id": "team5863",
+      "source_url": "https://static.igem.wiki/teams/5863/wetlab/notebook.pdf",
+      "source_pdf_sha256_from_download_manifest": "81ef285bbad2ab6cb254a7be981b657baac9f4be31d15b93c898f9bee7869c14",
+      "source_pdf_pages": 16,
+      "pages_json_path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/sources/team5863-pages.json",
+      "pages_json_sha256": "ef9cd8e5ca3e31089f5483e21ca27cd2d47b27b0ea7ec49761d65cd878b4c581",
+      "identity": {
+        "cover_page": 1,
+        "cover_text": "Lab Notebook \n \nProtocols from papers:",
+        "team": null,
+        "author": null,
+        "year": 2025,
+        "team_basis": "unconfirmed; numeric asset team id 5863 is not a team-name confirmation",
+        "year_basis": "explicit 2025 dated entries, not extracted cover text",
+        "identity": "Lab Notebook hosted on iGEM team 5863 public asset URL",
+        "cover_visual_confirmation": "Root agent reports rendered cover only says Lab Notebook / Protocols from papers; team identity remains unconfirmed."
+      },
+      "selected_ids": [
+        "team5863-01",
+        "team5863-02",
+        "team5863-03",
+        "team5863-04"
+      ],
+      "selected_count": 4,
+      "selection_scanned_through": {
+        "page": 4,
+        "heading": "26/06/2025 PCR test extracted DNA samples (optimize)"
+      },
+      "skipped_earlier_segments": [
+        {
+          "source_id": "team5863",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "Lab Notebook / Protocols from papers",
+          "original_text": "Lab Notebook \n \nProtocols from papers:",
+          "body_characters": 38,
+          "reason_code": "frontmatter",
+          "reason": "通用标题及文献协议章节名，没有本地执行日期或作者。"
+        },
+        {
+          "source_id": "team5863",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "Protocol for DNA extraction from PCR diagnostics paper (Toda et al, 2014)",
+          "original_text": "Adult females were homogenized individually in 10 μl of lysis buffer including 9 μl of \nSTE buffer [100 mM NaCl, 1 mM EDTA (pH 8.0), 10 mM Tris–HCl (pH 8.0)], and 1 μl of \nproteinase K (10 mg/ml). The homogenate was incubated for 15 min at 65 °C and then \nheated for 5 min at 95 °C to inactivate the proteinase K . PCR was per-formed in 20 ul \nreaction volume, containing 20 pmol of each primer, 10 mM Tris–HCl (pH 8.3), 50 mM \nKCl, 2.5 mM MgCl2, 0.25 mM of each dNTP, and 0.5 units of Taq-polymerase \n(AmpliTaq Gold, Applied Biosystems). The PCR program in the DNA thermal cycler \n(DNA thermal cycler 2720, PE Applied Biosystems) was 94°C for 9 min as a preheat \nstep, followed by 35 cycles at 94°C for 30 s, 52°C for 30 s, and 72°C for 1 min, and then \n72 °C for 7 min as a final extension.",
+          "body_characters": 792,
+          "reason_code": "literature_protocol_not_dated_local_diary",
+          "reason": "文献协议摘录，不是本团队明确日期的已执行实验日记；过去式描述不能据此认作本地实际操作。"
+        },
+        {
+          "source_id": "team5863",
+          "page_start": 1,
+          "page_end": 1,
+          "heading": "Protocol for DNA extraction from LAMP diagnostics paper (Toda et al, 2015)",
+          "original_text": "Place one individual Scirtothrips dorsalis insect into a 0.2 ml PCR tube (using a fine-\ntipped brush). Add 10 µl of 100 mM Tris-HCl (pH 8.0) to the tube. Grind the insect \nthoroughly in this solution (using a fine-tipped brush or a heat-modified pipette tip as \nmentioned previously). Heat the homogenate at 99.9°C for 10 minutes. The resulting \nsupernatant/lysate containing the DNA is then used directly as the template for the \nLAMP reaction (0.5 µl of this extract was used per 20 µl LAMP reaction).",
+          "body_characters": 503,
+          "reason_code": "literature_protocol_not_dated_local_diary",
+          "reason": "文献协议摘录，命令式步骤，没有本地执行日期或作者。"
+        }
+      ]
+    }
+  ],
+  "record_audit": [
+    {
+      "id": "iisc2019-01",
+      "original_heading": "09 – 04 – 2019",
+      "next_heading": "10 – 04 – 2019",
+      "raw_body_characters": 268,
+      "body_characters": 268,
+      "body_sha256": "ef58723d71dbcba850c03777203ee58706e5df974f4b2c224d63ae0f1afb6602",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": []
+    },
+    {
+      "id": "iisc2019-02",
+      "original_heading": "10 – 04 – 2019",
+      "next_heading": "12 – 04 – 2019",
+      "raw_body_characters": 182,
+      "body_characters": 182,
+      "body_sha256": "2169b2e8f85d50fe61e010e2d398ad3ebd2d600facb659cd08c5c547589d4133",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": []
+    },
+    {
+      "id": "iisc2019-03",
+      "original_heading": "13 – 04 – 2019",
+      "next_heading": "15 – 04 - 2019",
+      "raw_body_characters": 1006,
+      "body_characters": 996,
+      "body_sha256": "a9007062deb717bcf854822944648be3928a9ed1b5afe5a3adb7ee156a077a40",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 527,
+          "source_end": 528,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 533,
+          "source_end": 534,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 568,
+          "source_end": 569,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 584,
+          "source_end": 585,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 594,
+          "source_end": 595,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 610,
+          "source_end": 611,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 761,
+          "source_end": 762,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 793,
+          "source_end": 794,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 807,
+          "source_end": 808,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 819,
+          "source_end": 820,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 833,
+          "source_end": 834,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 851,
+          "source_end": 852,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 860,
+          "source_end": 861,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 866,
+          "source_end": 867,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 874,
+          "source_end": 875,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 878,
+          "source_end": 879,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 891,
+          "source_end": 892,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 894,
+          "source_end": 895,
+          "from": "\n",
+          "to": " "
+        },
+        {
+          "source_start": 898,
+          "source_end": 899,
+          "from": "\n",
+          "to": " "
+        }
+      ]
+    },
+    {
+      "id": "iisc2019-04",
+      "original_heading": "14 – 05 – 2019",
+      "next_heading": "15 – 05 – 2019",
+      "raw_body_characters": 81,
+      "body_characters": 81,
+      "body_sha256": "22830d8c19c2e877785ffe1e940de8ff080b7d94084e5ca5b00cb9c1c8af382e",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": []
+    },
+    {
+      "id": "ubc2021-01",
+      "original_heading": "2021/06/30",
+      "next_heading": "2021/07/05",
+      "raw_body_characters": 351,
+      "body_characters": 356,
+      "body_sha256": "d5d5bc2d6c0bdc3b1d843642d88226cb8d04427cc0cb4c06bdff5c7f8667a430",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 65,
+          "source_end": 65,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 159,
+          "source_end": 159,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 177,
+          "source_end": 177,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 207,
+          "source_end": 207,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 270,
+          "source_end": 271,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 301,
+          "source_end": 301,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 307,
+          "source_end": 307,
+          "from": "",
+          "to": "\n"
+        }
+      ],
+      "body_extraction_method": "pdfplumber 0.11.9 extract_text() on original PDF pages 1–2, default options; source_json remains initial pypdf extraction for provenance"
+    },
+    {
+      "id": "ubc2021-02",
+      "original_heading": "2021/07/05",
+      "next_heading": "2021/07/06",
+      "raw_body_characters": 756,
+      "body_characters": 764,
+      "body_sha256": "9c500e5750a2598627e26c7b8ab2ae090d45502c00ffd97d12cdf3c68c90a852",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 90,
+          "source_end": 90,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 170,
+          "source_end": 170,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 263,
+          "source_end": 263,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 356,
+          "source_end": 356,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 369,
+          "source_end": 369,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 461,
+          "source_end": 461,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 485,
+          "source_end": 486,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 546,
+          "source_end": 546,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 630,
+          "source_end": 630,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 700,
+          "source_end": 700,
+          "from": "",
+          "to": "\n"
+        }
+      ],
+      "body_extraction_method": "pdfplumber 0.11.9 extract_text() on original PDF pages 1–2, default options; source_json remains initial pypdf extraction for provenance"
+    },
+    {
+      "id": "ubc2021-03",
+      "original_heading": "2021/07/06",
+      "next_heading": "2021/07/05",
+      "raw_body_characters": 645,
+      "body_characters": 657,
+      "body_sha256": "50308ce6bd500a2a2994365adf48fe359ffaeee9e385d04dfd649d74587605e6",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 29,
+          "source_end": 29,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 116,
+          "source_end": 116,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 204,
+          "source_end": 204,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 242,
+          "source_end": 242,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 281,
+          "source_end": 281,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 361,
+          "source_end": 361,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 390,
+          "source_end": 390,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 423,
+          "source_end": 423,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 444,
+          "source_end": 444,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 455,
+          "source_end": 455,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 475,
+          "source_end": 475,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 496,
+          "source_end": 496,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 522,
+          "source_end": 523,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 541,
+          "source_end": 541,
+          "from": "",
+          "to": "\n"
+        }
+      ],
+      "body_extraction_method": "pdfplumber 0.11.9 extract_text() on original PDF pages 1–2, default options; source_json remains initial pypdf extraction for provenance"
+    },
+    {
+      "id": "ubc2021-04",
+      "original_heading": "2021/07/08",
+      "next_heading": "2021/07/09",
+      "raw_body_characters": 762,
+      "body_characters": 771,
+      "body_sha256": "981a2937c781a0ea8036f0dc034bf74e42f2e3256765c802161218597e45ad88",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 97,
+          "source_end": 97,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 189,
+          "source_end": 189,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 282,
+          "source_end": 282,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 377,
+          "source_end": 377,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 400,
+          "source_end": 400,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 494,
+          "source_end": 494,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 590,
+          "source_end": 590,
+          "from": "",
+          "to": " "
+        },
+        {
+          "source_start": 667,
+          "source_end": 667,
+          "from": "",
+          "to": "\n"
+        },
+        {
+          "source_start": 707,
+          "source_end": 707,
+          "from": "",
+          "to": "\n"
+        }
+      ],
+      "body_extraction_method": "pdfplumber 0.11.9 extract_text() on original PDF pages 1–2, default options; source_json remains initial pypdf extraction for provenance"
+    },
+    {
+      "id": "team5863-01",
+      "original_heading": "2025/05/04. Field sampling",
+      "next_heading": "2025/06/11 DNA extraction of collected samples.",
+      "raw_body_characters": 141,
+      "body_characters": 139,
+      "body_sha256": "2e31e8951e0318ee2c0813c8e9c93483ef204a16acd3b86d267efc7cefeceae9",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 26,
+          "source_end": 27,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 108,
+          "source_end": 109,
+          "from": " ",
+          "to": ""
+        }
+      ]
+    },
+    {
+      "id": "team5863-02",
+      "original_heading": "2025/06/11 DNA extraction of collected samples.",
+      "next_heading": "2025/06/12 PCR tests of extracted DNA samples.",
+      "raw_body_characters": 1127,
+      "body_characters": 1094,
+      "body_sha256": "9194aaf0acbbb30fe3158348a3019c08a7581d0811ac391c913678cda17891e0",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 55,
+          "source_end": 56,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 74,
+          "source_end": 75,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 112,
+          "source_end": 113,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 144,
+          "source_end": 145,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 165,
+          "source_end": 166,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 181,
+          "source_end": 182,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 213,
+          "source_end": 214,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 215,
+          "source_end": 216,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 231,
+          "source_end": 232,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 311,
+          "source_end": 312,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 338,
+          "source_end": 339,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 417,
+          "source_end": 418,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 470,
+          "source_end": 471,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 496,
+          "source_end": 497,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 523,
+          "source_end": 524,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 551,
+          "source_end": 552,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 620,
+          "source_end": 621,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 630,
+          "source_end": 631,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 660,
+          "source_end": 661,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 703,
+          "source_end": 704,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 715,
+          "source_end": 716,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 785,
+          "source_end": 786,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 830,
+          "source_end": 831,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 855,
+          "source_end": 856,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 864,
+          "source_end": 865,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 924,
+          "source_end": 925,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 929,
+          "source_end": 930,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 941,
+          "source_end": 942,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 981,
+          "source_end": 982,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 1031,
+          "source_end": 1032,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 1086,
+          "source_end": 1087,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 1088,
+          "source_end": 1089,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 1096,
+          "source_end": 1097,
+          "from": " ",
+          "to": ""
+        }
+      ]
+    },
+    {
+      "id": "team5863-03",
+      "original_heading": "2025/06/12 PCR tests of extracted DNA samples.",
+      "next_heading": null,
+      "raw_body_characters": 535,
+      "body_characters": 512,
+      "body_sha256": "f8135b7693d5efd6733d203b33893443c525e56a4bfcf659c41101502bccbcdf",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 22,
+          "source_end": 23,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 60,
+          "source_end": 61,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 98,
+          "source_end": 99,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 136,
+          "source_end": 137,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 171,
+          "source_end": 172,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 206,
+          "source_end": 207,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 231,
+          "source_end": 232,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 248,
+          "source_end": 249,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 250,
+          "source_end": 251,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 267,
+          "source_end": 268,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 269,
+          "source_end": 270,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 303,
+          "source_end": 305,
+          "from": "  ",
+          "to": ""
+        },
+        {
+          "source_start": 330,
+          "source_end": 331,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 342,
+          "source_end": 343,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 365,
+          "source_end": 366,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 388,
+          "source_end": 389,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 416,
+          "source_end": 418,
+          "from": "  ",
+          "to": ""
+        },
+        {
+          "source_start": 419,
+          "source_end": 420,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 421,
+          "source_end": 422,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 508,
+          "source_end": 509,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 510,
+          "source_end": 511,
+          "from": " ",
+          "to": ""
+        }
+      ]
+    },
+    {
+      "id": "team5863-04",
+      "original_heading": "26/06/2025 PCR test extracted DNA samples (optimize)",
+      "next_heading": null,
+      "raw_body_characters": 943,
+      "body_characters": 915,
+      "body_sha256": "4047ffe6c7870d651c71b4856b2b556bc4c16cf1d24d6879d91b7a53349d9c11",
+      "non_whitespace_character_sequence_unchanged": true,
+      "normalization_edits": [
+        {
+          "source_start": 43,
+          "source_end": 44,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 67,
+          "source_end": 68,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 105,
+          "source_end": 106,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 150,
+          "source_end": 151,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 195,
+          "source_end": 196,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 237,
+          "source_end": 238,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 279,
+          "source_end": 280,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 304,
+          "source_end": 305,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 318,
+          "source_end": 319,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 320,
+          "source_end": 321,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 322,
+          "source_end": 323,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 339,
+          "source_end": 340,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 341,
+          "source_end": 342,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 374,
+          "source_end": 376,
+          "from": "  ",
+          "to": ""
+        },
+        {
+          "source_start": 401,
+          "source_end": 402,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 413,
+          "source_end": 414,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 436,
+          "source_end": 437,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 458,
+          "source_end": 459,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 486,
+          "source_end": 488,
+          "from": "  ",
+          "to": ""
+        },
+        {
+          "source_start": 489,
+          "source_end": 490,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 576,
+          "source_end": 577,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 664,
+          "source_end": 665,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 682,
+          "source_end": 683,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 768,
+          "source_end": 769,
+          "from": "\n",
+          "to": ""
+        },
+        {
+          "source_start": 796,
+          "source_end": 797,
+          "from": " ",
+          "to": ""
+        },
+        {
+          "source_start": 882,
+          "source_end": 883,
+          "from": "\n",
+          "to": ""
+        }
+      ]
+    }
+  ],
+  "total_selected": 12,
+  "shortfall": 0,
+  "all_earlier_skipped_segments_recorded": true,
+  "records_path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/inputs/records.json",
+  "records_sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0",
+  "verification": {
+    "per_source_selected_count": {
+      "iisc2019": 4,
+      "ubc2021": 4,
+      "team5863": 4
+    },
+    "minimum_body_characters": 81,
+    "maximum_body_characters": 1094,
+    "all_required_record_fields_present": true,
+    "all_body_lengths_in_range": true,
+    "non_whitespace_source_body_match_count": 12
+  },
+  "visual_checks_for_root": [
+    "Selected physical pages and dates unchanged: IISc 2/3; UBC 1/2; team5863 2/3/4.",
+    "IISc/team5863 already visually checked by root; remain unchanged.",
+    "UBC four bodies re-extracted from SHA-verified PDF via pdfplumber to restore line-boundary word spaces, before blind annotation; compare these bodies with already-rendered pages 1/2."
+  ],
+  "files_written": [
+    "inputs/records.json",
+    "inputs/selection.json"
+  ],
+  "text_extraction_repair": {
+    "reason": "Root visual review identified pypdf fused words at UBC hard line boundaries; pdfplumber retains correct word spacing. Output-preparation repair before blind annotation/system execution.",
+    "source_pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/sources/ubc2021.pdf",
+    "source_pdf_sha256": "65ca2cd39d40dfaa92b5de8096435642e483ecaec475e13f44d412b0bb4c570d",
+    "source_pdf_sha256_matches_download_manifest": true,
+    "extractor": "pdfplumber",
+    "extractor_version": "0.11.9",
+    "method": "page.extract_text() with default options",
+    "physical_pages": [
+      1,
+      2
+    ],
+    "page_extracted_text_sha256": {
+      "1": "e7b9b634bd638dbe37d78c5e7630fa6781fdfef8cd262e660a0651225849e472",
+      "2": "37eae9e5d6da89cde8f8d3a323faff9183b3fa63fc2068361fd4a41ede7ebd8a"
+    },
+    "layout_normalization": "strip physical-line outer whitespace; append unnumbered/unbulleted continuation lines to previous line with one space; preserve bullet and numbered-item boundaries",
+    "record_bodies_changed": [
+      "ubc2021-01",
+      "ubc2021-02",
+      "ubc2021-03",
+      "ubc2021-04"
+    ],
+    "per_record": [
+      {
+        "id": "ubc2021-01",
+        "old_body_characters": 355,
+        "new_body_characters": 356,
+        "old_body_sha256": "60df46e737f0049746609b21fbf5d14da7bd6bbc5a806661c7de3da733355f56",
+        "new_body_sha256": "d5d5bc2d6c0bdc3b1d843642d88226cb8d04427cc0cb4c06bdff5c7f8667a430",
+        "pdfplumber_segment_characters": 356,
+        "pdfplumber_segment_sha256": "59cc4acdaf3d83e43888decd3b6105e0b240dd5190257df064d684db14c47137",
+        "non_whitespace_character_sequence_unchanged": true
+      },
+      {
+        "id": "ubc2021-02",
+        "old_body_characters": 759,
+        "new_body_characters": 764,
+        "old_body_sha256": "8ecc9ac02a4d9460e965950f5c122be4aa521c4075a8cbbec890757b2ed11a2a",
+        "new_body_sha256": "9c500e5750a2598627e26c7b8ab2ae090d45502c00ffd97d12cdf3c68c90a852",
+        "pdfplumber_segment_characters": 764,
+        "pdfplumber_segment_sha256": "40fa22083ea6765b958b4d4e980199d31eb10ca076ed05423ad1e5add7a38e59",
+        "non_whitespace_character_sequence_unchanged": true
+      },
+      {
+        "id": "ubc2021-03",
+        "old_body_characters": 657,
+        "new_body_characters": 657,
+        "old_body_sha256": "b7cb76ee8a693287a428705d51cd427731e865924e0067e11537e60d31bbc1c1",
+        "new_body_sha256": "50308ce6bd500a2a2994365adf48fe359ffaeee9e385d04dfd649d74587605e6",
+        "pdfplumber_segment_characters": 657,
+        "pdfplumber_segment_sha256": "9d1ab63acc97fc5f416b676425374776e03aa7efe40b27f0de66b509d6df08d8",
+        "non_whitespace_character_sequence_unchanged": true
+      },
+      {
+        "id": "ubc2021-04",
+        "old_body_characters": 765,
+        "new_body_characters": 771,
+        "old_body_sha256": "1cda6788dfe4e35bedc3ebe749b5375ebc46305e26325f708e228f3b228f26ac",
+        "new_body_sha256": "981a2937c781a0ea8036f0dc034bf74e42f2e3256765c802161218597e45ad88",
+        "pdfplumber_segment_characters": 771,
+        "pdfplumber_segment_sha256": "6ff0fe7b845c1327ebb2035bb98dded6841febd347947a2eb71b1f1e28b6400a",
+        "non_whitespace_character_sequence_unchanged": true
+      }
+    ],
+    "old_records_sha256": "3c7bb5b2f596fa0df347fc84169d07919c84e436acbeeba6f2bc3d5e07802aea",
+    "new_records_sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0",
+    "non_UBC_records_unchanged": true,
+    "all_ids_dates_page_ranges_titles_types_selection_notes_unchanged": true,
+    "examples": [
+      "from\\nHallam -> from Hallam",
+      "since\\nwe -> since we",
+      "BIOMOD\\nshelf. -> BIOMOD shelf.",
+      "comes in\\ncontact -> comes in contact"
+    ]
+  }
+}

@@ -1,0 +1,539 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "product_manager",
+  "completion_date": "2026-10-04",
+  "completed_at_local": "2026-10-04T00:47:19+08:00",
+  "completed_at_utc": "2026-10-03T16:47:19Z",
+  "timezone": "Asia/Shanghai",
+  "candidate": {
+    "path": "/private/tmp/advisor-T129-20261003/candidate.docx",
+    "sha256": "03206e97eb2ba36fb385f6df07cf91c87b39cafd658e441491646592b05ea4a2"
+  },
+  "render": {
+    "directory": "/private/tmp/advisor-T129-20261003/render-v7",
+    "pdf_path": "/private/tmp/advisor-T129-20261003/render-v7/candidate.pdf",
+    "pdf_sha256": "03f394f859e0027470776e1beecbb810292ecb7b6b77edd2719bd0b758b44b67",
+    "physical_pages": 107,
+    "body_numbered_pages": 100
+  },
+  "scope": {
+    "physical_pages_start": 41,
+    "physical_pages_end": 75,
+    "pages_covered": 35,
+    "fresh_original_size_views": 22,
+    "inherited_identical_original_size_views": 13
+  },
+  "result": "pass_with_nonblocking_readability_notes",
+  "blocking_issues": [],
+  "nonblocking_notes": [
+    {
+      "physical_page": 43,
+      "object": "图5-1",
+      "note": "历史全屏截图主体字体较小。"
+    },
+    {
+      "physical_page": 47,
+      "object": "图5-8",
+      "note": "历史全屏截图主体字体较小。"
+    },
+    {
+      "physical_page": 65,
+      "object": "图6-5",
+      "note": "绿色条形白色分母标注末端对比不足；建议深色标注或置于条形外。"
+    }
+  ],
+  "boundaries": [
+    "本记录仅验收物理41—75页。全篇渲染107页已核对文件数量及PDF页数；不据此声称本Agent逐页亲看了范围外页面。",
+    "13页继承先前render-v3同页原尺寸亲看结论，继承仅因PNG SHA-256完全一致；22个变化页全部在render-v7重新原尺寸亲看。",
+    "目录缓存101项及实际页码核验由root汇总；WPS因锁屏未进行实际打开/刷新目录复核。",
+    "视觉验收不表示未完成实验已完成；本轮性能为600请求/60秒本地限速只读轻负载，轻反馈未点击且为非盲条件，真人参与者0。"
+  ],
+  "pages": [
+    {
+      "physical_page": 41,
+      "printed_page": 34,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-41.png",
+      "png_sha256": "9910e11ca50a69663918167b43c88cf4d1541246bb2eb0e51c0a1703f6a067a8",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 41,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-41.png",
+        "png_sha256": "9910e11ca50a69663918167b43c88cf4d1541246bb2eb0e51c0a1703f6a067a8",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "第五章开篇与表5-1完整同页，5.2标题后有正文。"
+      ]
+    },
+    {
+      "physical_page": 42,
+      "printed_page": 35,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-42.png",
+      "png_sha256": "99fbcdf7d21cac7e4d15e9a23ca20439a1f624936a2101f9af02950ef1d62db5",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 42,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-42.png",
+        "png_sha256": "99fbcdf7d21cac7e4d15e9a23ca20439a1f624936a2101f9af02950ef1d62db5",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "表5-2项目数据、表5-3种子样例完整，表题同页。"
+      ]
+    },
+    {
+      "physical_page": 43,
+      "printed_page": 36,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-43.png",
+      "png_sha256": "d04500b1d04ec58dbc1ebf44b037d9312163bb03e54b37e0f9323de73d364033",
+      "inspection_method": "original_size_view",
+      "result": "pass_with_nonblocking_note",
+      "observations": [
+        "图5-1、图5-2均完整且图题同页；图5-2已改为笔记列表与审核状态。",
+        "旧图5-1采用桌面全屏，主体字体较小，属非阻断的可读性限制。"
+      ]
+    },
+    {
+      "physical_page": 44,
+      "printed_page": 37,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-44.png",
+      "png_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 44,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-44.png",
+        "png_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-3审核流程及图5-4状态界面完整，图题同页。"
+      ]
+    },
+    {
+      "physical_page": 45,
+      "printed_page": 38,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-45.png",
+      "png_sha256": "de135f103a1fbca86409e4892e703ca251365a305ef680979e4c458f240a3d49",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 45,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-45.png",
+        "png_sha256": "de135f103a1fbca86409e4892e703ca251365a305ef680979e4c458f240a3d49",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-5资料处理流程与表5-4检索参数完整同页。"
+      ]
+    },
+    {
+      "physical_page": 46,
+      "printed_page": 39,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-46.png",
+      "png_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 46,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-46.png",
+        "png_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-6图谱全景与图5-7来源聚焦完整；全景标签较小，可结合聚焦图理解。"
+      ]
+    },
+    {
+      "physical_page": 47,
+      "printed_page": 40,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-47.png",
+      "png_sha256": "f1c2e22229f268cea083944ff238806d12e3e510ec5183241a8476c902ea54ed",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 47,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-47.png",
+        "png_sha256": "f1c2e22229f268cea083944ff238806d12e3e510ec5183241a8476c902ea54ed",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass_with_nonblocking_note",
+      "observations": [
+        "图5-8固定任务历史界面完整且图题同页。",
+        "旧全屏截图主体字较小；本页底部留白来自后续完整图的分页，未见裁切。"
+      ]
+    },
+    {
+      "physical_page": 48,
+      "printed_page": 41,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-48.png",
+      "png_sha256": "c71776ce9906b97aad6a74a332612635443d5ec5ce03050b1e1888ee9da979f1",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 48,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-48.png",
+        "png_sha256": "c71776ce9906b97aad6a74a332612635443d5ec5ce03050b1e1888ee9da979f1",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-9计划覆盖界面及表5-5完整同页。"
+      ]
+    },
+    {
+      "physical_page": 49,
+      "printed_page": 42,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-49.png",
+      "png_sha256": "6d86ee6663d6930f022ceff14b1b7bfdbc8f1a0f77737ae19c3eb0b705b4ec19",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 49,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-49.png",
+        "png_sha256": "6d86ee6663d6930f022ceff14b1b7bfdbc8f1a0f77737ae19c3eb0b705b4ec19",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "表5-6的13个子模块映射完整，截图来源、部署版本与既有记录边界可读。"
+      ]
+    },
+    {
+      "physical_page": 50,
+      "printed_page": 43,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-50.png",
+      "png_sha256": "387fcdd77586594d1331332a94d9d0886973e0826a11c234e940e336e41ed685",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 50,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-50.png",
+        "png_sha256": "387fcdd77586594d1331332a94d9d0886973e0826a11c234e940e336e41ed685",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-10成员权限与图5-11笔记最新版本/退回状态完整，图题同页。"
+      ]
+    },
+    {
+      "physical_page": 51,
+      "printed_page": 44,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-51.png",
+      "png_sha256": "66c2184b1eb30f33f620463a5d8d3d64723cbf3f0d172931cc425bcfa7b705b6",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 51,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-51.png",
+        "png_sha256": "66c2184b1eb30f33f620463a5d8d3d64723cbf3f0d172931cc425bcfa7b705b6",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-12资料、图5-13 OCR、图5-14问答来源完整；OCR夹具非正式结果的边界清楚。"
+      ]
+    },
+    {
+      "physical_page": 52,
+      "printed_page": 45,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-52.png",
+      "png_sha256": "bb80ee257d9f9c418563041d547e073e5992de4199fda07f1c6f68fe2fa8c3f9",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 52,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-52.png",
+        "png_sha256": "bb80ee257d9f9c418563041d547e073e5992de4199fda07f1c6f68fe2fa8c3f9",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "图5-15预警、图5-16审计、图5-17盲评访问隔离完整；审计裁剪主体可读。"
+      ]
+    },
+    {
+      "physical_page": 53,
+      "printed_page": 46,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-53.png",
+      "png_sha256": "82bf9a7e71050a5156c8c028966693fe60c52890473656a0052d6b3206090f3b",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "图5-18普通问答轻反馈来源/降级/按钮完整；新query1934身份、日期、模型、版本和未点击反馈的说明明确。",
+        "5.4标题与正文同页，无溢出。"
+      ]
+    },
+    {
+      "physical_page": 54,
+      "printed_page": 47,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-54.png",
+      "png_sha256": "d4c4c5472fb690d505a89d2cc1958b2ef37137d9aeb1219eb8a978efffc22825",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 54,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-54.png",
+        "png_sha256": "d4c4c5472fb690d505a89d2cc1958b2ef37137d9aeb1219eb8a978efffc22825",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "第六章开篇与表6-1实验环境完整同页。"
+      ]
+    },
+    {
+      "physical_page": 55,
+      "printed_page": 48,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-55.png",
+      "png_sha256": "4304f10eadb29613fa52713fc0cdd8518db9d6d2f450f99a9e7e9668c2a2fa0d",
+      "inspection_method": "inherited_identical_png",
+      "inherited_from": {
+        "render": "render-v3",
+        "physical_page": 55,
+        "png_path": "/private/tmp/advisor-T129-20261003/render-v3/page-55.png",
+        "png_sha256": "4304f10eadb29613fa52713fc0cdd8518db9d6d2f450f99a9e7e9668c2a2fa0d",
+        "prior_inspection": "personally viewed at original size before final v7"
+      },
+      "result": "pass",
+      "observations": [
+        "表6-2、图6-1完整；6.2标题后有正文。"
+      ]
+    },
+    {
+      "physical_page": 56,
+      "printed_page": 49,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-56.png",
+      "png_sha256": "0f0860d5f1a74d3a3dc768a3608015b5aef46c0d6aafc25a6284eca47f0d6078",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-3功能汇总与表6-3a基础B01—B04完整同页，表题和最后一行均在页内。"
+      ]
+    },
+    {
+      "physical_page": 57,
+      "printed_page": 50,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-57.png",
+      "png_sha256": "de65e9062c73698ce9a69d87b7eabfce22aa7a1e3cae0b730195b3703b553d89",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-3b协作权限B05—B08与表6-3c Rust R01—R03各完整同页。",
+        "600请求/60秒观测段完整，数值与只读轻负载边界清楚。"
+      ]
+    },
+    {
+      "physical_page": 58,
+      "printed_page": 51,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-58.png",
+      "png_sha256": "f4580b4ff5042ca9f922b95ce886bdc7c6f81cb012e336ee452d19afb6c8a0a4",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "6.3标题、正文与全部表6-4指标同页；此前标题和指标表之间的大段空白已消除。",
+        "公式和表格最后一行完整，无裁切。"
+      ]
+    },
+    {
+      "physical_page": 59,
+      "printed_page": 52,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-59.png",
+      "png_sha256": "7031053852d2d0bb44750e472f97a1062389f25b5e2c285de52729e8f044ee8e",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "指标说明、参考答案定义与配对统计方法段连续可读，无溢出。"
+      ]
+    },
+    {
+      "physical_page": 60,
+      "printed_page": 53,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-60.png",
+      "png_sha256": "f77ae60c7ea019b9ff5739a1bb7beafea85aaa54418b88207ca0b4fbd45a986a",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "6.4、6.5及6.5.1正文正常；表6-5完整，6.5.2标题后有两行正文。"
+      ]
+    },
+    {
+      "physical_page": 61,
+      "printed_page": 54,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-61.png",
+      "png_sha256": "1cf6dbbffc2e2d3b9a048a46fa0fecc8faaaea664471330dca667bffe6df4154",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-6和图6-2完整，图题同页。"
+      ]
+    },
+    {
+      "physical_page": 62,
+      "printed_page": 55,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-62.png",
+      "png_sha256": "b6b14a7a6b73ad44ae51aee2e9565c61ad65cbd7ce45c078030bf1b326f38001",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "图6-3两个面板完整且图题同页；图内字体较小但原尺寸可辨。"
+      ]
+    },
+    {
+      "physical_page": 63,
+      "printed_page": 56,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-63.png",
+      "png_sha256": "f03027c064685864249c7b9ab9664e653e8f660b880392f4aba4fa8ee8c09a0f",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "图6-4完整且图题同页，6.5.3标题及正文同页。"
+      ]
+    },
+    {
+      "physical_page": 64,
+      "printed_page": 57,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-64.png",
+      "png_sha256": "fdf65e8ee093502a8d666f9936ad315536cbaa98086ef813826f3aa066b69d76",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-7、表6-8均完整，表题同页；底部留白来自下一页完整图安排。"
+      ]
+    },
+    {
+      "physical_page": 65,
+      "printed_page": 58,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-65.png",
+      "png_sha256": "4b45b5c4b0e9ce6fd2dd40b16309ab988d754688aa18d2dab3c1397009f9af73",
+      "inspection_method": "original_size_view",
+      "result": "pass_with_nonblocking_note",
+      "observations": [
+        "微平均解释含36回答、96次规定事实、29/96与87/96，完整可读。",
+        "图6-5与图6-6均完整且图题同页；图6-5绿色条形的白色分母标注末端对比不足，属于非阻断可读性说明。"
+      ]
+    },
+    {
+      "physical_page": 66,
+      "printed_page": 59,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-66.png",
+      "png_sha256": "bcd23b6ed4762e897a1a4dd661843b5b8884211f88cff128ee66ebed88029b6a",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-9与图6-7完整，题名同页；历史批次与当前Rust实现的身份说明清楚。"
+      ]
+    },
+    {
+      "physical_page": 67,
+      "printed_page": 60,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-67.png",
+      "png_sha256": "2d5385d55bc5d73c99e018f3f965a2a10e28521b19ab0e92c75f0d93593f0423",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "6.5.5计划覆盖/预警及6.5.6参考答案定义连续完整，无标题孤立或正文溢出。"
+      ]
+    },
+    {
+      "physical_page": 68,
+      "printed_page": 61,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-68.png",
+      "png_sha256": "2ca8e6c4c87eae753de33b33d09e263f45af08c866e9d27b250d111671a3afe4",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-10完整；6.6标题后有正文，图谱增强分析保留主张级日志缺口。",
+        "末行表6-11引用在连字符处分至下一页，仍可连读，未构成数据或图表裁切。"
+      ]
+    },
+    {
+      "physical_page": 69,
+      "printed_page": 62,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-69.png",
+      "png_sha256": "4419833f67a29b86739b767b9b98d6181148dad8e6439fa8310edd7085e74e13",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-11与新增表6-11a完整同页，全部差值/区间清楚；不能直接相减和未重复评分边界可读。"
+      ]
+    },
+    {
+      "physical_page": 70,
+      "printed_page": 63,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-70.png",
+      "png_sha256": "a3a88eb84df937bf682de7014aa68550167a41766f876d19e38e3cfaf9b776d8",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-12完整，Rust四组结果及统计/业务角色解释连续可读。"
+      ]
+    },
+    {
+      "physical_page": 71,
+      "printed_page": 64,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-71.png",
+      "png_sha256": "4d38d363903b44ed00473b1a531abd31f3d98e92f430c8a9f356340f9c7095d9",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "表6-13完整；GPT角色模拟、真人参与0和原轮/补测批次边界明确，6.7标题后有完整正文。",
+        "第六章末尾留白属于章节终页。"
+      ]
+    },
+    {
+      "physical_page": 72,
+      "printed_page": 65,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-72.png",
+      "png_sha256": "f1e6d38f5a11854a6168486df1ee68a31716da9588801587fbd729fdcf6da784",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "第七章开篇与7.1、7.2、7.3正文正常，无孤立标题。",
+        "底部表6-11a引用在连字符处分至下一页，仍可连读。"
+      ]
+    },
+    {
+      "physical_page": 73,
+      "printed_page": 66,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-73.png",
+      "png_sha256": "60553e82504fda3a053ce220a4ad1712094a354874373c11c3bf64f7f75710d5",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "7.3第(2)—(5)项连续完整；未来评价/性能/真人使用计划与当前不足区分清楚。",
+        "章节终页底部留白未伴随正文断失。"
+      ]
+    },
+    {
+      "physical_page": 74,
+      "printed_page": 67,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-74.png",
+      "png_sha256": "f399c13e059595135a32a68742534633e61f076ff57b4d7f0bf27c777ce9c331",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "致谢单独起页且正文完整，无溢出或异常空段。"
+      ]
+    },
+    {
+      "physical_page": 75,
+      "printed_page": 68,
+      "png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-75.png",
+      "png_sha256": "ee78fe38ac02c32b94084799cf4287d3fe5e329f6983da3fac0b7ab19a0cf760",
+      "inspection_method": "original_size_view",
+      "result": "pass",
+      "observations": [
+        "参考文献[1]—[14]完整可读，英文换行与悬挂缩进正常。"
+      ]
+    }
+  ]
+}

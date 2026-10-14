@@ -1,0 +1,15 @@
+{
+  "task": "T139",
+  "status": "PASS",
+  "utc": "2026-10-11T08:07:06.728312+00:00",
+  "renderer": "bundled documents render_docx.py using LibreOfficeDev and Poppler",
+  "input_docx_sha256": "ac0378e5419b3e4f94d23921b65c74c30784635e7b50de137f0e1c4c5948c3cb",
+  "pdf_sha256": "047fe424ea270cdc741abeffe70ace82285cee3921fe08ed7584a4ba3f37d211",
+  "fontconfig_sha256": "743c1a81e6959117aa4a6b47640547956241d7199a5d3b0b8c0cf9462380ef37",
+  "physical_pages": 111,
+  "png_width": 1414,
+  "png_height": 2000,
+  "all_page_visual_review": "visual-final-coverage.json",
+  "native_word_wps_pagination_measured": false,
+  "pdf_and_png_local_only": true
+}

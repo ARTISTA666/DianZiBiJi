@@ -1,0 +1,41 @@
+{
+  "range": [
+    1801,
+    3580
+  ],
+  "paragraphs_read": 1780,
+  "all_read_in_order": true,
+  "revisions_count": 20,
+  "numeric_sequence_issues": [
+    {
+      "p": 3512,
+      "old_numbers": [
+        "111619",
+        "226",
+        "63",
+        "77",
+        "256",
+        "1",
+        "16"
+      ],
+      "new_numbers": [
+        "111619",
+        "226",
+        "63",
+        "77",
+        "256",
+        "16",
+        "1"
+      ]
+    }
+  ],
+  "protected_notes": [
+    "p2022外键说明、p2024默认值说明、p2031逻辑引用与兼容表说明属于必要数据库定义，保留。",
+    "p3447高风险人工确认属于系统权限规则，保留。",
+    "p3574基线与未提交测试工作树说明属于测试版本事实，保留。",
+    "图内免责声明在6张原PNG中亲查确认；根Agent已重建SVG，本报告不编辑原图。"
+  ],
+  "protection_issues": [],
+  "numeric_issues": [],
+  "replacement_count": 20
+}

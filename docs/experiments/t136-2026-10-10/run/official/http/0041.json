@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.866751+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "team5863-02 DNA extraction of collected samples",
+    "experiment_type": "insect_DNA_extraction",
+    "experiment_date": "2025-06-11",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "Quick Protocol: DNeasy Blood & Tissue Kit (for insects)\nMaterials Needed:\n● DNeasy Blood & Tissue Kit (Qiagen)\n● 1.5 mL microcentrifuge tubes\n● Ethanol (96–100%)\n● Proteinase K\n● Buffer ATL, AL, AW1, AW2, AE\n\n1. Sample Prep\n● 5 samples collected from farms were used (4 samples collected by Baha and 1 sample collected by Wahei)\n● Samples were centrifuged to spin down the insects and ethanol was discarded\n● Incubated in 56 °C until excess ethanol dried out\n● Add 180 µL Buffer ATL.\n● Add 20 µL Proteinase K.\n● Vortex briefly or flick.\n● Incubate at 56 °C for 1–3 hours (or overnight) until fully lysed.\n2. Lysis\n● Add 200 µL Buffer AL, mix.\n● Add 200 µL ethanol (96–100%), mix well.\n3. Binding\n● Transfer the mixture to a DNeasy spin column in a collection tube.\n● Centrifuge 1 min at ≥6000 x g (8000 rpm).\n● Discard flow-through.\n4. Wash\n● Add 500 µL Buffer AW1, spin 1 min, discard flow-through.\n● x\n5. Elution\n● Place column in a clean 1.5 mL tube.\n● Add 100 µL Buffer AE (or nuclease-free water).\n● Incubate 1 min, then centrifuge 1 min at ≥6000 x g.\n\nStore:\n● Store eluted DNA at –20 °C."
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 10,
+    "project_id": 1,
+    "template_id": null,
+    "title": "team5863-02 DNA extraction of collected samples",
+    "experiment_type": "insect_DNA_extraction",
+    "experiment_date": "2025-06-11",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 10,
+    "created_at": "2026-10-10T15:52:29.300513Z",
+    "updated_at": "2026-10-10T15:52:29.300513Z"
+  }
+}

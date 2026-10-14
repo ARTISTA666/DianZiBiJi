@@ -1,0 +1,28 @@
+{
+  "task": "T150",
+  "report_original_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+  "files": [
+    {
+      "path": "/Users/yusong/Desktop/论文/1012.docx",
+      "exists": true,
+      "sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+      "matches_report_original_sha": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t146-2026-10-11/1005-摘要语句精校版-2026-10-11.docx",
+      "exists": true,
+      "sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+      "matches_report_original_sha": true
+    },
+    {
+      "path": "/Users/yusong/Desktop/论文/1005-摘要语句精校版-2026-10-11_副本.docx",
+      "exists": true,
+      "sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+      "matches_report_original_sha": true
+    }
+  ],
+  "scope": "Byte identity only; no new rendering or source authorship inference",
+  "source_native_pdf_manifest_pages": 100,
+  "advisor_report_independent_render_pages": 89,
+  "pagination_note": "Different rendering engines may paginate differently; SHA establishes same Word input, page counts are engine-specific rather than proof of content divergence."
+}

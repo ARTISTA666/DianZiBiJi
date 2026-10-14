@@ -1,0 +1,114 @@
+{
+  "scope": "Existing worktree changes against HEAD; static API structure inspection only",
+  "route_changes": [],
+  "changed_declarations": [
+    {
+      "path": "backend/src/kg_blueprint.rs",
+      "name": "BlueprintParseInput",
+      "before": null,
+      "after": "struct BlueprintParseInput {\n    text: String,\n    source: Value,\n    snapshot: Value,\n}"
+    }
+  ],
+  "agent_200_response_schemas": {
+    "/api/agent/sessions": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/sessions/{session_id}": {
+      "get": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/sessions/{session_id}/messages": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/sessions/{session_id}/events": {
+      "get": {
+        "text/event-stream": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "/api/agent/pending-actions/{action_id}/approve": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/pending-actions/{action_id}/reject": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/sessions/{session_id}/turns": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/sessions/{session_id}/turns/{turn_id}/start": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "/api/agent/sessions/{session_id}/turns/{turn_id}/cancel": {
+      "post": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  },
+  "compatible_dynamic_json_additions": [
+    "budget.prompt_identity prompt fingerprints",
+    "confirmation event terminal / turn identity metadata"
+  ],
+  "blueprint_type_extensions": "entity_type and relation_type remain OpenAPI string fields",
+  "openapi_source": "Rust includes checked-in backend/openapi.json; no Rust DTO auto-generator",
+  "typescript_generated_in_output": "output/repository-sync-T160-2026-10-14/api-schema.generated.d.ts",
+  "generated_schema_byte_identical": true,
+  "openapi_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+  "frontend_schema_sha256": "5e15985f7b7baab883a3174cdac320b5d31cf7db71a5939b841bd9a3bc6c30ae",
+  "recommendation": "No contract regeneration change is required for these existing compatible modifications. Existing response schemas are open objects, not exhaustively typed payload specifications."
+}

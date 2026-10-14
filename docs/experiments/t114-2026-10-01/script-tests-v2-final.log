@@ -1,0 +1,42 @@
+........................................................................ [ 12%]
+........................................................................ [ 24%]
+........................................................................ [ 36%]
+........................................................................ [ 48%]
+........................................................................ [ 60%]
+........................................................................ [ 72%]
+........................................................................ [ 84%]
+............................F........................................... [ 96%]
+.....................                                                    [100%]
+=================================== FAILURES ===================================
+_____ test_restore_accepts_regular_storage_members_before_database_checks ______
+
+    def test_restore_accepts_regular_storage_members_before_database_checks() -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            backup = root / "backup"
+            backup.mkdir()
+            (backup / "database.dump").write_bytes(b"valid-enough-for-archive-guard")
+            write_regular_storage_archive(backup / "storage.tar.gz")
+            (backup / "manifest.txt").write_text(
+                "\n".join(
+                    (
+                        "manifest_version=1",
+                        f"database_sha256={sha256(backup / 'database.dump')}",
+                        f"storage_sha256={sha256(backup / 'storage.tar.gz')}",
+                    )
+                ),
+                encoding="utf-8",
+            )
+    
+            result = run_restore_with_fake_docker(backup, root / "tools")
+    
+        assert result.returncode == 1
+        assert "unsafe storage archive" not in result.stderr.lower()
+>       assert "fake docker was called" in result.stderr
+E       AssertionError: assert 'fake docker was called' in 'tracked checkout changes detected; use a clean checkout for build/evidence\n[FAIL] PostgreSQL is not ready.\n'
+E        +  where 'tracked checkout changes detected; use a clean checkout for build/evidence\n[FAIL] PostgreSQL is not ready.\n' = CompletedProcess(args=['sh', '/Users/yusong/Downloads/new/full-system/scripts/ops/restore-system.sh', '/var/folders/jv...stderr='tracked checkout changes detected; use a clean checkout for build/evidence\n[FAIL] PostgreSQL is not ready.\n').stderr
+
+scripts/ops/test_backup_restore_guards.py:162: AssertionError
+=========================== short test summary info ============================
+FAILED scripts/ops/test_backup_restore_guards.py::test_restore_accepts_regular_storage_members_before_database_checks
+1 failed, 596 passed in 23.01s

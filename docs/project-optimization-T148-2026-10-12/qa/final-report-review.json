@@ -1,0 +1,570 @@
+{
+  "task": "T148 final report and artifact review",
+  "owner": "qa-engineer",
+  "finished_utc": "2026-10-12T14:33:18.056596+00:00",
+  "status": "passed",
+  "blocking_findings": 0,
+  "unresolved_findings": [],
+  "mode": "Read-only independent archive/log/hash verification. Only this JSON written; no source/docs/frozen-result edits, no new tests, database connections or container actions.",
+  "acceptance_boundary": "Execution/internal automatic and independent QA complete; author/supervisor scientific acceptance pending; no manuscript synchronization. T148 incremental checks do not assert global dirty workspace cleanliness.",
+  "bound_predecessor_manifest": {
+    "path": "docs/project-optimization-T148-2026-10-12/final-evidence-manifest.json",
+    "sha256": "f4488616f91ce884d075d85c03ce7caf7ab5f1701c666947ecb5927a07650383",
+    "artifact_count": 45,
+    "source_count": 17,
+    "new_source_count": 3,
+    "aggregate_sha256": "6207b58f76a4c3b6e66015e9ae05823254ff1128b1b617c3334c5c998e57d414",
+    "note": "This review binds the preceding45artifact manifest; parent may later archive this review and expand to46 without self-reference.",
+    "all_45_artifact_hashes_and_bytes_match": true,
+    "all_17_current_source_hashes_match": true,
+    "source_baselines_and_delta_manifest_match": true,
+    "artifact_aggregate_match": true
+  },
+  "checks": [
+    {
+      "name": "latest final manifest identity",
+      "passed": true
+    },
+    {
+      "name": "45 artifacts exact SHA and bytes",
+      "passed": true
+    },
+    {
+      "name": "artifact aggregate",
+      "passed": true
+    },
+    {
+      "name": "17 current source hashes,3 new,328 baseline",
+      "passed": true
+    },
+    {
+      "name": "source delta agreement",
+      "passed": true
+    },
+    {
+      "name": "50 protected baseline checks",
+      "passed": true
+    },
+    {
+      "name": "archived protected-final reproduced",
+      "passed": true
+    },
+    {
+      "name": "backend-build-inputs.json identity",
+      "passed": true
+    },
+    {
+      "name": "frontend-build-inputs.json identity",
+      "passed": true
+    },
+    {
+      "name": "build input counts",
+      "passed": true
+    },
+    {
+      "name": "current Rust305 parsed from raw log",
+      "passed": true
+    },
+    {
+      "name": "Rust exact gate execution and SHA",
+      "passed": true
+    },
+    {
+      "name": "actual dedicated Rust DB identity",
+      "passed": true
+    },
+    {
+      "name": "Rust65 identities still exact",
+      "passed": true
+    },
+    {
+      "name": "scripts613 actual final log",
+      "passed": true
+    },
+    {
+      "name": "normal stack9pass9skip",
+      "passed": true
+    },
+    {
+      "name": "separate native SSE9pass",
+      "passed": true
+    },
+    {
+      "name": "frontend all gates exit0",
+      "passed": true
+    },
+    {
+      "name": "cursor and duplicate counts",
+      "passed": true
+    },
+    {
+      "name": "load200 soak350 raw records",
+      "passed": true
+    },
+    {
+      "name": "550 unique IDs and220writes",
+      "passed": true
+    },
+    {
+      "name": "all550 actualHTTP200 ID correct",
+      "passed": true
+    },
+    {
+      "name": "all550 payloadSHA latency identity",
+      "passed": true
+    },
+    {
+      "name": "mixed_load pooled quantiles",
+      "passed": true
+    },
+    {
+      "name": "short_soak pooled quantiles",
+      "passed": true
+    },
+    {
+      "name": "shortsoak7cycles actual60.261022s",
+      "passed": true
+    },
+    {
+      "name": "DBnote110 version220",
+      "passed": true
+    },
+    {
+      "name": "VM4core hash512",
+      "passed": true
+    },
+    {
+      "name": "build images and source manifests bound",
+      "passed": true
+    },
+    {
+      "name": "backend imageID in successful build log",
+      "passed": true
+    },
+    {
+      "name": "frontend imageID in successful build log",
+      "passed": true
+    },
+    {
+      "name": "restart completed",
+      "passed": true
+    },
+    {
+      "name": "captured owned cleanup",
+      "passed": true
+    },
+    {
+      "name": "owned volumes removal logged",
+      "passed": true
+    },
+    {
+      "name": "RAG48 complete requested returned identity",
+      "passed": true
+    },
+    {
+      "name": "72canonical entries includes4fulltext",
+      "passed": true
+    },
+    {
+      "name": "RAGraw aggregate numbers",
+      "passed": true
+    },
+    {
+      "name": "RAG no semantic primary with reviewed limits",
+      "passed": true
+    },
+    {
+      "name": "docs/项目论文增益优化实施与自动验证-T148-2026-10-12.md registration and links",
+      "passed": true
+    },
+    {
+      "name": "docs/experiments/rag-fair-comparison-T148-2026-10-12.md registration and links",
+      "passed": true
+    },
+    {
+      "name": "docs/project-optimization-T148-2026-10-12/README.md registration and links",
+      "passed": true
+    },
+    {
+      "name": "RAG terminology corrected",
+      "passed": true
+    },
+    {
+      "name": "static code review0blockers",
+      "passed": true
+    },
+    {
+      "name": "T148 scoped git diff check",
+      "passed": true
+    },
+    {
+      "name": "existing conflict markers exactly3 protected files",
+      "passed": true
+    }
+  ],
+  "protected": {
+    "actually_recomputed_now": true,
+    "checks": 50,
+    "unique_paths": 49,
+    "unchanged": 50,
+    "master_markdown_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+    "algorithm": "Directory rows use sorted pathlib.Path objects (path-component ordering), joinedLF without finalLF, excluding__pycache__/.pyc. Global string row sorting differs forT136 run/ vs run-console.log; no changed asset.",
+    "group_and_master_checks": [
+      {
+        "path": "docs/experiments/t136-2026-10-10",
+        "actual_count": 213,
+        "expected_count": 213,
+        "actual_sha256": "8118218f11476e0a9abb8990da6ae35a38356cc3e89128fa1518bb0dec341fa1",
+        "expected_sha256": "8118218f11476e0a9abb8990da6ae35a38356cc3e89128fa1518bb0dec341fa1",
+        "passed": true
+      },
+      {
+        "path": "docs/experiments/t114-2026-10-01",
+        "actual_count": 10,
+        "expected_count": 10,
+        "actual_sha256": "96af9e5f3395209c9fc6e6650a96ef2e20baed1d5db53f12d8ea2a6343903d2e",
+        "expected_sha256": "96af9e5f3395209c9fc6e6650a96ef2e20baed1d5db53f12d8ea2a6343903d2e",
+        "passed": true
+      },
+      {
+        "path": "docs/thesis-fixes-T141-2026-10-11",
+        "actual_count": 54,
+        "expected_count": 54,
+        "actual_sha256": "fe93e8c52487ca9488b3680fcd37c3dd9e8491f7fe7a718ac6a6c3504b9fc124",
+        "expected_sha256": "fe93e8c52487ca9488b3680fcd37c3dd9e8491f7fe7a718ac6a6c3504b9fc124",
+        "passed": true
+      },
+      {
+        "path": "docs/thesis-abstract-T146-2026-10-11",
+        "actual_count": 21,
+        "expected_count": 21,
+        "actual_sha256": "060df5b8e6f86578453ae770995d0863a45563535e885da0d05e7178aae1ea2c",
+        "expected_sha256": "060df5b8e6f86578453ae770995d0863a45563535e885da0d05e7178aae1ea2c",
+        "passed": true
+      },
+      {
+        "path": "docs/system-evidence",
+        "actual_count": 32,
+        "expected_count": 32,
+        "actual_sha256": "6e0613ddd5b24685703e42a0294f9771a53ed6416dd8c377851f09362a45c936",
+        "expected_sha256": "6e0613ddd5b24685703e42a0294f9771a53ed6416dd8c377851f09362a45c936",
+        "passed": true
+      },
+      {
+        "path": "docs/毕业论文重构稿.md",
+        "actual_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+        "passed": true
+      }
+    ],
+    "archived_50_details": "docs/project-optimization-T148-2026-10-12/protected-final.json; each stored expected/actual value independently reproduced"
+  },
+  "build_input_details": [
+    {
+      "path": "docs/project-optimization-T148-2026-10-12/system/backend-build-inputs.json",
+      "count": 65,
+      "file_sha256": "0d9aea45a8a0d6236b4df8629d6089be396e2c04fd2c7a6daede5a350400d852",
+      "aggregate_sha256": "0b2f6369c0a90959969f805201dcaf0cac8800bc5f01b4bffbc95981cd335dec",
+      "algorithm": "SHA256 compact JSON inputs array with sorted object keys; no final LF",
+      "all_current_files_match": true
+    },
+    {
+      "path": "docs/project-optimization-T148-2026-10-12/system/frontend-build-inputs.json",
+      "count": 106,
+      "file_sha256": "89840c6367451ac539bbe7aa5234e0c76efb3d3c7ad139ad0bb9eace7d13fa48",
+      "aggregate_sha256": "4817a40186f6043b41af01c50ff39c66186e0b30d3a9d80bbae7223e67f78efe",
+      "algorithm": "SHA256 sorted path:sha rows joined LF; no final LF",
+      "all_current_files_match": true
+    }
+  ],
+  "rust": {
+    "original_gates_actually_run_by_this_QA": true,
+    "current_review_reran_gates": false,
+    "toolchain": {
+      "cargo": "cargo 1.88.0 (873a06493 2025-05-10)",
+      "rustc": "rustc 1.88.0 (6b00bc388 2025-06-23)",
+      "rustfmt": "rustfmt 1.8.0-stable (6b00bc3880 2025-06-23)",
+      "clippy": "clippy 0.1.88 (6b00bc3880 2025-06-23)"
+    },
+    "actual_passed": 305,
+    "lib_passed": 303,
+    "entry_passed": 2,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filtered_out": 0,
+    "test_command_elapsed_seconds": 268.236,
+    "database": "qa_t148",
+    "user": "eln_test",
+    "connection_target": "127.0.0.1:55448/qa_t148",
+    "server": "PostgreSQL16.14",
+    "pgvector": "0.8.5",
+    "tables_before_after": [
+      0,
+      43
+    ],
+    "input_count": 65,
+    "Rust_files": 58,
+    "previous_T141_count_inherited": false,
+    "include_str_assets_timing_limitation": {
+      "note": "Additional include_str assets, first observed midrun; outside original65-inputcontract",
+      "assets": [
+        {
+          "path": "backend/openapi.json",
+          "midrun_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+          "t148_start_baseline_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+          "matches_task_start": true,
+          "pre_command_freeze_recorded": false,
+          "postrun_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+          "unchanged_midrun_to_postrun": true
+        },
+        {
+          "path": "backend/legacy/tests/security_vectors.json",
+          "midrun_sha256": "c07b30b0f25ce16d87df2ee5d84da1952aababb1f85071aca6b487cc76eac69d",
+          "t148_start_baseline_sha256": null,
+          "matches_task_start": null,
+          "pre_command_freeze_recorded": false,
+          "postrun_sha256": "c07b30b0f25ce16d87df2ee5d84da1952aababb1f85071aca6b487cc76eac69d",
+          "unchanged_midrun_to_postrun": true
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "actual_passed": 613,
+    "failed": 0,
+    "elapsed_seconds": 25.95,
+    "final_log_sha256": "3b88c2ba9dc662687203316ca772b6d008088dfec58931ccd3ddbebc98bcd1d1",
+    "earlier612pass1fixture_fail_is_disclosed": true
+  },
+  "frontend_system": {
+    "frontend_gate_exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "ordinary_full_stack": {
+      "cases": 18,
+      "passed": 9,
+      "skipped": 9,
+      "failed": 0
+    },
+    "separate_native_SSE": {
+      "cases": 9,
+      "passed": 9,
+      "skipped": 0,
+      "failed": 0
+    },
+    "native_cursor": [
+      "",
+      "3"
+    ],
+    "red_green_steps": [
+      8,
+      4
+    ],
+    "restart_existing_result": {
+      "run_id": 2,
+      "interrupted": true,
+      "resumed_status": "completed"
+    },
+    "cleanup_existing_result": {
+      "checked_at": "2026-10-12T14:18:05.451254+00:00",
+      "owned_stack_absent": true,
+      "owned_test_database_absent": true,
+      "existing_running_containers": [
+        "eln-t114-backend-1",
+        "eln-t114-db-1",
+        "eln-frontend-1",
+        "eln-backend-1",
+        "eln-db-1"
+      ],
+      "production_and_T114_not_operated": true,
+      "own_images_retained": [
+        "eln-backend-t148-20261012",
+        "eln-frontend-t148-20261012"
+      ]
+    },
+    "cleanup_scope": "Existing capture/log only; no live cleanup or reconnect performed in this review",
+    "limits": [
+      "Separate SSE uses real EventSource with mocked business APIs/write counters; does not prove PostgreSQL or backend permission atomicity.",
+      "Nine separate SSE cases are intentionally skipped in ordinary stack and not counted as18 stackpasses.",
+      "Automated whole-stack uses local LLM stub; role labels are not human research/user acceptance.",
+      "Explicit emptyid reset is covered; omittedid inherits cursor; session dedup has no refresh-persistence guarantee.",
+      "One controlled restartprobe does not cover arbitrarycrashes or all durable recovery cases."
+    ],
+    "raw_results": [
+      "docs/project-optimization-T148-2026-10-12/system/e2e-results.json",
+      "agent-work/t148-2026-10-12/frontend/green-results.json"
+    ]
+  },
+  "mixed_load": {
+    "records": 550,
+    "load_soak_counts": [
+      200,
+      350
+    ],
+    "unique_request_ids": 550,
+    "all_status_200": true,
+    "errors": 0,
+    "method_counts": {
+      "GET": 330,
+      "POST": 110,
+      "PATCH": 110
+    },
+    "all_payload_SHA_ID_latency_traces_match": true,
+    "raw_JSONL_equals_embedded": true,
+    "quantiles": [
+      {
+        "batch": "mixed_load",
+        "count": 200,
+        "recomputed": {
+          "p50_ms": 2.990374981891364,
+          "p95_ms": 9.501708031166345,
+          "p99_ms": 13.684209028724581
+        },
+        "max_ms": 27.315625047776848
+      },
+      {
+        "batch": "short_soak",
+        "count": 350,
+        "recomputed": {
+          "p50_ms": 3.8021249929443,
+          "p95_ms": 7.0653329603374,
+          "p99_ms": 9.320832963567227
+        },
+        "max_ms": 12.128332979045808
+      }
+    ],
+    "quantile_algorithm": "nearest rank ceil(n*p/100)-1 over all attempts; soakpooled acrossallcycles",
+    "database_deltas": {
+      "notes": 110,
+      "versions": 220,
+      "fixture_versions": 110,
+      "note_audits": 220
+    },
+    "cycles": 7,
+    "requests_per_cycle": 50,
+    "concurrency": 8,
+    "target_seconds": 60,
+    "actual_seconds": 60.26102220802568,
+    "interval_seconds": 10,
+    "load_total_window_seconds": 0.27748920797603205,
+    "load_window_includes_login": true,
+    "docker_VM_NCPU": 4,
+    "VM_memory_bytes": 8307175424,
+    "host_logical_cpus": 10,
+    "host_memory_bytes": 17179869184,
+    "embedding_backend": "hash",
+    "embedding_model": "rust-hash-512-v1",
+    "embedding_dimension": 512,
+    "platform_timing": "captured after run with sameDockerengine/settings",
+    "limits": "Small syntheticCRUD,60%GET20%POST20%PATCH,8concurrency,inter-cycleidle,noapproval/heavyupload/remoteembedding. No sustainedTPS,capacity,productionSLA,realweaknetwork or4hourstability claim."
+  },
+  "rag": {
+    "raw_calls": 48,
+    "unit_questions": 12,
+    "arms": 4,
+    "generations_each": 1,
+    "canonical_entries": 72,
+    "whole_record_text_entries": 4,
+    "aggregate": {
+      "prompt_tokens": 113077,
+      "completion_tokens": 10688,
+      "elapsed_range_seconds": [
+        0.885,
+        3.226
+      ]
+    },
+    "means_lexical_alias_coverage": {
+      "same_facts_text": 0.19444444444444445,
+      "same_facts_triples": 0.1111111111111111,
+      "budget_ordered": 0.18055555555555555,
+      "budget_query_ranked": 0.1111111111111111
+    },
+    "semantic_primary_computed": false,
+    "requested_model": "deepseek-v4-flash",
+    "returned_model": "deepseek-flash",
+    "offline_content_budget": 1536,
+    "provider_max_budgetarm_prompt_tokens": 1541,
+    "provider_above1536_budget_cases": 12,
+    "earlier_RAG_independent_review_sha256": "eb30ed12780f763fd3aa153d5fc4b58d3d11ec34f8d53e87f5d3b694c6713df3",
+    "earlier_review_scope": "RAG-only. Its pending full-report field is a release-time snapshot; this review closes the final report/archive/system review.",
+    "limits": [
+      "Lexicalaliases are auxiliary; formatting/negation can mis-score and semantictruth,entitybinding,citation support areunscored.",
+      "72canonicalentries include4entireparagraphs, not72 independentatomicsemanticfacts.",
+      "Sameentrypool controlsinformation butencodinglength differs; budgetselection retains33 vs6–7 entries of unequalinformation/length.",
+      "ReusedT114 developer-known12questions/fourpublicsources andonegenerationpercondition;48notindependent n.",
+      "Negative descriptive comparisons preserved; nosuperiority,equivalence,topologycausalbenefit,stability,heldoutgeneralization,humanstudy or manuscriptupdate claim."
+    ]
+  },
+  "documents": {
+    "navigation_sha256": "ddb3e4efaa4d6ca7139c2a64506e641edcae34c07d899a092f27096e9f053c25",
+    "three_registered": true,
+    "local_link_count": 35,
+    "all_local_links_reachable": true,
+    "details": [
+      {
+        "path": "docs/项目论文增益优化实施与自动验证-T148-2026-10-12.md",
+        "sha256": "a9c6fedb6f53ba81bb68ecbaa0644123e92447b9538e43bbbaa054495972b677",
+        "registered": true,
+        "local_link_count": 22
+      },
+      {
+        "path": "docs/experiments/rag-fair-comparison-T148-2026-10-12.md",
+        "sha256": "23ec2a95656c3fc0c74dc7c1ddec0eab98256c41ca2fec4f1ce70a6e8d116cde",
+        "registered": true,
+        "local_link_count": 10
+      },
+      {
+        "path": "docs/project-optimization-T148-2026-10-12/README.md",
+        "sha256": "cef02cbc01f75f761d50bb18db906b5e86a93c178325b06cf1eef4ab816be9bd",
+        "registered": true,
+        "local_link_count": 3
+      }
+    ]
+  },
+  "global_workspace_boundary": {
+    "T148_scoped_diff_check_exit_code": 0,
+    "global_diff_check_not_claimed_clean": true,
+    "existing_protected_conflict_marker_files": [
+      {
+        "path": "docs/system-evidence/local-health-latest.json",
+        "sha256": "5249c2b7ff03563207107c19d2d8aefbf23aed54de44839de281e4b37ab41829",
+        "mtime_utc": "2026-09-14T08:51:04.515007+00:00",
+        "protected_directory": "docs/system-evidence",
+        "markers_present": true
+      },
+      {
+        "path": "docs/system-evidence/manifest.json",
+        "sha256": "e9a66837c53c77a400fab30d5bc06b52fa85bb0852bfe5445f7604d888ab06dc",
+        "mtime_utc": "2026-09-14T08:51:04.515305+00:00",
+        "protected_directory": "docs/system-evidence",
+        "markers_present": true
+      },
+      {
+        "path": "docs/system-evidence/rust-runtime-contract-latest.json",
+        "sha256": "080e423accfe6a5c000699280dd6235322164038a6e1420e9c6480d1558fe84f",
+        "mtime_utc": "2026-09-14T08:51:04.515452+00:00",
+        "protected_directory": "docs/system-evidence",
+        "markers_present": true
+      }
+    ],
+    "interpretation": "Three frozen oldJSON files retain prior conflictmarker text. Exact docs/system-evidence directory aggregate matches opening baseline, so these are preserved preexisting content, notT148changes. Do not rewritefrozenevidence to makeglobaldiffclean."
+  },
+  "resolved_findings": [
+    {
+      "location": "docs/project-optimization-T148-2026-10-12/README.md:9",
+      "resolution": "RAG evidence-reviewscope correctlyrestricted; finalsystem/reportreview is separate."
+    },
+    {
+      "location": "docs/experiments/rag-fair-comparison-T148-2026-10-12.md:10",
+      "resolution": "72entries including4record_text paragraphs explicitly distinguished fromindependentsemanticfacts; implementationreport narrowedtoo."
+    },
+    {
+      "location": "system/backend-build-inputs.json aggregate_sha256",
+      "resolution": "Independently reproduced compactJSONSHA; individual65hashes match. No frozenresult modification required."
+    }
+  ],
+  "independent_checks_passed": 45
+}

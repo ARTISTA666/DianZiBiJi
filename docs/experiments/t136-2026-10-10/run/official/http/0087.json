@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:29.328979+00:00",
+  "path": "/notes/21/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 21,
+    "project_id": 2,
+    "template_id": null,
+    "title": "team5863-01 Field sampling",
+    "experiment_type": "field_sample_collection",
+    "experiment_date": "2025-05-04",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 21,
+    "created_at": "2026-10-10T15:52:29.326731Z",
+    "updated_at": "2026-10-10T15:52:29.333347Z"
+  }
+}

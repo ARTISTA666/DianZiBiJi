@@ -1,0 +1,437 @@
+{
+  "task": "T137",
+  "reviewer": "research-reviewer Agent",
+  "status": "complete original-pixel inspection; failed page77 pending pagination repair",
+  "render_directory": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final",
+  "bound_docx_sha256": "5fc92595fde66340a8382dedaa2789eaa3e33f7b2287dea16531f870d62ad91e",
+  "bound_pdf_sha256": "e9d249f212d8a84699d579883ae46de15a2ff0365e17287010b0d06283b50d33",
+  "scope": [
+    71,
+    106
+  ],
+  "method": "Each page physically viewed through view_image(detail=original), in batches4–6. SHA only binds observed pixels.",
+  "pages": [
+    {
+      "page": 71,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-71.png",
+      "image_sha256": "f276ba0839ce4469787d708cb2016279aad4940a5a67d9595f9fd406558b4a89",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Table6-10 complete;6.6 heading has following text on the same page. Header/footer and glyphs clear."
+      ]
+    },
+    {
+      "page": 72,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-72.png",
+      "image_sha256": "be8a1227a133800a551f5ce47449985a4d63290d58a9335f4818f4aaef441d0f",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Tables6-11 and6-11a complete with captions;body and formulas readable."
+      ]
+    },
+    {
+      "page": 73,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-73.png",
+      "image_sha256": "3ddb14915f35c3584c1269870c6a408e34c78b695cfcec19d884de1df7434ed4",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Table6-12 complete;statistics text and body continuation within margins."
+      ]
+    },
+    {
+      "page": 74,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-74.png",
+      "image_sha256": "4868c11179a3207cd196124845034449f0b7da15b5b10e8293ff17cbddb95621",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Table6-13 complete;new selection/reference/pairing method text readable."
+      ]
+    },
+    {
+      "page": 75,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-75.png",
+      "image_sha256": "494fe968376b281799ae53a29b1142655d56c5ffb9f4958980f201fd7072f52a",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Table6-14 caption and all three result rows remain together;undefined precision dash, content counts, metadata counts and error analysis clear. Chapter-end white space ordinary."
+      ]
+    },
+    {
+      "page": 76,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-76.png",
+      "image_sha256": "7c9bc064151cda64c02cf395cd3c37977621fb11a8f343e6ab7225e31fb03ee6",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Chapter7 title and sections7.1–7.3 readable;points1–3 present;point4 spills to next page."
+      ]
+    },
+    {
+      "page": 77,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-77.png",
+      "image_sha256": "845cec9fe004e609d1d35499c664d2af0598b3d926482685c22f6bba44f90eef",
+      "viewed_original": true,
+      "pass": false,
+      "observations": [
+        "Only the three-line point4 of7.3 appears at top;large unintended blank remainder before acknowledgments. Reported immediately for pagination repair."
+      ]
+    },
+    {
+      "page": 78,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-78.png",
+      "image_sha256": "0021e1141254e210242997426e8b9992e97a94611e1463862b8ae0caac3587ee",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "Acknowledgments complete;孙明斋 and other names have clear correct glyphs."
+      ]
+    },
+    {
+      "page": 79,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-79.png",
+      "image_sha256": "2a0d2fac05479b5975d610d7c75ba32b23c7786aebb4b204c057f77682f4a077",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "References1–14 readable with normal hanging indents and complete boundary."
+      ]
+    },
+    {
+      "page": 80,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-80.png",
+      "image_sha256": "70bc95622fd39270d4fef24c56e4afa8fa6ccd4236e7c5a4054e09b2b2f5d71e",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "References15–30 readable;no clipping or overlap."
+      ]
+    },
+    {
+      "page": 81,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-81.png",
+      "image_sha256": "14a541a697edb7ebccd81c39f2d2a8eb2288ffe376fae88398bd57378c980fc1",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "References31–48 clear, within margins; no clipping or overlap."
+      ]
+    },
+    {
+      "page": 82,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-82.png",
+      "image_sha256": "ea63638a2f2879a75bf8970459bfdd89c55d63ae3ea334bfd9925b387f08f67e",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "References49–67 clear, within margins; no clipping or overlap."
+      ]
+    },
+    {
+      "page": 83,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-83.png",
+      "image_sha256": "3ce6a4a6521aa269328a047fb77cadee664eba5d53e8b20e35213bfb963f4aac",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "References68–84 clear, including82–84 statistical references; no clipping or overlap."
+      ]
+    },
+    {
+      "page": 84,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-84.png",
+      "image_sha256": "a3f9255bbfbc14539cc8d8a77d1892e032e4d2ae02f63b61abbd4cf0993adb4e",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "AppendixA and tableA-1 complete with all20 questions on one page; Q05/Q20 dagger marks readable; caption attached."
+      ]
+    },
+    {
+      "page": 85,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-85.png",
+      "image_sha256": "1edb8c8ed7192661c438b83afa5b866fa9d9510e9a41bae79d27c9c0c356fbcc",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "AppendixB opening and tableB-1(a) complete. Re-viewed original image:52 in the first paragraph is visibly present; earlier concern withdrawn. Caption and12 relation rows fit."
+      ]
+    },
+    {
+      "page": 86,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-86.png",
+      "image_sha256": "27f1ee0f85b30016bbeb0ba7123605f1c296682ba11335210f0416f05edf78a6",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-1(b) andB-1(c) complete with attached captions and readable12/14 relation rows; no split, clipping or overlap."
+      ]
+    },
+    {
+      "page": 87,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-87.png",
+      "image_sha256": "3d58ffeaba23cd2c211373347527315c74037c186ece2de4dff5d5bb99a89ab4",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TableB-1(d) complete, rows39–52 clear. B.3 heading andB-2 definitions readable within margins."
+      ]
+    },
+    {
+      "page": 88,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-88.png",
+      "image_sha256": "3c2eaa740862a4df6e5b0adf153c3c8ebb536e903b74463c3e4a0a1af707d410",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TableB-2 continuationG01–G18 andB-3 complete; labels and enum text clear."
+      ]
+    },
+    {
+      "page": 89,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-89.png",
+      "image_sha256": "b5620e8dfa2045f58156feebdd4144eadfa72a9e9afc72bf2362eb97166e3403",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-4–B-9 and captions complete; long names fit."
+      ]
+    },
+    {
+      "page": 90,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-90.png",
+      "image_sha256": "38b4ba834a1f7b116da9cb1a840de4bd940bdecf85c05ca66e0f320f833ea4cf",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-10–B-14 and captions complete; no clipping or overlap."
+      ]
+    },
+    {
+      "page": 91,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-91.png",
+      "image_sha256": "81465f194c0e0c0dd2f315e3e7f49ea71d0aa2d53a577715278dc9bee05c17ef",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-15–B-17 complete; multiline model defaults fit rows."
+      ]
+    },
+    {
+      "page": 92,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-92.png",
+      "image_sha256": "fe23a7bbefa5e9c77b0bdae09af9933b0a25d77aac58f6a31401d80503d1f1a9",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-18–B-20 complete, captions attached; no clipping or overlap."
+      ]
+    },
+    {
+      "page": 93,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-93.png",
+      "image_sha256": "5a2687710f748d813ee441e98a9d1ef0f5a7d250378d2cf00bed70773ef1374b",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-21–B-24 complete; long and two-line constraints fit rows."
+      ]
+    },
+    {
+      "page": 94,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-94.png",
+      "image_sha256": "9d1c6087bcf2eaa755bce3fecdb41d78d9c71e192f71dd413a5537c37b6706b5",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TableB-25 caption wraps onto a second line but stays attached; tableB-26 complete."
+      ]
+    },
+    {
+      "page": 95,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-95.png",
+      "image_sha256": "b37f092d698e422d5fe71c59cf1291a6b0b15ce6b40f1a6de8f4509750148b28",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-27–B-29 complete; wrapped captions and constraints remain readable and attached."
+      ]
+    },
+    {
+      "page": 96,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-96.png",
+      "image_sha256": "ff2c26c4f7cb574409d088c68cd106a093453c35231fe7c9151c57ae5bc6a200",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-30–B-33 complete; long captions wrap without separation."
+      ]
+    },
+    {
+      "page": 97,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-97.png",
+      "image_sha256": "bf0acc226fbab0bd234fce1aaaccb0e332c59ac2258d7db955b0dce6c7da397a",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-34–B-37 complete; default text safely wraps within rows."
+      ]
+    },
+    {
+      "page": 98,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-98.png",
+      "image_sha256": "a8feae6f512f93b43ebd64cb2951b65ad2e9c09627a46cf32c11e5e53cf809a4",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-38–B-41 complete; long constraints fit within margins."
+      ]
+    },
+    {
+      "page": 99,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-99.png",
+      "image_sha256": "c47876ee5b0d28a36891bfdbc2a9b4584b5b1b374c036396ee7710a13b87b242",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TablesB-42–B-45 complete; ordinary chapter-end white space."
+      ]
+    },
+    {
+      "page": 100,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-100.png",
+      "image_sha256": "b1fd38505241c51aa3f728bd76f5a649600b6cd019af679bab1ef69143bd0195",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "AppendixC, tablesC-1 andC-2 complete with12 tools and6 templates; captions attached."
+      ]
+    },
+    {
+      "page": 101,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-101.png",
+      "image_sha256": "e1671dfb71e4723732f055d6cd65324180d68b0d7d24d1d0a0e321f73987bdc9",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "AppendixD, D.1/D.2 and tablesD-1/D-2 complete; long attachment row and protocol URL wrap within margins. Last paragraph continues normally."
+      ]
+    },
+    {
+      "page": 102,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-102.png",
+      "image_sha256": "e049048d6fd841306a1ba59684a4ec97147e049c58df024bfcdf0ea1bcf47c60",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "D.2 continuation and new public diary sources clear; 12 units,74 relations,56 exclusions,28 inputs readable. D.3 heading and explanatory paragraph attached; intentional break before full figures."
+      ]
+    },
+    {
+      "page": 103,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-103.png",
+      "image_sha256": "ebf82ff3c7304d279ae7ab5cad8d4503fdeefa29b05bfba1e1c0f7b35330f706",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "FiguresD-1 andD-2 complete with attached captions; Chinese/English labels,58°C and18% readable; no overlap or cropping."
+      ]
+    },
+    {
+      "page": 104,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-104.png",
+      "image_sha256": "533078ab0c272849a34f3d3c9dbc86ae8540c69b50afe161bc72bd8b3723039d",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "FiguresD-3 andD-4 complete with attached captions; qPCR1/2 and2.3 values readable; no overlap or cropping."
+      ]
+    },
+    {
+      "page": 105,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-105.png",
+      "image_sha256": "e99c0ce2e1b524046cf9b7d8891413142214953dd7b4e5e3dc6f50dcdf339b85",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "FiguresD-5 andD-6 complete with attached captions; filenames, SOP text and units readable. D.4 heading has following text; no overlap or cropping."
+      ]
+    },
+    {
+      "page": 106,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-106.png",
+      "image_sha256": "5a812108971a0d2bba920d6585c5f40076d3979e7645289862c94e5e3a4ce85f",
+      "viewed_original": true,
+      "pass": true,
+      "observations": [
+        "TableD-3 complete with attached caption. Long Rust command/test names and T136 runtime paragraph wrap within margins; administrator role statement readable; no clipping or overlap."
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "physical_page": 77,
+      "printed_page": 70,
+      "kind": "large-unintended-tail-page",
+      "status": "reported to root",
+      "description": "Only the three-line point4 of7.3 appears at top;large unintended blank remainder before acknowledgments. Reported immediately for pagination repair."
+    }
+  ],
+  "coverage": {
+    "total_pages": 36,
+    "direct_original_view_pages": [
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106
+    ],
+    "unviewed_pages": [],
+    "passed_pages": 35,
+    "failed_pages": [
+      77
+    ]
+  },
+  "withdrawn_concerns": [
+    {
+      "physical_page": 85,
+      "kind": "suspected-missing-52",
+      "resolution": "Re-viewed the same original image;52 is visible. Withdrawn; no change requested."
+    }
+  ]
+}

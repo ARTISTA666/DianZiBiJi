@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-10T15:52:28.960414+00:00",
+  "path": "/projects",
+  "method": "POST",
+  "request": {
+    "name": "T136 fields",
+    "approval_enabled": true
+  },
+  "status": 200,
+  "response": {
+    "id": 2,
+    "name": "T136 fields",
+    "description": null,
+    "is_sensitive": false,
+    "status": "active",
+    "approval_enabled": true,
+    "owner_user_id": null
+  }
+}

@@ -6,6 +6,7 @@
 
 | 子目录 | 件数 | 内容 | 归档原因 |
 | --- | --- | --- | --- |
+| thesis-format/ | 1 | 2026-09-13 专用格式 v1 的官方规范、项目调研及验收记录 | 作者要求改回原 GitHub 引擎并复刻所供范文，已由 docs/论文范文复刻版验收-2026-09-14.md 取代；旧正文保留，内部相对路径按原 docs/ 位置解释（原文件未入库，使用文件移动） |
 | qoder-night/ | 5 | Qoder 夜间自主迭代协议文件(NIGHT_CONTEXT/LOG/BACKLOG/WORK_REPORT、AGENT-EVALUATION,08-12~13) | 协议期已结束,历史记录 |
 | dev-logs/ | 8 | 开发日志(2026-06-05 ~ 2026-08-21,含深度优化记录、确认性证据推进记录) | 历史过程记录,文件名自带日期可检索 |
 | thesis-versions/ | 9 | 论文旧版本(初稿 v1-v4、导师审阅版 docx/pdf、feedback_revision、AHNU-LaTeX PDF) | 已被 `docs/毕业论文重构稿.md` 取代;PDF 落后三轮修改 |

@@ -1,0 +1,21 @@
+{
+  "task": "T143 root supplementary visual review",
+  "word_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+  "pdf_sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a",
+  "method": "functions view_image detail original; full 1415x2000 PNGs independently displayed and inspected by root this round; supplemental to assigned reviewers",
+  "status": "PASS",
+  "pages": [
+    {
+      "page": 14,
+      "png_sha256": "c118cebe0279f1a1afcd66ea2ffe161e2566d99938b6a5f4cbffdfdae24d41bb",
+      "status": "PASS",
+      "observed": "MCP出版日删除后段落通顺；规范2025-06-18为接口版本保留；正文/标题断行正常，方括号与引文数字整体上标且字形一致，页眉页码、页边距无溢出。"
+    },
+    {
+      "page": 99,
+      "png_sha256": "95e8c10d77f959cd6be0aac49f8a50a40655fc7c0d85883e13152685fbded0c5",
+      "status": "PASS",
+      "observed": "历史运行记录删除日历日期和整场命令耗时后，历史批次区别明确；图D-6来源文本完整；表D-3三条横线、三行数据和标题同页，余白与基线布局一致，无裁切或溢出。"
+    }
+  ]
+}

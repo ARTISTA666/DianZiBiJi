@@ -1,0 +1,242 @@
+{
+  "schema_version": "t132-user-save-comparison-v1",
+  "owner": "code-reviewer",
+  "completed_at": "2026-10-04T17:22:13.826580+08:00",
+  "source_docx_sha256": "6df10197d5fb55757580c93a7f42e76ba01b66309ad787ca35a3c43c0aad3ea3",
+  "prior_T131_candidate_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+  "checks": {
+    "source_sha_matches_parent": true,
+    "48_native_formulas_unchanged_from_T131": true,
+    "48_media_content_multiset_unchanged_from_T131": true,
+    "48_displayed_images_content_order_unchanged_from_T131": true,
+    "all_103_table_content_and_format_unchanged_except_comment_IDs": true,
+    "81_references_preserved_from_T131": true,
+    "citation_order_and_frequency_preserved_from_T131": true,
+    "31_prior_comments_full_text_preserved_plus_two_new": true,
+    "old_comment_anchor_event_order_preserved_under_ID_mapping": true,
+    "33_comment_anchors_legal_14_ranges_and_19_points": true,
+    "acknowledgment_preserved_except_transient_GoBack_bookmark": true,
+    "revision_markers_zero": true,
+    "trackRevisions_disabled": true,
+    "all_relationship_targets_valid": true
+  },
+  "baseline_manifest_path": "/private/tmp/advisor-T132-20261004/baseline-protected.json",
+  "baseline_manifest_sha256": "18a6f06a225cde3164076c95730e0398a0342bb4b09e1f1f5577528a8323eda6",
+  "new_comments": [
+    {
+      "id": "10",
+      "text": "显示问题吗？怎么有两个 I ？",
+      "author": "登哲",
+      "date": "2026-10-04T17:01:48Z",
+      "canonical_sha256": "e9007baad79f5d4b0491e5633fbe484ad70c59ebaa96e1c3124cba5727b66c11",
+      "prior_T131_id": null,
+      "is_new": true
+    },
+    {
+      "id": "26",
+      "text": "全文有多处这样的防御性表述，有必要吗？没有必要则删除。",
+      "author": "登哲",
+      "date": "2026-10-04T17:11:38Z",
+      "canonical_sha256": "63b91fccd1f7e21642110a02b0aa5b377757a8f35efd9168cf313913bac76ade",
+      "prior_T131_id": null,
+      "is_new": true
+    }
+  ],
+  "comment_ID_mapping_T132_to_T131": {
+    "0": "0",
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7",
+    "8": "8",
+    "9": "9",
+    "11": "10",
+    "12": "11",
+    "13": "12",
+    "14": "13",
+    "15": "14",
+    "16": "15",
+    "17": "16",
+    "18": "17",
+    "19": "18",
+    "20": "19",
+    "21": "20",
+    "22": "21",
+    "23": "22",
+    "24": "23",
+    "25": "24",
+    "27": "25",
+    "28": "26",
+    "29": "27",
+    "30": "28",
+    "31": "29",
+    "32": "30"
+  },
+  "visible_body_text_changes": [
+    {
+      "document_paragraph_index": 650,
+      "old": "q、d分别表示问题与资料块的嵌入向量，点积衡量向量方向的一致性，‖·‖₂表示向量的二范数；v(d,q)为非负向量得分。数据库余弦距离为1−cos(q,d)，距离越小，相似度越高。",
+      "new": "q、d分别表示问题与资料块的嵌入向量，点积衡量向量方向一致性，‖·‖₂表示向量的二范数；v(d,q)为非负向量得分。数据库余弦距离为1−cos(q,d)，距离越小，相似度越高。"
+    }
+  ],
+  "image_relationship_remapping": [
+    {
+      "image_instance": 31,
+      "old_relationship_id": "rId58",
+      "new_relationship_id": "rId42",
+      "old_media_part": "word/media/T131-figure-5-19.png",
+      "new_media_part": "word/media/image31.png",
+      "content_sha256": "0c78799e73282a8f765f0d65b4aa3a2cc781ceafd0dc42c3b9bb4c089b09735d"
+    },
+    {
+      "image_instance": 32,
+      "old_relationship_id": "rId59",
+      "new_relationship_id": "rId43",
+      "old_media_part": "word/media/T131-figure-5-20.png",
+      "new_media_part": "word/media/image32.png",
+      "content_sha256": "b282f2d4835dbccb7ece2c1afe56c82769a61843855e31cdc668081956eb7569"
+    },
+    {
+      "image_instance": 33,
+      "old_relationship_id": "rId60",
+      "new_relationship_id": "rId44",
+      "old_media_part": "word/media/T131-figure-5-21.png",
+      "new_media_part": "word/media/image33.png",
+      "content_sha256": "37b44ec53c47cf89e63749650ecd11211efb63c13bd679341494a10d2e6e3bc2"
+    },
+    {
+      "image_instance": 34,
+      "old_relationship_id": "rId61",
+      "new_relationship_id": "rId45",
+      "old_media_part": "word/media/T131-figure-5-22.png",
+      "new_media_part": "word/media/image34.png",
+      "content_sha256": "021ee17103d68dee7a6c9a442d02b177ee7006e79df31154a86b27b93f72c3be"
+    },
+    {
+      "image_instance": 35,
+      "old_relationship_id": "rId62",
+      "new_relationship_id": "rId46",
+      "old_media_part": "word/media/T131-figure-5-23.png",
+      "new_media_part": "word/media/image35.png",
+      "content_sha256": "a0f630c391760c95d6a288eb994f925c179596d9296505ae1d0f6460db188e82"
+    },
+    {
+      "image_instance": 36,
+      "old_relationship_id": "rId42",
+      "new_relationship_id": "rId47",
+      "old_media_part": "word/media/image31.png",
+      "new_media_part": "word/media/image36.png",
+      "content_sha256": "04d9b1c05074afd560bfb3e97cb867aa356c17ee903936abe62e620bc6d234c0"
+    },
+    {
+      "image_instance": 37,
+      "old_relationship_id": "rId43",
+      "new_relationship_id": "rId48",
+      "old_media_part": "word/media/image32.png",
+      "new_media_part": "word/media/image37.png",
+      "content_sha256": "df87a94e6b3b419f710e872c6a81ba3d48e78ac3eff776024b23e30594c15435"
+    },
+    {
+      "image_instance": 38,
+      "old_relationship_id": "rId44",
+      "new_relationship_id": "rId49",
+      "old_media_part": "word/media/image33.png",
+      "new_media_part": "word/media/image38.png",
+      "content_sha256": "727fb28f3f85952784268b0b7a277a2d2482ed4ceb52d8778148874f9ed3aaf1"
+    },
+    {
+      "image_instance": 39,
+      "old_relationship_id": "rId45",
+      "new_relationship_id": "rId50",
+      "old_media_part": "word/media/image34.png",
+      "new_media_part": "word/media/image39.png",
+      "content_sha256": "12829a550a6cfc716854c88e94faa7b5624b8be3868f5998cb7605f0ad8bdfb6"
+    },
+    {
+      "image_instance": 40,
+      "old_relationship_id": "rId46",
+      "new_relationship_id": "rId51",
+      "old_media_part": "word/media/image35.png",
+      "new_media_part": "word/media/image40.png",
+      "content_sha256": "a3735db1036a0b99278f6c442aeb031fd33d17e93a1164e16d974a8a5e5e8d7c"
+    },
+    {
+      "image_instance": 41,
+      "old_relationship_id": "rId47",
+      "new_relationship_id": "rId52",
+      "old_media_part": "word/media/image36.png",
+      "new_media_part": "word/media/image41.png",
+      "content_sha256": "a51df40af464383d4587b904d68b66954bae5ab6ec33c467c4a57e361fe6d88a"
+    },
+    {
+      "image_instance": 42,
+      "old_relationship_id": "rId48",
+      "new_relationship_id": "rId53",
+      "old_media_part": "word/media/image37.png",
+      "new_media_part": "word/media/image42.png",
+      "content_sha256": "54da8529fe1fbb24980fb418ebd6f4f369f88942bb3a04a9407820ec231d1c4e"
+    },
+    {
+      "image_instance": 43,
+      "old_relationship_id": "rId49",
+      "new_relationship_id": "rId54",
+      "old_media_part": "word/media/image38.png",
+      "new_media_part": "word/media/image43.png",
+      "content_sha256": "d8b7ff8a56c52645fd75b475053764abfbd90601cf925a166cf5c9ac3d9fd20d"
+    },
+    {
+      "image_instance": 44,
+      "old_relationship_id": "rId50",
+      "new_relationship_id": "rId55",
+      "old_media_part": "word/media/image39.png",
+      "new_media_part": "word/media/image44.png",
+      "content_sha256": "e11e0ddff653b5265eb8c4de9c9557dd6160ee8fb53a4cedb4cf73e37387adda"
+    },
+    {
+      "image_instance": 45,
+      "old_relationship_id": "rId51",
+      "new_relationship_id": "rId56",
+      "old_media_part": "word/media/image40.png",
+      "new_media_part": "word/media/image45.png",
+      "content_sha256": "a46be55874abfe6a05704cd2e2d2c085c45368a71a39a855665c137bae122f6d"
+    },
+    {
+      "image_instance": 46,
+      "old_relationship_id": "rId52",
+      "new_relationship_id": "rId57",
+      "old_media_part": "word/media/image41.png",
+      "new_media_part": "word/media/image46.png",
+      "content_sha256": "ccc13d5416d9051973d8ea64a16a07c5e75be9fe70ae0fe62c0e3ae0041b2b47"
+    },
+    {
+      "image_instance": 47,
+      "old_relationship_id": "rId53",
+      "new_relationship_id": "rId58",
+      "old_media_part": "word/media/image42.png",
+      "new_media_part": "word/media/image47.png",
+      "content_sha256": "e6a6f9adcdee3c7a4b9718ae9330aebbe5cf9ccf96352adc1d00d05b735f4d78"
+    },
+    {
+      "image_instance": 48,
+      "old_relationship_id": "rId54",
+      "new_relationship_id": "rId59",
+      "old_media_part": "word/media/image43.png",
+      "new_media_part": "word/media/image48.png",
+      "content_sha256": "eb8b5e0721043dd946e9a3d00b3e7f43f0a046c1d046134147176e6d36bd2715"
+    }
+  ],
+  "save_serialization_changes": [
+    "Two text-identical paragraphs split into runs to carry new comment anchors.",
+    "Five screenshots wp:extent slightly rounded; original bytes unchanged.",
+    "Transient _GoBack bookmark185 removed from acknowledgment, visible text and other formatting unchanged.",
+    "Font entries reordered with unchanged per-font content.",
+    "settings added3 rsids; people/commentsExtended updated.",
+    "app.xml Pages109→108, TotalTime115→163; not current render measurements.",
+    "Core timestamps updated."
+  ],
+  "all_document_diff_accounted_after_normalizing_save_changes": true,
+  "normalization_scope": "Removed new anchor events10/26; mapped old IDs; mapped image embeds by media SHA; restored one removed 的; restored two text-identical paragraphs split for comments; restored five wp:extent values; ignored prior _GoBack bookmark. Whole normalized document canonical exactly equaled T131."
+}

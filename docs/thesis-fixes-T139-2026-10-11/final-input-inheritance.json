@@ -1,0 +1,161 @@
+{
+  "task": "T139 final 18-file input inheritance after E2E anchor correction",
+  "utc": "2026-10-11T06:59:32.169949+00:00",
+  "status": "FINAL_INPUT_VERIFIED_STATIC_PASS_E2E_PENDING",
+  "previous_qa_manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/qa-final-validation.json",
+  "previous_qa_manifest_sha256": "5e8203a04b28f9d02c7db6a8adb087a40ef967efd86a7d62f161cf399eb6ef19",
+  "previous_executed_final_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+  "final_snapshot_revision": "c6de4c4d219e535bd25e794495070d191e7baa1c",
+  "authorized_changed_file_count": 18,
+  "files": [
+    {
+      "path": "backend/src/api/agent_runtime.rs",
+      "sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/agents.rs",
+      "sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/files.rs",
+      "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/knowledge_graph.rs",
+      "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/mcp.rs",
+      "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/notes.rs",
+      "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/project_alert.rs",
+      "sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/projects.rs",
+      "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/api/rag/mod.rs",
+      "sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/project_alert.rs",
+      "sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "backend/src/rag/index.rs",
+      "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/src/components/project-alerts.tsx",
+      "sha256": "6598665e59ab591982fd06e21e93a40f52ca648e331e9c2eead1ef233d2b9feb",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/src/lib/api.ts",
+      "sha256": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "scripts/experiments/validate_experiment_restart.py",
+      "sha256": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/src/components/shared/AgentAssistant.tsx",
+      "sha256": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/e2e/system.spec.ts",
+      "sha256": "bed27d9da3ea1b95c1245c912f8f550dcd930201aef0b2688ac39da495178b5b",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/e2e/user-journeys.spec.ts",
+      "sha256": "d87a2b7f3b9a9ce6aceb0c16ea4bc9c040985801ab584db8cd8a0ab69d2627e4",
+      "primary_copy_committed_match": true
+    },
+    {
+      "path": "frontend/e2e/real-lab-acceptance.spec.ts",
+      "sha256": "be3f284006cc602a452fa3e076a0442163d9b62858ee661c8896afefae8f8d5f",
+      "primary_copy_committed_match": true
+    }
+  ],
+  "production_15_files_unchanged": true,
+  "rust_configuration_unchanged": true,
+  "inherited_gates": [
+    "cargo_fmt",
+    "cargo_clippy",
+    "full_rust_isolated_postgresql (284 passed)",
+    "scripts_tracked_full (546 passed)"
+  ],
+  "inheritance_reason": "The only additional files since the validated 15-file input are three Playwright test specifications. All prior production/probe source and Rust validation configuration bytes match; no source/runtime/scripts implementation changed.",
+  "static_gates": [
+    {
+      "gate": "eslint",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "./node_modules/.bin/eslint e2e/system.spec.ts e2e/user-journeys.spec.ts e2e/real-lab-acceptance.spec.ts --max-warnings=0",
+      "cwd": "/Users/yusong/Downloads/new/full-system/frontend",
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/eslint-final.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "duration_seconds": null,
+      "duration_note": "Not separately timed."
+    },
+    {
+      "gate": "e2e_typecheck",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "./node_modules/.bin/tsc --noEmit --target ES2017 --module esnext --moduleResolution bundler --esModuleInterop --skipLibCheck --strict --types node e2e/system.spec.ts e2e/user-journeys.spec.ts e2e/real-lab-acceptance.spec.ts",
+      "cwd": "/Users/yusong/Downloads/new/full-system/frontend",
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/tsc-e2e-final.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "duration_seconds": null,
+      "duration_note": "Not separately timed."
+    },
+    {
+      "gate": "playwright_discovery",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "./node_modules/.bin/playwright test --list --reporter=list --output /Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/discovery-final-output",
+      "cwd": "/Users/yusong/Downloads/new/full-system/frontend",
+      "log": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/playwright-list-final.log",
+      "log_sha256": "65b9a4a2cc47e5c25fa7764c65631852a50ff24b4700c5ee6b1972ba13950dec",
+      "duration_seconds": null,
+      "duration_note": "Not separately timed."
+    },
+    {
+      "gate": "diff_check",
+      "status": "PASS",
+      "exit_code": 0,
+      "command": "git diff --check -- frontend/e2e/system.spec.ts frontend/e2e/user-journeys.spec.ts frontend/e2e/real-lab-acceptance.spec.ts",
+      "cwd": "/Users/yusong/Downloads/new/full-system",
+      "log": null,
+      "log_sha256": null,
+      "duration_seconds": null,
+      "duration_note": "Not separately timed."
+    }
+  ],
+  "e2e_runtime_owner": "root",
+  "e2e_runtime_status": "v4 running, no pass claim",
+  "checkout_clean": true,
+  "original_qa_manifest_rewritten": false
+}

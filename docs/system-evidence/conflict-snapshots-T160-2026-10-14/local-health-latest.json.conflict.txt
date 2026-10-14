@@ -1,0 +1,104 @@
+{
+<<<<<<< Updated upstream
+  "generated_at": "2026-08-29T11:17:48.447470+00:00",
+  "local_ready": true,
+  "status": "ready",
+  "build_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "app_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+  "runtime_revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+=======
+  "generated_at": "2026-08-29T09:14:19.199956+00:00",
+  "local_ready": true,
+  "status": "ready",
+  "app_revision": "aa94309b0695b7d2848f5c79056a0908ef06c557",
+  "runtime_revision": "aa94309b0695b7d2848f5c79056a0908ef06c557",
+>>>>>>> Stashed changes
+  "secrets_disclosed": false,
+  "app_env": "development",
+  "production_readiness": {
+    "status": "not_production_mode",
+    "note": "当前 APP_ENV=development，未执行生产发布判断。",
+    "checks": {
+      "APP_ENV=production": false,
+      "SEED_DEMO_DATA=false": false,
+      "endpoint 编译 revision 已绑定": true,
+      "DeepSeek API key 已配置": true,
+      "生产 embedding=OpenAI-compatible/BAAI/bge-m3/1024": true
+    }
+  },
+  "runtime": {
+    "api_runtime": "rust-axum",
+<<<<<<< Updated upstream
+    "revision": "80c8c6f8003505a6741445cc2893d51f8810a7b9",
+=======
+    "revision": "aa94309b0695b7d2848f5c79056a0908ef06c557",
+>>>>>>> Stashed changes
+    "embedding_backend": "openai_compatible",
+    "embedding_model": "BAAI/bge-m3",
+    "embedding_dimension": 1024
+  },
+  "checks": [
+    {
+      "name": "Rust API 就绪",
+      "passed": true,
+      "severity": "error",
+      "detail": "HTTP 200 / status=ready"
+    },
+    {
+      "name": "PostgreSQL",
+      "passed": true,
+      "severity": "error",
+      "detail": "database=ok"
+    },
+    {
+      "name": "持久化存储",
+      "passed": true,
+      "severity": "error",
+      "detail": "storage=ok"
+    },
+    {
+      "name": "前端首页",
+      "passed": true,
+      "severity": "error",
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "前端/API host 一致",
+      "passed": true,
+      "severity": "error",
+      "detail": "frontend=localhost / api=localhost"
+    },
+    {
+      "name": "运行指标",
+      "passed": true,
+      "severity": "error",
+      "detail": "HTTP 200 / status=ok"
+    },
+    {
+      "name": "Axum 对外运行时",
+      "passed": true,
+      "severity": "error",
+      "detail": "api_runtime=rust-axum"
+    },
+    {
+      "name": "编译 revision 已绑定",
+      "passed": true,
+      "severity": "error",
+<<<<<<< Updated upstream
+      "detail": "ready=80c8c6f8003505a6741445cc2893d51f8810a7b9 / metrics=80c8c6f8003505a6741445cc2893d51f8810a7b9 / checkout=80c8c6f8003505a6741445cc2893d51f8810a7b9"
+    }
+  ],
+  "sources": {
+    "ready": "http://localhost:8001/ready",
+    "metrics": "http://localhost:8001/metrics",
+=======
+      "detail": "ready=aa94309b0695b7d2848f5c79056a0908ef06c557 / metrics=aa94309b0695b7d2848f5c79056a0908ef06c557"
+    }
+  ],
+  "sources": {
+    "ready": "http://127.0.0.1:8001/ready",
+    "metrics": "http://127.0.0.1:8001/metrics",
+>>>>>>> Stashed changes
+    "frontend": "http://localhost:3000/"
+  }
+}

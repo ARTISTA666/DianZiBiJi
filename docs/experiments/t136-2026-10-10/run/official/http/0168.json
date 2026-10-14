@@ -1,0 +1,383 @@
+{
+  "utc": "2026-10-10T15:52:30.095593+00:00",
+  "path": "/notes/25/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 3,
+    "entities": [
+      {
+        "id": 116,
+        "project_id": 3,
+        "entity_type": "project",
+        "label": "T136 regression",
+        "normalized_label": "t136 regression",
+        "natural_key": "project:project:3",
+        "source_type": "project",
+        "source_id": 3,
+        "properties": {
+          "project_id": 3
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 118,
+        "project_id": 3,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 119,
+        "project_id": 3,
+        "entity_type": "experiment_type",
+        "label": "PCR",
+        "normalized_label": "聚合酶链反应",
+        "natural_key": "experiment_type:聚合酶链反应",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "PCR"
+        },
+        "created_at": "2026-10-10T15:52:29.487745Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 265,
+        "project_id": 3,
+        "entity_type": "note",
+        "label": "PCR 条件优化实验",
+        "normalized_label": "聚合酶链反应 条件优化实验",
+        "natural_key": "note:note:25",
+        "source_type": "note",
+        "source_id": 25,
+        "properties": {
+          "experiment_date": "2026-06-03",
+          "note_id": 25,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 266,
+        "project_id": 3,
+        "entity_type": "instrument",
+        "label": "PCR Thermal Cycler",
+        "normalized_label": "聚合酶链反应 thermal cycler",
+        "natural_key": "instrument:聚合酶链反应 thermal cycler",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 267,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "MgCl2",
+        "normalized_label": "mgcl2",
+        "natural_key": "reagent:mgcl2",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 268,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "Taq DNA Polymerase",
+        "normalized_label": "taq dna polymerase",
+        "natural_key": "reagent:taq dna polymerase",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 269,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "dNTP",
+        "normalized_label": "dntp",
+        "natural_key": "reagent:dntp",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 270,
+        "project_id": 3,
+        "entity_type": "reagent",
+        "label": "模板 DNA",
+        "normalized_label": "模板 dna",
+        "natural_key": "reagent:模板 dna",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 271,
+        "project_id": 3,
+        "entity_type": "result",
+        "label": "58℃ 条件下条带清晰。",
+        "normalized_label": "58℃ 条件下条带清晰",
+        "natural_key": "result:58℃ 条件下条带清晰",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 272,
+        "project_id": 3,
+        "entity_type": "result",
+        "label": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。",
+        "normalized_label": "退火温度 58℃ 时扩增条带最清晰 非特异性条带减少",
+        "natural_key": "result:退火温度 58℃ 时扩增条带最清晰 非特异性条带减少",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 273,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "样本 A",
+        "normalized_label": "样本 a",
+        "natural_key": "sample:样本 a",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 274,
+        "project_id": 3,
+        "entity_type": "sample",
+        "label": "样本 B",
+        "normalized_label": "样本 b",
+        "natural_key": "sample:样本 b",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:30.090Z",
+        "updated_at": "2026-10-10T15:52:30.090Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 350,
+        "project_id": 3,
+        "source_entity_id": 116,
+        "target_entity_id": 265,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 25,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 351,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 118,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 25,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 352,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 119,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 25,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 353,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 266,
+        "relation_type": "uses_instrument",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 354,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 267,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 355,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 268,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 356,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 269,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 357,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 270,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 358,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 271,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 359,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 272,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 360,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 273,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      },
+      {
+        "id": 361,
+        "project_id": 3,
+        "source_entity_id": 265,
+        "target_entity_id": 274,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 25,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:30.090Z"
+      }
+    ]
+  }
+}

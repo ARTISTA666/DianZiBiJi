@@ -1,0 +1,27 @@
+{
+  "scope": "Final staged canonical docs and repository metadata before adding this scan receipt",
+  "file_count": 1071,
+  "exact_local_secret_values_compared": 3,
+  "credential_findings": [],
+  "invalid_json": [],
+  "new_doc_header_findings": [],
+  "nav_findings": [],
+  "deletions": [],
+  "limits": "Pattern/literal scan; archive images and encoded secrets not exhaustively inspected. Historical original token kept locally with separately labeled public derivative.",
+  "navigation_followup": {
+    "checked_paths": [
+      "docs/coordination/HANDOFF.md",
+      "docs/coordination/ZC-01.md",
+      "docs/experiments/innovation-ablation-2026-09-07.md",
+      "docs/毕业论文重构稿-参考架构版.md",
+      "docs/毕业论文重构稿.md"
+    ],
+    "docs_readme_sha256": "743c6d3855b038410ab5b22b6a738b9131f11ec44bc30f91c37eba225ac34b74",
+    "result": "passed"
+  },
+  "read_only_peer_review": {
+    "result": "no blocking issue",
+    "checked": "negative evidence retained; AI records retained; historical thesis body unchanged from start; conflict restoration and JWT derivative byte identity verified",
+    "whitespace_limit": "Historical CSV, logs and preserved text/patch include existing line-end whitespace; frozen bytes retained."
+  }
+}

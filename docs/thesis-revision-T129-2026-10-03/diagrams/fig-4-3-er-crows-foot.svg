@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1650" viewBox="0 0 1900 1650">
+<rect width="100%" height="100%" fill="white"/>
+<rect x="60" y="120" width="490" height="260" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="60,225 550,225" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="305.0" y="152" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">用户</text>
+<text x="305.0" y="197" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">users</text>
+<text x="84" y="260" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="84" y="303" font-family="Songti SC, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">全局角色 / 账号状态</text>
+<rect x="670" y="120" width="500" height="260" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="670,225 1170,225" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="920.0" y="152" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">项目成员</text>
+<text x="920.0" y="197" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">project_members</text>
+<text x="694" y="260" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="694" y="303" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  user_id</text>
+<text x="694" y="346" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  project_id</text>
+<rect x="1270" y="120" width="520" height="285" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="1270,225 1790,225" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="1530.0" y="152" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">项目</text>
+<text x="1530.0" y="197" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">projects</text>
+<text x="1294" y="260" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="1294" y="303" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  owner_user_id</text>
+<text x="1294" y="346" font-family="Songti SC, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">（可为空）</text>
+<rect x="60" y="650" width="580" height="280" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="60,755 640,755" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="350.0" y="682" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">实验笔记</text>
+<text x="350.0" y="727" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">experiment_notes</text>
+<text x="84" y="790" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="84" y="833" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  project_id</text>
+<text x="84" y="876" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  owner_user_id</text>
+<rect x="1240" y="650" width="550" height="280" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="1240,755 1790,755" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="1515.0" y="682" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">图谱实体</text>
+<text x="1515.0" y="727" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">kg_entities</text>
+<text x="1264" y="790" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="1264" y="833" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  project_id</text>
+<text x="1264" y="876" font-family="Songti SC, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">类型 / 显示名 / 规范名</text>
+<rect x="60" y="1110" width="580" height="280" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="60,1215 640,1215" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="350.0" y="1142" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">笔记版本</text>
+<text x="350.0" y="1187" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">note_versions</text>
+<text x="84" y="1250" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="84" y="1293" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  note_id</text>
+<text x="84" y="1336" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  created_by</text>
+<rect x="1210" y="1110" width="580" height="330" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="1210,1215 1790,1215" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="1500.0" y="1142" font-family="Songti SC, serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="central">图谱关系</text>
+<text x="1500.0" y="1187" font-family="Times New Roman, serif" font-size="35" font-weight="bold" text-anchor="middle" dominant-baseline="central">kg_relations</text>
+<text x="1234" y="1250" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">PK  id</text>
+<text x="1234" y="1293" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  project_id</text>
+<text x="1234" y="1336" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  source_entity_id</text>
+<text x="1234" y="1379" font-family="Times New Roman, serif" font-size="38" font-weight="normal" text-anchor="start" dominant-baseline="central">FK  target_entity_id</text>
+<polyline points="270,120 270,50 1510,50 1510,120" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="257.0,112.0 283.0,112.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="270.0" cy="85.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<polyline points="1495.0,115.0 1510.0,94.0 1525.0,115.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="1510.0" cy="74.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="793.0" y="28.5" width="184.0" height="47.0" fill="white"/>
+<text x="885" y="50" font-family="Songti SC, serif" font-size="34" font-weight="bold" text-anchor="middle" dominant-baseline="central">项目负责人</text>
+<polyline points="550,248 670,248" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="558.0,235.0 558.0,261.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="577.0,235.0 577.0,261.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="665.0,263.0 644.0,248.0 665.0,233.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="624.0" cy="248.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="572.0" y="281.0" width="76.0" height="43.5" fill="white"/>
+<text x="610" y="301" font-family="Songti SC, serif" font-size="31" font-weight="normal" text-anchor="middle" dominant-baseline="central">成员</text>
+<polyline points="1270,248 1170,248" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1262.0,261.0 1262.0,235.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1243.0,261.0 1243.0,235.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1175.0,233.0 1196.0,248.0 1175.0,263.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="1216.0" cy="248.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="1182.0" y="281.0" width="76.0" height="43.5" fill="white"/>
+<text x="1220" y="301" font-family="Songti SC, serif" font-size="31" font-weight="normal" text-anchor="middle" dominant-baseline="central">归属</text>
+<polyline points="270,380 270,650" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="283.0,388.0 257.0,388.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="283.0,407.0 257.0,407.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="255.0,645.0 270.0,624.0 285.0,645.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="270.0" cy="604.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="195.0" y="494.0" width="150.0" height="46.0" fill="white"/>
+<text x="270" y="515" font-family="Songti SC, serif" font-size="34" font-weight="normal" text-anchor="middle" dominant-baseline="central">拥有笔记</text>
+<polyline points="1310,405 1310,525 720,525 720,795 640,795" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1323.0,413.0 1297.0,413.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1323.0,432.0 1297.0,432.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="645.0,780.0 666.0,795.0 645.0,810.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="686.0" cy="795.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="892.0" y="504.0" width="150.0" height="46.5" fill="white"/>
+<text x="967" y="525" font-family="Songti SC, serif" font-size="34" font-weight="normal" text-anchor="middle" dominant-baseline="central">项目笔记</text>
+<polyline points="1530,405 1530,650" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1543.0,413.0 1517.0,413.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1543.0,432.0 1517.0,432.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1515.0,645.0 1530.0,624.0 1545.0,645.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="1530.0" cy="604.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="1455.0" y="505.5" width="150.0" height="47.0" fill="white"/>
+<text x="1530" y="527" font-family="Songti SC, serif" font-size="34" font-weight="normal" text-anchor="middle" dominant-baseline="central">图谱实体</text>
+<polyline points="1790,248 1850,248 1850,1275 1790,1275" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1798.0,235.0 1798.0,261.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1817.0,235.0 1817.0,261.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1795.0,1260.0 1816.0,1275.0 1795.0,1290.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="1836.0" cy="1275.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="1811.0" y="714.0" width="78.0" height="43.5" fill="white"/>
+<text x="1850" y="734" font-family="Songti SC, serif" font-size="32" font-weight="normal" text-anchor="middle" dominant-baseline="central">关系</text>
+<rect x="1811.0" y="757.0" width="78.0" height="44.0" fill="white"/>
+<text x="1850" y="777" font-family="Songti SC, serif" font-size="32" font-weight="normal" text-anchor="middle" dominant-baseline="central">归属</text>
+<polyline points="270,930 270,1110" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="283.0,938.0 257.0,938.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="283.0,957.0 257.0,957.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="255.0,1105.0 270.0,1084.0 285.0,1105.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="270.0" cy="1064.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="195.0" y="988.5" width="150.0" height="47.0" fill="white"/>
+<text x="270" y="1010" font-family="Songti SC, serif" font-size="34" font-weight="normal" text-anchor="middle" dominant-baseline="central">历史版本</text>
+<polyline points="1340,930 1340,1110" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1353.0,938.0 1327.0,938.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1353.0,957.0 1327.0,957.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1325.0,1105.0 1340.0,1084.0 1355.0,1105.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="1340.0" cy="1064.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="1282.0" y="988.5" width="116.0" height="47.0" fill="white"/>
+<text x="1340" y="1010" font-family="Songti SC, serif" font-size="34" font-weight="normal" text-anchor="middle" dominant-baseline="central">源实体</text>
+<polyline points="1660,930 1660,1110" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1673.0,938.0 1647.0,938.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1673.0,957.0 1647.0,957.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="1645.0,1105.0 1660.0,1084.0 1675.0,1105.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="1660.0" cy="1064.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<rect x="1585.0" y="988.5" width="150.0" height="47.0" fill="white"/>
+<text x="1660" y="1010" font-family="Songti SC, serif" font-size="34" font-weight="normal" text-anchor="middle" dominant-baseline="central">目标实体</text>
+<text x="960" y="800" font-family="Songti SC, serif" font-size="32" font-weight="bold" text-anchor="middle" dominant-baseline="central">成员表组合唯一：</text>
+<text x="960" y="851" font-family="Times New Roman, serif" font-size="31" font-weight="normal" text-anchor="middle" dominant-baseline="central">(project_id, user_id)</text>
+<text x="935" y="1160" font-family="Songti SC, serif" font-size="32" font-weight="bold" text-anchor="middle" dominant-baseline="central">乌鸦脚端点符号</text>
+<polyline points="760,1220 848,1220" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="768.0,1207.0 768.0,1233.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="787.0,1207.0 787.0,1233.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<text x="872" y="1220" font-family="Songti SC, serif" font-size="33" font-weight="normal" text-anchor="start" dominant-baseline="central">必须一个（1）</text>
+<polyline points="760,1285 848,1285" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="768.0,1272.0 768.0,1298.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="795.0" cy="1285.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<text x="872" y="1285" font-family="Songti SC, serif" font-size="33" font-weight="normal" text-anchor="start" dominant-baseline="central">零个或一个（0..1）</text>
+<polyline points="760,1350 848,1350" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<polyline points="765.0,1335.0 786.0,1350.0 765.0,1365.0" fill="none" stroke="black" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="806.0" cy="1350.0" r="10" fill="white" stroke="black" stroke-width="3"/>
+<text x="872" y="1350" font-family="Songti SC, serif" font-size="33" font-weight="normal" text-anchor="start" dominant-baseline="central">零个或多个（0..N）</text>
+<text x="950" y="1500" font-family="Songti SC, serif" font-size="32" font-weight="bold" text-anchor="middle" dominant-baseline="central">PK：主键    FK：外键；符号表示连线端实体的允许数量。</text>
+<text x="950" y="1555" font-family="Songti SC, serif" font-size="31" font-weight="normal" text-anchor="middle" dominant-baseline="central">本图省略版本创建者连线；完整字段与约束见附录 B.3。</text>
+</svg>

@@ -1,0 +1,38 @@
+{
+  "task": "T144 read-only native QA preparation",
+  "utc": "2026-10-11T15:00:09.898061+00:00",
+  "scripts": [
+    {
+      "source": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/check-native-toc.py",
+      "source_sha256": "486f95ad74939fa899797ce11db5283224a9959f7abd7df8af2557010500848c",
+      "adapted": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/check-native-toc.py",
+      "adapted_sha256": "3a51f748fe26fbf3d8ff153aebfb4a9080f72bc2f5158d6ac1670ebb46bd9b5a",
+      "changes": [
+        "T143 task label -> T144",
+        "baseline file -> current author source 35e9 inventory (where applicable)"
+      ]
+    },
+    {
+      "source": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/check-native-table-coordinates.py",
+      "source_sha256": "6c34a53667628ed9512afd6f3475cd09227c9a1047afe7e4c0b07c108c3418b8",
+      "adapted": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/check-native-table-coordinates.py",
+      "adapted_sha256": "c344a7671952010f4b7dca04ca9bc784af665f02705868720bee7b511f8f779c",
+      "changes": [
+        "T143 task label -> T144",
+        "baseline file -> current author source 35e9 inventory (where applicable)"
+      ]
+    },
+    {
+      "source": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/qa/check-table-same-page.py",
+      "source_sha256": "55cfb2cf21a701252c666638b7b3df477f436e8233335dd5a4757b0706e0f132",
+      "adapted": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/check-table-same-page.py",
+      "adapted_sha256": "219d2840fbfdb1c67cec4a086045f4af60f30023d198485b51e3fae1f5dd2475",
+      "changes": [
+        "T143 task label -> T144",
+        "baseline file -> current author source 35e9 inventory (where applicable)"
+      ]
+    }
+  ],
+  "actual_candidate_native_PDF_checks": "PENDING native export",
+  "old_files_modified": false
+}

@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:29.240271+00:00",
+  "path": "/notes/19/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 19,
+    "project_id": 2,
+    "template_id": null,
+    "title": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+    "experiment_type": "Golden_Gate_assembly",
+    "experiment_date": "2021-07-06",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 19,
+    "created_at": "2026-10-10T15:52:29.237859Z",
+    "updated_at": "2026-10-10T15:52:29.245172Z"
+  }
+}

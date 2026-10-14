@@ -1,0 +1,2319 @@
+{
+  "schema_version": "t131-final-qa-pages-1-40-v1",
+  "reviewer": "code-reviewer",
+  "completed_at": "2026-10-04T16:19:37.360661+08:00",
+  "candidate_docx_path": "/private/tmp/advisor-T131-20261004/candidate.docx",
+  "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+  "source_docx_path": "/private/tmp/advisor-T131-20261004/source.docx",
+  "source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+  "render_directory": "/private/tmp/advisor-T131-20261004/render-final",
+  "final_pdf_path": "/private/tmp/advisor-T131-20261004/render-final/candidate.pdf",
+  "final_pdf_sha256": "159060b00593e626e18ba739f4c4ae232b9f40bbf3a0b8ef36614eb729fe58bb",
+  "final_physical_page_count": 109,
+  "scope": {
+    "physical_pages_start": 1,
+    "physical_pages_end": 40,
+    "pages_reviewed": 40
+  },
+  "verification_method": "最终1–40页逐文件核对PNG SHA。6、7页目录变化，均view_image(detail=original)原尺寸亲看；其余38页与已验source对应PNG exact SHA相同，继承既有视觉结论和原尺寸亲看来源链。",
+  "directly_viewed_physical_pages": [
+    6,
+    7
+  ],
+  "inherited_physical_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40
+  ],
+  "result": "pass",
+  "blocking_issues": [],
+  "nonblocking_observations": [
+    {
+      "physical_page": 36,
+      "note": "页下方留白用于将长表4-11完整放到37页。"
+    },
+    {
+      "physical_page": 38,
+      "note": "表4-12计算方法列内单位小时、天换行，内容完整可读。"
+    }
+  ],
+  "toc_actual_pages_verification": {
+    "report_path": "/private/tmp/advisor-T131-20261004/protected-audit.json",
+    "report_sha256": "d595edfb94e7b5940b94d39daf68eeb8d062683a61bbf7202bc28d10e702b4d6",
+    "independent_check": "100_toc_entries_match_bookmarks_and_final_109_page_pdf",
+    "result": true
+  },
+  "validation_limits": [
+    "仅覆盖最终稿物理1–40页；41–109页由其他审阅者负责。",
+    "未声明WPS原生验收通过。"
+  ],
+  "pages": [
+    {
+      "physical_page": 1,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-1.png",
+      "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 1,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-1.png",
+        "prior_png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 1,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-1.png",
+          "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 1,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-1.png",
+            "prior_png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 1,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-1.png",
+              "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "封面布局完整，未见裁切。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-1.png",
+                "comparison_png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 1,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-1.png",
+                "prior_render_png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-1.png",
+                  "png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 2,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-2.png",
+      "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 2,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-2.png",
+        "prior_png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 2,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-2.png",
+          "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 2,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-2.png",
+            "prior_png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 2,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-2.png",
+              "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "声明页布局完整。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-2.png",
+                "comparison_png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 2,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-2.png",
+                "prior_render_png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-2.png",
+                  "png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 3,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-3.png",
+      "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 3,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-3.png",
+        "prior_png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 3,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-3.png",
+          "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 3,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-3.png",
+            "prior_png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 3,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-3.png",
+              "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "摘要页布局完整。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-3.png",
+                "comparison_png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 3,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-3.png",
+                "prior_render_png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-3.png",
+                  "png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 4,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-4.png",
+      "png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 4,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-4.png",
+        "prior_png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 4,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-4.png",
+          "png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 4,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-4.png",
+            "prior_png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "direct_view_image_original",
+            "prior_page_record": {
+              "physical_page": 4,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-4.png",
+              "png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "中文摘要完整同页，末段与关键词清楚，无页眉页脚冲突。"
+              ],
+              "review_method": "direct_view_image_original",
+              "reuse_source": null,
+              "review_image_detail": "original",
+              "reviewed_at_utc": "2026-10-04T04:13:50.022281+00:00"
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 5,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-5.png",
+      "png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 5,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-5.png",
+        "prior_png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 5,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-5.png",
+          "png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 5,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-5.png",
+            "prior_png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "direct_view_image_original",
+            "prior_page_record": {
+              "physical_page": 5,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-5.png",
+              "png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "英文摘要完整同页，关键词换行完整，未裁切或触碰页脚。"
+              ],
+              "review_method": "direct_view_image_original",
+              "reuse_source": null,
+              "review_image_detail": "original",
+              "reviewed_at_utc": "2026-10-04T04:13:50.024073+00:00"
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 6,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-6.png",
+      "png_sha256": "a62228da6e4fe87cd10318c97e124bfbc59040ba28151c577c2cb98309c070a3",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "direct_view_image_original",
+      "notes": [
+        "目录首页原尺寸亲看；标题、缩进、点线和右侧页码清晰，无重叠、裁切或0占位，页脚III完整。"
+      ],
+      "inspection_source": {
+        "tool": "view_image",
+        "detail": "original",
+        "inspection_date": "2026-10-04",
+        "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-6.png",
+        "png_sha256": "a62228da6e4fe87cd10318c97e124bfbc59040ba28151c577c2cb98309c070a3"
+      }
+    },
+    {
+      "physical_page": 7,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-7.png",
+      "png_sha256": "09ad6eb95006957005ebf771133f6994f2fc1b3e8c8ba2c1121f46a4b28f7516",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "direct_view_image_original",
+      "notes": [
+        "目录续页原尺寸亲看；第五章至附录D.4条目完整，更新页码清晰，无重叠、裁切或0占位，页脚IV完整。"
+      ],
+      "inspection_source": {
+        "tool": "view_image",
+        "detail": "original",
+        "inspection_date": "2026-10-04",
+        "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-7.png",
+        "png_sha256": "09ad6eb95006957005ebf771133f6994f2fc1b3e8c8ba2c1121f46a4b28f7516"
+      }
+    },
+    {
+      "physical_page": 8,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-8.png",
+      "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 8,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-8.png",
+        "prior_png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 8,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-8.png",
+          "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 8,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-8.png",
+            "prior_png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 8,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-8.png",
+              "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "第一章文字完整，无孤立标题或页脚冲突。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-8.png",
+                "comparison_png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 8,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-8.png",
+                "prior_render_png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-8.png",
+                  "png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 9,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-9.png",
+      "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 9,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-9.png",
+        "prior_png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 9,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-9.png",
+          "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 9,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-9.png",
+            "prior_png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 9,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-9.png",
+              "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "第一章文字完整。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-9.png",
+                "comparison_png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 9,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-9.png",
+                "prior_render_png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-9.png",
+                  "png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 10,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-10.png",
+      "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 10,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-10.png",
+        "prior_png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 10,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-10.png",
+          "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 10,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-10.png",
+            "prior_png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 10,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-10.png",
+              "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "第二章起始页完整。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-10.png",
+                "comparison_png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 10,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-10.png",
+                "prior_render_png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-10.png",
+                  "png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 11,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-11.png",
+      "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 11,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-11.png",
+        "prior_png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 11,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-11.png",
+          "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 11,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-11.png",
+            "prior_png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 11,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-11.png",
+              "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "第二章文字及标题完整。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-11.png",
+                "comparison_png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 11,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-11.png",
+                "prior_render_png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-11.png",
+                  "png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 12,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-12.png",
+      "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 12,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-12.png",
+        "prior_png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 12,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-12.png",
+          "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 12,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-12.png",
+            "prior_png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 12,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-12.png",
+              "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "第二章文字完整。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-12.png",
+                "comparison_png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 12,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-12.png",
+                "prior_render_png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+                "prior_review_method": "inherited_sha256_identical",
+                "earlier_personal_view_source": {
+                  "png_path": "/private/tmp/advisor-T129-20261003/render-v2/page-12.png",
+                  "png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+                  "prior_review": "personally viewed with view_image(detail=original)"
+                },
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 13,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-13.png",
+      "png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 13,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-13.png",
+        "prior_png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 13,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-13.png",
+          "png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 13,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-13.png",
+            "prior_png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 13,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-13.png",
+              "png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "2.6 小结完整留在本页，无尾页孤段。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-13.png",
+                "comparison_png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 13,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-13.png",
+                "prior_render_png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+                "prior_review_method": "direct_view_image_original",
+                "earlier_personal_view_source": null,
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 14,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-14.png",
+      "png_sha256": "12958c002251336ee784bf914d43a4325dd1ae6e19a7762bcd51ec222a5638cf",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 14,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-14.png",
+        "prior_png_sha256": "12958c002251336ee784bf914d43a4325dd1ae6e19a7762bcd51ec222a5638cf",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 14,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-14.png",
+          "png_sha256": "12958c002251336ee784bf914d43a4325dd1ae6e19a7762bcd51ec222a5638cf",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "第三章与3.1标题清楚；表3-1六类角色完整同页，未见裁切或重叠。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-14.png",
+            "png_sha256": "12958c002251336ee784bf914d43a4325dd1ae6e19a7762bcd51ec222a5638cf"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 15,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-15.png",
+      "png_sha256": "087b74729a51866fe8123e7fcec7786264a6a4bd546a4b1fcaeaff5406184400",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 15,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-15.png",
+        "prior_png_sha256": "087b74729a51866fe8123e7fcec7786264a6a4bd546a4b1fcaeaff5406184400",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 15,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-15.png",
+          "png_sha256": "087b74729a51866fe8123e7fcec7786264a6a4bd546a4b1fcaeaff5406184400",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图3-1及图题完整清楚；表3-2、3-3完整同页。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-15.png",
+            "png_sha256": "087b74729a51866fe8123e7fcec7786264a6a4bd546a4b1fcaeaff5406184400"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 16,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-16.png",
+      "png_sha256": "5bba69778fd380772417be39e3e95b0a692419c95030b858bcadd20e29b66087",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 16,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-16.png",
+        "prior_png_sha256": "5bba69778fd380772417be39e3e95b0a692419c95030b858bcadd20e29b66087",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 16,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-16.png",
+          "png_sha256": "5bba69778fd380772417be39e3e95b0a692419c95030b858bcadd20e29b66087",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表3-4的FR1–FR10功能需求清单完整，三线表边界与文字均清楚。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-16.png",
+            "png_sha256": "5bba69778fd380772417be39e3e95b0a692419c95030b858bcadd20e29b66087"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 17,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-17.png",
+      "png_sha256": "c51de21c45e12601d4d6cb87e9ae3d559fe48435f06ce96b31030edd7befeb0e",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 17,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-17.png",
+        "prior_png_sha256": "c51de21c45e12601d4d6cb87e9ae3d559fe48435f06ce96b31030edd7befeb0e",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 17,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-17.png",
+          "png_sha256": "c51de21c45e12601d4d6cb87e9ae3d559fe48435f06ce96b31030edd7befeb0e",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表3-5的NFR1–NFR6完整；p95与吞吐量要求可读，3.5小结完整。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-17.png",
+            "png_sha256": "c51de21c45e12601d4d6cb87e9ae3d559fe48435f06ce96b31030edd7befeb0e"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 18,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-18.png",
+      "png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 18,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-18.png",
+        "prior_png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 18,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-18.png",
+          "png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 18,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-18.png",
+            "prior_png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 18,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-18.png",
+              "png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "第四章起始页，图 4-1 与图题同页；Rust/Axum、PostgreSQL/pgvector 架构标注清楚。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-18.png",
+                "comparison_png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 18,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-18.png",
+                "prior_render_png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+                "prior_review_method": "direct_view_image_original",
+                "earlier_personal_view_source": null,
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 19,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-19.png",
+      "png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 19,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-19.png",
+        "prior_png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "inherited_sha256_identical",
+        "prior_page_record": {
+          "physical_page": 19,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-19.png",
+          "png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "inherited_sha256_identical",
+          "notes": [
+            "与已验T130对应页PNG的SHA-256完全一致，继承该页视觉布局结论。"
+          ],
+          "reuse_source": {
+            "prior_review_report": "/private/tmp/advisor-T130-20261004/qa-1-40.json",
+            "prior_review_report_sha256": "f14067bd617421596d64df076ad1a4eba725b24301ad137e9b82ab2e04a03ef2",
+            "prior_report_page": 19,
+            "prior_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-19.png",
+            "prior_png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+            "prior_candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+            "prior_review_method": "inherited_sha256_identical",
+            "prior_page_record": {
+              "physical_page": 19,
+              "png_path": "/private/tmp/advisor-T130-20261004/render-final/page-19.png",
+              "png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+              "pixel_size": [
+                1414,
+                2000
+              ],
+              "result": "pass",
+              "notes": [
+                "式 4-1 四项条件完整，无公式裁切。"
+              ],
+              "review_method": "inherited_sha256_identical",
+              "reuse_source": {
+                "comparison_png_path": "/private/tmp/advisor-T129-20261003/render-v8/page-19.png",
+                "comparison_png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+                "prior_review_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/qa-final-architect.json",
+                "prior_review_report_sha256": "61d371936c9b7d9ef875b56186342568132ab84b9f5518e5d9c4e09638706e52",
+                "prior_report_page": 19,
+                "prior_render_png_path": "/private/tmp/advisor-T129-20261003/render-v7/page-19.png",
+                "prior_render_png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+                "prior_review_method": "direct_view_image_original",
+                "earlier_personal_view_source": null,
+                "bridge_report": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/root-final-checks.json",
+                "bridge_report_sha256": "15b250447f7d459592e12f43de7ccd7343d452d155bed6ff4a1a67e112be1920",
+                "bridge": "T129 render-v8 与已验 render-v7 逐页 SHA-256 完全相同；本页 T130 final 与 T129 v8 完全相同。"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 20,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-20.png",
+      "png_sha256": "eeb7dc7f6c5ae0a5d8915a26b4fa8a1869599aa4a842b3b04735f9ddec17db26",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 20,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-20.png",
+        "prior_png_sha256": "eeb7dc7f6c5ae0a5d8915a26b4fa8a1869599aa4a842b3b04735f9ddec17db26",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 20,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-20.png",
+          "png_sha256": "eeb7dc7f6c5ae0a5d8915a26b4fa8a1869599aa4a842b3b04735f9ddec17db26",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-1角色能力矩阵完整；图4-2四类业务模块及子功能清楚，图题完整同页。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-20.png",
+            "png_sha256": "eeb7dc7f6c5ae0a5d8915a26b4fa8a1869599aa4a842b3b04735f9ddec17db26"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 21,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-21.png",
+      "png_sha256": "2fb90a29ade0acf7f4df5b6a69e0849a689cb0eeaf150feab142778a19b75143",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 21,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-21.png",
+        "prior_png_sha256": "2fb90a29ade0acf7f4df5b6a69e0849a689cb0eeaf150feab142778a19b75143",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 21,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-21.png",
+          "png_sha256": "2fb90a29ade0acf7f4df5b6a69e0849a689cb0eeaf150feab142778a19b75143",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-2和4-3完整；数据库设计标题与正文未孤立。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-21.png",
+            "png_sha256": "2fb90a29ade0acf7f4df5b6a69e0849a689cb0eeaf150feab142778a19b75143"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 22,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-22.png",
+      "png_sha256": "f484e0496590457cc40436e71e3d995d911044f79a14b90aba8ebf68f77cd9a2",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 22,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-22.png",
+        "prior_png_sha256": "f484e0496590457cc40436e71e3d995d911044f79a14b90aba8ebf68f77cd9a2",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 22,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-22.png",
+          "png_sha256": "f484e0496590457cc40436e71e3d995d911044f79a14b90aba8ebf68f77cd9a2",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图4-3七表关系图与乌鸦脚图例完整，外键标签可读，无线条或文字裁切。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-22.png",
+            "png_sha256": "f484e0496590457cc40436e71e3d995d911044f79a14b90aba8ebf68f77cd9a2"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 23,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-23.png",
+      "png_sha256": "64de4f0fbffd1efed8a5bb710563c56f40a9033d3cdca8171b8930b26d59d862",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 23,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-23.png",
+        "prior_png_sha256": "64de4f0fbffd1efed8a5bb710563c56f40a9033d3cdca8171b8930b26d59d862",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 23,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-23.png",
+          "png_sha256": "64de4f0fbffd1efed8a5bb710563c56f40a9033d3cdca8171b8930b26d59d862",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-4十二组数据库表名及附录编号完整，同页未拆行丢字；4.5开头段落完整。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-23.png",
+            "png_sha256": "64de4f0fbffd1efed8a5bb710563c56f40a9033d3cdca8171b8930b26d59d862"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 24,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-24.png",
+      "png_sha256": "a0ffab69df5f8cc4a0259710c3b71033566c673813a9fb5062e767e26ed07b92",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 24,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-24.png",
+        "prior_png_sha256": "a0ffab69df5f8cc4a0259710c3b71033566c673813a9fb5062e767e26ed07b92",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 24,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-24.png",
+          "png_sha256": "a0ffab69df5f8cc4a0259710c3b71033566c673813a9fb5062e767e26ed07b92",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图4-4双路径流程与图题完整；表4-5九类实体定义完整同页。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-24.png",
+            "png_sha256": "a0ffab69df5f8cc4a0259710c3b71033566c673813a9fb5062e767e26ed07b92"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 25,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-25.png",
+      "png_sha256": "35f246a5dc10b82bc99a205ffff3d9b1bb80593f31a7f5a9b628e68da076c07a",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 25,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-25.png",
+        "prior_png_sha256": "35f246a5dc10b82bc99a205ffff3d9b1bb80593f31a7f5a9b628e68da076c07a",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 25,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-25.png",
+          "png_sha256": "35f246a5dc10b82bc99a205ffff3d9b1bb80593f31a7f5a9b628e68da076c07a",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-6八类关系完整；图4-5审核状态与抽取流程可读，说明文字完整。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-25.png",
+            "png_sha256": "35f246a5dc10b82bc99a205ffff3d9b1bb80593f31a7f5a9b628e68da076c07a"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 26,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-26.png",
+      "png_sha256": "e71d90895949a06393dd59d8ad5f69b6abdbada19555880feff168c95135e52a",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 26,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-26.png",
+        "prior_png_sha256": "e71d90895949a06393dd59d8ad5f69b6abdbada19555880feff168c95135e52a",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 26,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-26.png",
+          "png_sha256": "e71d90895949a06393dd59d8ad5f69b6abdbada19555880feff168c95135e52a",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图4-6实体规范化流程完整；自然键分支、箭头与图题可读。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-26.png",
+            "png_sha256": "e71d90895949a06393dd59d8ad5f69b6abdbada19555880feff168c95135e52a"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 27,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-27.png",
+      "png_sha256": "d5b34603681fe51b2f5659f07f71b5c3df81e1fbed59ee0804d3c9762097f36e",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 27,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-27.png",
+        "prior_png_sha256": "d5b34603681fe51b2f5659f07f71b5c3df81e1fbed59ee0804d3c9762097f36e",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 27,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-27.png",
+          "png_sha256": "d5b34603681fe51b2f5659f07f71b5c3df81e1fbed59ee0804d3c9762097f36e",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "算法4-1输入输出与1–24行完整同页；分段公式4-2及编号清楚，无裁切。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-27.png",
+            "png_sha256": "d5b34603681fe51b2f5659f07f71b5c3df81e1fbed59ee0804d3c9762097f36e"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 28,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-28.png",
+      "png_sha256": "9f6e08146bb865833f0ad10def30117a47984829578ebf8e2dfe1b6422b8c798",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 28,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-28.png",
+        "prior_png_sha256": "9f6e08146bb865833f0ad10def30117a47984829578ebf8e2dfe1b6422b8c798",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 28,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-28.png",
+          "png_sha256": "9f6e08146bb865833f0ad10def30117a47984829578ebf8e2dfe1b6422b8c798",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "4.5.5至4.5.8标题与正文清楚，无孤立标题或页脚冲突。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-28.png",
+            "png_sha256": "9f6e08146bb865833f0ad10def30117a47984829578ebf8e2dfe1b6422b8c798"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 29,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-29.png",
+      "png_sha256": "8bba62ebec96c8000344e5c74cabf92c0395605bf741a9601440a192c2318d5e",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 29,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-29.png",
+        "prior_png_sha256": "8bba62ebec96c8000344e5c74cabf92c0395605bf741a9601440a192c2318d5e",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 29,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-29.png",
+          "png_sha256": "8bba62ebec96c8000344e5c74cabf92c0395605bf741a9601440a192c2318d5e",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图4-7资料入库与在线问答流程完整；式4-3分式、下标及编号清楚。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-29.png",
+            "png_sha256": "8bba62ebec96c8000344e5c74cabf92c0395605bf741a9601440a192c2318d5e"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 30,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-30.png",
+      "png_sha256": "1e8b4840ab8f8de99e8a90c2c737e0225f7f4ae025da02d05598df5eb241b803",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 30,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-30.png",
+        "prior_png_sha256": "1e8b4840ab8f8de99e8a90c2c737e0225f7f4ae025da02d05598df5eb241b803",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 30,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-30.png",
+          "png_sha256": "1e8b4840ab8f8de99e8a90c2c737e0225f7f4ae025da02d05598df5eb241b803",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "BM25与RRF说明排版完整；式4-4、4-5分式及下标可读。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-30.png",
+            "png_sha256": "1e8b4840ab8f8de99e8a90c2c737e0225f7f4ae025da02d05598df5eb241b803"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 31,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-31.png",
+      "png_sha256": "42291a17946f95d18bd882deec36b1038f8b54c85c872c46592f219396971c0e",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 31,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-31.png",
+        "prior_png_sha256": "42291a17946f95d18bd882deec36b1038f8b54c85c872c46592f219396971c0e",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 31,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-31.png",
+          "png_sha256": "42291a17946f95d18bd882deec36b1038f8b54c85c872c46592f219396971c0e",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "式4-6至4-10及编号完整；集合、指示函数与双重求和符号可读。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-31.png",
+            "png_sha256": "42291a17946f95d18bd882deec36b1038f8b54c85c872c46592f219396971c0e"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 32,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-32.png",
+      "png_sha256": "0a21d99f52c948bff8d3c320e93876d1320d629293cb2a1aa0101b72fb2fc060",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 32,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-32.png",
+        "prior_png_sha256": "0a21d99f52c948bff8d3c320e93876d1320d629293cb2a1aa0101b72fb2fc060",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 32,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-32.png",
+          "png_sha256": "0a21d99f52c948bff8d3c320e93876d1320d629293cb2a1aa0101b72fb2fc060",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图4-8普通与图谱增强RAG对照流程完整；表4-7四项符号及表内公式清楚。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-32.png",
+            "png_sha256": "0a21d99f52c948bff8d3c320e93876d1320d629293cb2a1aa0101b72fb2fc060"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 33,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-33.png",
+      "png_sha256": "5e852d59a624de3dd492f8b417e0988fd0c6332979edba3792d96800544f5418",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 33,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-33.png",
+        "prior_png_sha256": "5e852d59a624de3dd492f8b417e0988fd0c6332979edba3792d96800544f5418",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 33,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-33.png",
+          "png_sha256": "5e852d59a624de3dd492f8b417e0988fd0c6332979edba3792d96800544f5418",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "图4-9及图题完整；表4-8四项审计与评价对比完整，末段在下一页正常续排。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-33.png",
+            "png_sha256": "5e852d59a624de3dd492f8b417e0988fd0c6332979edba3792d96800544f5418"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 34,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-34.png",
+      "png_sha256": "5faf06d99936c783d2cfb9db5f00df092a94c01bc638457cac060ce7e53800ed",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 34,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-34.png",
+        "prior_png_sha256": "5faf06d99936c783d2cfb9db5f00df092a94c01bc638457cac060ce7e53800ed",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 34,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-34.png",
+          "png_sha256": "5faf06d99936c783d2cfb9db5f00df092a94c01bc638457cac060ce7e53800ed",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "4.7.1文字完整；图4-10三类调用流程及A/B/C标签完整可读，与图题同页。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-34.png",
+            "png_sha256": "5faf06d99936c783d2cfb9db5f00df092a94c01bc638457cac060ce7e53800ed"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 35,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-35.png",
+      "png_sha256": "b58b6cd53656b4973e6f43ec3bee3d5a420fd8fc0606543841665bd5eceb153e",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 35,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-35.png",
+        "prior_png_sha256": "b58b6cd53656b4973e6f43ec3bee3d5a420fd8fc0606543841665bd5eceb153e",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 35,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-35.png",
+          "png_sha256": "b58b6cd53656b4973e6f43ec3bee3d5a420fd8fc0606543841665bd5eceb153e",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-9六类固定任务完整同页；N/F/R来源标识说明在下一页正常续排。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-35.png",
+            "png_sha256": "b58b6cd53656b4973e6f43ec3bee3d5a420fd8fc0606543841665bd5eceb153e"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 36,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-36.png",
+      "png_sha256": "27b033fb87cae2e5f2914a6c5e4a9b6483bcc9200eb7ab98eb22b2b3b0fc2f76",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 36,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-36.png",
+        "prior_png_sha256": "27b033fb87cae2e5f2914a6c5e4a9b6483bcc9200eb7ab98eb22b2b3b0fc2f76",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 36,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-36.png",
+          "png_sha256": "27b033fb87cae2e5f2914a6c5e4a9b6483bcc9200eb7ab98eb22b2b3b0fc2f76",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-10五项示例与来源映射完整；4.7.3标题及说明完整，下方留白使后续长表4-11整表同页。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-36.png",
+            "png_sha256": "27b033fb87cae2e5f2914a6c5e4a9b6483bcc9200eb7ab98eb22b2b3b0fc2f76"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 37,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-37.png",
+      "png_sha256": "35efff429d138d8a244e2e57b82cb914c62370ad26d681d6b51f86dd4915b7a2",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 37,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-37.png",
+        "prior_png_sha256": "35efff429d138d8a244e2e57b82cb914c62370ad26d681d6b51f86dd4915b7a2",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 37,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-37.png",
+          "png_sha256": "35efff429d138d8a244e2e57b82cb914c62370ad26d681d6b51f86dd4915b7a2",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-11十二项MCP工具完整同页；风险级别与人工确认列清楚，4.7.4与4.7.5文字完整。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-37.png",
+            "png_sha256": "35efff429d138d8a244e2e57b82cb914c62370ad26d681d6b51f86dd4915b7a2"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 38,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-38.png",
+      "png_sha256": "c40225ac6f83eda25d37887af64113c957fd8426e2210c925397f24c8324e1ed",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 38,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-38.png",
+        "prior_png_sha256": "c40225ac6f83eda25d37887af64113c957fd8426e2210c925397f24c8324e1ed",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 38,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-38.png",
+          "png_sha256": "c40225ac6f83eda25d37887af64113c957fd8426e2210c925397f24c8324e1ed",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表4-12四项预警指标及公式完整；单位小时、天局部换行但完整可读，4.9小结同页。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-38.png",
+            "png_sha256": "c40225ac6f83eda25d37887af64113c957fd8426e2210c925397f24c8324e1ed"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 39,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-39.png",
+      "png_sha256": "33e0aa4e36a38c31d71181a9b10f5889581aaaeaf1d88f1a68a2b7c3519ad525",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 39,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-39.png",
+        "prior_png_sha256": "33e0aa4e36a38c31d71181a9b10f5889581aaaeaf1d88f1a68a2b7c3519ad525",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 39,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-39.png",
+          "png_sha256": "33e0aa4e36a38c31d71181a9b10f5889581aaaeaf1d88f1a68a2b7c3519ad525",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "第五章标题与表5-1环境、版本及参数完整；长参数单元格换行正常，未见裁切。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-39.png",
+            "png_sha256": "33e0aa4e36a38c31d71181a9b10f5889581aaaeaf1d88f1a68a2b7c3519ad525"
+          }
+        }
+      }
+    },
+    {
+      "physical_page": 40,
+      "png_path": "/private/tmp/advisor-T131-20261004/render-final/page-40.png",
+      "png_sha256": "859474e367368ed9e598efde28499128f6116294db73a74fb060161b1269c810",
+      "pixel_size": [
+        1414,
+        2000
+      ],
+      "candidate_docx_sha256": "89534bcd8ab836e59f909053e51325603dbf0070cac533312a6d532c9a4cee04",
+      "result": "pass",
+      "issues": [],
+      "review_method": "inherited_sha256_identical",
+      "notes": [
+        "最终PNG与已验source对应页SHA-256完全一致，继承该页视觉结论并保存完整证据链。"
+      ],
+      "reuse_source": {
+        "prior_review_report": "/private/tmp/advisor-T131-20261004/source-qa-1-40.json",
+        "prior_review_report_sha256": "5c5e3b73e277bd264b458ab08a4e8bc3e1214b8610108103ca779f2f8fabed3d",
+        "prior_report_page": 40,
+        "prior_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-40.png",
+        "prior_png_sha256": "859474e367368ed9e598efde28499128f6116294db73a74fb060161b1269c810",
+        "prior_source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+        "prior_review_method": "direct_view_image_original",
+        "prior_page_record": {
+          "physical_page": 40,
+          "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-40.png",
+          "png_sha256": "859474e367368ed9e598efde28499128f6116294db73a74fb060161b1269c810",
+          "pixel_size": [
+            1414,
+            2000
+          ],
+          "result": "pass",
+          "issues": [],
+          "review_method": "direct_view_image_original",
+          "notes": [
+            "表5-2三项目与合计完整；表5-3四条种子笔记样例完整同页，日期、58℃、18%与2.3倍文字可读。"
+          ],
+          "inspection_source": {
+            "tool": "view_image",
+            "detail": "original",
+            "inspection_date": "2026-10-04",
+            "png_path": "/private/tmp/advisor-T131-20261004/render-source/page-40.png",
+            "png_sha256": "859474e367368ed9e598efde28499128f6116294db73a74fb060161b1269c810"
+          }
+        }
+      }
+    }
+  ]
+}

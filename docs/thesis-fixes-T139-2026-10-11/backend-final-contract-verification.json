@@ -1,0 +1,435 @@
+{
+  "schema_version": 1,
+  "task": "T139",
+  "reviewer": "/root/backend_engineer",
+  "status": "verified_with_explicit_boundaries",
+  "verified_at_utc": "2026-10-11 06:58:28 UTC",
+  "scope": "Read-only final Rust contract and evidence check. No source, Word, existing review record or historical frozen evidence edited; only this new local result written. No database restarted and no heavy test rerun.",
+  "outcome": {
+    "blocking_source_hash_mismatches": 0,
+    "backend_files_matching_executed_full_suite": 11,
+    "backend_files_matching_code_review_hashes": 8,
+    "backend_files_absent_from_code_review_hash_map": 3,
+    "full_suite_passed": 284,
+    "required_regressions_present_and_ok": true,
+    "openapi_regeneration_required": false,
+    "browser_acceptance_for_new_sse_states": false
+  },
+  "source_identity": {
+    "primary_head": "b6cd3a24f6edb5bdf971d8d76cc7635139b32954",
+    "executed_rust_snapshot_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+    "current_snapshot_revision_at_review": "c6de4c4d219e535bd25e794495070d191e7baa1c",
+    "result_recorded_inheritance_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+    "inheritance": "The full Rust suite actually executed 6d52a600. Its result JSON names 8d45b78e as an inherited revision; snapshot-input now names c6de4c4d after E2E-only changes. Independently reading Git blobs proves all 11 backend file bytes in the executed and current snapshot match the primary tree. This is hash inheritance, not a new Rust execution at the later revisions.",
+    "code_review_map_coverage_note": "code-review.json records 8 backend and 2 frontend hashes, not all 11 backend files. All 8 recorded backend hashes match. agents.rs, api/project_alert.rs and project_alert.rs are absent from that map; all 3 match snapshot-input and the actual full-test commit.",
+    "files": [
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "primary_sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "snapshot_manifest_sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "executed_snapshot_sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "current_snapshot_blob_sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "review_frozen_sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "primary_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "snapshot_manifest_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "executed_snapshot_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "current_snapshot_blob_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "review_frozen_sha256": null,
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": null
+      },
+      {
+        "path": "backend/src/api/files.rs",
+        "primary_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "snapshot_manifest_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "executed_snapshot_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "current_snapshot_blob_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "review_frozen_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "primary_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "snapshot_manifest_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "executed_snapshot_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "current_snapshot_blob_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "review_frozen_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/api/mcp.rs",
+        "primary_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "snapshot_manifest_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "executed_snapshot_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "current_snapshot_blob_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "review_frozen_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/api/notes.rs",
+        "primary_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "snapshot_manifest_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "executed_snapshot_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "current_snapshot_blob_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "review_frozen_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/api/project_alert.rs",
+        "primary_sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "snapshot_manifest_sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "executed_snapshot_sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "current_snapshot_blob_sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "review_frozen_sha256": null,
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": null
+      },
+      {
+        "path": "backend/src/api/projects.rs",
+        "primary_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "snapshot_manifest_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "executed_snapshot_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "current_snapshot_blob_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "review_frozen_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/api/rag/mod.rs",
+        "primary_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "snapshot_manifest_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "executed_snapshot_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "current_snapshot_blob_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "review_frozen_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      },
+      {
+        "path": "backend/src/project_alert.rs",
+        "primary_sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "snapshot_manifest_sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "executed_snapshot_sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "current_snapshot_blob_sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "review_frozen_sha256": null,
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": null
+      },
+      {
+        "path": "backend/src/rag/index.rs",
+        "primary_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "snapshot_manifest_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "executed_snapshot_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "current_snapshot_blob_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "review_frozen_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "primary_matches_snapshot": true,
+        "primary_matches_executed": true,
+        "primary_matches_current_snapshot_blob": true,
+        "primary_matches_review": true
+      }
+    ],
+    "configuration_hashes": [
+      {
+        "path": "backend/Cargo.lock",
+        "sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "matches_manifest": true
+      },
+      {
+        "path": "backend/Cargo.toml",
+        "sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "matches_manifest": true
+      },
+      {
+        "path": "backend/rust-toolchain.toml",
+        "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "matches_manifest": true
+      },
+      {
+        "path": "docker-compose.test-db.yml",
+        "sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "matches_manifest": true
+      },
+      {
+        "path": "scripts/ops/run-rust-db-tests.sh",
+        "sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "matches_manifest": true
+      },
+      {
+        "path": "scripts/ops/docker-compose-with-revision.sh",
+        "sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+        "matches_manifest": true
+      }
+    ]
+  },
+  "test_evidence": {
+    "rust_toolchain": "1.88.0",
+    "outer_command": "APP_ENV=development TEST_DB_PORT=55440 CARGO_TARGET_DIR=/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/cargo-target bash ./scripts/ops/run-rust-db-tests.sh",
+    "actual_cargo_flags": "cargo +1.88.0 test --locked --all-targets --no-default-features -- --test-threads=1",
+    "isolated_test_database_port": 55440,
+    "full_log_sha256": "f08ef866b669722218393dcbddd52aa587a426adb9c387574d0d602835cafbf2",
+    "full_log_sha_matches_result_record": true,
+    "individual_ok_entries": 284,
+    "library_passed": 282,
+    "main_passed": 2,
+    "failed": 0,
+    "ignored": 0,
+    "filtered_out": 0,
+    "summaries": [
+      "test result: ok. 282 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 391.58s",
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "new_R05_R08_and_followup_tests": [
+      {
+        "test_name": "api::agent_runtime::tests::t139_unavailable_confirmation_is_a_failed_real_agent_step",
+        "path": "backend/src/api/agent_runtime.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R05",
+          "SSE follow-up"
+        ],
+        "source_line": 1930,
+        "coverage": "Real Axum Agent turn against local mock model provider with expired/rejected/completed pending actions; persisted step status, reporting model input and MCP audit outcome checked; legacy SSE body after deleting persisted events checked for tool.failed or tool.completed."
+      },
+      {
+        "test_name": "api::agent_runtime::tests::t139_pending_key_binds_parameters_and_preserves_expiry",
+        "path": "backend/src/api/agent_runtime.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R05"
+        ],
+        "source_line": 2104,
+        "coverage": "Same-key changed decision rejected; stored summary/status retained; stored expiry reduced to 45 seconds and reuse does not renew; expired reuse reports expired/zero remaining."
+      },
+      {
+        "test_name": "api::agent_runtime::tests::t139_confirmation_rolls_back_business_if_execution_key_insert_fails",
+        "path": "backend/src/api/agent_runtime.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R06"
+        ],
+        "source_line": 2156,
+        "coverage": "Real PostgreSQL BEFORE INSERT fault after review_note business work; note stays SUBMITTED, approval/KG rows absent, pending remains pending; same action retry succeeds after removing fault."
+      },
+      {
+        "test_name": "api::agent_runtime::tests::t139_submit_requires_current_write_permission_and_active_project",
+        "path": "backend/src/api/agent_runtime.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R07"
+        ],
+        "source_line": 2239,
+        "coverage": "REST submission after write revocation fails 403; confirmation registered while writable then revocation before approval fails 403; archived project REST submission fails 403; note remains DRAFT."
+      },
+      {
+        "test_name": "api::agent_runtime::tests::t139_confirmation_registration_and_execution_reject_cross_project_note",
+        "path": "backend/src/api/agent_runtime.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R08"
+        ],
+        "source_line": 2322,
+        "coverage": "Actor authorized for two projects cannot register a note from the other project; deliberately stored mismatched pending action also fails approval (JSON-RPC -32003 / HTTP 403)."
+      },
+      {
+        "test_name": "api::agent_runtime::tests::t139_all_confirmed_domain_writes_roll_back_on_key_failure",
+        "path": "backend/src/api/agent_runtime.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R06",
+          "R08"
+        ],
+        "source_line": 2367,
+        "coverage": "Seven injected execution-key insertion failures: submit, document reject/approve, member change, graph/rag/all rebuild; domain state, domain audit, keys and derived chunk/dataset/KG rows checked for rollback. Cross-project file rejected at registration and approval."
+      },
+      {
+        "test_name": "api::rag::tests::t139_rebuild_and_failure_follow_file_before_sync_lock_order",
+        "path": "backend/src/api/rag/mod.rs",
+        "kind": "new_test_function",
+        "full_log_outcome": "ok",
+        "requirements": [
+          "R06 lock-order follow-up"
+        ],
+        "source_line": 2656,
+        "coverage": "Real PostgreSQL blocking observation for project rebuild and mark_sync_failed while regular sync holds files then updates syncs; regression excludes the reviewed files↔syncs inversion."
+      }
+    ],
+    "R09_expanded_existing_tests": [
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "test_name": "test_extract_and_rebuild_knowledge_graph_idempotently",
+        "source_line": 260,
+        "kind": "expanded_existing_test",
+        "full_log_name": "api::knowledge_graph::tests::test_extract_and_rebuild_knowledge_graph_idempotently",
+        "full_log_outcome": "ok",
+        "full_log_line": 68,
+        "requirements": [
+          "R09"
+        ],
+        "coverage": "Four current non-approved statuses (DRAFT/SUBMITTED/RETURNED/ARCHIVED) with deliberate stale KG rows: individual POST extract and GET graph return 409; extraction counts unchanged; project graph excludes sources; project rebuild does not extract them."
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "test_name": "test_agent_generation_and_history_use_approved_notes",
+        "source_line": 1648,
+        "kind": "expanded_existing_test",
+        "full_log_name": "api::agents::tests::test_agent_generation_and_history_use_approved_notes",
+        "full_log_outcome": "ok",
+        "full_log_line": 44,
+        "requirements": [
+          "R09"
+        ],
+        "coverage": "Four current non-approved statuses with deliberate stale graph rows are excluded from note/relation source IDs for experiment_summary/weekly_report/stage_report/graph_overview; approved source and history remain positive. graph_overview intentionally has empty source_note_ids and cites relation IDs."
+      }
+    ],
+    "other_new_test": {
+      "name": "api::project_alert::tests::test_matched_entity_update_interval_resets_on_reextract_and_is_zero_without_matches",
+      "requirements": [
+        "R04"
+      ],
+      "full_log_outcome": "ok"
+    },
+    "coverage_interpretation": "R05–R08/follow-up add seven distinct test functions. R09 extends two existing functions, so it adds matrix assertions without increasing the test-function count. All nine appear once with ok in the 284-entry log. The wrapper sets TEST_DATABASE_URL, and its log confirms the isolated PostgreSQL container became healthy; this is not an env-absent skipped DB run.",
+    "limits": [
+      "The full-suite invocation uses --no-default-features; do not describe it as all-features execution. Separate all-features clippy evidence remains in validation/cargo-clippy.log.",
+      "R09 new matrices deliberately change fixture status directly in PostgreSQL to retain stale derived rows; they test current-state exclusion, not the full UI transition workflow.",
+      "The new R09 status matrices operate in one project and fixed date interval; they do not newly establish cross-project/date-boundary negative fixtures or real LLM quality.",
+      "The rollback matrix begins without existing valid chunks/dataset/KG rows; it proves failure does not leak new derived rows. Preservation of an already-valid index under the same injected failure is inferred from the shared transaction and embed-before-delete ordering, not newly demonstrated by this matrix."
+    ]
+  },
+  "openapi": {
+    "changed_backend_files": [
+      "backend/src/api/agent_runtime.rs",
+      "backend/src/api/agents.rs",
+      "backend/src/api/files.rs",
+      "backend/src/api/knowledge_graph.rs",
+      "backend/src/api/mcp.rs",
+      "backend/src/api/notes.rs",
+      "backend/src/api/project_alert.rs",
+      "backend/src/api/projects.rs",
+      "backend/src/api/rag/mod.rs",
+      "backend/src/project_alert.rs",
+      "backend/src/rag/index.rs"
+    ],
+    "api_shape_relevant_diff_lines": [
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "shape_relevant_lines": [
+          "+            let mock = Router::new().route(\"/chat/completions\", axum::routing::post(move |axum::Json(input): axum::Json<Value>| {"
+        ]
+      }
+    ],
+    "openapi_changed_against_head": false,
+    "generated_types_changed_against_head": false,
+    "openapi_sha256": "524217d612636765d03581f90f150021fb18603de73964e38be54e70457d7898",
+    "generated_types_sha256": "5e15985f7b7baab883a3174cdac320b5d31cf7db71a5939b841bd9a3bc6c30ae",
+    "required": false,
+    "reason": "No changed production route, request DTO, declared response DTO or serde field shape. MCP/session/action responses are existing JSON objects with additionalProperties=true; Agent SSE schema is text/event-stream string with no generated event-name enum. New structured result status/code/expiry and event semantics fit those envelopes; handwritten frontend subscription/consumer changed.",
+    "semantic_changes_requiring_consumer_awareness": [
+      "MCP same key/different args returns JSON-RPC error -32009 in the HTTP-200 JSON-RPC envelope; do not claim this registration response itself is HTTP 409.",
+      "Re-approving completed/expired/unavailable pending action is HTTP 409.",
+      "expired/rejected reuse -> isError=true + confirmation_unavailable -> failed tool step and tool.failed; completed reuse -> already_completed with no fresh business execution.",
+      "Same-argument reuse returns stored summary, status and actual expires_at; remaining time is not reset."
+    ],
+    "generation_executed_in_this_review": false
+  },
+  "atomicity_and_timing": {
+    "scope": "Only confirmed dispatch of the five registered high-risk tools: submit_note_review, review_note, review_document, rebuild_project_index (graph/rag/all) and change_project_member.",
+    "database_guarantee": "Business database writes, domain audit rows, tool_execution_keys insertion, consumed pending status and associated session/turn completion share the caller-owned PostgreSQL transaction; nested helpers do not commit it early.",
+    "execution_refs": [
+      "backend/src/api/agent_runtime.rs:990",
+      "backend/src/api/agent_runtime.rs:1059",
+      "backend/src/api/agent_runtime.rs:1072",
+      "backend/src/api/agent_runtime.rs:1087",
+      "backend/src/api/agent_runtime.rs:1116"
+    ],
+    "excluded": [
+      "External embedding/provider requests and charges cannot be rolled back and may repeat when database work fails/retries.",
+      "Post-commit confirmation.completed trace event insertion is outside the transaction; trace failure can surface after business commit.",
+      "Existing REST file review commits business approval before a separate indexing transaction; its behavior is not covered by the confirmed-tool atomicity claim.",
+      "Pool-side permission reads recheck current rights but do not serialize every concurrent revocation throughout the whole transaction."
+    ],
+    "external_call_scope": "RAG/document indexing holds the confirmation transaction while extracting text/chunking and awaiting embeddings. Default hash embedding is local. openai_compatible invokes HTTP send and response JSON await with no explicit application request timeout in embedding.rs; actual provider cost/time was not measured by these tests.",
+    "lock_scope": "Pending action/session locks are held from approval selection until outer commit/rollback. Document sync locks files before dataset/sync rows. Project RAG rebuild locks all approved knowledge-document files in id order before bulk stale updates, then processes all files sequentially in that same transaction. mark_sync_failed updates files before syncs.",
+    "timing_limit": "No claim of bounded lock duration or bounded external cost. The 180/1200-second Agent-turn budgets do not wrap the separate approve_pending_action endpoint. SQL initialization's 1-second lock timeout and pool acquisition's 30-second timeout are not an end-to-end confirmation or remote embedding deadline. The regression's 250ms local lock timeout and 5-second observation guard are test settings, not production SLOs. A slow embedding call prolongs already-held DB locks.",
+    "supporting_refs": [
+      "backend/src/embedding.rs:43",
+      "backend/src/embedding.rs:69",
+      "backend/src/rag/index.rs:79",
+      "backend/src/rag/index.rs:96",
+      "backend/src/rag/index.rs:112",
+      "backend/src/api/rag/mod.rs:337",
+      "backend/src/api/rag/mod.rs:408",
+      "backend/src/api/rag/mod.rs:1860",
+      "backend/src/db.rs:178",
+      "backend/src/db.rs:220"
+    ]
+  },
+  "sse_validation_limits": {
+    "backend_integration": "The new unavailable-confirmation test executes real Axum turns against a local mock model HTTP provider and PostgreSQL, checking expired/rejected/completed status, audit, reporting input and legacy replay event bodies. It does not validate actual remote model generated prose.",
+    "frontend_static": "api.ts subscribes tool.failed; AgentAssistant failed display and already_completed explanation are present; turn.completed/cancelled changes residual running to waiting. Static reviewer inspection plus root frontend lint/typecheck/build establish compilation/shape only.",
+    "browser_verified": false,
+    "unverified_browser_scenarios": [
+      "expired/rejected tool.failed displayed as failed through a real EventSource connection",
+      "tool.completed with status=already_completed shown as previously completed, not newly executed",
+      "turn completed/cancelled with missing tool result leaves residual running as waiting",
+      "SSE reconnect/order interaction and legacy replay presentation in the browser"
+    ],
+    "e2e_evidence_boundary": "system-e2e-final-v2 did not reach Agent scenarios because earlier UI anchor/text drift caused failures. QA is fixing existing E2E selectors independently; no completed browser verification of these new abnormal SSE branches was supplied to this review. Later general E2E success alone will not cover these branches unless it explicitly exercises them.",
+    "refs": [
+      "backend/src/api/agent_runtime.rs:724",
+      "backend/src/api/agent_runtime.rs:739",
+      "backend/src/api/agent_runtime.rs:874",
+      "backend/src/api/agent_runtime.rs:1930",
+      "frontend/src/lib/api.ts:1350",
+      "frontend/src/components/shared/AgentAssistant.tsx:351",
+      "frontend/src/components/shared/AgentAssistant.tsx:355",
+      "frontend/src/components/shared/AgentAssistant.tsx:358"
+    ]
+  },
+  "evidence_sha256": {
+    "backend/code-review.json": "30cad06af6a45a5d66b28628f48549ae439ecbbc296f65f2bb07eec2c716aa98",
+    "backend/manifest.json": "ce9e949840c6f8da61e811627589902c66dbbaff7b872df53627329e51613b7d",
+    "backend/green-final.log": "b4c76c4b7791cf197eddd9920f017e1e64c1f5e09d60ad3675c3728ed8e9a0cf",
+    "validation/snapshot-input.json": "2627f5e2aa9952ac5878c88800864941d1ddf0f0dbb3b8e8d3aaeaf729f8f166",
+    "validation/rust-db-tests-full-result.json": "fa7a99359a2a17114f99a1ab3fd6ac839e17cd64a6c2f5760aa203c3ec5fdabd",
+    "validation/rust-db-tests-full.log": "f08ef866b669722218393dcbddd52aa587a426adb9c387574d0d602835cafbf2",
+    "validation/cargo-clippy.log": "beab921ea5eba1fb735137648e593c0967e28549958a13fb0c3e49dcd136b0ee",
+    "validation/cargo-fmt-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "no_source_edits": true,
+  "no_tests_rerun": true
+}

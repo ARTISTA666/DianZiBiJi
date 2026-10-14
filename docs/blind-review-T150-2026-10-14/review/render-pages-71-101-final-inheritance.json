@@ -1,0 +1,326 @@
+{
+  "schema": "t150-final-render-inheritance-v1",
+  "task_id": "T150",
+  "date": "2026-10-14",
+  "reviewer_type": "AI只读复核",
+  "baseline": {
+    "word_sha256": "ebe61a107576280f153a41a8ad5fa4edd565decd83fb4d4cbd2c0863a984bb15",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/论文匿名整改副本-T150.pdf",
+    "pdf_sha256": "f47ee881851c4c23d4e39035589af45d2499c7d64df80023f6abaa4f183c3a1e",
+    "actual_original_visual_review": "/Users/yusong/Downloads/new/full-system/docs/blind-review-T150-2026-10-14/review/render-pages-71-101-visual-review.json",
+    "original_viewed_physical_pages": [
+      71,
+      101
+    ],
+    "count": 31
+  },
+  "final": {
+    "word_path": "/Users/yusong/Desktop/盲审整改-T150-2026-10-14/论文匿名整改副本-T150.docx",
+    "word_sha256": "9035845efc316c781a54dfb18cf5e84e1fb777dd6951aeb0b9330df54cef62af",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/论文匿名整改副本-T150.pdf",
+    "pdf_sha256": "8680867165794270c3b3038787b01f814e75ed8414f081ea962d571889273dc9",
+    "render_source_association": "父线程确认final-render由最终SHA 9035845e…候选生成；本代理独立复算Word/PDF与每页PNG哈希。"
+  },
+  "pixel_comparison": {
+    "method": "逐页PIL转RGB后ImageChops.difference，尺寸相同且差异bbox为空即像素一致",
+    "independently_checked_count": 31,
+    "physical_pages": [
+      71,
+      101
+    ],
+    "all_pixel_identical": true,
+    "non_identical_pages": [],
+    "inherited_actual_visual_review_count": 31,
+    "reopening_required_count": 0,
+    "pages": [
+      {
+        "physical_page": 71,
+        "baseline_png_sha256": "57f8e39eb05d219af96b0df50bb9936933afddfa77820ba51b88ab1ba2dcedf6",
+        "final_png_sha256": "57f8e39eb05d219af96b0df50bb9936933afddfa77820ba51b88ab1ba2dcedf6",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-71.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-71.png"
+      },
+      {
+        "physical_page": 72,
+        "baseline_png_sha256": "f30c09ac62006ec2453efe4b43d8347c88bc1fd111e575bd923716e48633643a",
+        "final_png_sha256": "f30c09ac62006ec2453efe4b43d8347c88bc1fd111e575bd923716e48633643a",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-72.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-72.png"
+      },
+      {
+        "physical_page": 73,
+        "baseline_png_sha256": "9329ea7b7884c720fb3fbc094501c9e300e69f1366ef2e549cd396470f6be4cf",
+        "final_png_sha256": "9329ea7b7884c720fb3fbc094501c9e300e69f1366ef2e549cd396470f6be4cf",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-73.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-73.png"
+      },
+      {
+        "physical_page": 74,
+        "baseline_png_sha256": "0b901c84776f32d7d84594a5ea0530ec1c42b086245edb6d5a74b8a35aa5d461",
+        "final_png_sha256": "0b901c84776f32d7d84594a5ea0530ec1c42b086245edb6d5a74b8a35aa5d461",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-74.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-74.png"
+      },
+      {
+        "physical_page": 75,
+        "baseline_png_sha256": "3ccc5bcdceacec4bf78411412672abb708bd00c75e8ed6da691a7233cbaee96f",
+        "final_png_sha256": "3ccc5bcdceacec4bf78411412672abb708bd00c75e8ed6da691a7233cbaee96f",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-75.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-75.png"
+      },
+      {
+        "physical_page": 76,
+        "baseline_png_sha256": "f2265bd1267c04594c1fbbaf2aeb9d0901681079586c06e9f81642ee81356d4f",
+        "final_png_sha256": "f2265bd1267c04594c1fbbaf2aeb9d0901681079586c06e9f81642ee81356d4f",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-76.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-76.png"
+      },
+      {
+        "physical_page": 77,
+        "baseline_png_sha256": "b2fe6c4543e22ee7f67c39ea3403d5f2d7f93fb7354c9102cfabcb070bea6b39",
+        "final_png_sha256": "b2fe6c4543e22ee7f67c39ea3403d5f2d7f93fb7354c9102cfabcb070bea6b39",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-77.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-77.png"
+      },
+      {
+        "physical_page": 78,
+        "baseline_png_sha256": "b2c2ff5215ee84e4eda01069b810118cdfdfd5596806d96e646086305ac1ff16",
+        "final_png_sha256": "b2c2ff5215ee84e4eda01069b810118cdfdfd5596806d96e646086305ac1ff16",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-78.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-78.png"
+      },
+      {
+        "physical_page": 79,
+        "baseline_png_sha256": "a10fee985d5f1cdec72c1fe2f143bf4e5a0f1f286316fa29eb157bcdb066590f",
+        "final_png_sha256": "a10fee985d5f1cdec72c1fe2f143bf4e5a0f1f286316fa29eb157bcdb066590f",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-79.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-79.png"
+      },
+      {
+        "physical_page": 80,
+        "baseline_png_sha256": "b0f9ee92450a783189670b6d6578878a4665aef829e2c66912a647ef99124f96",
+        "final_png_sha256": "b0f9ee92450a783189670b6d6578878a4665aef829e2c66912a647ef99124f96",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-80.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-80.png"
+      },
+      {
+        "physical_page": 81,
+        "baseline_png_sha256": "90cfa7a3d38718ef830c4c16f8599264c11ab9b12f387f5f92b40bbc068ccb86",
+        "final_png_sha256": "90cfa7a3d38718ef830c4c16f8599264c11ab9b12f387f5f92b40bbc068ccb86",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-81.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-81.png"
+      },
+      {
+        "physical_page": 82,
+        "baseline_png_sha256": "735e3de7acdd6777fc00160f22e9004024fd96c94c93d95175b9d12c7a955be7",
+        "final_png_sha256": "735e3de7acdd6777fc00160f22e9004024fd96c94c93d95175b9d12c7a955be7",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-82.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-82.png"
+      },
+      {
+        "physical_page": 83,
+        "baseline_png_sha256": "ed189cad3849cbd57f8f5d096537acfc38744146eb503a3f285559b3d4d919f9",
+        "final_png_sha256": "ed189cad3849cbd57f8f5d096537acfc38744146eb503a3f285559b3d4d919f9",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-83.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-83.png"
+      },
+      {
+        "physical_page": 84,
+        "baseline_png_sha256": "5c6fee25bef2795efdd1e2de7b9b5db7a1761d545aafa919a019cb7f4c7d467f",
+        "final_png_sha256": "5c6fee25bef2795efdd1e2de7b9b5db7a1761d545aafa919a019cb7f4c7d467f",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-84.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-84.png"
+      },
+      {
+        "physical_page": 85,
+        "baseline_png_sha256": "80a7f95506c7c26c9786d36c015ee3cb6e72c61c50eaca14c97b715de180ba3c",
+        "final_png_sha256": "80a7f95506c7c26c9786d36c015ee3cb6e72c61c50eaca14c97b715de180ba3c",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-85.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-85.png"
+      },
+      {
+        "physical_page": 86,
+        "baseline_png_sha256": "79093c82dfdde445cfad21e03b856222c0b8949b1ca0051168c9972b1299107b",
+        "final_png_sha256": "79093c82dfdde445cfad21e03b856222c0b8949b1ca0051168c9972b1299107b",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-86.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-86.png"
+      },
+      {
+        "physical_page": 87,
+        "baseline_png_sha256": "79784cc7e5f233434044c26fc99e980254598fd040d2f01a0357fdd7233fdda4",
+        "final_png_sha256": "79784cc7e5f233434044c26fc99e980254598fd040d2f01a0357fdd7233fdda4",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-87.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-87.png"
+      },
+      {
+        "physical_page": 88,
+        "baseline_png_sha256": "8b6725521c687078690e3ea7a605d4cc538a7ef916356a5edefe018709cea689",
+        "final_png_sha256": "8b6725521c687078690e3ea7a605d4cc538a7ef916356a5edefe018709cea689",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-88.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-88.png"
+      },
+      {
+        "physical_page": 89,
+        "baseline_png_sha256": "de7618806b03781b8168d8f15c4051f845e5fee1f1d1812a6faf675425dba2e4",
+        "final_png_sha256": "de7618806b03781b8168d8f15c4051f845e5fee1f1d1812a6faf675425dba2e4",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-89.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-89.png"
+      },
+      {
+        "physical_page": 90,
+        "baseline_png_sha256": "d9a9b587ba32760e99bf1600f88546b8b0fc041548860eb9ae82d89b00d6145f",
+        "final_png_sha256": "d9a9b587ba32760e99bf1600f88546b8b0fc041548860eb9ae82d89b00d6145f",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-90.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-90.png"
+      },
+      {
+        "physical_page": 91,
+        "baseline_png_sha256": "b4ca7139d6bea6710080ffbffac2256ef922874a4eb296ffcefd35977a9f79bb",
+        "final_png_sha256": "b4ca7139d6bea6710080ffbffac2256ef922874a4eb296ffcefd35977a9f79bb",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-91.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-91.png"
+      },
+      {
+        "physical_page": 92,
+        "baseline_png_sha256": "d0a13a4ba6ef9a3e4b168cff7671232694453301df6bff2e7eda38807e40cb30",
+        "final_png_sha256": "d0a13a4ba6ef9a3e4b168cff7671232694453301df6bff2e7eda38807e40cb30",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-92.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-92.png"
+      },
+      {
+        "physical_page": 93,
+        "baseline_png_sha256": "d4ce10b6964a6015d802dd56ca79c9c14f3e8e10d13d38827780636319a97b8c",
+        "final_png_sha256": "d4ce10b6964a6015d802dd56ca79c9c14f3e8e10d13d38827780636319a97b8c",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-93.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-93.png"
+      },
+      {
+        "physical_page": 94,
+        "baseline_png_sha256": "3598e183c9d114ecf391c316609df51731ef1800ff687b1f62d2dc55c650d8fb",
+        "final_png_sha256": "3598e183c9d114ecf391c316609df51731ef1800ff687b1f62d2dc55c650d8fb",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-94.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-94.png"
+      },
+      {
+        "physical_page": 95,
+        "baseline_png_sha256": "3c1f7c351181f7762a34131f071301b686f3f30fa00742a4859cf7310c93778e",
+        "final_png_sha256": "3c1f7c351181f7762a34131f071301b686f3f30fa00742a4859cf7310c93778e",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-95.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-95.png"
+      },
+      {
+        "physical_page": 96,
+        "baseline_png_sha256": "519c0d83f28a5ee39be92f528480321da5a73ecf61ae1648568a77a33d485441",
+        "final_png_sha256": "519c0d83f28a5ee39be92f528480321da5a73ecf61ae1648568a77a33d485441",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-96.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-96.png"
+      },
+      {
+        "physical_page": 97,
+        "baseline_png_sha256": "6e0c285a09ae1c27211701201df409b96c5ef5e7db5cb641ceadd689155dd724",
+        "final_png_sha256": "6e0c285a09ae1c27211701201df409b96c5ef5e7db5cb641ceadd689155dd724",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-97.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-97.png"
+      },
+      {
+        "physical_page": 98,
+        "baseline_png_sha256": "f13c9dc307e6bf5449b93993bd90b5f2dec754d12a7e1e12b4856b19dc722088",
+        "final_png_sha256": "f13c9dc307e6bf5449b93993bd90b5f2dec754d12a7e1e12b4856b19dc722088",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-98.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-98.png"
+      },
+      {
+        "physical_page": 99,
+        "baseline_png_sha256": "55fc6e2d9acf3f7ea9712549e52bad409eb65f7503bc82eaa300ce527a3145f1",
+        "final_png_sha256": "55fc6e2d9acf3f7ea9712549e52bad409eb65f7503bc82eaa300ce527a3145f1",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-99.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-99.png"
+      },
+      {
+        "physical_page": 100,
+        "baseline_png_sha256": "f18c7cb9b93847ca655871691fdfdc6d3cc5e08bc92fe436be943176107f95da",
+        "final_png_sha256": "f18c7cb9b93847ca655871691fdfdc6d3cc5e08bc92fe436be943176107f95da",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-100.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-100.png"
+      },
+      {
+        "physical_page": 101,
+        "baseline_png_sha256": "a799405e563bad527ecc6de53b02240f87ca10c3a987e97acd342656450b2d73",
+        "final_png_sha256": "a799405e563bad527ecc6de53b02240f87ca10c3a987e97acd342656450b2d73",
+        "dimensions_equal": true,
+        "pixel_identical": true,
+        "baseline_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-101.png",
+        "final_png_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/page-101.png"
+      }
+    ]
+  },
+  "result": "最终物理71—101页与此前实际逐张original查看的基线全部像素一致，可继承其分页、断表、图题、致谢匿名、文献链接与图字可读性结论。",
+  "defects_in_scope": [],
+  "human_independent_review": false,
+  "supersedes_source_binding_only": "/Users/yusong/Downloads/new/full-system/docs/blind-review-T150-2026-10-14/review/render-pages-71-101-baseline-binding.json",
+  "unresolved": [
+    "学院正式匿名规范尚未取得",
+    "人类独立研究核验与原始实验证据缺项不由视觉检查解决"
+  ]
+}
+

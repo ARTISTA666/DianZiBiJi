@@ -1,0 +1,321 @@
+{
+  "source_sha256": "6bd8280e5092a302040afbd46a5e16e64ef96a8ec3846ecd8753efe13ebc649d",
+  "target_sha256": "e7a70a569061851dbe7e990c22cdbde938b35a3b31ad73dcbdc9804c90ac5811",
+  "status": "pass",
+  "original_desktop_source_unchanged": true,
+  "paragraphs": {
+    "source": 3571,
+    "target": 3581,
+    "unchanged_xml_verified": 3376,
+    "authorized_replaced": 55,
+    "authorized_toc_cache_paragraphs": 93,
+    "authorized_inserted": 16,
+    "authorized_original_text_paragraph_deleted": 1,
+    "authorized_table_spacing_paragraphs": 33,
+    "authorized_formula_layout_changed": 8,
+    "authorized_original_number_paragraph_deleted": 5
+  },
+  "allowed_page_cache_updates_original_indices": [
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    151,
+    152,
+    153,
+    154,
+    155,
+    156,
+    157,
+    158
+  ],
+  "objects": {
+    "math": {
+      "source_count": 48,
+      "target_count": 48,
+      "canonical_xml_order_identical": true
+    },
+    "drawing": {
+      "source_count": 48,
+      "target_count": 48,
+      "canonical_xml_order_identical": true
+    },
+    "section": {
+      "source_count": 3,
+      "target_count": 3,
+      "canonical_xml_order_identical": true
+    },
+    "field_character": {
+      "source_count": 603,
+      "target_count": 603,
+      "canonical_xml_order_identical": true
+    },
+    "field_instruction": {
+      "source_count": 201,
+      "target_count": 201,
+      "canonical_xml_order_identical": true
+    },
+    "bookmark_start": {
+      "source_count": 186,
+      "target_count": 186,
+      "canonical_xml_order_identical": true
+    },
+    "bookmark_end": {
+      "source_count": 186,
+      "target_count": 186,
+      "canonical_xml_order_identical": true
+    }
+  },
+  "comments": {
+    "commentReference": {
+      "source": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1,
+        "15": 1
+      },
+      "target": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+        "10": 1,
+        "11": 1,
+        "12": 1,
+        "13": 1,
+        "14": 1,
+        "15": 1
+      },
+      "identical": true
+    },
+    "commentRangeStart": {
+      "source": {
+        "1": 1,
+        "2": 1,
+        "6": 1,
+        "9": 1,
+        "13": 1,
+        "15": 1
+      },
+      "target": {
+        "1": 1,
+        "2": 1,
+        "6": 1,
+        "9": 1,
+        "13": 1,
+        "15": 1
+      },
+      "identical": true
+    },
+    "commentRangeEnd": {
+      "source": {
+        "1": 1,
+        "2": 1,
+        "6": 1,
+        "9": 1,
+        "13": 1,
+        "15": 1
+      },
+      "target": {
+        "1": 1,
+        "2": 1,
+        "6": 1,
+        "9": 1,
+        "13": 1,
+        "15": 1
+      },
+      "identical": true
+    }
+  },
+  "tables": {
+    "source": 104,
+    "target": 104,
+    "shapes_identical": true,
+    "properties": {
+      "tblPr": {
+        "source_count": 104,
+        "target_count": 104,
+        "canonical_xml_order_identical": true
+      },
+      "trPr": {
+        "source_count": 787,
+        "target_count": 787,
+        "canonical_xml_order_identical": true
+      },
+      "tcPr": {
+        "source_count": 2790,
+        "target_count": 2790,
+        "canonical_xml_order_identical": true
+      },
+      "tblPrEx": {
+        "source_count": 787,
+        "target_count": 787,
+        "canonical_xml_order_identical": true
+      }
+    },
+    "metric_table_paragraphs": 43,
+    "metric_spacing_rules_pass": true,
+    "metric_spacing_rules": {
+      "exact": 33,
+      "atLeast": 10
+    }
+  },
+  "zip_parts": {
+    "source": 74,
+    "target": 74,
+    "same_names": true,
+    "changed_parts": [
+      "word/document.xml",
+      "word/settings.xml"
+    ],
+    "protected_parts_unchanged": true,
+    "media_entries": 49,
+    "image_files": 48
+  },
+  "settings_only_trackRevisions_removed": true,
+  "source_revision_counts": {
+    "ins": 31,
+    "del": 14,
+    "rPrChange": 17,
+    "pPrChange": 1,
+    "tblPrChange": 6,
+    "tcPrChange": 168,
+    "sectPrChange": 0,
+    "tblGridChange": 6,
+    "tblPrExChange": 46,
+    "trPrChange": 46
+  },
+  "remaining_revisions": {
+    "ins": 0,
+    "del": 0,
+    "rPrChange": 0,
+    "pPrChange": 0,
+    "tblPrChange": 0,
+    "tcPrChange": 0,
+    "sectPrChange": 0,
+    "tblGridChange": 0,
+    "tblPrExChange": 0,
+    "trPrChange": 0
+  },
+  "remaining_red_highlights": 0,
+  "algorithm_lines": 26,
+  "deleted_text_paragraph_protected_objects": {
+    "192": 0
+  },
+  "toc": {
+    "entries": 100,
+    "changed_caches": 93,
+    "three_reported_title_mappings_corrected": {
+      "第三章需求分析": "9",
+      "第四章系统设计": "13",
+      "参考文献": "71"
+    },
+    "pdf": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T134-2026-10-09/render-final-v5/1005-导师批注修订版-2026-10-09.pdf",
+    "pdf_sha256": "909e98d61f274b12128e18c6f47755767a74b1f4358287f4adf3e5fedb24ae2c",
+    "pdf_total_pages": 104,
+    "exact_heading_page_matches": 100,
+    "numeric_page_cache_mapping_correct": true
+  },
+  "issues": [],
+  "source_revision_total": 335,
+  "remaining_revision_total": 0
+}

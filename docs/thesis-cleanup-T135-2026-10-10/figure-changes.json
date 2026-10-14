@@ -1,0 +1,137 @@
+{
+  "basis": "Rebuilt native SVG from preserved structured records; removed repeated disclaimer subtitle and audit footer.",
+  "figures": [
+    {
+      "media": "word/media/image43.png",
+      "svg": "project-one-note-1.svg",
+      "png": "project-one-note-1.png",
+      "width": 1320,
+      "height": 849,
+      "source": {
+        "title": "PCR 条件优化实验",
+        "fixed_fields": {
+          "reagents": "Taq DNA Polymerase、dNTP、MgCl2、模板 DNA",
+          "instrument": "PCR Thermal Cycler",
+          "sample": "样本 A、样本 B",
+          "result": "退火温度 58℃ 时扩增条带最清晰，非特异性条带减少。"
+        },
+        "content_text": "试剂: Taq DNA Polymerase、dNTP、MgCl2\n仪器: PCR Thermal Cycler\n样本: 样本 A、样本 B\n结果: 58℃ 条件下条带清晰。"
+      }
+    },
+    {
+      "media": "word/media/image44.png",
+      "svg": "project-one-note-2.svg",
+      "png": "project-one-note-2.png",
+      "width": 1320,
+      "height": 849,
+      "source": {
+        "title": "细胞活力检测实验",
+        "fixed_fields": {
+          "reagents": "CCK-8、PBS、DMEM 培养基",
+          "instrument": "酶标仪、CO2 培养箱",
+          "sample": "处理组细胞、对照组细胞",
+          "result": "处理组细胞活力较对照组下降约 18%，重复孔结果稳定。"
+        },
+        "content_text": "试剂: CCK-8、PBS、DMEM 培养基\n仪器: 酶标仪、CO2 培养箱\n样本: 处理组细胞、对照组细胞\n结果: 细胞活力下降约 18%。"
+      }
+    },
+    {
+      "media": "word/media/image45.png",
+      "svg": "project-one-note-3.svg",
+      "png": "project-one-note-3.png",
+      "width": 1320,
+      "height": 849,
+      "source": {
+        "title": "Western Blot 蛋白表达验证",
+        "fixed_fields": {
+          "reagents": "RIPA 裂解液、BCA 试剂盒、一抗、二抗",
+          "instrument": "电泳仪、转膜仪、凝胶成像系统",
+          "sample": "蛋白样本 P1、蛋白样本 P2",
+          "result": "目标蛋白在处理组表达降低，内参条带稳定。"
+        },
+        "content_text": "试剂: RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器: 电泳仪、转膜仪、凝胶成像系统\n样本: 蛋白样本 P1、蛋白样本 P2\n结果: 处理组目标蛋白表达降低。"
+      }
+    },
+    {
+      "media": "word/media/image46.png",
+      "svg": "project-one-note-4.svg",
+      "png": "project-one-note-4.png",
+      "width": 1320,
+      "height": 849,
+      "source": {
+        "title": "qPCR 定量验证实验",
+        "fixed_fields": {
+          "reagents": "SYBR Green Master Mix、cDNA 模板、引物对、无酶水",
+          "instrument": "荧光定量 PCR 仪、微量分光光度计",
+          "sample": "cDNA 样本 1、cDNA 样本 2、阴性对照",
+          "result": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。"
+        },
+        "content_text": "试剂: SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器: 荧光定量 PCR 仪、微量分光光度计\n样本: cDNA 样本 1、2、阴性对照\n结果: 目标基因差异表达约 2.3 倍。"
+      }
+    },
+    {
+      "media": "word/media/image47.png",
+      "svg": "project-one-sop-1.svg",
+      "png": "project-one-sop-1.png",
+      "width": 1320,
+      "height": 790,
+      "source": {
+        "records": [
+          {
+            "file_id": 6,
+            "chunk_id": 1,
+            "filename": "PCR_protocol_demo.txt",
+            "snippet": "PCR 体系配置、循环条件和退火温度优化说明。"
+          },
+          {
+            "file_id": 7,
+            "chunk_id": 2,
+            "filename": "cell_assay_reference_demo.txt",
+            "snippet": "CCK-8 检测步骤、读数要求和细胞活力统计说明。"
+          },
+          {
+            "file_id": 33,
+            "chunk_id": 3,
+            "filename": "qPCR_protocol.txt",
+            "snippet": "SYBR Green 法 qPCR 实验流程：1. cDNA 稀释 10 倍；2. 配置 20μL 体系；3. 三步法扩增；4. 融解曲线分析。"
+          },
+          {
+            "file_id": 34,
+            "chunk_id": 4,
+            "filename": "cell_culture_standard.txt",
+            "snippet": "细胞培养标准操作流程：1. 培养基预热；2. 细胞复苏；3. 传代比例 1:3-1:4；4. 定期支原体检测。"
+          }
+        ]
+      }
+    },
+    {
+      "media": "word/media/image48.png",
+      "svg": "project-one-sop-2.svg",
+      "png": "project-one-sop-2.png",
+      "width": 1320,
+      "height": 694,
+      "source": {
+        "records": [
+          {
+            "file_id": 35,
+            "chunk_id": 5,
+            "filename": "western_blot_protocol.txt",
+            "snippet": "Western Blot 标准流程：1. 蛋白提取与定量；2. SDS-PAGE 电泳；3. 转膜条件 100V 60min；4. 封闭 5% BSA；5. 一抗 4℃ 过夜。"
+          },
+          {
+            "file_id": 36,
+            "chunk_id": 6,
+            "filename": "plasmid_extraction_protocol.txt",
+            "snippet": "质粒提取流程：1. 过夜培养菌液；2. 碱裂解法提取；3. 柱纯化；4. 浓度和纯度检测。"
+          },
+          {
+            "file_id": 37,
+            "chunk_id": 7,
+            "filename": "flow_cytometry_protocol.txt",
+            "snippet": "流式细胞术检测流程：1. 细胞收集；2. 染色 30min；3. 上机检测；4. 数据分析。"
+          }
+        ]
+      }
+    }
+  ]
+}

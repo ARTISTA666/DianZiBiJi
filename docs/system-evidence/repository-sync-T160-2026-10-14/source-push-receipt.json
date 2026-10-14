@@ -1,0 +1,11 @@
+{
+  "status": "frozen-evidence",
+  "owner": "Codex evidence line T160",
+  "verified_at_utc": "2026-10-14T09:35:55.275697+00:00",
+  "source_commit": "0d9fb3457d210b8f839dcd2ffc8d32c337fabd22",
+  "remote_head_lines": [
+    "0d9fb3457d210b8f839dcd2ffc8d32c337fabd22\trefs/heads/feature/innovation-demos",
+    "0d9fb3457d210b8f839dcd2ffc8d32c337fabd22\trefs/heads/main"
+  ],
+  "note": "Verified source sync before the subsequent documentation commit. The final documentation commit can advance both tips without changing production source. No force push or history rewrite."
+}

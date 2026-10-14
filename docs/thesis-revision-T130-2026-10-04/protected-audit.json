@@ -1,0 +1,2923 @@
+{
+  "schema_version": "t130-protected-audit-v1",
+  "owner": "code-reviewer",
+  "completed_at": "2026-10-04T12:16:02.906115+08:00",
+  "stage": "final-DOCX-binding",
+  "candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+  "source_sha256": "11268ba5ee190c89e08cfb0b32010219920d2d8d7186f7e24384d9270a895556",
+  "files": {
+    "source": {
+      "path": "/private/tmp/advisor-T130-20261004/source.docx",
+      "size_bytes": 5963606,
+      "sha256": "11268ba5ee190c89e08cfb0b32010219920d2d8d7186f7e24384d9270a895556"
+    },
+    "candidate": {
+      "path": "/private/tmp/advisor-T130-20261004/candidate.docx",
+      "size_bytes": 5962731,
+      "sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14"
+    }
+  },
+  "scope": "Independent read-only ZIP/XML audit of authorized T130 changes against protected T129 source. No DOCX, production code or repository evidence was edited. Visual QA is separate.",
+  "changes_manifest_path": "/private/tmp/advisor-T130-20261004/changes.json",
+  "changes_manifest_sha256": "11180c0be2908e77faf02ef6f55dd9847490a09422e40e5d601c3f7ed787d7f2",
+  "changes_count": 19,
+  "checks": {
+    "baseline_identity": {
+      "passed": true,
+      "expected_T129_sha256": "11268ba5ee190c89e08cfb0b32010219920d2d8d7186f7e24384d9270a895556"
+    },
+    "package_parts": {
+      "passed": true,
+      "changed_parts": [
+        "word/document.xml"
+      ],
+      "added_parts": [],
+      "removed_parts": [],
+      "note": "Only body/TOC document XML and authorized page-count cache may change; all other package parts retain original bytes."
+    },
+    "authorized_text_and_number_scope": {
+      "passed": true,
+      "source_paragraph_count": 4224,
+      "candidate_paragraph_count": 4220,
+      "expected_paragraph_count": 4220,
+      "removed_paragraph_count": 4,
+      "removed_paragraphs": [
+        "D.3 人工盲评协议97",
+        "（5）真实使用效果尚未验证。第6.6节的四种GPT角色操作了隔离项目的真实接口，真人参与者为0；浏览器自动化与角色模拟不能说明课题组的实际使用负担或建议采纳情况。后续应由真实课题组按固定任务完成记录编写、审核、问答核查和告警处置，保存参与者、操作过程及反馈，评价任务完成、核查耗时和长期使用效果；图谱核对效率可通过替代界面对照检验。",
+        "D.3 人工盲评协议",
+        "人工盲评由未参与答案生成的研究者独立完成。评价者阅读匿名问题、回答及对应证据，逐项判断事实正确性和引用支持度，再给出 1—5 分综合质量评分及理由；全部评价提交后才按解盲键统计模式结果。两名评价者应报告一致率或 Cohen’s kappa，保留各自原始判断与分歧处理记录。已有表格为待执行协议，人工结果以实际完成、可签核的评价记录为依据；模型自动评分单独归档。应检查回答或证据中的 [G] 标记可能造成的模式泄露，并记录处理方式。第6.6节的GPT会话评判与角色模拟已单独归档；本协议仍用于未来由独立研究者实际完成的人工评价。"
+      ],
+      "authorized_text_replacements": 9,
+      "replacement_occurrence_counts": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "7": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "8": 1
+      },
+      "mismatches": [],
+      "note": "Exact ordered visible paragraph equality after authorized substitutions/deletions and D.4/D.5 renumbering; only numeric TOC page caches are excluded. No evidence value, runtime identity or unrelated prose change is tolerated."
+    },
+    "omml": {
+      "passed": true,
+      "method": "Ordered exclusive C14N SHA-256 for every native OMML node",
+      "counts": {
+        "source": {
+          "oMath": 48,
+          "oMathPara": 26
+        },
+        "candidate": {
+          "oMath": 48,
+          "oMathPara": 26
+        }
+      },
+      "canonical_sha256": {
+        "source": {
+          "oMath": [
+            "fbfbad2fadd613145bc1305a883a30b769d7c6b316d04e0dea116c8d5a86e882",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "fc8f20679f4a55bbd07eca8c0f9d97e79b0843dfb9074f562069ccc2a9d9f4f0",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "ca95f69d5a395966cc47fdea36c75bff60dad68f99e6ad1f2a772fcbd27f9361",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "fcce55c8cf212c5a29d6ab14dfdbe8c4eb3cff062c615f95c63687c9d60ca357",
+            "06dac2ef3661bb61d6fd75a4e6ab7a3a8a73bffa199fa3e06f86fa330a537602",
+            "5e22cf7b952fbadcde668cbccbb49e7bfbd044eb766a196a8c8de92a0c41f3e7",
+            "5dc2367e11ad564a976ec68b1f22e28f30b0fe31338018a77560f2aa49de1b34",
+            "6ec15d9153d90168b7935787c6b369b61333d676cea95bdd86e5158fe96100c8",
+            "24f986328898e0286af52d5d1e11c2f66c13d6e2e10ba92f81d22c0493235915",
+            "8b38590c1b7026503b5c94324d773f254dadec95f573208a363c662b101df044",
+            "81f3a0643be3c3ccf74e16d1c0f1ca1a288bae1da412591d72f422f770b27396",
+            "91a1ce54675657ada6e07c1eee3144634494fa37c01c72860050996a06129e86",
+            "f4a55fac41a45dae44153b923d45948943738a44c0548ddad2adb249cdd4c9d9",
+            "41a10be3d2a1dbd69d27e281f70bd6bace64e6bb48e8beab3a220c5de43eb6e5",
+            "fec01bc97cf88b72bfeb5b8ec495b68ed37c4b08596eecffccfd91971ddb6132",
+            "c250c9edc45a1155f1d97ebebdf70ace1288c63cbeaff7d740dc10fc03b697ee",
+            "47cef137e10bfb680f4330590ff90733553155f948c80079720242a16ea27912",
+            "7dc9396965a7f9da57d380c59c43a5b460899ed8214ac69e288658022b59fc53",
+            "3e6025c1314d95325d21ac7adc219c8a0e3463b34bfb6ea8d1ebf6ed20a124dc",
+            "8af593ed46e54b8fcb4c06ac411cb5c0c30a3633b7102273fb688c56b8fb398f",
+            "bc3fb9d342dc20db3114d8d3f9c4743b2c09401f1a05a446555c68ad69b50c51",
+            "daf9064296e65774cc31bfb70c62ae190d57ba8f2a6e55b4a544d9207fac1d98",
+            "8e454d72b03e8cd39d1abf80fb4d400934d6f5638f59e439fc8dbfbbf3cf7dce",
+            "e1ed762818583f829af5affce5282bf92bcd3c86a6a5dfbb35c72853645376e1",
+            "bc3242aab7013c175f799cce6d29d56f6f7a41946ecdc227c3eddd817a326993",
+            "b5e68e9d1651f19b052fc6ec27974f1dfca381ea006d40038111529ec5932df1",
+            "4663be8262ac5c1ef0dc7b23a1f405b852b25bea4f8e3aeb5bbf2dc83e9af634",
+            "253b17be0f92ae7228e5f3b8d7814cde03aa042705a54897407de08f8207c286",
+            "98569cf615bc43becd52891ba21fd154d67f04df6c1ef6339afdaa5b27893f7b",
+            "6c61da5f9a60e8c3f3f21f1770f56344acf9d487d382aa84e99c31f1675d8a62",
+            "d424b4d051316de431ff6f7d31ec4d83f9da487954fb06d48dadf717569eeef8",
+            "f1bc0d02754aa22ff721b5822ff8238af7bd4da0dcc75d5eed52c427c3a725c5",
+            "660f7f925aac632cb6b5956d3d687cf6c9cfada3a7f7250d00438266b59fb8f5",
+            "af3820466635c06413dfafa0bb3d391cba8556abca59a14f3f8c89d90d2f53a9",
+            "e051dcce1cce7c6752820da91d61879a6bb316011ad17179859174830e09f025",
+            "3b20f8815d2818bb2cee84dd3bccd8de38ee7a6f7d80a5804491ab058a3eb90a",
+            "95f12a57277f183ab0c8d9b94e6a89864ea457911b398b0b02b4343de5bc795f",
+            "6fd9e097bc14d521992cc37685639e926569cf67b5dabfccc6f872b8d93c05a2",
+            "cd2967d59ceeb52cc3a49c278956793159ba16f3a9b4fe8aead95a82977548c0",
+            "5114b89ac5de5c4ec5047a948d45a01216ecb89f89f9a501cf236850ba1feac4",
+            "e21061e7fc631b5892a5856707d1a95198f268d96533d36239c998737d8baadf",
+            "5b1c6a7e790b8e854ad356067300f57bcd70d238be6dbd1a3ca4b7995f04adf0"
+          ],
+          "oMathPara": [
+            "e9bcc927488cf95294b0da96ae63ef20bc9f22e9a8e648302aee2c9fe52712f9",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "d2aa421b998fe68ce12f6f0bdb7ea4c0661c2cce42920c6a155a8ad4d0b45bcc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "f1d4bafedf72a83b1076af782be4173015b0bea8c337055c87a6e031ffbd4944",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "ac343893e6e00987edebb5e8e845f3b5e0b54f2607e814ebbf67fae325531857",
+            "705ce291b6c8cdb2de6addff0db2a26f29df8159bd0f166c87e1e69648a4aef0",
+            "06567228451d3a94d38e1e2bdea88d0e39328dce8a4aa2a36527a83e95dfbaca",
+            "4df2b6d2d21ab37e50a9e6b60e54190101ff167fe1469a2106f9d336a9ac65d3",
+            "751f347fd7ee35fb9c4eff0660a13a464ecb83f75979f964d174ad00889d7b2b",
+            "14ed9558fe41e99336715a63f11daef43777d325aa6e057cc80a4b4c3eadc60c",
+            "bfe5e1dcacf2a04990ea60a35c80c76771e5570930349aefe9fa270f9c585274",
+            "e25eacced49795eb6ba6545452e645ee06a008988ee0ea18dcc5686eef4ad57b",
+            "6e7478ceaa3e41d3328bbea367c1893a33f0a15fba2225f4cae1f8f2a4d7d8ec",
+            "017c5a36cddf5f16e060553f072262c64bcf4e529038e2b3aac0c5b0d47aa981",
+            "5559ba74e455dd4604a80fbaf84a58f8ecf098143d1b295ad2ee671b51186411",
+            "e104858ee4538210df37014eb266938e9ea0e9461ca5f09e6efe85c7ddc58971",
+            "9d607697dec53c2eac8e08ed1e02f782c7e41ed5794fee672bf055ae3418605a",
+            "f43c30765a23c49b0a41b09c5d43d7b66d053f73af1eadbb685e6488d2720f1b",
+            "e3ede6e713b869c8c242a5139020fe81fedd10fe5f1e02550c65cd6f76a6174e",
+            "a484ba127f0946b1162f29f1c29e48634c2082fa9f0b2a9a533b2cad9ad455cc",
+            "812e985dc815c9ac8e1374c4b9581a285fcbe5d57c4682ae087dd66398ce61aa"
+          ]
+        },
+        "candidate": {
+          "oMath": [
+            "fbfbad2fadd613145bc1305a883a30b769d7c6b316d04e0dea116c8d5a86e882",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "fc8f20679f4a55bbd07eca8c0f9d97e79b0843dfb9074f562069ccc2a9d9f4f0",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "ca95f69d5a395966cc47fdea36c75bff60dad68f99e6ad1f2a772fcbd27f9361",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "16d74ab16ccd9e585c73bd9f928b56c922fd0280874f528d099656ba9faeb0a7",
+            "fcce55c8cf212c5a29d6ab14dfdbe8c4eb3cff062c615f95c63687c9d60ca357",
+            "06dac2ef3661bb61d6fd75a4e6ab7a3a8a73bffa199fa3e06f86fa330a537602",
+            "5e22cf7b952fbadcde668cbccbb49e7bfbd044eb766a196a8c8de92a0c41f3e7",
+            "5dc2367e11ad564a976ec68b1f22e28f30b0fe31338018a77560f2aa49de1b34",
+            "6ec15d9153d90168b7935787c6b369b61333d676cea95bdd86e5158fe96100c8",
+            "24f986328898e0286af52d5d1e11c2f66c13d6e2e10ba92f81d22c0493235915",
+            "8b38590c1b7026503b5c94324d773f254dadec95f573208a363c662b101df044",
+            "81f3a0643be3c3ccf74e16d1c0f1ca1a288bae1da412591d72f422f770b27396",
+            "91a1ce54675657ada6e07c1eee3144634494fa37c01c72860050996a06129e86",
+            "f4a55fac41a45dae44153b923d45948943738a44c0548ddad2adb249cdd4c9d9",
+            "41a10be3d2a1dbd69d27e281f70bd6bace64e6bb48e8beab3a220c5de43eb6e5",
+            "fec01bc97cf88b72bfeb5b8ec495b68ed37c4b08596eecffccfd91971ddb6132",
+            "c250c9edc45a1155f1d97ebebdf70ace1288c63cbeaff7d740dc10fc03b697ee",
+            "47cef137e10bfb680f4330590ff90733553155f948c80079720242a16ea27912",
+            "7dc9396965a7f9da57d380c59c43a5b460899ed8214ac69e288658022b59fc53",
+            "3e6025c1314d95325d21ac7adc219c8a0e3463b34bfb6ea8d1ebf6ed20a124dc",
+            "8af593ed46e54b8fcb4c06ac411cb5c0c30a3633b7102273fb688c56b8fb398f",
+            "bc3fb9d342dc20db3114d8d3f9c4743b2c09401f1a05a446555c68ad69b50c51",
+            "daf9064296e65774cc31bfb70c62ae190d57ba8f2a6e55b4a544d9207fac1d98",
+            "8e454d72b03e8cd39d1abf80fb4d400934d6f5638f59e439fc8dbfbbf3cf7dce",
+            "e1ed762818583f829af5affce5282bf92bcd3c86a6a5dfbb35c72853645376e1",
+            "bc3242aab7013c175f799cce6d29d56f6f7a41946ecdc227c3eddd817a326993",
+            "b5e68e9d1651f19b052fc6ec27974f1dfca381ea006d40038111529ec5932df1",
+            "4663be8262ac5c1ef0dc7b23a1f405b852b25bea4f8e3aeb5bbf2dc83e9af634",
+            "253b17be0f92ae7228e5f3b8d7814cde03aa042705a54897407de08f8207c286",
+            "98569cf615bc43becd52891ba21fd154d67f04df6c1ef6339afdaa5b27893f7b",
+            "6c61da5f9a60e8c3f3f21f1770f56344acf9d487d382aa84e99c31f1675d8a62",
+            "d424b4d051316de431ff6f7d31ec4d83f9da487954fb06d48dadf717569eeef8",
+            "f1bc0d02754aa22ff721b5822ff8238af7bd4da0dcc75d5eed52c427c3a725c5",
+            "660f7f925aac632cb6b5956d3d687cf6c9cfada3a7f7250d00438266b59fb8f5",
+            "af3820466635c06413dfafa0bb3d391cba8556abca59a14f3f8c89d90d2f53a9",
+            "e051dcce1cce7c6752820da91d61879a6bb316011ad17179859174830e09f025",
+            "3b20f8815d2818bb2cee84dd3bccd8de38ee7a6f7d80a5804491ab058a3eb90a",
+            "95f12a57277f183ab0c8d9b94e6a89864ea457911b398b0b02b4343de5bc795f",
+            "6fd9e097bc14d521992cc37685639e926569cf67b5dabfccc6f872b8d93c05a2",
+            "cd2967d59ceeb52cc3a49c278956793159ba16f3a9b4fe8aead95a82977548c0",
+            "5114b89ac5de5c4ec5047a948d45a01216ecb89f89f9a501cf236850ba1feac4",
+            "e21061e7fc631b5892a5856707d1a95198f268d96533d36239c998737d8baadf",
+            "5b1c6a7e790b8e854ad356067300f57bcd70d238be6dbd1a3ca4b7995f04adf0"
+          ],
+          "oMathPara": [
+            "e9bcc927488cf95294b0da96ae63ef20bc9f22e9a8e648302aee2c9fe52712f9",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "d2aa421b998fe68ce12f6f0bdb7ea4c0661c2cce42920c6a155a8ad4d0b45bcc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "f1d4bafedf72a83b1076af782be4173015b0bea8c337055c87a6e031ffbd4944",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "8c8cf339cd99892b81714791fc1c6a947642779ba725cf64a096b8d563ce62cc",
+            "ac343893e6e00987edebb5e8e845f3b5e0b54f2607e814ebbf67fae325531857",
+            "705ce291b6c8cdb2de6addff0db2a26f29df8159bd0f166c87e1e69648a4aef0",
+            "06567228451d3a94d38e1e2bdea88d0e39328dce8a4aa2a36527a83e95dfbaca",
+            "4df2b6d2d21ab37e50a9e6b60e54190101ff167fe1469a2106f9d336a9ac65d3",
+            "751f347fd7ee35fb9c4eff0660a13a464ecb83f75979f964d174ad00889d7b2b",
+            "14ed9558fe41e99336715a63f11daef43777d325aa6e057cc80a4b4c3eadc60c",
+            "bfe5e1dcacf2a04990ea60a35c80c76771e5570930349aefe9fa270f9c585274",
+            "e25eacced49795eb6ba6545452e645ee06a008988ee0ea18dcc5686eef4ad57b",
+            "6e7478ceaa3e41d3328bbea367c1893a33f0a15fba2225f4cae1f8f2a4d7d8ec",
+            "017c5a36cddf5f16e060553f072262c64bcf4e529038e2b3aac0c5b0d47aa981",
+            "5559ba74e455dd4604a80fbaf84a58f8ecf098143d1b295ad2ee671b51186411",
+            "e104858ee4538210df37014eb266938e9ea0e9461ca5f09e6efe85c7ddc58971",
+            "9d607697dec53c2eac8e08ed1e02f782c7e41ed5794fee672bf055ae3418605a",
+            "f43c30765a23c49b0a41b09c5d43d7b66d053f73af1eadbb685e6488d2720f1b",
+            "e3ede6e713b869c8c242a5139020fe81fedd10fe5f1e02550c65cd6f76a6174e",
+            "a484ba127f0946b1162f29f1c29e48634c2082fa9f0b2a9a533b2cad9ad455cc",
+            "812e985dc815c9ac8e1374c4b9581a285fcbe5d57c4682ae087dd66398ce61aa"
+          ]
+        }
+      }
+    },
+    "bibliography_and_citations": {
+      "passed": true,
+      "bibliography_counts": {
+        "source": 81,
+        "candidate": 81
+      },
+      "bibliography_entry_sha256": [
+        "5b692030d21684ec5e2e096f14ce329512b09a57f8b6d861792c4474a021ff0e",
+        "7a1a037d7f83fd609ca95915a4ab73ee63e5cc8ace97bbcccb1e419115363fad",
+        "3ff8ef3ebb5427171b19580d96eed98142f6b57b96f11ef6c35337e722b7f940",
+        "2d79a1efe52c9dfa23bb0f125643673133923d9e644c5eeac4cf72a58b79408d",
+        "cf1fc81467b12a769d535c8886156065c7f2ab56b2985a522583f2a31b23c802",
+        "c34c85dc83b4b105adb6bca279e2f7942b35d00cd86269da22e4b124af64f0a8",
+        "da486e17a0f3629eee9602f71adf455e3c79b940e7291d3752c2ede96a8e84d5",
+        "98e73c432696bf1ceddc11b851acf18b6cab65e1b87a3871364f39f7e9607187",
+        "b5062bed7f79e57fe24edb4c622815069c3206b1f7d310b01b46398393f0e3e8",
+        "42e188f0f1a14b296592c0e129e19572ea257e40f21b63e8ba9bcf75c36bcb0f",
+        "a6862de82b3e9657e1366f02bb7ddfe756c88a453df685f0379958843042bd98",
+        "1940b772207a228e1daaf1f51904e0aebbbf815e15767bf9998a025a50ec20c1",
+        "80baeda7711c9109b115b3f46f89a8149394e80bdb0a1c2dad1a63ed62e89e84",
+        "8a53a54effece8f2db4323caa686a31dcd600dd417b738f185e078300fe9202c",
+        "7892dabd7443a1e547067a48738c69c00de26589a3035141f9ce22c325f25982",
+        "1c5a6a3eb89131d1334cbb27a5bbdb45967c218bcf65fb23ca0600bf76a0dc5a",
+        "361519ce2982dcfdd4b501c9e941922fafecdfe3ade15e0a3e7256b2f53f122f",
+        "c6b4c4e64c7555c5d257da24894ab31fdb38c0c56435efae22d7008ffce46143",
+        "d8c278f45c99acef9886607930cb46ebf0e47270d7730ec7c7365ef3f93f1e48",
+        "9af8dd609ce0eed240db9b68556a1ddc8658a6d440d8fc428ecd2cea81930483",
+        "faa1b9adac7a3218f2bdcc99d7d15162c896f8ebec451cdf597838cefb7c462b",
+        "85354e0a19f832cda914c559d7e5619f5c3a3d0dd3f3e622c12a90b34650a2fe",
+        "849670a9a810e2b7aefb6980ec7cd28060f10e1615dc8d7c322f9ad308cc71fd",
+        "dc1a31759e916c906674bbf532c07beb1193c10d11b55421160770228904a357",
+        "3f06b075c3b356cb67daa9380921583d29930cc1b26e07b23473d45769e80c58",
+        "4cbef98e3f3e4ff69c531e062be78e39dc6ade89985eac39e0ca0e8cd5d098d9",
+        "dab37cc9c4a60c8069702678b368a63cbe7898598c848517f1837476a0afa0a6",
+        "3fdfa36c7c5e37fa48b63f9e1cdbdc0d5ae0e58ee2ba24fe205fac68450f77b9",
+        "d91549d7743034bbcabd5760136b8c6e5d9ee4d085cfe9f58caeb22c12af6eba",
+        "e40c5e3e77c4794df9209666e313b074d8377f64b090003d326696bc651f2e56",
+        "c8b9dc40796657839d5e12f44c9fe5a0f34aeac28b7e8a80f915d8df45884bad",
+        "d2030d1f645cff072b62bdc4541f0800a92e5d9e188fb78ce22c8191a7ba83b5",
+        "327ab4fd8983aef94e6a6c80261a5d9d098dd4aa3ccbc90398d28c4f7f417e62",
+        "63f3f9a5fae988f8ba6bc475892cfb4bec1ab84a6a30d3a5406d4370d042c77f",
+        "fc14d219c9c3d15b827398a5eec3408a92883ca651e31fb7d9c8e5e0f72dd75b",
+        "e463ce85b535d756082fe3f358f9d8435f5e23786bea683011055c98bb8a4324",
+        "36422af9e45a11ed7c085f481bc6bb6959dc5ac6384c2e2b0d23b87e0339f7d7",
+        "9369931494e4a592165723f9fc1f1c5eb494ec7d386c294db99e17561f977301",
+        "abfa68372b38bd040cd750c7fbb060db0ccde76dd4b288091e783ba01182d1b8",
+        "230a56b14dc9d110be0ce404befa4166ff8a921e0083a5012c649e7c1703aa59",
+        "ddc0bac6ee5d2afad6e827e20aeb71ae2ef1a189742cbc7231e2660ec7e21a1b",
+        "922b797ac71335f4c8449da38a9a278f66d156962285621e4ed7be69a33abb96",
+        "ff0d07d1f55ae50ffd0cf4f82f118dd8698b24f11388047e45051d0ff7b52938",
+        "6bc372ea2e16e1d6773ee2792b2aa19025dbef3628389e96d4901b96255588fd",
+        "e3b4fee3955c8a2f07c3b5e0991696f5979151738cb0d0781e3cfcfe2c79f332",
+        "ad2882c7528b9999d36feb8f75a5ce5df2e5904d6bba9d3e27edb8cfef6d4cf8",
+        "079e3234a19c6fdb57efbc882db2e3a35a3b43c569a69a7b7496cb0269960881",
+        "7ebf03be65bef36309131bcc43934bf5a66cd38ad7bfe1d0c7a16a4a7e3d2cba",
+        "3b7abcc17ac608d093fbaf3e7a72c36b1ad57f0a635f6a37d70d35da0b5001e3",
+        "8adca57a27a4ac2b02f81c9dfb318855ee1dcbf7d468dd7c147d9e359020ffc8",
+        "a2fba4824be5631ad9ebe92465adceeea3cc012ad70a417dde48a31e410319d5",
+        "162cd30de4be75a004a0f0e3a93467f537633eb3222990dc4956f470cc811165",
+        "b8e13535019648bf218ac4a08dcf4790d3aa03e05300f9fb8c0dfbf08ff9f0cf",
+        "f04bb14248c37c83dc75c036f0db522cbbb9e74c151344f948f282fbe3ea4a30",
+        "bcfd474b9bbe1c22b4d18bd661998607bdbe29304e92c4bdfd28fd3b4703d504",
+        "38fa36f58ac832e6e795645c60dbaf5ecfa4b63851fe5eb76a81259856154b43",
+        "ca88d749954515e373b28b5772c3435c4b23d7b6b97a50016f16469e0a6fd00a",
+        "fa26d8aaf34baa6d34224a4a83b00fb411f498156109a8f552d80a352bc04402",
+        "82311d6330ba4c458a294f766995d75085287cdc5a01ebc84484e65907f6e43e",
+        "84a43ff553898a7f113436dc6e4a050e4734142e38698352f386406514971bb9",
+        "ce2b5b6e10669791b333ac0c4d4c7d701ed785ca5df03d08f7f11b72b4f6a27c",
+        "75e113b776088c5d3aec08413b7898b457e42f2c230561f4f06b4a3f47246f2f",
+        "5f756625a0377fe6aa74cc2ea830bdbc1fd73f3e0c546a23ca23ae234926f59f",
+        "46da6396c95db520a2881c9026b77e0dd14daa45c3aec7ee7e22ed3e9d7b1f4a",
+        "03c8e8f167d1ef4496d54433f67befb7a0b4e053d3a9ed0ea9e4d6bbea26e1ed",
+        "c20d6a5088bf8494097c779825e19234d4bec4cb7dd27a26b8dbc9db878db7dc",
+        "7a6b5c7791921f7d35dc8dfc9d28140ea099dc767637b0299b2472df0fb5380c",
+        "b568fd6e91724fc9d927ef33174d00b29723a6f0c9c4ab3b58bfc59a1beb9966",
+        "034c8cd35eb16c050362f9e5366383129313bbfaac5e970944a95b7b0765236f",
+        "e8ae40710ed78082ae7eab1d8dcbbb6829891693539f7e839dc42491cd261d68",
+        "82d92472fa93a483676930d7a2a62f4f7a33f49dee87c2333c06a3e95622ccfa",
+        "dbeb15ceb4fb80c3e49528768aec297cd2318a485d5836b66afcc81b593b752a",
+        "7729d7a44186dafba24c3a405860e9120b04163c185e1527bb9e82329b21c96a",
+        "f289106aed666be53bc6bdf0c83cb1e86594225c2c8e53a6a91b3ad4b4d539ad",
+        "424c325ab54aaba7fea766f045059dd65d00732ab2ad60a8e34bab06752af122",
+        "7680c9359c37867703cd4d99240e29ab507b8a47ee447dad4513830b98b46039",
+        "36cf89ca8970fe8df411b763bbc4e3d08960186f4678da92b5df8c672ba59ecb",
+        "1f861288bfdf64ad8945483f1c475580ba66bd0b5bb4a81bef8ec36160b7ff22",
+        "304a48e90ed14b8c5dd0a72cd41725c3728119c920ccc54014a734fb7edf1c69",
+        "c7479db1687d7425babae0d6ee6478ebf1a49dcd0948a5f95374ad9fba56f539",
+        "c61733aeced09b6240e8b14de79453b33badf2e4506b763b9a0ff2790aeb28e7"
+      ],
+      "citation_expression_counts": {
+        "source": 58,
+        "candidate": 58
+      },
+      "citation_order_identical": true,
+      "citation_frequency_identical": true,
+      "citation_order": [
+        "[1-3]",
+        "[4]",
+        "[2]",
+        "[5]",
+        "[6-7]",
+        "[3,8]",
+        "[4]",
+        "[9-11]",
+        "[12-13]",
+        "[14]",
+        "[15]",
+        "[16-17]",
+        "[18-20]",
+        "[21-22]",
+        "[23-24]",
+        "[25]",
+        "[26]",
+        "[27]",
+        "[28-29]",
+        "[1]",
+        "[30]",
+        "[31-36]",
+        "[6-7]",
+        "[37-40]",
+        "[41-43]",
+        "[44]",
+        "[45-47]",
+        "[48]",
+        "[9-11,49]",
+        "[13,36]",
+        "[50]",
+        "[14,51]",
+        "[12,52]",
+        "[15,53-54]",
+        "[55]",
+        "[52,56]",
+        "[57]",
+        "[58-65]",
+        "[16-17]",
+        "[66-67]",
+        "[18-20]",
+        "[21-22]",
+        "[79]",
+        "[80]",
+        "[25]",
+        "[26]",
+        "[27]",
+        "[28]",
+        "[29]",
+        "[68-74]",
+        "[75]",
+        "[76]",
+        "[77]",
+        "[81]",
+        "[81]",
+        "[81]",
+        "[78]",
+        "[77]"
+      ],
+      "citation_frequency": {
+        "[1-3]": 1,
+        "[4]": 2,
+        "[2]": 1,
+        "[5]": 1,
+        "[6-7]": 2,
+        "[3,8]": 1,
+        "[9-11]": 1,
+        "[12-13]": 1,
+        "[14]": 1,
+        "[15]": 1,
+        "[16-17]": 2,
+        "[18-20]": 2,
+        "[21-22]": 2,
+        "[23-24]": 1,
+        "[25]": 2,
+        "[26]": 2,
+        "[27]": 2,
+        "[28-29]": 1,
+        "[1]": 1,
+        "[30]": 1,
+        "[31-36]": 1,
+        "[37-40]": 1,
+        "[41-43]": 1,
+        "[44]": 1,
+        "[45-47]": 1,
+        "[48]": 1,
+        "[9-11,49]": 1,
+        "[13,36]": 1,
+        "[50]": 1,
+        "[14,51]": 1,
+        "[12,52]": 1,
+        "[15,53-54]": 1,
+        "[55]": 1,
+        "[52,56]": 1,
+        "[57]": 1,
+        "[58-65]": 1,
+        "[66-67]": 1,
+        "[79]": 1,
+        "[80]": 1,
+        "[28]": 1,
+        "[29]": 1,
+        "[68-74]": 1,
+        "[75]": 1,
+        "[76]": 1,
+        "[77]": 2,
+        "[81]": 3,
+        "[78]": 1
+      }
+    },
+    "all_tables_and_appendix_data": {
+      "passed": true,
+      "body_table_counts": {
+        "source": 103,
+        "candidate": 103
+      },
+      "appendix_table_counts": {
+        "source": 54,
+        "candidate": 54
+      },
+      "all_table_details": [
+        {
+          "body_table_number": 1,
+          "source_canonical_sha256": "e2554fd34da31874fbced2ba79ad2fc805957650ec2a06b276202fd1f7a372e8",
+          "candidate_canonical_sha256": "e2554fd34da31874fbced2ba79ad2fc805957650ec2a06b276202fd1f7a372e8",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 2,
+          "source_canonical_sha256": "b058591f72d498d2462bb1b1c346b589bd990572c527a2f0838fe09e97b2fa92",
+          "candidate_canonical_sha256": "b058591f72d498d2462bb1b1c346b589bd990572c527a2f0838fe09e97b2fa92",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 3,
+          "source_canonical_sha256": "a4ce3a751c26475c26b7a74c3d7b4f45e931d4b1eaec54a5594bbba33a4c4e60",
+          "candidate_canonical_sha256": "a4ce3a751c26475c26b7a74c3d7b4f45e931d4b1eaec54a5594bbba33a4c4e60",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 4,
+          "source_canonical_sha256": "ceceaec5a3357a841766969d96f652489e48133b86953a19c2f709fc7bed0278",
+          "candidate_canonical_sha256": "ceceaec5a3357a841766969d96f652489e48133b86953a19c2f709fc7bed0278",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 5,
+          "source_canonical_sha256": "54be2840b0daa2e8efe9b007afea9c366e337cd45ca0decca34730581d38a540",
+          "candidate_canonical_sha256": "54be2840b0daa2e8efe9b007afea9c366e337cd45ca0decca34730581d38a540",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 6,
+          "source_canonical_sha256": "3478f6b910d9349d7a5f3abe6a5b9ab4b7dff64714d5681f5216c33b1f23cfba",
+          "candidate_canonical_sha256": "3478f6b910d9349d7a5f3abe6a5b9ab4b7dff64714d5681f5216c33b1f23cfba",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 7,
+          "source_canonical_sha256": "d6a848d512bfc0086d17448dffc85933d81856400881debfe249108f64bd1bc6",
+          "candidate_canonical_sha256": "d6a848d512bfc0086d17448dffc85933d81856400881debfe249108f64bd1bc6",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 8,
+          "source_canonical_sha256": "9d768d5ebee899bc76e4ba50dd4a1819157720c9064d23448ca5d38b698516b1",
+          "candidate_canonical_sha256": "9d768d5ebee899bc76e4ba50dd4a1819157720c9064d23448ca5d38b698516b1",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 9,
+          "source_canonical_sha256": "0d2f79395297705cabad6ae5b3cda25b477c8723d2f00bd13c2221bad23b74e7",
+          "candidate_canonical_sha256": "0d2f79395297705cabad6ae5b3cda25b477c8723d2f00bd13c2221bad23b74e7",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 10,
+          "source_canonical_sha256": "891c819feae1d4289a19721ff9fc62c8e2e03c3f1a81d340bf0d77d36982d0a3",
+          "candidate_canonical_sha256": "891c819feae1d4289a19721ff9fc62c8e2e03c3f1a81d340bf0d77d36982d0a3",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 11,
+          "source_canonical_sha256": "5bf223cd6006c112eaac73b8cceb5eb986a84dbc623da939400a33917dbcbe85",
+          "candidate_canonical_sha256": "5bf223cd6006c112eaac73b8cceb5eb986a84dbc623da939400a33917dbcbe85",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 12,
+          "source_canonical_sha256": "facabef575e9b523d0685be5f649767ba5acffd1b6d1ce7aa8d83b4636d1a2db",
+          "candidate_canonical_sha256": "facabef575e9b523d0685be5f649767ba5acffd1b6d1ce7aa8d83b4636d1a2db",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 13,
+          "source_canonical_sha256": "e6095cc78b38f1acd9fe070a0d51344cd5fedba05ddcac3fc5df332365218228",
+          "candidate_canonical_sha256": "e6095cc78b38f1acd9fe070a0d51344cd5fedba05ddcac3fc5df332365218228",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 14,
+          "source_canonical_sha256": "fdde9826ce4e1585e19af19b93b6b9b8ef1b604bd054e096720e256eb6ed9fb2",
+          "candidate_canonical_sha256": "fdde9826ce4e1585e19af19b93b6b9b8ef1b604bd054e096720e256eb6ed9fb2",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 15,
+          "source_canonical_sha256": "6188ac6a14121f345b490423202bb39003c83df4cc15790eead928df5a6c3242",
+          "candidate_canonical_sha256": "6188ac6a14121f345b490423202bb39003c83df4cc15790eead928df5a6c3242",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 16,
+          "source_canonical_sha256": "0f498236dd06325d5d7a847dccf65f7812922f6c358710c1ea1dca4c6ef13171",
+          "candidate_canonical_sha256": "0f498236dd06325d5d7a847dccf65f7812922f6c358710c1ea1dca4c6ef13171",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 17,
+          "source_canonical_sha256": "f0edcb8c58d9379332ac9bd3ce5f6795b2341bf6e590c8f1d3c821e6eda1fcd6",
+          "candidate_canonical_sha256": "f0edcb8c58d9379332ac9bd3ce5f6795b2341bf6e590c8f1d3c821e6eda1fcd6",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 18,
+          "source_canonical_sha256": "99e089247c400fa38293bd2f1ae14f25de6ba4b998380911790f902d9cff3f0c",
+          "candidate_canonical_sha256": "99e089247c400fa38293bd2f1ae14f25de6ba4b998380911790f902d9cff3f0c",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 19,
+          "source_canonical_sha256": "a96112122698a940bf4e334e4004ccd62598949ad299e6db95a9d55501901ad1",
+          "candidate_canonical_sha256": "a96112122698a940bf4e334e4004ccd62598949ad299e6db95a9d55501901ad1",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 20,
+          "source_canonical_sha256": "44d9b94762ca93775490ba37a6605fddac3a4cec89cdfd74acf9f5e0d3a0cd09",
+          "candidate_canonical_sha256": "44d9b94762ca93775490ba37a6605fddac3a4cec89cdfd74acf9f5e0d3a0cd09",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 21,
+          "source_canonical_sha256": "7399bb94f80d90ff56aff640cb2c496e4537677c464a9ce3cd8aac77aa6443a4",
+          "candidate_canonical_sha256": "7399bb94f80d90ff56aff640cb2c496e4537677c464a9ce3cd8aac77aa6443a4",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 22,
+          "source_canonical_sha256": "6c69e3efc8e28e304b65fd5dc2d2f750e9486b8a0b5dbe0427506858083cd75f",
+          "candidate_canonical_sha256": "6c69e3efc8e28e304b65fd5dc2d2f750e9486b8a0b5dbe0427506858083cd75f",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 23,
+          "source_canonical_sha256": "3731c79fd8969cffefd8c4bdaf4872cfe8e46154c7ca4002c4896b7ed629d255",
+          "candidate_canonical_sha256": "3731c79fd8969cffefd8c4bdaf4872cfe8e46154c7ca4002c4896b7ed629d255",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 24,
+          "source_canonical_sha256": "9e8c41931ffa2d1007f6bc681f43cc92be4d39c2685206b433483e2216a618a9",
+          "candidate_canonical_sha256": "9e8c41931ffa2d1007f6bc681f43cc92be4d39c2685206b433483e2216a618a9",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 25,
+          "source_canonical_sha256": "50ecdfa4a4f17b35bafb118304dc30136d1eb31c369dcbd0c65bcbdebc4fa670",
+          "candidate_canonical_sha256": "50ecdfa4a4f17b35bafb118304dc30136d1eb31c369dcbd0c65bcbdebc4fa670",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 26,
+          "source_canonical_sha256": "c6efd88fd658ed4ff168ccdafc34324be121d6e925ecba9064a81af674897c1b",
+          "candidate_canonical_sha256": "c6efd88fd658ed4ff168ccdafc34324be121d6e925ecba9064a81af674897c1b",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 27,
+          "source_canonical_sha256": "b76b47ca41b843da8a3983feef3ce6cc2f86fd751afcbb97d46c7ba91856c930",
+          "candidate_canonical_sha256": "b76b47ca41b843da8a3983feef3ce6cc2f86fd751afcbb97d46c7ba91856c930",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 28,
+          "source_canonical_sha256": "93f46af8a0b79b13f18ea5f36afdaa361b47f48bf3a46063492500c98f20bb30",
+          "candidate_canonical_sha256": "93f46af8a0b79b13f18ea5f36afdaa361b47f48bf3a46063492500c98f20bb30",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 29,
+          "source_canonical_sha256": "9b6b46811031e0d234d28f6935aa35ca4fd1aefe095e9edfe473713fbc229407",
+          "candidate_canonical_sha256": "9b6b46811031e0d234d28f6935aa35ca4fd1aefe095e9edfe473713fbc229407",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 30,
+          "source_canonical_sha256": "cb05adbd7fd37ba9c7191c67823797149e6042258a9081a900c87f2a9e303ec6",
+          "candidate_canonical_sha256": "cb05adbd7fd37ba9c7191c67823797149e6042258a9081a900c87f2a9e303ec6",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 31,
+          "source_canonical_sha256": "63b1ca6f2c40755ac08d5f1008ad22d24f77feb56e9161bc9594f1c6498083cb",
+          "candidate_canonical_sha256": "63b1ca6f2c40755ac08d5f1008ad22d24f77feb56e9161bc9594f1c6498083cb",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 32,
+          "source_canonical_sha256": "43d0f05cc01dd5401b1e8a230d161ce19495e577de2ffe0c7d532b34976f35b4",
+          "candidate_canonical_sha256": "43d0f05cc01dd5401b1e8a230d161ce19495e577de2ffe0c7d532b34976f35b4",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 33,
+          "source_canonical_sha256": "4728f6c83f79edbe9a9307735b7d0eddb5aa1ec179a272c2ce483c2695acdb52",
+          "candidate_canonical_sha256": "4728f6c83f79edbe9a9307735b7d0eddb5aa1ec179a272c2ce483c2695acdb52",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 34,
+          "source_canonical_sha256": "228726df710d94df43f1553745f54cdb71438e54d8b53f024a9de6472ca76aea",
+          "candidate_canonical_sha256": "228726df710d94df43f1553745f54cdb71438e54d8b53f024a9de6472ca76aea",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 35,
+          "source_canonical_sha256": "c26c65b3805226772989694e52e43e549417623b4c608b244ee63efad207584e",
+          "candidate_canonical_sha256": "c26c65b3805226772989694e52e43e549417623b4c608b244ee63efad207584e",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 36,
+          "source_canonical_sha256": "6abcca3a5ac5d22372f88b8e7c09b876ee8f7a5aca1af2c066bcd566b10afa89",
+          "candidate_canonical_sha256": "6abcca3a5ac5d22372f88b8e7c09b876ee8f7a5aca1af2c066bcd566b10afa89",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 37,
+          "source_canonical_sha256": "1923a011e0f927498531db3bfd5c653cd5d7a295eed5b588af86968d015d9c9f",
+          "candidate_canonical_sha256": "1923a011e0f927498531db3bfd5c653cd5d7a295eed5b588af86968d015d9c9f",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 38,
+          "source_canonical_sha256": "d2dca42a9c8e16748736ce958d9ffd47825476b49cef624ab4e88fb6eb95866f",
+          "candidate_canonical_sha256": "d2dca42a9c8e16748736ce958d9ffd47825476b49cef624ab4e88fb6eb95866f",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 39,
+          "source_canonical_sha256": "ba0a12e8f5d026cf4eb1ef5650ff67de08aba19d84c3aec31b7f88afecb26e7f",
+          "candidate_canonical_sha256": "ba0a12e8f5d026cf4eb1ef5650ff67de08aba19d84c3aec31b7f88afecb26e7f",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 40,
+          "source_canonical_sha256": "2199f4feeea7d16280a596f2dea8aaa49120bcc5d875f80a1a48785a959ff027",
+          "candidate_canonical_sha256": "2199f4feeea7d16280a596f2dea8aaa49120bcc5d875f80a1a48785a959ff027",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 41,
+          "source_canonical_sha256": "ac6ce962ffb8bef01559aa59aec41421cadeb3f6d3bfcb38a792a964fe05742c",
+          "candidate_canonical_sha256": "ac6ce962ffb8bef01559aa59aec41421cadeb3f6d3bfcb38a792a964fe05742c",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 42,
+          "source_canonical_sha256": "e602cb6e171b76fd97aa0e2c746e5316dddd0922d3eab6de6dbfe2fbc049b030",
+          "candidate_canonical_sha256": "e602cb6e171b76fd97aa0e2c746e5316dddd0922d3eab6de6dbfe2fbc049b030",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 43,
+          "source_canonical_sha256": "6cacc3a969a0e4d5fe3a24edbb7b0a0eba1a0df31129009be363289d414e1e84",
+          "candidate_canonical_sha256": "6cacc3a969a0e4d5fe3a24edbb7b0a0eba1a0df31129009be363289d414e1e84",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 44,
+          "source_canonical_sha256": "f42db93979746b5679ea52c2fb0057291c0922d89d5bfee949361e5b7491554d",
+          "candidate_canonical_sha256": "f42db93979746b5679ea52c2fb0057291c0922d89d5bfee949361e5b7491554d",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 45,
+          "source_canonical_sha256": "b22eded0ff183e781da91feac0210809722226f59d1d22cca5e82014d2d950ae",
+          "candidate_canonical_sha256": "b22eded0ff183e781da91feac0210809722226f59d1d22cca5e82014d2d950ae",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 46,
+          "source_canonical_sha256": "0421bbff59697be235e0237f456e16002f74497d092c76bcc87a99bda2383ca5",
+          "candidate_canonical_sha256": "0421bbff59697be235e0237f456e16002f74497d092c76bcc87a99bda2383ca5",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 47,
+          "source_canonical_sha256": "e5bef46f26f3f424f2dbbab230b7645640d2e6328512b822debe714b1f991982",
+          "candidate_canonical_sha256": "e5bef46f26f3f424f2dbbab230b7645640d2e6328512b822debe714b1f991982",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 48,
+          "source_canonical_sha256": "4ecbefbc6ceb5f5e138d1afcc19a76d422dd7489a62c97d5ba0888fed5f8ef1f",
+          "candidate_canonical_sha256": "4ecbefbc6ceb5f5e138d1afcc19a76d422dd7489a62c97d5ba0888fed5f8ef1f",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 49,
+          "source_canonical_sha256": "7b664ef02c94eef91f0af891c7396869e761a18a00a748ad47bf9c29a7eb1555",
+          "candidate_canonical_sha256": "7b664ef02c94eef91f0af891c7396869e761a18a00a748ad47bf9c29a7eb1555",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 50,
+          "source_canonical_sha256": "90cf735228124bc09c6c21969923fea69f198dcf5095e6a4b3b3453b3e216664",
+          "candidate_canonical_sha256": "90cf735228124bc09c6c21969923fea69f198dcf5095e6a4b3b3453b3e216664",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 51,
+          "source_canonical_sha256": "0f641077ea60d323bd5164288b8a8c2046830b33a3b87016d1dff7611d4d73b6",
+          "candidate_canonical_sha256": "0f641077ea60d323bd5164288b8a8c2046830b33a3b87016d1dff7611d4d73b6",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 52,
+          "source_canonical_sha256": "892dac7b83ead0aa88245fd0164fe5f630ace5d021153209623cf9b57dc5c9ce",
+          "candidate_canonical_sha256": "892dac7b83ead0aa88245fd0164fe5f630ace5d021153209623cf9b57dc5c9ce",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 53,
+          "source_canonical_sha256": "7e91d69315c032c8713af8a190578b8e52ee206e33268782ba4ad635c184f883",
+          "candidate_canonical_sha256": "7e91d69315c032c8713af8a190578b8e52ee206e33268782ba4ad635c184f883",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 54,
+          "source_canonical_sha256": "e21376915866a72f3cfbf87fcc4983a09dd38693d5fdc0fc67e22b70a6ff5623",
+          "candidate_canonical_sha256": "e21376915866a72f3cfbf87fcc4983a09dd38693d5fdc0fc67e22b70a6ff5623",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 55,
+          "source_canonical_sha256": "304008aa3bedd758dbde7f2bbbce1c7e2bc5f7c9668e7b539ca2402fff329850",
+          "candidate_canonical_sha256": "304008aa3bedd758dbde7f2bbbce1c7e2bc5f7c9668e7b539ca2402fff329850",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 56,
+          "source_canonical_sha256": "57a0ad57fa7b90c61e8a4659285f2148cb50321cbee5db6cada3301621d5011c",
+          "candidate_canonical_sha256": "57a0ad57fa7b90c61e8a4659285f2148cb50321cbee5db6cada3301621d5011c",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 57,
+          "source_canonical_sha256": "15b6bc184054b06e95e5d7fecf2a8a63eac44e0d66c6b698cc822b6564aa4924",
+          "candidate_canonical_sha256": "15b6bc184054b06e95e5d7fecf2a8a63eac44e0d66c6b698cc822b6564aa4924",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 58,
+          "source_canonical_sha256": "6aed8a0021955c637ed0b3a8c8ac887f42936d9a5735063d3da2576cca6170e7",
+          "candidate_canonical_sha256": "6aed8a0021955c637ed0b3a8c8ac887f42936d9a5735063d3da2576cca6170e7",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 59,
+          "source_canonical_sha256": "a62de9f215573682a6ecc905c42fa12248be02abe4f06e153158fd27585c19ff",
+          "candidate_canonical_sha256": "a62de9f215573682a6ecc905c42fa12248be02abe4f06e153158fd27585c19ff",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 60,
+          "source_canonical_sha256": "1f8f14db3e0b7340713215fb18a735f4255daa57ce8ff0f3163fbdad2478d30b",
+          "candidate_canonical_sha256": "1f8f14db3e0b7340713215fb18a735f4255daa57ce8ff0f3163fbdad2478d30b",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 61,
+          "source_canonical_sha256": "9877395f2c6fa33d3b5cd34be174d6544607e7c4a1e4e47c176ddec2c7c287ce",
+          "candidate_canonical_sha256": "9877395f2c6fa33d3b5cd34be174d6544607e7c4a1e4e47c176ddec2c7c287ce",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 62,
+          "source_canonical_sha256": "9e0f639fd18bf37e13d1be368ced10c79a29ee11dc5f2202c70cf7e97e88d695",
+          "candidate_canonical_sha256": "9e0f639fd18bf37e13d1be368ced10c79a29ee11dc5f2202c70cf7e97e88d695",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 63,
+          "source_canonical_sha256": "7994ad540d6985feb374b07ef6121faf6c3bfaf28b892fe092ef381ddb9786db",
+          "candidate_canonical_sha256": "7994ad540d6985feb374b07ef6121faf6c3bfaf28b892fe092ef381ddb9786db",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 64,
+          "source_canonical_sha256": "982a5b61790ebeb40a72b10a20ba466a7751c3099cdcf1552bfb42605fd2c6f8",
+          "candidate_canonical_sha256": "982a5b61790ebeb40a72b10a20ba466a7751c3099cdcf1552bfb42605fd2c6f8",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 65,
+          "source_canonical_sha256": "1c915f669994535cc336eaee64bf4df5147dfce6f0045a957bea7009820f63e8",
+          "candidate_canonical_sha256": "1c915f669994535cc336eaee64bf4df5147dfce6f0045a957bea7009820f63e8",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 66,
+          "source_canonical_sha256": "0918cb65ac940f3b59767a488eb7210e721b1d46ffa7c7c22ae47115ab0890ab",
+          "candidate_canonical_sha256": "0918cb65ac940f3b59767a488eb7210e721b1d46ffa7c7c22ae47115ab0890ab",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 67,
+          "source_canonical_sha256": "ea0700bd8561fc9246f38e992547de1de5f68410f392d6e050c8353f6c177d61",
+          "candidate_canonical_sha256": "ea0700bd8561fc9246f38e992547de1de5f68410f392d6e050c8353f6c177d61",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 68,
+          "source_canonical_sha256": "06ff9c53e161b12137cc886b583e19ed0007a89a44add7bb1dc83abe0b4d85e4",
+          "candidate_canonical_sha256": "06ff9c53e161b12137cc886b583e19ed0007a89a44add7bb1dc83abe0b4d85e4",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 69,
+          "source_canonical_sha256": "4fa8fa194e19feaf0761e6382275cf661b7e1cdfd7e6f846f22593c03fceec16",
+          "candidate_canonical_sha256": "4fa8fa194e19feaf0761e6382275cf661b7e1cdfd7e6f846f22593c03fceec16",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 70,
+          "source_canonical_sha256": "b06c9c25b3a268c22878242248d1303fa802b54e551c07ac6fdaa25674e7f7d6",
+          "candidate_canonical_sha256": "b06c9c25b3a268c22878242248d1303fa802b54e551c07ac6fdaa25674e7f7d6",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 71,
+          "source_canonical_sha256": "36934273e050ebba66a459279997daa7073aa8d3f24596773f9b206d1c873fa4",
+          "candidate_canonical_sha256": "36934273e050ebba66a459279997daa7073aa8d3f24596773f9b206d1c873fa4",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 72,
+          "source_canonical_sha256": "a550e789891c47adaf77c3eceb0d68d7594a0e62461d3d50319a2e201c0f41b5",
+          "candidate_canonical_sha256": "a550e789891c47adaf77c3eceb0d68d7594a0e62461d3d50319a2e201c0f41b5",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 73,
+          "source_canonical_sha256": "91a562048fe730bac47415fed57316a47fb4298f78fd96e397bcf7942dd3cfb5",
+          "candidate_canonical_sha256": "91a562048fe730bac47415fed57316a47fb4298f78fd96e397bcf7942dd3cfb5",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 74,
+          "source_canonical_sha256": "99a81434a4c45c5810ac1d3a1bbf0f72e9a91d066295fce4e1b77e69390726aa",
+          "candidate_canonical_sha256": "99a81434a4c45c5810ac1d3a1bbf0f72e9a91d066295fce4e1b77e69390726aa",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 75,
+          "source_canonical_sha256": "80a65564c88e1385b4e694ff264c4fba6f93296e65fe6162aafc0c25c8cce00e",
+          "candidate_canonical_sha256": "80a65564c88e1385b4e694ff264c4fba6f93296e65fe6162aafc0c25c8cce00e",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 76,
+          "source_canonical_sha256": "76659dca1241c084243224be6f55447c96a0857e3f60bd784abc47bbb60410e7",
+          "candidate_canonical_sha256": "76659dca1241c084243224be6f55447c96a0857e3f60bd784abc47bbb60410e7",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 77,
+          "source_canonical_sha256": "57f0bbe2ab85af25fa2ff7cde987da257de9640f23255ededfc4d19a193d910b",
+          "candidate_canonical_sha256": "57f0bbe2ab85af25fa2ff7cde987da257de9640f23255ededfc4d19a193d910b",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 78,
+          "source_canonical_sha256": "e41c9adcc9c9fa74e6730d027ca8e2180290bce380d9978d19f2b470ffc697b2",
+          "candidate_canonical_sha256": "e41c9adcc9c9fa74e6730d027ca8e2180290bce380d9978d19f2b470ffc697b2",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 79,
+          "source_canonical_sha256": "0a09317f921cdbc04583891e4de64dd021c330f930aff758b90e104ae4b6d77b",
+          "candidate_canonical_sha256": "0a09317f921cdbc04583891e4de64dd021c330f930aff758b90e104ae4b6d77b",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 80,
+          "source_canonical_sha256": "9fc475d313753b89bddba71c52963e50deeb53e9b9a9c6cc599325adb838bcb9",
+          "candidate_canonical_sha256": "9fc475d313753b89bddba71c52963e50deeb53e9b9a9c6cc599325adb838bcb9",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 81,
+          "source_canonical_sha256": "7b31164289d2483eb358becb50ed6a2a8eacaa2f5accab68ac5a16acadba873b",
+          "candidate_canonical_sha256": "7b31164289d2483eb358becb50ed6a2a8eacaa2f5accab68ac5a16acadba873b",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 82,
+          "source_canonical_sha256": "5877c1614aa9b1926bac77504e9caeb4f6a777bf6a5bdc1ecf6b665464cfc09a",
+          "candidate_canonical_sha256": "5877c1614aa9b1926bac77504e9caeb4f6a777bf6a5bdc1ecf6b665464cfc09a",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 83,
+          "source_canonical_sha256": "1ddb8577232e8d737cad964c0e9433e7b87cd6fa050014202c04fa3c8e5a44f0",
+          "candidate_canonical_sha256": "1ddb8577232e8d737cad964c0e9433e7b87cd6fa050014202c04fa3c8e5a44f0",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 84,
+          "source_canonical_sha256": "b8cdb1ab4b3ac371825b477b3ab9f1d4c96eb2c390bd67635373c05b95733486",
+          "candidate_canonical_sha256": "b8cdb1ab4b3ac371825b477b3ab9f1d4c96eb2c390bd67635373c05b95733486",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 85,
+          "source_canonical_sha256": "6a67a76f993fe55ea8f681e7a1a12485c0e7d7d3a7c74d5a264db2435c0e20fd",
+          "candidate_canonical_sha256": "6a67a76f993fe55ea8f681e7a1a12485c0e7d7d3a7c74d5a264db2435c0e20fd",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 86,
+          "source_canonical_sha256": "94845e78fe9340434e505a6620c1aead4ecf3c994c3a15b06a609830400c6117",
+          "candidate_canonical_sha256": "94845e78fe9340434e505a6620c1aead4ecf3c994c3a15b06a609830400c6117",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 87,
+          "source_canonical_sha256": "9b3dbfb5fc520fadffb8374a5d911e701753266b02b125cd1035494be35b42f6",
+          "candidate_canonical_sha256": "9b3dbfb5fc520fadffb8374a5d911e701753266b02b125cd1035494be35b42f6",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 88,
+          "source_canonical_sha256": "5bb9710d424fc5b7ec39772c49298cfb016ac775bee05183cbce1610f420c2c8",
+          "candidate_canonical_sha256": "5bb9710d424fc5b7ec39772c49298cfb016ac775bee05183cbce1610f420c2c8",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 89,
+          "source_canonical_sha256": "348e63219ce4780802b198c88a4aed047aeeefb3e73234c0331b4c2cd096e639",
+          "candidate_canonical_sha256": "348e63219ce4780802b198c88a4aed047aeeefb3e73234c0331b4c2cd096e639",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 90,
+          "source_canonical_sha256": "f0c4d7a8065c078ae6d7f6d081037c4496b89727d152735ce4a5469026d588f0",
+          "candidate_canonical_sha256": "f0c4d7a8065c078ae6d7f6d081037c4496b89727d152735ce4a5469026d588f0",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 91,
+          "source_canonical_sha256": "8759e34ee9a24e7c56c98126f2aa0efeb3f45c8121fa2f8eeb2e228a9d74f039",
+          "candidate_canonical_sha256": "8759e34ee9a24e7c56c98126f2aa0efeb3f45c8121fa2f8eeb2e228a9d74f039",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 92,
+          "source_canonical_sha256": "728a6a6c88aaaba578daa327e205ba1345e40aea33b4cafc4a1960c75ff25f30",
+          "candidate_canonical_sha256": "728a6a6c88aaaba578daa327e205ba1345e40aea33b4cafc4a1960c75ff25f30",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 93,
+          "source_canonical_sha256": "57b3bd99383f97897a61a7de28dd96132356c39480f50421147a1a31292d334a",
+          "candidate_canonical_sha256": "57b3bd99383f97897a61a7de28dd96132356c39480f50421147a1a31292d334a",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 94,
+          "source_canonical_sha256": "0a521745846789cf886b61a4ebee449707e812e41f81724cef6ba50b901bf6a7",
+          "candidate_canonical_sha256": "0a521745846789cf886b61a4ebee449707e812e41f81724cef6ba50b901bf6a7",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 95,
+          "source_canonical_sha256": "1d0e168c4561013ee44a32dc7c774047ccf5816a37aa17e9f99979bb693de2f8",
+          "candidate_canonical_sha256": "1d0e168c4561013ee44a32dc7c774047ccf5816a37aa17e9f99979bb693de2f8",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 96,
+          "source_canonical_sha256": "ed388aeeec6cde50d4f2134c3ad0281d2b6a87c538ac26307d1c27aa66875464",
+          "candidate_canonical_sha256": "ed388aeeec6cde50d4f2134c3ad0281d2b6a87c538ac26307d1c27aa66875464",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 97,
+          "source_canonical_sha256": "f641d5b84920bfaad9524519197cbf400cfdc58bc3275474bd068918e98b4608",
+          "candidate_canonical_sha256": "f641d5b84920bfaad9524519197cbf400cfdc58bc3275474bd068918e98b4608",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 98,
+          "source_canonical_sha256": "b7a203083f85825674e26c831cd853b6d3c6682f4d38c245becb3cb223bfa1c1",
+          "candidate_canonical_sha256": "b7a203083f85825674e26c831cd853b6d3c6682f4d38c245becb3cb223bfa1c1",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 99,
+          "source_canonical_sha256": "4322f66834a0403c66c7eebceb50ea49363facbb6b390e56b993abcf7f9cdd97",
+          "candidate_canonical_sha256": "4322f66834a0403c66c7eebceb50ea49363facbb6b390e56b993abcf7f9cdd97",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 100,
+          "source_canonical_sha256": "2a8bd6701d23355137d8cb9439148d0d27c2b391ea4245ccb44ed833c22f5260",
+          "candidate_canonical_sha256": "2a8bd6701d23355137d8cb9439148d0d27c2b391ea4245ccb44ed833c22f5260",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 101,
+          "source_canonical_sha256": "8c2cbb7af189717a7c85c48fd904006c67eef03313709378d75555da38f56aed",
+          "candidate_canonical_sha256": "8c2cbb7af189717a7c85c48fd904006c67eef03313709378d75555da38f56aed",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 102,
+          "source_canonical_sha256": "e3479e5bb7abb6c1241fd2bc4992ac85ab6c37bcdc605eb4058ad5decec2f521",
+          "candidate_canonical_sha256": "cf0f06134add8b13e9f09922b92e4210a0c3793bad5b3db2c3189a49455f667f",
+          "allowed_D2_cell_substitution": [
+            {
+              "before": "条）、答案规则与逐题判定、盲评表与解盲键",
+              "after": "条）、答案规则与逐题判定"
+            }
+          ],
+          "exact_after_authorized_substitution": true
+        },
+        {
+          "body_table_number": 103,
+          "source_canonical_sha256": "8971d32e1c541ca6f2b2b2cc3c98e247032cc04db8cfb2daa71f1179bcf49185",
+          "candidate_canonical_sha256": "8971d32e1c541ca6f2b2b2cc3c98e247032cc04db8cfb2daa71f1179bcf49185",
+          "allowed_D2_cell_substitution": [],
+          "exact_after_authorized_substitution": true
+        }
+      ],
+      "note": "All 103 complete native tables are canonical-identical except the single authorized D.2 attachment-list text deletion. The original 53 appendix tables and T129 added D-3 table remain; all numeric data and table structure/formatting are exact."
+    },
+    "comments": {
+      "passed": true,
+      "profiles": {
+        "source": {
+          "comments_xml_sha256": "87983efb60d8bc5aa0c4d21c3e7b5f0485db27fdc343acdfd37fef89ef5a2934",
+          "ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "comment_count": 31,
+          "nonempty_comment_count": 30,
+          "empty_ids": [
+            4
+          ],
+          "anchor_counts": {
+            "commentRangeStart": 12,
+            "commentRangeEnd": 12,
+            "commentReference": 31
+          },
+          "ranged_ids": [
+            0,
+            3,
+            4,
+            5,
+            9,
+            15,
+            19,
+            22,
+            23,
+            24,
+            26,
+            29
+          ],
+          "point_ids": [
+            1,
+            2,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12,
+            13,
+            14,
+            16,
+            17,
+            18,
+            20,
+            21,
+            25,
+            27,
+            28,
+            30
+          ],
+          "order_errors": [],
+          "duplicate_events": [],
+          "orphan_anchor_ids": []
+        },
+        "candidate": {
+          "comments_xml_sha256": "87983efb60d8bc5aa0c4d21c3e7b5f0485db27fdc343acdfd37fef89ef5a2934",
+          "ids": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "comment_count": 31,
+          "nonempty_comment_count": 30,
+          "empty_ids": [
+            4
+          ],
+          "anchor_counts": {
+            "commentRangeStart": 12,
+            "commentRangeEnd": 12,
+            "commentReference": 31
+          },
+          "ranged_ids": [
+            0,
+            3,
+            4,
+            5,
+            9,
+            15,
+            19,
+            22,
+            23,
+            24,
+            26,
+            29
+          ],
+          "point_ids": [
+            1,
+            2,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12,
+            13,
+            14,
+            16,
+            17,
+            18,
+            20,
+            21,
+            25,
+            27,
+            28,
+            30
+          ],
+          "order_errors": [],
+          "duplicate_events": [],
+          "orphan_anchor_ids": []
+        }
+      },
+      "comments_xml_byte_identical": true,
+      "unaltered_anchor_ids": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "unapproved_anchor_changes": [],
+      "ID29_destination": "（2）样本规模和评价可比性有限。旧20题仅生成一次，使用修复前图谱，3题含已知误抽关系，并按事后规则核对；新12题在生成前锁定规则、语料与配置，同题三次重复按题汇总，两批结果分别报告。第6.6节已给出GPT语义评价及表6-11a的题级配对差值，但评审代理未统一校准，也未对同一回答重复评价；其自定义指标与DeepSeek RAGAS定义不同。后续应扩大独立题集，使用同一评分定义开展多模型重复评价，报告一致性与全部成功、缺失及失败记录。扩展批次中项目RAG与词法检索RAG的自动分数仍未取得。",
+      "ID30_destination": "（4）业务验证与运行评价覆盖不足。计划覆盖只按类型与规范名判断记录是否涉及知识点，不能判断科研任务是否完成；合并冲突样例不足，主动预警推送、数量汇总的项目权限隔离及上游失败写入链路尚无专项结果。退回动作枚举及重新抽取后停滞天数的指标口径仍需核对。后续应补齐冲突与异常状态测试，复核来源优先级、预警计算和状态留痕，并在声明数据规模、并发与模型配置下测量业务接口和生成任务的性能。",
+      "note": "ID29 range start/end/reference moved as a complete group; ID30 point-reference moved to retained 7.3(4). All comments text/IDs and 12-range/19-point structure remain exact."
+    },
+    "media_and_images": {
+      "passed": true,
+      "profiles": {
+        "source": {
+          "media_sha256": {
+            "word/media/": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "word/media/image1.png": "fadcfdaefb7b6aa5ba9cf2d1a2f35e759d2520465291de1ebe7b6ce6b10d1dbf",
+            "word/media/image10.png": "0cf2e203d10f607bed625db729824930759974912884611206ab10cd20c7a086",
+            "word/media/image11.png": "9d059288a39465578e57eb60d2de0fa9cf0856b61a3443381a3db2051d6e95d6",
+            "word/media/image12.png": "01546ffe86f120b029f05a7fd4f1aa83061ba18b3d9312490bccea0d56da6552",
+            "word/media/image13.png": "e931ab6a57ad915797bf096007bcd960a3b2dc775e5c7430eced666edacd8369",
+            "word/media/image14.png": "ec024159103cac61ecab2962b62a4388a0b27a40c0f28bd0bc322aecf4edb320",
+            "word/media/image15.png": "4b05b9b854a2a847d64c3c862d7a18a6fcf6f8ac265ea8ccdea4bfe31ea37b03",
+            "word/media/image16.png": "c2204d5ac7c174fe782d161167b66457b5ec68f0579996e5d0c9cd476a9942f8",
+            "word/media/image17.png": "7edcff5fe5db86f208f1f5adc3893604eb4be8eb5e1f072d51b3552fd6ae2006",
+            "word/media/image18.png": "631186578e495e3da2bf85b7ba8830f3f371f80698d368511d6c1d0ec4626ddc",
+            "word/media/image19.png": "f8240d5912ff282304fe5a122e120abd19823cca11df61f752d486a920a648b9",
+            "word/media/image2.png": "bb4ae8c4f20e132126eb6e1f2d5f5f50543e2cdda565641e13915c3da032506d",
+            "word/media/image20.png": "e32d84f5e9a17b2a19ad144f76c9b26e404d247ccc9ea5dc9e8cf929b1998d5c",
+            "word/media/image21.png": "0f7894cc4827b9f1dd20b5c9250a684e2b9c536ef463c151b9918d878fc4a238",
+            "word/media/image22.png": "04d9b1c05074afd560bfb3e97cb867aa356c17ee903936abe62e620bc6d234c0",
+            "word/media/image23.png": "df87a94e6b3b419f710e872c6a81ba3d48e78ac3eff776024b23e30594c15435",
+            "word/media/image24.png": "727fb28f3f85952784268b0b7a277a2d2482ed4ceb52d8778148874f9ed3aaf1",
+            "word/media/image25.png": "12829a550a6cfc716854c88e94faa7b5624b8be3868f5998cb7605f0ad8bdfb6",
+            "word/media/image26.png": "a3735db1036a0b99278f6c442aeb031fd33d17e93a1164e16d974a8a5e5e8d7c",
+            "word/media/image27.png": "a51df40af464383d4587b904d68b66954bae5ab6ec33c467c4a57e361fe6d88a",
+            "word/media/image28.png": "54da8529fe1fbb24980fb418ebd6f4f369f88942bb3a04a9407820ec231d1c4e",
+            "word/media/image3.png": "d54bfab2ffa9dfdc147eec602e032c0b47cda73a5b86e3ec20f74a6b1b925834",
+            "word/media/image4.png": "e60c9472a51826de5d8c44b216013f6d7bcefc1ee9c16912eef7308b4b92c1d5",
+            "word/media/image5.png": "cbda4b57e0515b8610705b8c1ae5c6ab0e403eb1ddd9d008d7d437d04bf46e40",
+            "word/media/image6.png": "40dfac749ca20dbe45ff09c145ff6935052f2d5c804f419565183d1b7663beeb",
+            "word/media/image7.png": "ab3becb18535ee028df107183e422e5f45878b4eed5dc1170954db3f6cab53c6",
+            "word/media/image8.png": "d9357e749df0f8ac79e7dd5fc323a33d96411bd9616fed5ba698c62255c90cd4",
+            "word/media/image9.png": "39871b77cecc7ffa4a68dbf203daad951006be13893ca39ca62b3ffd9eb8e6d5",
+            "word/media/t129-fig-4-3-er-crows-foot.png": "ef2f33b27baed02e1b067f478587179f13e91d9ded20ced4692efc8d23da2e8c",
+            "word/media/t129-fig-4-10-assistance-flows.png": "f66f28ad8e13ccb76e6f1741ae0e7de367481f6d2368c02d2b8b6b97a8076890",
+            "word/media/t129-01-project-permissions.png": "83f24e239293dcc589445a5ddde8e536d3375fabc6c4c11e7b923ab7268bd319",
+            "word/media/t129-07-note-version-approval.png": "a8e29a4bbb1a1cf43abb2d7afb8a27583634b06d0040f8de31b67f08ae1e3d88",
+            "word/media/t129-03-attachment-ingestion.png": "b619bbb06d16233ddfe8d06a13b18040d6f04c1c81da4d79c0dd6e1707c29c34",
+            "word/media/t129-06-ocr-reviewed-text.png": "d19a24cf02bebd1107eeed5957ba647ce89d3ca66dcfa9e2aefc306b559565d2",
+            "word/media/t129-04-qa-citations.png": "bf80e339ddf81a43ce04be6e0fdc4347176488187c375581a66d54e08f4e05a3",
+            "word/media/t129-05-alert-inbox.png": "4b87d5fc8758a0f1354e5a8fae4b1cb3678ea1725d15d00a28e1ec4c2e4069d7",
+            "word/media/t129-02-audit-tool-trace.png": "fc30cb93eeabd7b833b2275eae46d6d6534091f7c1f0698c7aa6ae09c2e15ea9",
+            "word/media/t129-09-blind-review-isolation.png": "8e0000090c2490111430c84e4107171e0cd266afc92bac84a425faf9fac8744c",
+            "word/media/t129-11-qa-feedback.png": "2756fcd42a46c4832bfc858e101ae163d20b4ff5dedb437b555d118ce5788532",
+            "word/media/t129-project-one-seed-note-1.png": "d8b7ff8a56c52645fd75b475053764abfbd90601cf925a166cf5c9ac3d9fd20d",
+            "word/media/t129-project-one-seed-note-2.png": "e11e0ddff653b5265eb8c4de9c9557dd6160ee8fb53a4cedb4cf73e37387adda",
+            "word/media/t129-project-one-seed-note-3.png": "a46be55874abfe6a05704cd2e2d2c085c45368a71a39a855665c137bae122f6d",
+            "word/media/t129-project-one-seed-note-4.png": "ccc13d5416d9051973d8ea64a16a07c5e75be9fe70ae0fe62c0e3ae0041b2b47",
+            "word/media/t129-historical-sop-contexts-1.png": "e6a6f9adcdee3c7a4b9718ae9330aebbe5cf9ccf96352adc1d00d05b735f4d78",
+            "word/media/t129-historical-sop-contexts-2.png": "eb8b5e0721043dd946e9a3d00b3e7f43f0a046c1d046134147176e6d36bd2715"
+          },
+          "media_count": 46,
+          "image_relationship_count": 45,
+          "image_reference_count": 43,
+          "invalid": [],
+          "relationships": [
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId39",
+              "resolved_target": "word/media/image28.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId38",
+              "resolved_target": "word/media/image27.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId37",
+              "resolved_target": "word/media/image26.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId36",
+              "resolved_target": "word/media/image25.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId35",
+              "resolved_target": "word/media/image24.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId34",
+              "resolved_target": "word/media/image23.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId33",
+              "resolved_target": "word/media/image22.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId32",
+              "resolved_target": "word/media/image21.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId31",
+              "resolved_target": "word/media/image20.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId30",
+              "resolved_target": "word/media/image19.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId29",
+              "resolved_target": "word/media/image18.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId28",
+              "resolved_target": "word/media/image17.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId27",
+              "resolved_target": "word/media/image16.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId26",
+              "resolved_target": "word/media/image15.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId25",
+              "resolved_target": "word/media/image14.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId24",
+              "resolved_target": "word/media/image13.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId23",
+              "resolved_target": "word/media/image12.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId22",
+              "resolved_target": "word/media/image11.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId21",
+              "resolved_target": "word/media/image10.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId20",
+              "resolved_target": "word/media/image9.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId19",
+              "resolved_target": "word/media/image8.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId18",
+              "resolved_target": "word/media/image7.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId17",
+              "resolved_target": "word/media/image6.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId16",
+              "resolved_target": "word/media/image5.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId15",
+              "resolved_target": "word/media/image4.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId14",
+              "resolved_target": "word/media/image3.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId13",
+              "resolved_target": "word/media/image2.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId12",
+              "resolved_target": "word/media/image1.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_43",
+              "resolved_target": "word/media/t129-fig-4-3-er-crows-foot.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_44",
+              "resolved_target": "word/media/t129-fig-4-10-assistance-flows.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_45",
+              "resolved_target": "word/media/t129-01-project-permissions.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_46",
+              "resolved_target": "word/media/t129-07-note-version-approval.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_47",
+              "resolved_target": "word/media/t129-03-attachment-ingestion.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_48",
+              "resolved_target": "word/media/t129-06-ocr-reviewed-text.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_49",
+              "resolved_target": "word/media/t129-04-qa-citations.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_50",
+              "resolved_target": "word/media/t129-05-alert-inbox.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_51",
+              "resolved_target": "word/media/t129-02-audit-tool-trace.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_52",
+              "resolved_target": "word/media/t129-09-blind-review-isolation.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_53",
+              "resolved_target": "word/media/t129-11-qa-feedback.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_54",
+              "resolved_target": "word/media/t129-project-one-seed-note-1.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_55",
+              "resolved_target": "word/media/t129-project-one-seed-note-2.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_56",
+              "resolved_target": "word/media/t129-project-one-seed-note-3.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_57",
+              "resolved_target": "word/media/t129-project-one-seed-note-4.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_58",
+              "resolved_target": "word/media/t129-historical-sop-contexts-1.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_59",
+              "resolved_target": "word/media/t129-historical-sop-contexts-2.png",
+              "external": false
+            }
+          ]
+        },
+        "candidate": {
+          "media_sha256": {
+            "word/media/": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "word/media/image1.png": "fadcfdaefb7b6aa5ba9cf2d1a2f35e759d2520465291de1ebe7b6ce6b10d1dbf",
+            "word/media/image10.png": "0cf2e203d10f607bed625db729824930759974912884611206ab10cd20c7a086",
+            "word/media/image11.png": "9d059288a39465578e57eb60d2de0fa9cf0856b61a3443381a3db2051d6e95d6",
+            "word/media/image12.png": "01546ffe86f120b029f05a7fd4f1aa83061ba18b3d9312490bccea0d56da6552",
+            "word/media/image13.png": "e931ab6a57ad915797bf096007bcd960a3b2dc775e5c7430eced666edacd8369",
+            "word/media/image14.png": "ec024159103cac61ecab2962b62a4388a0b27a40c0f28bd0bc322aecf4edb320",
+            "word/media/image15.png": "4b05b9b854a2a847d64c3c862d7a18a6fcf6f8ac265ea8ccdea4bfe31ea37b03",
+            "word/media/image16.png": "c2204d5ac7c174fe782d161167b66457b5ec68f0579996e5d0c9cd476a9942f8",
+            "word/media/image17.png": "7edcff5fe5db86f208f1f5adc3893604eb4be8eb5e1f072d51b3552fd6ae2006",
+            "word/media/image18.png": "631186578e495e3da2bf85b7ba8830f3f371f80698d368511d6c1d0ec4626ddc",
+            "word/media/image19.png": "f8240d5912ff282304fe5a122e120abd19823cca11df61f752d486a920a648b9",
+            "word/media/image2.png": "bb4ae8c4f20e132126eb6e1f2d5f5f50543e2cdda565641e13915c3da032506d",
+            "word/media/image20.png": "e32d84f5e9a17b2a19ad144f76c9b26e404d247ccc9ea5dc9e8cf929b1998d5c",
+            "word/media/image21.png": "0f7894cc4827b9f1dd20b5c9250a684e2b9c536ef463c151b9918d878fc4a238",
+            "word/media/image22.png": "04d9b1c05074afd560bfb3e97cb867aa356c17ee903936abe62e620bc6d234c0",
+            "word/media/image23.png": "df87a94e6b3b419f710e872c6a81ba3d48e78ac3eff776024b23e30594c15435",
+            "word/media/image24.png": "727fb28f3f85952784268b0b7a277a2d2482ed4ceb52d8778148874f9ed3aaf1",
+            "word/media/image25.png": "12829a550a6cfc716854c88e94faa7b5624b8be3868f5998cb7605f0ad8bdfb6",
+            "word/media/image26.png": "a3735db1036a0b99278f6c442aeb031fd33d17e93a1164e16d974a8a5e5e8d7c",
+            "word/media/image27.png": "a51df40af464383d4587b904d68b66954bae5ab6ec33c467c4a57e361fe6d88a",
+            "word/media/image28.png": "54da8529fe1fbb24980fb418ebd6f4f369f88942bb3a04a9407820ec231d1c4e",
+            "word/media/image3.png": "d54bfab2ffa9dfdc147eec602e032c0b47cda73a5b86e3ec20f74a6b1b925834",
+            "word/media/image4.png": "e60c9472a51826de5d8c44b216013f6d7bcefc1ee9c16912eef7308b4b92c1d5",
+            "word/media/image5.png": "cbda4b57e0515b8610705b8c1ae5c6ab0e403eb1ddd9d008d7d437d04bf46e40",
+            "word/media/image6.png": "40dfac749ca20dbe45ff09c145ff6935052f2d5c804f419565183d1b7663beeb",
+            "word/media/image7.png": "ab3becb18535ee028df107183e422e5f45878b4eed5dc1170954db3f6cab53c6",
+            "word/media/image8.png": "d9357e749df0f8ac79e7dd5fc323a33d96411bd9616fed5ba698c62255c90cd4",
+            "word/media/image9.png": "39871b77cecc7ffa4a68dbf203daad951006be13893ca39ca62b3ffd9eb8e6d5",
+            "word/media/t129-fig-4-3-er-crows-foot.png": "ef2f33b27baed02e1b067f478587179f13e91d9ded20ced4692efc8d23da2e8c",
+            "word/media/t129-fig-4-10-assistance-flows.png": "f66f28ad8e13ccb76e6f1741ae0e7de367481f6d2368c02d2b8b6b97a8076890",
+            "word/media/t129-01-project-permissions.png": "83f24e239293dcc589445a5ddde8e536d3375fabc6c4c11e7b923ab7268bd319",
+            "word/media/t129-07-note-version-approval.png": "a8e29a4bbb1a1cf43abb2d7afb8a27583634b06d0040f8de31b67f08ae1e3d88",
+            "word/media/t129-03-attachment-ingestion.png": "b619bbb06d16233ddfe8d06a13b18040d6f04c1c81da4d79c0dd6e1707c29c34",
+            "word/media/t129-06-ocr-reviewed-text.png": "d19a24cf02bebd1107eeed5957ba647ce89d3ca66dcfa9e2aefc306b559565d2",
+            "word/media/t129-04-qa-citations.png": "bf80e339ddf81a43ce04be6e0fdc4347176488187c375581a66d54e08f4e05a3",
+            "word/media/t129-05-alert-inbox.png": "4b87d5fc8758a0f1354e5a8fae4b1cb3678ea1725d15d00a28e1ec4c2e4069d7",
+            "word/media/t129-02-audit-tool-trace.png": "fc30cb93eeabd7b833b2275eae46d6d6534091f7c1f0698c7aa6ae09c2e15ea9",
+            "word/media/t129-09-blind-review-isolation.png": "8e0000090c2490111430c84e4107171e0cd266afc92bac84a425faf9fac8744c",
+            "word/media/t129-11-qa-feedback.png": "2756fcd42a46c4832bfc858e101ae163d20b4ff5dedb437b555d118ce5788532",
+            "word/media/t129-project-one-seed-note-1.png": "d8b7ff8a56c52645fd75b475053764abfbd90601cf925a166cf5c9ac3d9fd20d",
+            "word/media/t129-project-one-seed-note-2.png": "e11e0ddff653b5265eb8c4de9c9557dd6160ee8fb53a4cedb4cf73e37387adda",
+            "word/media/t129-project-one-seed-note-3.png": "a46be55874abfe6a05704cd2e2d2c085c45368a71a39a855665c137bae122f6d",
+            "word/media/t129-project-one-seed-note-4.png": "ccc13d5416d9051973d8ea64a16a07c5e75be9fe70ae0fe62c0e3ae0041b2b47",
+            "word/media/t129-historical-sop-contexts-1.png": "e6a6f9adcdee3c7a4b9718ae9330aebbe5cf9ccf96352adc1d00d05b735f4d78",
+            "word/media/t129-historical-sop-contexts-2.png": "eb8b5e0721043dd946e9a3d00b3e7f43f0a046c1d046134147176e6d36bd2715"
+          },
+          "media_count": 46,
+          "image_relationship_count": 45,
+          "image_reference_count": 43,
+          "invalid": [],
+          "relationships": [
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId39",
+              "resolved_target": "word/media/image28.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId38",
+              "resolved_target": "word/media/image27.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId37",
+              "resolved_target": "word/media/image26.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId36",
+              "resolved_target": "word/media/image25.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId35",
+              "resolved_target": "word/media/image24.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId34",
+              "resolved_target": "word/media/image23.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId33",
+              "resolved_target": "word/media/image22.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId32",
+              "resolved_target": "word/media/image21.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId31",
+              "resolved_target": "word/media/image20.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId30",
+              "resolved_target": "word/media/image19.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId29",
+              "resolved_target": "word/media/image18.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId28",
+              "resolved_target": "word/media/image17.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId27",
+              "resolved_target": "word/media/image16.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId26",
+              "resolved_target": "word/media/image15.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId25",
+              "resolved_target": "word/media/image14.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId24",
+              "resolved_target": "word/media/image13.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId23",
+              "resolved_target": "word/media/image12.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId22",
+              "resolved_target": "word/media/image11.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId21",
+              "resolved_target": "word/media/image10.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId20",
+              "resolved_target": "word/media/image9.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId19",
+              "resolved_target": "word/media/image8.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId18",
+              "resolved_target": "word/media/image7.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId17",
+              "resolved_target": "word/media/image6.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId16",
+              "resolved_target": "word/media/image5.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId15",
+              "resolved_target": "word/media/image4.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId14",
+              "resolved_target": "word/media/image3.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId13",
+              "resolved_target": "word/media/image2.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rId12",
+              "resolved_target": "word/media/image1.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_43",
+              "resolved_target": "word/media/t129-fig-4-3-er-crows-foot.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_44",
+              "resolved_target": "word/media/t129-fig-4-10-assistance-flows.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_45",
+              "resolved_target": "word/media/t129-01-project-permissions.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_46",
+              "resolved_target": "word/media/t129-07-note-version-approval.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_47",
+              "resolved_target": "word/media/t129-03-attachment-ingestion.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_48",
+              "resolved_target": "word/media/t129-06-ocr-reviewed-text.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_49",
+              "resolved_target": "word/media/t129-04-qa-citations.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_50",
+              "resolved_target": "word/media/t129-05-alert-inbox.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_51",
+              "resolved_target": "word/media/t129-02-audit-tool-trace.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_52",
+              "resolved_target": "word/media/t129-09-blind-review-isolation.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_53",
+              "resolved_target": "word/media/t129-11-qa-feedback.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_54",
+              "resolved_target": "word/media/t129-project-one-seed-note-1.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_55",
+              "resolved_target": "word/media/t129-project-one-seed-note-2.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_56",
+              "resolved_target": "word/media/t129-project-one-seed-note-3.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_57",
+              "resolved_target": "word/media/t129-project-one-seed-note-4.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_58",
+              "resolved_target": "word/media/t129-historical-sop-contexts-1.png",
+              "external": false
+            },
+            {
+              "part": "word/_rels/document.xml.rels",
+              "id": "rIdT129_59",
+              "resolved_target": "word/media/t129-historical-sop-contexts-2.png",
+              "external": false
+            }
+          ]
+        }
+      }
+    },
+    "tracked_revisions": {
+      "passed": true,
+      "profiles": {
+        "source": {
+          "revision_marker_count": 0,
+          "markers": [],
+          "trackRevisions_element_count": 0,
+          "trackRevisions_enabled": false
+        },
+        "candidate": {
+          "revision_marker_count": 0,
+          "markers": [],
+          "trackRevisions_element_count": 0,
+          "trackRevisions_enabled": false
+        }
+      }
+    },
+    "human_testing_scope": {
+      "passed": true,
+      "forbidden_residuals": {},
+      "retained_function_and_GPT_identity_paragraphs": [
+        "问答结果保留原始问题、回答正文、所选模式、资料引用、图谱关系及运行信息，便于回查证据。当前前端在回答下方提供“有帮助／没帮助”轻反馈入口，提交时核验项目读权限及非盲访问条件，并将反馈写入审计日志。后端另保留1～5分非盲评价接口，需评价或管理能力，评分记录独立保存；当前普通问答前端未提供该评分表单。独立盲评另按评价者与项目的访问隔离规则控制，相关入口见5.3.7节。",
+        "审计页按项目展示操作记录，展开后可核对调用工具、风险与完成状态（图5-16）。独立盲评要求评价者无项目读权限，当前管理员被该入口拒绝（图5-17），这一画面展示该入口的访问隔离。",
+        "上述结果来自真实Rust接口的功能测试与GPT角色模拟：批准版本可回查，普通RAG在资料未入库时返回409，入库后按原规则通过8/9场，项目读取与写入权限分别核验。实际请求、生成结果与完整响应保存在补验附件中。这些记录支持相应接口与业务条件的检查。"
+      ],
+      "note": "Existing human-confirmation functions, nonblind score API/schema and isolated blind-review entry design are expected functional content. GPT role simulation, fixed-model test stubs, source dates and archived test identity remain."
+    },
+    "appendix_renumbering": {
+      "passed": true,
+      "headings": [
+        "D.1 GSE111619 数据文件完整性",
+        "D.2 实验附件归档清单",
+        "D.3 项目一样本原文展示",
+        "D.4 测试运行与本轮性能观测记录"
+      ],
+      "body_cross_reference_paragraphs": [
+        "归档实验配置：主问答对照与固定任务运行于迁移前Python原型，生成与自动评判均为DeepSeek flash档、温度0.1，嵌入模型为bge-small-zh-v1.5（512维）。另有2026年8月28日legacy/SQLite模式的pytest摘要：346项通过、11项跳过，用时10.43 s；逐条日志及JUnit未归档，不作为生产Rust测试结果。Rust安全模块同日另有隔离PostgreSQL记录，模块8项通过，3项新增集成测试具备名称及ok摘录。运行记录见附录D.4。GSE111619扩展批次未绑定代码版本，各归档身份和配置以附录D为准。",
+        "项目一四条固定笔记为合成种子，PCR、细胞活力、Western Blot及qPCR的字段与正文展示见附录D.3。图中内容由留存种子定义重现，与早期Python同名种子逐字段一致。七份SOP提要则来自原型运行编号4的检索来源，与留存同名文件逐字一致；它们不代表原型批次全部15条笔记的完整输入快照。",
+        "本轮按NFR6基础只读接口目标作持续观测：2026年10月3日，版本fb87ce38，10项目、46笔记、44文件；10个并发工作者分别以约1请求/s循环访问/health、/ready、/projects。墙时60.01074 s，三个端点各200次，共600次请求全部成功；成功吞吐9.99821请求/s，整体p95为13.376 ms，最大17.724 ms，三个端点p95分别为11.484、12.713、13.570 ms。本轮达到p95≤2 s及吞吐≥5请求/s的基础目标；结果仅适用于本地小数据、限速轻负载，不含模型生成、写入事务及复杂检索，不能外推峰值容量。逐请求明细与运行身份见附录D.4。"
+      ]
+    },
+    "toc_and_page_cache_structure": {
+      "passed": true,
+      "source_entry_count": 101,
+      "candidate_entry_count": 100,
+      "invalid_entries": [],
+      "app_xml_Pages": "107",
+      "final_pdf_pages": 107,
+      "final_pdf_sha256": "25cdb9a6f74de81e7cf28ba830de0f89de9328dc4c1371f9a658e6a47526a3aa",
+      "entries": [
+        {
+          "title": "摘　要",
+          "bookmark": "_Toc846394769",
+          "cached_printed_page": "I",
+          "matched_physical_page": 4,
+          "actual_printed_page": "I",
+          "passed": true
+        },
+        {
+          "title": "Abstract",
+          "bookmark": "_Toc425204855",
+          "cached_printed_page": "II",
+          "matched_physical_page": 5,
+          "actual_printed_page": "II",
+          "passed": true
+        },
+        {
+          "title": "第一章 绪论",
+          "bookmark": "_Toc1739904416",
+          "cached_printed_page": "1",
+          "matched_physical_page": 8,
+          "actual_printed_page": "1",
+          "passed": true
+        },
+        {
+          "title": "1.1 研究背景及意义",
+          "bookmark": "_Toc288698513",
+          "cached_printed_page": "1",
+          "matched_physical_page": 8,
+          "actual_printed_page": "1",
+          "passed": true
+        },
+        {
+          "title": "1.2 国内外研究现状",
+          "bookmark": "_Toc990349418",
+          "cached_printed_page": "1",
+          "matched_physical_page": 8,
+          "actual_printed_page": "1",
+          "passed": true
+        },
+        {
+          "title": "1.2.1 电子实验笔记系统研究现状",
+          "bookmark": "_Toc1804404076",
+          "cached_printed_page": "1",
+          "matched_physical_page": 8,
+          "actual_printed_page": "1",
+          "passed": true
+        },
+        {
+          "title": "1.2.2 大语言模型与 RAG 技术研究现状",
+          "bookmark": "_Toc2002726045",
+          "cached_printed_page": "2",
+          "matched_physical_page": 9,
+          "actual_printed_page": "2",
+          "passed": true
+        },
+        {
+          "title": "1.2.3 知识图谱在科研数据管理中的应用现状",
+          "bookmark": "_Toc157955237",
+          "cached_printed_page": "2",
+          "matched_physical_page": 9,
+          "actual_printed_page": "2",
+          "passed": true
+        },
+        {
+          "title": "1.2.4 智能体与工具调用技术研究现状",
+          "bookmark": "_Toc463880567",
+          "cached_printed_page": "2",
+          "matched_physical_page": 9,
+          "actual_printed_page": "2",
+          "passed": true
+        },
+        {
+          "title": "1.2.5 小结与研究问题",
+          "bookmark": "_Toc1075050959",
+          "cached_printed_page": "3",
+          "matched_physical_page": 10,
+          "actual_printed_page": "3",
+          "passed": true
+        },
+        {
+          "title": "1.3 研究目标及研究内容",
+          "bookmark": "_Toc618582016",
+          "cached_printed_page": "3",
+          "matched_physical_page": 10,
+          "actual_printed_page": "3",
+          "passed": true
+        },
+        {
+          "title": "1.4 研究贡献",
+          "bookmark": "_Toc539607785",
+          "cached_printed_page": "4",
+          "matched_physical_page": 11,
+          "actual_printed_page": "4",
+          "passed": true
+        },
+        {
+          "title": "1.5 论文组织结构",
+          "bookmark": "_Toc364601214",
+          "cached_printed_page": "4",
+          "matched_physical_page": 11,
+          "actual_printed_page": "4",
+          "passed": true
+        },
+        {
+          "title": "第二章 相关理论与技术",
+          "bookmark": "_Toc1081758807",
+          "cached_printed_page": "5",
+          "matched_physical_page": 12,
+          "actual_printed_page": "5",
+          "passed": true
+        },
+        {
+          "title": "2.1 电子实验笔记与科研数据管理",
+          "bookmark": "_Toc523713747",
+          "cached_printed_page": "5",
+          "matched_physical_page": 12,
+          "actual_printed_page": "5",
+          "passed": true
+        },
+        {
+          "title": "2.2 大语言模型与检索增强生成技术",
+          "bookmark": "_Toc1668960423",
+          "cached_printed_page": "5",
+          "matched_physical_page": 12,
+          "actual_printed_page": "5",
+          "passed": true
+        },
+        {
+          "title": "2.3 知识图谱与实体关系建模",
+          "bookmark": "_Toc1933915894",
+          "cached_printed_page": "6",
+          "matched_physical_page": 13,
+          "actual_printed_page": "6",
+          "passed": true
+        },
+        {
+          "title": "2.4 智能体与工具调用机制",
+          "bookmark": "_Toc1159433113",
+          "cached_printed_page": "6",
+          "matched_physical_page": 13,
+          "actual_printed_page": "6",
+          "passed": true
+        },
+        {
+          "title": "2.5 系统开发相关技术",
+          "bookmark": "_Toc325717313",
+          "cached_printed_page": "6",
+          "matched_physical_page": 13,
+          "actual_printed_page": "6",
+          "passed": true
+        },
+        {
+          "title": "2.6 本章小结",
+          "bookmark": "_Toc395063388",
+          "cached_printed_page": "6",
+          "matched_physical_page": 13,
+          "actual_printed_page": "6",
+          "passed": true
+        },
+        {
+          "title": "第三章 需求分析",
+          "bookmark": "_Toc1958409239",
+          "cached_printed_page": "7",
+          "matched_physical_page": 14,
+          "actual_printed_page": "7",
+          "passed": true
+        },
+        {
+          "title": "3.1 科研实验记录业务场景与角色分析",
+          "bookmark": "_Toc502222304",
+          "cached_printed_page": "7",
+          "matched_physical_page": 14,
+          "actual_printed_page": "7",
+          "passed": true
+        },
+        {
+          "title": "3.2 系统问题场景分析",
+          "bookmark": "_Toc1239530618",
+          "cached_printed_page": "8",
+          "matched_physical_page": 15,
+          "actual_printed_page": "8",
+          "passed": true
+        },
+        {
+          "title": "3.3 系统功能需求分析",
+          "bookmark": "_Toc52237179",
+          "cached_printed_page": "9",
+          "matched_physical_page": 16,
+          "actual_printed_page": "9",
+          "passed": true
+        },
+        {
+          "title": "3.4 系统非功能需求",
+          "bookmark": "_Toc1776939477",
+          "cached_printed_page": "10",
+          "matched_physical_page": 17,
+          "actual_printed_page": "10",
+          "passed": true
+        },
+        {
+          "title": "3.5 本章小结",
+          "bookmark": "_Toc2114194757",
+          "cached_printed_page": "10",
+          "matched_physical_page": 17,
+          "actual_printed_page": "10",
+          "passed": true
+        },
+        {
+          "title": "第四章 系统设计",
+          "bookmark": "_Toc1006857637",
+          "cached_printed_page": "11",
+          "matched_physical_page": 18,
+          "actual_printed_page": "11",
+          "passed": true
+        },
+        {
+          "title": "4.1 系统总体架构设计",
+          "bookmark": "_Toc85166699",
+          "cached_printed_page": "11",
+          "matched_physical_page": 18,
+          "actual_printed_page": "11",
+          "passed": true
+        },
+        {
+          "title": "4.2 用户角色与权限设计",
+          "bookmark": "_Toc1172601191",
+          "cached_printed_page": "12",
+          "matched_physical_page": 19,
+          "actual_printed_page": "12",
+          "passed": true
+        },
+        {
+          "title": "4.3 系统功能模块设计",
+          "bookmark": "_Toc450788618",
+          "cached_printed_page": "13",
+          "matched_physical_page": 20,
+          "actual_printed_page": "13",
+          "passed": true
+        },
+        {
+          "title": "4.4 数据库设计",
+          "bookmark": "_Toc81996110",
+          "cached_printed_page": "14",
+          "matched_physical_page": 21,
+          "actual_printed_page": "14",
+          "passed": true
+        },
+        {
+          "title": "4.4.1 数据存储与服务依赖",
+          "bookmark": "_Toc1571603043",
+          "cached_printed_page": "14",
+          "matched_physical_page": 21,
+          "actual_printed_page": "14",
+          "passed": true
+        },
+        {
+          "title": "4.4.2 数据组织与表结构",
+          "bookmark": "_Toc2030969248",
+          "cached_printed_page": "15",
+          "matched_physical_page": 22,
+          "actual_printed_page": "15",
+          "passed": true
+        },
+        {
+          "title": "4.5 实验知识图谱构建方法",
+          "bookmark": "_Toc247582071",
+          "cached_printed_page": "16",
+          "matched_physical_page": 23,
+          "actual_printed_page": "16",
+          "passed": true
+        },
+        {
+          "title": "4.5.1 实验知识图谱总体设计",
+          "bookmark": "_Toc1436043058",
+          "cached_printed_page": "17",
+          "matched_physical_page": 24,
+          "actual_printed_page": "17",
+          "passed": true
+        },
+        {
+          "title": "4.5.2 实验记录实体定义",
+          "bookmark": "_Toc6967173",
+          "cached_printed_page": "17",
+          "matched_physical_page": 24,
+          "actual_printed_page": "17",
+          "passed": true
+        },
+        {
+          "title": "4.5.3 实验知识关系定义",
+          "bookmark": "_Toc1133159673",
+          "cached_printed_page": "18",
+          "matched_physical_page": 25,
+          "actual_printed_page": "18",
+          "passed": true
+        },
+        {
+          "title": "4.5.4 基于实验笔记内容的实体关系抽取方法",
+          "bookmark": "_Toc1129642515",
+          "cached_printed_page": "18",
+          "matched_physical_page": 25,
+          "actual_printed_page": "18",
+          "passed": true
+        },
+        {
+          "title": "4.5.5 审核状态驱动的知识图谱更新机制",
+          "bookmark": "_Toc2146310125",
+          "cached_printed_page": "22",
+          "matched_physical_page": 29,
+          "actual_printed_page": "22",
+          "passed": true
+        },
+        {
+          "title": "4.5.6 资料审核与知识入库机制",
+          "bookmark": "_Toc1751452216",
+          "cached_printed_page": "22",
+          "matched_physical_page": 29,
+          "actual_printed_page": "22",
+          "passed": true
+        },
+        {
+          "title": "4.5.7 实验知识图谱可视化与关联检索",
+          "bookmark": "_Toc1099044883",
+          "cached_printed_page": "22",
+          "matched_physical_page": 29,
+          "actual_printed_page": "22",
+          "passed": true
+        },
+        {
+          "title": "4.5.8 计划知识点管理与覆盖匹配",
+          "bookmark": "_Toc1140500734",
+          "cached_printed_page": "22",
+          "matched_physical_page": 29,
+          "actual_printed_page": "22",
+          "passed": true
+        },
+        {
+          "title": "4.6 融合知识图谱的智能问答方法",
+          "bookmark": "_Toc2104286863",
+          "cached_printed_page": "23",
+          "matched_physical_page": 30,
+          "actual_printed_page": "23",
+          "passed": true
+        },
+        {
+          "title": "4.6.1 项目级 RAG 知识库构建与分块",
+          "bookmark": "_Toc1988607645",
+          "cached_printed_page": "23",
+          "matched_physical_page": 30,
+          "actual_printed_page": "23",
+          "passed": true
+        },
+        {
+          "title": "4.6.2 词法检索与 BM25 倒排索引",
+          "bookmark": "_Toc1240691254",
+          "cached_printed_page": "24",
+          "matched_physical_page": 31,
+          "actual_printed_page": "24",
+          "passed": true
+        },
+        {
+          "title": "4.6.3 混合检索的 RRF 融合",
+          "bookmark": "_Toc231693608",
+          "cached_printed_page": "24",
+          "matched_physical_page": 31,
+          "actual_printed_page": "24",
+          "passed": true
+        },
+        {
+          "title": "4.6.4 融合知识图谱的检索增强策略",
+          "bookmark": "_Toc686617645",
+          "cached_printed_page": "25",
+          "matched_physical_page": 32,
+          "actual_printed_page": "25",
+          "passed": true
+        },
+        {
+          "title": "4.6.5 权限约束下的问答执行流程",
+          "bookmark": "_Toc1553124184",
+          "cached_printed_page": "27",
+          "matched_physical_page": 34,
+          "actual_printed_page": "27",
+          "passed": true
+        },
+        {
+          "title": "4.6.6 问答来源、审计与评价记录",
+          "bookmark": "_Toc694431203",
+          "cached_printed_page": "27",
+          "matched_physical_page": 34,
+          "actual_printed_page": "27",
+          "passed": true
+        },
+        {
+          "title": "4.7 固定任务型智能辅助与工具调用设计",
+          "bookmark": "_Toc1879091023",
+          "cached_printed_page": "28",
+          "matched_physical_page": 35,
+          "actual_printed_page": "28",
+          "passed": true
+        },
+        {
+          "title": "4.7.1 MCP 接口与会话助手实现",
+          "bookmark": "_TocT0960052",
+          "cached_printed_page": "28",
+          "matched_physical_page": 35,
+          "actual_printed_page": "28",
+          "passed": true
+        },
+        {
+          "title": "4.7.2 固定任务模板设计",
+          "bookmark": "_Toc1900736755",
+          "cached_printed_page": "29",
+          "matched_physical_page": 36,
+          "actual_printed_page": "29",
+          "passed": true
+        },
+        {
+          "title": "4.7.3 工具注册与风险分级",
+          "bookmark": "_Toc1863392160",
+          "cached_printed_page": "31",
+          "matched_physical_page": 38,
+          "actual_printed_page": "31",
+          "passed": true
+        },
+        {
+          "title": "4.7.4 高风险操作的人工确认与幂等控制",
+          "bookmark": "_Toc1278008919",
+          "cached_printed_page": "32",
+          "matched_physical_page": 39,
+          "actual_printed_page": "32",
+          "passed": true
+        },
+        {
+          "title": "4.7.5 提示版本管理",
+          "bookmark": "_Toc364464339",
+          "cached_printed_page": "33",
+          "matched_physical_page": 40,
+          "actual_printed_page": "33",
+          "passed": true
+        },
+        {
+          "title": "4.8 项目指标评估与人工干预",
+          "bookmark": "_Toc928784329",
+          "cached_printed_page": "33",
+          "matched_physical_page": 40,
+          "actual_printed_page": "33",
+          "passed": true
+        },
+        {
+          "title": "4.9 本章小结",
+          "bookmark": "_Toc19587460",
+          "cached_printed_page": "33",
+          "matched_physical_page": 40,
+          "actual_printed_page": "33",
+          "passed": true
+        },
+        {
+          "title": "第五章 系统实现",
+          "bookmark": "_Toc641442229",
+          "cached_printed_page": "34",
+          "matched_physical_page": 41,
+          "actual_printed_page": "34",
+          "passed": true
+        },
+        {
+          "title": "5.1 系统实现环境",
+          "bookmark": "_Toc351634863",
+          "cached_printed_page": "34",
+          "matched_physical_page": 41,
+          "actual_printed_page": "34",
+          "passed": true
+        },
+        {
+          "title": "5.2 实验数据集",
+          "bookmark": "_TocT0960061",
+          "cached_printed_page": "34",
+          "matched_physical_page": 41,
+          "actual_printed_page": "34",
+          "passed": true
+        },
+        {
+          "title": "5.3 系统功能实现",
+          "bookmark": "_TocT0960062",
+          "cached_printed_page": "37",
+          "matched_physical_page": 44,
+          "actual_printed_page": "37",
+          "passed": true
+        },
+        {
+          "title": "5.3.1 实验笔记审核与知识更新实现",
+          "bookmark": "_TocT0960063",
+          "cached_printed_page": "37",
+          "matched_physical_page": 44,
+          "actual_printed_page": "37",
+          "passed": true
+        },
+        {
+          "title": "5.3.2 资料向量化与检索实现",
+          "bookmark": "_Toc1527988567",
+          "cached_printed_page": "38",
+          "matched_physical_page": 45,
+          "actual_printed_page": "38",
+          "passed": true
+        },
+        {
+          "title": "5.3.3 图谱增强问答与可视化实现",
+          "bookmark": "_TocT0960065",
+          "cached_printed_page": "38",
+          "matched_physical_page": 45,
+          "actual_printed_page": "38",
+          "passed": true
+        },
+        {
+          "title": "5.3.4 固定任务与工具调用实现",
+          "bookmark": "_TocT0960066",
+          "cached_printed_page": "40",
+          "matched_physical_page": 47,
+          "actual_printed_page": "40",
+          "passed": true
+        },
+        {
+          "title": "5.3.5 权限与审计实现",
+          "bookmark": "_TocT0960067",
+          "cached_printed_page": "42",
+          "matched_physical_page": 49,
+          "actual_printed_page": "42",
+          "passed": true
+        },
+        {
+          "title": "5.3.6 计划覆盖功能实现",
+          "bookmark": "_TocT0960068",
+          "cached_printed_page": "42",
+          "matched_physical_page": 49,
+          "actual_printed_page": "42",
+          "passed": true
+        },
+        {
+          "title": "5.3.7 代表操作与模块对应",
+          "bookmark": "_TocT129_184",
+          "cached_printed_page": "42",
+          "matched_physical_page": 49,
+          "actual_printed_page": "42",
+          "passed": true
+        },
+        {
+          "title": "5.4 本章小结",
+          "bookmark": "_TocT0960069",
+          "cached_printed_page": "46",
+          "matched_physical_page": 53,
+          "actual_printed_page": "46",
+          "passed": true
+        },
+        {
+          "title": "第六章 系统测试与实验结果分析",
+          "bookmark": "_Toc1370028501",
+          "cached_printed_page": "47",
+          "matched_physical_page": 54,
+          "actual_printed_page": "47",
+          "passed": true
+        },
+        {
+          "title": "6.1 测试环境与数据集",
+          "bookmark": "_Toc749353173",
+          "cached_printed_page": "47",
+          "matched_physical_page": 54,
+          "actual_printed_page": "47",
+          "passed": true
+        },
+        {
+          "title": "6.2 功能与安全测试",
+          "bookmark": "_Toc1534672603",
+          "cached_printed_page": "48",
+          "matched_physical_page": 55,
+          "actual_printed_page": "48",
+          "passed": true
+        },
+        {
+          "title": "6.3 实验设计与评价指标",
+          "bookmark": "_Toc1963838151",
+          "cached_printed_page": "51",
+          "matched_physical_page": 58,
+          "actual_printed_page": "51",
+          "passed": true
+        },
+        {
+          "title": "6.4 多角色流程走查记录复核",
+          "bookmark": "_Toc1551633114",
+          "cached_printed_page": "53",
+          "matched_physical_page": 60,
+          "actual_printed_page": "53",
+          "passed": true
+        },
+        {
+          "title": "6.5 归档实验分析",
+          "bookmark": "_Toc1403821477",
+          "cached_printed_page": "53",
+          "matched_physical_page": 60,
+          "actual_printed_page": "53",
+          "passed": true
+        },
+        {
+          "title": "6.5.1 实验一：知识图谱抽取质量评价",
+          "bookmark": "_Toc1772217997",
+          "cached_printed_page": "53",
+          "matched_physical_page": 60,
+          "actual_printed_page": "53",
+          "passed": true
+        },
+        {
+          "title": "6.5.2 实验二：普通 RAG 与图谱增强 RAG 归档对照",
+          "bookmark": "_Toc69691689",
+          "cached_printed_page": "53",
+          "matched_physical_page": 60,
+          "actual_printed_page": "53",
+          "passed": true
+        },
+        {
+          "title": "6.5.3 实验三：多方法对照实验",
+          "bookmark": "_Toc929629408",
+          "cached_printed_page": "56",
+          "matched_physical_page": 63,
+          "actual_printed_page": "56",
+          "passed": true
+        },
+        {
+          "title": "6.5.4 实验四：固定任务生成功能验证",
+          "bookmark": "_Toc1337928331",
+          "cached_printed_page": "59",
+          "matched_physical_page": 66,
+          "actual_printed_page": "59",
+          "passed": true
+        },
+        {
+          "title": "6.5.5 实验五：计划覆盖与预警机制验证",
+          "bookmark": "_Toc260191380",
+          "cached_printed_page": "60",
+          "matched_physical_page": 67,
+          "actual_printed_page": "60",
+          "passed": true
+        },
+        {
+          "title": "6.5.6 自动评价补充",
+          "bookmark": "_Toc759818368",
+          "cached_printed_page": "60",
+          "matched_physical_page": 67,
+          "actual_printed_page": "60",
+          "passed": true
+        },
+        {
+          "title": "6.6 Rust问答与业务验证",
+          "bookmark": "_TocT114Supplement",
+          "cached_printed_page": "61",
+          "matched_physical_page": 68,
+          "actual_printed_page": "61",
+          "passed": true
+        },
+        {
+          "title": "6.7 本章小结",
+          "bookmark": "_Toc1329545914",
+          "cached_printed_page": "64",
+          "matched_physical_page": 71,
+          "actual_printed_page": "64",
+          "passed": true
+        },
+        {
+          "title": "第七章 总结与展望",
+          "bookmark": "_Toc1110829563",
+          "cached_printed_page": "65",
+          "matched_physical_page": 72,
+          "actual_printed_page": "65",
+          "passed": true
+        },
+        {
+          "title": "7.1 工作总结",
+          "bookmark": "_Toc1637121970",
+          "cached_printed_page": "65",
+          "matched_physical_page": 72,
+          "actual_printed_page": "65",
+          "passed": true
+        },
+        {
+          "title": "7.2 研究贡献",
+          "bookmark": "_Toc1548464426",
+          "cached_printed_page": "65",
+          "matched_physical_page": 72,
+          "actual_printed_page": "65",
+          "passed": true
+        },
+        {
+          "title": "7.3 不足与展望",
+          "bookmark": "_Toc1834773436",
+          "cached_printed_page": "65",
+          "matched_physical_page": 72,
+          "actual_printed_page": "65",
+          "passed": true
+        },
+        {
+          "title": "致谢",
+          "bookmark": "_Toc1319451579",
+          "cached_printed_page": "67",
+          "matched_physical_page": 74,
+          "actual_printed_page": "67",
+          "passed": true
+        },
+        {
+          "title": "参考文献",
+          "bookmark": "_Toc1106549331",
+          "cached_printed_page": "68",
+          "matched_physical_page": 75,
+          "actual_printed_page": "68",
+          "passed": true
+        },
+        {
+          "title": "附录 A　RAG 对照实验问题清单",
+          "bookmark": "_Toc566223097",
+          "cached_printed_page": "73",
+          "matched_physical_page": 80,
+          "actual_printed_page": "73",
+          "passed": true
+        },
+        {
+          "title": "附录 B　知识图谱抽取参考关系集",
+          "bookmark": "_Toc1011551422",
+          "cached_printed_page": "74",
+          "matched_physical_page": 81,
+          "actual_printed_page": "74",
+          "passed": true
+        },
+        {
+          "title": "B.1 参考集构成与匹配判定",
+          "bookmark": "_Toc1664199902",
+          "cached_printed_page": "74",
+          "matched_physical_page": 81,
+          "actual_printed_page": "74",
+          "passed": true
+        },
+        {
+          "title": "B.2 参考关系完整清单",
+          "bookmark": "_Toc1380734386",
+          "cached_printed_page": "74",
+          "matched_physical_page": 81,
+          "actual_printed_page": "74",
+          "passed": true
+        },
+        {
+          "title": "B.3 数据分类与完整表结构设计",
+          "bookmark": "_Toc294536020",
+          "cached_printed_page": "78",
+          "matched_physical_page": 85,
+          "actual_printed_page": "78",
+          "passed": true
+        },
+        {
+          "title": "附录 C　智能体工具规格与任务模板清单",
+          "bookmark": "_Toc317081805",
+          "cached_printed_page": "95",
+          "matched_physical_page": 102,
+          "actual_printed_page": "95",
+          "passed": true
+        },
+        {
+          "title": "附录 D　实验附件与数据完整性清单",
+          "bookmark": "_Toc1286968428",
+          "cached_printed_page": "96",
+          "matched_physical_page": 103,
+          "actual_printed_page": "96",
+          "passed": true
+        },
+        {
+          "title": "D.1 GSE111619 数据文件完整性",
+          "bookmark": "_Toc623076812",
+          "cached_printed_page": "96",
+          "matched_physical_page": 103,
+          "actual_printed_page": "96",
+          "passed": true
+        },
+        {
+          "title": "D.2 实验附件归档清单",
+          "bookmark": "_Toc921716512",
+          "cached_printed_page": "96",
+          "matched_physical_page": 103,
+          "actual_printed_page": "96",
+          "passed": true
+        },
+        {
+          "title": "D.3 项目一样本原文展示",
+          "bookmark": "_TocT129_185",
+          "cached_printed_page": "97",
+          "matched_physical_page": 104,
+          "actual_printed_page": "97",
+          "passed": true
+        },
+        {
+          "title": "D.4 测试运行与本轮性能观测记录",
+          "bookmark": "_TocT129_186",
+          "cached_printed_page": "100",
+          "matched_physical_page": 107,
+          "actual_printed_page": "100",
+          "passed": true
+        }
+      ],
+      "method": "Read Word HYPERLINK/PAGEREF complex fields in w:body/w:sdt, validate bookmark target; independently match whitespace-normalized title as complete final-PDF text line outside physical TOC pages6–7. No substring matches. Printed page = physical page−7; abstracts I/II."
+    },
+    "candidate_stability": {
+      "passed": true,
+      "candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14"
+    }
+  },
+  "all_protected_checks_passed": true,
+  "failed_check_names": [],
+  "pending": [],
+  "semantic_independent_review": {
+    "reviewer": "architect",
+    "result": "pass",
+    "finding": "New ID26 explanation agrees with RAGAS Rc/F definitions; no new causal attribution or observed human-result claim."
+  },
+  "reverification": {
+    "method": "Final DOCX ZIP/XML was reread and bound to final SHA; complex-field TOC parser independently matches complete heading lines from final PDF.",
+    "candidate_sha256": "cebf97abe0f9415651182152b7237f92978a29ab17d827e45ba5c70a078bde14",
+    "changes_manifest_sha256": "11180c0be2908e77faf02ef6f55dd9847490a09422e40e5d601c3f7ed787d7f2"
+  }
+}

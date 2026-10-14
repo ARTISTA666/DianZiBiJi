@@ -1,0 +1,884 @@
+{
+  "task": "T142 final independent frozen evidence and Rust input byte audit",
+  "utc": "2026-10-11T11:05:10.827924+00:00",
+  "identity": {
+    "word_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/1005-精简与角标校正版-2026-10-11.docx",
+    "word_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-wps/1005-精简与角标校正版-2026-10-11.pdf",
+    "pdf_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+    "page_manifest_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-page-manifest.json",
+    "page_manifest_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+    "physical_page_count": 100
+  },
+  "protected_input_manifest": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/protected-input-hashes.json",
+    "sha256": "c0e416b7a28700468ae265bb4a227dc481ffda39a9cddb98f6c7df23a57c0e4d"
+  },
+  "protected_input_count": 57,
+  "protected_inputs": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/毕业论文重构稿.md",
+      "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+      "actual_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+      "expected_bytes": 273777,
+      "actual_bytes": 273777,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Desktop/1005-深审整改版-2026-10-11.docx",
+      "expected_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948",
+      "actual_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948",
+      "expected_bytes": 6024387,
+      "actual_bytes": 6024387,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Desktop/1005-深审整改版-2026-10-11.pdf",
+      "expected_sha256": "bfd769f53d297732793833d8a5c46df5dae32c6dd02869a0ca0168dd3dfa9165",
+      "actual_sha256": "bfd769f53d297732793833d8a5c46df5dae32c6dd02869a0ca0168dd3dfa9165",
+      "expected_bytes": 5391227,
+      "actual_bytes": 5391227,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/README.md",
+      "expected_sha256": "07201c403468d8a15f815e6d4ff4887b47dba98d8eac82be555fa68e9353ea2d",
+      "actual_sha256": "07201c403468d8a15f815e6d4ff4887b47dba98d8eac82be555fa68e9353ea2d",
+      "expected_bytes": 5337,
+      "actual_bytes": 5337,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/algorithm-border-fix.json",
+      "expected_sha256": "8707ed3353668c721c4b37c4375ac83226c747d3a8304cab21846c7b36f1b3a2",
+      "actual_sha256": "8707ed3353668c721c4b37c4375ac83226c747d3a8304cab21846c7b36f1b3a2",
+      "expected_bytes": 426,
+      "actual_bytes": 426,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/algorithm-native-indent-final-release-border-review.json",
+      "expected_sha256": "b0aabbee50c3b460142cd48ea5b2398b2f6609250c481af2512495096c6a5a02",
+      "actual_sha256": "b0aabbee50c3b460142cd48ea5b2398b2f6609250c481af2512495096c6a5a02",
+      "expected_bytes": 138069,
+      "actual_bytes": 138069,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/baseline-manifest.json",
+      "expected_sha256": "b5ff60ceecf615cebe70188941864314893d32169ce83071fa6b3512298fbcdd",
+      "actual_sha256": "b5ff60ceecf615cebe70188941864314893d32169ce83071fa6b3512298fbcdd",
+      "expected_bytes": 6206,
+      "actual_bytes": 6206,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/changes.json",
+      "expected_sha256": "7d8614b0463b330f37f3c03f2cb3efaf5bc61e9b8a17bcdb7048e1a4c2c1caa7",
+      "actual_sha256": "7d8614b0463b330f37f3c03f2cb3efaf5bc61e9b8a17bcdb7048e1a4c2c1caa7",
+      "expected_bytes": 211217,
+      "actual_bytes": 211217,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/chapter6-paragraph-native-indent-final-release-numeric-diff.json",
+      "expected_sha256": "eed8e96faa2661a951b01bae3ec3c60daaa8633147c9b035a57b9bd51059f36f",
+      "actual_sha256": "eed8e96faa2661a951b01bae3ec3c60daaa8633147c9b035a57b9bd51059f36f",
+      "expected_bytes": 11515,
+      "actual_bytes": 11515,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/content-review-native-delivery.json",
+      "expected_sha256": "a85419a0e6b096c84da79b43f298fb2d54ba251d6ad1b8b497a140d47d24c30e",
+      "actual_sha256": "a85419a0e6b096c84da79b43f298fb2d54ba251d6ad1b8b497a140d47d24c30e",
+      "expected_bytes": 45410,
+      "actual_bytes": 45410,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/current-delta.patch",
+      "expected_sha256": "2ff27187a6e2b267a320b76d7fb67fae9136495272d69144e51691d2a932243a",
+      "actual_sha256": "2ff27187a6e2b267a320b76d7fb67fae9136495272d69144e51691d2a932243a",
+      "expected_bytes": 43299,
+      "actual_bytes": 43299,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/current-source-manifest.json",
+      "expected_sha256": "418d076f2248eac6c7e96fc2c5810372c237d78b6fae89dc84a5d541b6131c06",
+      "actual_sha256": "418d076f2248eac6c7e96fc2c5810372c237d78b6fae89dc84a5d541b6131c06",
+      "expected_bytes": 1890,
+      "actual_bytes": 1890,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/delivery-copy-proof.json",
+      "expected_sha256": "75149271509f4e601fc77542830b0cab14dc42b2ce7ca119f52d111dca4fe3d3",
+      "actual_sha256": "75149271509f4e601fc77542830b0cab14dc42b2ce7ca119f52d111dca4fe3d3",
+      "expected_bytes": 1549,
+      "actual_bytes": 1549,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/final-evidence-manifest.json",
+      "expected_sha256": "1767a870eb789cc5e043dd87cf269231a840e0569b6b274fb5e92cebfbbf0d61",
+      "actual_sha256": "1767a870eb789cc5e043dd87cf269231a840e0569b6b274fb5e92cebfbbf0d61",
+      "expected_bytes": 17528,
+      "actual_bytes": 17528,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/frozen-and-rust-input-native-indent-final-release.json",
+      "expected_sha256": "3193c90bbca9978beceb0303e7612333e1af8b82bbc1e9d6bb2a9b34b7377de8",
+      "actual_sha256": "3193c90bbca9978beceb0303e7612333e1af8b82bbc1e9d6bb2a9b34b7377de8",
+      "expected_bytes": 95539,
+      "actual_bytes": 95539,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/implementation-verification.json",
+      "expected_sha256": "e30668e6ebececb4e5e9f90b17106b424b1a212ce0f8638f8d3938dd1da66219",
+      "actual_sha256": "e30668e6ebececb4e5e9f90b17106b424b1a212ce0f8638f8d3938dd1da66219",
+      "expected_bytes": 7436,
+      "actual_bytes": 7436,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/main-markdown-preservation.json",
+      "expected_sha256": "86af8f51fa34c18bd5adc702ad675d5ecfb80c5b322c6dd55b7857aa3166309d",
+      "actual_sha256": "86af8f51fa34c18bd5adc702ad675d5ecfb80c5b322c6dd55b7857aa3166309d",
+      "expected_bytes": 1105,
+      "actual_bytes": 1105,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-clean-page-manifest.json",
+      "expected_sha256": "3ae08c147353700252eccc6121d0a3a936923427c9de75188d2c406c1bae7810",
+      "actual_sha256": "3ae08c147353700252eccc6121d0a3a936923427c9de75188d2c406c1bae7810",
+      "expected_bytes": 38844,
+      "actual_bytes": 38844,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-d4-width-fix.json",
+      "expected_sha256": "7443077c5c4a0e9f6d43278ec2d6cdbe8eaf91b33f07bb5c736af47219e62564",
+      "actual_sha256": "7443077c5c4a0e9f6d43278ec2d6cdbe8eaf91b33f07bb5c736af47219e62564",
+      "expected_bytes": 383,
+      "actual_bytes": 383,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-export-proof.json",
+      "expected_sha256": "6e74e4abba53faaba73230e6c158ddc430eb21c537fffa70b7775b3e5c572ecd",
+      "actual_sha256": "6e74e4abba53faaba73230e6c158ddc430eb21c537fffa70b7775b3e5c572ecd",
+      "expected_bytes": 1195,
+      "actual_bytes": 1195,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-five-table-indent-fix.json",
+      "expected_sha256": "22dc4a671344c40701833b40624f5336ac30aaf041b34a191f1a81995798bba2",
+      "actual_sha256": "22dc4a671344c40701833b40624f5336ac30aaf041b34a191f1a81995798bba2",
+      "expected_bytes": 521,
+      "actual_bytes": 521,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-five-table-margin-fix.json",
+      "expected_sha256": "f4d7167d2d9deae8838c2c3f1e7117aff20ffd2ad5bbd9e182ce47d8571339f4",
+      "actual_sha256": "f4d7167d2d9deae8838c2c3f1e7117aff20ffd2ad5bbd9e182ce47d8571339f4",
+      "expected_bytes": 2613,
+      "actual_bytes": 2613,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-five-table-position-proof.json",
+      "expected_sha256": "2133bbbe2d9be4247ab48a4dc7ffa5aa955370e3c29945ac10956acf0c28bbc3",
+      "actual_sha256": "2133bbbe2d9be4247ab48a4dc7ffa5aa955370e3c29945ac10956acf0c28bbc3",
+      "expected_bytes": 2140,
+      "actual_bytes": 2140,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-indent-final-release-five-table-position-only-review.json",
+      "expected_sha256": "7ec12c042322f0348c9e129bf23c566b67ca1bdee0dca3eeee10e7fd7d732822",
+      "actual_sha256": "7ec12c042322f0348c9e129bf23c566b67ca1bdee0dca3eeee10e7fd7d732822",
+      "expected_bytes": 6472,
+      "actual_bytes": 6472,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-indent-final-release-identity-and-copy-review.json",
+      "expected_sha256": "1e6e7b3a22af165ba9753cbdaaf245c7ee41e4103c3e6ac852e657abe8b45d17",
+      "actual_sha256": "1e6e7b3a22af165ba9753cbdaaf245c7ee41e4103c3e6ac852e657abe8b45d17",
+      "expected_bytes": 28932,
+      "actual_bytes": 28932,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-margin-only-page-manifest.json",
+      "expected_sha256": "749b9785b53fea8822899dd97b884894f3023da70c08145f902c55c18f546145",
+      "actual_sha256": "749b9785b53fea8822899dd97b884894f3023da70c08145f902c55c18f546145",
+      "expected_bytes": 69806,
+      "actual_bytes": 69806,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-margin-release-width-only-review.json",
+      "expected_sha256": "92135685c6e76e8839de36965981847c8e2ac03aff5bae00f872760671984543",
+      "actual_sha256": "92135685c6e76e8839de36965981847c8e2ac03aff5bae00f872760671984543",
+      "expected_bytes": 3534,
+      "actual_bytes": 3534,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-page-manifest.json",
+      "expected_sha256": "39acb1d85294d75c57072cadf637364df2a016fd5a83823603cbef29718e7fea",
+      "actual_sha256": "39acb1d85294d75c57072cadf637364df2a016fd5a83823603cbef29718e7fea",
+      "expected_bytes": 25370,
+      "actual_bytes": 25370,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-release-page-manifest.json",
+      "expected_sha256": "2cb70f7debb0899b7550b11f74eae007f1ad9e5cc5a5f7bcfe1f0c89e329e6c6",
+      "actual_sha256": "2cb70f7debb0899b7550b11f74eae007f1ad9e5cc5a5f7bcfe1f0c89e329e6c6",
+      "expected_bytes": 83546,
+      "actual_bytes": 83546,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-table-width-fix.json",
+      "expected_sha256": "4173c8d8dc88de7a17031b17da9501105509ecde11d8ed091c7ad0614fc77b9e",
+      "actual_sha256": "4173c8d8dc88de7a17031b17da9501105509ecde11d8ed091c7ad0614fc77b9e",
+      "expected_bytes": 1106,
+      "actual_bytes": 1106,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-table-width-only-review.json",
+      "expected_sha256": "56e3adc42833354ed0a5d595fc2a37b44b1c431e30cb00d494ef0c874bc3b7bd",
+      "actual_sha256": "56e3adc42833354ed0a5d595fc2a37b44b1c431e30cb00d494ef0c874bc3b7bd",
+      "expected_bytes": 2442,
+      "actual_bytes": 2442,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-table1-release-page-manifest.json",
+      "expected_sha256": "cd047ee89b24eb5a0dd946c55c7de1c30d7d471c11f8e74c5f231fbf705ac619",
+      "actual_sha256": "cd047ee89b24eb5a0dd946c55c7de1c30d7d471c11f8e74c5f231fbf705ac619",
+      "expected_bytes": 55090,
+      "actual_bytes": 55090,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/native-table1-width-fix.json",
+      "expected_sha256": "f026cbe87857cec63290929ae7e575da73b7a834261b03aa0ba6856241656f65",
+      "actual_sha256": "f026cbe87857cec63290929ae7e575da73b7a834261b03aa0ba6856241656f65",
+      "expected_bytes": 1180,
+      "actual_bytes": 1180,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/prompt-registry-independent-review.json",
+      "expected_sha256": "f4c846dc1ac3d0b4c0df9ad2edafce52e8048c4310f82963da9cff49e3c3bfd3",
+      "actual_sha256": "f4c846dc1ac3d0b4c0df9ad2edafce52e8048c4310f82963da9cff49e3c3bfd3",
+      "expected_bytes": 2042,
+      "actual_bytes": 2042,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/prompt-version-registry.json",
+      "expected_sha256": "a124bc37e22d5e0ad6f24d8ee7612cc9527b0f07b3f26cdeba3399910fd3c8eb",
+      "actual_sha256": "a124bc37e22d5e0ad6f24d8ee7612cc9527b0f07b3f26cdeba3399910fd3c8eb",
+      "expected_bytes": 2890,
+      "actual_bytes": 2890,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/qa-native-indent-final-release-final-review.json",
+      "expected_sha256": "5524243fafc085ea3c549ed627253dc072435fe6a471ba12ce8ef52525ee7657",
+      "actual_sha256": "5524243fafc085ea3c549ed627253dc072435fe6a471ba12ce8ef52525ee7657",
+      "expected_bytes": 9489,
+      "actual_bytes": 9489,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/reference-count-provenance.json",
+      "expected_sha256": "068a36f183ef8900729073809af91cee2f33d172875fc326cb9487cd885ed3a9",
+      "actual_sha256": "068a36f183ef8900729073809af91cee2f33d172875fc326cb9487cd885ed3a9",
+      "expected_bytes": 17599,
+      "actual_bytes": 17599,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/regression-red-evidence-review.json",
+      "expected_sha256": "d826028dec9986dfd8068d6c346682f0d0cfa39cc6f92190764f8e544cd74531",
+      "actual_sha256": "d826028dec9986dfd8068d6c346682f0d0cfa39cc6f92190764f8e544cd74531",
+      "expected_bytes": 4524,
+      "actual_bytes": 4524,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/rust-final-validation.json",
+      "expected_sha256": "0d826556dd443fef9332070b7816df39bc39c269ca7863a0eb976ccaf76eea21",
+      "actual_sha256": "0d826556dd443fef9332070b7816df39bc39c269ca7863a0eb976ccaf76eea21",
+      "expected_bytes": 34700,
+      "actual_bytes": 34700,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/toc-changes.json",
+      "expected_sha256": "1b4454a71058f33f9b50974fdbb87b3d6f98e7fad7600a484d76c7c5ef99a932",
+      "actual_sha256": "1b4454a71058f33f9b50974fdbb87b3d6f98e7fad7600a484d76c7c5ef99a932",
+      "expected_bytes": 17490,
+      "actual_bytes": 17490,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/toc-native-indent-final-release-review.json",
+      "expected_sha256": "9455a0228588e5c52fc7c4cd2ad211b46adf27cab8ff09b6fb094f1cb9c39b28",
+      "actual_sha256": "9455a0228588e5c52fc7c4cd2ad211b46adf27cab8ff09b6fb094f1cb9c39b28",
+      "expected_bytes": 65609,
+      "actual_bytes": 65609,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/validation-input.json",
+      "expected_sha256": "0ed1013c0e7da88ea94e805d9e9f845508e2372fac77a4fd94762e7342b8d163",
+      "actual_sha256": "0ed1013c0e7da88ea94e805d9e9f845508e2372fac77a4fd94762e7342b8d163",
+      "expected_bytes": 19553,
+      "actual_bytes": 19553,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-509b5-68-100.json",
+      "expected_sha256": "89c17dec840aa234831076568d9b82658f63a9280c9c11f41a7958820be10bb7",
+      "actual_sha256": "89c17dec840aa234831076568d9b82658f63a9280c9c11f41a7958820be10bb7",
+      "expected_bytes": 27758,
+      "actual_bytes": 27758,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-clean-1-33.json",
+      "expected_sha256": "ad2eb349f38dd810134c71c9078378880545ac56a3ceafa08c690fe4ab8956a0",
+      "actual_sha256": "ad2eb349f38dd810134c71c9078378880545ac56a3ceafa08c690fe4ab8956a0",
+      "expected_bytes": 30248,
+      "actual_bytes": 30248,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-clean-34-67.json",
+      "expected_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965",
+      "actual_sha256": "4a1127ffbae6946732e72fed9da8db641d935522de104957c6cdf1d752112965",
+      "expected_bytes": 40042,
+      "actual_bytes": 40042,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-clean-final-68-100.json",
+      "expected_sha256": "924d5eb9ef6ebf6423cc8621f6c20b98ef7541138dd6ffb48833ecf37cef04b8",
+      "actual_sha256": "924d5eb9ef6ebf6423cc8621f6c20b98ef7541138dd6ffb48833ecf37cef04b8",
+      "expected_bytes": 46248,
+      "actual_bytes": 46248,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-delivery-1-33.json",
+      "expected_sha256": "af7ea97853f80401e1b0dd098e4e9ccac1d691ab267f9f30e6c084890f05dc9b",
+      "actual_sha256": "af7ea97853f80401e1b0dd098e4e9ccac1d691ab267f9f30e6c084890f05dc9b",
+      "expected_bytes": 47840,
+      "actual_bytes": 47840,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-delivery-34-67.json",
+      "expected_sha256": "c9e09bc0f77646e54a60d0bd3c95b4b1968c2ae969a11a10cba42c33f135e347",
+      "actual_sha256": "c9e09bc0f77646e54a60d0bd3c95b4b1968c2ae969a11a10cba42c33f135e347",
+      "expected_bytes": 62919,
+      "actual_bytes": 62919,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-final-1-33.json",
+      "expected_sha256": "f8f49d45d2f9c8848b0a6d9ee7df26e96f85b55040b49b09255c50204bb6da62",
+      "actual_sha256": "f8f49d45d2f9c8848b0a6d9ee7df26e96f85b55040b49b09255c50204bb6da62",
+      "expected_bytes": 21792,
+      "actual_bytes": 21792,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-final-34-67.json",
+      "expected_sha256": "b4e47bf3aa5216a5a2dbd2761ec1aceb45fe03b3a0c06cbfb9728f7481c06c50",
+      "actual_sha256": "b4e47bf3aa5216a5a2dbd2761ec1aceb45fe03b3a0c06cbfb9728f7481c06c50",
+      "expected_bytes": 30610,
+      "actual_bytes": 30610,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-final-68-100.json",
+      "expected_sha256": "89c17dec840aa234831076568d9b82658f63a9280c9c11f41a7958820be10bb7",
+      "actual_sha256": "89c17dec840aa234831076568d9b82658f63a9280c9c11f41a7958820be10bb7",
+      "expected_bytes": 27758,
+      "actual_bytes": 27758,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-indent-final-release-68-100.json",
+      "expected_sha256": "e3818da3fafe511e53cfae648aeb21f264f675c7ac97bcc267700dc225f4b8be",
+      "actual_sha256": "e3818da3fafe511e53cfae648aeb21f264f675c7ac97bcc267700dc225f4b8be",
+      "expected_bytes": 44992,
+      "actual_bytes": 44992,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-margin-release-1-33.json",
+      "expected_sha256": "873849917973f8fed62c523910e676a3cc73defdb720ffdea5fe4c807b6a6757",
+      "actual_sha256": "873849917973f8fed62c523910e676a3cc73defdb720ffdea5fe4c807b6a6757",
+      "expected_bytes": 47582,
+      "actual_bytes": 47582,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-margin-release-34-67.json",
+      "expected_sha256": "0d787e064fd406e2cd629ee6238b11f395e16c8afa94f57845c690b2fd6bd703",
+      "actual_sha256": "0d787e064fd406e2cd629ee6238b11f395e16c8afa94f57845c690b2fd6bd703",
+      "expected_bytes": 52297,
+      "actual_bytes": 52297,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-margin-release-68-100.json",
+      "expected_sha256": "f69bd35a79fd591162625aaf659ce97911a36d431208488bc670e1c4ff48db56",
+      "actual_sha256": "f69bd35a79fd591162625aaf659ce97911a36d431208488bc670e1c4ff48db56",
+      "expected_bytes": 40220,
+      "actual_bytes": 40220,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/visual-review-native-release-1-33.json",
+      "expected_sha256": "6ef0308b51419a7aa7a3c1810136d6ca6070d3cb077e0b5e15acabc3950e49ed",
+      "actual_sha256": "6ef0308b51419a7aa7a3c1810136d6ca6070d3cb077e0b5e15acabc3950e49ed",
+      "expected_bytes": 31551,
+      "actual_bytes": 31551,
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/word-protective-native-indent-final-release-review.json",
+      "expected_sha256": "0cb5334e886472d0ab9d5fb5e96bf585e9f33a12212ac72401687abe0e1f6c89",
+      "actual_sha256": "0cb5334e886472d0ab9d5fb5e96bf585e9f33a12212ac72401687abe0e1f6c89",
+      "expected_bytes": 122772,
+      "actual_bytes": 122772,
+      "pass": true
+    }
+  ],
+  "all_57_protected_input_SHA_and_sizes_match": true,
+  "includes": "主Markdown、T141基线桌面Word/PDF及T141归档53项证据+最终证据manifest，共57路径；不是把重叠证据重复计数为新增测试。",
+  "rust_prior_validation_identity": {
+    "input_manifest": {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-fixes-T141-2026-10-11/validation-input.json",
+      "sha256": "0ed1013c0e7da88ea94e805d9e9f845508e2372fac77a4fd94762e7342b8d163"
+    },
+    "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+    "input_count": 65
+  },
+  "rust_source_inputs": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/Cargo.lock",
+      "expected_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+      "actual_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/Cargo.toml",
+      "expected_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+      "actual_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/rust-toolchain.toml",
+      "expected_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "actual_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/sql/0001_initial.sql",
+      "expected_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+      "actual_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/ai_provider.rs",
+      "expected_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+      "actual_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_runtime.rs",
+      "expected_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+      "actual_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/agent_suggestion.rs",
+      "expected_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+      "actual_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/agents.rs",
+      "expected_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "actual_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/audit.rs",
+      "expected_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+      "actual_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/auth.rs",
+      "expected_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+      "actual_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/files.rs",
+      "expected_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "actual_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/groups.rs",
+      "expected_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+      "actual_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/kg_blueprint.rs",
+      "expected_sha256": "e719adf5256a752e7d5f94e11ab1b1a76851174db812e2316ab60b8fe2db15e7",
+      "actual_sha256": "e719adf5256a752e7d5f94e11ab1b1a76851174db812e2316ab60b8fe2db15e7",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/knowledge_graph.rs",
+      "expected_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "actual_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/maturity.rs",
+      "expected_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+      "actual_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/mcp.rs",
+      "expected_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "actual_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/mod.rs",
+      "expected_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+      "actual_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/notes.rs",
+      "expected_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "actual_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/ocr.rs",
+      "expected_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+      "actual_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/project_alert.rs",
+      "expected_sha256": "89ea3d7c9923084ffbed9e82dc51e8ba8d410475e37df97dff982d338a4bf75c",
+      "actual_sha256": "89ea3d7c9923084ffbed9e82dc51e8ba8d410475e37df97dff982d338a4bf75c",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/projects.rs",
+      "expected_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "actual_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/rag/blind.rs",
+      "expected_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+      "actual_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/rag/experiments.rs",
+      "expected_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+      "actual_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/rag/mod.rs",
+      "expected_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "actual_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/search.rs",
+      "expected_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+      "actual_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/templates.rs",
+      "expected_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+      "actual_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/api/users.rs",
+      "expected_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+      "actual_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/audit.rs",
+      "expected_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+      "actual_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/config.rs",
+      "expected_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+      "actual_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/db.rs",
+      "expected_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+      "actual_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/embedding.rs",
+      "expected_sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+      "actual_sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/error.rs",
+      "expected_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+      "actual_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/kg_blueprint.rs",
+      "expected_sha256": "7d57e6866271371193f0685b719e4baa0861b93aa8fc02022e9612e0294088be",
+      "actual_sha256": "7d57e6866271371193f0685b719e4baa0861b93aa8fc02022e9612e0294088be",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/knowledge_graph.rs",
+      "expected_sha256": "a60596f588296e7f93701998e5f534f91a6299bee1e5dd11ef966ddf6216423e",
+      "actual_sha256": "a60596f588296e7f93701998e5f534f91a6299bee1e5dd11ef966ddf6216423e",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/lib.rs",
+      "expected_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+      "actual_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/main.rs",
+      "expected_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+      "actual_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/agent.rs",
+      "expected_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+      "actual_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/file.rs",
+      "expected_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+      "actual_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/kg_blueprint.rs",
+      "expected_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+      "actual_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/knowledge_graph.rs",
+      "expected_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+      "actual_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/mod.rs",
+      "expected_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+      "actual_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/note.rs",
+      "expected_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+      "actual_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/pagination.rs",
+      "expected_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+      "actual_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/project.rs",
+      "expected_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+      "actual_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/project_alert.rs",
+      "expected_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+      "actual_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/rag.rs",
+      "expected_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+      "actual_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/search.rs",
+      "expected_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+      "actual_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/user.rs",
+      "expected_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+      "actual_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/models/validation.rs",
+      "expected_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+      "actual_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/ocr.rs",
+      "expected_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+      "actual_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/permissions.rs",
+      "expected_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+      "actual_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/project_alert.rs",
+      "expected_sha256": "bd37dc8daf843c9c3c598a2bae2ffebda46b986c88551f2fe6deed309e9eaa7f",
+      "actual_sha256": "bd37dc8daf843c9c3c598a2bae2ffebda46b986c88551f2fe6deed309e9eaa7f",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/bm25.rs",
+      "expected_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+      "actual_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/chunk.rs",
+      "expected_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+      "actual_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/citations.rs",
+      "expected_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+      "actual_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/graph.rs",
+      "expected_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+      "actual_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/index.rs",
+      "expected_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "actual_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/mod.rs",
+      "expected_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+      "actual_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/retrieval.rs",
+      "expected_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+      "actual_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/rag/snapshot.rs",
+      "expected_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+      "actual_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/security.rs",
+      "expected_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+      "actual_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/backend/src/state.rs",
+      "expected_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+      "actual_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docker-compose.test-db.yml",
+      "expected_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+      "actual_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/scripts/ops/docker-compose-with-revision.sh",
+      "expected_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "actual_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "pass": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/scripts/ops/run-rust-db-tests.sh",
+      "expected_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+      "actual_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+      "pass": true
+    }
+  ],
+  "all_65_Rust_input_SHA_match": true,
+  "main_MD_SHA": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+  "new_tests_executed": false,
+  "new_experiments_executed": false,
+  "result": "PASS_57_FROZEN_AND_65_SOURCE_INPUTS",
+  "scope": "本轮纯Word语言/格式QA只复核哈希。T141测试结果保持其原执行身份，未声称本轮重跑或把旧结果更新成新执行。"
+}

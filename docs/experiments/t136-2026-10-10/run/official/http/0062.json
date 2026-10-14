@@ -1,0 +1,53 @@
+{
+  "utc": "2026-10-10T15:52:29.071494+00:00",
+  "path": "/projects/2/notes",
+  "method": "POST",
+  "request": {
+    "title": "iisc2019-03 PCR and gel electrophoresis",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2019-04-13",
+    "fixed_fields_json": {
+      "reagents": [
+        "NF H2O",
+        "Buffer",
+        "dNTP mix",
+        "Forward primer",
+        "Reverse primer",
+        "1% Agarose Gel(1X)",
+        "Gene Ruler",
+        "loading dye"
+      ],
+      "instrument": [
+        "oven"
+      ],
+      "sample": [
+        "6-His imcherry",
+        "mcp-1 + HlyA",
+        "mcp-1 + PelB",
+        "mcp-1 expression",
+        "DNA only",
+        "FP only",
+        "No DNA",
+        "Primers only",
+        "RP only",
+        "No primers"
+      ],
+      "result": []
+    },
+    "content_json": {}
+  },
+  "status": 200,
+  "response": {
+    "id": 15,
+    "project_id": 2,
+    "template_id": null,
+    "title": "iisc2019-03 PCR and gel electrophoresis",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2019-04-13",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 15,
+    "created_at": "2026-10-10T15:52:29.080645Z",
+    "updated_at": "2026-10-10T15:52:29.080645Z"
+  }
+}

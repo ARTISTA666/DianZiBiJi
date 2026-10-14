@@ -1,0 +1,17 @@
+{
+  "utc": "2026-10-10T16:00:24.100404+00:00",
+  "action": "stopped only this experiment backend/db after dump",
+  "states": [
+    {
+      "name": "eln-t136-backend-1",
+      "running": false,
+      "status": "exited"
+    },
+    {
+      "name": "eln-t136-db-1",
+      "running": false,
+      "status": "exited"
+    }
+  ],
+  "isolated_volumes_retained": true
+}

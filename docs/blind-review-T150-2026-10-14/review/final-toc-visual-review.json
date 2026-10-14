@@ -1,0 +1,20 @@
+{
+  "task": "T150",
+  "reviewer": "Codex root (AI visual inspection)",
+  "docx_sha256": "9035845efc316c781a54dfb18cf5e84e1fb777dd6951aeb0b9330df54cef62af",
+  "pdf_sha256": "8680867165794270c3b3038787b01f814e75ed8414f081ea962d571889273dc9",
+  "method": "Individually opened page-6.png and page-7.png with view_image original detail after final render",
+  "pages": [
+    {
+      "physical_page": 6,
+      "png_sha256": "283acb2d69d3c4626172147c1debeda8ff9a96d19601cb68d6d157ab4a55b40f",
+      "result": "Read all TOC headings/page digits; readable, no clipping/overlap; numeric correspondence independently checked by QA"
+    },
+    {
+      "physical_page": 7,
+      "png_sha256": "d7e27e01711fd00f83076f3adc8103505ede783ec5478f673e5b338a37279867",
+      "result": "Read all TOC headings/page digits; readable, no clipping/overlap; numeric correspondence independently checked by QA"
+    }
+  ],
+  "formal_wps_or_college_acceptance": false
+}

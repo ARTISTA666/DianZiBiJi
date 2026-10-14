@@ -1,0 +1,33 @@
+{
+  "schema": "t150-render-baseline-binding-v1",
+  "task_id": "T150",
+  "date": "2026-10-14",
+  "review_record": "/Users/yusong/Downloads/new/full-system/docs/blind-review-T150-2026-10-14/review/render-pages-71-101-visual-review.json",
+  "binding_authority": "父线程 /root 于2026-10-14提供的渲染来源关联说明",
+  "baseline": {
+    "render_directory": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render",
+    "word_path_at_render": "/Users/yusong/Desktop/盲审整改-T150-2026-10-14/论文匿名整改副本-T150.docx",
+    "word_sha256": "ebe61a107576280f153a41a8ad5fa4edd565decd83fb4d4cbd2c0863a984bb15",
+    "word_stage": "pre-mask，五张带姓名PNG遮挡之前",
+    "pdf_sha256_prefix": "f47ee881",
+    "pdf_sha256_complete": "待父线程提供完整值；不得把前缀冒充完整哈希",
+    "physical_pages_reviewed": [
+      71,
+      101
+    ],
+    "count": 31,
+    "association": "基线font-fixed-render的已审31页绑定本pre-mask Word。原visual-review中采集的current_word_sha256只用于提示版本已变更，不是本轮视觉验收的来源。"
+  },
+  "next_candidate": {
+    "word_sha256_prefix": "9035845e",
+    "changes_reported_by_parent": [
+      "更新76目录缓存",
+      "处理5张PNG个人姓名",
+      "updateFields"
+    ],
+    "final_render_status": "生成中",
+    "acceptance_plan": "比较final-render的物理71—101页与baseline已审PNG的像素；相同页面继承此前实际视觉结论，异常页面再以original实际打开复核。"
+  },
+  "independent_human_review": false
+}
+

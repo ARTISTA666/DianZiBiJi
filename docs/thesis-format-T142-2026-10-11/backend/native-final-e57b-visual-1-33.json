@@ -1,0 +1,768 @@
+{
+  "task": "T142",
+  "reviewer": "backend_engineer",
+  "reviewed_at_utc": "2026-10-11T10:58:06.537744+00:00",
+  "identity": "reviewed_snapshot",
+  "result": "pass",
+  "scope": "仅物理1–33页最终格式复验；不代表其余67页，也未重跑实验。",
+  "word": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/1005-精简与角标校正版-2026-10-11.docx",
+  "word_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+  "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-wps/1005-精简与角标校正版-2026-10-11.pdf",
+  "pdf_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+  "page_count": 100,
+  "manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-page-manifest.json",
+  "manifest_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+  "previous_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+  "previous_report_sha256": "11866307c23812e636e70ac652f75242be60855440a44c68b34c61658554ac44",
+  "method": {
+    "changed_page": "第23页已实际调用tools.view_image(detail=original)查看完整1415×2000新PNG。",
+    "unchanged_pages": "其余32页逐PNG计算SHA并核验当前manifest与上一实视报告完全相同，承接其实际原尺寸查看结论。",
+    "original_complete_review": "首次导出1–33均逐页原尺寸实看；无批注导出4/9/10/28另已原尺寸重看。",
+    "checks": [
+      "引用方括号及数字整体上标完整",
+      "三线表题注/表头/表体同页",
+      "图、公式、算法可读且无裁剪遮挡",
+      "正文版心、可见字体/行距、目录与段落分页"
+    ]
+  },
+  "coverage": {
+    "required_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "fresh_original_viewed_pages": [
+      23
+    ],
+    "same_sha_original_view_inherited_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "effective_actual_original_viewed": 33,
+    "missing": [],
+    "pass_pages": 33,
+    "blocked_pages": 0
+  },
+  "closed_findings": [
+    {
+      "id": "V01",
+      "pages": [
+        4,
+        9,
+        10,
+        28
+      ],
+      "reason": "批注标记/蓝紫底色在无批注版已重看关闭，本版4页PNG保持完全相同。"
+    },
+    {
+      "id": "V02",
+      "pages": [
+        23
+      ],
+      "reason": "表4-4左超版心已消除；左右横线79.4–515.9pt，表体完整。"
+    }
+  ],
+  "protection_verification": {
+    "baseline_word": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/candidate-before-table-alignment.docx",
+    "baseline_word_sha256": "b45dc34c37785fb2b9f522885c0b5aa51992eb6048684691875a9f714a2fe489",
+    "document_xml_identical_after_removing_only_tblInd": true,
+    "changed_tblInd_count": 50,
+    "table4_4": {
+      "body_table_index_zero_based": 11,
+      "indent_twips_before": 0,
+      "indent_twips_after": 60,
+      "width_twips_unchanged": 8730,
+      "grid_twips_unchanged": [
+        1440,
+        6000,
+        1290
+      ],
+      "visible_text_sha256_unchanged": "e506ab4854309cdbca00364b4542ea95e3231ff187dfc805801660d867bf0103",
+      "all_other_table_xml_including_font_and_size_unchanged": true,
+      "pdf_horizontal_rule_bounds_pt": [
+        79.4,
+        515.9
+      ],
+      "png_horizontal_rule_bounds_px": [
+        189,
+        1225
+      ]
+    }
+  },
+  "nonblocking_observations": [
+    {
+      "pages": [
+        13,
+        14
+      ],
+      "item": "[56]跨页续排至页首",
+      "result": "完整引文；可选改善分页，不据此判丢失或上标失败。"
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "printed_page": null,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-001.png",
+      "sha256": "cbe199cebcb9003cddc4475c916aaaab323977e97c2166e80d7dd2c7feca24e7",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "封面中英文题名、模板栏位与页内布局完整，无裁剪或重叠。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "cbe199cebcb9003cddc4475c916aaaab323977e97c2166e80d7dd2c7feca24e7"
+    },
+    {
+      "page": 2,
+      "printed_page": null,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-002.png",
+      "sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "原创性声明及签名/日期栏完整，未见正文与签名栏重叠。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a"
+    },
+    {
+      "page": 3,
+      "printed_page": null,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-003.png",
+      "sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "版权使用授权声明及签名栏完整，页内排版正常。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65"
+    },
+    {
+      "page": 4,
+      "printed_page": "I",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-004.png",
+      "sha256": "7587301a5b07a36f208d6e1d2e6b2c8462ffcd7027222f5db5823fe5d91f0c0e",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "中文摘要、贡献与验证边界段、关键词及印刷页I完整。",
+        "关闭本次导出批注后重新原尺寸实看：蓝紫底色/紫色批注标记均已消失，文字与结构完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "7587301a5b07a36f208d6e1d2e6b2c8462ffcd7027222f5db5823fe5d91f0c0e"
+    },
+    {
+      "page": 5,
+      "printed_page": "II",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-005.png",
+      "sha256": "503b2f2165e14e4ecadf82ded04e2d9f94f3679799b7b418ce84c3d1a4f2b772",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "英文摘要段落、关键词及印刷页II完整，未见裁剪。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "503b2f2165e14e4ecadf82ded04e2d9f94f3679799b7b418ce84c3d1a4f2b772"
+    },
+    {
+      "page": 6,
+      "printed_page": "III",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-006.png",
+      "sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "目录第一页的章节条目、点引导线和页码对齐，页脚III完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0"
+    },
+    {
+      "page": 7,
+      "printed_page": "IV",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-007.png",
+      "sha256": "76d1aa2f9afd417bda08ef0cd3d8017b2296e03d15c1032abdf06222e3455b24",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "目录第二页含附录D.4及其页码，未见条目裁剪，页脚IV完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "76d1aa2f9afd417bda08ef0cd3d8017b2296e03d15c1032abdf06222e3455b24"
+    },
+    {
+      "page": 8,
+      "printed_page": "1",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-008.png",
+      "sha256": "62f9076d03b5f7d1ed9010982dc42453c71ffbae068ea0f135a9a64944bb47ca",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "第一章正文与标题排版正常；已见文献引用括号和数字整体上标、字形完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "62f9076d03b5f7d1ed9010982dc42453c71ffbae068ea0f135a9a64944bb47ca"
+    },
+    {
+      "page": 9,
+      "printed_page": "2",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-009.png",
+      "sha256": "2ba978359d6f8d4c5372082cc4fedfa43db145413de267f9aea0c16e43ed5010",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表1-1标题、表头及全部表体同页，保持三线样式并在正文版心内；正文文献上标完整。",
+        "关闭本次导出批注后重新原尺寸实看：蓝紫底色/紫色批注标记均已消失，文字与结构完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "2ba978359d6f8d4c5372082cc4fedfa43db145413de267f9aea0c16e43ed5010"
+    },
+    {
+      "page": 10,
+      "printed_page": "3",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-010.png",
+      "sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "1.2.3、1.2.4、1.2.5标题均有本页正文；文献[17,18]至[30]的括号与数字整体上标完整。",
+        "关闭本次导出批注后重新原尺寸实看：蓝紫底色/紫色批注标记均已消失，文字与结构完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1"
+    },
+    {
+      "page": 11,
+      "printed_page": "4",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-011.png",
+      "sha256": "0add61e82ba5baba6087e17b124fb543590791786b334bfa03028f19c36256c6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "RQ1至RQ3与1.3、1.4正文完整，未见孤立标题。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "0add61e82ba5baba6087e17b124fb543590791786b334bfa03028f19c36256c6"
+    },
+    {
+      "page": 12,
+      "printed_page": "5",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-012.png",
+      "sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图1-1各节点、箭头、文字与题注完整同页，1.5标题及正文同页。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50"
+    },
+    {
+      "page": 13,
+      "printed_page": "6",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-013.png",
+      "sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "第二章标题与正文完整，文献[31]至[55]等括号/数字整体上标可读。",
+        "段末“反事实稳健性”对应[56]随正常段落续排至下一页首；不是字形损坏或引文丢失，但引用落页首略显突兀。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04"
+    },
+    {
+      "page": 14,
+      "printed_page": "7",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-014.png",
+      "sha256": "c67f8807877ee73e8aab03e867e63df500930b0a820d7596d6a4db9919654926",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "上一页续排的[56]在首行显示完整上标；2.3至2.6标题及正文正常，文献[59]至[70]等完整可读。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "c67f8807877ee73e8aab03e867e63df500930b0a820d7596d6a4db9919654926"
+    },
+    {
+      "page": 15,
+      "printed_page": "8",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-015.png",
+      "sha256": "6b319ba2c8a1ba25e6fe979a31eb7e8d20ad7e44e2f125b40ee26e1a76808731",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表3-1标题、表头、表体同页且三线完整；图3-1、题注和后续正文完整，未见裁剪。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "6b319ba2c8a1ba25e6fe979a31eb7e8d20ad7e44e2f125b40ee26e1a76808731"
+    },
+    {
+      "page": 16,
+      "printed_page": "9",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-016.png",
+      "sha256": "a4f0e513381d92aca7ce6fe086b0e1a1eb344228302975c11feebadcd2f1efef",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表3-2及表3-3各自标题、表头、表体完整同页；3.3标题有本页正文。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "a4f0e513381d92aca7ce6fe086b0e1a1eb344228302975c11feebadcd2f1efef"
+    },
+    {
+      "page": 17,
+      "printed_page": "10",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-017.png",
+      "sha256": "8229bf35809c17bcf3ea5b8823bf87fd785db00584c6d5a4ed200a6c3aa9c640",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表3-4及表3-5完整同页，三线及文字可读；FR2/3/6与NFR6完整显示，3.5标题有正文。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "8229bf35809c17bcf3ea5b8823bf87fd785db00584c6d5a4ed200a6c3aa9c640"
+    },
+    {
+      "page": 18,
+      "printed_page": "11",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-018.png",
+      "sha256": "448924df920049b27a698a389e1736cfcfae2e100e541464be54ff8e7ab8ca4b",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图4-1架构层、连线、标签及题注完整，无裁剪遮挡。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "448924df920049b27a698a389e1736cfcfae2e100e541464be54ff8e7ab8ca4b"
+    },
+    {
+      "page": 19,
+      "printed_page": "12",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-019.png",
+      "sha256": "c028554efa6a3908c344f364e8f7b4e89c078fa218724d4e87ee4e573e59f177",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "式(4-1)授权条件、符号、下标与式号完整可读；正文无重叠。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "c028554efa6a3908c344f364e8f7b4e89c078fa218724d4e87ee4e573e59f177"
+    },
+    {
+      "page": 20,
+      "printed_page": "13",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-020.png",
+      "sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表4-1标题、表头、表体与三线完整同页；图4-2功能模块及题注完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd"
+    },
+    {
+      "page": 21,
+      "printed_page": "14",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-021.png",
+      "sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表4-2及表4-3各自完整同页，三线表体可读；4.4及4.4.1标题有本页正文。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f"
+    },
+    {
+      "page": 22,
+      "printed_page": "15",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-022.png",
+      "sha256": "6e148097c379f1ba2d406fa7f083b3a96cd01f613fa14f4da6182f7880c63a93",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图4-3数据库关系示意的七组节点、标签、图例及题注完整可读。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "6e148097c379f1ba2d406fa7f083b3a96cd01f613fa14f4da6182f7880c63a93"
+    },
+    {
+      "page": 23,
+      "printed_page": "16",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-023.png",
+      "sha256": "a6a254c33e62a63fb14814d3b6824cb7cab527dfe1de7f4c82e2e015cc1bb36f",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "原尺寸重新实看表4-4：题注、表头及全部表体完整同页，三线清楚，未见裁切、遮挡或重叠。",
+        "三条横线在PDF矢量路径的左右端均为79.4–515.9pt，正好对应正文版心；PNG横线端点189–1225px，旧左越界已消除。",
+        "对照b45修改前表11：只改tblInd0→60twips，tblW8730、grid1440/6000/1290、可见文字与其他表XML（含字体/字号）全部不变。",
+        "本页其他HNSW及知识构建方法正文、4.5标题与页脚印刷16完整，未见孤立标题。"
+      ],
+      "review_basis": "fresh_actual_original_view",
+      "actual_original_view": true,
+      "source_report": null,
+      "source_png_sha256": null
+    },
+    {
+      "page": 24,
+      "printed_page": "17",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-024.png",
+      "sha256": "9ed43b55e952ac3061188a112d50c8756bcc74f806a51fe75156e1ae1b2db480",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图4-4审核知识与独立计划两路径、箭头及题注完整，4.5.1/4.5.2正文正常。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "9ed43b55e952ac3061188a112d50c8756bcc74f806a51fe75156e1ae1b2db480"
+    },
+    {
+      "page": 25,
+      "printed_page": "18",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-025.png",
+      "sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表4-5及表4-6标题、表头、表体及三线完整同页；软件、标识、生物来源等类型/角色字样完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab"
+    },
+    {
+      "page": 26,
+      "printed_page": "19",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-026.png",
+      "sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图4-5审核状态流转图、标签、题注完整，原尺寸可读；4.5.4标题有本页正文。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6"
+    },
+    {
+      "page": 27,
+      "printed_page": "20",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-027.png",
+      "sha256": "cf645a54ad05085f39b36a920f7f96aef7a9beee6e01af5b43523fc7560b36d9",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图4-6实体规范化流程图与题注完整，符号/下标可读；下方留白不构成裁剪或孤立标题。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "cf645a54ad05085f39b36a920f7f96aef7a9beee6e01af5b43523fc7560b36d9"
+    },
+    {
+      "page": 28,
+      "printed_page": "21",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-028.png",
+      "sha256": "04caf2baacc13f5018b1b6a7545e374837c45bcab73bb79ff590ea31e028a38c",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "算法4-1标题、输入输出与26行算法正文完整同页；仅顶底及标题/输入输出分隔线，无逐行横线。",
+        "式(4-2)分段括号、数值、文字与式号完整可读。",
+        "关闭本次导出批注后重新原尺寸实看：蓝紫底色/紫色批注标记均已消失，文字与结构完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "04caf2baacc13f5018b1b6a7545e374837c45bcab73bb79ff590ea31e028a38c"
+    },
+    {
+      "page": 29,
+      "printed_page": "22",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-029.png",
+      "sha256": "8d50f02ee1745fab4e61fdf938a812102d793ebe63a54f892b8ac18ab6248977",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "4.5.5至4.5.8与4.6标题/正文完整；biosample登录号与物理样本区分等技术限定显示完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "8d50f02ee1745fab4e61fdf938a812102d793ebe63a54f892b8ac18ab6248977"
+    },
+    {
+      "page": 30,
+      "printed_page": "23",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-030.png",
+      "sha256": "20c12bbc7f4096fb5da7dbf190876a890f891f919d05514b8e9e260d71b0b3b0",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "图4-7检索流程及题注完整；式(4-3)分式、上下标和式号可读；[78]括号/数字整体上标完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "20c12bbc7f4096fb5da7dbf190876a890f891f919d05514b8e9e260d71b0b3b0"
+    },
+    {
+      "page": 31,
+      "printed_page": "24",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-031.png",
+      "sha256": "2fa65d4321c146ab0adf9e2259132dc6fbe5c938202f4a26bf4e28b75bbe722e",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "式(4-4)至(4-9)分式、求交、上下标、阈值、式号全部可读且无重叠；[79]文献括号/数字整体上标完整；底部资料编号段及页脚完整。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "2fa65d4321c146ab0adf9e2259132dc6fbe5c938202f4a26bf4e28b75bbe722e"
+    },
+    {
+      "page": 32,
+      "printed_page": "25",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-032.png",
+      "sha256": "52eeb617df82d1a37e4dd2105982df158db40d4e56d0fbdbf6c083520faeec15",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "式(4-10)双重求和、索引、上下标和式号完整；图4-8两种检索路径、连线、标签及题注完整同页。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "52eeb617df82d1a37e4dd2105982df158db40d4e56d0fbdbf6c083520faeec15"
+    },
+    {
+      "page": 33,
+      "printed_page": "26",
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-render/page-033.png",
+      "sha256": "ba1d5eada9abb24e1848b4a5f11bea17759347839dbb98dc5a143523f442c557",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "observations": [
+        "表4-7符号说明的标题、表头、表体及三线完整同页；表内数学符号可读。",
+        "图4-9所有节点、连线、审计栏与题注完整；4.6.5及4.6.6标题均有本页正文。"
+      ],
+      "review_basis": "same_png_sha_inherited_from_actual_original_view",
+      "actual_original_view": true,
+      "source_report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-no-comments-final-visual-1-33.json",
+      "source_png_sha256": "ba1d5eada9abb24e1848b4a5f11bea17759347839dbb98dc5a143523f442c557"
+    }
+  ]
+}

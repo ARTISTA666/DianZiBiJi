@@ -1,0 +1,506 @@
+{
+  "task_id": "T136",
+  "reviewed_at_utc": "2026-10-10T15:51:30.914501+00:00",
+  "status": "review_complete_one_pre_output_semantic_boundary_proposal",
+  "reviewer": {
+    "identity": "/root/product_manager AI Agent",
+    "first_annotator": "research-reviewer Agent",
+    "provenance": "与首次标注者分开的AI复核者，同时是本轮原文单元选材者；另有qa_evidence AI Agent独立机械核验。不是人工标注。"
+  },
+  "inputs": {
+    "records": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/inputs/records.json",
+      "sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0"
+    },
+    "semantic_ruling": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/annotation/semantic-ruling.json",
+      "sha256": "96e9be124a887aeb9c3fa803490cc78b73944795876ba55dcfd11d41ee1b851e"
+    },
+    "protocol": {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/experiments/kg-heldout-T136-protocol-v1.md",
+      "sha256": "26f1de4dfcc1f5bbc70489f9ee54f58e2049786e3d025875f1644d80ca56bc68"
+    },
+    "gold_draft": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/annotation/gold-draft.json",
+      "sha256": "ab8b98cf4f3ea4841eeb63dc3416e7f44c1935b68a1be72876e66451195c9c88"
+    }
+  },
+  "scope": {
+    "records_reviewed": 12,
+    "draft_relations_reviewed": 75,
+    "draft_exclusions_reviewed": 55,
+    "full_bodies_read": true,
+    "system_code_read": false,
+    "run_outputs_read": false,
+    "review_timing": "测试笔记导入和API输出前；根Agent先提出终点一致性疑问，复核者独立判断。",
+    "only_written_artifact": "/Users/yusong/Downloads/new/full-system/agent-work/t136-2026-10-10/annotation/review.json"
+  },
+  "mechanical_audit": {
+    "status": "pass",
+    "independent_checker": "/root/product_manager/qa_evidence",
+    "record_ids_unique": 12,
+    "relation_evidence_contiguous_matches": 75,
+    "target_labels_in_own_evidence": 75,
+    "exclusion_text_contiguous_matches": 55,
+    "valid_relation_type_pairs": 75,
+    "normalized_relation_duplicates": 0,
+    "exclusion_duplicates": 0,
+    "input_sha_matches_draft_and_ruling": true
+  },
+  "agree": {
+    "relation_indices_zero_based": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74
+    ],
+    "relation_count": 74,
+    "exclusion_indices_zero_based": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54
+    ],
+    "exclusion_count": 55
+  },
+  "proposed_additions": [],
+  "proposed_removals": [
+    {
+      "draft_relation_index_zero_based": 50,
+      "relation": {
+        "record_id": "team5863-02",
+        "relation_type": "produces_result",
+        "target_type": "result",
+        "target_label": "Incubated in 56 °C until excess ethanol dried out",
+        "evidence": "Incubated in 56 °C until excess ethanol dried out",
+        "evidence_kind": "explicit"
+      },
+      "classification": "semantic_boundary_consistency",
+      "reason": "该句描述孵育操作及其停止条件，没有独立报告实验观测。与 iisc2019-03 已排除的 till transparency is achieved 保持同一边界；过去时不足以单独把制备终点归为 produces_result。保留原记录事实，只调整目标关系分类，不推断该操作未发生。"
+    }
+  ],
+  "proposed_changes": [
+    {
+      "action": "add_exclusion",
+      "record_id": "team5863-02",
+      "text": "Incubated in 56 °C until excess ethanol dried out",
+      "reason": "该句描述孵育操作及其停止条件，没有独立报告实验观测。与 iisc2019-03 已排除的 till transparency is achieved 保持同一边界；过去时不足以单独把制备终点归为 produces_result。保留原记录事实，只调整目标关系分类，不推断该操作未发生。",
+      "classification": "semantic_boundary_consistency",
+      "changes_source_text": false
+    }
+  ],
+  "per_record_review": [
+    {
+      "record_id": "iisc2019-01",
+      "decision": "agree",
+      "draft_relation_count": 4,
+      "agreed_relation_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "agreed_exclusion_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "proposed_relation_count": 4,
+      "review_note": "同意4条明确配制组分（CaCl2、glycerol、LB、Agar）；其余成品配制、灭菌及设备推断按输出前裁决排除。"
+    },
+    {
+      "record_id": "iisc2019-02",
+      "decision": "agree",
+      "draft_relation_count": 0,
+      "agreed_relation_indices": [],
+      "agreed_exclusion_indices": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "proposed_relation_count": 0,
+      "review_note": "同意空目标集合；配制成品和灭菌动作没有明确实际输入用途或独立观测。保留原选材，不补全原文拼写或设备。"
+    },
+    {
+      "record_id": "iisc2019-03",
+      "decision": "agree",
+      "draft_relation_count": 19,
+      "agreed_relation_indices": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "agreed_exclusion_indices": [
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "proposed_relation_count": 19,
+      "review_note": "同意19条。原文称5个对照但列出6个，按6个实际明确对照标签标样本；No DNA/No primers不是缺失试剂的使用。仅明确oven标设备；加热至透明属于操作终点，排除为结果。"
+    },
+    {
+      "record_id": "iisc2019-04",
+      "decision": "agree",
+      "draft_relation_count": 0,
+      "agreed_relation_indices": [],
+      "agreed_exclusion_indices": [
+        18,
+        19
+      ],
+      "proposed_relation_count": 0,
+      "review_note": "同意空目标集合；仅制备/灭菌LB及LB Agar，不推断使用试剂、设备或观测。"
+    },
+    {
+      "record_id": "ubc2021-01",
+      "decision": "agree",
+      "draft_relation_count": 4,
+      "agreed_relation_indices": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "agreed_exclusion_indices": [
+        20,
+        21,
+        22,
+        23
+      ],
+      "proposed_relation_count": 4,
+      "review_note": "同意4条。gel analyzer明确命名；照片拍摄不等于条带观测，不从选材元数据推断agarose。"
+    },
+    {
+      "record_id": "ubc2021-02",
+      "decision": "agree",
+      "draft_relation_count": 5,
+      "agreed_relation_indices": [
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
+      "agreed_exclusion_indices": [
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "proposed_relation_count": 5,
+      "review_note": "同意5条。三种有明确上下文的RFP库存作样本，SOC实际使用；re-picking/miniprepping后低产量是明确已完成观测。未来PCR、库存请求、probably bad及被弃用supernatant排除。"
+    },
+    {
+      "record_id": "ubc2021-03",
+      "decision": "agree",
+      "draft_relation_count": 8,
+      "agreed_relation_indices": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "agreed_exclusion_indices": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ],
+      "proposed_relation_count": 8,
+      "review_note": "同意8条。明确组装输入和样本保留；不推断DNA amplicon别名、未命名溶剂、设备或组装成功。准备动作及孵育条件自身不作为结果。"
+    },
+    {
+      "record_id": "ubc2021-04",
+      "decision": "agree",
+      "draft_relation_count": 7,
+      "agreed_relation_indices": [
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "agreed_exclusion_indices": [
+        35,
+        36,
+        37,
+        38,
+        39
+      ],
+      "proposed_relation_count": 7,
+      "review_note": "同意7条。无DNA对照已明确included，作为样本；不推断已涂板或DNA试剂使用。三项完整观测保留原解释强度，不将可能原因升级为确定原因。"
+    },
+    {
+      "record_id": "team5863-01",
+      "decision": "agree",
+      "draft_relation_count": 2,
+      "agreed_relation_indices": [
+        47,
+        48
+      ],
+      "agreed_exclusion_indices": [
+        40,
+        41,
+        42
+      ],
+      "proposed_relation_count": 2,
+      "review_note": "同意2条：thrips样本及实际用于保存的99% ethanol；采集动作、容器及地点不增加目标关系。"
+    },
+    {
+      "record_id": "team5863-02",
+      "decision": "agree_except_one_semantic_boundary",
+      "draft_relation_count": 2,
+      "agreed_relation_indices": [
+        49
+      ],
+      "agreed_exclusion_indices": [
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "proposed_relation_count": 1,
+      "review_note": "同意实际5份农场样本和5条原排除项；唯一建议移除乙醇干燥操作终点的produces_result并增为排除项。命令式kit协议、备选Buffer AE/water及缺损洗涤量不补为实际使用。"
+    },
+    {
+      "record_id": "team5863-03",
+      "decision": "agree",
+      "draft_relation_count": 10,
+      "agreed_relation_indices": [
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60
+      ],
+      "agreed_exclusion_indices": [
+        48,
+        49
+      ],
+      "proposed_relation_count": 10,
+      "review_note": "同意10条。明确PCR结果说明该日期的反应和胶检测已执行；保留明确组分及extracted DNA，unclear观测不推断为成功/失败；不由温度程序推断仪器。"
+    },
+    {
+      "record_id": "team5863-04",
+      "decision": "agree",
+      "draft_relation_count": 14,
+      "agreed_relation_indices": [
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "agreed_exclusion_indices": [
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "proposed_relation_count": 14,
+      "review_note": "同意14条。明确执行上下文中的反应/胶组分、阶段与限定样本及完整清晰条带观测保留；不从裸浓度补样本身份、重复ladder或补缺失水量单位。"
+    }
+  ],
+  "boundary_checks": [
+    "遵守成品配制/灭菌与明确组分的输出前裁决；两条空参考不更换选材。",
+    "否定条件可构成实际对照样本名称，不能变成缺失试剂的使用。",
+    "明确实验结果支持其本地执行上下文；仅粘贴命令式协议和备选项不能证明实际使用。",
+    "观察保留原文不确定性，不推断设备、别名、试剂、单位或额外科学结论。",
+    "title/experiment_type是选材Agent元数据，不作为关系标注证据。"
+  ],
+  "counts": {
+    "draft_relations": 75,
+    "draft_by_relation_type": {
+      "uses_reagent": 39,
+      "uses_sample": 27,
+      "uses_instrument": 2,
+      "produces_result": 7
+    },
+    "draft_exclusions": 55,
+    "proposed_relations": 74,
+    "proposed_by_relation_type": {
+      "uses_reagent": 39,
+      "uses_sample": 27,
+      "uses_instrument": 2,
+      "produces_result": 6
+    },
+    "proposed_exclusions": 56,
+    "nonempty_records": 10,
+    "empty_records": 2,
+    "interpretation": "标注参考条目数；不是系统抽取性能或测试结果。"
+  },
+  "resolution": "根Agent已在输出前表示接受唯一移除；本报告不修改原draft或inputs，最终参考及冻结由根Agent生成。",
+  "input_protection": {
+    "authorized_input_bytes_unchanged": true
+  }
+}

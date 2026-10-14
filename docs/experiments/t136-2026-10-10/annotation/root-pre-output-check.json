@@ -1,0 +1,35 @@
+{
+  "reviewer": "root Agent",
+  "reviewed_utc": "2026-10-10T15:45:33.696878+00:00",
+  "stage": "pre-output",
+  "input_sha256": "f2ec2667ab9d26e382ead18ce12c77e71962416f452236c119940fbc49fea1a0",
+  "draft_sha256": "ab8b98cf4f3ea4841eeb63dc3416e7f44c1935b68a1be72876e66451195c9c88",
+  "checks": {
+    "input_hash_matches": true,
+    "all_reference_evidence_in_body": true,
+    "all_labels_in_body": true,
+    "all_exclusion_spans_in_body": true,
+    "all_types_match_schema": true
+  },
+  "reference_rows": 75,
+  "exclusion_rows": 55,
+  "pending_semantic_issue": "team5863-02 ethanol drying endpoint versus excluded iisc2019-03 transparency endpoint; awaiting second reviewer before adjudication",
+  "visual_source_pages_checked": {
+    "iisc2019": [
+      1,
+      2,
+      3
+    ],
+    "ubc2021": [
+      1,
+      2
+    ],
+    "team5863": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "no_test_note_imports_yet": true
+}

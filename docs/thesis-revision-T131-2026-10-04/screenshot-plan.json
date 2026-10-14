@@ -1,0 +1,730 @@
+{
+  "schema_version": "1.0",
+  "task": "T131",
+  "reviewer": "product_manager",
+  "completed_at_local": "2026-10-04T12:52:58+08:00",
+  "source": {
+    "path": "/Users/yusong/Desktop/1003-导师批注修订版-1004.docx",
+    "sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7"
+  },
+  "advisor_comments": {
+    "source_path": "/Users/yusong/Desktop/1003-修改.docx",
+    "source_sha256": "ea98b90930e85ad1efe4b327e45786de2cac0a3b1a800e6d2c8f3ba62f4dca55",
+    "comments": [
+      {
+        "id": 12,
+        "author": "徐琳",
+        "date_utc": "2026-10-03T21:43:07Z",
+        "text": "图里面只写流程就可，协议与入口的区别去掉"
+      },
+      {
+        "id": 17,
+        "author": "徐琳",
+        "date_utc": "2026-10-03T22:44:00Z",
+        "text": "实现部分截图太少了，前面所有的功能模块都需要有代表的截图和流程。"
+      },
+      {
+        "id": 20,
+        "author": "徐琳",
+        "date_utc": "2026-10-03T22:45:14Z",
+        "text": "测试的数据有sample吗？ 如果有需要在附录里面给出截图"
+      }
+    ],
+    "primary_requirement": "ID17：所有功能模块需要代表截图和流程；ID12约束流程图简洁，ID20属于附录样例，不应在第五章重复充数。"
+  },
+  "current_chapter5": {
+    "figure_count": 18,
+    "system_screenshot_count": 15,
+    "process_diagram_count": 3,
+    "inventory": [
+      {
+        "figure": "5-1",
+        "caption": "图 5-1　已审核实验笔记详情与审核记录",
+        "section": "5.2 实验数据集",
+        "body_block_index_0_based": 350,
+        "media_part": "word/media/image13.png",
+        "media_sha256": "e931ab6a57ad915797bf096007bcd960a3b2dc775e5c7430eced666edacd8369",
+        "pixel_dimensions": [
+          1039,
+          649
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-2",
+        "caption": "图 5-2　实验笔记列表与审核状态",
+        "section": "5.2 实验数据集",
+        "body_block_index_0_based": 352,
+        "media_part": "word/media/image14.png",
+        "media_sha256": "ec024159103cac61ecab2962b62a4388a0b27a40c0f28bd0bc322aecf4edb320",
+        "pixel_dimensions": [
+          1039,
+          649
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-3",
+        "caption": "图 5-3　系统处理总流程图",
+        "section": "5.3 系统功能实现",
+        "body_block_index_0_based": 356,
+        "media_part": "word/media/image15.png",
+        "media_sha256": "4b05b9b854a2a847d64c3c862d7a18a6fcf6f8ac265ea8ccdea4bfe31ea37b03",
+        "pixel_dimensions": [
+          1878,
+          1315
+        ],
+        "type": "process_diagram",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-4",
+        "caption": "图 5-4　实验笔记状态流转",
+        "section": "5.3.1 实验笔记审核与知识更新实现",
+        "body_block_index_0_based": 360,
+        "media_part": "word/media/image16.png",
+        "media_sha256": "c2204d5ac7c174fe782d161167b66457b5ec68f0579996e5d0c9cd476a9942f8",
+        "pixel_dimensions": [
+          1299,
+          331
+        ],
+        "type": "process_diagram",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-5",
+        "caption": "图 5-5　附件资料审核与向量入库流水线",
+        "section": "5.3.1 实验笔记审核与知识更新实现",
+        "body_block_index_0_based": 363,
+        "media_part": "word/media/image17.png",
+        "media_sha256": "7edcff5fe5db86f208f1f5adc3893604eb4be8eb5e1f072d51b3552fd6ae2006",
+        "pixel_dimensions": [
+          1707,
+          157
+        ],
+        "type": "process_diagram",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-6",
+        "caption": "图 5-6　项目二知识图谱全景",
+        "section": "5.3.3 图谱增强问答与可视化实现",
+        "body_block_index_0_based": 372,
+        "media_part": "word/media/image18.png",
+        "media_sha256": "631186578e495e3da2bf85b7ba8830f3f371f80698d368511d6c1d0ec4626ddc",
+        "pixel_dimensions": [
+          1216,
+          915
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-7",
+        "caption": "图 5-7　图谱一跳局部聚焦",
+        "section": "5.3.3 图谱增强问答与可视化实现",
+        "body_block_index_0_based": 374,
+        "media_part": "word/media/image19.png",
+        "media_sha256": "f8240d5912ff282304fe5a122e120abd19823cca11df61f752d486a920a648b9",
+        "pixel_dimensions": [
+          996,
+          749
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-8",
+        "caption": "图 5-8　固定任务智能生成页面",
+        "section": "5.3.4 固定任务与工具调用实现",
+        "body_block_index_0_based": 379,
+        "media_part": "word/media/image20.png",
+        "media_sha256": "e32d84f5e9a17b2a19ad144f76c9b26e404d247ccc9ea5dc9e8cf929b1998d5c",
+        "pixel_dimensions": [
+          1039,
+          649
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-9",
+        "caption": "图 5-9　计划覆盖与未匹配项展示",
+        "section": "5.3.4 固定任务与工具调用实现",
+        "body_block_index_0_based": 381,
+        "media_part": "word/media/image21.png",
+        "media_sha256": "0f7894cc4827b9f1dd20b5c9250a684e2b9c536ef463c151b9918d878fc4a238",
+        "pixel_dimensions": [
+          996,
+          922
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": []
+      },
+      {
+        "figure": "5-10",
+        "caption": "图 5-10　项目成员角色与能力配置",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 395,
+        "media_part": "word/media/image22.png",
+        "media_sha256": "83f24e239293dcc589445a5ddde8e536d3375fabc6c4c11e7b923ab7268bd319",
+        "pixel_dimensions": [
+          1216,
+          619
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/01-project-permissions.png"
+        ]
+      },
+      {
+        "figure": "5-11",
+        "caption": "图 5-11　笔记版本与退回修订入口",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 397,
+        "media_part": "word/media/image23.png",
+        "media_sha256": "a8e29a4bbb1a1cf43abb2d7afb8a27583634b06d0040f8de31b67f08ae1e3d88",
+        "pixel_dimensions": [
+          576,
+          538
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/07-note-version-approval.png"
+        ]
+      },
+      {
+        "figure": "5-12",
+        "caption": "图 5-12　资料上传关联与审核入库状态",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 400,
+        "media_part": "word/media/image24.png",
+        "media_sha256": "b619bbb06d16233ddfe8d06a13b18040d6f04c1c81da4d79c0dd6e1707c29c34",
+        "pixel_dimensions": [
+          1216,
+          423
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/03-attachment-ingestion.png"
+        ]
+      },
+      {
+        "figure": "5-13",
+        "caption": "图 5-13　OCR识别文本与人工校对确认",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 402,
+        "media_part": "word/media/image25.png",
+        "media_sha256": "d19a24cf02bebd1107eeed5957ba647ce89d3ca66dcfa9e2aefc306b559565d2",
+        "pixel_dimensions": [
+          512,
+          524
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/06-ocr-reviewed-text.png"
+        ]
+      },
+      {
+        "figure": "5-14",
+        "caption": "图 5-14　图谱增强问答的来源编号与不足说明",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 405,
+        "media_part": "word/media/image26.png",
+        "media_sha256": "bf80e339ddf81a43ce04be6e0fdc4347176488187c375581a66d54e08f4e05a3",
+        "pixel_dimensions": [
+          1002,
+          131
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/04-qa-citations.png"
+        ]
+      },
+      {
+        "figure": "5-15",
+        "caption": "图 5-15　按需预警与确认处置入口",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 407,
+        "media_part": "word/media/image27.png",
+        "media_sha256": "4b87d5fc8758a0f1354e5a8fae4b1cb3678ea1725d15d00a28e1ec4c2e4069d7",
+        "pixel_dimensions": [
+          1036,
+          350
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/05-alert-inbox.png"
+        ]
+      },
+      {
+        "figure": "5-16",
+        "caption": "图 5-16　项目工具调用的审计摘要",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 410,
+        "media_part": "word/media/image28.png",
+        "media_sha256": "fc30cb93eeabd7b833b2275eae46d6d6534091f7c1f0698c7aa6ae09c2e15ea9",
+        "pixel_dimensions": [
+          1000,
+          531
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/02-audit-tool-trace.png"
+        ]
+      },
+      {
+        "figure": "5-17",
+        "caption": "图 5-17　独立盲评入口的访问隔离",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 412,
+        "media_part": "word/media/image29.png",
+        "media_sha256": "8e0000090c2490111430c84e4107171e0cd266afc92bac84a425faf9fac8744c",
+        "pixel_dimensions": [
+          1036,
+          311
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/09-blind-review-isolation.png"
+        ]
+      },
+      {
+        "figure": "5-18",
+        "caption": "图 5-18　当前会话的问答轻反馈入口",
+        "section": "5.3.7 代表操作与模块对应",
+        "body_block_index_0_based": 415,
+        "media_part": "word/media/image30.png",
+        "media_sha256": "2756fcd42a46c4832bfc858e101ae163d20b4ff5dedb437b555d118ce5788532",
+        "pixel_dimensions": [
+          702,
+          622
+        ],
+        "type": "system_screenshot",
+        "exact_asset_match": [
+          "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/11-qa-feedback.png"
+        ]
+      }
+    ],
+    "assessment": "十三子模块均已有代表图；新的补图应显示前后操作步骤和来源详情。15张截图不等于15条端到端流程完成。"
+  },
+  "asset_reviews": [
+    {
+      "path": "/private/tmp/advisor-T129-20261003/screens/08-note-editor.png",
+      "sha256": "0c78799e73282a8f765f0d65b4aa3a2cc781ceafd0dc42c3b9bb4c089b09735d",
+      "dimensions": [
+        512,
+        580
+      ],
+      "exact_bytes_embedded": false,
+      "status": "unused",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "退回笔记的编辑表单，加载兼容旧笔记标题和版本2正文，底部有取消、保存与本地暂存说明。"
+    },
+    {
+      "path": "/private/tmp/advisor-T129-20261003/screens/10-alert-thresholds.png",
+      "sha256": "130ec7e1b5047bc3f5918d11416e216776ebd9a6482377545e43d5ffe0f8fd98",
+      "dimensions": [
+        1036,
+        328
+      ],
+      "exact_bytes_embedded": false,
+      "status": "unused",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "审批停滞、退回率、蓝图停滞、进展偏差四行warn/critical配置、启用与保存入口。"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/04-blueprint-gap-detail.png",
+      "sha256": "3ac8ca436c663f95e0e6effd6a36c4edab69bba5dc08680dc4d4a4679b326e35",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "exact_bytes_embedded": false,
+      "status": "unused_distinct_view",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "TRIzol待实证知识点已选中，来源类型项目计划书、优先级50、规划描述、定位和作废入口均可见。"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/05-agent-assistant.png",
+      "sha256": "62d7ee181bcedadfac567140f74379dad6cee2b4bafa23b8ce5f9be83e5fc038",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "exact_bytes_embedded": false,
+      "status": "unused_distinct_view",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "深度助手显示计划已确认、知识图谱返回内容、工具状态completed和三步执行轨迹标题；轨迹内容仅部分可见。"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/13-reports-generation.png",
+      "sha256": "12741f2bfd4b3b861bbd2698f0cffe9921306517a37c4ca0d3d0cec92ecf4971",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "exact_bytes_embedded": false,
+      "status": "already_in_figure_5_8_resampled",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "与DOCX image20图5-8同一画面：项目10报告页、2026-09-01已有完成记录、草稿开头及N37/N38/N40笔记编号；完整正文与来源列表未显示。"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/12-ai-suggestion-qa.png",
+      "sha256": "b96814131e8642a6e34a025dd660ec1111962848d3542b88442e1f74db1627fa",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "exact_bytes_embedded": false,
+      "status": "unused_distinct_view_optional",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "计划缺口联动建议卡、已入库资料提示及S/G编号回答可见；下半部回答及引用校验未完整收入视口。"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/06-agent-cited-answer.png",
+      "sha256": "eada4a77f750c3ea974e00ede1744159de9bc46e069e3fe4b267fbc5f2f36f22",
+      "dimensions": [
+        1440,
+        900
+      ],
+      "exact_bytes_embedded": false,
+      "status": "unused_distinct_view_optional",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "快速助手回答含S1—S4/G1—G9，明确材料不能确定下一实验；与12同一历史示例，信息部分重复。"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/user-guide-assets/23-generation-sources.png",
+      "sha256": "eb27d8e135218e0913d70212b5fbb10dde7fa5ad596bfb2722183f1fa83ac429",
+      "dimensions": [
+        1292,
+        714
+      ],
+      "exact_bytes_embedded": false,
+      "status": "exclude_not_system_screenshot",
+      "personally_viewed": true,
+      "view_detail": "original",
+      "visible_content": "四类生成任务来源数量与延迟柱状统计图，属于研究结果可视化。"
+    }
+  ],
+  "recommended_plan": [
+    {
+      "id": "S1",
+      "priority": 1,
+      "status": "ready_reuse",
+      "target_section": "5.3.7",
+      "anchor": "图5-11后，或与5-11组成同一退回修订组图",
+      "technical_section": "5.3.1",
+      "path": "/private/tmp/advisor-T129-20261003/screens/08-note-editor.png",
+      "caption": "退回笔记的编辑与本地草稿暂存界面",
+      "explanation": "记录者从退回意见进入编辑表单，补充标题与正文后可再次保存和提审。画面加载已有版本2内容，保存入口与本地暂存提示对应修订阶段。",
+      "flow": "退回意见→进入编辑→修改内容→保存后提审（画面仅覆盖进入编辑阶段）",
+      "modules": [
+        "实验笔记管理"
+      ],
+      "identity": {
+        "capture_date": "2026-10-03",
+        "deployment_revision": "fb87ce38c08aa3444759a47adda56e491ad05db2",
+        "provenance": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/captions-and-coverage.json",
+        "condition": "本地演示栈的既有软件验收记录；采集时仅打开页面/取消，不保存或确认。"
+      },
+      "limits": [
+        "本次没有点击保存，不写成已生成新版本或已再次通过审核。",
+        "该表单为兼容旧笔记样例，日期为空，不用于宣称结构化模板录入完整。"
+      ],
+      "layout": "512×580局部图；宽约7.5—9cm，与图5-11并排或上下两图同页，不放大全屏。",
+      "asset_sha256": "0c78799e73282a8f765f0d65b4aa3a2cc781ceafd0dc42c3b9bb4c089b09735d"
+    },
+    {
+      "id": "S2",
+      "priority": 1,
+      "status": "ready_reuse",
+      "target_section": "5.3.7",
+      "anchor": "图5-15预警处置入口之后",
+      "technical_section": "5.3.5；对应4.8阈值规则",
+      "path": "/private/tmp/advisor-T129-20261003/screens/10-alert-thresholds.png",
+      "caption": "四类预警指标的分级阈值配置界面",
+      "explanation": "管理者分别配置审批停滞、退回率、计划停滞与进展偏差的警告和紧急阈值，并控制各规则是否启用。配置页面提示阈值变更写入审计，与后续按需评估和确认处置相衔接。",
+      "flow": "核对规则→配置分级阈值→按需评估→查看告警→确认备注（本图仅展示配置）",
+      "modules": [
+        "预警管理",
+        "审计与日志"
+      ],
+      "identity": {
+        "capture_date": "2026-10-03",
+        "deployment_revision": "fb87ce38c08aa3444759a47adda56e491ad05db2",
+        "provenance": "/Users/yusong/Downloads/new/full-system/docs/thesis-revision-T129-2026-10-03/screens/captions-and-coverage.json",
+        "condition": "本地演示栈的既有软件验收记录；采集时仅打开页面/取消，不保存或确认。"
+      },
+      "limits": [
+        "没有保存阈值更改，不宣称阈值设置或告警解除在本轮已重新验证。",
+        "不要改称主动推送或持续后台监控结果。"
+      ],
+      "layout": "1036×328横向局部图，15cm宽，和现5-15上下同页；右下浮动助手遮挡少量边缘，当前重新采图时可关闭面板。",
+      "asset_sha256": "130ec7e1b5047bc3f5918d11416e216776ebd9a6482377545e43d5ffe0f8fd98"
+    },
+    {
+      "id": "S3",
+      "priority": 1,
+      "status": "historical_reuse_or_prefer_recapture",
+      "target_section": "5.3.6或5.3.7计划知识点组",
+      "anchor": "计划解析、来源优先级合并说明之后；与现图5-9互补",
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/04-blueprint-gap-detail.png",
+      "caption": "未覆盖计划知识点的来源与规划描述回查",
+      "explanation": "在缺口清单中选中TRIzol试剂后，详情区显示计划来源、优先级与规划描述，并提供图中定位和计划节点作废入口。该信息描述计划要求，仍需与已审核实验记录核对。",
+      "flow": "覆盖结果→选缺口→查来源和描述→定位节点（不点击作废）",
+      "modules": [
+        "计划知识点管理",
+        "图谱展示管理"
+      ],
+      "identity": {
+        "kind": "历史演示画面",
+        "source_record": "/Users/yusong/Downloads/new/full-system/docs/innovation/创新点试用展示-2026-09-08.md",
+        "capture_timestamp_and_revision": "未独立绑定，不能标为本轮当前版本截图"
+      },
+      "limits": [
+        "计划要求不等于实验事实或任务完成。",
+        "旧图顶部大块图谱可裁去，建议在当前版本重新打开同一缺口后采来源卡片。"
+      ],
+      "layout": "保留缺口清单、选中节点标识与来源卡片的同一局部；不要缩小1440×900全屏。",
+      "asset_sha256": "3ac8ca436c663f95e0e6effd6a36c4edab69bba5dc08680dc4d4a4679b326e35"
+    },
+    {
+      "id": "S4",
+      "priority": 1,
+      "status": "recapture_required_for_full_trace",
+      "target_section": "5.3.4或5.3.7工具调用组",
+      "anchor": "固定任务与会话调用实现段后",
+      "path": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/05-agent-assistant.png",
+      "caption": "会话助手的工具调用与执行轨迹",
+      "explanation": "会话助手按已确认的计划读取项目证据，执行轨迹列出工具名称与完成状态，结果区域保留返回内容。工具的授权、风险分类和运行结果可继续在项目审计中回查。",
+      "flow": "会话输入→计划确认状态→只读工具步骤→返回结果→审计回查",
+      "modules": [
+        "固定任务生成管理",
+        "审计与日志",
+        "图谱展示管理"
+      ],
+      "identity": {
+        "kind": "历史候选，仅作复现参考",
+        "source_record": "/Users/yusong/Downloads/new/full-system/docs/任务台账.md",
+        "record": "T-044 2026-09-14截图重载记录；精确revision未绑定"
+      },
+      "limits": [
+        "旧图三步轨迹只露出第一步，需展开并采完整局部。",
+        "已确认研究计划不是高风险业务写入确认，不能用此图声称高风险动作确认过程。",
+        "不称思维链，标题仅用工具执行轨迹。",
+        "若当前会话入口不可用，保留历史身份并说明截图只能显示已有状态。"
+      ],
+      "layout": "助手面板局部，工具名、risk/status与结果清楚；必要时输入/结果与完整步骤拆成两图。",
+      "asset_sha256": "62d7ee181bcedadfac567140f74379dad6cee2b4bafa23b8ce5f9be83e5fc038"
+    },
+    {
+      "id": "S5",
+      "priority": 1,
+      "status": "new_capture_existing_record",
+      "target_section": "5.3.4或5.3.7固定任务组",
+      "anchor": "图5-8报告页后，表5-5来源节选旁",
+      "existing_figure": "5-8",
+      "existing_asset": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/13-reports-generation.png",
+      "path": null,
+      "caption": "固定任务草稿展开结果与三类来源回查",
+      "explanation": "打开一条已完成的固定任务记录，核对任务类型、时间范围和草稿正文，并展开笔记、资料和图谱关系来源。来源编号使生成内容可返回原笔记、文件或关系记录。",
+      "flow": "任务/范围→已有完成记录→展开正文→展开N/F/R来源→原记录回查",
+      "modules": [
+        "固定任务生成管理",
+        "知识关系管理",
+        "资料与附件管理"
+      ],
+      "identity": {
+        "kind": "本轮读取既有运行记录的新截图",
+        "required_fields": [
+          "截图日期",
+          "部署revision",
+          "项目ID",
+          "任务run ID",
+          "原记录生成时间"
+        ],
+        "prohibited_relabel": "不得将原记录生成时间改写为本轮新生成结果"
+      },
+      "limits": [
+        "13-reports-generation.png已经入图5-8，只能作为定位参考，不再重复添加。",
+        "优先打开既有成功记录，不为截图重新运行生成，不把失败/待执行条目并称完成。",
+        "同一记录若当前UI不显示三类来源，按实际可见项调整图题；不可拼造。"
+      ],
+      "layout": "草稿正文局部与来源列表局部可成两幅组图，字段字号打印可辨。"
+    },
+    {
+      "id": "S6",
+      "priority": 2,
+      "status": "new_capture_readonly_dialog",
+      "target_section": "5.3.6或5.3.7计划知识点组",
+      "anchor": "与S3缺口回查配为输入/结果组",
+      "path": null,
+      "caption": "项目计划文本的导入解析入口",
+      "explanation": "计划页提供项目计划书或组会纪要文本入口，解析后的条目与来源分别保留并用于覆盖核对。将该入口与缺口来源界面对照，可说明输入如何连接到已保存的计划知识点。",
+      "flow": "打开解析入口→核对文本/来源字段→查看已有解析结果→缺口回查",
+      "modules": [
+        "计划知识点管理"
+      ],
+      "identity": {
+        "kind": "本轮只打开未提交表单",
+        "required_fields": [
+          "截图日期",
+          "部署revision",
+          "项目ID"
+        ]
+      },
+      "limits": [
+        "只打开对话框，不提交新解析，不将表单与其他历史结果描述为本轮同次解析闭环。",
+        "如窗口只提供文件上传或其他字段，按当前实际控件改写图题。"
+      ],
+      "layout": "对话框局部，字段和执行/取消入口完整。"
+    },
+    {
+      "id": "S7",
+      "priority": 2,
+      "status": "optional_new_capture",
+      "target_section": "5.3.3或5.3.7问答组",
+      "anchor": "现图5-14旁",
+      "path": null,
+      "caption": "问答来源详情与原记录回查",
+      "explanation": "从回答中的S或G编号打开来源详情，对照文件片段或关系对应的原记录。回答与来源共同显示，便于确认编号指向和证据范围。",
+      "flow": "历史问题/回答→S/G编号→来源内容→原笔记或文件",
+      "modules": [
+        "智能问答",
+        "知识关系管理",
+        "资料与附件管理"
+      ],
+      "identity": {
+        "kind": "本轮打开既有问答/来源记录",
+        "required_fields": [
+          "截图日期",
+          "部署revision",
+          "项目ID",
+          "query ID",
+          "原问答时间"
+        ]
+      },
+      "limits": [
+        "现图5-14仅131像素高，已有编号文字但缺展开来源；不要再补同样回答段。",
+        "沿用既有问答，不为补图重复实验；图片不单独证明引用正确性。"
+      ],
+      "layout": "问题与一条来源卡片局部；每幅来源关系明确，避免重复滚动截成长图。"
+    }
+  ],
+  "recommended_scope": {
+    "minimum": "优先S1—S5，其中S1/S2可立即复用，S3可带历史身份复用但优先当前重采，S4/S5优先采真实完整局部。S6与S7按可达入口和版面追加。",
+    "numbering": "推荐按实际正文出现顺序统一重编号。若需保留现5-1—5-18，可将新增图集中接续于5.3.7（新5-19起），并在5.3.1—5.3.6交叉引用；不能在前面插图后保留乱序图号。",
+    "layout": "同一操作链每页1—2张局部图。保留图题同页，不用全桌面缩到15cm宽；所有新裁图/新截图须重新原尺寸目检和最终打印尺寸QA。",
+    "privacy": "旧系统管理员截图有可见测试凭据，排除；新图避开口令、令牌、浏览器存储和无关个人资料。",
+    "evidence_boundary": "只描述实现的入口、操作和状态。保留历史记录时间、本轮采集日期及版本身份，不加入用户满意度、工作效率、真人实测或已完成评分含义。"
+  },
+  "module_coverage": [
+    {
+      "module": "用户与项目权限",
+      "existing_figures": "5-10",
+      "action": "已有角色与能力配置；登录/项目列表可选，不优先堆图"
+    },
+    {
+      "module": "实验笔记管理",
+      "existing_figures": "5-1/5-2/5-11",
+      "action": "S1补退回后编辑入口；完整版本差异仍不由图证明"
+    },
+    {
+      "module": "资料与附件管理",
+      "existing_figures": "5-12",
+      "action": "现图已有上传关联与状态；S5/S7补来源回查"
+    },
+    {
+      "module": "文档解析与入库",
+      "existing_figures": "5-5/5-12/5-13",
+      "action": "现OCR夹具待同步；若需同文件入库闭环须另取得真正完成记录"
+    },
+    {
+      "module": "知识实体",
+      "existing_figures": "5-6/5-7",
+      "action": "已有类型、局部聚焦；不需重复图谱"
+    },
+    {
+      "module": "知识关系",
+      "existing_figures": "5-6/5-7/5-14",
+      "action": "S5/S7补关系来源回查"
+    },
+    {
+      "module": "图谱展示",
+      "existing_figures": "5-6/5-7",
+      "action": "已有全景与聚焦；S3只补选中来源详情"
+    },
+    {
+      "module": "计划知识点",
+      "existing_figures": "5-9",
+      "action": "S3/S6补输入入口与缺口来源"
+    },
+    {
+      "module": "智能问答",
+      "existing_figures": "5-14/5-18",
+      "action": "S7补实际来源详情，不重复回答截图"
+    },
+    {
+      "module": "固定任务生成",
+      "existing_figures": "5-8",
+      "action": "S4/S5补会话工具过程与报告来源"
+    },
+    {
+      "module": "效果评价",
+      "existing_figures": "5-17/5-18",
+      "action": "已有轻反馈/访问隔离；不补评价结果，不新增未执行研究说明"
+    },
+    {
+      "module": "预警管理",
+      "existing_figures": "5-15",
+      "action": "S2补分级阈值配置，仍按需评估"
+    },
+    {
+      "module": "审计与日志",
+      "existing_figures": "5-16",
+      "action": "已有真实只读工具审计；与S4执行轨迹衔接"
+    }
+  ],
+  "exclusions": [
+    {
+      "asset": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/13-reports-generation.png",
+      "reason": "已是图5-8缩放原图，视觉亲看确认；不是新增截图。"
+    },
+    {
+      "asset": "/Users/yusong/Downloads/new/full-system/docs/user-guide-assets/23-generation-sources.png",
+      "reason": "柱状统计图；不是系统实截图。"
+    },
+    {
+      "asset": "/Users/yusong/Downloads/new/full-system/docs/user-guide-assets/03-system-admin.png",
+      "reason": "T128已记录可见测试凭据风险；不纳入论文候选，不重发凭据画面。"
+    },
+    {
+      "asset": "/Users/yusong/Downloads/new/full-system/docs/user-guide-assets/05-rag-files-evaluation.png",
+      "reason": "文件名误标，实际是笔记审批页；不得作为资料或评价截图。"
+    },
+    {
+      "asset": "/Users/yusong/Downloads/new/full-system/docs/user-guide-assets/08-project-audit-log.png",
+      "reason": "文件名误标，实际是成员权限；日志应使用现5-16或innovation对应图。"
+    },
+    {
+      "asset": "/Users/yusong/Downloads/new/full-system/docs/innovation/screenshots/06-agent-cited-answer.png",
+      "reason": "可备选快速助手展示，但与现问答编号内容和12候选重复，不优先加图。"
+    }
+  ],
+  "boundaries": [
+    "只读核对源DOCX、批注和历史图片；未编辑论文、代码或原有证据。",
+    "本任务未进入浏览器采集新界面，new_capture条目是待采计划而非已完成截图。",
+    "判断未入文以媒体SHA核查加具体画面复核为准；只有SHA不一致不足以证明未入文，图5-8已识别重采样副本。",
+    "已逐张original亲看asset_reviews八张候选，并亲看DOCX图5-8/image20和图5-9/image21用于去重；既有图其余布局结论不在本任务重新全篇验收。"
+  ]
+}

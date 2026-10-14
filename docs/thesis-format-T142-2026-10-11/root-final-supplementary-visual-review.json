@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "word_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+  "pdf_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+  "page_manifest_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+  "scope": "Root final supplementary visual checks;100-page coverage verified by three independent reviewer reports separately",
+  "viewed_pages": [
+    {
+      "page": 56,
+      "png_sha256": "0c84cec4cb01c0ef42f6f220bb6d02b0d1dfbe55219be676006f61e7ed91281b",
+      "observation": "Original complete page viewed. Three tables6-3a/b/c have full headers/rows, three rules and clear prose. No comment shading or edge clipping."
+    },
+    {
+      "page": 95,
+      "png_sha256": "f425eb0fd17d25c55e5a792861b1f8f04c5045286bfbe08eb51599762f05af84",
+      "observation": "Original complete page viewed. AppendixD[80] is a full superscript marker. Two complete three-rule tables and all source identities retained."
+    },
+    {
+      "page": 100,
+      "png_sha256": "1f5cf64eaee05280a6122e1685792a0850d7664b1779bffc0b779f574df0d57e",
+      "observation": "Original complete page viewed. TableD-4 has caption/header/all nine source rows and bottom rule fully on page; border is within body. Final printed page93."
+    }
+  ],
+  "verification": "view_image detail original; tool may display at reduced resolution as noted; no claim of full100-page independent view by root"
+}

@@ -1,0 +1,71 @@
+{
+  "task": "T150",
+  "status": "ANALYZED",
+  "statistical_confirmed": false,
+  "new_experiment": false,
+  "eleven_fallacy_scan": [
+    {
+      "fallacy": "Simpson paradox",
+      "finding": "不支持合并不同任务/条件得优劣；按四臂与两类负载分开保留。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Ecological fallacy",
+      "finding": "48次调用不是48个独立问题；72条上下文条目不是72个独立原子事实。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Berkson/selection bias",
+      "finding": "已知开发材料、4条合成记录与12条选定英文日记不能代表一般中文科研记录。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Collider bias",
+      "finding": "未进行协变量调整或用户因果模型，无相应推断。",
+      "status": "NOT_APPLICABLE"
+    },
+    {
+      "fallacy": "Base-rate neglect",
+      "finding": "T136分母固定为74条AI参考关系；结果不估计真实全部关系分布的正确率。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Regression to mean",
+      "finding": "T148后续字段映射修复未重跑T136，不将历史F1当修复后效果。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Survivorship bias",
+      "finding": "T148预定48条响应全部留存，性能550条包括全部尝试；当前均成功不删失败。",
+      "status": "CHECKED"
+    },
+    {
+      "fallacy": "Look-elsewhere effect",
+      "finding": "仅复核预先冻结的两组配对比较；没有筛选正向显著结果。",
+      "status": "CHECKED"
+    },
+    {
+      "fallacy": "Garden of forking paths",
+      "finding": "冻结计分规则保留；原已知题集仍具回顾性局限，不追改标签/分数。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Correlation vs causation",
+      "finding": "词法覆盖及小样本计分不能推出图拓扑带来因果增益，更不能推出真实用户收益。",
+      "status": "CAUTION"
+    },
+    {
+      "fallacy": "Reverse causality",
+      "finding": "没有使用观察性用户结果做因果归因。",
+      "status": "NOT_APPLICABLE"
+    }
+  ],
+  "allowed_claim": "可复算现存原始数据的算术及身份一致性；小批次描述性结果。",
+  "disallowed_claims": [
+    "领域科学金标准已通过",
+    "广泛外推中文自然正文能力",
+    "新系统已提高一般事实准确性",
+    "真实用户收益已证实",
+    "全威胁安全合规或生产SLA已证实"
+  ]
+}

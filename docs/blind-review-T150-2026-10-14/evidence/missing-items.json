@@ -1,0 +1,112 @@
+{
+  "task": "T150",
+  "issues": "R3/R5/R9 evidence line, with dependent R4/R7 gaps",
+  "count": 14,
+  "items": [
+    {
+      "id": "R3-ACCEPTANCE",
+      "issue": "R3",
+      "status": "AWAITING_INDEPENDENT_ACCEPTANCE",
+      "description": "Local evidence package and offline computations are provided; mentor or uninvolved third party has not accepted random reruns or author explanation.",
+      "needed": "导师在新环境选样复算、现场说明核心模块和证据链，并独立签署验收。"
+    },
+    {
+      "id": "R3-PUBLIC-ARCHIVE",
+      "issue": "R3",
+      "status": "NOT_PUBLICLY_ARCHIVED",
+      "description": "Remote URL recorded locally; no network verification, public archive DOI or institutional receipt obtained.",
+      "needed": "作者/导师确定校内受控归档位置并出具收件记录；敏感历史先脱敏审查。"
+    },
+    {
+      "id": "R3-FULL-HISTORY-REVIEW",
+      "issue": "R3",
+      "status": "PRIVATE_LOCAL_COMPLETE_REACHABLE_HISTORY_ONLY",
+      "description": "Three bundles contain all refs and HEAD reachable history and verify in empty repositories, but no full historic-content release review; excluded from mentor ZIP.",
+      "needed": "导师本地核验 bundles；对外提供前审查全历史隐私与身份信息。"
+    },
+    {
+      "id": "R3-DATABASE-DUMP",
+      "issue": "R3",
+      "status": "FULL_ANONYMIZED_DATABASE_DUMP_MISSING",
+      "description": "Selected original input/graph/environment/row-count snapshots retained; a self-contained anonymized database dump with complete record-to-audit lineage is not established. Uninspected SQLite file omitted.",
+      "needed": "提供真实对应批次的匿名化数据库 dump、迁移版本表和可验证血缘；不得新建 dump 冒充历史快照。"
+    },
+    {
+      "id": "R3-PROVIDER-EXPORT",
+      "issue": "R3",
+      "status": "PROVIDER_SIDE_EXPORT_MISSING",
+      "description": "Raw local response IDs/time/usage available; no independent provider backend/billing export.",
+      "needed": "作者提供脱敏服务后台导出，与本地响应 ID 和时间逐项对照。"
+    },
+    {
+      "id": "R3-TRACE-SENSITIVITY",
+      "issue": "R3",
+      "status": "SENSITIVE_TRACE_OR_LOG_ORIGINALS_NOT_DISTRIBUTED",
+      "description": "Earlier T139 v4 log/results include bearer/JWT tokens; browser trace ZIPs may retain cookies. Credential-bearing local QA JSONs are only supplied as labelled redacted derivatives.",
+      "needed": "在受控环境检查原始敏感文件；如需交付，生成保留事件时间和请求 ID 的脱敏派生文件并独立审查。"
+    },
+    {
+      "id": "R3-CI",
+      "issue": "R3",
+      "status": "REMOTE_CI_RECORD_NOT_VERIFIED",
+      "description": "Historical local standard outputs preserved; remote CI record has not been fetched or independently authenticated.",
+      "needed": "提供与完整 commit 对应的 CI run URL/导出并由导师核验。"
+    },
+    {
+      "id": "R5-HISTORICAL-UNVERSIONED",
+      "issue": "R5",
+      "status": "UNRESOLVED",
+      "description": "Historic June 11 / July 13 runs remain unversioned; no trustworthy exact historical code and complete matching DB snapshot recovered. Later commits cannot replace missing history.",
+      "needed": "仅当发现可信原始记录时补绑定；否则保留历史探索批次标识并撤回严格因果/同条件比较。"
+    },
+    {
+      "id": "R5-T148-REUSE",
+      "issue": "R5",
+      "status": "PARTIAL_CONTROL_ONLY",
+      "description": "T148 frozen facts, scripts and context have hashes, but reuse prior questions and observations retrospectively; whole-repository identity is not one newly validated commit.",
+      "needed": "保留回顾性开发对照边界；若要独立确认需新冻结数据、同一环境并预先确定评价方案。"
+    },
+    {
+      "id": "R9-IMMUTABLE-MODEL",
+      "issue": "R9",
+      "status": "UNRESOLVED",
+      "description": "Requested deepseek-v4-flash and returned deepseek-flash aliases are preserved separately; immutable provider snapshot and server version unknown.",
+      "needed": "服务方后台或官方可验证的历史模型快照标识；无法取得时明确不保证模型级精确复现。"
+    },
+    {
+      "id": "R9-GPT-MODEL",
+      "issue": "R9",
+      "status": "UNRESOLVED",
+      "description": "184 archived AI evaluation rows have null model field; T136 GPT-assisted annotations also lack exact model ID.",
+      "needed": "提供原会话/平台日志；不能用当前配置或猜测的 GPT 型号填补。"
+    },
+    {
+      "id": "R4-HUMAN-GOLD",
+      "issue": "R4",
+      "status": "UNRESOLVED",
+      "description": "Recomputed saved AI scores are computational verification, not expert validation of 74 relations or answer semantics; no independent human gold.",
+      "needed": "人类专家独立标注和仲裁，报告一致性并保留逐条记录。"
+    },
+    {
+      "id": "R7-OLD-600-DETAILS",
+      "issue": "R7",
+      "status": "UNRESOLVED",
+      "description": "Newer 200/350 latency records do not restore historic 600 per-request timings or old p95 provenance.",
+      "needed": "继续明确旧实验无法复算；新增批次必须独立编号，不能回填旧值。"
+    },
+    {
+      "id": "SOURCE-OPTIONAL-SCRIPT",
+      "issue": "R3",
+      "status": "EXCLUDED_PENDING_CREDENTIAL_CLEANUP",
+      "description": "Optional ablate_score53_coefficients.py contains a production-like hardcoded database URL, excluded from current and historical portable source archives. Production Rust/Next source is included.",
+      "needed": "由授权代码线移除硬编码凭据后交付安全派生版；保留原历史哈希说明。"
+    }
+  ],
+  "solved_claim_forbidden": [
+    "Local file exists is not independent acceptance",
+    "Bundle header verification is not historic content authenticity",
+    "Saved AI judgment recomputation is not human gold",
+    "Later code/hash cannot repair an unversioned historic experiment",
+    "Aliases and response IDs do not reveal an immutable model snapshot"
+  ]
+}

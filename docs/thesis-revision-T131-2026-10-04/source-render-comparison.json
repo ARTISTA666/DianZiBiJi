@@ -1,0 +1,2376 @@
+{
+  "schema_version": "t131-source-render-comparison-v1",
+  "owner": "code-reviewer",
+  "completed_at": "2026-10-04T12:54:18.121661+08:00",
+  "source_docx_path": "/private/tmp/advisor-T131-20261004/source.docx",
+  "source_docx_sha256": "4fcf1080bbd148e658e4e2f6df1bd4c31730b72019848b200871c17dac7d76a7",
+  "source_baseline_protected_json_path": "/private/tmp/advisor-T131-20261004/baseline-protected.json",
+  "source_baseline_protected_json_sha256": "5a56a9f9e124ea8bd4a6a2dd41bcd3242eeae284f65228eb55da8b8f9d633836",
+  "render_command": {
+    "python": "/Users/yusong/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "script": "/Users/yusong/.codex/plugins/cache/openai-primary-runtime/documents/26.905.11957/skills/documents/render_docx.py",
+    "input_path": "/private/tmp/advisor-T131-20261004/source.docx",
+    "output_dir": "/private/tmp/advisor-T131-20261004/render-source",
+    "emit_pdf": true,
+    "FONTCONFIG_FILE": "/private/tmp/thesis-format-T124-20261003/fonts.conf",
+    "fonts_conf_sha256": "3b832af92f4de3427401f5272e7df7d003528093bf181d02195a524e07ddfa40",
+    "soffice_wrapper": "/Users/yusong/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/soffice",
+    "soffice_binary": "/Users/yusong/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/libreoffice-headless/libreoffice/LibreOfficeDev.app/Contents/MacOS/soffice",
+    "soffice_resolution_verified": "Renderer prefers selected runtime wrapper; wrapper directly executes bundled LibreOffice with separate temporary profile. Desktop LibreOffice was not used."
+  },
+  "source_render_pdf_path": "/private/tmp/advisor-T131-20261004/render-source/source.pdf",
+  "source_render_pdf_sha256": "848b2d02cfa7ff772fbe201d58cd87bfde6f5e0f6c634cb0bb7decd7324272bf",
+  "source_physical_page_count": 105,
+  "source_PNG_page_count": 105,
+  "T130_render_directory": "/private/tmp/advisor-T130-20261004/render-final",
+  "T130_physical_page_count": 107,
+  "T130_PNG_page_count": 107,
+  "source_PNG_sequence_complete": true,
+  "T130_PNG_sequence_complete": true,
+  "exact_hash_identical_physical_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    18,
+    19
+  ],
+  "changed_or_missing_physical_pages": [
+    14,
+    15,
+    16,
+    17,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107
+  ],
+  "identical_page_count": 15,
+  "changed_page_count": 92,
+  "per_page": [
+    {
+      "physical_page": 1,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-1.png",
+      "T130_png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-1.png",
+      "T131_source_png_sha256": "f138d987e20af6c19b2ad7cea1368f8342c5645d768f3d8cb78df02aab3c4b78",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 2,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-2.png",
+      "T130_png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-2.png",
+      "T131_source_png_sha256": "f8bdef59363c687bbaee0ec24e7aa1452d1477466ce1874d4d3e912c4b9791a9",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 3,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-3.png",
+      "T130_png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-3.png",
+      "T131_source_png_sha256": "68d0f89300e4a148c0e54141b46eba104981ec49589ba56e94d20c573a746c1f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 4,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-4.png",
+      "T130_png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-4.png",
+      "T131_source_png_sha256": "bcc272645076bfed53db1c551861992b3e5373c69549146304b4afa9717f585c",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 5,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-5.png",
+      "T130_png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-5.png",
+      "T131_source_png_sha256": "26cca5b3a6a5ffc649b0d6d218f551bda5a72c215a832adcb3f68152daa98cfc",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 6,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-6.png",
+      "T130_png_sha256": "3957c1d28b3ac8a662d18f9deffa9fd4b10f616c1f172710bcf92b519b7dfc06",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-6.png",
+      "T131_source_png_sha256": "3957c1d28b3ac8a662d18f9deffa9fd4b10f616c1f172710bcf92b519b7dfc06",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 7,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-7.png",
+      "T130_png_sha256": "dd2b4d12626f33cecea2f0891311eaa8bd50e293cff6bbee20e41e63060d40d2",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-7.png",
+      "T131_source_png_sha256": "dd2b4d12626f33cecea2f0891311eaa8bd50e293cff6bbee20e41e63060d40d2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 8,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-8.png",
+      "T130_png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-8.png",
+      "T131_source_png_sha256": "940f8cc9c24d2f4f08ade7bf1f0cae4f824aa358de39f45e5e2c4800b4e16dc7",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 9,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-9.png",
+      "T130_png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-9.png",
+      "T131_source_png_sha256": "e570301fecb52a3235a59805db44eb23c4270eda608a116db398e239571272b9",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 10,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-10.png",
+      "T130_png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-10.png",
+      "T131_source_png_sha256": "ff2c08d3c92b5f8015db2d7e5705b22e7f7f8625b6e285cc1078d703644ec904",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 11,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-11.png",
+      "T130_png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-11.png",
+      "T131_source_png_sha256": "40d1d02d515c9eb5b525f445776ae157b290860ab7221599ea22d235d8db55d9",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 12,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-12.png",
+      "T130_png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-12.png",
+      "T131_source_png_sha256": "611895bcb026d687cdeb4e2250994f05b3933e8741c0dd5062b492237c4b8924",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 13,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-13.png",
+      "T130_png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-13.png",
+      "T131_source_png_sha256": "66d577d83a44e30487461a8921b3258b5ae867f5aaad0115fc90fcd3951f28a9",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 14,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-14.png",
+      "T130_png_sha256": "8ac558d2502878654ac210ca66d2e50d4663fa568dbb22170648af55eed21257",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-14.png",
+      "T131_source_png_sha256": "12958c002251336ee784bf914d43a4325dd1ae6e19a7762bcd51ec222a5638cf",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 15,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-15.png",
+      "T130_png_sha256": "ab49de93815006879bdc04691fc74c57129ae55624aed51a6d8090b37ecaff41",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-15.png",
+      "T131_source_png_sha256": "087b74729a51866fe8123e7fcec7786264a6a4bd546a4b1fcaeaff5406184400",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 16,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-16.png",
+      "T130_png_sha256": "b9cebe7777331f93ba2d4870f5d42ab2dd0f3e53d3ae5614b30d1002e4cf7ba7",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-16.png",
+      "T131_source_png_sha256": "5bba69778fd380772417be39e3e95b0a692419c95030b858bcadd20e29b66087",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 17,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-17.png",
+      "T130_png_sha256": "adc9b3e41abc7674bbf4cb6b4eb33fa278f4c601225d23e84f522f52cb4cd944",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-17.png",
+      "T131_source_png_sha256": "c51de21c45e12601d4d6cb87e9ae3d559fe48435f06ce96b31030edd7befeb0e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 18,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-18.png",
+      "T130_png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-18.png",
+      "T131_source_png_sha256": "ccd7eb53ef779b3d2837e8c0408b2fcf128c1f0b16ca8bd6005ef8b7a449b94f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 19,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-19.png",
+      "T130_png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-19.png",
+      "T131_source_png_sha256": "f87bba4dfca60f3e12c321204adc092ac7c4c11f4b08e8f19adff44079463b2c",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": true,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "exact_hash_allows_inheritance_from_matching_prior_personal_inspection"
+    },
+    {
+      "physical_page": 20,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-20.png",
+      "T130_png_sha256": "18c7c606e43c0dea05832840c3fdc60162a69ba23a8e600575ef41e601bf458b",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-20.png",
+      "T131_source_png_sha256": "eeb7dc7f6c5ae0a5d8915a26b4fa8a1869599aa4a842b3b04735f9ddec17db26",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 21,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-21.png",
+      "T130_png_sha256": "3a9a9f5a45302b81cb0bcc67e1bfe6fb7c0187875fff0ff1eaf54eb391795747",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-21.png",
+      "T131_source_png_sha256": "2fb90a29ade0acf7f4df5b6a69e0849a689cb0eeaf150feab142778a19b75143",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 22,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-22.png",
+      "T130_png_sha256": "4ae8d111ecdfca056ed0faff24b1cff587bb8d69af0efc8e74b1702d35ec0060",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-22.png",
+      "T131_source_png_sha256": "f484e0496590457cc40436e71e3d995d911044f79a14b90aba8ebf68f77cd9a2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 23,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-23.png",
+      "T130_png_sha256": "2f2b3e898ee9fdd3810e58e99a8e75d6ef100d3a3dcc45b9388fb151204b1faa",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-23.png",
+      "T131_source_png_sha256": "64de4f0fbffd1efed8a5bb710563c56f40a9033d3cdca8171b8930b26d59d862",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 24,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-24.png",
+      "T130_png_sha256": "7a8558743d06b80c3df04e8557fa912063c9271023365144048bb7160f005bb3",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-24.png",
+      "T131_source_png_sha256": "a0ffab69df5f8cc4a0259710c3b71033566c673813a9fb5062e767e26ed07b92",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 25,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-25.png",
+      "T130_png_sha256": "10549f3d237d95167171d15cc63b2b4962c41611b3143fbeed2d639248afa4fe",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-25.png",
+      "T131_source_png_sha256": "35f246a5dc10b82bc99a205ffff3d9b1bb80593f31a7f5a9b628e68da076c07a",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 26,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-26.png",
+      "T130_png_sha256": "e144690c833e7cd00b43174f05a011c5bfa7884fc843d917ac44d7593dfe600c",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-26.png",
+      "T131_source_png_sha256": "e71d90895949a06393dd59d8ad5f69b6abdbada19555880feff168c95135e52a",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 27,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-27.png",
+      "T130_png_sha256": "dcdb28a1fdec499abd50d050f51fa557cae1395864ea36c9c4afcbbcec8d840f",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-27.png",
+      "T131_source_png_sha256": "d5b34603681fe51b2f5659f07f71b5c3df81e1fbed59ee0804d3c9762097f36e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 28,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-28.png",
+      "T130_png_sha256": "08cba44662c2dafbdc83f7331a54e449e657ffe689c803687158c9b09df16bfb",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-28.png",
+      "T131_source_png_sha256": "9f6e08146bb865833f0ad10def30117a47984829578ebf8e2dfe1b6422b8c798",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 29,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-29.png",
+      "T130_png_sha256": "cf44104ff6c3e7317cc8dc60b731408def868716e8b64fab74f547f681ce8cc6",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-29.png",
+      "T131_source_png_sha256": "8bba62ebec96c8000344e5c74cabf92c0395605bf741a9601440a192c2318d5e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 30,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-30.png",
+      "T130_png_sha256": "798ab961d861489ce2b1e0a47c7a1371d915bd3d0f5d329394a40b1876a1950a",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-30.png",
+      "T131_source_png_sha256": "1e8b4840ab8f8de99e8a90c2c737e0225f7f4ae025da02d05598df5eb241b803",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 31,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-31.png",
+      "T130_png_sha256": "ce32513b0bf12331340beb4058725650fb71e986ed81e3e2e26ef162bed9c711",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-31.png",
+      "T131_source_png_sha256": "42291a17946f95d18bd882deec36b1038f8b54c85c872c46592f219396971c0e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 32,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-32.png",
+      "T130_png_sha256": "c38c0d88a56fdcf01de3cf012a1d4a19b1fae7343bfc8e1a96cf4a1a837e0fb0",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-32.png",
+      "T131_source_png_sha256": "0a21d99f52c948bff8d3c320e93876d1320d629293cb2a1aa0101b72fb2fc060",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 33,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-33.png",
+      "T130_png_sha256": "0ee9464d867814255527459306dd7b23ce4b07ab17de8310016e1b32cfd41b85",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-33.png",
+      "T131_source_png_sha256": "5e852d59a624de3dd492f8b417e0988fd0c6332979edba3792d96800544f5418",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 34,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-34.png",
+      "T130_png_sha256": "d551fb04c3b7a50f17737ce571f6981c10b2dbba5a02fb3508ce162ce00bc860",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-34.png",
+      "T131_source_png_sha256": "5faf06d99936c783d2cfb9db5f00df092a94c01bc638457cac060ce7e53800ed",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 35,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-35.png",
+      "T130_png_sha256": "4b45567eaf21ed6838dd70dd0c0dd9a89781fd6803279a410cca196be6e491f4",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-35.png",
+      "T131_source_png_sha256": "b58b6cd53656b4973e6f43ec3bee3d5a420fd8fc0606543841665bd5eceb153e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 36,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-36.png",
+      "T130_png_sha256": "db6cc5538f2efe8991fab55fe11d97c9877874d2a6d23c594d12a6b57f0ee0be",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-36.png",
+      "T131_source_png_sha256": "27b033fb87cae2e5f2914a6c5e4a9b6483bcc9200eb7ab98eb22b2b3b0fc2f76",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 37,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-37.png",
+      "T130_png_sha256": "876e7b3bedbddcc79a5df53f86c042e811ffddaa6200914b154f864fb69f4c38",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-37.png",
+      "T131_source_png_sha256": "35efff429d138d8a244e2e57b82cb914c62370ad26d681d6b51f86dd4915b7a2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 38,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-38.png",
+      "T130_png_sha256": "6a3e390e6b88a53307e683985ed5c0f55f114508f83420b052509ee2fac1c757",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-38.png",
+      "T131_source_png_sha256": "c40225ac6f83eda25d37887af64113c957fd8426e2210c925397f24c8324e1ed",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 39,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-39.png",
+      "T130_png_sha256": "eedb666cf3b39bf19b5f6a8c61a23c22ab3058f35f62801a19342ee4ff955ff8",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-39.png",
+      "T131_source_png_sha256": "33e0aa4e36a38c31d71181a9b10f5889581aaaeaf1d88f1a68a2b7c3519ad525",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 40,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-40.png",
+      "T130_png_sha256": "c6dda960c4c6504a90f53a8b458be9822b08ffba00a35a07e4bf9e4541046d16",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-40.png",
+      "T131_source_png_sha256": "859474e367368ed9e598efde28499128f6116294db73a74fb060161b1269c810",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 41,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-41.png",
+      "T130_png_sha256": "9910e11ca50a69663918167b43c88cf4d1541246bb2eb0e51c0a1703f6a067a8",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-41.png",
+      "T131_source_png_sha256": "94bf55af893f0008071333cc9771dbf5147d521260ab69fa4bee463730e757a1",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 42,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-42.png",
+      "T130_png_sha256": "99fbcdf7d21cac7e4d15e9a23ca20439a1f624936a2101f9af02950ef1d62db5",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-42.png",
+      "T131_source_png_sha256": "2504ebf4206627c6f347974721d7e5d39158ca10558e6290f2e471d6a24c8f37",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 43,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-43.png",
+      "T130_png_sha256": "d04500b1d04ec58dbc1ebf44b037d9312163bb03e54b37e0f9323de73d364033",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-43.png",
+      "T131_source_png_sha256": "ab66d6680e9ced2cfa72f37f7f7c70111c50493becb120467fea7b45e68b7de2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 44,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-44.png",
+      "T130_png_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-44.png",
+      "T131_source_png_sha256": "d4999cc878454e49c63466e00cab557346d1fbdc9fa01d7e79b49e709dd59189",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 45,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-45.png",
+      "T130_png_sha256": "de135f103a1fbca86409e4892e703ca251365a305ef680979e4c458f240a3d49",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-45.png",
+      "T131_source_png_sha256": "d46a54253eb8c1c62ffe1834fba1f02c172449a92fec8a1ac9d32cef6b6fc256",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 46,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-46.png",
+      "T130_png_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-46.png",
+      "T131_source_png_sha256": "196a4694e6c7fdfd4ef9cbd2c22f4d9a27474d2664255c95d61733f7b59079f1",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 47,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-47.png",
+      "T130_png_sha256": "f1c2e22229f268cea083944ff238806d12e3e510ec5183241a8476c902ea54ed",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-47.png",
+      "T131_source_png_sha256": "2fafafbfdb852d9c41ff5415e1ddc4e383c9c56dbb7da4826205869e58e1fcc8",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 48,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-48.png",
+      "T130_png_sha256": "c71776ce9906b97aad6a74a332612635443d5ec5ce03050b1e1888ee9da979f1",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-48.png",
+      "T131_source_png_sha256": "2d724df0ea484495e168f00bfce24eb8372b79d41a4bdb05ab0b9d55c92a5278",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 49,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-49.png",
+      "T130_png_sha256": "6d86ee6663d6930f022ceff14b1b7bfdbc8f1a0f77737ae19c3eb0b705b4ec19",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-49.png",
+      "T131_source_png_sha256": "4e25ec813db1152bf9a9ee1ab23e7e2d057b725e8dabef5e0f20d3d0e0458abc",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 50,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-50.png",
+      "T130_png_sha256": "387fcdd77586594d1331332a94d9d0886973e0826a11c234e940e336e41ed685",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-50.png",
+      "T131_source_png_sha256": "f36d48f8c581fb71c661e4d9c25b2d78a5622af60a5d2d1d7b89aff15fd7f7fa",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 51,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-51.png",
+      "T130_png_sha256": "66c2184b1eb30f33f620463a5d8d3d64723cbf3f0d172931cc425bcfa7b705b6",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-51.png",
+      "T131_source_png_sha256": "0dab2aff4ef47a0d7e516fe90ae286e72b9209eecbc6668fdfa98c865a904012",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 52,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-52.png",
+      "T130_png_sha256": "a4773a72d181801f6dd8b937d56cf1d4a8c0495f1a909fefc1c94bda636cdefd",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-52.png",
+      "T131_source_png_sha256": "e6435595fcacd51baa2ab6c4e2bae0d0eff0fa880fc46499498939e52064e479",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 53,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-53.png",
+      "T130_png_sha256": "05155f2d919fee0e3420a0e97ade59f05d70dcfb3bda5cc7c91e3266673c1a6d",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-53.png",
+      "T131_source_png_sha256": "4322211de14bd61eab7e59f4a2c151e23cc7ba6080cdd6d8b003a01ec7633502",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 54,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-54.png",
+      "T130_png_sha256": "9fd3c0666794adfa72894f111af93dadc748cb7df73805ebe6fc62ab8953b9c1",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-54.png",
+      "T131_source_png_sha256": "6811869fe96e3907ff29036c0bf709cc3b974304e0ee8c0bfbee298497fd55ec",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 55,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-55.png",
+      "T130_png_sha256": "99a2e917945f34857311d9808599c17f4d3a061885905cb3254c06dd22bbbd15",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-55.png",
+      "T131_source_png_sha256": "62714b7074e1291cef1f640f98ccf0dc913ce3945bb2aff22ff37bb7e755bfc7",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 56,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-56.png",
+      "T130_png_sha256": "0f0860d5f1a74d3a3dc768a3608015b5aef46c0d6aafc25a6284eca47f0d6078",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-56.png",
+      "T131_source_png_sha256": "9fa18dabd77d7830105dbdf048f21702c0b6a8bac52c20773a6774d4a0b3c083",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 57,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-57.png",
+      "T130_png_sha256": "c0313ce8ea1520b891d0a87006a7857e3f577f9027289ba7e478983beabbc7a0",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-57.png",
+      "T131_source_png_sha256": "84b758a01cd1c4642416215cfa57b6f76706cc1d9d1114bc8a02269932bff73e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 58,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-58.png",
+      "T130_png_sha256": "f4580b4ff5042ca9f922b95ce886bdc7c6f81cb012e336ee452d19afb6c8a0a4",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-58.png",
+      "T131_source_png_sha256": "69a3e630c1c03cf227c3c653f2635c5b558b0cc834197f5547bc8a7415204108",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 59,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-59.png",
+      "T130_png_sha256": "7031053852d2d0bb44750e472f97a1062389f25b5e2c285de52729e8f044ee8e",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-59.png",
+      "T131_source_png_sha256": "56edd6379fad064099b83fd4b2b65301aca9f2ee24552da6f0398a1a84fbf243",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 60,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-60.png",
+      "T130_png_sha256": "f77ae60c7ea019b9ff5739a1bb7beafea85aaa54418b88207ca0b4fbd45a986a",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-60.png",
+      "T131_source_png_sha256": "248f940e601e75b6dcf2973cc6ab161886275e0473bb96e28d815727b2b4054f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 61,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-61.png",
+      "T130_png_sha256": "1cf6dbbffc2e2d3b9a048a46fa0fecc8faaaea664471330dca667bffe6df4154",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-61.png",
+      "T131_source_png_sha256": "38d256080d9ce6708c264e0eee575e0be9ece61da9bf3f20b72968dd94330da9",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 62,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-62.png",
+      "T130_png_sha256": "b6b14a7a6b73ad44ae51aee2e9565c61ad65cbd7ce45c078030bf1b326f38001",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-62.png",
+      "T131_source_png_sha256": "c40d8fe936cb2f49f21751bd42297d9d811ba515fa711c03a7b58a7dbb296205",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 63,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-63.png",
+      "T130_png_sha256": "f03027c064685864249c7b9ab9664e653e8f660b880392f4aba4fa8ee8c09a0f",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-63.png",
+      "T131_source_png_sha256": "a65df431aa311f463b9c7d9e0fcc34eaa03d741170bf93bfeea8125159ab2767",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 64,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-64.png",
+      "T130_png_sha256": "fdf65e8ee093502a8d666f9936ad315536cbaa98086ef813826f3aa066b69d76",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-64.png",
+      "T131_source_png_sha256": "f634faa237be710ddcad18008531af73f4553ad9fb3df81c7b798a53c4cf2d35",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 65,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-65.png",
+      "T130_png_sha256": "4b45b5c4b0e9ce6fd2dd40b16309ab988d754688aa18d2dab3c1397009f9af73",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-65.png",
+      "T131_source_png_sha256": "c648146d7077af47d3750504ca5fa16f3135efc10e3a8f502c36b8f5af416a4f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 66,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-66.png",
+      "T130_png_sha256": "bcd23b6ed4762e897a1a4dd661843b5b8884211f88cff128ee66ebed88029b6a",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-66.png",
+      "T131_source_png_sha256": "7278bc4577a5f25c79ad2b497ee272875c1e4e4cd126ed69a0c528e228ef8de4",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 67,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-67.png",
+      "T130_png_sha256": "2d5385d55bc5d73c99e018f3f965a2a10e28521b19ab0e92c75f0d93593f0423",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-67.png",
+      "T131_source_png_sha256": "921e0822f920f78f22b3c31bc360bbab6055668604b2a391202ef648261754e3",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 68,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-68.png",
+      "T130_png_sha256": "552f5228a445d2796bb206121cc569e7424087a1ff836452c47cb4e223cba5d9",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-68.png",
+      "T131_source_png_sha256": "ae9fb99db03d01868a8c180c77202ea6e45b12512bf880b7a33e0d3aeb4fe38c",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 69,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-69.png",
+      "T130_png_sha256": "04db759e9cd49297d5cc3b2514c9fff69e71eb6a46ed977e8e3156cb76ac829b",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-69.png",
+      "T131_source_png_sha256": "136f9bc3901c91fcd98d6d34ccdcf86fad117d308364bbb44730a7fc7c8cf436",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 70,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-70.png",
+      "T130_png_sha256": "a3a88eb84df937bf682de7014aa68550167a41766f876d19e38e3cfaf9b776d8",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-70.png",
+      "T131_source_png_sha256": "a812ace8fda1fe327e96339b2dd055e80281b5bd6e2551cf38155793c0b1a9d2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 71,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-71.png",
+      "T130_png_sha256": "c5ef219b27c09798ca78968ea3b55e88e475808f63d25a1693cae8b20af72101",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-71.png",
+      "T131_source_png_sha256": "1ab4e71ef3beae8b8e92380828c49b47848c5332900b5e0dee222b67da0bed99",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 72,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-72.png",
+      "T130_png_sha256": "9464bd5491878444acdd9b7c9306b4f3a74d410bd6163f5936f0556a772b823b",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-72.png",
+      "T131_source_png_sha256": "031c2a0a475b52d1f8af82e90fe46a93c3e63a3b8ae994c7419867b351537aab",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 73,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-73.png",
+      "T130_png_sha256": "9d4a7977dfb034689ba7c59205894da1b9cebd6d549fcbaa54bc4a8ab409d1b2",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-73.png",
+      "T131_source_png_sha256": "258409746311b04f52e54221435ad1d9f5985651087fc8ff0ef5a2a8dbf67151",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 74,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-74.png",
+      "T130_png_sha256": "f399c13e059595135a32a68742534633e61f076ff57b4d7f0bf27c777ce9c331",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-74.png",
+      "T131_source_png_sha256": "73427c68da02cad310df0978af132de3bf0822fe624ac2772261365587dbce30",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 75,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-75.png",
+      "T130_png_sha256": "ee78fe38ac02c32b94084799cf4287d3fe5e329f6983da3fac0b7ab19a0cf760",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-75.png",
+      "T131_source_png_sha256": "c3d8322a7588ee2690ca26376538c05b095d36bd773af258a3834db303b20016",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 76,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-76.png",
+      "T130_png_sha256": "38e87890761ad723e0779d879f5e920bcfd0c9c615b4464b476118c2a57f4b93",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-76.png",
+      "T131_source_png_sha256": "e29c2e70e938e9923c8c1724260c66f1e4eb9437929accb140e7c02b5f5ab208",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 77,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-77.png",
+      "T130_png_sha256": "1cdd2832afa63a9a7f778c9811c0973d43ced65a4072561e08d1be583b16c523",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-77.png",
+      "T131_source_png_sha256": "d3485c5eb348cdd05c560b1ec12d39ecadbef9a7db8593c0171f3fd5cbe2ac1c",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 78,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-78.png",
+      "T130_png_sha256": "01fd83e9117e0358a0d7152c03aecd9c1a90426f6286d0ffb72bcf644528bf19",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-78.png",
+      "T131_source_png_sha256": "08fcf68d5340e7563a17380793b30ded1c71bf1c3539189fabc0a623aed945ae",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 79,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-79.png",
+      "T130_png_sha256": "83047dc33d3ced8186d493c275bd01e8b5e7f8b4a0dcaa9555b86ce17cd9bd39",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-79.png",
+      "T131_source_png_sha256": "62b028c61c50fc00290e784fdfc21b5f86660daa3ae51bba8d05b3993028af67",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 80,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-80.png",
+      "T130_png_sha256": "1f20da00ef83e077405c3b262aa70d2f7229231dccee56a148060b87ee7d6f56",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-80.png",
+      "T131_source_png_sha256": "f3513c1375ecf3ce40ee151dfa722889ef09479443e16fce1fce64a084351c69",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 81,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-81.png",
+      "T130_png_sha256": "8150a624bfdb6ec5c71f29c3cbd9be06ee0beccc87d649515f6c41b18189a412",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-81.png",
+      "T131_source_png_sha256": "d734ff5d76ebf40db9542af8b05b96160c5fcc0232aa60c64af5cbae260d278f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 82,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-82.png",
+      "T130_png_sha256": "47b1e595ac63799eacaf519ab549e19337c222c909b1e25181991e08c84775d8",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-82.png",
+      "T131_source_png_sha256": "81abaf790a9bb5d5686b36ed086d71489ffe7b8e9b5d79cae8547c3ab772daf5",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 83,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-83.png",
+      "T130_png_sha256": "78c98fa9d6beaaf07dda32e47fa3105599fd9b49e39ab062eca44306d9631683",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-83.png",
+      "T131_source_png_sha256": "7f66bfdc24e8c316641543a6d906ea4cc5a808c3f33d8c669daae71e969e58e7",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 84,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-84.png",
+      "T130_png_sha256": "cc69faa040e0ae4d7b30b532d1dc0fc0d92f0b459aa9904d4e09d022e3e219b5",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-84.png",
+      "T131_source_png_sha256": "4d80fbbff865ba9d5aa7121f73d3b644c1926565fb95bd9c5f39d6cb21362a20",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 85,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-85.png",
+      "T130_png_sha256": "56b5cc67d20c7dd173aaeb726262989e1d551ddd3de08c732c5e469c8f51cce8",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-85.png",
+      "T131_source_png_sha256": "c9ac592d0046188dd7f522046d6d813cbdc7ba611206fd3b747f48857a1ec9c2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 86,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-86.png",
+      "T130_png_sha256": "836fbcb9e2731db4780160cdc0cc7cb7016bdd19c50b174c5a523929462d84fb",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-86.png",
+      "T131_source_png_sha256": "f4d25b86e9a8ae96317e7ee1c45b31bc7d6cb249c2c8e8edd8347ca8c9307c7f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 87,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-87.png",
+      "T130_png_sha256": "b9a4a6756b4ae9866a315f9962965db625494f17b21beface43169e5eac291da",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-87.png",
+      "T131_source_png_sha256": "74b8ee5f21dc2351e22d34b82b65ad8a68368068c3a6e41236e26cd8ccbb307d",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 88,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-88.png",
+      "T130_png_sha256": "164a40b692435057f785715a85c370de87fd487dd8f40b484a406fc37aca75b5",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-88.png",
+      "T131_source_png_sha256": "2ac7c858bd9c9c428d6ac0fa60f88469ffe6050da64b9ca9b55c2f62fa38abff",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 89,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-89.png",
+      "T130_png_sha256": "58f6cc0207a8e1dcbf1e6c41835ed0957935b8ea68c4209f7fa0aa1509daa729",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-89.png",
+      "T131_source_png_sha256": "93b3b2242962215d607565ee78f9bd024c9749b1b13c5664e3a7db154920d5cd",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 90,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-90.png",
+      "T130_png_sha256": "f62ec382da6af0b9103b17f46abb73112a08460757dd71a611215bfaaec37295",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-90.png",
+      "T131_source_png_sha256": "4efe7862912d78740d3a86fe176b1c791670e3126698fc4876e23054fc1d1737",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 91,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-91.png",
+      "T130_png_sha256": "7ffe333aac6159a209aa6f113066c4d6dae4c953d655a0ceee3669fae6baeee4",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-91.png",
+      "T131_source_png_sha256": "75cdff1ec952746d9e84636016fad7ab276b89fb5325fbd07529036b5421098a",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 92,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-92.png",
+      "T130_png_sha256": "35195910f01b7146ca09281fd845d4fe95c298f37ba6032e617a5184eb10047d",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-92.png",
+      "T131_source_png_sha256": "c5a3a5735da263efb05c7bb7f3c9a2f70447fde207d6390d66e2af895d5d48a4",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 93,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-93.png",
+      "T130_png_sha256": "708d74ff4303a333d90664d7c0c907ad26eb78da7ecf1d360217ab1e703ca305",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-93.png",
+      "T131_source_png_sha256": "5ce767b00d723cdc0e3c5398f202cccc82e5e01e23694bcaec13e5f27c07acf2",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 94,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-94.png",
+      "T130_png_sha256": "7e91f743c194dae0c6dc1cf2f15841c4b3580178a39a63e29e376e4bd3a07d47",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-94.png",
+      "T131_source_png_sha256": "f8c51e576444efeecee5ff1048f0b1801ea2d053b272bb45c26dc15bd66788f8",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 95,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-95.png",
+      "T130_png_sha256": "6cf4eadc8b4d79b6e2c6def873ab0903c40fe48a9b771babc45cc5ec4ff721ee",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-95.png",
+      "T131_source_png_sha256": "3eb0862e6fe10c65e8999befad62d7024b73994fb2dc5a0fed58b1a03232d72d",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 96,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-96.png",
+      "T130_png_sha256": "7196c41666d4c787a4aa7e3f6f5fd198d52779d3e11ebf76f56c784215f896a0",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-96.png",
+      "T131_source_png_sha256": "4e78e3a6e1178cf537078b7efd823af0707068313ae810e1ea3a5cbd37e99b5a",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 97,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-97.png",
+      "T130_png_sha256": "2befd2c7956061a048ed48ef4979687a49bf3ef042f8407f24a51e4e8005dbec",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-97.png",
+      "T131_source_png_sha256": "91003a02b748f53d017562d0a13d8cfdee1d919b8d7cee31e2e80917428e8ec8",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 98,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-98.png",
+      "T130_png_sha256": "9477f77c14c1a2afb27307e3a0792d843d90d5f25b51ef691c18d643b9d9f047",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-98.png",
+      "T131_source_png_sha256": "0247f761f6d61865b2c80660f34ced9672adcd276c80a2ece11353a1937b90fd",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 99,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-99.png",
+      "T130_png_sha256": "c78e645f23e3967475dbbbc18bf89aa508140af7a2aebb36d3efa2529bf1faeb",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-99.png",
+      "T131_source_png_sha256": "906e8b8b9f95cef6025ca6c2416e65c2f3daea0346e526e8f6a5cfefa1dfa865",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 100,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-100.png",
+      "T130_png_sha256": "7835a67fa5d85e92a06a0f1d0139e95413e9513aa30635c5419564b1764c17f1",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-100.png",
+      "T131_source_png_sha256": "7b6d6e158d44c9c839282d542f268f1cdba954a8b28f711f0128855df31ea277",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 101,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-101.png",
+      "T130_png_sha256": "ce860e4d29485d8b6a6b061d14ac9e10b3074be6945ed4be5314ff869bb6c2ff",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-101.png",
+      "T131_source_png_sha256": "d28765d3ecd11476e47fdba40018cb71025e00b17891081171c1f89e7e9d06af",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 102,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-102.png",
+      "T130_png_sha256": "c2008f79bd2a01d0f59693c432fb70b0757b897d112ab423e1e37d023b9783e7",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-102.png",
+      "T131_source_png_sha256": "1672cc0243f76a8f10394d45182e5c7b52860f5d94aee4a67b47b99cb394d0f3",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 103,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-103.png",
+      "T130_png_sha256": "898f3e25b716a400bbde6d34e34006a424905b60bc86fdf6b40f1aeb55bc6470",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-103.png",
+      "T131_source_png_sha256": "44839211cc7879f15796cd6b048f3046eedd732814bc6630f4823cf1e48db20f",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 104,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-104.png",
+      "T130_png_sha256": "1185be37491b30986e7c24b6a2eccd8c97f566e5df9e7c84c5bfa01557d506c8",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-104.png",
+      "T131_source_png_sha256": "4f6b421408f04a3cfe0dc94d85d43f000ab979129e1ea1b3bd32ce99cd843403",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 105,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-105.png",
+      "T130_png_sha256": "af3c3a457dd1d2e3b10293b9df44e3b7f4c599e345571954efd6031ffe9732e3",
+      "T131_source_png_path": "/private/tmp/advisor-T131-20261004/render-source/page-105.png",
+      "T131_source_png_sha256": "9a730559d10fe24ca27a9a338acefaf65e496719527b520df1287e22f80dbd6e",
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        },
+        "T131_source": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 106,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-106.png",
+      "T130_png_sha256": "0f83e0e981c14d5accc29e1036ac7b10b1915891db93297285c8c685d0c0ae62",
+      "T131_source_png_path": null,
+      "T131_source_png_sha256": null,
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    },
+    {
+      "physical_page": 107,
+      "T130_png_path": "/private/tmp/advisor-T130-20261004/render-final/page-107.png",
+      "T130_png_sha256": "083432af63ba469e4b0be22376c6e349c31b30046d617a117771b346edd5f402",
+      "T131_source_png_path": null,
+      "T131_source_png_sha256": null,
+      "dimensions": {
+        "T130": {
+          "width": 1414,
+          "height": 2000
+        }
+      },
+      "byte_identical": false,
+      "QA_status": "not_inherited_by_this_baseline_render_comparison",
+      "reuse_eligibility": "changed_or_missing_pixels_require_new_personal_inspection"
+    }
+  ],
+  "no_different_pixel_page_QA_inherited": true,
+  "note": "This is a baseline rendering and SHA comparison, not a new visual QA pass. Different pixel pages require new original-size personal inspection. Exact byte matches are only eligible for matching prior QA; no QA is falsely assigned by this comparison.",
+  "different_common_physical_pages": [
+    14,
+    15,
+    16,
+    17,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104,
+    105
+  ],
+  "missing_T131_source_physical_pages": [
+    106,
+    107
+  ],
+  "added_T131_source_physical_pages": []
+}

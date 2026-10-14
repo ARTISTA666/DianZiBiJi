@@ -1,0 +1,229 @@
+{
+  "task": "T142 final formatting and exclusion-scope QA",
+  "utc": "2026-10-11T11:05:10.827924+00:00",
+  "identity": {
+    "word_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/1005-精简与角标校正版-2026-10-11.docx",
+    "word_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-wps/1005-精简与角标校正版-2026-10-11.pdf",
+    "pdf_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+    "page_manifest_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-page-manifest.json",
+    "page_manifest_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+    "physical_page_count": 100
+  },
+  "structural_protection": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/word-protective-native-final-e57b-6d54-review.json",
+    "sha256": "e3cd6bf9ffe9787d8607011a3bc095bba11a548eec6628c69d730ea68496adb7"
+  },
+  "ordinary_body": {
+    "checked_normal_paragraphs": 225,
+    "base_size_pt": 12,
+    "line_spacing_pt": 20,
+    "line_rule": "exact",
+    "pass": true,
+    "separate_inline_formula_exception": {
+      "paragraph_index": 683,
+      "base_size_pt": 12,
+      "line_spacing_pt": 20,
+      "line_rule": "atLeast",
+      "unchanged": true
+    }
+  },
+  "authorized_spacing_only": [
+    193,
+    194,
+    195,
+    229,
+    230,
+    234,
+    239,
+    354,
+    1012,
+    1020,
+    1039,
+    1047
+  ],
+  "all_other_paragraph_font_spacing_layout_preserved": true,
+  "sections": [
+    {
+      "pgSz": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "11906",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}h": "16838"
+      },
+      "pgMar": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}top": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}right": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}bottom": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}left": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}header": "851",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}footer": "851",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}gutter": "0"
+      }
+    },
+    {
+      "pgSz": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "11906",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}h": "16838"
+      },
+      "pgMar": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}top": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}right": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}bottom": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}left": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}header": "851",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}footer": "851",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}gutter": "0"
+      }
+    },
+    {
+      "pgSz": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}w": "11906",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}h": "16838"
+      },
+      "pgMar": {
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}top": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}right": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}bottom": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}left": "1588",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}header": "851",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}footer": "851",
+        "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}gutter": "0"
+      }
+    }
+  ],
+  "A4_and_2_8cm_four_margins_unchanged": true,
+  "strict_three_rule_tables": {
+    "count": 98,
+    "outer_rule_pt": 1.5,
+    "header_rule_pt": 0.75,
+    "visible_vertical_or_extra_row_rules": false,
+    "all_structural_checks_pass": true,
+    "actual_boundary_proof": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/table-rules-native-final-e57b-6d54-coordinate-review.json",
+      "sha256": "1b5cac08a427bafe9b3935ccdf39b1f5928f2229087d225ac273738734ebcf1e"
+    },
+    "same_page_proof": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/table-same-page-native-final-e57b-6d54-closure.json",
+      "sha256": "885246eb42ddc83ff492ce40ed1b484f1f9a5e961c98a9e8ccee733864489c47"
+    }
+  },
+  "citations": {
+    "groups": 73,
+    "all_literals_preserved": true,
+    "first_use_sequence": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85
+    ],
+    "all_85_references_used": true,
+    "Word_base_size_pt": 12,
+    "all_brackets_and_numbers_true_superscript": true,
+    "actual_PDF_glyph_geometry_report": {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/pdf-citation-geometry-final.json",
+      "sha256": "cb75fd4060f71aa521f1143067908278ca7a2edb494f2a833490188c93eee78d"
+    },
+    "glyph_report_author": "root independent actual-PDF geometry check",
+    "actual_PDF_marker_size_pt": 7.8,
+    "actual_book_label_size_pt": 10.45,
+    "book_labels_not_superscript": true
+  },
+  "85_bibliography_XML_identity_and_order_preserved": true,
+  "48_ordered_OMML_preserved": true,
+  "media_asset_count": 49,
+  "all_media_bytes_preserved": true,
+  "body_heading_and_numbered_miniheading_regression": {
+    "heading_text_style_identity_preserved": true,
+    "ordinary_paragraph_number_prefix_collection_unchanged": true,
+    "numbered_prefixes": []
+  },
+  "Chinese_punctuation_review": {
+    "scope": "36处语言改写逐项语义审查；未新增半角逗号/冒号/分号/问叹号/圆括号。既有英文术语、代码、公式与书目按其原语义排除，未为统一中文标点改写。",
+    "no_new_ASCII_punctuation_in_36_prose_edits": true,
+    "book_and_math_XML_unchanged": true,
+    "table_text_unchanged": true,
+    "not_a_blanket_claim": "不宣称所有英文、代码和数学文本都必须采用中文标点。"
+  },
+  "findings": [],
+  "result": "PASS_FINAL_FORMAT_AND_PROTECTION_SCOPE"
+}

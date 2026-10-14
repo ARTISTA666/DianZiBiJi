@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:28.817109+00:00",
+  "path": "/notes/8/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 8,
+    "project_id": 1,
+    "template_id": null,
+    "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+    "experiment_type": "transformation_observation_and_retransformation",
+    "experiment_date": "2021-07-08",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 8,
+    "created_at": "2026-10-10T15:52:29.245974Z",
+    "updated_at": "2026-10-10T15:52:29.249859Z"
+  }
+}

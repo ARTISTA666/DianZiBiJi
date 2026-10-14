@@ -1,0 +1,192 @@
+frontend-1  | 
+backend-1   | [2m2026-10-11T07:51:40.327959Z[0m [32m INFO[0m [2meln_backend[0m[2m:[0m effective runtime configuration [3mapp_env[0m[2m=[0mdevelopment [3mrevision[0m[2m=[0m24c3d797c4aab953e10d55b308a8247f73032448 [3mseed_demo_data[0m[2m=[0mtrue
+backend-1   | [2m2026-10-11T07:51:41.181461Z[0m [32m INFO[0m [2meln_backend[0m[2m:[0m Rust backend listening [3maddress[0m[2m=[0m0.0.0.0:8000
+frontend-1  | > eln-frontend@0.1.0 start
+frontend-1  | > node node_modules/next/dist/bin/next start -H 0.0.0.0
+frontend-1  | 
+frontend-1  | ▲ Next.js 16.3.0
+frontend-1  | - Local:         http://localhost:3000
+llm-stub-1  | ----------------------------------------
+llm-stub-1  | Exception occurred during processing of request from ('172.25.0.4', 52252)
+llm-stub-1  | Traceback (most recent call last):
+llm-stub-1  |   File "/usr/local/lib/python3.12/socketserver.py", line 697, in process_request_thread
+llm-stub-1  |     self.finish_request(request, client_address)
+llm-stub-1  |   File "/usr/local/lib/python3.12/socketserver.py", line 362, in finish_request
+llm-stub-1  |     self.RequestHandlerClass(request, client_address, self)
+llm-stub-1  |   File "/usr/local/lib/python3.12/socketserver.py", line 766, in __init__
+llm-stub-1  |     self.handle()
+llm-stub-1  |   File "/usr/local/lib/python3.12/http/server.py", line 440, in handle
+llm-stub-1  |     self.handle_one_request()
+llm-stub-1  |   File "/usr/local/lib/python3.12/http/server.py", line 428, in handle_one_request
+backend-1   | [2m2026-10-11T07:51:45.395104Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"cb939afb51324c4db1070e2211992cb6" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:51:47.448241Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"6abb2d2ca95a4b909333dd20b9d3f4c8" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:51:49.503696Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"4a61c95076874dec81bae65d7b19afc5" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+llm-stub-1  |     method()
+llm-stub-1  |   File "/stub.py", line 19, in do_POST
+llm-stub-1  |     self._send(
+llm-stub-1  |   File "/stub.py", line 44, in _send
+llm-stub-1  |     self.wfile.write(body)
+llm-stub-1  |   File "/usr/local/lib/python3.12/socketserver.py", line 845, in write
+llm-stub-1  |     self._sock.sendall(b)
+llm-stub-1  | BrokenPipeError: [Errno 32] Broken pipe
+llm-stub-1  | ----------------------------------------
+backend-1   | [2m2026-10-11T07:51:51.547323Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"623147a7601643deb19bbdf27013bb9e" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:51:53.593101Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"7df6d7c2dc6a4d2fbf75d3ada42d2bc7" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:51:55.654939Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"ea85f84d171940d58ea07a0727e4061f" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+frontend-1  | - Network:       http://0.0.0.0:3000
+backend-1   | [2m2026-10-11T07:51:57.706109Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"771c5417abe64d32ae41ba99c7ecb451" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:51:59.752550Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"7bc0760142444c15beaeea73d2990854" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:01.799204Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"fc711e91457a4d328a7178a7d058c5af" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+db-1        | The files belonging to this database system will be owned by user "postgres".
+db-1        | This user must also own the server process.
+db-1        | 
+backend-1   | [2m2026-10-11T07:52:03.757544Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2a03a0d3e8c84485be2f6d5d0d2cb48e" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:05.811401Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"521270bc8f2546d2a4aaa6375ef8e5a5" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:07.861138Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2037d3b72ffc4b658337ebddc58233a7" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:09.910412Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"be359490af954afa884ef789dae1681b" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:11.960669Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"0d8863866662483992517eb6e248460a" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:14.012723Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"a42ce9123e8347a2aa11bc9a0d8690c6" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:16.059947Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"ad8cc2cddf3a4279b480f48686fdf1d4" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+db-1        | The database cluster will be initialized with locale "en_US.utf8".
+db-1        | The default database encoding has accordingly been set to "UTF8".
+db-1        | The default text search configuration will be set to "english".
+db-1        | 
+db-1        | Data page checksums are disabled.
+db-1        | 
+backend-1   | [2m2026-10-11T07:52:18.107317Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"e7ba4144f3564b838ef872e89fab7b84" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:20.160844Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"b9de5daf768247af914929a89db2b2fb" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:22.211233Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"f69046a995b047f1ad8772c5697193b1" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:24.136011Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"8de8b540ded6407da4ea36e90a911bcc" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+frontend-1  | ✓ Ready in 139ms
+frontend-1  | ✓ Running next.config.ts took 56ms
+db-1        | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1        | creating subdirectories ... ok
+db-1        | selecting dynamic shared memory implementation ... posix
+db-1        | selecting default max_connections ... 100
+backend-1   | [2m2026-10-11T07:52:26.189331Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"1473fd0ee9c14751bd7ff945f4726aff" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:28.247131Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"dfca6fe9e40e45678242d850d84151ff" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+db-1        | selecting default shared_buffers ... 128MB
+db-1        | selecting default time zone ... Etc/UTC
+db-1        | creating configuration files ... ok
+db-1        | running bootstrap script ... ok
+db-1        | performing post-bootstrap initialization ... ok
+db-1        | initdb: warning: enabling "trust" authentication for local connections
+db-1        | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1        | syncing data to disk ... ok
+db-1        | 
+db-1        | 
+db-1        | Success. You can now start the database server using:
+db-1        | 
+db-1        |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1        | 
+db-1        | waiting for server to start....2026-10-11 07:51:38.537 UTC [49] LOG:  starting PostgreSQL 16.14 (Debian 16.14-1.pgdg12+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1        | 2026-10-11 07:51:38.538 UTC [49] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1        | 2026-10-11 07:51:38.540 UTC [52] LOG:  database system was shut down at 2026-10-11 07:51:38 UTC
+db-1        | 2026-10-11 07:51:38.543 UTC [49] LOG:  database system is ready to accept connections
+backend-1   | [2m2026-10-11T07:52:30.298813Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"312fec4bb44846778fcfb54d3d668627" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:32.348062Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"af5312c4f2b14385b989f58c591a74cf" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:34.393984Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"ef6e878ddc6d4503a296917131e5509e" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:36.445730Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"c76072c2d43d416a8511a6565affbd0a" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:38.245702Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"09a7e0f1d1ff4eb497313a0b37e47503" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+db-1        |  done
+db-1        | server started
+db-1        | CREATE DATABASE
+db-1        | 
+db-1        | 
+db-1        | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-1        | 
+db-1        | waiting for server to shut down....2026-10-11 07:51:38.723 UTC [49] LOG:  received fast shutdown request
+db-1        | 2026-10-11 07:51:38.724 UTC [49] LOG:  aborting any active transactions
+db-1        | 2026-10-11 07:51:38.726 UTC [49] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+db-1        | 2026-10-11 07:51:38.728 UTC [50] LOG:  shutting down
+db-1        | 2026-10-11 07:51:38.729 UTC [50] LOG:  checkpoint starting: shutdown immediate
+db-1        | 2026-10-11 07:51:38.758 UTC [50] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.014 s, sync=0.015 s, total=0.031 s; sync files=301, longest=0.004 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912080, redo lsn=0/1912080
+db-1        | 2026-10-11 07:51:38.763 UTC [49] LOG:  database system is shut down
+db-1        |  done
+db-1        | server stopped
+db-1        | 
+db-1        | PostgreSQL init process complete; ready for start up.
+db-1        | 
+db-1        | 2026-10-11 07:51:38.845 UTC [1] LOG:  starting PostgreSQL 16.14 (Debian 16.14-1.pgdg12+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+db-1        | 2026-10-11 07:51:38.846 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1        | 2026-10-11 07:51:38.846 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1        | 2026-10-11 07:51:38.848 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1        | 2026-10-11 07:51:38.851 UTC [65] LOG:  database system was shut down at 2026-10-11 07:51:38 UTC
+db-1        | 2026-10-11 07:51:38.854 UTC [1] LOG:  database system is ready to accept connections
+backend-1   | [2m2026-10-11T07:52:38.511520Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"7be770f02ad84704b47271abfc11b5f5" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:38.593775Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"76e0a727ad1e4f8db9f133f9d3d9f556" [3mmethod[0m[2m=[0mPOST [3mpath[0m[2m=[0m"/auth/login" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m345
+backend-1   | [2m2026-10-11T07:52:38.600529Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"acf554cba6274530850c7ff6172ae4ac" [3mmethod[0m[2m=[0mPOST [3mpath[0m[2m=[0m"/projects" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m4
+backend-1   | [2m2026-10-11T07:52:38.616661Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"71e2a1b7de5e4498843fff706d59757d" [3mmethod[0m[2m=[0mPOST [3mpath[0m[2m=[0m"/projects/2/rag/init" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m14
+backend-1   | [2m2026-10-11T07:52:38.621319Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"4ef86c03fd894a72a67739a4a6f49dce" [3mmethod[0m[2m=[0mPOST [3mpath[0m[2m=[0m"/projects/2/rag/experiments" [3mstatus[0m[2m=[0m202 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:38.772349Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"9d6053c18eed465598d4cbaeedf182cf" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:39.668285Z[0m [32m INFO[0m [2meln_backend[0m[2m:[0m effective runtime configuration [3mapp_env[0m[2m=[0mdevelopment [3mrevision[0m[2m=[0m24c3d797c4aab953e10d55b308a8247f73032448 [3mseed_demo_data[0m[2m=[0mtrue
+backend-1   | [2m2026-10-11T07:52:39.708038Z[0m [32m INFO[0m [2meln_backend[0m[2m:[0m Rust backend listening [3maddress[0m[2m=[0m0.0.0.0:8000
+backend-1   | [2m2026-10-11T07:52:39.751154Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"838a09400a5c4110bb44ce61897db113" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:39.813833Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"df2140c26bf24fe081277a47113b8eee" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:40.890504Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"c8f6b89798ac4582956977a9a2ca7174" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m5
+backend-1   | [2m2026-10-11T07:52:41.986488Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"6649b8cf575a40eda70b88d95dc2fbe7" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m3
+backend-1   | [2m2026-10-11T07:52:43.089846Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"e7b24f7602fe4f35b033d701320318cb" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:44.082346Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"4062d9525947432bb59cb299765c418b" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:44.614215Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"81d4923fa96543d6a756cc92577b7593" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:45.201183Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2c00781868484d598d88979492ea85fd" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m3
+backend-1   | [2m2026-10-11T07:52:46.312776Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"27efee1de7244333a3c0b0c993935820" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:46.663694Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"44df93cba3ce46269f5d94767e44cfaf" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:47.418619Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"fad087536e42467f8b65f85cc0fb57ca" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:48.528171Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2e1d5355766746f5b4df711a6477de18" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:48.697348Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"b743e4e993934b78859079af232add49" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:49.638573Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"7621f4c3cd57498aa8acb94e941779d2" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:50.726224Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"38b78e30bbe34727b6fa73d18d940d6b" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:50.748334Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"84506c2361af4b42a29ab0b1bf620c8f" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:51.818611Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"cad81004ae0a4f95b84fd298a2a8c774" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:52.804301Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"fd654e7ba74143b6a91180f3187d1ac3" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:52.905428Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"62ecb816105846eb86ec5aadbc87e006" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:54.012749Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"9eb5c25b47804cd8a963dde48340d8d4" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:52:54.846443Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"d6a93102ff4a49dc91cc0542c82b73a2" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:55.101912Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"19c4a4004a5e45c7864cbf3f3f646152" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:56.237574Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"b996d83c17bf4c2dab29fb201d772ce7" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:56.905728Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"150d06c9f7c444e882c1d5e04c92de33" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:57.348772Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"15429614d0134a94bdf2f18c42a173c0" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:58.455769Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"3219d876885045c49e1b20656279f0d3" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:52:58.953673Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"39f1acebb6ee45138d2c29a1131a10d2" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:52:59.553731Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"ed5a8ba68def4cc58f10a10869f15f70" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:53:00.649136Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"81cf5601ddaf4befa648285ae4f3b667" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:01.003850Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"1277dabb78ef40b097beaa636ce73cc0" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:01.751488Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"be55fa0df2f34a99ab03d10841d08861" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:02.852097Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"3e78b4d9b061421f9162659891ab8a82" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:53:03.040140Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"fc2685bc9d1d4b959e266961c1e33531" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:03.950843Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"99dbf93cd02346788f14d6f51bb76fb3" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:05.077136Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"e5997fa9300e44128aec2ae2d9c98604" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:05.088641Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"049ae7870d79446c976788ef643fdeef" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:06.174066Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"b7faf72968e644eebc4500c84b59077c" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:07.159559Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"65daa5b4f2ec4f128e0c65cbdb77caf3" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:07.251606Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"b13777d316d94e719dcc04c6a76da722" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:53:08.379207Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"0ecaecd2759a46ceb6766a227e955d4e" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:09.220903Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"f6c723f25cd24b24aac3ccf3e2aa604d" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:09.486498Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"6c764b593a6e4e9cbc79c8c86f34d249" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/rag/experiments/1" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m2
+backend-1   | [2m2026-10-11T07:53:09.600791Z[0m [33m WARN[0m [2meln_backend[0m[2m:[0m recovered stale RAG experiment runs [3mrecovered[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:11.269835Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"24cf618cdf234b50ad87bdd65b4c08fb" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:13.323189Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"642f321a05f7476dbf1c990bc8bd8a8a" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:15.276052Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"fccbf92d02994829ad687604f06e6662" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:17.322706Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"9a274f97a0124fba80e3e092225c8c72" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:19.372981Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"79a19d79d70b451eadd6fb135d2ef21e" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:21.424972Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"4b3e10f8b88c498087e4f45578152b38" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:23.473603Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2bb5fb110e124dbb8692569cb8004531" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:25.527520Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"8d4ca8984a2449e3950ebd287632b43f" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:27.583800Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"a847a21e4846464eab930f7eafaca37f" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:29.632252Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"3a34211e144b45b4a9fa464ee7ffc727" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:31.681796Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"8e75effa6ed24498bef9623463fd559a" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:33.636448Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"7a6403aa5c32416894ff472997b28c25" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:35.748259Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"0e2bd7dc348b42328e6e32ac4bb08f5c" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m1
+backend-1   | [2m2026-10-11T07:53:37.804116Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"65602bd9c0454d97ae14a0753a24355e" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:39.856319Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"36da952ad4b145aea3458184ee78c02f" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:41.916977Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"422f37a60bea4a85ac50a9b4fc47f525" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:43.968111Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"4ff7b4b55bbf4b22b985ec24341e5056" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:46.019295Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"8fc8d4da95144cd8a6bea301f4bf9b28" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:48.072693Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2626894ddfed46aa8b860699afb8a016" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:50.117403Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"b52ee9642d5240fb949a3962be420fbe" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:52.164801Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"e66e41e8f47745638ea54f76b35f29b8" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:54.212153Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"aeaecfb22a76456088d63a005abc087b" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:56.260689Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2474e129486c4a2a926768c9bb87e129" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:53:58.309760Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"53ba2cdf5ebc4f3ca4fcbf2eda0749ea" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:54:00.354404Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"2bd46c99f71948e9a97f19988a29a354" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0
+backend-1   | [2m2026-10-11T07:54:02.409295Z[0m [32m INFO[0m [2meln_backend::api[0m[2m:[0m request [3mrequest_id[0m[2m=[0m"d93c08e080794251883ee397e2e1af68" [3mmethod[0m[2m=[0mGET [3mpath[0m[2m=[0m"/ready" [3mstatus[0m[2m=[0m200 [3mduration_ms[0m[2m=[0m0

@@ -1,0 +1,18 @@
+{
+  "task": "T144 first candidate/PDF review snapshot preserved before authorized TOC cache correction",
+  "copies": [
+    {
+      "input": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+      "read_only_snapshot": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/candidate-df765-before-toc.docx",
+      "sha256": "df765798eb3598a5818a5e492b8a229bbf4e7c12ca2ee9464171bce5e93a41d7",
+      "bytes": 5409311
+    },
+    {
+      "input": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-wps/1005-表述精校无批注版-2026-10-11.pdf",
+      "read_only_snapshot": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/qa/native-f815-before-toc.pdf",
+      "sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92",
+      "bytes": 4571216
+    }
+  ],
+  "old_review_reports_unchanged": true
+}

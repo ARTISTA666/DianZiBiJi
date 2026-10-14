@@ -1,0 +1,638 @@
+{
+  "task": "T143",
+  "result": "PASS:45处时间信息精简的内容与证据边界审核通过；无待处理内容问题。",
+  "scope": "只读OOXML与完整45处前后文，未作PDF视觉验收、未编辑Word/代码、未运行产品测试。",
+  "paragraph_indexing": "document.xml .//w:p zero-based includes table paragraphs",
+  "source": {
+    "path": "/Users/yusong/Desktop/1005-精简与角标校正版-2026-10-11.docx",
+    "sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69"
+  },
+  "candidate": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/1005-时间说明精简版-2026-10-11.docx",
+    "sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd"
+  },
+  "changes_manifest": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/changes.json",
+    "sha256": "43e82db80679307801f3d92fa5c5fb99439f699e442399d646b45c0db61fe4ab",
+    "count": 45,
+    "net_characters_removed": 663
+  },
+  "independent_checks": {
+    "paragraph_count_source": 3634,
+    "paragraph_count_candidate": 3634,
+    "actual_text_diff_indices": [
+      235,
+      793,
+      798,
+      991,
+      993,
+      995,
+      997,
+      999,
+      1060,
+      1064,
+      1066,
+      1177,
+      1220,
+      1227,
+      1230,
+      1233,
+      1236,
+      1243,
+      1246,
+      1249,
+      1252,
+      1321,
+      1394,
+      1473,
+      1657,
+      3573,
+      3574,
+      3575,
+      3576,
+      3577,
+      3578,
+      3579,
+      3581,
+      3595,
+      3601,
+      3603,
+      3605,
+      3609,
+      3611,
+      3619,
+      3621,
+      3623,
+      3625,
+      3629,
+      3633
+    ],
+    "actual_diff_exactly_matches_whitelist": true,
+    "all_before_after_id_exact": true,
+    "eight_browser_case_elapsed_values_removed": true,
+    "observation_duration_wording_changed_number_unchanged": true,
+    "references_85_xml_identical": true,
+    "media_49_bytes_identical": true,
+    "protected_business_performance_and_safety_paragraphs_xml_identical": true
+  },
+  "reviewed_replacements": [
+    {
+      "index": 235,
+      "id": "0EA6A663",
+      "before": "模型上下文协议（Model Context Protocol，MCP）由 Anthropic 于2024年11月25日发布为开放协议，用于规范模型应用与外部工具、资源和提示模板之间的连接。客户端按协议发现服务端能力，再提交工具名称与参数发起调用。本文采用 2025-06-18 版接口规范实现 MCP 服务端，具体项目授权、参数校验和风险控制由业务服务完成。协议发布与规范来源见附录D。",
+      "after": "模型上下文协议（Model Context Protocol，MCP）由 Anthropic 发布为开放协议，用于规范模型应用与外部工具、资源和提示模板之间的连接。客户端按协议发现服务端能力，再提交工具名称与参数发起调用。本文采用 2025-06-18 版接口规范实现 MCP 服务端，具体项目授权、参数校验和风险控制由业务服务完成。协议发布与规范来源见附录D。",
+      "result": "PASS"
+    },
+    {
+      "index": 793,
+      "id": "25A52693",
+      "before": "表4-10给出早期原型归档中的实验总结样例，批次配置见6.1节。日期范围为2026-06-03至2026-06-05，输入含3条已审核笔记、7份资料及38条图谱关系。[N9]、[N10]分别回查笔记9、10，[R1936]回查关系1936。",
+      "after": "表4-10给出早期原型归档中的实验总结样例，批次配置见6.1节。输入含3条已审核笔记、7份资料及38条图谱关系。[N9]、[N10]分别回查笔记9、10，[R1936]回查关系1936。",
+      "result": "PASS"
+    },
+    {
+      "index": 798,
+      "id": "0B80E65B",
+      "before": "任务类型：实验总结；日期：2026-06-03 至 2026-06-05；输入：已审核笔记3条、资料7份、图谱关系38条",
+      "after": "任务类型：实验总结；输入：已审核笔记3条、资料7份、图谱关系38条",
+      "result": "PASS"
+    },
+    {
+      "index": 991,
+      "id": "0B61FF3B",
+      "before": "笔记（实验类型，日期）",
+      "after": "笔记（实验类型）",
+      "result": "PASS"
+    },
+    {
+      "index": 993,
+      "id": "09783D14",
+      "before": "PCR 条件优化实验（PCR，2026-06-03）",
+      "after": "PCR 条件优化实验（PCR）",
+      "result": "PASS"
+    },
+    {
+      "index": 995,
+      "id": "3CC11C6E",
+      "before": "细胞活力检测实验（细胞培养，2026-06-04）",
+      "after": "细胞活力检测实验（细胞培养）",
+      "result": "PASS"
+    },
+    {
+      "index": 997,
+      "id": "10E5F216",
+      "before": "Western Blot 蛋白表达验证（Western Blot，2026-06-05）",
+      "after": "Western Blot 蛋白表达验证（Western Blot）",
+      "result": "PASS"
+    },
+    {
+      "index": 999,
+      "id": "3B21F29F",
+      "before": "qPCR 定量验证实验（PCR，2026-05-28）",
+      "after": "qPCR 定量验证实验（PCR）",
+      "result": "PASS"
+    },
+    {
+      "index": 1060,
+      "id": "2693F75A",
+      "before": "2026-06-03 至 2026-06-05",
+      "after": "所选实验笔记",
+      "result": "PASS"
+    },
+    {
+      "index": 1064,
+      "id": "032A8B03",
+      "before": "PCR条件优化实验（2026-06-03）：试剂为Taq DNA Polymerase、dNTP、MgCl2、模板DNA；58℃时扩增条带最清晰，非特异性条带减少",
+      "after": "PCR条件优化实验：试剂为Taq DNA Polymerase、dNTP、MgCl2、模板DNA；58℃时扩增条带最清晰，非特异性条带减少",
+      "result": "PASS"
+    },
+    {
+      "index": 1066,
+      "id": "555808EE",
+      "before": "细胞活力检测实验（2026-06-04）：处理组细胞活力较对照组下降约18%，重复孔结果稳定",
+      "after": "细胞活力检测实验：处理组细胞活力较对照组下降约18%，重复孔结果稳定",
+      "result": "PASS"
+    },
+    {
+      "index": 1177,
+      "id": "0ECEF91D",
+      "before": "6.5节归档关系、20题问答和固定任务属于Python原型，生成与自动评判用DeepSeek flash档、温度0.1，嵌入为bge-small-zh-v1.5（512维）。表6-8同为该嵌入配置，运行于2026年7月13日；app_revision为unversioned，仅作历史描述。6.6节为Rust补验，其中关系抽取用独立PostgreSQL/pgvector，不调用生成或嵌入模型。8月28日Rust安全及legacy/SQLite摘要见D.4。",
+      "after": "6.5节归档关系、20题问答和固定任务属于Python原型，生成与自动评判用DeepSeek flash档、温度0.1，嵌入为bge-small-zh-v1.5（512维）。表6-8同为该嵌入配置；app_revision为unversioned，仅作历史描述。6.6节为Rust补验，其中关系抽取用独立PostgreSQL/pgvector，不调用生成或嵌入模型。Rust安全及legacy/SQLite归档摘要见D.4。",
+      "result": "PASS"
+    },
+    {
+      "index": 1220,
+      "id": "4CAD3AA7",
+      "before": "表6-3a—6-3c保留2026年8月10日浏览器及8月28日Rust冻结结果，合并前置、步骤与验收条件；同名测试全文留存附件。2026年10月11日整改回归见D.4。",
+      "after": "表6-3a—6-3c保留历史浏览器及Rust冻结结果，合并前置、步骤与验收条件；同名测试全文留存附件。当前整改回归见D.4。",
+      "result": "PASS"
+    },
+    {
+      "index": 1227,
+      "id": "4CBF9F98",
+      "before": "通过（1999 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1230,
+      "id": "48B57D61",
+      "before": "通过（7300 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1233,
+      "id": "401228AD",
+      "before": "通过（4693 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1236,
+      "id": "44DC96F7",
+      "before": "通过（5289 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1243,
+      "id": "67045807",
+      "before": "通过（13633 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1246,
+      "id": "2D4691A0",
+      "before": "通过（12526 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1249,
+      "id": "7ACDD6FA",
+      "before": "通过（5759 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1252,
+      "id": "1E400830",
+      "before": "通过（52477 ms）",
+      "after": "通过",
+      "result": "PASS"
+    },
+    {
+      "index": 1321,
+      "id": "01CC8FD4",
+      "before": "本案例采用“乳腺癌外泌体miRNA课题”（运行库项目编号10）在2026年9月7日的计划解析结果、合成种子笔记与审计日志。计划导入后形成15个计划知识点；随后14分钟内，2条种子笔记完成提交与审核，图谱更新后的精确匹配覆盖由0项增至1项。语义关联清单涉及Western Blot、CD63和TSG101共3项，系统精确匹配项为Western Blot。项目负责人账号完成告警确认与处理；走查中发现阈值输入引起告警静默，并完成修复。",
+      "after": "本案例采用“乳腺癌外泌体miRNA课题”（运行库项目编号10）的计划解析结果、合成种子笔记与审计日志。计划导入后形成15个计划知识点；随后，2条种子笔记完成提交与审核，图谱更新后的精确匹配覆盖由0项增至1项。语义关联清单涉及Western Blot、CD63和TSG101共3项，系统精确匹配项为Western Blot。项目负责人账号完成告警确认与处理；走查中发现阈值输入引起告警静默，并完成修复。",
+      "result": "PASS"
+    },
+    {
+      "index": 1394,
+      "id": "3CFD52CF",
+      "before": "实验目的：比较裸大语言模型、资料检索、关系增强与直接数据库查询在不同题集上的完成率和开销。实验步骤：普通RAG与图谱增强RAG于2026年6月11日各运行20题，裸模型与直接SQL查询于2026年8月25日补充运行；SQL对应Q06—Q19共14题。表6-7分列20题全题集与14题共同子集的结果。两个运行日期的项目一数据分别为15条和4条已审核笔记，补充查询时Q15、Q18、Q19的部分要点已不在数据中。GSE111619扩展对照采用12题、每方法3次重复，形成每方法36次记录；分析时以12道问题为题集规模。",
+      "after": "实验目的：比较裸大语言模型、资料检索、关系增强与直接数据库查询在不同题集上的完成率和开销。实验步骤：普通RAG与图谱增强RAG各运行20题，裸模型与直接SQL查询另行补充运行；SQL对应Q06—Q19共14题。表6-7分列20题全题集与14题共同子集的结果。两个运行批次的项目一数据分别为15条和4条已审核笔记，补充查询时Q15、Q18、Q19的部分要点已不在数据中。GSE111619扩展对照采用12题、每方法3次重复，形成每方法36次记录；分析时以12道问题为题集规模。",
+      "result": "PASS"
+    },
+    {
+      "index": 1473,
+      "id": "55A5E632",
+      "before": "实验目的：评价实验总结、周报、阶段报告与图谱概览按模板读取已审核证据、生成草稿并保存来源的能力。实验步骤：采用2026年6月11日四类固定任务各一次生成记录，提示版本为agent-v3-deepseek-grounded-ids，分析完成状态、来源笔记、资料、图谱关系数量及Token、耗时。该批次采用早期固定任务实现；当前Rust的agent-v10工具和权限机制见第四、五章。",
+      "after": "实验目的：评价实验总结、周报、阶段报告与图谱概览按模板读取已审核证据、生成草稿并保存来源的能力。实验步骤：采用早期原型四类固定任务各一次生成记录，提示版本为agent-v3-deepseek-grounded-ids，分析完成状态、来源笔记、资料、图谱关系数量及Token、耗时。该批次采用早期固定任务实现；当前Rust的agent-v10工具和权限机制见第四、五章。",
+      "result": "PASS"
+    },
+    {
+      "index": 1657,
+      "id": "E1370022",
+      "before": "关系抽取补充测试于2026年10月10日在当前Rust后端执行。从三份公开iGEM英文实验日记按PDF阅读顺序各取最先四个合格的已执行日期单元，正文长度为60—2500字符、至少记有两个明确实验事实；最终12条共6735字符。仅修复排版空白，保留英文原文。参考标注、复核与操作终点边界裁决均由GPT子代理在读取系统输出前完成，形成74条内容关系：试剂39条、仪器2条、样本27条、结果6条。",
+      "after": "关系抽取补充测试在当前Rust后端执行。从三份公开iGEM英文实验日记按PDF阅读顺序各取最先四个合格的已执行日期单元，正文长度为60—2500字符、至少记有两个明确实验事实；最终12条共6735字符。仅修复排版空白，保留英文原文。参考标注、复核与操作终点边界裁决均由GPT子代理在读取系统输出前完成，形成74条内容关系：试剂39条、仪器2条、样本27条、结果6条。",
+      "result": "PASS"
+    },
+    {
+      "index": 3573,
+      "id": "E1370005",
+      "before": "6.6关系抽取补充测试（2026-10-10）",
+      "after": "6.6关系抽取补充测试",
+      "result": "PASS"
+    },
+    {
+      "index": 3574,
+      "id": "73FD1415",
+      "before": "MCP协议来源：Anthropic，Introducing the Model Context Protocol，2024年11月25日，https://www.anthropic.com/news/model-context-protocol；2025年6月18日版规范，https://modelcontextprotocol.io/specification/2025-06-18（访问日期：2026年10月1日）。",
+      "after": "MCP协议来源：Anthropic，Introducing the Model Context Protocol，https://www.anthropic.com/news/model-context-protocol；接口规范，https://modelcontextprotocol.io/specification/2025-06-18。",
+      "result": "PASS"
+    },
+    {
+      "index": 3575,
+      "id": "4F3E9E71",
+      "before": "T114补验附件（2026年10月1日）含旧40条回答GPT评判、12题四组三次复测、四种GPT角色接口操作及入库后9场操作，见t114-supplement-validation-2026-10-01.md与同批目录。当前提示版本及内容指纹见thesis-fixes-T141-2026-10-11/prompt-version-registry.json。",
+      "after": "T114补验附件含旧40条回答GPT评判、12题四组三次复测、四种GPT角色接口操作及入库后9场操作，见t114-supplement-validation-2026-10-01.md与同批目录。当前提示版本及内容指纹见thesis-fixes-T141-2026-10-11/prompt-version-registry.json。",
+      "result": "PASS"
+    },
+    {
+      "index": 3576,
+      "id": "E1370029",
+      "before": "关系抽取补充测试附件包括三份PDF来源与选材记录、12条原文单元、74条最终内容参考关系、56项排除记录、28组接口输入、原始及重建图谱、逐笔记计数和误抽漏抽清单。详见kg-heldout-T136-2026-10-10.md及t136-2026-10-10目录。公开来源如下，读取日期为2026年10月10日。",
+      "after": "关系抽取补充测试附件包括三份PDF来源与选材记录、12条原文单元、74条最终内容参考关系、56项排除记录、28组接口输入、原始及重建图谱、逐笔记计数和误抽漏抽清单。详见kg-heldout-T136-2026-10-10.md及t136-2026-10-10目录。公开来源如下。",
+      "result": "PASS"
+    },
+    {
+      "index": 3577,
+      "id": "E137002A",
+      "before": "IISc Bangalore 2019 Wetlab Notebook：物理第2—3页，2019年4月9日、4月10日、4月13日及5月14日，4个单元、23条内容参考关系。https://static.igem.org/mediawiki/2019/3/34/T--IISc-Bangalore--Wetlab_Notebook.pdf",
+      "after": "IISc Bangalore 2019 Wetlab Notebook：物理第2—3页，4个单元、23条内容参考关系。https://static.igem.org/mediawiki/2019/3/34/T--IISc-Bangalore--Wetlab_Notebook.pdf",
+      "result": "PASS"
+    },
+    {
+      "index": 3578,
+      "id": "E137002B",
+      "before": "British Columbia 2021 LabNotebook：物理第1—2页，2021年6月30日、7月5日、7月6日及7月8日，4个单元、24条内容参考关系。https://static.igem.org/mediawiki/2021/4/40/T--British_Columbia--LabNotebook.pdf",
+      "after": "British Columbia 2021 LabNotebook：物理第1—2页，4个单元、24条内容参考关系。https://static.igem.org/mediawiki/2021/4/40/T--British_Columbia--LabNotebook.pdf",
+      "result": "PASS"
+    },
+    {
+      "index": 3579,
+      "id": "E137002C",
+      "before": "Lab Notebook（公开路径teams/5863，团队及作者未确认）：物理第2—4页，2025年5月4日、6月11日、6月12日及6月26日，4个单元、27条内容参考关系。https://static.igem.wiki/teams/5863/wetlab/notebook.pdf",
+      "after": "Lab Notebook（公开路径teams/5863，团队及作者未确认）：物理第2—4页，4个单元、27条内容参考关系。https://static.igem.wiki/teams/5863/wetlab/notebook.pdf",
+      "result": "PASS"
+    },
+    {
+      "index": 3581,
+      "id": "49FCCA25",
+      "before": "图D-1—D-4展示四条合成测试笔记的标题、类型、日期、字段与正文。图D-5、D-6展示2026年6月11日原型运行编号4、项目编号19检索来源中的七份SOP短提要。",
+      "after": "图D-1—D-4展示四条合成测试笔记的标题、类型、字段与正文。图D-5、D-6展示原型运行编号4、项目编号19检索来源中的七份SOP短提要。",
+      "result": "PASS"
+    },
+    {
+      "index": 3595,
+      "id": "62519D61",
+      "before": "表D-3保留历史测试身份；当前整改回归和性能观测另列于下文。2026年8月20日9项浏览器场景属于另一批次。",
+      "after": "表D-3保留历史测试身份；当前整改回归和性能观测另列于下文。另有9项浏览器场景属于另一历史批次。",
+      "result": "PASS"
+    },
+    {
+      "index": 3601,
+      "id": "52541BF6",
+      "before": "2026-08-10",
+      "after": "浏览器功能测试",
+      "result": "PASS"
+    },
+    {
+      "index": 3603,
+      "id": "77A2AC8A",
+      "before": "8 passed；0 skipped / unexpected / flaky；107.06 s",
+      "after": "8 passed；0 skipped / unexpected / flaky",
+      "result": "PASS"
+    },
+    {
+      "index": 3605,
+      "id": "02719AAB",
+      "before": "2026-08-28",
+      "after": "Rust补充测试",
+      "result": "PASS"
+    },
+    {
+      "index": 3609,
+      "id": "7D79472C",
+      "before": "2026-08-28",
+      "after": "legacy补充测试",
+      "result": "PASS"
+    },
+    {
+      "index": 3611,
+      "id": "2DC54560",
+      "before": "346 passed，11 skipped；10.43 s",
+      "after": "346 passed，11 skipped",
+      "result": "PASS"
+    },
+    {
+      "index": 3619,
+      "id": "E141002D",
+      "before": "2026年10月3日23:36:40—23:37:40（北京时间）的持续读取观测，首尾revision为fb87ce38，规模10项目、46笔记、44文件；10 workers各约1请求/s，三个基础端点各200次，共600次HTTP 200且请求标识全部匹配，墙时60.01074 s；吞吐9.99821请求/s，整体p95=13.376 ms、最大17.724 ms，/health、/ready、/projects的p95依次11.484、12.713、13.570 ms。附件仅存汇总及临时路径/哈希，未留逐请求明细，不能独立重算p95或逐项核对标识。",
+      "after": "持续读取观测，首尾revision为fb87ce38，规模10项目、46笔记、44文件；10 workers各约1请求/s，三个基础端点各200次，共600次HTTP 200且请求标识全部匹配，观测时长60.01074 s；吞吐9.99821请求/s，整体p95=13.376 ms、最大17.724 ms，/health、/ready、/projects的p95依次11.484、12.713、13.570 ms。附件仅存汇总及临时路径/哈希，未留逐请求明细，不能独立重算p95或逐项核对标识。",
+      "result": "PASS"
+    },
+    {
+      "index": 3621,
+      "id": "E141002F",
+      "before": "2026年10月10日关系抽取测试使用b6cd3a24、独立PostgreSQL 16/pgvector与新存储卷，关闭自动种子；同一管理员执行创建及审批。3项目、28条批准笔记形成165实体、201关系，174次请求均HTTP 200；首次导入23:52:28、完成23:52:30（北京时间）。原始图谱及关系键评分见T136附件。",
+      "after": "关系抽取测试使用b6cd3a24、独立PostgreSQL 16/pgvector与新存储卷，关闭自动种子；同一管理员执行创建及审批。3项目、28条批准笔记形成165实体、201关系，174次请求均HTTP 200。原始图谱及关系键评分见T136附件。",
+      "result": "PASS"
+    },
+    {
+      "index": 3623,
+      "id": "E1410031",
+      "before": "2026年10月11日T139执行契约回归以b6cd3a24为基线，最终隔离验证快照为0268b88a949a78a72198ec80542c6306ed7f71cc。关系抽取规则与历史实验保持。",
+      "after": "T139执行契约回归以b6cd3a24为基线，最终隔离验证快照为0268b88a949a78a72198ec80542c6306ed7f71cc。关系抽取规则与历史实验保持。",
+      "result": "PASS"
+    },
+    {
+      "index": 3625,
+      "id": "E1410033",
+      "before": "T139在Rust 1.88.0及隔离PostgreSQL 16/pgvector下通过282项库测试与2项入口测试（库阶段391.58 s），格式、严格Clippy及前端lint/typecheck/build通过。Rust执行快照6d52a600与最终快照的11个后端文件、依赖和工具链SHA相同；后续只改探针及浏览器测试。最终快照59个脚本测试文件的546项通过（66.82 s），输入哈希前后相同。",
+      "after": "T139在Rust 1.88.0及隔离PostgreSQL 16/pgvector下通过282项库测试与2项入口测试，格式、严格Clippy及前端lint/typecheck/build通过。Rust执行快照6d52a600与最终快照的11个后端文件、依赖和工具链SHA相同；后续只改探针及浏览器测试。最终快照59个脚本测试文件的546项通过，输入哈希前后相同。",
+      "result": "PASS"
+    },
+    {
+      "index": 3629,
+      "id": "E1410037",
+      "before": "T139最终快照的9个浏览器场景全部通过，0失败/跳过/重试（140.16 s）；SIGKILL后租约回收至interrupted，1个未执行用例恢复至completed且完成1个，重启探针通过。",
+      "after": "T139最终快照的9个浏览器场景全部通过，0失败/跳过/重试；SIGKILL后租约回收至interrupted，1个未执行用例恢复至completed且完成1个，重启探针通过。",
+      "result": "PASS"
+    },
+    {
+      "index": 3633,
+      "id": "E141003B",
+      "before": "2026年10月11日独立隔离快照9548e83d通过287项库测试及2项入口测试（库阶段245.50 s），格式与严格Clippy通过；65项输入SHA与主树一致。新增回归覆盖退回计数、角色匹配及回退、v2提示身份与旧预览失配；当前源码及完整命令见T141整改附件。",
+      "after": "独立隔离快照9548e83d通过287项库测试及2项入口测试，格式与严格Clippy通过；65项输入SHA与主树一致。新增回归覆盖退回计数、角色匹配及回退、v2提示身份与旧预览失配；当前源码及完整命令见T141整改附件。",
+      "result": "PASS"
+    }
+  ],
+  "evidence_boundary_conclusions": [
+    {
+      "indices": [
+        1177,
+        1473
+      ],
+      "result": "PASS",
+      "conclusion": "Python原型、unversioned历史嵌入环境与当前Rust实现的边界保留；512维、温度及提示版本未改。"
+    },
+    {
+      "indices": [
+        1394
+      ],
+      "result": "PASS",
+      "conclusion": "两批方法分别运行及15/4条已审核笔记差异明确；20题/14共同题/12扩展题、3次重复、每方法36记录与缺失要点未改，未暗示同期受控比较。"
+    },
+    {
+      "indices": [
+        1220,
+        3595,
+        3601,
+        3605,
+        3609,
+        3623,
+        3625,
+        3629,
+        3633
+      ],
+      "result": "PASS",
+      "conclusion": "历史8浏览器场景、另一历史9场景与T139当前9场景仍分开；Rust/legacy与T141整改快照、测试数量及SHA一致性身份保留。"
+    },
+    {
+      "indices": [
+        1657,
+        3576,
+        3577,
+        3578,
+        3579
+      ],
+      "result": "PASS",
+      "conclusion": "源日历列表删去但三份公开来源、物理页、阅读顺序各四个合格日期单元、12条参考样本及23/24/27关系数和选材附件保留；未改选材规则或英语源文。"
+    },
+    {
+      "indices": [
+        793,
+        798,
+        991,
+        993,
+        995,
+        997,
+        999,
+        1060,
+        1064,
+        1066,
+        3581
+      ],
+      "result": "PASS",
+      "conclusion": "显示样例日期删去、表头配套调整；事实58℃和18%、来源数量/标记、实验类型不动，原始截图日期作为业务字段保留。"
+    },
+    {
+      "indices": [
+        1227,
+        1230,
+        1233,
+        1236,
+        1243,
+        1246,
+        1249,
+        1252,
+        3603,
+        3611,
+        3625,
+        3629,
+        3633
+      ],
+      "result": "PASS",
+      "conclusion": "仅删除场景/整轮测试执行时长，测试通过/失败/跳过/重试及测试数量保留。"
+    },
+    {
+      "indices": [
+        376,
+        1266,
+        1387,
+        1440,
+        1446,
+        1452,
+        1458,
+        1464,
+        1486,
+        1492,
+        1498,
+        1504,
+        3619,
+        3631
+      ],
+      "result": "PASS",
+      "conclusion": "方法响应开销、NFR阈值、60.01074s观测窗口、吞吐/p95/最大值保留；600与90两负载批次及无法重算明细的限制未混淆。"
+    },
+    {
+      "indices": [
+        235,
+        749,
+        3574,
+        3575,
+        3576
+      ],
+      "result": "PASS",
+      "conclusion": "MCP版本2025-06-18及规范URL保留；发布日期可精简；文件名中的日期未剥除，证据路径定位完整。"
+    },
+    {
+      "indices": [
+        3627
+      ],
+      "result": "PASS",
+      "conclusion": "外部费用不受数据库回滚保证、事务内嵌入持锁与未测上界、新SSE异常分支缺浏览器覆盖的限制原样。"
+    }
+  ],
+  "retained_date_exclusions": [
+    {
+      "indices": [
+        17,
+        19
+      ],
+      "category": "formal cover metadata",
+      "reason": "论文提交与授予学位模板日期，非执行日志。"
+    },
+    {
+      "indices": [
+        1714,
+        1715,
+        1716,
+        1717,
+        1718,
+        1719,
+        1720,
+        1721,
+        1722,
+        1723,
+        1724,
+        1725,
+        1726,
+        1727,
+        1728,
+        1729,
+        1730,
+        1731,
+        1732,
+        1733,
+        1734,
+        1735,
+        1736,
+        1737,
+        1738,
+        1739,
+        1740,
+        1741,
+        1742,
+        1743,
+        1744,
+        1745,
+        1746,
+        1747,
+        1748,
+        1749,
+        1750,
+        1751,
+        1752,
+        1753,
+        1754,
+        1755,
+        1756,
+        1757,
+        1758,
+        1759,
+        1760,
+        1761,
+        1762,
+        1763,
+        1764,
+        1765,
+        1766,
+        1767,
+        1768,
+        1769,
+        1770,
+        1771,
+        1772,
+        1773,
+        1774,
+        1775,
+        1776,
+        1777,
+        1778,
+        1779,
+        1780,
+        1781,
+        1782,
+        1783,
+        1784,
+        1785,
+        1786,
+        1787,
+        1788,
+        1789,
+        1790,
+        1791,
+        1792,
+        1793,
+        1794,
+        1795,
+        1796,
+        1797,
+        1798
+      ],
+      "category": "bibliography identity",
+      "reason": "85条书目完整原样，包括出版年份及[5]/[80]访问日期。"
+    },
+    {
+      "indices": [
+        1852
+      ],
+      "category": "frozen question filter semantics",
+      "reason": "评价问题询问具体日期范围，删去将改变题义。"
+    },
+    {
+      "indices": [
+        1690
+      ],
+      "category": "literal source quotation",
+      "reason": "July 5th是样本原文的一部分，保留解释误拆事实。"
+    },
+    {
+      "indices": [
+        887,
+        1508
+      ],
+      "category": "business metric and threshold",
+      "reason": "小时阈值与审批堵转时长属于业务条件，保留。"
+    }
+  ],
+  "issues": [],
+  "supersedes_for_acceptance": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/reviewer/date-time-scan-and-candidate-review.json",
+  "note": "前一报告生成期间收到候选补改，本报告重新绑定稳定d6cd候选并独立完整复核45处，作为最终内容复审依据。"
+}

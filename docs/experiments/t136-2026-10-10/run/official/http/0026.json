@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:28.772798+00:00",
+  "path": "/notes/6/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 6,
+    "project_id": 1,
+    "template_id": null,
+    "title": "ubc2021-02 RFP plasmid retransformation",
+    "experiment_type": "plasmid_transformation",
+    "experiment_date": "2021-07-05",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 6,
+    "created_at": "2026-10-10T15:52:29.200519Z",
+    "updated_at": "2026-10-10T15:52:29.208113Z"
+  }
+}

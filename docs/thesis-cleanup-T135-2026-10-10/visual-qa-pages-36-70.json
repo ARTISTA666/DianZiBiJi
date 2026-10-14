@@ -1,0 +1,1037 @@
+{
+  "task_id": "T135",
+  "reviewer": "architect / qa-engineer",
+  "status": "pass_with_inherited_source_image_minor_issues",
+  "source_docx": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/1005-防御性说明清理版-2026-10-10.docx",
+  "source_docx_sha256": "99b8cedd4bacf5f811a0c74a82206deb9a2d68779c4824e1207ec4b25da7e786",
+  "render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3",
+  "full_render_page_count": 103,
+  "page_range": {
+    "start": 36,
+    "end": 70
+  },
+  "inspected_page_count": 35,
+  "inspection_method": "原render-final的36–70页共35张PNG已逐张view_image(detail=original)原尺寸检查；最终v3的35张PNG均独立计算SHA256并与已观看PNG完全一致，继承该逐页视觉检查结论。",
+  "summary": {
+    "pass_pages": 33,
+    "pass_with_inherited_minor_issue_pages": 2,
+    "blocking_layout_defects": 0,
+    "minor_issue_pages": [
+      46,
+      69
+    ]
+  },
+  "formula_check": {
+    "physical_page": 62,
+    "equation_numbers": [
+      "6-1",
+      "6-2",
+      "6-3",
+      "6-4",
+      "6-5",
+      "6-6",
+      "6-7",
+      "6-8",
+      "6-9",
+      "6-10"
+    ],
+    "result": "十个公式及编号清晰；分式、求和、上下标和10^-10无错位、遮挡或边框截断。",
+    "scope": "本分工仅36–70页，不声明检查全篇48个公式或后续6.6统计页。"
+  },
+  "other_key_checks": [
+    {
+      "physical_pages": [
+        60,
+        61
+      ],
+      "result": "测试表6-3、6-3a、6-3b、6-3c完整，无跨页拆行或裁切；未完成测试阶段措辞显示正常。"
+    },
+    {
+      "physical_page": 64,
+      "result": "6.4标题已更新，表6-5及固定合成样本、内部参考集说明完整。"
+    },
+    {
+      "physical_pages": [
+        58,
+        63,
+        65,
+        70
+      ],
+      "result": "归档原型与当前Rust来源文字显示正常；独立GPT身份保留。"
+    }
+  ],
+  "inheritance_policy": "v3的36–70页已通过独立PNG SHA256一致性核验，逐页视觉结论完成继承；本报告同时绑定最终Word、最终PDF及35页PNG。报告不声明本分工之外页面的视觉检查。",
+  "pages": [
+    {
+      "page": 36,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-36.png",
+      "sha256": "f481c91562e655291e6683e1bde9fc41dc8b206b47e9837d5b7da6c0696d9c67",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图4-10三条调用流程完整，框线、箭头、图题均未遮挡；正文和页眉页脚清晰。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-36.png",
+      "original_inspected_sha256": "f481c91562e655291e6683e1bde9fc41dc8b206b47e9837d5b7da6c0696d9c67",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 37,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-37.png",
+      "sha256": "3af2883159fac14616d5aa8ebf7b4cfbbacfc72435cc40fdf6838b51b4187c99",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表4-9六行完整，新增‘当前为模板定义阶段’正常换行，无单元格越界或跨页截断。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-37.png",
+      "original_inspected_sha256": "3af2883159fac14616d5aa8ebf7b4cfbbacfc72435cc40fdf6838b51b4187c99",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 38,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-38.png",
+      "sha256": "1e285cf046b0230f30eb8c644fa793dc56b34340c19f9b723fab21f17458f88d",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表4-10与表4-11完整，表头和工具行清晰，正文未压到页脚。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-38.png",
+      "original_inspected_sha256": "1e285cf046b0230f30eb8c644fa793dc56b34340c19f9b723fab21f17458f88d",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 39,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-39.png",
+      "sha256": "9f20b5733604891f392d3f478ec0e431401aa6e4718a100e1d6a0587baf936aa",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表4-12四项公式、分式、上下标和阈值清晰；横线不遮挡公式。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-39.png",
+      "original_inspected_sha256": "9f20b5733604891f392d3f478ec0e431401aa6e4718a100e1d6a0587baf936aa",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 40,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-40.png",
+      "sha256": "a13977ff92cbc72271c9d3671e7dddbf62da534de67279eb25898417a575e14e",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表4-12符号解释续接自然；4.9章末留白正常，页眉页脚完整。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-40.png",
+      "original_inspected_sha256": "a13977ff92cbc72271c9d3671e7dddbf62da534de67279eb25898417a575e14e",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 41,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-41.png",
+      "sha256": "d14bc2028ef43527942d06901387a046cbf2fe0ccd5114382dcf6f107d6152a4",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "第5章标题、表5-1环境参数及5.2起段正常，无表格裁切。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-41.png",
+      "original_inspected_sha256": "d14bc2028ef43527942d06901387a046cbf2fe0ccd5114382dcf6f107d6152a4",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 42,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-42.png",
+      "sha256": "43eaaa24b27823ecd2762936b60d58e97c805a4e802830ed1fc1443ce4d3a8e1",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表5-2三项目统计和表5-3四条预设笔记完整；数值、温度及英文名称清晰。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-42.png",
+      "original_inspected_sha256": "43eaaa24b27823ecd2762936b60d58e97c805a4e802830ed1fc1443ce4d3a8e1",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 43,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-43.png",
+      "sha256": "7fe0b1694e1b0001a7a17b015e5503ae6869c5c495a72d74aedce405a7a93dea",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-1/5-2完整，界面文字较小但主要控件与状态可识别，图题无错位。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-43.png",
+      "original_inspected_sha256": "7fe0b1694e1b0001a7a17b015e5503ae6869c5c495a72d74aedce405a7a93dea",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 44,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-44.png",
+      "sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-3总体流程和图5-4六状态图均完整，箭头、标签与正文无碰撞。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-44.png",
+      "original_inspected_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 45,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-45.png",
+      "sha256": "504726b74142f5bd4ecc9cdec44da9ebd2eb3be15e5cb7f47b50efb32faa3659",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-5流程完整，表5-4参数、5.3.3标题和引用标记清晰。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-45.png",
+      "original_inspected_sha256": "504726b74142f5bd4ecc9cdec44da9ebd2eb3be15e5cb7f47b50efb32faa3659",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 46,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-46.png",
+      "sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass_with_inherited_minor_issue",
+      "notes": "图5-6与图5-7及图题完整；图5-7源截图内局部节点标签拥挤叠压，既有截图内容问题，正文排版无缺陷。",
+      "issues": [
+        {
+          "severity": "minor",
+          "location": "图5-7图谱一跳局部聚焦",
+          "description": "中心节点附近部分标签叠压，降低图内标签阅读性。",
+          "origin": "既有源截图，T134曾记录同类现象",
+          "disposition": "记录，不改Word或重新采集截图。"
+        }
+      ],
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-46.png",
+      "original_inspected_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 47,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-47.png",
+      "sha256": "6a834f5c101d5ee2de7ae7624721a8831ffa8d3a5491ad708924484db563ef86",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-8生成页面和正文完整，图片下方留白正常，无页脚侵入。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-47.png",
+      "original_inspected_sha256": "6a834f5c101d5ee2de7ae7624721a8831ffa8d3a5491ad708924484db563ef86",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 48,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-48.png",
+      "sha256": "1fab6dff26eb5a2725598e7d87d2b8dbf073c001fc6672805c2be087ae31bda6",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-9计划覆盖截图与说明完整，无裁切或图题分离。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-48.png",
+      "original_inspected_sha256": "1fab6dff26eb5a2725598e7d87d2b8dbf073c001fc6672805c2be087ae31bda6",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 49,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-49.png",
+      "sha256": "6ae853abeaa35ac2e63097c572b9c143cf227b2e4790f28c46b7c545cb562063",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表5-5草稿节选完整，引用编号和来源映射清晰；5.3.5–5.3.7正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-49.png",
+      "original_inspected_sha256": "6ae853abeaa35ac2e63097c572b9c143cf227b2e4790f28c46b7c545cb562063",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 50,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-50.png",
+      "sha256": "bc21bea7c9f5edbf2c3cbc80c7f08aea9c522eff564a2d655294960f3efe87a1",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表5-6十三子模块整表完整，图号换行未越界；页眉页脚清晰。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-50.png",
+      "original_inspected_sha256": "bc21bea7c9f5edbf2c3cbc80c7f08aea9c522eff564a2d655294960f3efe87a1",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 51,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-51.png",
+      "sha256": "3f5c9f68ff2d817f28b30a09350b3bda0bf8b3844aaac79150e95054dc7611e5",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-10角色能力与图5-11退回版本截图完整，说明段落及图题清晰。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-51.png",
+      "original_inspected_sha256": "3f5c9f68ff2d817f28b30a09350b3bda0bf8b3844aaac79150e95054dc7611e5",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 52,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-52.png",
+      "sha256": "d2f184a077c1fb4c19f82c685389c9cf851d040f1398c63ac4d1cd3ea546c7f6",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-12、5-13、5-14均完整，OCR对照区、来源编号和不足说明没有遮挡。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-52.png",
+      "original_inspected_sha256": "d2f184a077c1fb4c19f82c685389c9cf851d040f1398c63ac4d1cd3ea546c7f6",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 53,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-53.png",
+      "sha256": "4f3a933445cfdab41d0e22c81ea0f75611da9de0f4a9214985c78213e6f5fc79",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-15预警、5-16审计和5-17访问隔离三图与图题完整，表内文字可读。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-53.png",
+      "original_inspected_sha256": "4f3a933445cfdab41d0e22c81ea0f75611da9de0f4a9214985c78213e6f5fc79",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 54,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-54.png",
+      "sha256": "ad4654b046eaa644d6f3edc6d7c4675e65389e78980d0e14526d3a6b33188804",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-18问答和轻反馈入口完整，正文改写正常；图片和说明无跨页拆散。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-54.png",
+      "original_inspected_sha256": "ad4654b046eaa644d6f3edc6d7c4675e65389e78980d0e14526d3a6b33188804",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 55,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-55.png",
+      "sha256": "d1e4f492c6e40b983a3437a9c4a5b7c0258147904edb576925b67dfbc8846c5a",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-19编辑窗口与图5-20阈值配置完整，按钮、阈值和图题清晰。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-55.png",
+      "original_inspected_sha256": "d1e4f492c6e40b983a3437a9c4a5b7c0258147904edb576925b67dfbc8846c5a",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 56,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-56.png",
+      "sha256": "9357fb9e225058736430159588ad69b3949b80ed4a1c2b227dc8666476374aab",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-21草稿片段与图5-22来源统计完整；图内裁切属于原截图边界。正文“可查看”清晰，页眉页脚正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-56.png",
+      "original_inspected_sha256": "9357fb9e225058736430159588ad69b3949b80ed4a1c2b227dc8666476374aab",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 57,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-57.png",
+      "sha256": "6f2234afa7d23848e160af3b3c9b28699efe7266542ded23eeb2fa217b9a08f1",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图5-23 TRIzol计划节点属性完整；5.4节结束后的留白正常，图题、页眉页脚无异常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-57.png",
+      "original_inspected_sha256": "6f2234afa7d23848e160af3b3c9b28699efe7266542ded23eeb2fa217b9a08f1",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 58,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-58.png",
+      "sha256": "3294d21e100486877d4110d1547846288cadcc4eea39f93cc5c7b908c303a97e",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "第6章标题和表6-1完整；早期Python原型与当前Rust结果归属清楚，数字与中英文字符显示正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-58.png",
+      "original_inspected_sha256": "3294d21e100486877d4110d1547846288cadcc4eea39f93cc5c7b908c303a97e",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 59,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-59.png",
+      "sha256": "81242364d0a4a440f49ae23c52aa7c272d5d7a59f23fc543ef469b417cabcaf1",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-2数据集完整；图6-1的15/10/10柱状图标签清楚，6.2节正文正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-59.png",
+      "original_inspected_sha256": "81242364d0a4a440f49ae23c52aa7c272d5d7a59f23fc543ef469b417cabcaf1",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 60,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-60.png",
+      "sha256": "10e8d3b68db05ade69e11890eaca61e78a25ff78a27d1a90df600ce7d3cbb461",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-3功能及安全测试表完整，阶段状态措辞清晰；表6-3a的B01–B04和耗时1999/7300/4693/5289 ms显示完整，无裁切。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-60.png",
+      "original_inspected_sha256": "10e8d3b68db05ade69e11890eaca61e78a25ff78a27d1a90df600ce7d3cbb461",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 61,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-61.png",
+      "sha256": "6307a804f71acec1e4c04556a763c3e34f1cd0ea970b82269c567e7a823c2fca",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-3b的B05–B08及表6-3c的R01–R03完整，长英文和耗时正常换行；限速接口观测段与页脚无遮挡。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-61.png",
+      "original_inspected_sha256": "6307a804f71acec1e4c04556a763c3e34f1cd0ea970b82269c567e7a823c2fca",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 62,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-62.png",
+      "sha256": "e3b348e3260178872d86dc20e923fd62c4f80dabb5e6656ed43b8a498d6dee7e",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-4整表完整。式(6-1)至(6-10)十个编号可辨；分式、求和、上下标及10^-10清楚，McNemar与RAGAS公式未与边框或正文重叠。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-62.png",
+      "original_inspected_sha256": "e3b348e3260178872d86dc20e923fd62c4f80dabb5e6656ed43b8a498d6dee7e",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 63,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-63.png",
+      "sha256": "959a9a883a517ba553ab4b57f4f96921cfd2a49583448ce507931aff99b3c2a9",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "评价指标解释和引用完整，公式范围及52条参考关系文字清楚；独立GPT子代理身份显示明确，页眉页脚正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-63.png",
+      "original_inspected_sha256": "959a9a883a517ba553ab4b57f4f96921cfd2a49583448ce507931aff99b3c2a9",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 64,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-64.png",
+      "sha256": "847bf472b8122a9470edb4476731f6f0c0bc4c67f8e8e7955bea989d6808982d",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "6.4标题已改为“多角色协作流程验证”；表6-5的52/1/0与100.00%完整清楚，固定合成样本及内部参考集表述完整。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-64.png",
+      "original_inspected_sha256": "847bf472b8122a9470edb4476731f6f0c0bc4c67f8e8e7955bea989d6808982d",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 65,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-65.png",
+      "sha256": "258aa580f8a4a723f6142cf6b97b83399d32ef4ac89640e5e807f3cbf13ae41f",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-6总体结果和图6-2完整；图例、柱顶百分数与四类横轴标签清楚。归档McNemar p=0.0020显示正常，正文及页脚无冲突。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-65.png",
+      "original_inspected_sha256": "258aa580f8a4a723f6142cf6b97b83399d32ef4ac89640e5e807f3cbf13ae41f",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 66,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-66.png",
+      "sha256": "e890736af04d1988fa38594bc18c13b91df4a0ce4e5fa9755a516b30ae6149e8",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图6-3左右两组柱状图、图例、纵轴和数值完整；18题分母、响应耗时与阈值分析正文清楚，无遮挡。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-66.png",
+      "original_inspected_sha256": "e890736af04d1988fa38594bc18c13b91df4a0ce4e5fa9755a516b30ae6149e8",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 67,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-67.png",
+      "sha256": "2e1aa9cdc1224fb4091c221a42a50337cc25c10b87a84d7c40de5b271d92ac64",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "图6-4双纵轴、绿色柱、折线和叉形标记完整，图例与阈值清楚；引用编号规则和6.5.3标题正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-67.png",
+      "original_inspected_sha256": "2e1aa9cdc1224fb4091c221a42a50337cc25c10b87a84d7c40de5b271d92ac64",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 68,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-68.png",
+      "sha256": "d12a4db3500c42d1e1072cef5d5399d3881747a20e5270272f321940c40459b3",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-7与表6-8完整无跨页拆行；20题/14题、12题×3次重复、各百分数及耗时显示清晰，长表头正常换行。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-68.png",
+      "original_inspected_sha256": "d12a4db3500c42d1e1072cef5d5399d3881747a20e5270272f321940c40459b3",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 69,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-69.png",
+      "sha256": "9047b61ab1f5ea3be693b13457f3a413f46681fd87910cbf2d7243a9f73c1ee8",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass_with_inherited_minor_issue",
+      "notes": "图6-5与图6-6外框、轴标签及柱顶数值完整，正文和6.5.4标题正常。图6-5第四柱内白色分母说明右端超出绿色柱后与白底同色，可读性较弱，属于源图内容问题；对应表6-7和图外标签清楚。",
+      "issues": [
+        {
+          "severity": "minor",
+          "location": "图6-5第四根绿色柱内的分母说明",
+          "description": "白色说明文字右端超出绿色柱后与白底同色，可读性较弱；图外方法名称、78.57%及表6-7可清楚核对。",
+          "origin": "原统计图内部的白字与背景对比问题；根代理确认本任务保留统计图。",
+          "disposition": "仅记录源图可读性，不构成Word裁切或新增排版问题。"
+        }
+      ],
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-69.png",
+      "original_inspected_sha256": "9047b61ab1f5ea3be693b13457f3a413f46681fd87910cbf2d7243a9f73c1ee8",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    },
+    {
+      "page": 70,
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/page-70.png",
+      "sha256": "6a6abd57d2f0cfec6693269a2e615fe3194c75c915920256269911d918ff759e",
+      "width": 1414,
+      "height": 2000,
+      "status": "pass",
+      "notes": "表6-9及图6-7左右双图完整，Token、来源数量与响应时延数值清楚；早期固定任务与当前Rust归属及6.5.5标题、预警结果文字显示正常。",
+      "viewed_individually": true,
+      "view_image_detail": "original",
+      "checks": {
+        "glyphs": true,
+        "overlap_or_clipping": true,
+        "tables_and_figures": true,
+        "header_footer": true
+      },
+      "original_inspected_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/page-70.png",
+      "original_inspected_sha256": "6a6abd57d2f0cfec6693269a2e615fe3194c75c915920256269911d918ff759e",
+      "final_visual_qa_basis": "原尺寸逐页视觉检查结论，经独立SHA256字节一致性验证继承到v3；无需重复观看相同PNG。"
+    }
+  ],
+  "source_docx_hash_provenance": "最终v3候选固定后独立读取文件并计算SHA256，与根代理给定SHA一致。",
+  "rendered_pdfs": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/1005-防御性说明清理版-2026-10-10.pdf",
+      "sha256": "ba4ea4bbd4dbeb77f1c37e545760031b29871049be48e8f91e43b5e53c50c0f8",
+      "bytes": 7788062
+    }
+  ],
+  "source_image_issue_scope": "两项minor均发生在原图内部。根代理确认T135不修改统计图和来源截图，此分工仅记录来源图可读性；未据此认定Word裁切。",
+  "original_inspection_binding": {
+    "source_docx": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/1005-防御性说明清理版-2026-10-10.docx",
+    "source_docx_sha256": "0662fbdc0ba1d8f38d9ee00812eebd5f13e0a87b4c4df73169ecf784f52a441d",
+    "render_directory": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final",
+    "full_render_page_count": 104,
+    "rendered_pdfs": [
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final/1005-防御性说明清理版-2026-10-10.pdf",
+        "sha256": "a276156d2af6bcf9f544a82e65de565ae8c27bc651a7380860eb866390f3a40d",
+        "bytes": 7788866
+      }
+    ],
+    "inspection_method": "35张最终渲染PNG逐张调用view_image(detail=original)，以原尺寸1414×2000人工视觉检查字形、遮挡、图表、公式、页眉页脚。未用文字提取或contact sheet替代逐页检查。"
+  },
+  "final_v3_inheritance": {
+    "verified_at_utc": "2026-10-10T04:14:58.841882+00:00",
+    "verifier": "architect / qa-engineer",
+    "source_render": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final",
+    "final_render": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/render-final-v3",
+    "compared_page_count": 35,
+    "all_35_png_bytes_identical": true,
+    "final_docx_sha256": "99b8cedd4bacf5f811a0c74a82206deb9a2d68779c4824e1207ec4b25da7e786",
+    "final_pdf_sha256": "ba4ea4bbd4dbeb77f1c37e545760031b29871049be48e8f91e43b5e53c50c0f8",
+    "root_audit_path": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/visual-inheritance-audit.json",
+    "root_audit_sha256": "061e07143d18d3a6c04f6e470a0008cf21d694249418da2dba918f992d417b29",
+    "root_audit_rows_independently_confirmed": true,
+    "comparisons": [
+      {
+        "physical_page": 36,
+        "original_inspected_png_sha256": "f481c91562e655291e6683e1bde9fc41dc8b206b47e9837d5b7da6c0696d9c67",
+        "final_png_sha256": "f481c91562e655291e6683e1bde9fc41dc8b206b47e9837d5b7da6c0696d9c67",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 37,
+        "original_inspected_png_sha256": "3af2883159fac14616d5aa8ebf7b4cfbbacfc72435cc40fdf6838b51b4187c99",
+        "final_png_sha256": "3af2883159fac14616d5aa8ebf7b4cfbbacfc72435cc40fdf6838b51b4187c99",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 38,
+        "original_inspected_png_sha256": "1e285cf046b0230f30eb8c644fa793dc56b34340c19f9b723fab21f17458f88d",
+        "final_png_sha256": "1e285cf046b0230f30eb8c644fa793dc56b34340c19f9b723fab21f17458f88d",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 39,
+        "original_inspected_png_sha256": "9f20b5733604891f392d3f478ec0e431401aa6e4718a100e1d6a0587baf936aa",
+        "final_png_sha256": "9f20b5733604891f392d3f478ec0e431401aa6e4718a100e1d6a0587baf936aa",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 40,
+        "original_inspected_png_sha256": "a13977ff92cbc72271c9d3671e7dddbf62da534de67279eb25898417a575e14e",
+        "final_png_sha256": "a13977ff92cbc72271c9d3671e7dddbf62da534de67279eb25898417a575e14e",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 41,
+        "original_inspected_png_sha256": "d14bc2028ef43527942d06901387a046cbf2fe0ccd5114382dcf6f107d6152a4",
+        "final_png_sha256": "d14bc2028ef43527942d06901387a046cbf2fe0ccd5114382dcf6f107d6152a4",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 42,
+        "original_inspected_png_sha256": "43eaaa24b27823ecd2762936b60d58e97c805a4e802830ed1fc1443ce4d3a8e1",
+        "final_png_sha256": "43eaaa24b27823ecd2762936b60d58e97c805a4e802830ed1fc1443ce4d3a8e1",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 43,
+        "original_inspected_png_sha256": "7fe0b1694e1b0001a7a17b015e5503ae6869c5c495a72d74aedce405a7a93dea",
+        "final_png_sha256": "7fe0b1694e1b0001a7a17b015e5503ae6869c5c495a72d74aedce405a7a93dea",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 44,
+        "original_inspected_png_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+        "final_png_sha256": "bc8760305404eadda33e5779b7a9e320c1f78478fb9991c45e14617cee12f84b",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 45,
+        "original_inspected_png_sha256": "504726b74142f5bd4ecc9cdec44da9ebd2eb3be15e5cb7f47b50efb32faa3659",
+        "final_png_sha256": "504726b74142f5bd4ecc9cdec44da9ebd2eb3be15e5cb7f47b50efb32faa3659",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 46,
+        "original_inspected_png_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+        "final_png_sha256": "362510079497b6d314f06016d3eb15554c6631c7faded77e87045cd1932a43f5",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 47,
+        "original_inspected_png_sha256": "6a834f5c101d5ee2de7ae7624721a8831ffa8d3a5491ad708924484db563ef86",
+        "final_png_sha256": "6a834f5c101d5ee2de7ae7624721a8831ffa8d3a5491ad708924484db563ef86",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 48,
+        "original_inspected_png_sha256": "1fab6dff26eb5a2725598e7d87d2b8dbf073c001fc6672805c2be087ae31bda6",
+        "final_png_sha256": "1fab6dff26eb5a2725598e7d87d2b8dbf073c001fc6672805c2be087ae31bda6",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 49,
+        "original_inspected_png_sha256": "6ae853abeaa35ac2e63097c572b9c143cf227b2e4790f28c46b7c545cb562063",
+        "final_png_sha256": "6ae853abeaa35ac2e63097c572b9c143cf227b2e4790f28c46b7c545cb562063",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 50,
+        "original_inspected_png_sha256": "bc21bea7c9f5edbf2c3cbc80c7f08aea9c522eff564a2d655294960f3efe87a1",
+        "final_png_sha256": "bc21bea7c9f5edbf2c3cbc80c7f08aea9c522eff564a2d655294960f3efe87a1",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 51,
+        "original_inspected_png_sha256": "3f5c9f68ff2d817f28b30a09350b3bda0bf8b3844aaac79150e95054dc7611e5",
+        "final_png_sha256": "3f5c9f68ff2d817f28b30a09350b3bda0bf8b3844aaac79150e95054dc7611e5",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 52,
+        "original_inspected_png_sha256": "d2f184a077c1fb4c19f82c685389c9cf851d040f1398c63ac4d1cd3ea546c7f6",
+        "final_png_sha256": "d2f184a077c1fb4c19f82c685389c9cf851d040f1398c63ac4d1cd3ea546c7f6",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 53,
+        "original_inspected_png_sha256": "4f3a933445cfdab41d0e22c81ea0f75611da9de0f4a9214985c78213e6f5fc79",
+        "final_png_sha256": "4f3a933445cfdab41d0e22c81ea0f75611da9de0f4a9214985c78213e6f5fc79",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 54,
+        "original_inspected_png_sha256": "ad4654b046eaa644d6f3edc6d7c4675e65389e78980d0e14526d3a6b33188804",
+        "final_png_sha256": "ad4654b046eaa644d6f3edc6d7c4675e65389e78980d0e14526d3a6b33188804",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 55,
+        "original_inspected_png_sha256": "d1e4f492c6e40b983a3437a9c4a5b7c0258147904edb576925b67dfbc8846c5a",
+        "final_png_sha256": "d1e4f492c6e40b983a3437a9c4a5b7c0258147904edb576925b67dfbc8846c5a",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 56,
+        "original_inspected_png_sha256": "9357fb9e225058736430159588ad69b3949b80ed4a1c2b227dc8666476374aab",
+        "final_png_sha256": "9357fb9e225058736430159588ad69b3949b80ed4a1c2b227dc8666476374aab",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 57,
+        "original_inspected_png_sha256": "6f2234afa7d23848e160af3b3c9b28699efe7266542ded23eeb2fa217b9a08f1",
+        "final_png_sha256": "6f2234afa7d23848e160af3b3c9b28699efe7266542ded23eeb2fa217b9a08f1",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 58,
+        "original_inspected_png_sha256": "3294d21e100486877d4110d1547846288cadcc4eea39f93cc5c7b908c303a97e",
+        "final_png_sha256": "3294d21e100486877d4110d1547846288cadcc4eea39f93cc5c7b908c303a97e",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 59,
+        "original_inspected_png_sha256": "81242364d0a4a440f49ae23c52aa7c272d5d7a59f23fc543ef469b417cabcaf1",
+        "final_png_sha256": "81242364d0a4a440f49ae23c52aa7c272d5d7a59f23fc543ef469b417cabcaf1",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 60,
+        "original_inspected_png_sha256": "10e8d3b68db05ade69e11890eaca61e78a25ff78a27d1a90df600ce7d3cbb461",
+        "final_png_sha256": "10e8d3b68db05ade69e11890eaca61e78a25ff78a27d1a90df600ce7d3cbb461",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 61,
+        "original_inspected_png_sha256": "6307a804f71acec1e4c04556a763c3e34f1cd0ea970b82269c567e7a823c2fca",
+        "final_png_sha256": "6307a804f71acec1e4c04556a763c3e34f1cd0ea970b82269c567e7a823c2fca",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 62,
+        "original_inspected_png_sha256": "e3b348e3260178872d86dc20e923fd62c4f80dabb5e6656ed43b8a498d6dee7e",
+        "final_png_sha256": "e3b348e3260178872d86dc20e923fd62c4f80dabb5e6656ed43b8a498d6dee7e",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 63,
+        "original_inspected_png_sha256": "959a9a883a517ba553ab4b57f4f96921cfd2a49583448ce507931aff99b3c2a9",
+        "final_png_sha256": "959a9a883a517ba553ab4b57f4f96921cfd2a49583448ce507931aff99b3c2a9",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 64,
+        "original_inspected_png_sha256": "847bf472b8122a9470edb4476731f6f0c0bc4c67f8e8e7955bea989d6808982d",
+        "final_png_sha256": "847bf472b8122a9470edb4476731f6f0c0bc4c67f8e8e7955bea989d6808982d",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 65,
+        "original_inspected_png_sha256": "258aa580f8a4a723f6142cf6b97b83399d32ef4ac89640e5e807f3cbf13ae41f",
+        "final_png_sha256": "258aa580f8a4a723f6142cf6b97b83399d32ef4ac89640e5e807f3cbf13ae41f",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 66,
+        "original_inspected_png_sha256": "e890736af04d1988fa38594bc18c13b91df4a0ce4e5fa9755a516b30ae6149e8",
+        "final_png_sha256": "e890736af04d1988fa38594bc18c13b91df4a0ce4e5fa9755a516b30ae6149e8",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 67,
+        "original_inspected_png_sha256": "2e1aa9cdc1224fb4091c221a42a50337cc25c10b87a84d7c40de5b271d92ac64",
+        "final_png_sha256": "2e1aa9cdc1224fb4091c221a42a50337cc25c10b87a84d7c40de5b271d92ac64",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 68,
+        "original_inspected_png_sha256": "d12a4db3500c42d1e1072cef5d5399d3881747a20e5270272f321940c40459b3",
+        "final_png_sha256": "d12a4db3500c42d1e1072cef5d5399d3881747a20e5270272f321940c40459b3",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 69,
+        "original_inspected_png_sha256": "9047b61ab1f5ea3be693b13457f3a413f46681fd87910cbf2d7243a9f73c1ee8",
+        "final_png_sha256": "9047b61ab1f5ea3be693b13457f3a413f46681fd87910cbf2d7243a9f73c1ee8",
+        "byte_identical": true
+      },
+      {
+        "physical_page": 70,
+        "original_inspected_png_sha256": "6a6abd57d2f0cfec6693269a2e615fe3194c75c915920256269911d918ff759e",
+        "final_png_sha256": "6a6abd57d2f0cfec6693269a2e615fe3194c75c915920256269911d918ff759e",
+        "byte_identical": true
+      }
+    ],
+    "minor_records_retained": [
+      46,
+      69
+    ],
+    "word_or_figure_content_modified_by_this_review": false
+  }
+}

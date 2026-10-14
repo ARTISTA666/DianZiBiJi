@@ -1,0 +1,19 @@
+﻿id,check,evidence_level,sources,verified_scope,not_established,closure_status
+S01,威胁模型与攻击者能力,资料缺口,,已检索现有安全/运维文档及相关测试。,未找到完整资产、信任边界、攻击者能力和威胁假设的专项模型；当前材料不能证明系统性威胁覆盖。,部分覆盖；待专项补验证据
+S02,跨项目IDOR,实现+绑定历史数据库测试,backend/src/api/search.rs; backend/src/api/agent_suggestion.rs; backend/src/api/kg_blueprint.rs; backend/src/api/agent_runtime.rs,指定检索、建议、蓝图及待确认笔记路线的项目权限/对象边界已有通过记录。,尚无全部资源类型×角色×端点IDOR矩阵，不外推为系统全部对象已覆盖。,部分覆盖；待专项补验证据
+S03,Token重放,实现+绑定历史测试,backend/src/security.rs; backend/src/api/auth.rs; backend/src/api/users.rs,注销、角色/状态变更使已有Token失效，过期/算法混淆拒绝已测。,没有证明仍有效的被窃Token跨设备重放检测或专门的重放攻击套件。,部分覆盖；待专项补验证据
+S04,并发确认与幂等,实现+绑定历史测试,backend/src/api/agent_runtime.rs,参数绑定、同key复用已缓存结果、过期/已消费拒绝、高风险操作等待确认；事务内锁待确认行。,这些既有测试不构成全部并发确认竞态专项证明；外部AI或嵌入调用不在数据库原子回滚边界内。,部分覆盖；待专项补验证据
+S05,TOCTOU,实现+绑定历史数据库测试,backend/src/api/projects.rs; backend/src/api/ocr.rs; backend/src/api/agent_runtime.rs,锁等待后重读身份/权限、项目成员变更串行化、同文件OCR新提取与确认串行化，以及确认执行时当前写权限已覆盖。,限定这些已测路径；尚无全部业务写入口统一TOCTOU攻击矩阵。,部分覆盖；待专项补验证据
+S06,恶意上传,静态实现+基础上传流程测试,backend/src/api/files.rs; backend/src/ocr.rs,上传大小限额、服务端UUID文件名和受限扩展名；基础上传审核下载归档流程有通过记录。,未找到恶意文件样本集、杀毒、压缩炸弹或全格式解析攻击测试。,部分覆盖；待专项补验证据
+S07,OCR/PDF解析器安全,静态实现+限定功能测试,backend/src/ocr.rs; backend/src/api/ocr.rs,pdftotext/tesseract直接参数启动，无shell拼接；120秒超时及kill-on-drop，提取文本截断；OCR写权限已有通过记录。,不证明解析器漏洞抵抗；未见模糊测试、恶意PDF语料、解析器隔离/CVE版本核验的专项材料。,部分覆盖；待专项补验证据
+S08,提示注入,提示模板单元测试,backend/src/api/rag/mod.rs,提示模板将项目内容标为不可信证据，模板断言通过。,模板断言不证明真实模型抵抗间接提示注入；未见对抗请求集及真实响应攻击效果评测。,部分覆盖；待专项补验证据
+S09,RAG越权数据外泄,项目边界+敏感外发策略测试,backend/src/api/rag/mod.rs; backend/src/permissions.rs; backend/src/config.rs; backend/src/api/kg_blueprint.rs,项目过滤及敏感项目默认禁止外部AI策略；指定敏感调用403和外部mock零调用已有通过记录。,没有攻击驱动DLP、敏感字段识别准确性、已授权项目内容最小化或所有外发链路穷尽证明。,部分覆盖；待专项补验证据
+S10,审计防篡改,审计写入/访问实现+测试,backend/src/audit.rs; backend/src/api/audit.rs; backend/src/api/kg_blueprint.rs,操作审计持久化、访问权限，以及蓝图完整输入/实发输入追溯已有通过记录。,参数化写入和访问权限不等于防篡改；未见WORM、哈希链或数据库管理员篡改检测证据。,部分覆盖；待专项补验证据
+S11,密钥管理,配置保护单元测试,backend/src/config.rs; .env.example,不安全生产默认配置拒绝与运行轨迹秘密脱敏已有通过记录。,未见生产KMS/密钥轮换、撤销、授权审计或跨环境密钥治理实施记录。,部分覆盖；待专项补验证据
+S12,备份与恢复,既有历史演练+脚本守卫源码,docs/operations/backup-restore.md; docs/system-evidence/restore-drill-latest.json; scripts/ops/test_backup_restore_guards.py,2026-08-09隔离恢复材料记录27张表、39个文件；脚本守卫源码含显式替换确认、dump篡改、路径穿越/链接拒绝。T148脚本总集613通过日志未逐项列名，不能把逐项源码断言表述为本次新通过。,历史unversioned备份不代表当前Rust43表灾备复验；未见当前异地副本、加密实施、实测生产RPO/RTO及整机故障恢复证据。,部分覆盖；待专项补验证据
+S13,删除与保留策略,文档计划/归档语义,docs/operations/backup-restore.md; backend/src/api/files.rs; backend/src/api/notes.rs,运维文档定义备份7日/4周/6月保留计划，业务有归档状态。,归档不等于物理删除；备份保留计划不证明执行。未见完整业务数据保留、物理删除、备份擦除及责任流程。,部分覆盖；待专项补验证据
+S14,依赖漏洞扫描,既有npm结果+CI指令,docs/system-evidence/npm-audit-latest.json; .github/workflows/ci.yml,存有npm零漏洞结果；CI规定npm audit --omit=dev --audit-level=low。,该结果没有时间/lock绑定，不能当当前依赖无漏洞证明；未见Rust依赖、镜像/系统组件全面扫描结果。,部分覆盖；待专项补验证据
+S15,部署基线,既有静态门禁+配置测试,docs/system-evidence/reverse-proxy-latest.json; deploy/nginx.conf.template; backend/src/config.rs,2026-07-28静态反代门禁记录TLS1.2/1.3、HTTP跳转、HSTS、请求标识及body限额；生产配置拒绝测试通过。,静态模板通过不证明真实公网部署TLS、安全头、端口隔离、补丁和主机加固已实施。,部分覆盖；待专项补验证据
+S16,外部模型失败,模拟上游超时+回滚测试,backend/src/embedding.rs; backend/src/api/rag/mod.rs; backend/src/ai_provider.rs,缺header/停滞body远端嵌入超时、rebuild总预算回滚与锁释放、蓝图不合格输出降级保留响应身份已有通过记录。,不证明所有真实模型故障/长时弱网恢复或所有AI任务端到端总时限；本次未重跑外部接口。,部分覆盖；待专项补验证据
+S17,重复计费,数据库幂等+范围边界,backend/src/api/agent_runtime.rs; backend/src/ai_provider.rs,数据库域写入幂等/事务失败回滚已测。,数据库幂等不等于外部供应商计费幂等；事务重试可重复外部调用，未见供应商请求幂等或计费对账专项证明。,部分覆盖；待专项补验证据
+S18,敏感数据外发与跨境,敏感项目默认封锁+待人工政策,backend/src/permissions.rs; backend/src/config.rs; backend/src/api/rag/mod.rs; backend/src/api/kg_blueprint.rs,敏感项目默认不向外部模型发送；授权策略有实现及通过记录。,没有证明数据地域、供应商保留/训练条款、跨境合规与知情授权；需实际机构政策和责任人审查。,部分覆盖；待专项补验证据

@@ -1,0 +1,263 @@
+{
+  "utc": "2026-10-10T15:52:29.898599+00:00",
+  "path": "/notes/18/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 2,
+    "entities": [
+      {
+        "id": 26,
+        "project_id": 2,
+        "entity_type": "project",
+        "label": "T136 fields",
+        "normalized_label": "t136 fields",
+        "natural_key": "project:project:2",
+        "source_type": "project",
+        "source_id": 2,
+        "properties": {
+          "project_id": 2
+        },
+        "created_at": "2026-10-10T15:52:29.417684Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 28,
+        "project_id": 2,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.417684Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 70,
+        "project_id": 2,
+        "entity_type": "sample",
+        "label": "2019 RFP plasmid (17ng/ul)",
+        "normalized_label": "2019 rfp plasmid 17ng ul",
+        "natural_key": "sample:2019 rfp plasmid 17ng ul",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.212123Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 223,
+        "project_id": 2,
+        "entity_type": "note",
+        "label": "ubc2021-02 RFP plasmid retransformation",
+        "normalized_label": "ubc2021 02 rfp plasmid retransformation",
+        "natural_key": "note:note:18",
+        "source_type": "note",
+        "source_id": 18,
+        "properties": {
+          "experiment_date": "2021-07-05",
+          "note_id": 18,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 224,
+        "project_id": 2,
+        "entity_type": "experiment_type",
+        "label": "plasmid_transformation",
+        "normalized_label": "plasmid transformation",
+        "natural_key": "experiment_type:plasmid transformation",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "plasmid_transformation"
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 225,
+        "project_id": 2,
+        "entity_type": "reagent",
+        "label": "SOC",
+        "normalized_label": "soc",
+        "natural_key": "reagent:soc",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 226,
+        "project_id": 2,
+        "entity_type": "result",
+        "label": "This was confirmed by re-picking and miniprepping, resulted in low yield.",
+        "normalized_label": "this was confirmed by re picking and miniprepping resulted in low yield",
+        "natural_key": "result:this was confirmed by re picking and miniprepping resulted in low yield",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 227,
+        "project_id": 2,
+        "entity_type": "sample",
+        "label": "2017 RFP plasmid (10pg/ul)",
+        "normalized_label": "2017 rfp plasmid 10pg ul",
+        "natural_key": "sample:2017 rfp plasmid 10pg ul",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 228,
+        "project_id": 2,
+        "entity_type": "sample",
+        "label": "2019 RFP plasmid that was left out (118ng/ul)",
+        "normalized_label": "2019 rfp plasmid that was left out 118ng ul",
+        "natural_key": "sample:2019 rfp plasmid that was left out 118ng ul",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "extraction": "rule_based"
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z",
+        "updated_at": "2026-10-10T15:52:29.891655Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 280,
+        "project_id": 2,
+        "source_entity_id": 26,
+        "target_entity_id": 223,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 18,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 281,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 28,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 18,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 282,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 224,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 18,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 283,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 225,
+        "relation_type": "uses_reagent",
+        "source_type": "note_extraction",
+        "source_id": 18,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 284,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 226,
+        "relation_type": "produces_result",
+        "source_type": "note_extraction",
+        "source_id": 18,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 285,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 227,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 18,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 286,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 70,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 18,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      },
+      {
+        "id": 287,
+        "project_id": 2,
+        "source_entity_id": 223,
+        "target_entity_id": 228,
+        "relation_type": "uses_sample",
+        "source_type": "note_extraction",
+        "source_id": 18,
+        "confidence": 0.7,
+        "properties": {
+          "method": "rule_based",
+          "roles": []
+        },
+        "created_at": "2026-10-10T15:52:29.891655Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-10T15:52:29.166780+00:00",
+  "path": "/notes/17/submit",
+  "method": "POST",
+  "request": {},
+  "status": 200,
+  "response": {
+    "id": 17,
+    "project_id": 2,
+    "template_id": null,
+    "title": "ubc2021-01 Gel electrophoresis of PCR products",
+    "experiment_type": "agarose_gel_electrophoresis",
+    "experiment_date": "2021-06-30",
+    "owner_user_id": 1,
+    "status": "submitted",
+    "current_version_id": 17,
+    "created_at": "2026-10-10T15:52:29.164340Z",
+    "updated_at": "2026-10-10T15:52:29.170173Z"
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "manifest_sha256": "6ea7629e852ad875caa5dfb2f604d24450bb7585bebddfb7df240de33479451a",
+  "rubric_version": "claim-support-v1",
+  "analysis_unit": "question",
+  "availability": {
+    "deepseek": {
+      "expected_samples": 40,
+      "recorded_samples": 0,
+      "valid_samples": 0,
+      "failed_samples": 0,
+      "not_run_samples": 40
+    },
+    "gpt_session": {
+      "expected_samples": 40,
+      "recorded_samples": 40,
+      "valid_samples": 40,
+      "failed_samples": 0,
+      "not_run_samples": 0
+    }
+  },
+  "arms": {
+    "deepseek/project_rag": {
+      "claim_support_rate": {
+        "mean": null,
+        "valid_question_n": 0
+      },
+      "reference_group_coverage": {
+        "mean": null,
+        "valid_question_n": 0
+      },
+      "context_relevance_rate": {
+        "mean": null,
+        "valid_question_n": 0
+      },
+      "citation_support_rate": {
+        "mean": null,
+        "valid_question_n": 0
+      }
+    },
+    "deepseek/kg_enhanced_rag": {
+      "claim_support_rate": {
+        "mean": null,
+        "valid_question_n": 0
+      },
+      "reference_group_coverage": {
+        "mean": null,
+        "valid_question_n": 0
+      },
+      "context_relevance_rate": {
+        "mean": null,
+        "valid_question_n": 0
+      },
+      "citation_support_rate": {
+        "mean": null,
+        "valid_question_n": 0
+      }
+    },
+    "gpt_session/project_rag": {
+      "claim_support_rate": {
+        "mean": 0.8308333333333333,
+        "valid_question_n": 20
+      },
+      "reference_group_coverage": {
+        "mean": 0.29166666666666663,
+        "valid_question_n": 20
+      },
+      "context_relevance_rate": {
+        "mean": 0.09166666666666666,
+        "valid_question_n": 20
+      },
+      "citation_support_rate": {
+        "mean": 0.6481481481481481,
+        "valid_question_n": 18
+      }
+    },
+    "gpt_session/kg_enhanced_rag": {
+      "claim_support_rate": {
+        "mean": 0.8695238095238095,
+        "valid_question_n": 20
+      },
+      "reference_group_coverage": {
+        "mean": 0.7333333333333333,
+        "valid_question_n": 20
+      },
+      "context_relevance_rate": {
+        "mean": 0.24776785714285715,
+        "valid_question_n": 20
+      },
+      "citation_support_rate": {
+        "mean": 0.6686274509803922,
+        "valid_question_n": 17
+      }
+    }
+  },
+  "within_judge_paired_contrasts": {
+    "deepseek": {
+      "claim_support_rate": {
+        "paired_question_n": 0,
+        "mean_difference": null,
+        "bootstrap_95_ci": null
+      },
+      "reference_group_coverage": {
+        "paired_question_n": 0,
+        "mean_difference": null,
+        "bootstrap_95_ci": null
+      },
+      "context_relevance_rate": {
+        "paired_question_n": 0,
+        "mean_difference": null,
+        "bootstrap_95_ci": null
+      },
+      "citation_support_rate": {
+        "paired_question_n": 0,
+        "mean_difference": null,
+        "bootstrap_95_ci": null
+      }
+    },
+    "gpt_session": {
+      "claim_support_rate": {
+        "paired_question_n": 20,
+        "mean_difference": 0.038690476190476185,
+        "bootstrap_95_ci": [
+          -0.05630952380952381,
+          0.14740476190476157
+        ]
+      },
+      "reference_group_coverage": {
+        "paired_question_n": 20,
+        "mean_difference": 0.4416666666666667,
+        "bootstrap_95_ci": [
+          0.17083333333333334,
+          0.6875
+        ]
+      },
+      "context_relevance_rate": {
+        "paired_question_n": 20,
+        "mean_difference": 0.15610119047619048,
+        "bootstrap_95_ci": [
+          0.02678571428571429,
+          0.28125
+        ]
+      },
+      "citation_support_rate": {
+        "paired_question_n": 15,
+        "mean_difference": 0.002222222222222222,
+        "bootstrap_95_ci": [
+          -0.2,
+          0.17777777777777778
+        ]
+      }
+    }
+  },
+  "between_judge_agreement": {
+    "deepseek/gpt_session": {
+      "claim_support_rate": {
+        "paired_question_n": 0,
+        "mean_absolute_score_difference": null
+      },
+      "reference_group_coverage": {
+        "paired_question_n": 0,
+        "mean_absolute_score_difference": null
+      },
+      "context_relevance_rate": {
+        "paired_question_n": 0,
+        "mean_absolute_score_difference": null
+      },
+      "citation_support_rate": {
+        "paired_question_n": 0,
+        "mean_absolute_score_difference": null
+      }
+    }
+  },
+  "limitations": [
+    "Archived answers and references are retrospective; this is not a preregistered current-Rust rerun.",
+    "Scores are claim-support-v1, not RAGAS metrics, and do not verify the truth of archived graph relations.",
+    "Citation channels are anonymized but evidence format can reveal retrieval mode.",
+    "LLM-authored claim decomposition can differ between judges; neither judge is human validation.",
+    "Codex session judgments have no invented API model id; their session provenance is recorded on import."
+  ],
+  "inferential_note": "Bootstrap intervals are descriptive for these retrospectively selected 20 questions; no confirmatory p-values or human-participant claims."
+}

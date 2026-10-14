@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.687852+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "iisc2019-03 PCR and gel electrophoresis",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2019-04-13",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": " Created PCR mix for 4 different DNA sequences and 5 controls:\n DNA Sequences:\n 6-His imcherry (708bp)\n mcp-1 + HlyA(713bp)\n mcp-1 + PelB (536bp)\n mcp-1 expression\n Controls:\n DNA only\n FP only\n No DNA\n Primers only\n RP only\n No primers.\n The PCR (Total 25 µl) mix was created by adding the following ingredients in order:\n1. NF H2O: 8.9 µl\n2. Buffer: 5 µl\n3. dNTP mix: 0.5 µl\n4. Forward primer: 0.2 µl\n5. Reverse primer: 0.2 µl\n6. DNA sequence: 10 µl\n PCR was run by the following process:\nDenaturalisation: 95oC/98oC – 2min\nAnnealing (30 times): 95oC - 20s; Tm(67oC) – 30s;\nExtension: 72oC-20s/kb -> 10min\n Gel Electrophoresis (Gel preparation and electrophoresis)\n1% Agarose Gel(1X); Heated in the oven for 30-45s, till transparency is achieved.\nLoading Order:\n1.Gene Ruler\n2.imCherry\n3.mcp-1 Hly-A\n4.mcp-1 Hly-A\nBlank 6.mcp expression\n7. Control (no DNA)\n8.Control (no primer)\nGene ruler: 1µl loading dye + 1µl gene ruler + 1µl NF H2O\n2-8: 2µl loading dye + 10µl DNA (PCR mix)"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 3,
+    "project_id": 1,
+    "template_id": null,
+    "title": "iisc2019-03 PCR and gel electrophoresis",
+    "experiment_type": "PCR_and_agarose_gel_electrophoresis",
+    "experiment_date": "2019-04-13",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 3,
+    "created_at": "2026-10-10T15:52:29.121822Z",
+    "updated_at": "2026-10-10T15:52:29.121822Z"
+  }
+}

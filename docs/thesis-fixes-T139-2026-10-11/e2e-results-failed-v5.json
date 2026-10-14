@@ -1,0 +1,496 @@
+{
+  "config": {
+    "argv": [
+      "/Users/yusong/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/playwright.config.ts",
+    "rootDir": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/results.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/html",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "real-lab-acceptance.spec.ts",
+      "file": "real-lab-acceptance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "真实课题组四项目全员协作与 AI 验收",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 66294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:24:37.375Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ed34ea7aa3c667c4e66-7838f690862b0ed60f92",
+          "file": "real-lab-acceptance.spec.ts",
+          "line": 265,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "system.spec.ts",
+      "file": "system.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "登录并完成笔记审批",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4761,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:25:47.367Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "19fec53437319cd87246-4dc47e0934110248bc29",
+          "file": "system.spec.ts",
+          "line": 131,
+          "column": 5
+        },
+        {
+          "title": "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5950,
+                  "error": {
+                    "message": "Error: {\"detail\":\"Dataset-backed experiments must provide expected_corpus_snapshot_hash\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: {\"detail\":\"Dataset-backed experiments must provide expected_corpus_snapshot_hash\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at checkedJson (/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts:33:48)\n    at /Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts:203:22",
+                    "location": {
+                      "file": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts",
+                      "column": 48,
+                      "line": 33
+                    },
+                    "snippet": "  31 |\n  32 | async function checkedJson(response: APIResponse) {\n> 33 |   expect(response.ok(), await response.text()).toBeTruthy();\n     |                                                ^\n  34 |   return response.json();\n  35 | }\n  36 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts",
+                        "column": 48,
+                        "line": 33
+                      },
+                      "message": "Error: {\"detail\":\"Dataset-backed experiments must provide expected_corpus_snapshot_hash\"}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  31 |\n  32 | async function checkedJson(response: APIResponse) {\n> 33 |   expect(response.ok(), await response.text()).toBeTruthy();\n     |                                                ^\n  34 |   return response.json();\n  35 | }\n  36 |\n    at checkedJson (/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts:33:48)\n    at /Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts:203:22"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:25:52.886Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-图片-OCR、人工校对、入库、问答和五方法实验形成闭环-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-图片-OCR、人工校对、入库、问答和五方法实验形成闭环-chromium/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-图片-OCR、人工校对、入库、问答和五方法实验形成闭环-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/system-图片-OCR、人工校对、入库、问答和五方法实验形成闭环-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/system.spec.ts",
+                    "column": 48,
+                    "line": 33
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "19fec53437319cd87246-eba4df838ee0dff9ecb6",
+          "file": "system.spec.ts",
+          "line": 161,
+          "column": 5
+        },
+        {
+          "title": "独立评价人只能在盲评页面提交评价",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:25:59.119Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "19fec53437319cd87246-aeca4654c21626fdb814",
+          "file": "system.spec.ts",
+          "line": 220,
+          "column": 5
+        },
+        {
+          "title": "系统管理员完成账号、小组和审计闭环",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:25:59.119Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "19fec53437319cd87246-b0e433a055dc52e5befd",
+          "file": "system.spec.ts",
+          "line": 242,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "user-journeys.spec.ts",
+      "file": "user-journeys.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "项目负责人、记录员和审核人完成退回修订审批闭环",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16320,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:25:59.635Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-ca1e0ec20a02068490d6",
+          "file": "user-journeys.spec.ts",
+          "line": 105,
+          "column": 5
+        },
+        {
+          "title": "笔记附件必须关联笔记并在资料页保留关联关系",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3966,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:26:17.522Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-d86bd340f3719ac23ec4",
+          "file": "user-journeys.spec.ts",
+          "line": 175,
+          "column": 5
+        },
+        {
+          "title": "多角色完成 AI 资料、图谱、问答与报告协作闭环",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 182020,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/user-journeys.spec.ts",
+                        "column": 65,
+                        "line": 263
+                      },
+                      "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '重建图谱', exact: true })\u001b[22m\n\n\n  261 |   await openProject(page);\n  262 |   await page.goto(`/projects/${projectId}/kg`, { waitUntil: \"networkidle\" });\n> 263 |   await page.getByRole(\"button\", { name: \"重建图谱\", exact: true }).click();\n      |                                                                 ^\n  264 |   await expect(page.getByText(\"图谱已重建\", { exact: true })).toBeVisible({ timeout: 60_000 });\n  265 |   await page.getByRole(\"tab\", { name: \"AI 问答\", exact: true }).click();\n  266 |   await expect(page.getByText(\"已初始化 · 1 个文件已入库\", { exact: true })).toBeVisible();\n    at /Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/frontend/e2e/user-journeys.spec.ts:263:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:26:21.495Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/validation/repo/output/playwright/artifacts/user-journeys-多角色完成-AI-资料、图谱、问答与报告协作闭环-chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-8d15d8739d61664235d1",
+          "file": "user-journeys.spec.ts",
+          "line": 212,
+          "column": 5
+        },
+        {
+          "title": "只读成员只能查阅，不能看到写入或项目管理操作",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-11T07:29:25.114Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-0afa625cde0fdc955654",
+          "file": "user-journeys.spec.ts",
+          "line": 275,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-11T07:24:36.527Z",
+    "duration": 288724.41900000005,
+    "expected": 4,
+    "skipped": 3,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

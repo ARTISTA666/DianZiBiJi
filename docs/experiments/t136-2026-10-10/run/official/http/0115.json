@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-10T15:52:29.561864+00:00",
+  "path": "/projects/3/notes",
+  "method": "POST",
+  "request": {
+    "title": "qPCR 定量验证实验",
+    "experiment_type": "PCR",
+    "experiment_date": "2026-05-28",
+    "fixed_fields_json": {
+      "reagents": "SYBR Green Master Mix、cDNA 模板、引物对、无酶水",
+      "instrument": "荧光定量 PCR 仪、微量分光光度计",
+      "sample": "cDNA 样本 1、cDNA 样本 2、阴性对照",
+      "result": "目标基因在样本 1 中表达量约为样本 2 的 2.3 倍，融解曲线单一峰。"
+    },
+    "content_json": {
+      "text": "试剂: SYBR Green Master Mix、cDNA 模板、引物对、无酶水\n仪器: 荧光定量 PCR 仪、微量分光光度计\n样本: cDNA 样本 1、2、阴性对照\n结果: 目标基因差异表达约 2.3 倍。"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 28,
+    "project_id": 3,
+    "template_id": null,
+    "title": "qPCR 定量验证实验",
+    "experiment_type": "PCR",
+    "experiment_date": "2026-05-28",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 28,
+    "created_at": "2026-10-10T15:52:29.564722Z",
+    "updated_at": "2026-10-10T15:52:29.564722Z"
+  }
+}

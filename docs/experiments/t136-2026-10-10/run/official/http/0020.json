@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-10T15:52:28.736696+00:00",
+  "path": "/notes/4/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 1,
+    "entities": [
+      {
+        "id": 1,
+        "project_id": 1,
+        "entity_type": "project",
+        "label": "T136 body",
+        "normalized_label": "t136 body",
+        "natural_key": "project:project:1",
+        "source_type": "project",
+        "source_id": 1,
+        "properties": {
+          "project_id": 1
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.162858Z"
+      },
+      {
+        "id": 3,
+        "project_id": 1,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.162858Z"
+      },
+      {
+        "id": 9,
+        "project_id": 1,
+        "entity_type": "note",
+        "label": "iisc2019-04 LB medium and agar plate preparation",
+        "normalized_label": "iisc2019 04 lb medium and agar plate preparation",
+        "natural_key": "note:note:4",
+        "source_type": "note",
+        "source_id": 4,
+        "properties": {
+          "experiment_date": "2019-05-14",
+          "note_id": 4,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.162858Z",
+        "updated_at": "2026-10-10T15:52:29.162858Z"
+      },
+      {
+        "id": 10,
+        "project_id": 1,
+        "entity_type": "experiment_type",
+        "label": "medium_and_plate_preparation",
+        "normalized_label": "medium and plate preparation",
+        "natural_key": "experiment_type:medium and plate preparation",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "medium_and_plate_preparation"
+        },
+        "created_at": "2026-10-10T15:52:29.162858Z",
+        "updated_at": "2026-10-10T15:52:29.162858Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 10,
+        "project_id": 1,
+        "source_entity_id": 1,
+        "target_entity_id": 9,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 4,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.162858Z"
+      },
+      {
+        "id": 11,
+        "project_id": 1,
+        "source_entity_id": 9,
+        "target_entity_id": 3,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 4,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.162858Z"
+      },
+      {
+        "id": 12,
+        "project_id": 1,
+        "source_entity_id": 9,
+        "target_entity_id": 10,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 4,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.162858Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-10T15:52:28.808776+00:00",
+  "path": "/notes/7/kg/graph",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "project_id": 1,
+    "entities": [
+      {
+        "id": 1,
+        "project_id": 1,
+        "entity_type": "project",
+        "label": "T136 body",
+        "normalized_label": "t136 body",
+        "natural_key": "project:project:1",
+        "source_type": "project",
+        "source_id": 1,
+        "properties": {
+          "project_id": 1
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.235003Z"
+      },
+      {
+        "id": 3,
+        "project_id": 1,
+        "entity_type": "user",
+        "label": "系统管理员",
+        "normalized_label": "系统管理员",
+        "natural_key": "user:user:1",
+        "source_type": "user",
+        "source_id": 1,
+        "properties": {
+          "user_id": 1,
+          "username": "t136-admin"
+        },
+        "created_at": "2026-10-10T15:52:29.067479Z",
+        "updated_at": "2026-10-10T15:52:29.235003Z"
+      },
+      {
+        "id": 15,
+        "project_id": 1,
+        "entity_type": "note",
+        "label": "ubc2021-03 Golden Gate assembly of psicA and RFP construct",
+        "normalized_label": "ubc2021 03 golden gate assembly of psica and rfp construct",
+        "natural_key": "note:note:7",
+        "source_type": "note",
+        "source_id": 7,
+        "properties": {
+          "experiment_date": "2021-07-06",
+          "note_id": 7,
+          "status": "approved"
+        },
+        "created_at": "2026-10-10T15:52:29.235003Z",
+        "updated_at": "2026-10-10T15:52:29.235003Z"
+      },
+      {
+        "id": 16,
+        "project_id": 1,
+        "entity_type": "experiment_type",
+        "label": "Golden_Gate_assembly",
+        "normalized_label": "golden gate assembly",
+        "natural_key": "experiment_type:golden gate assembly",
+        "source_type": null,
+        "source_id": null,
+        "properties": {
+          "experiment_type": "Golden_Gate_assembly"
+        },
+        "created_at": "2026-10-10T15:52:29.235003Z",
+        "updated_at": "2026-10-10T15:52:29.235003Z"
+      }
+    ],
+    "relations": [
+      {
+        "id": 19,
+        "project_id": 1,
+        "source_entity_id": 1,
+        "target_entity_id": 15,
+        "relation_type": "has_note",
+        "source_type": "note",
+        "source_id": 7,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.235003Z"
+      },
+      {
+        "id": 20,
+        "project_id": 1,
+        "source_entity_id": 15,
+        "target_entity_id": 3,
+        "relation_type": "created_by",
+        "source_type": "note",
+        "source_id": 7,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.235003Z"
+      },
+      {
+        "id": 21,
+        "project_id": 1,
+        "source_entity_id": 15,
+        "target_entity_id": 16,
+        "relation_type": "has_experiment_type",
+        "source_type": "note",
+        "source_id": 7,
+        "confidence": 1.0,
+        "properties": {},
+        "created_at": "2026-10-10T15:52:29.235003Z"
+      }
+    ]
+  }
+}

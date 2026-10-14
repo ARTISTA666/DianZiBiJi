@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-10T15:52:28.606685+00:00",
+  "path": "/auth/me",
+  "method": "GET",
+  "request": null,
+  "status": 200,
+  "response": {
+    "id": 1,
+    "username": "t136-admin",
+    "display_name": "系统管理员",
+    "role": "super_admin"
+  }
+}

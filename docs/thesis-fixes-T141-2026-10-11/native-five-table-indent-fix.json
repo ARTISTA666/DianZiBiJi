@@ -1,0 +1,18 @@
+{
+  "task": "T141 strict body-margin five-table indentation correction",
+  "input_sha256": "a9e89d3c4a6a258d2c3e13f246271c227e06ed933f7be39eb71cf9f0df6a8b75",
+  "output_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948",
+  "table_indices": [
+    24,
+    32,
+    33,
+    48,
+    106
+  ],
+  "changed_attribute": "w:tblPr/w:tblInd/@w:w",
+  "old_twips": 0,
+  "new_twips": 140,
+  "horizontal_translation_pt": 7,
+  "all_other_document_xml_unchanged": true,
+  "all_other_package_parts_unchanged": true
+}

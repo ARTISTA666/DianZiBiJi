@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="420" viewBox="0 0 1500 420">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#222"/>
+    </marker>
+  </defs>
+  <rect width="1500" height="420" fill="#ffffff"/>
+
+  <g font-family="Songti SC, STSong, serif" text-anchor="middle">
+    <!-- DRAFT -->
+    <rect x="40" y="60" width="220" height="100" fill="#f0f0f0" stroke="#666" stroke-width="1.5"/>
+    <text x="150" y="105" font-size="22" font-family="Menlo, monospace">DRAFT</text>
+    <text x="150" y="138" font-size="19">草稿</text>
+
+    <!-- SUBMITTED -->
+    <rect x="380" y="60" width="220" height="100" fill="#fff" stroke="#222" stroke-width="1.5"/>
+    <text x="490" y="105" font-size="22" font-family="Menlo, monospace">SUBMITTED</text>
+    <text x="490" y="138" font-size="19">已提交</text>
+
+    <!-- APPROVED -->
+    <rect x="720" y="60" width="220" height="100" fill="#ffffff" stroke="#222222" stroke-width="1.8"/>
+    <text x="830" y="105" font-size="22" font-family="Menlo, monospace">APPROVED</text>
+    <text x="830" y="138" font-size="19">已审核</text>
+
+    <!-- ARCHIVED -->
+    <rect x="1100" y="60" width="220" height="100" fill="#fff" stroke="#222" stroke-width="1.5"/>
+    <text x="1210" y="105" font-size="22" font-family="Menlo, monospace">ARCHIVED</text>
+    <text x="1210" y="138" font-size="19">已归档</text>
+
+    <!-- RETURNED -->
+    <rect x="380" y="270" width="220" height="100" fill="#fff" stroke="#222" stroke-width="1.5"/>
+    <text x="490" y="315" font-size="22" font-family="Menlo, monospace">RETURNED</text>
+    <text x="490" y="348" font-size="19">已退回</text>
+
+    <!-- VOIDED -->
+    <rect x="1100" y="270" width="220" height="100" fill="#f0f0f0" stroke="#666" stroke-width="1.5"/>
+    <text x="1210" y="315" font-size="22" font-family="Menlo, monospace">VOIDED</text>
+    <text x="1210" y="348" font-size="19">已作废</text>
+  </g>
+
+  <!-- 主链箭头 -->
+  <line x1="260" y1="110" x2="378" y2="110" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="600" y1="110" x2="718" y2="110" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="660" y="98" font-family="Songti SC, serif" font-size="16" fill="#555" text-anchor="middle">审核通过</text>
+  <line x1="940" y1="110" x2="1098" y2="110" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- SUBMITTED <-> RETURNED -->
+  <line x1="450" y1="160" x2="450" y2="268" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="420" y="220" font-family="Songti SC, serif" font-size="16" fill="#555" text-anchor="end">退回</text>
+  <line x1="530" y1="268" x2="530" y2="162" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="560" y="220" font-family="Songti SC, serif" font-size="16" fill="#555">重提</text>
+
+  <!-- APPROVED -> VOIDED -->
+  <path d="M880,160 L880,320 L1098,320" fill="none" stroke="#222" stroke-width="1.5" marker-end="url(#arr)"/>
+</svg>

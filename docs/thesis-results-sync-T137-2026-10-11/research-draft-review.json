@@ -1,0 +1,212 @@
+{
+  "task": "T137",
+  "reviewer": "research-reviewer Agent",
+  "review_type": "minimal scientific draft review",
+  "status": "pass; no remaining necessary scientific text correction",
+  "read_only": true,
+  "reviewed_word": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/1005-新测试结果同步版-2026-10-11.docx",
+  "reviewed_word_sha256": "4df5be203242567f3191556806dfae10e857ff7363e1457afe48901b08a6dcf6",
+  "paragraph_index_basis": "zero-based index of all descendant w:p in word/document.xml in this reviewed draft",
+  "paragraph_count": 3618,
+  "changes_file": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/changes.json",
+  "changes_sha256": "44afff7dc277225a1eae2a193f9bae7c8343ff294011e0042842228cb0b8c567",
+  "changes_output_sha256": "4df5be203242567f3191556806dfae10e857ff7363e1457afe48901b08a6dcf6",
+  "result_report": "/Users/yusong/Downloads/new/full-system/docs/experiments/kg-heldout-T136-2026-10-10.md",
+  "result_report_sha256": "412fb23c30501d5c22ce84c40e25d62a19cbb95772268fedbce1237bd7edb25f",
+  "findings": [
+    {
+      "id": "T137-DRAFT-01",
+      "priority": "P2",
+      "category": "zero-prediction-scoring-definition",
+      "p_index": 1318,
+      "source_p_index": 1315,
+      "text": "归档关系核验使用四条合成笔记的52条参考关系（附录B-1），以“笔记标题、关系类型、目标标签”组成字符串集合键，去重后按集合交、差统计TP、FP、FN，结果见表6-5。当前Rust补充测试将试剂使用、仪器使用、样本使用和结果产生四类内容关系，与项目包含笔记、笔记创建者、笔记实验类型三类元数据关系分别计分；旧参考集相应分为40条内容关系与12条元数据关系。补充测试以“记录编号、源实体类型、源标签、源身份、关系类型、目标实体类型、目标标签、目标身份”构成有方向的集合键；标签统一NFKC、大小写与连续空白，保留标点，不作同义词替换。无预测时精确率未定义；F1直接按2TP/(2TP+FP+FN)计算，参考非空而预测为空时为0；参考与预测皆空的记录单独列出。表6-14报告内容关系的微平均精确率、召回率和F1。",
+      "issue": "正文条件精确率未定义而F1报告为0；现有式（6-3）为P、R的调和平均，方法未明确补充测试直接用计数形式处理此边界。",
+      "minimal_change": "在“无预测时精确率未定义”后补充“补充测试按F1=2TP/(2TP+FP+FN)计算；参考非空而预测为空时F1=0”。保留原式（6-1）至（6-3）及表格数值。",
+      "evidence": "T136结果表：body TP=0、FP=0、FN=74、P未定义、micro F1=0.00%。计数式分母74非零。",
+      "status": "resolved",
+      "original_suggestion_retained_for_history": true,
+      "resolution": "Observed p1318 explicitly defines count-based F1 and zero-prediction/nonempty-reference boundary.",
+      "resolved_text": "归档关系核验使用四条合成笔记的52条参考关系（附录B-1），以“笔记标题、关系类型、目标标签”组成字符串集合键，去重后按集合交、差统计TP、FP、FN，结果见表6-5。当前Rust补充测试将试剂使用、仪器使用、样本使用和结果产生四类内容关系，与项目包含笔记、笔记创建者、笔记实验类型三类元数据关系分别计分；旧参考集相应分为40条内容关系与12条元数据关系。补充测试以“记录编号、源实体类型、源标签、源身份、关系类型、目标实体类型、目标标签、目标身份”构成有方向的集合键；标签统一NFKC、大小写与连续空白，保留标点，不作同义词替换。无预测时精确率未定义；F1直接按2TP/(2TP+FP+FN)计算，参考非空而预测为空时为0；参考与预测皆空的记录单独列出。表6-14报告内容关系的微平均精确率、召回率和F1。"
+    },
+    {
+      "id": "T137-DRAFT-02",
+      "priority": "P2",
+      "category": "reference-and-approval-identity",
+      "p_indices": [
+        1660,
+        1694,
+        3617
+      ],
+      "texts": [
+        "关系抽取补充测试于2026年10月10日在当前Rust后端执行。从三份公开iGEM英文实验日记按PDF阅读顺序各取最先四个合格的已执行日期单元，正文长度为60—2500字符、至少记有两个明确实验事实；最终12条共6735字符。仅修复排版空白，保留英文原文。参考标注、复核与操作终点边界裁决均由GPT子代理在读取系统输出前完成，形成74条内容关系：试剂39条、仪器2条、样本27条、结果6条。",
+        "本批英文自然日记采用叙述式表达，没有触发当前实现依赖的试剂、仪器、样本与结果标签规则。结果表明，预先整理字段后的映射与自然正文抽取具有不同表现；固定样例的归档100.00%不能用于估计自然正文抽取能力。本轮参考为AI辅助标注，测试范围为上述12条英文日记，中文自然正文需另行评价。",
+        "2026年10月10日关系抽取测试采用Rust版本b6cd3a24f6edb5bdf971d8d76cc7635139b32954，在独立PostgreSQL 16/pgvector数据库和新存储卷中运行，关闭种子自动导入。同一测试管理员通过接口执行创建与审批角色，核验笔记状态流转；共3个项目、28条批准笔记、165个实体、201条关系；174次接口请求全部返回HTTP 200。首次笔记导入时间为北京时间23:52:28，运行于23:52:30完成；原始图谱与完整关系键评分明细保存在对应附件。"
+      ],
+      "issue": "初稿已写GPT辅助标注及测试管理员，但没有明确本轮参考未经过人工领域专家复核，且没有写同一管理员同时扮演作者和审批角色；批准状态仍可能被理解为人工科学验收。",
+      "minimal_change": "在标注方法或结果边界仅一处写明“参考由AI代理标注、复核与裁决，人工专家复核尚待开展”；D.4将“测试管理员执行笔记创建与批准”改为“同一测试管理员通过接口执行创建与审批角色，用于核验状态流转”。无需增加重复免责声明。",
+      "evidence": "T136“输入与实验过程”第2点明确没有真人标注或独立专家验收；第5点明确测试管理员同时执行作者及审批步骤，属于功能链测试。",
+      "status": "resolved",
+      "original_suggestion_retained_for_history": true,
+      "resolution": "Observed p1660 explicitly attributes annotation, review and adjudication entirely to GPT subagents; p3617 explicitly records the same test administrator performing author/approval roles for status-transition verification. These actual method identities resolve ambiguity; no extra pending-expert-acceptance declaration is required under the user’s previous prose constraint.",
+      "resolved_texts": [
+        {
+          "p_index": 1660,
+          "text": "关系抽取补充测试于2026年10月10日在当前Rust后端执行。从三份公开iGEM英文实验日记按PDF阅读顺序各取最先四个合格的已执行日期单元，正文长度为60—2500字符、至少记有两个明确实验事实；最终12条共6735字符。仅修复排版空白，保留英文原文。参考标注、复核与操作终点边界裁决均由GPT子代理在读取系统输出前完成，形成74条内容关系：试剂39条、仪器2条、样本27条、结果6条。"
+        },
+        {
+          "p_index": 3617,
+          "text": "2026年10月10日关系抽取测试采用Rust版本b6cd3a24f6edb5bdf971d8d76cc7635139b32954，在独立PostgreSQL 16/pgvector数据库和新存储卷中运行，关闭种子自动导入。同一测试管理员通过接口执行创建与审批角色，核验笔记状态流转；共3个项目、28条批准笔记、165个实体、201条关系；174次接口请求全部返回HTTP 200。首次笔记导入时间为北京时间23:52:28，运行于23:52:30完成；原始图谱与完整关系键评分明细保存在对应附件。"
+        }
+      ]
+    }
+  ],
+  "verified": [
+    {
+      "item": "Table 6-14 content results",
+      "p_indices": [
+        1663,
+        1664,
+        1665,
+        1666,
+        1667,
+        1668,
+        1669,
+        1670,
+        1671,
+        1672,
+        1673,
+        1674,
+        1675,
+        1676,
+        1677,
+        1678,
+        1679,
+        1680,
+        1681,
+        1682,
+        1683,
+        1684,
+        1685,
+        1686,
+        1687,
+        1688,
+        1689,
+        1690,
+        1691
+      ],
+      "rows": [
+        [
+          "输入条件",
+          "TP",
+          "FP",
+          "FN",
+          "精确率",
+          "召回率",
+          "F1"
+        ],
+        [
+          "自然正文（12条）",
+          "0",
+          "0",
+          "74",
+          "—",
+          "0.00%",
+          "0.00%"
+        ],
+        [
+          "正确字段对照（12条）",
+          "73",
+          "3",
+          "1",
+          "96.05%",
+          "98.65%",
+          "97.33%"
+        ],
+        [
+          "旧样例回归（4条）",
+          "40",
+          "1",
+          "0",
+          "97.56%",
+          "100.00%",
+          "98.77%"
+        ]
+      ],
+      "verdict": "All counts and percentages match the frozen T136 report; body precision correctly shown as undefined."
+    },
+    {
+      "item": "52 versus 40 old-reference identities",
+      "p_indices": [
+        1318,
+        1328,
+        1351,
+        1661,
+        1692,
+        1869
+      ],
+      "verdict": "Old 52 consists of 40 content plus 12 metadata; current content regression40/1/0 correctly separated. Current seven-class52/1/0 and99.05% explicitly supplied in metadata paragraph. Historical saved52/0/0 is confined to prototype archive."
+    },
+    {
+      "item": "Paired sample units",
+      "p_indices": [
+        1168,
+        1661,
+        1662
+      ],
+      "verdict": "12 natural diaries and12 field variants are paired inputs; fields use reference-label arrays and are not automatic extraction; rebuild does not increase independent note count. Original4 are a separate known fixed regression."
+    },
+    {
+      "item": "Metadata separation",
+      "p_indices": [
+        1318,
+        1692
+      ],
+      "verdict": "36+36+12=84 separately reported; not mixed into74-content reference or content F1."
+    },
+    {
+      "item": "Reference and true-positive record boundary",
+      "p_indices": [
+        1660,
+        1662,
+        1694
+      ],
+      "verdict": "74 AI-assisted content references,39/2/27/6 distribution,10 positive and2 schema-outside records, fields11/12 and regression3/4 all match report. Body empty matches not presented as successful fact extraction."
+    },
+    {
+      "item": "Current and historical runs",
+      "p_indices": [
+        48,
+        55,
+        1151,
+        1328,
+        1351,
+        1660,
+        1661,
+        1694,
+        1699,
+        3617
+      ],
+      "verdict": "Abstract and chapter conclusions reflect current English natural-body failure, mapping contrast and current Rust regression; old100.00% is identified as historical fixed-prototype output. Public source identity and target-language limits are retained."
+    }
+  ],
+  "not_requested": "No broad prose rewrite; no Word, experiment report, application or main Markdown edits. Full package preservation and page layout are outside this scientific text review.",
+  "resolution_checks": [
+    {
+      "item": "undefined P with F1=0",
+      "p_index": 1318,
+      "status": "implemented and independently read"
+    },
+    {
+      "item": "AI reference provenance of all annotation/review/adjudication stages",
+      "p_index": 1660,
+      "status": "implemented and independently read"
+    },
+    {
+      "item": "same-admin functional author/approval roles",
+      "p_index": 3617,
+      "status": "implemented and independently read"
+    }
+  ],
+  "remaining_findings": []
+}

@@ -1,0 +1,60 @@
+{
+  "source_docx_sha256": "6bd8280e5092a302040afbd46a5e16e64ef96a8ec3846ecd8753efe13ebc649d",
+  "audit_mode": "read-only frozen-output-and-script inspection; no new experiment",
+  "historical_cross_judge": {
+    "unit": "paired valid question",
+    "bootstrap_resamples": 5000,
+    "seed": 11420261001,
+    "source": "agent-work/t114-2026-10-01/cross-judge-freeze/frozen-input.json",
+    "script": "scripts/experiments/run_t114_cross_judge.py",
+    "percentile": "linear interpolated 2.5% and 97.5%"
+  },
+  "current_rust_semantic": {
+    "factual_questions": 10,
+    "pure_abstention_questions": 2,
+    "arms": 4,
+    "repetitions": 3,
+    "total_answers": 144,
+    "bootstrap_resamples": 10000,
+    "seed": 20261001114,
+    "source": "docs/experiments/t114-2026-10-01/semantic-analysis.json",
+    "script": "scripts/experiments/run_t114_semantic_judge.py",
+    "percentile": "linear interpolated 2.5% and 97.5%",
+    "primary_difference_fractions": [
+      "-2/9",
+      "0",
+      "1",
+      "0",
+      "1/2",
+      "1/3",
+      "1",
+      "1/6",
+      "0",
+      "0"
+    ],
+    "primary_mean_fraction": "5/18",
+    "primary_mean": 0.2777777777777778,
+    "bootstrap_ci95": [
+      0.03888888888888889,
+      0.55
+    ],
+    "exact_sign_combinations": 1024,
+    "extreme_sign_combinations": 96,
+    "exact_p": 0.09375,
+    "reported_p": "0.0938",
+    "secondary_raw_p": [
+      0.25,
+      0.25
+    ],
+    "holm_family": 2,
+    "secondary_holm_p": [
+      0.5,
+      0.5
+    ]
+  },
+  "interpretation": [
+    "Percentile bootstrap confidence limits are not inversion of this exact sign-flip test.",
+    "Human participant count is 0; actual GPT model is null/undisclosed.",
+    "KG 100% is exact match in four fixed synthetic notes against 52 internally derived reference relations."
+  ]
+}

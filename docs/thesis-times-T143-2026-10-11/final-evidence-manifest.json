@@ -1,0 +1,288 @@
+{
+  "task": "T143 paper overly specific time cleanup",
+  "status": "complete_internal_validation",
+  "author_advisor_acceptance": "pending",
+  "final_word": {
+    "path": "/Users/yusong/Desktop/1005-时间说明精简版-2026-10-11.docx",
+    "sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd"
+  },
+  "final_pdf": {
+    "path": "/Users/yusong/Desktop/1005-时间说明精简版-2026-10-11.pdf",
+    "sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a",
+    "native_page_count": 100,
+    "comment_output": 0
+  },
+  "revision_paragraph_count": 45,
+  "characters_removed_net": 663,
+  "changed_pages_original_visual": [
+    14,
+    36,
+    40,
+    45,
+    53,
+    55,
+    56,
+    58,
+    59,
+    62,
+    64,
+    69,
+    95,
+    96,
+    99,
+    100
+  ],
+  "identical_pages_sha_inheritance": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    37,
+    38,
+    39,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    54,
+    57,
+    60,
+    61,
+    63,
+    65,
+    66,
+    67,
+    68,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81,
+    82,
+    83,
+    84,
+    85,
+    86,
+    87,
+    88,
+    89,
+    90,
+    91,
+    92,
+    93,
+    94,
+    97,
+    98
+  ],
+  "visual_coverage_total": 100,
+  "fresh_extra_formula_page": 57,
+  "proof_scope": "16 changed pages newly viewed at original resolution; 84 byte-identical PNGs inherit verified final T142 visual reports; no fresh-all-100 claim",
+  "protected_input_count": 53,
+  "source_protected_unchanged": true,
+  "new_software_tests_or_experiments": false,
+  "main_markdown_edited": false,
+  "git_staged_or_committed": false,
+  "sole_writer_released": true,
+  "main_report": {
+    "path": "/Users/yusong/Downloads/new/full-system/docs/论文具体时间说明精简-T143-2026-10-11.md",
+    "sha256": "ae609a2a56680dd242d1e34ca8bfa3c0d9fcb78ccd8e6d64256088dbdc49e511"
+  },
+  "file_count_excluding_manifest": 30,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "7cb95662ae3479cd422023de6a3e05c90c3c2a9bb8895f7c771a27481b770ce8",
+      "bytes": 3913
+    },
+    {
+      "path": "backend/native-final-d6cd-a615-visual-7-pages.json",
+      "sha256": "5935917cbd0437d09295d46776c1d6cd19c47aaac4cb142fe5e544dc7f03c7a5",
+      "bytes": 9821
+    },
+    {
+      "path": "changes.json",
+      "sha256": "43e82db80679307801f3d92fa5c5fb99439f699e442399d646b45c0db61fe4ab",
+      "bytes": 28389
+    },
+    {
+      "path": "check_pdf_citations.py",
+      "sha256": "2937566875393aa0f4ea551273502cecef07835859326f380b3e473350344a1c",
+      "bytes": 2515
+    },
+    {
+      "path": "desktop-delivery-verification.json",
+      "sha256": "d2081179fbfba965baf396ac3c2833de8b67a9c0ef0319309f9f62e27e30eef8",
+      "bytes": 1048
+    },
+    {
+      "path": "native-final-export.json",
+      "sha256": "7dc55e124ca3e0853b89abfa300158fa0c448c57b740234bdb971bd2bef259da",
+      "bytes": 737
+    },
+    {
+      "path": "native-final-page-manifest.json",
+      "sha256": "0f85bb9a839eb64c070d93705c4e7b75fdf5e7f5a18164ccf69caf6f04a772ef",
+      "bytes": 29733
+    },
+    {
+      "path": "native-final-pixel-comparison.json",
+      "sha256": "f5e29073a03cc174725af9e893a69de890f0051bed74ba7b3c8b78a8547c6a22",
+      "bytes": 1697
+    },
+    {
+      "path": "paragraph-revisions.diff",
+      "sha256": "e7f4713fc84988a935f9008780c5cc3bbcce2fceb0bf5212b68cdf9441dd0ab1",
+      "bytes": 17677
+    },
+    {
+      "path": "pdf-citation-geometry-final.json",
+      "sha256": "71992ef155e774f98b828f58352494b14e31eb791f683e1528486589dd4336f6",
+      "bytes": 65493
+    },
+    {
+      "path": "protected-inputs-root-final-review.json",
+      "sha256": "d20c1bce25c284a06a711782ad21df8f8fda26eea585bda50755abac6d341822",
+      "bytes": 18547
+    },
+    {
+      "path": "qa/baseline-protection-e57b.json",
+      "sha256": "d4591499761fa2a86dd92029fe247c81612169f8780f21ae1e771f91cad587a9",
+      "bytes": 3164881
+    },
+    {
+      "path": "qa/content-date-scope-candidate-d6cd-review.json",
+      "sha256": "ccc7e41719a7b7d89e38d0bbc63da64b5ae21e31b9083c8ac5d5c63129172440",
+      "bytes": 51070
+    },
+    {
+      "path": "qa/final-report-map-d6cd-a615.json",
+      "sha256": "5a993e5ee3f57641d9089e2dcb6b97e948f0b9049c4c457a2bf5442deba0821f",
+      "bytes": 4481
+    },
+    {
+      "path": "qa/native-final-d6cd-a615-visual-100-closure.json",
+      "sha256": "ea4f144c72967135290f4f76ae21ae2e7a87c590850c1a6195e10657e7bd9f19",
+      "bytes": 91948
+    },
+    {
+      "path": "qa/native-final-d6cd-a615-visual-qa-pages.json",
+      "sha256": "dd9c3a36e69fd32ac6e4cb8fafbaeba574e0ecdb90d0261555d4f5ddadf1c7b1",
+      "bytes": 10582
+    },
+    {
+      "path": "qa/protected-input-baseline.json",
+      "sha256": "40045a90e1157bed37d82fb47518ae0c084777cbb97ecaacd5664aded0f6b3de",
+      "bytes": 17631
+    },
+    {
+      "path": "qa/protected-inputs-native-final-d6cd-a615-review.json",
+      "sha256": "80119309a5e612f60b263df371b7ad3e31b74162fd0137c6625eb3f467930f57",
+      "bytes": 24581
+    },
+    {
+      "path": "qa/qa-native-final-d6cd-a615-summary.json",
+      "sha256": "3a5f1fbb169cfae772dc51ac2d369711133b89fbccd92e7edfa61af6f1fc5d47",
+      "bytes": 11475
+    },
+    {
+      "path": "qa/table-rules-native-final-d6cd-a615-coordinate-review.json",
+      "sha256": "20de95c973180476deebf827db5e6db7f221aae030bfd2ffa61b8b36f760c239",
+      "bytes": 121559
+    },
+    {
+      "path": "qa/table-same-page-native-final-d6cd-a615-closure.json",
+      "sha256": "921cc92d0fc06272cc2017579f16fe8a824a88309c1363b7800ca273882a5b81",
+      "bytes": 2376
+    },
+    {
+      "path": "qa/table-same-page-native-final-d6cd-a615-text-review.json",
+      "sha256": "7c99ee1a973cc8e7b5a2df56f91c4b5e56f38988c8623cd6d3b240f75608cc4b",
+      "bytes": 34692
+    },
+    {
+      "path": "qa/toc-native-final-d6cd-a615-review.json",
+      "sha256": "a7ca2a14d32d27951b2c61556a71905e07e463e00f0ef9947ca13e7f2b2207c4",
+      "bytes": 65637
+    },
+    {
+      "path": "qa/visual-input-native-final-d6cd-a615.json",
+      "sha256": "3906cf498b351bacba53f52910bf90c3c05366f3106130ca0d76f60b530afaba",
+      "bytes": 100929
+    },
+    {
+      "path": "qa/word-candidate-d6cd-protection-review.json",
+      "sha256": "54c627e516c370e2e5586ce4e24d9fe3d90389098b8a032eb7227edfe60312ee",
+      "bytes": 76821
+    },
+    {
+      "path": "reviewer/final-45-content-review.json",
+      "sha256": "cf45072c1e634be74b20bce4a8d1f4146fb25d22cf892aa563de09f79154e0cf",
+      "bytes": 28566
+    },
+    {
+      "path": "root-supplementary-visual-review.json",
+      "sha256": "c571865d3cfb29cd6a996e021d13fb4d970ebd1875492ecefc7e5fde036e19ec",
+      "bytes": 1167
+    },
+    {
+      "path": "snapshots/changes-37-paragraphs-b91.json",
+      "sha256": "ddc9878a5bc975c5100af028860fa374b81c4488f1443f3be5424637eccd42f8",
+      "bytes": 26324
+    },
+    {
+      "path": "snapshots/reviewer-date-time-scan-and-candidate-review-b91.json",
+      "sha256": "5aba8964bad622364ca311ed3cea9383450f28de6d846e02aa49994b9c2ec868",
+      "bytes": 60092
+    },
+    {
+      "path": "time-scan.json",
+      "sha256": "980af153e1810be4f5a526ce33eb08a69efc25b85e2e96bbe4babab5b5420af7",
+      "bytes": 34842
+    }
+  ],
+  "manifest_self_hash": "intentionally excluded"
+}

@@ -1,0 +1,889 @@
+{
+  "task": "T142 final independent QA acceptance summary",
+  "reviewer": "qa-engineer",
+  "utc": "2026-10-11T11:05:10.827924+00:00",
+  "identity": {
+    "word_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/1005-精简与角标校正版-2026-10-11.docx",
+    "word_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-wps/1005-精简与角标校正版-2026-10-11.pdf",
+    "pdf_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+    "page_manifest_path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/native-final-page-manifest.json",
+    "page_manifest_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+    "physical_page_count": 100
+  },
+  "baseline_word_sha256": "501184b1d12d5611709606f24feed69437e6d862ff12d27a292a2f91fe1df948",
+  "result": "PASS_FINAL_NATIVE_DELIVERY",
+  "findings": [],
+  "new_tests_or_experiments_executed": false,
+  "accepted_changes": {
+    "prose_paragraphs": 36,
+    "characters_reduced": 324,
+    "chapter6_words_unchanged": true,
+    "citation_superscript_groups": 73,
+    "ordinary_paragraph_spacing_corrections": 12,
+    "sole_table_indent_corrections": 50,
+    "other_content_layout_or_frozen_values_changed": false
+  },
+  "gates": {
+    "Word_structural_protection_groups": 17,
+    "all_protection_groups_pass": true,
+    "physical_native_pages": 100,
+    "within_total_page_cap": true,
+    "all_100_TOC_entries_match_actual_pages": true,
+    "strict_three_rule_tables": 98,
+    "caption_header_and_full_body_same_page_tables": 98,
+    "mapped_total_Word_tables": 108,
+    "actual_PDF_wide_rule_count": 298,
+    "actual_PDF_margin_violations": 0,
+    "ordered_OMML_formulas_preserved": 48,
+    "bibliography_identity_order_preserved": 85,
+    "all_85_used_first_citation_order_1_to_85": true,
+    "actual_superscript_groups": 73,
+    "comment_content_and_exact_anchors_preserved": 16,
+    "tracked_changes": 0,
+    "media_bytes_preserved": 49,
+    "business_tables_and_complete_fields": [
+      43,
+      430
+    ],
+    "common_definition_codes_and_expanded_uses": [
+      18,
+      156
+    ],
+    "relationships_preserved": 52,
+    "original_notes": 4,
+    "SOP_original_pages": 2,
+    "old_evidence_and_baseline_protected_files": 57,
+    "prior_Rust_source_inputs_unchanged": 65,
+    "all_100_visual_coverage_PASS": true,
+    "native_PDF_annotation_count": 200,
+    "native_PDF_annotation_subtypes": [
+      "/Link"
+    ],
+    "PDF_comment_marks_exported": false
+  },
+  "visual_coverage": {
+    "team_effective_actual_original_size_pages": 100,
+    "own_physical_pages": [
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100
+    ],
+    "own_pass_pages": 33,
+    "final_fresh_original_size_pages": [
+      23,
+      56,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      100
+    ],
+    "final_fresh_count": 16,
+    "same_PNG_SHA_inherited_count": 84,
+    "basis": "前100页已经分工完成实际原尺寸实视；最终相对无批注原生版本仅16页PNG字节变化，16页均再次原尺寸实视，84页逐SHA相同继承，三段独立报告覆盖1–100无缺页。不是仅脚本扫描代替实视，也不声称单个审查者亲看全100页。",
+    "team_reports": [
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a"
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1"
+      },
+      {
+        "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+      }
+    ],
+    "pages": [
+      {
+        "physical_page": 1,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "cbe199cebcb9003cddc4475c916aaaab323977e97c2166e80d7dd2c7feca24e7",
+        "pass": true
+      },
+      {
+        "physical_page": 2,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "d94b1374d4df3cf453ad87033b80347e93d931961ac9d77760acf571f8b84d8a",
+        "pass": true
+      },
+      {
+        "physical_page": 3,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "5ae5771d1ab317cdf4a5e61344d3cd243a22ee6406a25cd8f8bdcc991e418b65",
+        "pass": true
+      },
+      {
+        "physical_page": 4,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "7587301a5b07a36f208d6e1d2e6b2c8462ffcd7027222f5db5823fe5d91f0c0e",
+        "pass": true
+      },
+      {
+        "physical_page": 5,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "503b2f2165e14e4ecadf82ded04e2d9f94f3679799b7b418ce84c3d1a4f2b772",
+        "pass": true
+      },
+      {
+        "physical_page": 6,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "32858b0b6249d5e2bcfeb8200c7fd2b3f370f947579a14c9c424faeaa0477aa0",
+        "pass": true
+      },
+      {
+        "physical_page": 7,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "76d1aa2f9afd417bda08ef0cd3d8017b2296e03d15c1032abdf06222e3455b24",
+        "pass": true
+      },
+      {
+        "physical_page": 8,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "62f9076d03b5f7d1ed9010982dc42453c71ffbae068ea0f135a9a64944bb47ca",
+        "pass": true
+      },
+      {
+        "physical_page": 9,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "2ba978359d6f8d4c5372082cc4fedfa43db145413de267f9aea0c16e43ed5010",
+        "pass": true
+      },
+      {
+        "physical_page": 10,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "d0d6a98d2bfc1897a7d5f0d80ee744012dfca33512b8c9851e5597ef0ae55bc1",
+        "pass": true
+      },
+      {
+        "physical_page": 11,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "0add61e82ba5baba6087e17b124fb543590791786b334bfa03028f19c36256c6",
+        "pass": true
+      },
+      {
+        "physical_page": 12,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "d28d98dcd23cbaeb54c5cc2e910ec67fe36737326cc265ae2f44471203243c50",
+        "pass": true
+      },
+      {
+        "physical_page": 13,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "637b8813455e13f2d0c3b2c49b0e06676926ba41352a00f9d3fd456260acef04",
+        "pass": true
+      },
+      {
+        "physical_page": 14,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "c67f8807877ee73e8aab03e867e63df500930b0a820d7596d6a4db9919654926",
+        "pass": true
+      },
+      {
+        "physical_page": 15,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "6b319ba2c8a1ba25e6fe979a31eb7e8d20ad7e44e2f125b40ee26e1a76808731",
+        "pass": true
+      },
+      {
+        "physical_page": 16,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "a4f0e513381d92aca7ce6fe086b0e1a1eb344228302975c11feebadcd2f1efef",
+        "pass": true
+      },
+      {
+        "physical_page": 17,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "8229bf35809c17bcf3ea5b8823bf87fd785db00584c6d5a4ed200a6c3aa9c640",
+        "pass": true
+      },
+      {
+        "physical_page": 18,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "448924df920049b27a698a389e1736cfcfae2e100e541464be54ff8e7ab8ca4b",
+        "pass": true
+      },
+      {
+        "physical_page": 19,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "c028554efa6a3908c344f364e8f7b4e89c078fa218724d4e87ee4e573e59f177",
+        "pass": true
+      },
+      {
+        "physical_page": 20,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "f23da8cf3cfb70b2fd5f5b2613d60e8f32da1579fad9d614199f40628c5a48dd",
+        "pass": true
+      },
+      {
+        "physical_page": 21,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "650cd1347cbba97091b4dc145afe93dac719480e40b5b1ea5195623adb87e63f",
+        "pass": true
+      },
+      {
+        "physical_page": 22,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "6e148097c379f1ba2d406fa7f083b3a96cd01f613fa14f4da6182f7880c63a93",
+        "pass": true
+      },
+      {
+        "physical_page": 23,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "a6a254c33e62a63fb14814d3b6824cb7cab527dfe1de7f4c82e2e015cc1bb36f",
+        "pass": true
+      },
+      {
+        "physical_page": 24,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "9ed43b55e952ac3061188a112d50c8756bcc74f806a51fe75156e1ae1b2db480",
+        "pass": true
+      },
+      {
+        "physical_page": 25,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "b2eb3f4e7af2fb04a9477b6689a1dc0cf9ea04f38920d49d80fb7e3f14e213ab",
+        "pass": true
+      },
+      {
+        "physical_page": 26,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "d00f1dc0d0c5930255069ffb9222f1b4dde35b15edb484a59da5c26defd330c6",
+        "pass": true
+      },
+      {
+        "physical_page": 27,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "cf645a54ad05085f39b36a920f7f96aef7a9beee6e01af5b43523fc7560b36d9",
+        "pass": true
+      },
+      {
+        "physical_page": 28,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "04caf2baacc13f5018b1b6a7545e374837c45bcab73bb79ff590ea31e028a38c",
+        "pass": true
+      },
+      {
+        "physical_page": 29,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "8d50f02ee1745fab4e61fdf938a812102d793ebe63a54f892b8ac18ab6248977",
+        "pass": true
+      },
+      {
+        "physical_page": 30,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "20c12bbc7f4096fb5da7dbf190876a890f891f919d05514b8e9e260d71b0b3b0",
+        "pass": true
+      },
+      {
+        "physical_page": 31,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "2fa65d4321c146ab0adf9e2259132dc6fbe5c938202f4a26bf4e28b75bbe722e",
+        "pass": true
+      },
+      {
+        "physical_page": 32,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "52eeb617df82d1a37e4dd2105982df158db40d4e56d0fbdbf6c083520faeec15",
+        "pass": true
+      },
+      {
+        "physical_page": 33,
+        "reviewer": "backend-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+        "PNG_sha256": "ba1d5eada9abb24e1848b4a5f11bea17759347839dbb98dc5a143523f442c557",
+        "pass": true
+      },
+      {
+        "physical_page": 34,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "fab2a281f3fb1ca5a6bb69a8fc989e937b96bae6b488fa28588574eb20acd910",
+        "pass": true
+      },
+      {
+        "physical_page": 35,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "d7f0d01c70efb6a478e6994e6e9dea41f9c78f1978850dfcb1fc0fa1193c7711",
+        "pass": true
+      },
+      {
+        "physical_page": 36,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "bb5fa91ca571d3d2f3ce9c107c752ad88b55b9b9cd52bb1c3ccfce8de84c3de2",
+        "pass": true
+      },
+      {
+        "physical_page": 37,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "16636233dcc3cfe7a00edbe0badd8fde24d5fb872277c3f4f90fc020b89af922",
+        "pass": true
+      },
+      {
+        "physical_page": 38,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "d451f234f511a74ba76a3847b3c28b82563ff5060da1419952725af517c4c052",
+        "pass": true
+      },
+      {
+        "physical_page": 39,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "e508ade88348e3a4656b0c1e607ac9509dc1f7681dd64e3d803e1e44ace0b4d2",
+        "pass": true
+      },
+      {
+        "physical_page": 40,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "93b617b465ab2146821383ff3137351b7c2da231c21a49d42314325d01901129",
+        "pass": true
+      },
+      {
+        "physical_page": 41,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "c049a79e61bb032653fa819f6d9282e69d18bb41d51908f2851654774ff6af9b",
+        "pass": true
+      },
+      {
+        "physical_page": 42,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "87ffcb337eba4404e0b70433aa94f8c49dc7d3d26f553a034772e4802636f520",
+        "pass": true
+      },
+      {
+        "physical_page": 43,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "d679c0449bc4e19c4ab677264b79122a709467f9133b43dbd46b45a7abfdc812",
+        "pass": true
+      },
+      {
+        "physical_page": 44,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "336abe3b90fbc5dce9bbe3a2321a87260b623aeb5ac3fd048d4d63dfe5b58ccf",
+        "pass": true
+      },
+      {
+        "physical_page": 45,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "0cd1d577d5ccb364387e412fcf5e241dc1077d9a5809b2cc233804cea7ac74a0",
+        "pass": true
+      },
+      {
+        "physical_page": 46,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "8d63029487dc04e549bc804bad2ffa9a3ca836fe12c083185957a20a8ac3af3c",
+        "pass": true
+      },
+      {
+        "physical_page": 47,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "9c62e090199cacb1ce40863e13d2127bab1ca5eeba7470191d06a63bb0fd1b4c",
+        "pass": true
+      },
+      {
+        "physical_page": 48,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "a77cef2d5a890561da9dfd8952a4312973546dc9b1ea13dd80f238b815e5e0bb",
+        "pass": true
+      },
+      {
+        "physical_page": 49,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "fafc8ca43a313c31b61cea1552c90915a728cef1201a47dbfab249e99120f8bc",
+        "pass": true
+      },
+      {
+        "physical_page": 50,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "e1534ef9f6e135a8634c2c91a5b632e5cb75f8e002e7e75af42c5e524084523c",
+        "pass": true
+      },
+      {
+        "physical_page": 51,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "89c49ffc093b445bdccea42fee5a180608761281c688e75a352589eed54201d4",
+        "pass": true
+      },
+      {
+        "physical_page": 52,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "5f80606502ccebcda9caa37399349a4033d6b64031403aa9e1f3a95d4b3e3ce0",
+        "pass": true
+      },
+      {
+        "physical_page": 53,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "32a4a22d7d83a330636162177ab667f61a18af2a95c1394f48bbba64b73ebd29",
+        "pass": true
+      },
+      {
+        "physical_page": 54,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "0762ee0453a5ec3fc4e4d4e094cd3953ccf37386d2cba06084232e7158855ee7",
+        "pass": true
+      },
+      {
+        "physical_page": 55,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "cf17815d4c8d7de53e1753530ba2b04fb7fc10d978d0178a03f61462a99b0c79",
+        "pass": true
+      },
+      {
+        "physical_page": 56,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "0c84cec4cb01c0ef42f6f220bb6d02b0d1dfbe55219be676006f61e7ed91281b",
+        "pass": true
+      },
+      {
+        "physical_page": 57,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "336098c15f084498fbedacc5a7a3498d4455b456a3b3080e31c0a3b528464d79",
+        "pass": true
+      },
+      {
+        "physical_page": 58,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "5998e0c8f1f640684459ba2b249aa5f436833bfe5a6665f00c1f7ad8dafc762b",
+        "pass": true
+      },
+      {
+        "physical_page": 59,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "38c526a2781ee9dace3f8638d8e08d9bdacd675df1100d012e36ad6679dd4ae6",
+        "pass": true
+      },
+      {
+        "physical_page": 60,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "8217ebb27bbdc05f25b07df9ae920ffa2e6580e204ee366d72c05b961e1284b0",
+        "pass": true
+      },
+      {
+        "physical_page": 61,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "e59bb7d2ecef6e70e890afce3844c2f09f83912e808efe68702e26c96c90cd9f",
+        "pass": true
+      },
+      {
+        "physical_page": 62,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "8a845fdc7dc84f8f50b85e6d38dc80eed71ac48dc243f08de4a87294a7c35cbf",
+        "pass": true
+      },
+      {
+        "physical_page": 63,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "d38d4cafac7e4aeed25f60a3bbb896ba96ab99f81657a32f2c05576d9dc0ef5a",
+        "pass": true
+      },
+      {
+        "physical_page": 64,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "b76b2d0f25fbecd83a5633c8ac225ad85e26606a256f9fbfb6acbecdd9297265",
+        "pass": true
+      },
+      {
+        "physical_page": 65,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "bc66683db30e52660fb1b3fdf4cefd612af67a66fd240321547c0c2135669510",
+        "pass": true
+      },
+      {
+        "physical_page": 66,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "b5c5b435ba8abe4088dbfde402864249c47f20b4bf03394235281a02d3b644de",
+        "pass": true
+      },
+      {
+        "physical_page": 67,
+        "reviewer": "figures reviewer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+        "PNG_sha256": "4dcf1ef538b8c2a5ccc1a107c3e8f57fd1c9b91d7231ab61847a92327fbc94ab",
+        "pass": true
+      },
+      {
+        "physical_page": 68,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "87b8cd17eb5a5e5f3ec6e381fd256ddcd2e935a6232eaa9ef75350f27419abb4",
+        "pass": true
+      },
+      {
+        "physical_page": 69,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "9f890e8cd8258b17754264cec9fde77c362690ad014628dafd9998dbafae6daa",
+        "pass": true
+      },
+      {
+        "physical_page": 70,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "8f461626102aa489f93bf9d4a1c81ba4fba58f5f4bec55d8be3223a30cf5134c",
+        "pass": true
+      },
+      {
+        "physical_page": 71,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "92f581dc9067a446aeef2666892eabce6b4d8c43dda7e3ca3337097a8deb2372",
+        "pass": true
+      },
+      {
+        "physical_page": 72,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "577229890ca44c4e8dab64dda374e4c72c329feca7b28779092b692865deb560",
+        "pass": true
+      },
+      {
+        "physical_page": 73,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "de8ca3ce1aed41884ca69cfc4964052660883acb67a7525a0e57c352db9a6e9c",
+        "pass": true
+      },
+      {
+        "physical_page": 74,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "016f76eb140b7a1a2c0a6aa20fed71f90c1bffafbb9db50133be301cd7533208",
+        "pass": true
+      },
+      {
+        "physical_page": 75,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "b57de62e5d1b5425144481ab450607e81555a4a401a651ae6365ba3af5336fe7",
+        "pass": true
+      },
+      {
+        "physical_page": 76,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "e91c46b1a4ea0f7fad6e3a18ff3eb10c18becd2b82300bdb704b187584e872e5",
+        "pass": true
+      },
+      {
+        "physical_page": 77,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "99eb7db8147b746276776abd869b718593441c8f46e3d6d2006505776d004e10",
+        "pass": true
+      },
+      {
+        "physical_page": 78,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "e362baf2bcaee244561f20503842ca7772571fc9cd9c2719e04d2c3b58527bdc",
+        "pass": true
+      },
+      {
+        "physical_page": 79,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "18a672ba47cbefcfa0eb9aff9816e00123b0a3ea691545561aa46691e2f57e65",
+        "pass": true
+      },
+      {
+        "physical_page": 80,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "87c1740a2c8947a4c9d037567ae5bb2d6337949cc4c9aa81b7b3b5d41c3e2ae6",
+        "pass": true
+      },
+      {
+        "physical_page": 81,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "e418d12b617bbf6bce114962710b1ead0c23eed43199ea5a5b281a204fc718d2",
+        "pass": true
+      },
+      {
+        "physical_page": 82,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "7fddfe3ca318b89da0ed4803d8dfbdd6afb8dc86fb92fbb7161187d0ca8ec7b4",
+        "pass": true
+      },
+      {
+        "physical_page": 83,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "85f548ebce9cd21e5c78d57638599dc680678aa89f356a83c71d5a57980ca854",
+        "pass": true
+      },
+      {
+        "physical_page": 84,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "22184acc2b45ed32ad5ff1ab6a3e55019404babd29abcfce20c74e921a168f49",
+        "pass": true
+      },
+      {
+        "physical_page": 85,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "a5c248439616626e7dc5aeb5d76190e24e62d20d5a426ce2926da8008132604d",
+        "pass": true
+      },
+      {
+        "physical_page": 86,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "7596da1250738cbfc40e6ec30538f633833b56fd75db0c451d1d299c94c01fb8",
+        "pass": true
+      },
+      {
+        "physical_page": 87,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "70e467a52f2ba9683262821da8273ebc0b2914e5e7e5a97af64e060b0a3abe7b",
+        "pass": true
+      },
+      {
+        "physical_page": 88,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "7d6958153b86f354efe768ca4214f2fdf489e455e9f8b1efb2d4fc486b7bf6e5",
+        "pass": true
+      },
+      {
+        "physical_page": 89,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "1c678718be7768cfb4fa5e3aabada130ab5f56b2937998d201c77a09f0519d88",
+        "pass": true
+      },
+      {
+        "physical_page": 90,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "5ade261927c886d97783c1a719cc63c333124b1651832bd07a889f4d26405034",
+        "pass": true
+      },
+      {
+        "physical_page": 91,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "16ce4bbe55932d255cc3f316072971259855d5c9322a6ee75e695932fc2ccc4a",
+        "pass": true
+      },
+      {
+        "physical_page": 92,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "4258260315015898d244e480e62018cb422bfeacf077859dddfdc7ef4bb101c1",
+        "pass": true
+      },
+      {
+        "physical_page": 93,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "1a1ab8ba4e166ce70b595d6f23c438a4be81b3e35873149fc161f2e336118519",
+        "pass": true
+      },
+      {
+        "physical_page": 94,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "201bda431f779d556198c1e67c2df2a56f07b873518126029c7d3d75cea82d79",
+        "pass": true
+      },
+      {
+        "physical_page": 95,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "f425eb0fd17d25c55e5a792861b1f8f04c5045286bfbe08eb51599762f05af84",
+        "pass": true
+      },
+      {
+        "physical_page": 96,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "f8a59852ff6cbed002862697caa3f2b4ba9991f52008c3e3f5f8cdf33403c30e",
+        "pass": true
+      },
+      {
+        "physical_page": 97,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "818a93952291fd465d29d919be9057e8ff7e84dc24205f6f07f31d0fdd314136",
+        "pass": true
+      },
+      {
+        "physical_page": 98,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "44a4962ba696752f9776772f4d756ed7ea2132e05ffe7e7f0547291c2f06e2b1",
+        "pass": true
+      },
+      {
+        "physical_page": 99,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "2fae0dff002efe09b030a68a17086f6570bdddd89dd71af557ec4e80669cf34e",
+        "pass": true
+      },
+      {
+        "physical_page": 100,
+        "reviewer": "qa-engineer",
+        "report": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+        "PNG_sha256": "1f5cf64eaee05280a6122e1685792a0850d7664b1779bffc0b779f574df0d57e",
+        "pass": true
+      }
+    ]
+  },
+  "final_reports": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/word-protective-native-final-e57b-6d54-review.json",
+      "sha256": "e3cd6bf9ffe9787d8607011a3bc095bba11a548eec6628c69d730ea68496adb7"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/toc-native-final-e57b-6d54-review.json",
+      "sha256": "8703b4a63a06f4522c4369e25e4667537e0004f445b50c7620069f7573a60e4d"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/table-rules-native-final-e57b-6d54-coordinate-review.json",
+      "sha256": "1b5cac08a427bafe9b3935ccdf39b1f5928f2229087d225ac273738734ebcf1e"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/table-same-page-native-final-e57b-6d54-text-review.json",
+      "sha256": "63db032e6df0fcd39e726cc95f0ec6b2fe254013cc93f5de8aeb70249d639c3e"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/table-same-page-native-final-e57b-6d54-closure.json",
+      "sha256": "885246eb42ddc83ff492ce40ed1b484f1f9a5e961c98a9e8ccee733864489c47"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+      "sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/protected-inputs-native-final-e57b-6d54-review.json",
+      "sha256": "b114c43c61d10ed3278dde3d7813c3ad0c21e52e50e6229a0874d4787aca0390"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/content-boundary-native-final-e57b-6d54-review.json",
+      "sha256": "23d92547e92bfc53caf84cf1f846807cadc2d37756a57ea279b494304e83a39d"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/qa/format-native-final-e57b-6d54-review.json",
+      "sha256": "d3602e0cc49368d3891b9d837d9a840cbbc20c7db7d1dc790ee085f8800bfadd"
+    }
+  ],
+  "actual_PDF_citation_geometry": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/pdf-citation-geometry-final.json",
+    "sha256": "cb75fd4060f71aa521f1143067908278ca7a2edb494f2a833490188c93eee78d"
+  },
+  "desktop_delivery": {
+    "path": "/Users/yusong/Downloads/new/full-system/agent-work/t142-2026-10-11/desktop-delivery-verification.json",
+    "sha256": "947b9547aa8306524ec320e145850bd580b33c407829d790e59014ecf8224ad2"
+  },
+  "retained_failures": "首次原生导出平面化批注、无批注版严格表横线越界、31缩进版漏19表等原报告与原输入均保留；均未改成通过。最终验收只绑定e57b/6d54/f998三身份。",
+  "limitations": "本轮限纯语言、真实上标与明确白名单格式变化的保护、分页及视觉验收。无代码测试/新实验/新LLM判分，T141历史执行结果只按65输入同SHA保持原身份。"
+}

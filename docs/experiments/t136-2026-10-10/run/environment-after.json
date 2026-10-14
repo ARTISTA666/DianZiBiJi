@@ -1,0 +1,19 @@
+{
+  "captured_utc": "2026-10-10T15:55:47.598022+00:00",
+  "containers": [
+    {
+      "name": "eln-t136-backend-1",
+      "container_id": "2651579a5005d184755dec7053a48486f7627cfc2cbe006608ed79d7ee71a961",
+      "image_id": "sha256:f39264ceca846f14d87559e972206fdfd0ba0c10731aadf90b8b3c8a2995552e",
+      "health": "healthy",
+      "running": true
+    },
+    {
+      "name": "eln-t136-db-1",
+      "container_id": "754c4dcddc89fcbe0c877d00c744e12c70c9a577b31fc961c1998236ff763255",
+      "image_id": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+      "health": "healthy",
+      "running": true
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-10T15:52:29.534864+00:00",
+  "path": "/projects/3/notes",
+  "method": "POST",
+  "request": {
+    "title": "Western Blot 蛋白表达验证",
+    "experiment_type": "Western Blot",
+    "experiment_date": "2026-06-05",
+    "fixed_fields_json": {
+      "reagents": "RIPA 裂解液、BCA 试剂盒、一抗、二抗",
+      "instrument": "电泳仪、转膜仪、凝胶成像系统",
+      "sample": "蛋白样本 P1、蛋白样本 P2",
+      "result": "目标蛋白在处理组表达降低，内参条带稳定。"
+    },
+    "content_json": {
+      "text": "试剂: RIPA 裂解液、BCA 试剂盒、一抗、二抗\n仪器: 电泳仪、转膜仪、凝胶成像系统\n样本: 蛋白样本 P1、蛋白样本 P2\n结果: 处理组目标蛋白表达降低。"
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 27,
+    "project_id": 3,
+    "template_id": null,
+    "title": "Western Blot 蛋白表达验证",
+    "experiment_type": "Western Blot",
+    "experiment_date": "2026-06-05",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 27,
+    "created_at": "2026-10-10T15:52:29.539335Z",
+    "updated_at": "2026-10-10T15:52:29.539335Z"
+  }
+}

@@ -1,0 +1,747 @@
+{
+  "task": "T141 independent QA final Rust validation",
+  "completed_utc": "2026-10-11T09:12:19.508498+00:00",
+  "status": "PASS",
+  "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+  "local_validation_commit_only": true,
+  "main_git_not_committed_stashed_or_reset": true,
+  "execution": {
+    "task": "T141 QA independently executed Rust validation",
+    "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+    "snapshot_input_sha256": "0ed1013c0e7da88ea94e805d9e9f845508e2372fac77a4fd94762e7342b8d163",
+    "repository": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/repo",
+    "started_utc": "2026-10-11T09:06:47.656524+00:00",
+    "selected_environment": {
+      "CARGO_TARGET_DIR": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/cargo-target",
+      "APP_ENV": "development",
+      "TEST_DB_PORT": "55441",
+      "TEST_DATABASE_URL": "unset before wrapper; wrapper injects isolated endpoint",
+      "DATABASE_URL": "unset"
+    },
+    "commands": [
+      {
+        "name": "fmt",
+        "command_argv": [
+          "cargo",
+          "+1.88.0",
+          "fmt",
+          "--manifest-path",
+          "backend/Cargo.toml",
+          "--all",
+          "--check"
+        ],
+        "cwd": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/repo",
+        "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+        "started_utc": "2026-10-11T09:06:47.677576+00:00",
+        "log": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/fmt.log",
+        "status": "PASS",
+        "exit_code": 0,
+        "elapsed_seconds": 0.397,
+        "ended_utc": "2026-10-11T09:06:48.075354+00:00",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "clippy",
+        "command_argv": [
+          "cargo",
+          "+1.88.0",
+          "clippy",
+          "--manifest-path",
+          "backend/Cargo.toml",
+          "--locked",
+          "--all-targets",
+          "--all-features",
+          "--",
+          "-D",
+          "warnings"
+        ],
+        "cwd": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/repo",
+        "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+        "started_utc": "2026-10-11T09:06:48.092668+00:00",
+        "log": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/clippy.log",
+        "status": "PASS",
+        "exit_code": 0,
+        "elapsed_seconds": 11.633,
+        "ended_utc": "2026-10-11T09:06:59.725778+00:00",
+        "log_sha256": "be1a791a25ed4ae47e191ed21bf02fc78762c802c4a2233a0c6000dff10953ad"
+      },
+      {
+        "name": "rust-db-full",
+        "command_argv": [
+          "bash",
+          "./scripts/ops/run-rust-db-tests.sh"
+        ],
+        "cwd": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/repo",
+        "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+        "started_utc": "2026-10-11T09:06:59.851304+00:00",
+        "log": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/rust-db-full.log",
+        "status": "PASS",
+        "exit_code": 0,
+        "elapsed_seconds": 267.606,
+        "ended_utc": "2026-10-11T09:11:27.458302+00:00",
+        "log_sha256": "644201b9110d85b0d2309ad1df5a8eff2e5e85d901104b8a73f1a1c7a7f1dcda"
+      }
+    ],
+    "status": "PASS",
+    "reserved_project_immediate_preflight": {
+      "utc": "2026-10-11T09:06:59.824454+00:00",
+      "inventory": {
+        "containers": [],
+        "networks": [],
+        "volumes": []
+      }
+    },
+    "post_execution_git_clean": true,
+    "post_execution_revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+    "post_execution_inputs_unchanged": true,
+    "ended_utc": "2026-10-11T09:11:27.507924+00:00"
+  },
+  "cargo_summaries": [
+    {
+      "status": "ok",
+      "passed": 287,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered_out": 0,
+      "duration_seconds_from_cargo_output": 245.5
+    },
+    {
+      "status": "ok",
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered_out": 0,
+      "duration_seconds_from_cargo_output": 0.0
+    }
+  ],
+  "actual_total_passed": 289,
+  "actual_failed": 0,
+  "actual_ignored": 0,
+  "mechanism_tests": [
+    {
+      "exact_test_name": "api::project_alert::tests::test_return_rate_counts_returned_and_legacy_return",
+      "actual_full_suite_status": "PASS",
+      "occurrences_in_pass_lines": 1
+    },
+    {
+      "exact_test_name": "api::kg_blueprint::tests::test_blueprint_role_coverage_and_alerts_share_evidence_contract",
+      "actual_full_suite_status": "PASS",
+      "occurrences_in_pass_lines": 1
+    },
+    {
+      "exact_test_name": "kg_blueprint::tests::test_rule_blueprint_preserves_fact_ontology_roles",
+      "actual_full_suite_status": "PASS",
+      "occurrences_in_pass_lines": 1
+    },
+    {
+      "exact_test_name": "api::agent_runtime::tests::test_agent_prompt_v2_identity_is_persisted_without_rewriting_history",
+      "actual_full_suite_status": "PASS",
+      "occurrences_in_pass_lines": 1
+    },
+    {
+      "exact_test_name": "api::agent_runtime::tests::test_agent_old_prompt_preview_cannot_execute_under_new_prompt_identity",
+      "actual_full_suite_status": "PASS",
+      "occurrences_in_pass_lines": 1
+    },
+    {
+      "exact_test_name": "api::agent_runtime::tests::t139_unavailable_confirmation_is_a_failed_real_agent_step",
+      "actual_full_suite_status": "PASS",
+      "occurrences_in_pass_lines": 1
+    }
+  ],
+  "test_database_identity": {
+    "task": "T141 QA live isolated DB identity",
+    "captured_utc": "2026-10-11T09:07:22.884820+00:00",
+    "revision": "9548e83d4f887630385e2b818292e2b8a5afbf36",
+    "container": {
+      "name": "/eln-rust-test-db-db-1",
+      "id": "76475adf2ac091768ffe8375abd54dcb78051df1f3ab97bc702611f40f9fc0fb",
+      "image": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+      "project": "eln-rust-test-db",
+      "service": "db",
+      "working_dir": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/repo",
+      "config_files": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/repo/docker-compose.test-db.yml",
+      "ports": {
+        "5432/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "55441"
+          }
+        ]
+      },
+      "status": "running",
+      "health": "healthy"
+    },
+    "postgres_version": "16.14 (Debian 16.14-1.pgdg12+1)",
+    "postgres_server_version_num": "160014",
+    "pgvector_available_default_version": "0.8.5",
+    "expected_pgvector_pg16_image_id": "sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb",
+    "image_matches_expected": true,
+    "selected_fields_only": true,
+    "no_environment_or_secret_read": true,
+    "created_and_owned_by_this_qa_wrapper": true,
+    "production_data_copied": false
+  },
+  "automatic_owned_project_cleanup_inventory": {
+    "containers": [],
+    "networks": [],
+    "volumes": []
+  },
+  "protected_production_and_t114_containers": [
+    {
+      "name": "eln-t114-backend-1",
+      "project": "eln-t114",
+      "pre_id": "68ac7b21efc45a757a3ca64ebb83f4ebed75a292089a38df1bfbf31de1515550",
+      "post_id": "68ac7b21efc45a757a3ca64ebb83f4ebed75a292089a38df1bfbf31de1515550",
+      "same_id": true,
+      "same_image": true,
+      "pre_status": "running",
+      "post_status": "running"
+    },
+    {
+      "name": "eln-t114-db-1",
+      "project": "eln-t114",
+      "pre_id": "c7aa3e02a038674ad29f29401d9c831e0757e1f42646bc2971fd5710c9df4d69",
+      "post_id": "c7aa3e02a038674ad29f29401d9c831e0757e1f42646bc2971fd5710c9df4d69",
+      "same_id": true,
+      "same_image": true,
+      "pre_status": "running",
+      "post_status": "running"
+    },
+    {
+      "name": "eln-frontend-1",
+      "project": "eln",
+      "pre_id": "4bc03cc2589a57213671fa70ce4df2d705d4bc38b394936dd6dd6e0b579ce97b",
+      "post_id": "4bc03cc2589a57213671fa70ce4df2d705d4bc38b394936dd6dd6e0b579ce97b",
+      "same_id": true,
+      "same_image": true,
+      "pre_status": "running",
+      "post_status": "running"
+    },
+    {
+      "name": "eln-backend-1",
+      "project": "eln",
+      "pre_id": "f4208714581da9be39908fbd93837f8bb2746e596e6debfc3c29ac1bf17a8f88",
+      "post_id": "f4208714581da9be39908fbd93837f8bb2746e596e6debfc3c29ac1bf17a8f88",
+      "same_id": true,
+      "same_image": true,
+      "pre_status": "running",
+      "post_status": "running"
+    },
+    {
+      "name": "eln-db-1",
+      "project": "eln",
+      "pre_id": "d8758a40428d18639ba5e7f81e3631184f2d680b5cc0bbd1b825ccdac81b2402",
+      "post_id": "d8758a40428d18639ba5e7f81e3631184f2d680b5cc0bbd1b825ccdac81b2402",
+      "same_id": true,
+      "same_image": true,
+      "pre_status": "running",
+      "post_status": "running"
+    }
+  ],
+  "final_inputs": [
+    {
+      "path": "backend/Cargo.lock",
+      "expected_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+      "qa_post_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+      "main_post_sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+      "all_equal": true
+    },
+    {
+      "path": "backend/Cargo.toml",
+      "expected_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+      "qa_post_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+      "main_post_sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+      "all_equal": true
+    },
+    {
+      "path": "backend/rust-toolchain.toml",
+      "expected_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "qa_post_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "main_post_sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+      "all_equal": true
+    },
+    {
+      "path": "backend/sql/0001_initial.sql",
+      "expected_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+      "qa_post_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+      "main_post_sha256": "aba51d07056db3599f8fafa44cefda6b615e01866411db88cd841f40a4378b9e",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/ai_provider.rs",
+      "expected_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+      "qa_post_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+      "main_post_sha256": "e5e649a1946d9d8bb1470e3a08d1677e0e1e1cf039075e61ac1d8ab04ff2b70e",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/agent_runtime.rs",
+      "expected_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+      "qa_post_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+      "main_post_sha256": "7ff300a63dc87e27361df1a72485b889e80dc99100e60b4cbd5404c57f73711c",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/agent_suggestion.rs",
+      "expected_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+      "qa_post_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+      "main_post_sha256": "71c1f93896da306cc72237e1dba1b9736bfb0deb2664c87140a2dd6b1d61840d",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/agents.rs",
+      "expected_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "qa_post_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "main_post_sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/audit.rs",
+      "expected_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+      "qa_post_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+      "main_post_sha256": "3c165a3471057807e79115f68217823fa352af44ff7778524124c7428cfa8031",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/auth.rs",
+      "expected_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+      "qa_post_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+      "main_post_sha256": "98f3a9261ad68e1258a7e9a790389dde9cadae2cca8b33cde157da9da28dcf60",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/files.rs",
+      "expected_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "qa_post_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "main_post_sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/groups.rs",
+      "expected_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+      "qa_post_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+      "main_post_sha256": "234f96fb3987e358067ed804a82ae5603d6ac05fe69350e26f8e0f1bb9ce6a7d",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/kg_blueprint.rs",
+      "expected_sha256": "e719adf5256a752e7d5f94e11ab1b1a76851174db812e2316ab60b8fe2db15e7",
+      "qa_post_sha256": "e719adf5256a752e7d5f94e11ab1b1a76851174db812e2316ab60b8fe2db15e7",
+      "main_post_sha256": "e719adf5256a752e7d5f94e11ab1b1a76851174db812e2316ab60b8fe2db15e7",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/knowledge_graph.rs",
+      "expected_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "qa_post_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "main_post_sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/maturity.rs",
+      "expected_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+      "qa_post_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+      "main_post_sha256": "e3e0999f1ec7eada8d7e2e6495a7db45309d7ded58ac14a7024068f2f55da794",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/mcp.rs",
+      "expected_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "qa_post_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "main_post_sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/mod.rs",
+      "expected_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+      "qa_post_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+      "main_post_sha256": "88621275ba26ba7fdc1264d31fd5f294f97dde69b6233fa6314dca9053e028ab",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/notes.rs",
+      "expected_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "qa_post_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "main_post_sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/ocr.rs",
+      "expected_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+      "qa_post_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+      "main_post_sha256": "77cdbc29e609500b662c678784f748e897e0a6b8e5d4d16160eb4ba1db9da525",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/project_alert.rs",
+      "expected_sha256": "89ea3d7c9923084ffbed9e82dc51e8ba8d410475e37df97dff982d338a4bf75c",
+      "qa_post_sha256": "89ea3d7c9923084ffbed9e82dc51e8ba8d410475e37df97dff982d338a4bf75c",
+      "main_post_sha256": "89ea3d7c9923084ffbed9e82dc51e8ba8d410475e37df97dff982d338a4bf75c",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/projects.rs",
+      "expected_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "qa_post_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "main_post_sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/rag/blind.rs",
+      "expected_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+      "qa_post_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+      "main_post_sha256": "8b7c698b996fe9560dab7e7fae0671170cf0ac4a4a07040221e68d7e5b041cca",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/rag/experiments.rs",
+      "expected_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+      "qa_post_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+      "main_post_sha256": "5054f34f884c83a26aaf0dde9c08413f8592398865a914c5757d4c3980242c07",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/rag/mod.rs",
+      "expected_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "qa_post_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "main_post_sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/search.rs",
+      "expected_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+      "qa_post_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+      "main_post_sha256": "88c0ec91b294215bb1b3d6339e11b3b964e1c4ec1d1aaeb2323929c6e13dba28",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/templates.rs",
+      "expected_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+      "qa_post_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+      "main_post_sha256": "513e84ab72e722a14c7a6c330ace07307161da263d5304437d923bcce995cc66",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/api/users.rs",
+      "expected_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+      "qa_post_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+      "main_post_sha256": "8f2527f30fe838607cf93941296f8a33ccc8f07ebd774836d33ad698bb44fd40",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/audit.rs",
+      "expected_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+      "qa_post_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+      "main_post_sha256": "7e27c42742fabf97b8138e17030ad408c5ac153643e9fdb72ff6b126764b6b5d",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/config.rs",
+      "expected_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+      "qa_post_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+      "main_post_sha256": "c4e6d523cbbb845f2d43970ca325506c8d721583aa891549847659b5fcdec973",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/db.rs",
+      "expected_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+      "qa_post_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+      "main_post_sha256": "a7731b5a0d8f3305399511ae6b9fb479fa0f7202c923fcae6976ff2bd774c250",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/embedding.rs",
+      "expected_sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+      "qa_post_sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+      "main_post_sha256": "6dff241194a12d7b564c6b402fb3450e1804a0f92566380df4df3e7988d92577",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/error.rs",
+      "expected_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+      "qa_post_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+      "main_post_sha256": "41d2d9863442976fade9bf092f3528c304ad8e680b4807e09648d64e713cb138",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/kg_blueprint.rs",
+      "expected_sha256": "7d57e6866271371193f0685b719e4baa0861b93aa8fc02022e9612e0294088be",
+      "qa_post_sha256": "7d57e6866271371193f0685b719e4baa0861b93aa8fc02022e9612e0294088be",
+      "main_post_sha256": "7d57e6866271371193f0685b719e4baa0861b93aa8fc02022e9612e0294088be",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/knowledge_graph.rs",
+      "expected_sha256": "a60596f588296e7f93701998e5f534f91a6299bee1e5dd11ef966ddf6216423e",
+      "qa_post_sha256": "a60596f588296e7f93701998e5f534f91a6299bee1e5dd11ef966ddf6216423e",
+      "main_post_sha256": "a60596f588296e7f93701998e5f534f91a6299bee1e5dd11ef966ddf6216423e",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/lib.rs",
+      "expected_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+      "qa_post_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+      "main_post_sha256": "3387a2330179616cdbc48e98af8c2904bcbf5b77d1f2d93e785950abd012168e",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/main.rs",
+      "expected_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+      "qa_post_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+      "main_post_sha256": "7841a161212106af34df4f3d5c147df74077b83ad5f606c75b5f40dffc958930",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/agent.rs",
+      "expected_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+      "qa_post_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+      "main_post_sha256": "92c2d91da781688f0904c6ab41e92bf030b1aa2ceeabe85d86a7e4e999c7d06b",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/file.rs",
+      "expected_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+      "qa_post_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+      "main_post_sha256": "229f70c942ba5995ccfbe2381822aa6ba965321abe3b79c379d5b98e121ce512",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/kg_blueprint.rs",
+      "expected_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+      "qa_post_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+      "main_post_sha256": "10e9f4ef5f91fe5d144bde9b6f50670c62bdb35e6a82cbd1fd22e671b06a5518",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/knowledge_graph.rs",
+      "expected_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+      "qa_post_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+      "main_post_sha256": "f6eb293975e6af68ac94c7d48a2311ef213094c658cbe5d7883d9f7dbe6712b8",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/mod.rs",
+      "expected_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+      "qa_post_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+      "main_post_sha256": "935d2b19b5c2ec8e5a8e4925afbee266e95998304634d4dfee459d248ccd8162",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/note.rs",
+      "expected_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+      "qa_post_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+      "main_post_sha256": "2f832d3bf56b09235d0f740c2fb6fcafc7c0c44bb2d649e7413e65d730070ba0",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/pagination.rs",
+      "expected_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+      "qa_post_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+      "main_post_sha256": "6581a92a253c9756d929c60262e61ba49ec251099dd588533b617e8f6f79d766",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/project.rs",
+      "expected_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+      "qa_post_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+      "main_post_sha256": "b099913b7cd02d35046d09801badbed96eebdb2d46a3f1b785ca798131ef265a",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/project_alert.rs",
+      "expected_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+      "qa_post_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+      "main_post_sha256": "214d3e7794ec9e109704b3927b65f7e496abf22a65a4715ec3720f25669f1b44",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/rag.rs",
+      "expected_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+      "qa_post_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+      "main_post_sha256": "ba108cc0e30f791de693caa6087a69fa8b237078ca9329088506d1798608eb64",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/search.rs",
+      "expected_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+      "qa_post_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+      "main_post_sha256": "305ab91887e41feec1c1af420b9dc5e4e44b0118c483e768b2761958f96a4379",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/user.rs",
+      "expected_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+      "qa_post_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+      "main_post_sha256": "214524d87a7b8740b957cb737a9768733321ffd12ad924bc9c2f7e6dc3030296",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/models/validation.rs",
+      "expected_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+      "qa_post_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+      "main_post_sha256": "2b31de7cb2fcea89ecf93584b51a3ca0bc1d9e3bc877e202697c5418dcd978e4",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/ocr.rs",
+      "expected_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+      "qa_post_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+      "main_post_sha256": "2d65fdcb85c923d09683848c12004354cab6258033808088c09ac9a7bec672ca",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/permissions.rs",
+      "expected_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+      "qa_post_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+      "main_post_sha256": "ebc506c5e3112e8477cd852be23abce9252bc3a99da179a06e0b713b9c97075e",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/project_alert.rs",
+      "expected_sha256": "bd37dc8daf843c9c3c598a2bae2ffebda46b986c88551f2fe6deed309e9eaa7f",
+      "qa_post_sha256": "bd37dc8daf843c9c3c598a2bae2ffebda46b986c88551f2fe6deed309e9eaa7f",
+      "main_post_sha256": "bd37dc8daf843c9c3c598a2bae2ffebda46b986c88551f2fe6deed309e9eaa7f",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/bm25.rs",
+      "expected_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+      "qa_post_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+      "main_post_sha256": "3ab215b947ce7cc5b2048e97a38e311ab2180bfceccda0a95df09afa407bdf57",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/chunk.rs",
+      "expected_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+      "qa_post_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+      "main_post_sha256": "5a3931004d97d52bf1c50cdbcc7eb9b46860340502691bdc1c772e0a5c41d3a3",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/citations.rs",
+      "expected_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+      "qa_post_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+      "main_post_sha256": "63154f1b0fa3356817f81e21ddb40da55eb033a0f0e582d929184bce4a512a99",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/graph.rs",
+      "expected_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+      "qa_post_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+      "main_post_sha256": "6a6550198c20c5a968ac3742c40ff1f49ea8b3ed8aa1972745dd6e3eb5d5f74b",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/index.rs",
+      "expected_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "qa_post_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "main_post_sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/mod.rs",
+      "expected_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+      "qa_post_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+      "main_post_sha256": "75f54317b35643457a2833856d6319e495697e8881c685953d16eca753d8ca2d",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/retrieval.rs",
+      "expected_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+      "qa_post_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+      "main_post_sha256": "2f0c8e05b6954b95b80d27afa664878a876e40ce13d97012422d17d2162d2f9b",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/rag/snapshot.rs",
+      "expected_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+      "qa_post_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+      "main_post_sha256": "5dfe9f5d3825152179ef3cff9c0c7a9da4ec6a41d7c098478a7183fe6691d213",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/security.rs",
+      "expected_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+      "qa_post_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+      "main_post_sha256": "118a4825d5f329de1f0c5238f6875adda62eac1b23a34bea9a62bc3447fefb95",
+      "all_equal": true
+    },
+    {
+      "path": "backend/src/state.rs",
+      "expected_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+      "qa_post_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+      "main_post_sha256": "3259760bae92cb6cee0d6a1dc972b7408d2526d4cce83cf46f2d81c0944e664a",
+      "all_equal": true
+    },
+    {
+      "path": "docker-compose.test-db.yml",
+      "expected_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+      "qa_post_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+      "main_post_sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+      "all_equal": true
+    },
+    {
+      "path": "scripts/ops/docker-compose-with-revision.sh",
+      "expected_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "qa_post_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "main_post_sha256": "fbb490ab7f0edc5c024f2e59d8da86015e2e83042703d68e6089c5e7f60bee0d",
+      "all_equal": true
+    },
+    {
+      "path": "scripts/ops/run-rust-db-tests.sh",
+      "expected_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+      "qa_post_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+      "main_post_sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+      "all_equal": true
+    }
+  ],
+  "new_qa_repository_clean": true,
+  "old_results_inherited": false,
+  "new_external_llm_or_browser_experiments_run": false,
+  "artifact_hashes": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/snapshot-input.json",
+      "sha256": "0ed1013c0e7da88ea94e805d9e9f845508e2372fac77a4fd94762e7342b8d163"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/rust-validation-result.json",
+      "sha256": "dde7b3ef38eb94df59c23a2ca2f8ca081e5f05f9cdacfd6a44eca0c70658561c"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/rust-db-runtime-identity.json",
+      "sha256": "59c348936b8a4ab2f346ee1858af6ab221cac8a06f63c93cf81c2e5d0b4b4309"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/prompt-registry-independent-review.json",
+      "sha256": "f4c846dc1ac3d0b4c0df9ad2edafce52e8048c4310f82963da9cff49e3c3bfd3"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/execution-preflight.json",
+      "sha256": "f3ed0823b465d56f7b6caaa1f5166a3b482fb1d086700f1b6d1acaffcccdbd67"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/fmt.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/clippy.log",
+      "sha256": "be1a791a25ed4ae47e191ed21bf02fc78762c802c4a2233a0c6000dff10953ad"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/rust-db-full.log",
+      "sha256": "644201b9110d85b0d2309ad1df5a8eff2e5e85d901104b8a73f1a1c7a7f1dcda"
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t141-2026-10-11/qa/run-validation.py",
+      "sha256": "af0452513b93fb683f5c13264bb72a4e6bf482fe5aba3ef984d38ce879f0c57f"
+    }
+  ],
+  "scope_limits": [
+    "Complete Rust unit/integration suite against isolated PostgreSQL16/pgvector; not a new browser E2E or external LLM trial.",
+    "The newly modified existing report stub test proves actual static report prompt SHA; the orchestrator template SHA refers to the static placeholder template.",
+    "Final Word content acceptance is separate and pending root release."
+  ]
+}

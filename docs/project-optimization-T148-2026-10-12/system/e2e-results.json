@@ -1,0 +1,908 @@
+{
+  "config": {
+    "argv": [
+      "/Users/yusong/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "/Users/yusong/Downloads/new/full-system/frontend/node_modules/.bin/playwright",
+      "test",
+      "--reporter=list,json",
+      "--output=/Users/yusong/Downloads/new/full-system/agent-work/t148-2026-10-12/system/artifacts"
+    ],
+    "configFile": "/Users/yusong/Downloads/new/full-system/frontend/playwright.config.ts",
+    "rootDir": "/Users/yusong/Downloads/new/full-system/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/yusong/Downloads/new/full-system/agent-work/t148-2026-10-12/system/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/yusong/Downloads/new/full-system/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 180000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "agent-events.spec.ts",
+      "file": "agent-events.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Agent durable-event replay",
+          "file": "agent-events.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "native reconnect preserves the cursor and replayed IDs do not duplicate UI or writes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.586Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-31dead0bddaa7d0994b8",
+              "file": "agent-events.spec.ts",
+              "line": 98,
+              "column": 7
+            },
+            {
+              "title": "a stale deep plan is refused without an index-error message, write or retry",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-ff2e80732aea52d0b65d",
+              "file": "agent-events.spec.ts",
+              "line": 128,
+              "column": 7
+            },
+            {
+              "title": "legacy string IDs stay distinct; events without an ID are not collapsed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-1d8542f3b9f9f69dcd4f",
+              "file": "agent-events.spec.ts",
+              "line": 138,
+              "column": 7
+            },
+            {
+              "title": "confirmation expiry causes no write or automatic retry",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-0093345a161759f10e21",
+              "file": "agent-events.spec.ts",
+              "line": 154,
+              "column": 9
+            },
+            {
+              "title": "confirmation permission withdrawal causes no write or automatic retry",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-af234f467ca6034d68b8",
+              "file": "agent-events.spec.ts",
+              "line": 154,
+              "column": 9
+            },
+            {
+              "title": "a rejection event closes the waiting trajectory without displaying success",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-554d20a40b538090a12b",
+              "file": "agent-events.spec.ts",
+              "line": 167,
+              "column": 7
+            },
+            {
+              "title": "a completed confirmation replay does not claim a new write",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-8416e62ba83a7654edda",
+              "file": "agent-events.spec.ts",
+              "line": 177,
+              "column": 7
+            },
+            {
+              "title": "a server error message remains a failure after normal stream EOF",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-99c62e1d83b15a14dd09",
+              "file": "agent-events.spec.ts",
+              "line": 187,
+              "column": 7
+            },
+            {
+              "title": "completing one pending action keeps the other confirmation waiting",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Requires the isolated mock API frontend",
+                      "location": {
+                        "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                        "line": 8,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": -1,
+                      "parallelIndex": -1,
+                      "status": "skipped",
+                      "duration": 0,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-12T14:12:19.587Z",
+                      "annotations": [
+                        {
+                          "type": "skip",
+                          "description": "Requires the isolated mock API frontend",
+                          "location": {
+                            "file": "/Users/yusong/Downloads/new/full-system/frontend/e2e/agent-events.spec.ts",
+                            "line": 8,
+                            "column": 8
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "53ee895dc07e4e1d10da-6645b4e18b762b58a31e",
+              "file": "agent-events.spec.ts",
+              "line": 198,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "real-lab-acceptance.spec.ts",
+      "file": "real-lab-acceptance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "真实课题组四项目全员协作与 AI 验收",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 53482,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:12:19.746Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0ed34ea7aa3c667c4e66-7838f690862b0ed60f92",
+          "file": "real-lab-acceptance.spec.ts",
+          "line": 265,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "system.spec.ts",
+      "file": "system.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "登录并完成笔记审批",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4089,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:15.051Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "19fec53437319cd87246-4dc47e0934110248bc29",
+          "file": "system.spec.ts",
+          "line": 131,
+          "column": 5
+        },
+        {
+          "title": "图片 OCR、人工校对、入库、问答和五方法实验形成闭环",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5162,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:19.583Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "19fec53437319cd87246-eba4df838ee0dff9ecb6",
+          "file": "system.spec.ts",
+          "line": 161,
+          "column": 5
+        },
+        {
+          "title": "独立评价人只能在盲评页面提交评价",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:24.750Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "19fec53437319cd87246-aeca4654c21626fdb814",
+          "file": "system.spec.ts",
+          "line": 226,
+          "column": 5
+        },
+        {
+          "title": "系统管理员完成账号、小组和审计闭环",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5563,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:29.412Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "19fec53437319cd87246-b0e433a055dc52e5befd",
+          "file": "system.spec.ts",
+          "line": 248,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "user-journeys.spec.ts",
+      "file": "user-journeys.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "项目负责人、记录员和审核人完成退回修订审批闭环",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12810,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:34.988Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-ca1e0ec20a02068490d6",
+          "file": "user-journeys.spec.ts",
+          "line": 105,
+          "column": 5
+        },
+        {
+          "title": "笔记附件必须关联笔记并在资料页保留关联关系",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3209,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:48.533Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-d86bd340f3719ac23ec4",
+          "file": "user-journeys.spec.ts",
+          "line": 175,
+          "column": 5
+        },
+        {
+          "title": "多角色完成 AI 资料、图谱、问答与报告协作闭环",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10649,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:13:51.747Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-8d15d8739d61664235d1",
+          "file": "user-journeys.spec.ts",
+          "line": 212,
+          "column": 5
+        },
+        {
+          "title": "只读成员只能查阅，不能看到写入或项目管理操作",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5656,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-12T14:14:02.401Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e47fcf35bc402c5fa352-0afa625cde0fdc955654",
+          "file": "user-journeys.spec.ts",
+          "line": 275,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-12T14:12:19.566Z",
+    "duration": 108697.632,
+    "expected": 9,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

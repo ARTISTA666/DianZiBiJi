@@ -1,0 +1,323 @@
+{
+  "date": "2026-10-14",
+  "role": "code-reviewer read-only",
+  "source": "/Users/yusong/Desktop/论文/1012.docx",
+  "source_sha256": "0b38c0df1cdcca0f0c2c017283c863fe219b02aa565b53888fe4b47dfbf2bae8",
+  "manuscript_modified": false,
+  "no_manuscript_uploaded": true,
+  "query_scope": "仅题名、作者及DOI最小元数据联网；不上传论文或私有证据",
+  "replacements": [
+    {
+      "old": "[4] 中国科学院. “电子实验记录本”应用解决科学实验数据规范和溯源问题[EB/OL]. 2023.",
+      "new": "[4] 中国科学院. “电子实验记录本”应用解决科学实验数据规范和溯源问题[EB/OL]. (2023-04-25)[2026-10-14]. https://www.cas.cn/zt/kjzt/wxsd/202304/t20230425_4885267.shtml."
+    },
+    {
+      "old": "[6] Schröder M, Biskup T. LabInform ELN: A Lightweight and Flexible Electronic Laboratory Notebook for Academic Research Based on the Open-Source Software DokuWiki[EB/OL]. ChemRxiv, 2023.",
+      "new": "[6] Schröder M, Biskup T. LabInform ELN: A lightweight and flexible electronic laboratory notebook for academic research based on the open-source software DokuWiki[EB/OL]. ChemRxiv, (2023-04-25)[2026-10-14]. https://doi.org/10.26434/chemrxiv-2023-2tvct."
+    },
+    {
+      "old": "[13] 李子骏, 肖辉, 李雪峰. 面向知识密集型任务的检索增强生成技术综述[J]. 微电子学与计算机, 2025, 42(10): 48-65.",
+      "new": "[13] 李子骏, 肖辉, 李雪峰. 面向知识密集型任务的检索增强生成技术综述[J]. 微电子学与计算机, 2025, 42(10): 48-65. DOI: 10.19304/J.ISSN1000-7180.2025.0652."
+    },
+    {
+      "old": "[25] Ma C, Chen Y, Wu T, et al. Large Language Models Meet Knowledge Graphs for Question Answering: Synthesis and Opportunities[C]//EMNLP 2025.",
+      "new": "[25] Ma C, Chen Y, Wu T, et al. Large Language Models Meet Knowledge Graphs for Question Answering: Synthesis and Opportunities[C]//Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing. Suzhou: Association for Computational Linguistics, 2025: 24578-24597. DOI: 10.18653/v1/2025.emnlp-main.1249."
+    },
+    {
+      "old": "[50] 袁乐, 刘绍华, 王禹, 等. 大语言模型检索增强生成优化技术研究综述[J]. 计算机学报, 2026, 49(2): 383-423.",
+      "new": "[50] 袁乐, 刘绍华, 王禹, 等. 大语言模型检索增强生成优化技术研究综述[J]. 计算机学报, 2026, 49(2): 383-422. DOI: 10.11897/SP.J.1016.2026.00383."
+    },
+    {
+      "old": "[58] 姜毅, 王艺璇, 方浜毅, 等. 大语言模型安全与隐私风险综述[J]. 计算机研究与发展, 2025, 62(8): 1979-2018.",
+      "new": "[58] 姜毅, 杨勇, 印佳丽, 等. 大语言模型安全与隐私风险综述[J]. 计算机研究与发展, 2025, 62(8): 1979-2018. DOI: 10.7544/issn1000-1239.202440265."
+    },
+    {
+      "old": "[59] 刘峤, 李杨, 段宏, 等. 知识图谱构建技术综述[J]. 计算机研究与发展, 2016, 53(3): 582-600.",
+      "new": "[59] 刘峤, 李杨, 段宏, 等. 知识图谱构建技术综述[J]. 计算机研究与发展, 2016, 53(3): 582-600. DOI: 10.7544/issn1000-1239.2016.20148228."
+    },
+    {
+      "old": "[62] 张吉祥, 张祥森, 武长旭, 等. 知识图谱构建技术综述[J]. 计算机工程, 2022, 48(3): 23-37.",
+      "new": "[62] 张吉祥, 张祥森, 武长旭, 等. 知识图谱构建技术综述[J]. 计算机工程, 2022, 48(3): 23-37. DOI: 10.19678/j.issn.1000-3428.0061803."
+    }
+  ],
+  "verification": [
+    {
+      "reference_number": 4,
+      "paragraph_index": 1717,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[4] 中国科学院. “电子实验记录本”应用解决科学实验数据规范和溯源问题[EB/OL]. 2023.",
+      "new": "[4] 中国科学院. “电子实验记录本”应用解决科学实验数据规范和溯源问题[EB/OL]. (2023-04-25)[2026-10-14]. https://www.cas.cn/zt/kjzt/wxsd/202304/t20230425_4885267.shtml.",
+      "status": "metadata_completed",
+      "verified_metadata": {
+        "author": "中国科学院",
+        "publication_date": "2023-04-25",
+        "url": "https://www.cas.cn/zt/kjzt/wxsd/202304/t20230425_4885267.shtml"
+      },
+      "primary_sources": [
+        "https://www.cas.cn/zt/kjzt/wxsd/202304/t20230425_4885267.shtml"
+      ],
+      "pending": [],
+      "note": "中国科学院官网标题、日期及页面来源相符；补URL与本次查阅日期。"
+    },
+    {
+      "reference_number": 6,
+      "paragraph_index": 1719,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[6] Schröder M, Biskup T. LabInform ELN: A Lightweight and Flexible Electronic Laboratory Notebook for Academic Research Based on the Open-Source Software DokuWiki[EB/OL]. ChemRxiv, 2023.",
+      "new": "[6] Schröder M, Biskup T. LabInform ELN: A lightweight and flexible electronic laboratory notebook for academic research based on the open-source software DokuWiki[EB/OL]. ChemRxiv, (2023-04-25)[2026-10-14]. https://doi.org/10.26434/chemrxiv-2023-2tvct.",
+      "status": "metadata_completed",
+      "verified_metadata": {
+        "authors": [
+          "Mirjam Schröder",
+          "Till Biskup"
+        ],
+        "publication_date": "2023-04-25",
+        "doi": "10.26434/chemrxiv-2023-2tvct",
+        "record_type": "posted-content"
+      },
+      "primary_sources": [
+        "https://api.crossref.org/works/10.26434/chemrxiv-2023-2tvct",
+        "https://doi.org/10.26434/chemrxiv-2023-2tvct",
+        "https://www.labinform.de/index"
+      ],
+      "pending": [
+        "预印本具体版本号尚未核实；不擅自补v1。"
+      ],
+      "note": "Crossref DOI元数据与LabInform项目官网匹配作者、题名及年份；ChemRxiv正文直连受限，未据此否认真实性。"
+    },
+    {
+      "reference_number": 13,
+      "paragraph_index": 1726,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[13] 李子骏, 肖辉, 李雪峰. 面向知识密集型任务的检索增强生成技术综述[J]. 微电子学与计算机, 2025, 42(10): 48-65.",
+      "new": "[13] 李子骏, 肖辉, 李雪峰. 面向知识密集型任务的检索增强生成技术综述[J]. 微电子学与计算机, 2025, 42(10): 48-65. DOI: 10.19304/J.ISSN1000-7180.2025.0652.",
+      "status": "verified_and_doi_completed",
+      "verified_metadata": {
+        "authors": [
+          "李子骏",
+          "肖辉",
+          "李雪峰"
+        ],
+        "journal": "微电子学与计算机",
+        "year": 2025,
+        "volume": "42",
+        "issue": "10",
+        "pages": "48-65",
+        "doi": "10.19304/J.ISSN1000-7180.2025.0652"
+      },
+      "primary_sources": [
+        "https://mc.spacejournal.cn/article/doi/10.19304/J.ISSN1000-7180.2025.0652?viewType=HTML"
+      ],
+      "pending": [],
+      "note": "期刊官网引用元数据与原稿主要字段一致。"
+    },
+    {
+      "reference_number": 25,
+      "paragraph_index": 1738,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[25] Ma C, Chen Y, Wu T, et al. Large Language Models Meet Knowledge Graphs for Question Answering: Synthesis and Opportunities[C]//EMNLP 2025.",
+      "new": "[25] Ma C, Chen Y, Wu T, et al. Large Language Models Meet Knowledge Graphs for Question Answering: Synthesis and Opportunities[C]//Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing. Suzhou: Association for Computational Linguistics, 2025: 24578-24597. DOI: 10.18653/v1/2025.emnlp-main.1249.",
+      "status": "metadata_completed",
+      "verified_metadata": {
+        "authors": [
+          "Chuangtao Ma",
+          "Yongrui Chen",
+          "Tianxing Wu",
+          "Arijit Khan",
+          "Haofen Wang"
+        ],
+        "proceedings": "Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing",
+        "location": "Suzhou, China",
+        "publisher": "Association for Computational Linguistics",
+        "year": 2025,
+        "pages": "24578-24597",
+        "doi": "10.18653/v1/2025.emnlp-main.1249"
+      },
+      "primary_sources": [
+        "https://aclanthology.org/2025.emnlp-main.1249/"
+      ],
+      "pending": [],
+      "note": "ACL Anthology正式记录支持论文集、出版地、出版者、页码和DOI。"
+    },
+    {
+      "reference_number": 45,
+      "paragraph_index": 1758,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[45] 赵鑫, 李军毅, 周昆, 等. 大语言模型[M]. 北京: 高等教育出版社, 2024.",
+      "new": "[45] 赵鑫, 李军毅, 周昆, 等. 大语言模型[M]. 北京: 高等教育出版社, 2024.",
+      "status": "main_metadata_verified_edition_pending",
+      "verified_metadata": {
+        "authors": [
+          "赵鑫",
+          "李军毅",
+          "周昆",
+          "唐天一",
+          "文继荣"
+        ],
+        "title": "大语言模型",
+        "publisher": "高等教育出版社",
+        "year": 2024,
+        "publication_month": "2024-12",
+        "isbn": "978-7-04-063496-9",
+        "pages": 376
+      },
+      "primary_sources": [
+        "https://xuanshu.hep.com.cn/front/book/findBookDetails?bookId=67338a89e4efbc722ba48736"
+      ],
+      "pending": [
+        "版次未由本次出版商页面直接取得，需书籍版权页确认；不编造第1版。"
+      ],
+      "note": "原稿前三作者加等、书名、出版社与年份均相符；ISBN核实为978-7-04-063496-9，原条目可保留。"
+    },
+    {
+      "reference_number": 50,
+      "paragraph_index": 1763,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[50] 袁乐, 刘绍华, 王禹, 等. 大语言模型检索增强生成优化技术研究综述[J]. 计算机学报, 2026, 49(2): 383-423.",
+      "new": "[50] 袁乐, 刘绍华, 王禹, 等. 大语言模型检索增强生成优化技术研究综述[J]. 计算机学报, 2026, 49(2): 383-422. DOI: 10.11897/SP.J.1016.2026.00383.",
+      "status": "confirmed_error_corrected",
+      "verified_metadata": {
+        "authors_first_three": [
+          "袁乐",
+          "刘绍华",
+          "王禹"
+        ],
+        "journal": "计算机学报",
+        "year": 2026,
+        "volume": "49",
+        "issue": "2",
+        "pages": "383-422",
+        "doi": "10.11897/SP.J.1016.2026.00383"
+      },
+      "primary_sources": [
+        "http://cjc.ict.ac.cn/online/onlinepaper/008_yl-2026227143149.pdf",
+        "https://doi.org/10.11897/SP.J.1016.2026.00383"
+      ],
+      "pending": [],
+      "note": "期刊官方PDF共40页，第一页页码383，第二页384，末页422；原稿383-423末页错误。DOI出现在官方PDF首页。Crossref检索404不足以否定该期刊DOI。"
+    },
+    {
+      "reference_number": 58,
+      "paragraph_index": 1771,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[58] 姜毅, 王艺璇, 方浜毅, 等. 大语言模型安全与隐私风险综述[J]. 计算机研究与发展, 2025, 62(8): 1979-2018.",
+      "new": "[58] 姜毅, 杨勇, 印佳丽, 等. 大语言模型安全与隐私风险综述[J]. 计算机研究与发展, 2025, 62(8): 1979-2018. DOI: 10.7544/issn1000-1239.202440265.",
+      "status": "confirmed_error_corrected",
+      "verified_metadata": {
+        "authors_first_three": [
+          "姜毅",
+          "杨勇",
+          "印佳丽"
+        ],
+        "journal": "计算机研究与发展",
+        "year": 2025,
+        "volume": "62",
+        "issue": "8",
+        "pages": "1979-2018",
+        "doi": "10.7544/issn1000-1239.202440265"
+      },
+      "primary_sources": [
+        "https://crad.ict.ac.cn/cn/article/pdf/preview/10.7544/issn1000-1239.202440265.pdf",
+        "https://nesa.zju.edu.cn/download/jiangyi_2025.pdf"
+      ],
+      "pending": [],
+      "note": "期刊官方PDF首页首三作者为姜毅、杨勇、印佳丽；原稿王艺璇、方浜毅不符。浙江大学作者团队存档可交叉核验。"
+    },
+    {
+      "reference_number": 59,
+      "paragraph_index": 1772,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[59] 刘峤, 李杨, 段宏, 等. 知识图谱构建技术综述[J]. 计算机研究与发展, 2016, 53(3): 582-600.",
+      "new": "[59] 刘峤, 李杨, 段宏, 等. 知识图谱构建技术综述[J]. 计算机研究与发展, 2016, 53(3): 582-600. DOI: 10.7544/issn1000-1239.2016.20148228.",
+      "status": "verified_and_doi_completed",
+      "verified_metadata": {
+        "authors": [
+          "刘峤",
+          "李杨",
+          "段宏",
+          "刘瑶",
+          "秦志光"
+        ],
+        "journal": "计算机研究与发展",
+        "year": 2016,
+        "volume": "53",
+        "issue": "3",
+        "pages": "582-600",
+        "doi": "10.7544/issn1000-1239.2016.20148228"
+      },
+      "primary_sources": [
+        "https://crad.ict.ac.cn/cn/article/doi/10.7544/issn1000-1239.2016.20148228"
+      ],
+      "pending": [],
+      "note": "期刊官网citation元数据与原稿相符；与[62]同题名但为不同论文，没有作者刊名串条。"
+    },
+    {
+      "reference_number": 62,
+      "paragraph_index": 1775,
+      "paragraph_index_basis": "zero based over .//w:body//w:p document order, including tables",
+      "old": "[62] 张吉祥, 张祥森, 武长旭, 等. 知识图谱构建技术综述[J]. 计算机工程, 2022, 48(3): 23-37.",
+      "new": "[62] 张吉祥, 张祥森, 武长旭, 等. 知识图谱构建技术综述[J]. 计算机工程, 2022, 48(3): 23-37. DOI: 10.19678/j.issn.1000-3428.0061803.",
+      "status": "verified_and_doi_completed",
+      "verified_metadata": {
+        "authors": [
+          "张吉祥",
+          "张祥森",
+          "武长旭",
+          "赵增顺"
+        ],
+        "journal": "计算机工程",
+        "year": 2022,
+        "volume": "48",
+        "issue": "3",
+        "pages": "23-37",
+        "doi": "10.19678/j.issn.1000-3428.0061803",
+        "online_date": "2021-09-09"
+      },
+      "primary_sources": [
+        "https://www.ecice06.com/CN/10.19678/j.issn.1000-3428.0061803"
+      ],
+      "pending": [],
+      "note": "期刊官网元数据与原稿相符；2021在线日期不改写2022正式卷期年。"
+    }
+  ],
+  "summary": {
+    "checked_references": 9,
+    "confirmed_substantive_errors": [
+      {
+        "reference": 50,
+        "field": "last_page",
+        "old": "423",
+        "new": "422"
+      },
+      {
+        "reference": 58,
+        "field": "authors_2_3",
+        "old": [
+          "王艺璇",
+          "方浜毅"
+        ],
+        "new": [
+          "杨勇",
+          "印佳丽"
+        ]
+      }
+    ],
+    "remaining_pending": [
+      {
+        "reference": 6,
+        "field": "preprint_version"
+      },
+      {
+        "reference": 45,
+        "field": "edition"
+      }
+    ]
+  },
+  "author_statements": {
+    "source": "根线程转达作者在本会话中的直接说明",
+    "implementation": "项目主体代码主要由AI辅助编程（vibe coding）完成，论文涉及的代码均经作者本人复核；未获确认模型或工作量比例不补写。",
+    "author_alias": "登哲为作者本人",
+    "teacher_name": "徐林与徐琳为同一老师，作者已确认正确姓名徐琳。"
+  },
+  "format_note": "补充文本采用现有数字顺序引用样式；学校所采用的GB/T 7714版本与院级细则未取得，不宣称完成全篇格式认证。"
+}

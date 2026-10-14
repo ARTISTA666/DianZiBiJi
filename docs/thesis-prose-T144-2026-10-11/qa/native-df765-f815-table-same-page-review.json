@@ -1,0 +1,1110 @@
+{
+  "task": "T144 independent native-PDF same-page cell-text screening",
+  "utc": "2026-10-11T15:04:25.951682+00:00",
+  "inputs": {
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/1005-表述精校无批注版-2026-10-11.docx",
+    "word_sha256": "df765798eb3598a5818a5e492b8a229bbf4e7c12ca2ee9464171bce5e93a41d7",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t144-2026-10-11/native-wps/1005-表述精校无批注版-2026-10-11.pdf",
+    "pdf_sha256": "f8158465c20323857e4afe8b2063bebd68735451b9c342ffa808bde5d4e84e92"
+  },
+  "table_count": 98,
+  "text_screen_pass_count": 97,
+  "requiring_visual": [
+    {
+      "table_index": 40,
+      "caption": "表 6-4　评价指标与计算方式",
+      "caption_physical_pages": [
+        57
+      ],
+      "cell_text_fragment_count": 44,
+      "missing_cell_text_fragments": [
+        "Na、Nr为回答、参考答案陈述总数,s表示受上下文支持;K为上下文条数,vk为第k条上下文有助于参考答案的0/1判定,pk为前k条的相关比例。"
+      ],
+      "all_plain_cell_text_on_caption_page": false,
+      "status": "EXTRACTION_AMBIGUITY_REQUIRES_VISUAL"
+    }
+  ],
+  "tables": [
+    {
+      "table_index": 1,
+      "caption": "表 1-1　代表性ELN能力与本文具体实现的比较",
+      "caption_physical_pages": [
+        9
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 2,
+      "caption": "表 3-1　用户角色与权限需求",
+      "caption_physical_pages": [
+        15
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 3,
+      "caption": "表 3-2　问题场景与需求约束对应",
+      "caption_physical_pages": [
+        16
+      ],
+      "cell_text_fragment_count": 10,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 4,
+      "caption": "表 3-3　业务场景与 AI 处理目标映射",
+      "caption_physical_pages": [
+        16
+      ],
+      "cell_text_fragment_count": 24,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 5,
+      "caption": "表 3-4　系统功能需求清单",
+      "caption_physical_pages": [
+        17
+      ],
+      "cell_text_fragment_count": 33,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 6,
+      "caption": "表 3-5　系统非功能需求清单",
+      "caption_physical_pages": [
+        17
+      ],
+      "cell_text_fragment_count": 21,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 8,
+      "caption": "表 4-1　用户角色能力矩阵",
+      "caption_physical_pages": [
+        20
+      ],
+      "cell_text_fragment_count": 21,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 9,
+      "caption": "表 4-2　系统功能模块与职责",
+      "caption_physical_pages": [
+        21
+      ],
+      "cell_text_fragment_count": 30,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 10,
+      "caption": "表 4-3　功能链路与数据对应",
+      "caption_physical_pages": [
+        21
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 11,
+      "caption": "表 4-4　数据分类与数据库表",
+      "caption_physical_pages": [
+        23
+      ],
+      "cell_text_fragment_count": 39,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 12,
+      "caption": "表 4-5　实体类型定义",
+      "caption_physical_pages": [
+        25
+      ],
+      "cell_text_fragment_count": 42,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 13,
+      "caption": "表 4-6　关系类型定义",
+      "caption_physical_pages": [
+        25
+      ],
+      "cell_text_fragment_count": 52,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 21,
+      "caption": "表 4-7　评分公式符号说明",
+      "caption_physical_pages": [
+        33
+      ],
+      "cell_text_fragment_count": 11,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 22,
+      "caption": "表 4-8　审计记录与评价记录对比",
+      "caption_physical_pages": [
+        34
+      ],
+      "cell_text_fragment_count": 15,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 23,
+      "caption": "表 4-9　固定任务生成设计",
+      "caption_physical_pages": [
+        35
+      ],
+      "cell_text_fragment_count": 35,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 24,
+      "caption": "表 4-10　实验总结模板示例与来源映射",
+      "caption_physical_pages": [
+        36
+      ],
+      "cell_text_fragment_count": 10,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 25,
+      "caption": "表 4-11　MCP 工具清单",
+      "caption_physical_pages": [
+        36
+      ],
+      "cell_text_fragment_count": 65,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 26,
+      "caption": "表 4-12　预警指标与默认阈值",
+      "caption_physical_pages": [
+        37
+      ],
+      "cell_text_fragment_count": 15,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 27,
+      "caption": "表 5-1　系统实现环境与参数",
+      "caption_physical_pages": [
+        39
+      ],
+      "cell_text_fragment_count": 54,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 28,
+      "caption": "表 5-2　实验数据列表",
+      "caption_physical_pages": [
+        40
+      ],
+      "cell_text_fragment_count": 23,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 29,
+      "caption": "表 5-3　预置测试笔记结构化样例",
+      "caption_physical_pages": [
+        40
+      ],
+      "cell_text_fragment_count": 10,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 30,
+      "caption": "表 5-4　检索参数配置",
+      "caption_physical_pages": [
+        43
+      ],
+      "cell_text_fragment_count": 16,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 32,
+      "caption": "表 5-5　实验总结草稿节选",
+      "caption_physical_pages": [
+        45
+      ],
+      "cell_text_fragment_count": 14,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 33,
+      "caption": "表 5-6　功能模块与代表操作对应",
+      "caption_physical_pages": [
+        46
+      ],
+      "cell_text_fragment_count": 42,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 34,
+      "caption": "表 6-1　验证对象与工具",
+      "caption_physical_pages": [
+        53
+      ],
+      "cell_text_fragment_count": 8,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 35,
+      "caption": "表 6-2　实验数据集",
+      "caption_physical_pages": [
+        53
+      ],
+      "cell_text_fragment_count": 15,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 36,
+      "caption": "表 6-3　功能与安全测试设计、过程及结果",
+      "caption_physical_pages": [
+        55
+      ],
+      "cell_text_fragment_count": 18,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 37,
+      "caption": "表 6-3a　浏览器基础流程用例与冻结运行结果",
+      "caption_physical_pages": [
+        55
+      ],
+      "cell_text_fragment_count": 15,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 38,
+      "caption": "表 6-3b　浏览器协作与权限用例的冻结运行结果",
+      "caption_physical_pages": [
+        56
+      ],
+      "cell_text_fragment_count": 15,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 39,
+      "caption": "表 6-3c　Rust高风险确认与幂等集成用例",
+      "caption_physical_pages": [
+        56
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 40,
+      "caption": "表 6-4　评价指标与计算方式",
+      "caption_physical_pages": [
+        57
+      ],
+      "cell_text_fragment_count": 44,
+      "missing_cell_text_fragments": [
+        "Na、Nr为回答、参考答案陈述总数,s表示受上下文支持;K为上下文条数,vk为第k条上下文有助于参考答案的0/1判定,pk为前k条的相关比例。"
+      ],
+      "all_plain_cell_text_on_caption_page": false,
+      "status": "EXTRACTION_AMBIGUITY_REQUIRES_VISUAL"
+    },
+    {
+      "table_index": 41,
+      "caption": "表 6-5　迁移前Python原型的固定样例关系核验结果",
+      "caption_physical_pages": [
+        59
+      ],
+      "cell_text_fragment_count": 21,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 42,
+      "caption": "表 6-6　20 题成对实验总体结果",
+      "caption_physical_pages": [
+        60
+      ],
+      "cell_text_fragment_count": 27,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 43,
+      "caption": "表 6-7　项目一基础对照：20 题全题集与 Q06—Q19 共同子集",
+      "caption_physical_pages": [
+        62
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 44,
+      "caption": "表 6-8　扩展对照：五种方法（GSE111619 语料，12 题 × 3 次重复）",
+      "caption_physical_pages": [
+        63
+      ],
+      "cell_text_fragment_count": 36,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 45,
+      "caption": "表 6-9　固定任务生成结果",
+      "caption_physical_pages": [
+        65
+      ],
+      "cell_text_fragment_count": 30,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 46,
+      "caption": "表 6-10　RAGAS 自动评价结果",
+      "caption_physical_pages": [
+        66
+      ],
+      "cell_text_fragment_count": 36,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 47,
+      "caption": "表 6-11　20题成对实验的GPT语义评价",
+      "caption_physical_pages": [
+        67
+      ],
+      "cell_text_fragment_count": 15,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 48,
+      "caption": "表 6-11a　GPT语义评价的题级配对差值",
+      "caption_physical_pages": [
+        67
+      ],
+      "cell_text_fragment_count": 20,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 49,
+      "caption": "表 6-12　基于Rust检索证据的四种上下文配置问答结果",
+      "caption_physical_pages": [
+        68
+      ],
+      "cell_text_fragment_count": 25,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 50,
+      "caption": "表 6-13　角色真实接口验证",
+      "caption_physical_pages": [
+        69
+      ],
+      "cell_text_fragment_count": 27,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 51,
+      "caption": "表 6-14　当前Rust关系抽取补充测试的内容关系结果",
+      "caption_physical_pages": [
+        70
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 52,
+      "caption": "表 A-1　RAG 对照实验问题清单",
+      "caption_physical_pages": [
+        78
+      ],
+      "cell_text_fragment_count": 63,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 53,
+      "caption": "表 B-1(a)　PCR 条件优化（源实体：PCR 条件优化实验）",
+      "caption_physical_pages": [
+        79
+      ],
+      "cell_text_fragment_count": 39,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 54,
+      "caption": "表 B-1(b)　细胞活力检测（源实体：细胞活力检测实验）",
+      "caption_physical_pages": [
+        80
+      ],
+      "cell_text_fragment_count": 39,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 55,
+      "caption": "表 B-1(c)　Western Blot（源实体：Western Blot 蛋白表达验证）",
+      "caption_physical_pages": [
+        80
+      ],
+      "cell_text_fragment_count": 45,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 56,
+      "caption": "表 B-1(d)　qPCR 定量验证（源实体：qPCR 定量验证实验）",
+      "caption_physical_pages": [
+        81
+      ],
+      "cell_text_fragment_count": 45,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 57,
+      "caption": "表 B-2　数据分类与字段约束符号说明",
+      "caption_physical_pages": [
+        81
+      ],
+      "cell_text_fragment_count": 18,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 58,
+      "caption": "表 B-2　数据分类与字段约束符号说明（续：公共字段完整定义）",
+      "caption_physical_pages": [
+        82
+      ],
+      "cell_text_fragment_count": 76,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 59,
+      "caption": "表 B-3　用户账户表（users）；G：G02/G01/G03",
+      "caption_physical_pages": [
+        82
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 60,
+      "caption": "表 B-4　课题组表（groups）；G：G02/G01/G03",
+      "caption_physical_pages": [
+        82
+      ],
+      "cell_text_fragment_count": 16,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 61,
+      "caption": "表 B-5　课题组成员表（group_members）；G：G02/G05/G01",
+      "caption_physical_pages": [
+        83
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 62,
+      "caption": "表 B-6　课题组项目关联表（group_projects）；G：G02/G04/G01",
+      "caption_physical_pages": [
+        83
+      ],
+      "cell_text_fragment_count": 8,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 63,
+      "caption": "表 B-7　科研项目表（projects）；G：G02/G01/G03",
+      "caption_physical_pages": [
+        83
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 64,
+      "caption": "表 B-8　项目成员授权表（project_members）；G：G02/G04/G05/G01",
+      "caption_physical_pages": [
+        83
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 65,
+      "caption": "表 B-9　项目审核人表（project_reviewers）；G：G02/G04/G05/G01",
+      "caption_physical_pages": [
+        83
+      ],
+      "cell_text_fragment_count": 8,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 66,
+      "caption": "表 B-10　实验模板表（experiment_templates）；G：G02/G01/G03",
+      "caption_physical_pages": [
+        83
+      ],
+      "cell_text_fragment_count": 24,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 67,
+      "caption": "表 B-11　实验笔记表（experiment_notes）；G：G02/G04/G01/G03",
+      "caption_physical_pages": [
+        84
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 68,
+      "caption": "表 B-12　笔记版本表（note_versions）；G：G02/G12/G06/G01",
+      "caption_physical_pages": [
+        84
+      ],
+      "cell_text_fragment_count": 24,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 69,
+      "caption": "表 B-13　笔记审核记录表（note_approvals）；G：G02/G12/G01",
+      "caption_physical_pages": [
+        84
+      ],
+      "cell_text_fragment_count": 20,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 70,
+      "caption": "表 B-14　笔记检索文档表（search_documents）；G：G02/G04/G03",
+      "caption_physical_pages": [
+        84
+      ],
+      "cell_text_fragment_count": 20,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 71,
+      "caption": "表 B-15　附件与知识资料表（files）；G：G02/G04/G01",
+      "caption_physical_pages": [
+        85
+      ],
+      "cell_text_fragment_count": 52,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 72,
+      "caption": "表 B-16　OCR结果与校对表（file_ocr_results）；G：G02/G04/G06/G01",
+      "caption_physical_pages": [
+        85
+      ],
+      "cell_text_fragment_count": 44,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 73,
+      "caption": "表 B-17　项目知识库表（project_rag_datasets）；G：G02/G09/G06/G01/G03",
+      "caption_physical_pages": [
+        85
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 74,
+      "caption": "表 B-18　知识资料同步表（rag_file_syncs）；G：G02/G04/G01/G03",
+      "caption_physical_pages": [
+        86
+      ],
+      "cell_text_fragment_count": 40,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 75,
+      "caption": "表 B-19　资料分块与向量表（rag_document_chunks）；G：G02/G04/G01",
+      "caption_physical_pages": [
+        86
+      ],
+      "cell_text_fragment_count": 40,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 76,
+      "caption": "表 B-20　图谱实体表（kg_entities）；G：G02/G04/G01/G03",
+      "caption_physical_pages": [
+        86
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 77,
+      "caption": "表 B-21　图谱关系表（kg_relations）；G：G02/G04/G01",
+      "caption_physical_pages": [
+        87
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 78,
+      "caption": "表 B-22　知识抽取运行表（kg_extraction_runs）；G：G02/G04/G12/G09/G01",
+      "caption_physical_pages": [
+        87
+      ],
+      "cell_text_fragment_count": 20,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 79,
+      "caption": "表 B-23　计划知识点表（kg_blueprint_nodes）；G：G07/G08/G06/G01/G03",
+      "caption_physical_pages": [
+        87
+      ],
+      "cell_text_fragment_count": 36,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 80,
+      "caption": "表 B-24　计划知识关系表（kg_blueprint_edges）；G：G07/G08/G01",
+      "caption_physical_pages": [
+        87
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 81,
+      "caption": "表 B-25　计划文档解析记录表（kg_blueprint_documents）；G：G07/G08/G06/G01",
+      "caption_physical_pages": [
+        88
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 82,
+      "caption": "表 B-26　问答运行日志表（ai_query_logs）；G：G02/G04/G05/G01",
+      "caption_physical_pages": [
+        88
+      ],
+      "cell_text_fragment_count": 84,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 83,
+      "caption": "表 B-27　问答评价表（ai_query_evaluations）；G：G02/G01/G03",
+      "caption_physical_pages": [
+        88
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 84,
+      "caption": "表 B-28　问答实验批次表（ai_experiment_runs）；G：G02/G04/G06/G09/G01/G13",
+      "caption_physical_pages": [
+        89
+      ],
+      "cell_text_fragment_count": 48,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 85,
+      "caption": "表 B-29　盲评批次表（ai_blind_review_batches）；G：G07/G08/G06/G01",
+      "caption_physical_pages": [
+        89
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 86,
+      "caption": "表 B-30　固定任务生成记录表（agent_generation_runs）；G：G02/G04/G05/G09/G01",
+      "caption_physical_pages": [
+        89
+      ],
+      "cell_text_fragment_count": 56,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 87,
+      "caption": "表 B-31　操作审计日志表（audit_logs）；G：G02/G14/G01",
+      "caption_physical_pages": [
+        90
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 88,
+      "caption": "表 B-32　MCP访问令牌表（mcp_personal_access_tokens）；G：G10/G15/G16/G01",
+      "caption_physical_pages": [
+        90
+      ],
+      "cell_text_fragment_count": 28,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 89,
+      "caption": "表 B-33　MCP HTTP会话表（mcp_http_sessions）；G：G10/G15/G16/G01",
+      "caption_physical_pages": [
+        90
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 90,
+      "caption": "表 B-34　智能体会话表（agent_sessions）；G：G10/G05/G14/G01/G03",
+      "caption_physical_pages": [
+        90
+      ],
+      "cell_text_fragment_count": 36,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 91,
+      "caption": "表 B-35　智能体回合表（agent_turns）；G：G10/G11/G15/G09/G01/G03/G13",
+      "caption_physical_pages": [
+        91
+      ],
+      "cell_text_fragment_count": 44,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 92,
+      "caption": "表 B-36　智能体事件表（agent_events）；G：G17/G11/G01",
+      "caption_physical_pages": [
+        91
+      ],
+      "cell_text_fragment_count": 16,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 93,
+      "caption": "表 B-37　智能体消息表（agent_messages）；G：G17/G11/G01",
+      "caption_physical_pages": [
+        91
+      ],
+      "cell_text_fragment_count": 16,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 94,
+      "caption": "表 B-38　工具执行步骤表（agent_steps）；G：G17/G11/G18/G13",
+      "caption_physical_pages": [
+        91
+      ],
+      "cell_text_fragment_count": 40,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 95,
+      "caption": "表 B-39　待确认工具动作表（agent_pending_actions）；G：G10/G05/G14/G18/G16/G01",
+      "caption_physical_pages": [
+        92
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 96,
+      "caption": "表 B-40　工具幂等记录表（tool_execution_keys）；G：G18/G01",
+      "caption_physical_pages": [
+        92
+      ],
+      "cell_text_fragment_count": 20,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 97,
+      "caption": "表 B-41　项目预警阈值表（project_alert_thresholds）；G：G07/G08/G01/G03",
+      "caption_physical_pages": [
+        92
+      ],
+      "cell_text_fragment_count": 24,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 98,
+      "caption": "表 B-42　项目预警记录表（project_alerts）；G：G07/G08/G01/G03",
+      "caption_physical_pages": [
+        92
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 99,
+      "caption": "表 B-43　建议反馈记录表（agent_suggestion_feedback）；G：G07/G08",
+      "caption_physical_pages": [
+        93
+      ],
+      "cell_text_fragment_count": 32,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 100,
+      "caption": "表 B-44　历史迁移版本表（alembic_version）",
+      "caption_physical_pages": [
+        93
+      ],
+      "cell_text_fragment_count": 8,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 101,
+      "caption": "表 B-45　Rust结构版本表（rust_schema_versions）",
+      "caption_physical_pages": [
+        93
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 102,
+      "caption": "表 C-1　MCP 工具权限范围与审计动作对照",
+      "caption_physical_pages": [
+        94
+      ],
+      "cell_text_fragment_count": 39,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 103,
+      "caption": "表 C-2　固定任务模板注册表",
+      "caption_physical_pages": [
+        94
+      ],
+      "cell_text_fragment_count": 21,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 104,
+      "caption": "表 D-1　GSE111619 数据文件完整性清单",
+      "caption_physical_pages": [
+        95
+      ],
+      "cell_text_fragment_count": 12,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 105,
+      "caption": "表 D-2　实验附件归档清单",
+      "caption_physical_pages": [
+        95
+      ],
+      "cell_text_fragment_count": 16,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 106,
+      "caption": "表 D-3　测试运行记录",
+      "caption_physical_pages": [
+        99
+      ],
+      "cell_text_fragment_count": 16,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    },
+    {
+      "table_index": 107,
+      "caption": "表 D-4　追加验证与观测记录",
+      "caption_physical_pages": [
+        100
+      ],
+      "cell_text_fragment_count": 20,
+      "missing_cell_text_fragments": [],
+      "all_plain_cell_text_on_caption_page": true,
+      "status": "PASS_TEXT_SCREEN"
+    }
+  ],
+  "scope": "Matching captions uses complete normalized lines (or one wrapped line), not prefix matches. Inline OMML separates plain-text fragments and is protected independently in Word. Missing PDF text, including subscript extraction, is not a pagination failure without visual confirmation. Positive cell-text screening supports same-page placement; original-size review verifies appearance, formula glyphs and complete rules."
+}

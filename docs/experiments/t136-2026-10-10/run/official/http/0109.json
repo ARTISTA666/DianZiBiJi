@@ -1,0 +1,22 @@
+{
+  "utc": "2026-10-10T15:52:29.516169+00:00",
+  "path": "/notes/26/approve",
+  "method": "POST",
+  "request": {
+    "comment": "T136 isolated functional test"
+  },
+  "status": 200,
+  "response": {
+    "id": 26,
+    "project_id": 3,
+    "template_id": null,
+    "title": "细胞活力检测实验",
+    "experiment_type": "细胞培养",
+    "experiment_date": "2026-06-04",
+    "owner_user_id": 1,
+    "status": "approved",
+    "current_version_id": 26,
+    "created_at": "2026-10-10T15:52:29.510107Z",
+    "updated_at": "2026-10-10T15:52:29.519108Z"
+  }
+}

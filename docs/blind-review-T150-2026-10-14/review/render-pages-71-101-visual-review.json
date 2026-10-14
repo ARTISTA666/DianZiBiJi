@@ -1,0 +1,567 @@
+{
+  "schema": "t150-render-visual-review-v1",
+  "task_id": "T150",
+  "review_date": "2026-10-14",
+  "reviewer_type": "AI视觉复核，非人类独立复核",
+  "mode": "只读查看原尺寸页面PNG，未修改Word、PNG、源码或历史证据",
+  "source": {
+    "render_directory": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render",
+    "word_path": "/Users/yusong/Desktop/盲审整改-T150-2026-10-14/论文匿名整改副本-T150.docx",
+    "parent_previously_reported_word_sha256": "ebe61a107576280f153a41a8ad5fa4edd565decd83fb4d4cbd2c0863a984bb15",
+    "current_word_sha256_at_review_metadata_capture": "0ed180a286b3069ab73bc023f1d2ca32dcba4de4f49ee7bfe03ce2b0e77f1bcb",
+    "render_to_current_word_hash_association": "未核实；当前Word哈希与父线程最初提供的Word哈希不同。本结论绑定各PNG哈希，不能自行声称已覆盖最新Word的全部修改。"
+  },
+  "scope": {
+    "physical_pages": [
+      71,
+      101
+    ],
+    "count": 31,
+    "printed_pages": [
+      64,
+      94
+    ],
+    "actual_images_opened_count": 31,
+    "detail": "original",
+    "image_dimensions_px": [
+      1414,
+      2000
+    ],
+    "checks": [
+      "分页、断表、截断、图题分离",
+      "致谢与附录的个人姓名/账号可见残留",
+      "参考文献链接/DOI/条目分页的可读性",
+      "附录图字、表字和数字/公式的视觉可读性"
+    ]
+  },
+  "result": {
+    "overall": "本范围31页未发现可具体定位的排版缺陷或新增姓名残留",
+    "layout_defects": [],
+    "identity_defects_visible_in_this_page_range": [],
+    "bibliography_visual": "[4][6][13][25][50][58][59][62]相关已修条目在物理75—77页完整可读，[45]保持原条目；网址/DOI换行属于正常排版，未见截断",
+    "ai_disclosure_visual": "物理96—97页AI辅助编程贡献披露完整衔接，可读；包含主体AI vibe coding及作者复核论文和代码的限定，未伪称人工独立开发或真实用户研究"
+  },
+  "pages": [
+    {
+      "physical_page": 71,
+      "printed_page": "64",
+      "content": "表6-14、6.7本章小结",
+      "result": "pass",
+      "notes": [
+        "表6-14整体在页内，列名、数据与表题清晰，未断表。",
+        "新加AI参考标签一致性限制可完整阅读。",
+        "6.7标题与首段同页，未孤行。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-71.png",
+      "sha256": "57f8e39eb05d219af96b0df50bb9936933afddfa77820ba51b88ab1ba2dcedf6",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 72,
+      "printed_page": "65",
+      "content": "第七章、7.1与7.2",
+      "result": "pass",
+      "notes": [
+        "章标题及7.1、7.2层级正常。",
+        "图结构独立增益未确认的限制完整呈现。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-72.png",
+      "sha256": "f30c09ac62006ec2453efe4b43d8347c88bc1fd111e575bd923716e48633643a",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 73,
+      "printed_page": "66",
+      "content": "7.3不足与展望",
+      "result": "pass",
+      "notes": [
+        "正文清晰，无溢出或断字。",
+        "末尾大段留白属本章结束，非空白页。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-73.png",
+      "sha256": "9329ea7b7884c720fb3fbc094501c9e300e69f1366ef2e549cd396470f6be4cf",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 74,
+      "printed_page": "67",
+      "content": "致谢",
+      "result": "pass",
+      "notes": [
+        "已改致谢全文可读，未见作者、导师、同学姓名。",
+        "通用指导教师/学院/同学表述保留，页眉学校名称仍存在；学院正式盲审规范尚未核实。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-74.png",
+      "sha256": "0b901c84776f32d7d84594a5ea0530ec1c42b086245edb6d5a74b8a35aa5d461",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 75,
+      "printed_page": "68",
+      "content": "参考文献[1]—[19]",
+      "result": "pass",
+      "notes": [
+        "[4]官方URL、[6]DOI链接、[13]DOI完整可见，未越出右页边距。",
+        "[6]日期跨行但未缺字。",
+        "条目保持悬挂缩进，未在75/76页边界拆分条目。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-75.png",
+      "sha256": "3ccc5bcdceacec4bf78411412672abb708bd00c75e8ed6da691a7233cbaee96f",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 76,
+      "printed_page": "69",
+      "content": "参考文献[20]—[39]",
+      "result": "pass",
+      "notes": [
+        "[25]正式会议信息、24578—24597页码及DOI完整可读。",
+        "无文本截断，未在76/77页边界拆分条目。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-76.png",
+      "sha256": "f2265bd1267c04594c1fbbaf2aeb9d0901681079586c06e9f81642ee81356d4f",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 77,
+      "printed_page": "70",
+      "content": "参考文献[40]—[64]",
+      "result": "pass",
+      "notes": [
+        "[45]原条目正常。",
+        "[50]页码383—422、[58]姜毅/杨勇/印佳丽及[59][62]DOI均完整可读。",
+        "未见条目跨页截断。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-77.png",
+      "sha256": "b2fe6c4543e22ee7f67c39ea3403d5f2d7f93fb7354c9102cfabcb070bea6b39",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 78,
+      "printed_page": "71",
+      "content": "参考文献[65]—[85]",
+      "result": "pass",
+      "notes": [
+        "[80]GEO来源URL完整在页内，后续DOI亦无截断。",
+        "参考文献结束无单行孤页。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-78.png",
+      "sha256": "b2c2ff5215ee84e4eda01069b810118cdfdfd5596806d96e646086305ac1ff16",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 79,
+      "printed_page": "72",
+      "content": "附录A、表A-1问题清单",
+      "result": "pass",
+      "notes": [
+        "20题表格整页内完整，不跨页；Q05/Q20标记与说明可读。",
+        "问题列个别两行换行正常。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-79.png",
+      "sha256": "a10fee985d5f1cdec72c1fe2f143bf4e5a0f1f286316fa29eb157bcdb066590f",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 80,
+      "printed_page": "73",
+      "content": "附录B、B.1/B.2、表B-1(a)",
+      "result": "pass",
+      "notes": [
+        "参考关系来源说明与表B-1(a)完整同页，目标实体英文可读。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-80.png",
+      "sha256": "b0f9ee92450a783189670b6d6578878a4665aef829e2c66912a647ef99124f96",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 81,
+      "printed_page": "74",
+      "content": "表B-1(b)、B-1(c)",
+      "result": "pass",
+      "notes": [
+        "两张表均整体同页，行号13—38完整，无跨页断行。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-81.png",
+      "sha256": "90cfa7a3d38718ef830c4c16f8599264c11ab9b12f387f5f92b40bbc068ccb86",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 82,
+      "printed_page": "75",
+      "content": "表B-1(d)、B.3与表B-2",
+      "result": "pass",
+      "notes": [
+        "表B-2符号说明较密，但所有符号与英文SQL值可读，无截断。",
+        "表下43表/430字段说明与表相邻，未孤页。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-82.png",
+      "sha256": "735e3de7acdd6777fc00160f22e9004024fd96c94c93d95175b9d12c7a955be7",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 83,
+      "printed_page": "76",
+      "content": "表B-2续、B-3、B-4",
+      "result": "pass",
+      "notes": [
+        "表B-2续表明确标注，公共字段G01—G18完整。",
+        "枚举与表B-3/B-4可读，B-4底行未截断。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-83.png",
+      "sha256": "ed189cad3849cbd57f8f5d096537acfc38744146eb503a3f285559b3d4d919f9",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 84,
+      "printed_page": "77",
+      "content": "表B-5—B-10",
+      "result": "pass",
+      "notes": [
+        "六张短表及补充约束完整同页，标题未与表分离。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-84.png",
+      "sha256": "5c6fee25bef2795efdd1e2de7b9b5db7a1761d545aafa919a019cb7f4c7d467f",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 85,
+      "printed_page": "78",
+      "content": "表B-11—B-14",
+      "result": "pass",
+      "notes": [
+        "四表完整同页，字段名/约束/含义无异常断字。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-85.png",
+      "sha256": "80a7f95506c7c26c9786d36c015ee3cb6e72c61c50eaca14c97b715de180ba3c",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 86,
+      "printed_page": "79",
+      "content": "表B-15—B-17",
+      "result": "pass",
+      "notes": [
+        "英文长字段名均在列内。",
+        "表B-17嵌入模型默认值分两行，生成模型默认值完整显示。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-86.png",
+      "sha256": "79093c82dfdde445cfad21e03b856222c0b8949b1ca0051168c9972b1299107b",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 87,
+      "printed_page": "80",
+      "content": "表B-18—B-20",
+      "result": "pass",
+      "notes": [
+        "三表完整同页，索引默认值legacy-unknown与补充约束完整可读。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-87.png",
+      "sha256": "79784cc7e5f233434044c26fc99e980254598fd040d2f01a0357fdd7233fdda4",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 88,
+      "printed_page": "81",
+      "content": "表B-21—B-24",
+      "result": "pass",
+      "notes": [
+        "四表及补充唯一约束清晰，B-24约束换行未缺字。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-88.png",
+      "sha256": "8b6725521c687078690e3ea7a605d4cc538a7ef916356a5edefe018709cea689",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 89,
+      "printed_page": "82",
+      "content": "表B-25—B-27",
+      "result": "pass",
+      "notes": [
+        "长字段experiment_repetition_index与相关字段无折断/重叠。",
+        "B-27底部补充约束仍在页内。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-89.png",
+      "sha256": "de7618806b03781b8168d8f15c4051f845e5fee1f1d1812a6faf675425dba2e4",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 90,
+      "printed_page": "83",
+      "content": "表B-28—B-30",
+      "result": "pass",
+      "notes": [
+        "表B-30长字段source_graph_relation_ids_json完整显示，三表整体同页。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-90.png",
+      "sha256": "d9a9b587ba32760e99bf1600f88546b8b0fc041548860eb9ae82d89b00d6145f",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 91,
+      "printed_page": "84",
+      "content": "表B-31—B-34",
+      "result": "pass",
+      "notes": [
+        "MCP令牌/会话与智能体会话表完整，无跨页或溢出。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-91.png",
+      "sha256": "b4ca7139d6bea6710080ffbffac2256ef922874a4eb296ffcefd35977a9f79bb",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 92,
+      "printed_page": "85",
+      "content": "表B-35—B-38",
+      "result": "pass",
+      "notes": [
+        "提示词默认值正常分行，长补充约束完整在页内。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-92.png",
+      "sha256": "d0a13a4ba6ef9a3e4b168cff7671232694453301df6bff2e7eda38807e40cb30",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 93,
+      "printed_page": "86",
+      "content": "表B-39—B-42",
+      "result": "pass",
+      "notes": [
+        "四表整体同页，CHECK/唯一约束完整可读。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-93.png",
+      "sha256": "d4ce10b6964a6015d802dd56ca79c9c14f3e8e10d13d38827780636319a97b8c",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 94,
+      "printed_page": "87",
+      "content": "表B-43—B-45",
+      "result": "pass",
+      "notes": [
+        "三表整体同页，下半页留白为附录B结束，无空白页。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-94.png",
+      "sha256": "3598e183c9d114ecf391c316609df51731ef1800ff687b1f62d2dc55c650d8fb",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 95,
+      "printed_page": "88",
+      "content": "附录C、表C-1/C-2",
+      "result": "pass",
+      "notes": [
+        "12项工具权限/动作表与模板注册表完整同页，英文权限可读。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-95.png",
+      "sha256": "3c1f7c351181f7762a34131f071301b686f3f30fa00742a4859cf7310c93778e",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 96,
+      "printed_page": "89",
+      "content": "附录D、D.1/D.2、表D-1/D-2与AI贡献披露起始",
+      "result": "pass",
+      "notes": [
+        "SHA-256前16位与文件名可读，未跨行拆断。",
+        "Anthropic和MCP规范URL完整在页内，段落两端对齐导致间距较大但无缺字。",
+        "AI贡献披露段落正常续到97页；未出现姓名。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-96.png",
+      "sha256": "519c0d83f28a5ee39be92f528480321da5a73ecf61ae1648568a77a33d485441",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 97,
+      "printed_page": "90",
+      "content": "AI贡献披露续、三份自然日记来源、D.3、图D-1",
+      "result": "pass",
+      "notes": [
+        "AI辅助编程、本人复核及自动评价不能冒充人类独立复核/真实用户/导师验收的句子完整呈现。",
+        "三份公开来源URL均完整可辨，跨行未截断；需从正文/链接读取，不宜按视觉行尾插入空格。",
+        "图D-1文字清晰，图与图题同页，无身份姓名。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-97.png",
+      "sha256": "6e0c285a09ae1c27211701201df409b96c5ef5e7db5cb641ceadd689155dd724",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 98,
+      "printed_page": "91",
+      "content": "图D-2/D-3",
+      "result": "pass",
+      "notes": [
+        "两张合成笔记原文图文字可读，图题同页，无人名或账号。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-98.png",
+      "sha256": "f13c9dc307e6bf5449b93993bd90b5f2dec754d12a7e1e12b4856b19dc722088",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 99,
+      "printed_page": "92",
+      "content": "图D-4/D-5",
+      "result": "pass",
+      "notes": [
+        "qPCR原文与SOP来源图完整，英文文件名与正文可读，无身份泄漏。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-99.png",
+      "sha256": "55fc6e2d9acf3f7ea9712549e52bad409eb65f7503bc82eaa300ce527a3145f1",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 100,
+      "printed_page": "93",
+      "content": "图D-6、D.4与表D-3",
+      "result": "pass",
+      "notes": [
+        "图D-6全文可读，与图题同页。",
+        "表D-3中批次列正常换行，三行结果与说明完整，不跨页。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-100.png",
+      "sha256": "f18c7cb9b93847ca655871691fdfdc6d3cc5e08bc92fe436be943176107f95da",
+      "width_px": 1414,
+      "height_px": 2000
+    },
+    {
+      "physical_page": 101,
+      "printed_page": "94",
+      "content": "表D-4追加验证与观测记录",
+      "result": "pass",
+      "notes": [
+        "表D-4内容较密但清晰，revision/SHA/结果与限制均完整显示。",
+        "九行同页，未断表；底行T141与下边框在页内。",
+        "最后页未见作者姓名/导师姓名/账号。"
+      ],
+      "view_mode": "original",
+      "ai_visual_review": true,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/font-fixed-render/page-101.png",
+      "sha256": "a799405e563bad527ecc6de53b02240f87ca10c3a987e97acd342656450b2d73",
+      "width_px": 1414,
+      "height_px": 2000
+    }
+  ],
+  "unresolved_items": [
+    {
+      "id": "render-version-binding",
+      "status": "待父线程核实",
+      "description": "确认本批101页渲染采用的Word哈希；如最新修改影响71—101页，应只重审受影响页面。"
+    },
+    {
+      "id": "formal-anonymity-rules",
+      "status": "待核",
+      "description": "学院正式盲审要求未取得。物理74及其他页面仍保留学校抬头，当前仅按用户授权的姓名/元数据范围评审。"
+    },
+    {
+      "id": "source-image-person-names",
+      "status": "未解决",
+      "description": "本范围不包含正文图5-1/5-7/5-10。47张源图复核另见image-visual-review.json：image13、19、22的姓名在Word裁剪下仍可见；image14、20原PNG有姓名即使打印裁剪隐藏。没有匹配全部姓名和账号ID的种子证据，不能标称合成。"
+    },
+    {
+      "id": "evidence-strength",
+      "status": "未解决",
+      "description": "本次视觉复核不能替代人类专家独立核验、真实用户研究、自然日记原始请求日志或历史模型版本补证。"
+    }
+  ],
+  "limitations": [
+    "视觉检查仅证明所列PNG可见内容的排版与可读性；未复算数据或验证全部参考文献。",
+    "实际查看由AI执行，不能冒充人类复核或导师验收。",
+    "未将学校名称、参考文献作者姓名作为用户授权清理的个人身份残留。"
+  ],
+  "companion_reviews": [
+    "/Users/yusong/Downloads/new/full-system/docs/blind-review-T150-2026-10-14/review/image-visual-review.json",
+    "/Users/yusong/Downloads/new/full-system/docs/blind-review-T150-2026-10-14/review/anonymous-docx-readonly-review.json",
+    "/Users/yusong/Downloads/new/full-system/docs/blind-review-T150-2026-10-14/review/bibliography-corrections.json"
+  ]
+}
+

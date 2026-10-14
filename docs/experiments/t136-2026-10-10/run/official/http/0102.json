@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-10T15:52:29.467065+00:00",
+  "path": "/projects",
+  "method": "POST",
+  "request": {
+    "name": "T136 regression",
+    "approval_enabled": true
+  },
+  "status": 200,
+  "response": {
+    "id": 3,
+    "name": "T136 regression",
+    "description": null,
+    "is_sensitive": false,
+    "status": "active",
+    "approval_enabled": true,
+    "owner_user_id": null
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "url": "http://cjc.ict.ac.cn/online/onlinepaper/008_yl-2026227143149.pdf",
+  "physical_pages": 40,
+  "sampled_page_metadata": [
+    {
+      "physical_page": 1,
+      "first_150": "第 49 卷  第 2 期\n2026 年 2 月\n计 算 机 学 报\nCHINESE JOURNAL OF COMPUTERS\nVol .  49    No .  2\nFeb .  2026\n大语言模型检索增强生成优化技术研究综述\n袁 乐\n1 ）\n 刘绍华\n1 ） ， 2 ）\n 王 禹\n1 ）\n ",
+      "last_250": "  主要研究领\n域为人工智能与网络分布式计算 。  E - mail ：  liushaohua@bupt . edu . cn 。  王 禹 ， 博士研究生 ， 主要研究领域为 RAG 与 Agent 。 朱尚威 ，\n博士研究生 ， 主要研究领域为自然语言处理和图像光电容积脉搏波 。 王 焘 ， 博士 ， 副研究员 ，  主要研究领域为生成式人工智能模型加\n速技术 。 毛天露 ， 博士 ， 副研究员 ，  中国计算机学会  （ CCF ）  会员 ， 主要研究领域为人工智能 、 建模与仿真 。",
+      "standalone_numeric_lines": []
+    },
+    {
+      "physical_page": 2,
+      "first_150": "计 算 机 学 报 2026 年\ninformation from external databases into the generation process ,  RAG enhances accuracy ,  factual \nconsistency ,  and controllabili",
+      "last_250": "T 系列\n［ 1 - 2 ］\n、 Claude 系列\n［ 3 - 4 ］\n、 Gemini\n系 列\n［ 5 ］\n以 及 开 源 的 Llama 系 列\n［ 6 ］\n、 Qwen 系 列\n［ 7 ］\n、\nDeepSeek 系 列\n［ 8 - 9 ］\n为 代 表 的 大 语 言 模 型 在 自 然\n语 言 处 理 领 域 取 得 了 显 著 进 展 。 这 些 模 型 在\nMMLU\n［ 10 ］\n、 MMMU\n［ 11 ］\n、 GPQA\n［ 12 ］\n、 HumanEval\n［ 13 ］\n、\n384",
+      "standalone_numeric_lines": [
+        "384"
+      ]
+    },
+    {
+      "physical_page": 3,
+      "first_150": "2 期 袁 乐等 ： 大语言模型检索增强生成优化技术研究综述\nLiveCodeBench\n［ 14 ］\n、 MATH\n［ 15 ］\n等基准测试中展现出\n卓越性能 。 然而 ， 尽管其生成能力突出 ， 这些模型在\n处理特定领域任务时仍暴露出若干局限性\n［ 16 ］\n。 尤其\n当查询涉及超出训练数据范围",
+      "last_250": "2.0（2021）：实时对话信息获取\nActive RAG（2023）：动态检索推理\n多模态RAG（2024）：跨模态应用\nAI深度研究（2025）：OpenAI、Google以及\nPerplexity的DeepResearch，bytedance的DeerFlow\n全新AI浏览器Comet\nAI搜索（2025）：ChatGPT Search、\n微软必应、谷歌AI Overviews、纳米AI搜索、\nxAIDeepSearch、Perplexity\n图 1 　 RAG 技术发展及研究进展\n385",
+      "standalone_numeric_lines": [
+        " ",
+        "385"
+      ]
+    },
+    {
+      "physical_page": 39,
+      "first_150": "2 期 袁 乐等 ： 大语言模型检索增强生成优化技术研究综述\n附录 X .\nYUAN Le ,  Ph . D .  candidate .  His \nresearch interests include RAG ,  agent ,  and \nautomated program fault l",
+      "last_250": "Mean Average Precision\nTerm Frequency - Inverse Document Frequency\nAbstract Meaning Representation\nExact Match\nNatural Language Inference\n中文释义\n生成式检索\n思维链\n大语言模型\n检索增强生成\n开放域问答\n命名实体识别\n蒙特卡罗树搜索\n互惠等级融合\n归一化折扣累积增益\n平均倒数排名\n平均准确率\n词频 - 逆文档频率\n抽象语义表示\n精确匹配\n自然语言推理\n421",
+      "standalone_numeric_lines": [
+        "421"
+      ]
+    },
+    {
+      "physical_page": 40,
+      "first_150": "计 算 机 学 报 2026 年\nLLM enhancement ,  clarifying their respective goals ,  \nmechanisms ,  advantages ,  limitations ,  and application scenarios .  \nIn ",
+      "last_250": "utes a \nconsolidated view of what has been achieved internationally ,  \nidentifies persistent bottlenecks ,  and delineates where RAG \noptimization can be most impactful within the larger program of \nadvancing LLM - centered intelligent systems .\n422",
+      "standalone_numeric_lines": [
+        "422"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "task": "T150",
+  "method": "Independent pixel comparisons plus actual original-resolution visual inspection of all five masked images",
+  "applies_to_docx_sha256": "0ed180a286b3069ab73bc023f1d2ca32dcba4de4f49ee7bfe03ce2b0e77f1bcb",
+  "authorization": "Parent reports direct user authorization for deterministic rectangular name masking",
+  "all_five_pass": true,
+  "screenshots": [
+    {
+      "name": "image13.png",
+      "source_sha256": "e931ab6a57ad915797bf096007bcd960a3b2dc775e5c7430eced666edacd8369",
+      "masked_sha256": "48e49f8d46504416f87d111badc56692907dfe108cd6ba0f363be5d732c3786d",
+      "dimensions_unchanged": true,
+      "parent_hashes_match": true,
+      "outside_rectangles_pixel_identical": true,
+      "masked_pixels_all_opaque_single_color": true,
+      "actual_original_resolution_viewed": true,
+      "visual_observation": "右上姓名完全被矩形覆盖，审核记录用户#32、实验文本与状态保留。"
+    },
+    {
+      "name": "image14.png",
+      "source_sha256": "ec024159103cac61ecab2962b62a4388a0b27a40c0f28bd0bc322aecf4edb320",
+      "masked_sha256": "2a6530c4c353e3e6e243f1fac6a1c61f5271848411df3c6250db7889818144df",
+      "dimensions_unchanged": true,
+      "parent_hashes_match": true,
+      "outside_rectangles_pixel_identical": true,
+      "masked_pixels_all_opaque_single_color": true,
+      "actual_original_resolution_viewed": true,
+      "visual_observation": "右上姓名完全被矩形覆盖；项目标题、导航、笔记与状态不受影响。"
+    },
+    {
+      "name": "image19.png",
+      "source_sha256": "f8240d5912ff282304fe5a122e120abd19823cca11df61f752d486a920a648b9",
+      "masked_sha256": "f3eaeba5a5abbda78f9fc8a9aefe650defa78225f1ea813bd83a04687f71df8e",
+      "dimensions_unchanged": true,
+      "parent_hashes_match": true,
+      "outside_rectangles_pixel_identical": true,
+      "masked_pixels_all_opaque_single_color": true,
+      "actual_original_resolution_viewed": true,
+      "visual_observation": "右侧创建者姓名和图内同名节点的姓名覆盖；创建者角色、节点连线、来源标签及实验参数保留。"
+    },
+    {
+      "name": "image20.png",
+      "source_sha256": "e32d84f5e9a17b2a19ad144f76c9b26e404d247ccc9ea5dc9e8cf929b1998d5c",
+      "masked_sha256": "8681bda7082d2a95de7ad49a4f7cf30ecf12be84ec335bb5d326615b02e71af0",
+      "dimensions_unchanged": true,
+      "parent_hashes_match": true,
+      "outside_rectangles_pixel_identical": true,
+      "masked_pixels_all_opaque_single_color": true,
+      "actual_original_resolution_viewed": true,
+      "visual_observation": "右上姓名完全被矩形覆盖；报告状态、项目10与来源编号保留。"
+    },
+    {
+      "name": "image22.png",
+      "source_sha256": "83f24e239293dcc589445a5ddde8e536d3375fabc6c4c11e7b923ab7268bd319",
+      "masked_sha256": "ee7d480dd98a64b3e23be86044cfd0a456fe1815d139a2e8cf3be04e2c4937b9",
+      "dimensions_unchanged": true,
+      "parent_hashes_match": true,
+      "outside_rectangles_pixel_identical": true,
+      "masked_pixels_all_opaque_single_color": true,
+      "actual_original_resolution_viewed": true,
+      "visual_observation": "五个成员姓名完全覆盖；账号#31至#35、拥有者/审核人/成员/观察者以及权限方框保留。"
+    }
+  ],
+  "remaining_boundary": "学校标识与声明/授权/致谢保留范围仍依学院正式规则确认；未将这些截图账号ID判为现实人员身份。"
+}

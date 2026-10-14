@@ -1,0 +1,133 @@
+{
+  "task": "T150",
+  "mode": "read_only_offline_recalculation_and_scope_audit",
+  "verification_status": "ANALYZED",
+  "no_new_experiments_models_services_or_tests": true,
+  "已验证": [
+    {
+      "item": "原稿1012/T146基线身份",
+      "evidence": "original-manuscript-identity.json",
+      "scope": "SHA256 0b38c0df…匹配导师报告和T146基线"
+    },
+    {
+      "item": "T136关系计分",
+      "evidence": "t136-recalculation.json",
+      "scope": "从原始graph重建类型/方向完整键；TP/FP/FN、micro/macro、逐条FP/FN一致"
+    },
+    {
+      "item": "T148性能记录",
+      "evidence": "t148-performance-recalculation.json",
+      "scope": "新批次200+350=550逐请求延迟/状态/ID、p95 nearest-rank全部可复算；不是旧600恢复"
+    },
+    {
+      "item": "T148 RAG48条响应",
+      "evidence": "t148-rag-recalculation.json",
+      "scope": "12题×4臂×1次，提示SHA/原始响应/计分迹线/配对分析一致；新词法评价不显示改进"
+    },
+    {
+      "item": "现有安全实现与测试范围",
+      "evidence": "security-coverage.json",
+      "scope": "65/65源码等输入仍同T148既有数据库测试；18项范围表绑定41处通过日志，不运行新测试"
+    },
+    {
+      "item": "五图匿名确定性遮挡",
+      "evidence": "word-screenshot-redaction-independent-review.json",
+      "scope": "全部原尺寸实看，矩形外像素100%相同，角色/编号/实验信息保留。"
+    },
+    {
+      "item": "最终匿名Word OOXML",
+      "evidence": "word-ooxml-final-independent-review.json",
+      "scope": "最终9035845e版本48公式/108表结构及表中数字/47PNG/85文献编号/72正文引文顺序，五PNG仅授权遮挡，封面前三页结构、关系及各故事匿名文本检查通过。"
+    },
+    {
+      "item": "最终渲染实际视觉检查",
+      "evidence": "word-final-render-independent-review.json",
+      "scope": "已实看物理36—70全部35页；最终变化42/45/48再次original实看，其余32页逐像素一致承接；全101页差异仅6/7/42/45/48。"
+    },
+    {
+      "item": "最终目录100项",
+      "evidence": "word-toc-final-page-check.json",
+      "scope": "DOCX缓存、最终PDF目录显示页码、100个唯一正文标题所在印刷页全部一致，0差异；开启Word打开更新域。"
+    },
+    {
+      "item": "最终原稿与冻结输入保护",
+      "evidence": "protected-input-check.json",
+      "scope": "最终渲染完成后285/285输入SHA保持不变。"
+    }
+  ],
+  "待人类或专项证据": [
+    {
+      "item": "AI参考标签和语义评价",
+      "needed": "领域专家逐条确认科学语义、标注一致性；人类独立裁决，不以GPT分工替代。"
+    },
+    {
+      "item": "真实用户与中文自然记录外推",
+      "needed": "真实研究人员/真实项目及中文独立测试；现存4条合成记录/12条英文日记不足。"
+    },
+    {
+      "item": "安全系统性覆盖",
+      "needed": "正式威胁模型、攻击矩阵、对抗注入/恶意解析、审计防篡改、密钥治理、异地灾备、当前全栈漏洞扫描、外部计费/数据政策的专项证据；未见记录不等于确认漏洞。"
+    },
+    {
+      "item": "匿名送审细则",
+      "needed": "学院正式规范确认保留/删除学校标识、致谢、独创性及授权书；不得擅定。"
+    },
+    {
+      "item": "最终WPS目录和正式打印分页",
+      "needed": "bundled LibreOffice最终101页与100项目录已核对全部一致。正式送审仍须WPS/学院要求环境中刷新域并确认分页、字体、清晰度；不得把本次渲染称为WPS验收。"
+    }
+  ],
+  "无法恢复": [
+    {
+      "item": "历史600只读逐请求明细及原测试客户端",
+      "scope": "当前仓库和已审计临时目录仍未恢复；已有哈希和汇总不能还原原明细，不独立核验旧p95。",
+      "evidence": "t148-performance-recalculation.json"
+    },
+    {
+      "item": "历史90负载逐请求明细",
+      "scope": "仅存汇总；不以T148550条替换原批次。"
+    },
+    {
+      "item": "旧GPT模型精确身份",
+      "scope": "现存仅会话代理称谓，未记录可验证型号/版本，不能按现在配置回填。"
+    }
+  ],
+  "not_scientific_truth_attestation": true,
+  "artifacts": [
+    "original-manuscript-identity.json",
+    "protected-input-baseline.json",
+    "protected-input-check.json",
+    "security-coverage.csv",
+    "security-coverage.json",
+    "statistical-interpretation-check.json",
+    "t136-per-note-recalculation.csv",
+    "t136-recalculation.json",
+    "t148-performance-endpoints.csv",
+    "t148-performance-per-request-recalculation.csv",
+    "t148-performance-recalculation.json",
+    "t148-rag-case-recalculation.csv",
+    "t148-rag-recalculation.json",
+    "word-final-render-independent-review.json",
+    "word-ooxml-final-independent-review.json",
+    "word-ooxml-independent-review.json",
+    "word-screenshot-redaction-independent-review.json",
+    "word-toc-cache-replacements.json",
+    "word-toc-final-page-check.json",
+    "word-toc-page-check.json",
+    "word-visual-review-pages36-70.json"
+  ],
+  "final_document": {
+    "docx_path": "/Users/yusong/Desktop/盲审整改-T150-2026-10-14/论文匿名整改副本-T150.docx",
+    "docx_sha256": "9035845efc316c781a54dfb18cf5e84e1fb777dd6951aeb0b9330df54cef62af",
+    "pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t150-2026-10-14/docx/final-render/论文匿名整改副本-T150.pdf",
+    "pdf_sha256": "8680867165794270c3b3038787b01f814e75ed8414f081ea962d571889273dc9",
+    "renderer": "bundled LibreOffice with explicitly configured system fonts",
+    "pdf_pages": 101,
+    "ooxml_status": "PASS",
+    "assigned_visual_pages": "physical36—70",
+    "toc_verified_entries": 100,
+    "toc_mismatches": 0,
+    "protected_inputs_unchanged": "285/285",
+    "formal_WPS_and_school_rules": "PENDING_HUMAN_ACCEPTANCE"
+  }
+}

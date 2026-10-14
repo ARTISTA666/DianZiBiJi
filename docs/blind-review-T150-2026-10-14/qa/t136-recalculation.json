@@ -1,0 +1,1985 @@
+{
+  "task": "T150",
+  "mode": "offline independent recalculation; no new extraction or model call",
+  "verification_status": "ANALYZED; deterministic arithmetic and saved graph integrity verified",
+  "frozen_reference_identity": "AI-generated pre-output reference, not human gold",
+  "reference_relations": 74,
+  "gold_matches_body_and_fields_expectations": true,
+  "relation_key_fields": [
+    "record_id",
+    "source_type",
+    "source_label",
+    "source_identity",
+    "relation_type",
+    "target_type",
+    "target_label",
+    "target_identity"
+  ],
+  "normalization": "NFKC then casefold then whitespace collapse; includes record identity, typed source/target and direction",
+  "metrics": {
+    "body": {
+      "content": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 74,
+        "reference_relations": 74,
+        "predicted_relations": 0,
+        "precision": null,
+        "recall": 0.0,
+        "f1": 0.0,
+        "exact": false,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [],
+        "false_negatives": [
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "agar",
+            ""
+          ],
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "cacl2",
+            ""
+          ],
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "glycerol",
+            ""
+          ],
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "lb",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_instrument",
+            "instrument",
+            "oven",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "1% agarose gel(1x)",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "buffer",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "dntp mix",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "forward primer",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "gene ruler",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "loading dye",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "nf h2o",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "reverse primer",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "6-his imcherry",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "dna only",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "fp only",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "mcp-1 + hlya",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "mcp-1 + pelb",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "mcp-1 expression",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "no dna",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "no primers",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "primers only",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "rp only",
+            ""
+          ],
+          [
+            "team5863-01",
+            "note",
+            "team5863-01 field sampling",
+            "team5863-01",
+            "uses_reagent",
+            "reagent",
+            "99% ethanol",
+            ""
+          ],
+          [
+            "team5863-01",
+            "note",
+            "team5863-01 field sampling",
+            "team5863-01",
+            "uses_sample",
+            "sample",
+            "thrips",
+            ""
+          ],
+          [
+            "team5863-02",
+            "note",
+            "team5863-02 dna extraction of collected samples",
+            "team5863-02",
+            "uses_sample",
+            "sample",
+            "samples collected from farms",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "produces_result",
+            "result",
+            "the result was unclear.",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "agarose",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "h2o",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "phusion plus master mix",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "sditsf3",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "sditsf7",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "tae buffer",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "thripsitsf",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "thripsitsr",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_sample",
+            "sample",
+            "extracted dna",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "produces_result",
+            "result",
+            "clear bands near 200 bp (characteristic to c strain), one sample has band on 300 bp (characteristic to 300 bp).",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "agarose",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "h2o",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "ladder",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "loading dye",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "phusion plus master mix",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "sditsf3",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "sditsf7",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "tae",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "thripsitsf",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "thripsitsr",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_sample",
+            "sample",
+            "7ng/ul extracted dna (trap water)",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_sample",
+            "sample",
+            "extracted dna",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_sample",
+            "sample",
+            "pcr samples",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_instrument",
+            "instrument",
+            "gel analyzer",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_reagent",
+            "reagent",
+            "dna ladder 1kb plus",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_reagent",
+            "reagent",
+            "gel stain",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_sample",
+            "sample",
+            "pcr products of ryan’s primer design",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "produces_result",
+            "result",
+            "this was confirmed by re-picking and miniprepping, resulted in low yield.",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_reagent",
+            "reagent",
+            "soc",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_sample",
+            "sample",
+            "2017 rfp plasmid (10pg/ul)",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_sample",
+            "sample",
+            "2019 rfp plasmid (17ng/ul)",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_sample",
+            "sample",
+            "2019 rfp plasmid that was left out (118ng/ul)",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "10x bsa buffer",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "10x t4 buffer",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "bsai",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "h2o",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "t4 ligase",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_sample",
+            "sample",
+            "dna amplicon",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_sample",
+            "sample",
+            "golden gate compatible rfp construct",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_sample",
+            "sample",
+            "psica insert",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "produces_result",
+            "result",
+            "2 with 2019 rfp plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "produces_result",
+            "result",
+            "the 2017 10pg test kit worked, but had few colonies.",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "produces_result",
+            "result",
+            "the two with 2019 rfp plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "2019 rfp plasmid (17ng/ul)",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "competent cells",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "negative control without any dna",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "plates from madina, taylor, and janella’s transformation on july 5th",
+            ""
+          ]
+        ],
+        "note_count": 12,
+        "exact_note_count": 2,
+        "macro_f1": 0.0,
+        "macro_nonempty_count": 10,
+        "matches_frozen_summary": true
+      },
+      "metadata": {
+        "tp": 36,
+        "fp": 0,
+        "fn": 0,
+        "reference_relations": 36,
+        "predicted_relations": 36,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "exact": true,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [],
+        "false_negatives": [],
+        "note_count": 12,
+        "exact_note_count": 12,
+        "macro_f1": 1.0,
+        "macro_nonempty_count": 12,
+        "matches_frozen_summary": true
+      },
+      "all": {
+        "tp": 36,
+        "fp": 0,
+        "fn": 74,
+        "reference_relations": 110,
+        "predicted_relations": 36,
+        "precision": 1.0,
+        "recall": 0.32727272727272727,
+        "f1": 0.4931506849315068,
+        "exact": false,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [],
+        "false_negatives": [
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "agar",
+            ""
+          ],
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "cacl2",
+            ""
+          ],
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "glycerol",
+            ""
+          ],
+          [
+            "iisc2019-01",
+            "note",
+            "iisc2019-01 buffer and medium preparation",
+            "iisc2019-01",
+            "uses_reagent",
+            "reagent",
+            "lb",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_instrument",
+            "instrument",
+            "oven",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "1% agarose gel(1x)",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "buffer",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "dntp mix",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "forward primer",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "gene ruler",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "loading dye",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "nf h2o",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_reagent",
+            "reagent",
+            "reverse primer",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "6-his imcherry",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "dna only",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "fp only",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "mcp-1 + hlya",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "mcp-1 + pelb",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "mcp-1 expression",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "no dna",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "no primers",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "primers only",
+            ""
+          ],
+          [
+            "iisc2019-03",
+            "note",
+            "iisc2019-03 pcr and gel electrophoresis",
+            "iisc2019-03",
+            "uses_sample",
+            "sample",
+            "rp only",
+            ""
+          ],
+          [
+            "team5863-01",
+            "note",
+            "team5863-01 field sampling",
+            "team5863-01",
+            "uses_reagent",
+            "reagent",
+            "99% ethanol",
+            ""
+          ],
+          [
+            "team5863-01",
+            "note",
+            "team5863-01 field sampling",
+            "team5863-01",
+            "uses_sample",
+            "sample",
+            "thrips",
+            ""
+          ],
+          [
+            "team5863-02",
+            "note",
+            "team5863-02 dna extraction of collected samples",
+            "team5863-02",
+            "uses_sample",
+            "sample",
+            "samples collected from farms",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "produces_result",
+            "result",
+            "the result was unclear.",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "agarose",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "h2o",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "phusion plus master mix",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "sditsf3",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "sditsf7",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "tae buffer",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "thripsitsf",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_reagent",
+            "reagent",
+            "thripsitsr",
+            ""
+          ],
+          [
+            "team5863-03",
+            "note",
+            "team5863-03 pcr tests of extracted dna samples",
+            "team5863-03",
+            "uses_sample",
+            "sample",
+            "extracted dna",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "produces_result",
+            "result",
+            "clear bands near 200 bp (characteristic to c strain), one sample has band on 300 bp (characteristic to 300 bp).",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "agarose",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "h2o",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "ladder",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "loading dye",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "phusion plus master mix",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "sditsf3",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "sditsf7",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "tae",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "thripsitsf",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_reagent",
+            "reagent",
+            "thripsitsr",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_sample",
+            "sample",
+            "7ng/ul extracted dna (trap water)",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_sample",
+            "sample",
+            "extracted dna",
+            ""
+          ],
+          [
+            "team5863-04",
+            "note",
+            "team5863-04 pcr test extracted dna samples (optimize)",
+            "team5863-04",
+            "uses_sample",
+            "sample",
+            "pcr samples",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_instrument",
+            "instrument",
+            "gel analyzer",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_reagent",
+            "reagent",
+            "dna ladder 1kb plus",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_reagent",
+            "reagent",
+            "gel stain",
+            ""
+          ],
+          [
+            "ubc2021-01",
+            "note",
+            "ubc2021-01 gel electrophoresis of pcr products",
+            "ubc2021-01",
+            "uses_sample",
+            "sample",
+            "pcr products of ryan’s primer design",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "produces_result",
+            "result",
+            "this was confirmed by re-picking and miniprepping, resulted in low yield.",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_reagent",
+            "reagent",
+            "soc",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_sample",
+            "sample",
+            "2017 rfp plasmid (10pg/ul)",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_sample",
+            "sample",
+            "2019 rfp plasmid (17ng/ul)",
+            ""
+          ],
+          [
+            "ubc2021-02",
+            "note",
+            "ubc2021-02 rfp plasmid retransformation",
+            "ubc2021-02",
+            "uses_sample",
+            "sample",
+            "2019 rfp plasmid that was left out (118ng/ul)",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "10x bsa buffer",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "10x t4 buffer",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "bsai",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "h2o",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_reagent",
+            "reagent",
+            "t4 ligase",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_sample",
+            "sample",
+            "dna amplicon",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_sample",
+            "sample",
+            "golden gate compatible rfp construct",
+            ""
+          ],
+          [
+            "ubc2021-03",
+            "note",
+            "ubc2021-03 golden gate assembly of psica and rfp construct",
+            "ubc2021-03",
+            "uses_sample",
+            "sample",
+            "psica insert",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "produces_result",
+            "result",
+            "2 with 2019 rfp plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates.",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "produces_result",
+            "result",
+            "the 2017 10pg test kit worked, but had few colonies.",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "produces_result",
+            "result",
+            "the two with 2019 rfp plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "2019 rfp plasmid (17ng/ul)",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "competent cells",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "negative control without any dna",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "plates from madina, taylor, and janella’s transformation on july 5th",
+            ""
+          ]
+        ],
+        "note_count": 12,
+        "exact_note_count": 2,
+        "macro_f1": 0.5964756077256077,
+        "macro_nonempty_count": 12,
+        "matches_frozen_summary": true
+      }
+    },
+    "fields": {
+      "content": {
+        "tp": 73,
+        "fp": 3,
+        "fn": 1,
+        "reference_relations": 74,
+        "predicted_relations": 76,
+        "precision": 0.9605263157894737,
+        "recall": 0.9864864864864865,
+        "f1": 0.9733333333333334,
+        "exact": false,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "and janella’s transformation on july 5th",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "plates from madina",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "taylor",
+            ""
+          ]
+        ],
+        "false_negatives": [
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "plates from madina, taylor, and janella’s transformation on july 5th",
+            ""
+          ]
+        ],
+        "note_count": 12,
+        "exact_note_count": 11,
+        "macro_f1": 0.975,
+        "macro_nonempty_count": 10,
+        "matches_frozen_summary": true
+      },
+      "metadata": {
+        "tp": 36,
+        "fp": 0,
+        "fn": 0,
+        "reference_relations": 36,
+        "predicted_relations": 36,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "exact": true,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [],
+        "false_negatives": [],
+        "note_count": 12,
+        "exact_note_count": 12,
+        "macro_f1": 1.0,
+        "macro_nonempty_count": 12,
+        "matches_frozen_summary": true
+      },
+      "all": {
+        "tp": 109,
+        "fp": 3,
+        "fn": 1,
+        "reference_relations": 110,
+        "predicted_relations": 112,
+        "precision": 0.9732142857142857,
+        "recall": 0.990909090909091,
+        "f1": 0.9819819819819819,
+        "exact": false,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "and janella’s transformation on july 5th",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "plates from madina",
+            ""
+          ],
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "taylor",
+            ""
+          ]
+        ],
+        "false_negatives": [
+          [
+            "ubc2021-04",
+            "note",
+            "ubc2021-04 rfp transformation plate observations and retransformation",
+            "ubc2021-04",
+            "uses_sample",
+            "sample",
+            "plates from madina, taylor, and janella’s transformation on july 5th",
+            ""
+          ]
+        ],
+        "note_count": 12,
+        "exact_note_count": 11,
+        "macro_f1": 0.9848484848484849,
+        "macro_nonempty_count": 12,
+        "matches_frozen_summary": true
+      }
+    },
+    "regression": {
+      "content": {
+        "tp": 40,
+        "fp": 1,
+        "fn": 0,
+        "reference_relations": 40,
+        "predicted_relations": 41,
+        "precision": 0.975609756097561,
+        "recall": 1.0,
+        "f1": 0.9876543209876543,
+        "exact": false,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [
+          [
+            "regression-04",
+            "note",
+            "qpcr 定量验证实验",
+            "regression-04",
+            "uses_sample",
+            "sample",
+            "2",
+            ""
+          ]
+        ],
+        "false_negatives": [],
+        "note_count": 4,
+        "exact_note_count": 3,
+        "macro_f1": 0.9891304347826086,
+        "macro_nonempty_count": 4,
+        "matches_frozen_summary": true
+      },
+      "metadata": {
+        "tp": 12,
+        "fp": 0,
+        "fn": 0,
+        "reference_relations": 12,
+        "predicted_relations": 12,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "exact": true,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [],
+        "false_negatives": [],
+        "note_count": 4,
+        "exact_note_count": 4,
+        "macro_f1": 1.0,
+        "macro_nonempty_count": 4,
+        "matches_frozen_summary": true
+      },
+      "all": {
+        "tp": 52,
+        "fp": 1,
+        "fn": 0,
+        "reference_relations": 52,
+        "predicted_relations": 53,
+        "precision": 0.9811320754716981,
+        "recall": 1.0,
+        "f1": 0.9904761904761905,
+        "exact": false,
+        "duplicate_scoring_keys": 0,
+        "false_positives": [
+          [
+            "regression-04",
+            "note",
+            "qpcr 定量验证实验",
+            "regression-04",
+            "uses_sample",
+            "sample",
+            "2",
+            ""
+          ]
+        ],
+        "false_negatives": [],
+        "note_count": 4,
+        "exact_note_count": 3,
+        "macro_f1": 0.9913793103448276,
+        "macro_nonempty_count": 4,
+        "matches_frozen_summary": true
+      }
+    }
+  },
+  "graph_checks": [
+    {
+      "arm": "body",
+      "record_id": "iisc2019-01",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "iisc2019-02",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "iisc2019-03",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "iisc2019-04",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "ubc2021-01",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "ubc2021-02",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "ubc2021-03",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "ubc2021-04",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "team5863-01",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "team5863-02",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "team5863-03",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "body",
+      "record_id": "team5863-04",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "iisc2019-01",
+      "entities": 8,
+      "relations": 7,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "iisc2019-02",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "iisc2019-03",
+      "entities": 23,
+      "relations": 22,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "iisc2019-04",
+      "entities": 4,
+      "relations": 3,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "ubc2021-01",
+      "entities": 8,
+      "relations": 7,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "ubc2021-02",
+      "entities": 9,
+      "relations": 8,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "ubc2021-03",
+      "entities": 12,
+      "relations": 11,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "ubc2021-04",
+      "entities": 13,
+      "relations": 12,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "team5863-01",
+      "entities": 6,
+      "relations": 5,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "team5863-02",
+      "entities": 5,
+      "relations": 4,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "team5863-03",
+      "entities": 14,
+      "relations": 13,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "fields",
+      "record_id": "team5863-04",
+      "entities": 18,
+      "relations": 17,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "regression",
+      "record_id": "regression-01",
+      "entities": 13,
+      "relations": 12,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "regression",
+      "record_id": "regression-02",
+      "entities": 13,
+      "relations": 12,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "regression",
+      "record_id": "regression-03",
+      "entities": 15,
+      "relations": 14,
+      "relation_ids_unique": true
+    },
+    {
+      "arm": "regression",
+      "record_id": "regression-04",
+      "entities": 16,
+      "relations": 15,
+      "relation_ids_unique": true
+    }
+  ],
+  "scientific_reference_acceptance": "待领域人类独立核验；本轮不提供人类标注正确性证明"
+}

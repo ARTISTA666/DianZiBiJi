@@ -1,0 +1,35 @@
+{
+  "utc": "2026-10-10T15:52:29.322108+00:00",
+  "path": "/projects/2/notes",
+  "method": "POST",
+  "request": {
+    "title": "team5863-01 Field sampling",
+    "experiment_type": "field_sample_collection",
+    "experiment_date": "2025-05-04",
+    "fixed_fields_json": {
+      "reagents": [
+        "99% ethanol"
+      ],
+      "instrument": [],
+      "sample": [
+        "thrips"
+      ],
+      "result": []
+    },
+    "content_json": {}
+  },
+  "status": 200,
+  "response": {
+    "id": 21,
+    "project_id": 2,
+    "template_id": null,
+    "title": "team5863-01 Field sampling",
+    "experiment_type": "field_sample_collection",
+    "experiment_date": "2025-05-04",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 21,
+    "created_at": "2026-10-10T15:52:29.326731Z",
+    "updated_at": "2026-10-10T15:52:29.326731Z"
+  }
+}

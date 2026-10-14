@@ -1,0 +1,224 @@
+{
+  "status": "verified",
+  "owner": "T-114 root; independent QA methods separately",
+  "human_participant_count": 0,
+  "gpt_role_count": 4,
+  "original_v2": {
+    "planned_scenes": 24,
+    "passed_scenes": 18,
+    "failed_scenes": 6,
+    "actual_action_records": 84,
+    "actions_sha256": "c8e90280924a149a970683741b10f5b64b8e93da59b817f5a858049ff8d5c917",
+    "scenario_summary": [
+      {
+        "category": "create_and_submit",
+        "passed": 3,
+        "planned": 3
+      },
+      {
+        "category": "review_and_return",
+        "passed": 3,
+        "planned": 3
+      },
+      {
+        "category": "revise_and_resubmit",
+        "passed": 3,
+        "planned": 3
+      },
+      {
+        "category": "approve_returned_revision",
+        "passed": 3,
+        "planned": 3
+      },
+      {
+        "category": "evidence_based_fact_query",
+        "passed": 0,
+        "planned": 3
+      },
+      {
+        "category": "insufficient_evidence_query",
+        "passed": 0,
+        "planned": 3
+      },
+      {
+        "category": "readonly_write_denied",
+        "passed": 3,
+        "planned": 3
+      },
+      {
+        "category": "nonmember_read_denied",
+        "passed": 3,
+        "planned": 3
+      }
+    ],
+    "failed_query_http_status": 409,
+    "independent_recomputation": "methods-qa.json"
+  },
+  "v3": {
+    "planned_scenes": 9,
+    "passed_scenes": 8,
+    "failed_scenes": 1,
+    "actual_action_records": 16,
+    "query_api_request_count": 6,
+    "upstream_model_call_count": null,
+    "responses_with_internal_citation_repair": 4,
+    "scene_results": [
+      {
+        "category": "evidence_based_fact_query",
+        "repetition": 1,
+        "success": false,
+        "http_status": 200,
+        "action_sha256": "9eba6f2d97f512b4a4d3a1cba5af38f28897d2e0141622b2c4ff56d943964fff",
+        "provider": "deepseek",
+        "model_name": "deepseek-flash",
+        "fallback_reason": "needs_review",
+        "citation_audit": {
+          "passed": false,
+          "citation_count": 9,
+          "invalid_citations": [],
+          "has_evidence": true,
+          "message": "引用校验通过，共核对 9 个证据编号。 缺少强制引用：关键事实必须在同段包含有效 [S数字] 或 [G数字]。",
+          "repair_attempted": true
+        },
+        "judgment": "实际DeepSeek回答对两样本条件与H226的核心事实正确，S4/S5实体同句条件绑定和S3研究标题提供内容支持；但fallback_reason=needs_review，citation_audit.passed=false且evidence_status=partial，不满足冻结规则的no fallback，因此失败。"
+      },
+      {
+        "category": "evidence_based_fact_query",
+        "repetition": 2,
+        "success": true,
+        "http_status": 200,
+        "action_sha256": "f3167081a2709a2a6edcad1dfa3ff5ea03410f640b227fd5bc986d7b23c5ced2",
+        "provider": "deepseek",
+        "model_name": "deepseek-flash",
+        "fallback_reason": null,
+        "citation_audit": {
+          "passed": true,
+          "citation_count": 16,
+          "invalid_citations": [],
+          "has_evidence": true,
+          "message": "引用校验通过，共核对 16 个证据编号。",
+          "repair_attempted": false
+        },
+        "judgment": "实际DeepSeek回答正确给出GSM3035185非靶向对照、GSM3035187 p63靶向shRNA敲低、H226；S4/S5内容逐实体支持绑定，S3研究标题支持细胞系。fallback_reason=null，满足冻结事实场景规则。"
+      },
+      {
+        "category": "evidence_based_fact_query",
+        "repetition": 3,
+        "success": true,
+        "http_status": 200,
+        "action_sha256": "6f13cdc4e84f3a8c8d31fae77c7cec9f36d5a27ecd0776096eb7859ddbe877b0",
+        "provider": "deepseek",
+        "model_name": "deepseek-flash",
+        "fallback_reason": null,
+        "citation_audit": {
+          "passed": true,
+          "citation_count": 12,
+          "invalid_citations": [],
+          "has_evidence": true,
+          "message": "引用校验通过，共核对 12 个证据编号。",
+          "repair_attempted": false
+        },
+        "judgment": "实际DeepSeek回答正确给出GSM3035185非靶向对照、GSM3035187 p63靶向shRNA敲低、H226；S4/S5内容逐实体支持绑定，S3研究标题支持细胞系。fallback_reason=null，满足冻结事实场景规则。"
+      },
+      {
+        "category": "insufficient_evidence_query",
+        "repetition": 1,
+        "success": true,
+        "http_status": 200,
+        "action_sha256": "83c36f69556ac5a9ef2e9b08d3baafb66670c848c0958d8f8bc62eb15b8e4ecc",
+        "provider": "deepseek",
+        "model_name": "deepseek-flash",
+        "fallback_reason": "needs_review",
+        "citation_audit": {
+          "passed": false,
+          "citation_count": 16,
+          "invalid_citations": [],
+          "has_evidence": true,
+          "message": "引用校验通过，共核对 16 个证据编号。 缺少强制引用：关键事实必须在同段包含有效 [S数字] 或 [G数字]。",
+          "repair_attempted": true
+        },
+        "judgment": "真实DeepSeek回答明确抗体稀释比例和抗体孵育时长无支持/证据不足，未提供虚构抗体数值。回复把37°C、5% CO2、6 days归为培养条件，并把1 µg/mL归为doxycycline处理而不是抗体参数，满足原不足证据场景规则。"
+      },
+      {
+        "category": "insufficient_evidence_query",
+        "repetition": 2,
+        "success": true,
+        "http_status": 200,
+        "action_sha256": "ff40427a8ffd6220ce8fbb8f3a42cdaab01f9ded74b87add872f0085e3f858f7",
+        "provider": "deepseek",
+        "model_name": "deepseek-flash",
+        "fallback_reason": "needs_review",
+        "citation_audit": {
+          "passed": false,
+          "citation_count": 16,
+          "invalid_citations": [],
+          "has_evidence": true,
+          "message": "引用校验通过，共核对 16 个证据编号。 缺少强制引用：关键事实必须在同段包含有效 [S数字] 或 [G数字]。",
+          "repair_attempted": true
+        },
+        "judgment": "真实DeepSeek回答明确抗体稀释比例和抗体孵育时长无支持/证据不足，未提供虚构抗体数值。回复把37°C、5% CO2、6 days归为培养条件，并把1 µg/mL归为doxycycline处理而不是抗体参数，满足原不足证据场景规则。"
+      },
+      {
+        "category": "insufficient_evidence_query",
+        "repetition": 3,
+        "success": true,
+        "http_status": 200,
+        "action_sha256": "33ee8049b57a50848cd15a5ea59511601b47c0f970127bb6712501ca7c523fce",
+        "provider": "deepseek",
+        "model_name": "deepseek-flash",
+        "fallback_reason": "needs_review",
+        "citation_audit": {
+          "passed": false,
+          "citation_count": 16,
+          "invalid_citations": [],
+          "has_evidence": true,
+          "message": "引用校验通过，共核对 16 个证据编号。 缺少强制引用：关键事实必须在同段包含有效 [S数字] 或 [G数字]。",
+          "repair_attempted": true
+        },
+        "judgment": "真实DeepSeek回答明确抗体稀释比例和抗体孵育时长无支持/证据不足，未提供虚构抗体数值。回复把37°C、5% CO2、6 days归为培养条件，并把1 µg/mL归为doxycycline处理而不是抗体参数，满足原不足证据场景规则。"
+      },
+      {
+        "category": "readonly_write_denied",
+        "repetition": 1,
+        "success": true,
+        "http_status": 403,
+        "action_sha256": "280f02ab44abba9d0fa7f5c499121ccb201570fe1209866c778e14b5c4afce2a",
+        "provider": null,
+        "model_name": null,
+        "fallback_reason": null,
+        "citation_audit": null,
+        "judgment": "完整合法创建载荷实际返回403“需要写入权限”；前后GET响应一致，只有原批准笔记5/6/7，总数3，未新建笔记。"
+      },
+      {
+        "category": "readonly_write_denied",
+        "repetition": 2,
+        "success": true,
+        "http_status": 403,
+        "action_sha256": "142a5ec54e93e368b36c7abbf8135d07ead3859daca0f5cdb05dae6e53659967",
+        "provider": null,
+        "model_name": null,
+        "fallback_reason": null,
+        "citation_audit": null,
+        "judgment": "完整合法创建载荷实际返回403“需要写入权限”；前后GET响应一致，只有原批准笔记5/6/7，总数3，未新建笔记。"
+      },
+      {
+        "category": "readonly_write_denied",
+        "repetition": 3,
+        "success": true,
+        "http_status": 403,
+        "action_sha256": "b0a478ca846cb190028ea637c303fbf45b640a80e621bde900186e8b8280de7b",
+        "provider": null,
+        "model_name": null,
+        "fallback_reason": null,
+        "citation_audit": null,
+        "judgment": "完整合法创建载荷实际返回403“需要写入权限”；前后GET响应一致，只有原批准笔记5/6/7，总数3，未新建笔记。"
+      }
+    ],
+    "actions_sha256": "8fa7a2face9c39f603ab4fff7fed11a4d9accbf72fd455363bd5e3d5d50bcf6c",
+    "protocol_sha256": "28a913cec4c5925e6955c588d05054bf07816e3bc67c687b4d8d8cf5a1bf70bb",
+    "original_failures_preserved": true,
+    "corpus_and_note_inventory_unchanged": true
+  },
+  "errors": [],
+  "interpretation": "API workflow GPT simulation, not human validation or UI usability; v3 performed after v2 data precondition failure; no pooling"
+}

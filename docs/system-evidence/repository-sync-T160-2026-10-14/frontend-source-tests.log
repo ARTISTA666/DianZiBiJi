@@ -1,0 +1,54 @@
+
+> eln-frontend@0.1.0 test:source
+> node --test e2e/frontend-regressions.test.cjs
+
+✔ R04: real SSE subscription delivers expiry and disposes its native listener (75.75ms)
+✔ R07: invalid login rejects locally without logout or redirect (22.403125ms)
+✔ R01: late session creation cannot start a turn or poison the next project session (29.059375ms)
+✔ R01: late turn, plan and SSE results are discarded after project/user changes (26.7105ms)
+✔ R01: logout invalidates a session request before the component rerenders (12.973ms)
+✔ R01: an in-flight confirmation cannot render into the next identity with the same session id (26.168208ms)
+✔ R01: late deep-plan start failure is discarded (21.008708ms)
+✔ R01: late deep-plan cancel failure is discarded (10.476875ms)
+✔ R04: two pending actions remain actionable after the first 确认 (10.151583ms)
+✔ R04: two pending actions remain actionable after the first 取消 (13.439833ms)
+✔ R04: confirmation.completed only removes its own action and keeps the stream active (9.891708ms)
+✔ R04: confirmation.rejected only removes its own action and keeps the stream active (10.951416ms)
+✔ R04: confirmation.expired only removes its own action and keeps the stream active (15.009792ms)
+✔ R04 retry: 确认 network failure retains A for explicit retry before B (16.710125ms)
+✔ R04 retry: 确认 503 failure retains A for explicit retry before B (25.111042ms)
+✔ R04 retry: 取消 network failure retains A for explicit retry before B (14.395875ms)
+✔ R04 retry: 取消 503 failure retains A for explicit retry before B (15.464625ms)
+✔ R04 retry: terminal 409 refusal does not restore A ahead of B (21.174791ms)
+✔ R04 retry: terminal 403 refusal does not restore A ahead of B (15.858625ms)
+✔ R04 retry: confirmation.completed before a late transport error prevents restoring settled A (11.180959ms)
+✔ R04 retry: confirmation.rejected before a late transport error prevents restoring settled A (9.709542ms)
+✔ R04 retry: confirmation.expired before a late transport error prevents restoring settled A (14.397125ms)
+✔ R08: note id survives partial image upload failure; retry only uploads failed files (9.269167ms)
+✔ R16: late note creation cannot upload attachments or overwrite a new project draft (5.330541ms)
+✔ R16: an old attachment failure cannot alter a new project save or unlock it (5.354708ms)
+✔ R16: late note creation cannot upload attachments or overwrite a new identity draft (4.745459ms)
+✔ R16: an old attachment failure cannot alter a new identity save or unlock it (5.374708ms)
+✔ R16: unmount stops a created note from starting attachment uploads (6.127458ms)
+✔ R16: logout before rerender stops a created note from starting attachment uploads (6.860625ms)
+✔ R16: closing and reopening a form isolates its in-flight save in the same project (5.879417ms)
+✔ R09: reader/reviewer can view and correct existing OCR without write (5.582917ms)
+✔ R09: reviewer cannot extract a missing OCR result (4.878042ms)
+✔ R10: all file pages are collected, deduplicated, and empty pages terminate (14.778458ms)
+✔ R10: a project/identity change discards a pending file page and stops fetching (5.926791ms)
+✔ R10: file UI exposes item 51 and approvals include the oldest pending file (10.10475ms)
+✔ R06: knowledge format validation rejects Office, including renamed gzip, and preserves attachment choice (0.873459ms)
+✔ R06: a committed approval survives metadata refresh failure (1.771208ms)
+✔ R06: approved-but-failed sync is visible and retries sync without approving twice (5.103125ms)
+✔ R14: partial batch upload refreshes success and retries only the failed file (7.987375ms)
+✔ R14: the active batch cannot change category, queue, or start twice (6.035792ms)
+✔ R14: a project change clears the queue and discards an old batch without unlocking the new batch (5.994416ms)
+✔ R14: a identity change clears the queue and discards an old batch without unlocking the new batch (7.035916ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 683.647875

@@ -1,0 +1,44 @@
+# 1005 导师批注 6/7：研究现状修订来源索引
+
+核查日期：2026-10-09。只读核查；未修改仓库或 Word。正文草案见 `/tmp/thesis-1005-research-revision.json`。保留原参考文献编号，未扩充文献或增加实验数字。以下引用原论文、作者公开稿、作者项目文档或机构官方资料；本研究的 ELN 适配要求属于结合研究对象作出的综合判断，不是各原文共同证明的“空白”。
+
+| 编号 | 一手来源 | 本轮核实内容与写作边界 |
+|---|---|---|
+| [1] | [Wilkinson 等原文，Scientific Data](https://www.nature.com/articles/sdata201618) | FAIR 是数据管理与重用的原则，强调人和机器可用性，允许必要的认证授权；不能把 FAIR 等同于完全开放数据。1.2不新增此引文。 |
+| [2] | [Barillari 等，OUP原刊](https://academic.oup.com/bioinformatics/article/32/4/638/1743839)；[ETH作者存档PDF](https://www.research-collection.ethz.ch/bitstreams/ba66fd0c-4c8f-4da3-8111-a95d69a1777f/download) | openBIS ELN-LIMS 管理材料、实验记录和原始/分析数据，网页录入、浏览与检索，包含访问控制；可以写关联管理，不应概括为既有ELN无权限机制。 |
+| [3] | [Buonsanti，ACS原刊](https://pubs.acs.org/doi/10.1021/acs.chemmater.3c00019) | 材料合成场景的社论/实践讨论：记录检索、数据共享、仪器数据与人员交接；讨论领域本体和推广困难。无算法对照实验。原参考元数据应由35(5):1586–1587改为35(3):805–806。 |
+| [4] | [中国科学院官方报道](https://www.cas.cn/zt/kjzt/wxsd/202304/t20230425_4885267.shtml) | 科研机构电子实验记录本部署、全流程采集/汇聚/标准化与溯源；机构实践报道，不能当作独立量化比较研究。 |
+| [5] | [Schröder 与 Biskup，ChemRxiv作者原稿PDF](https://chemrxiv.org/engage/api-gateway/chemrxiv/assets/orp/resource/item/64458f4cdf78ec5015479533/original/lab-inform-eln-a-lightweight-and-flexible-electronic-laboratory-notebook-for-academic-research-based-on-the-open-source-software-doku-wiki.pdf)；[作者项目概念文档](https://eln.docs.labinform.de/concepts.html) | DokuWiki+插件，无数据库后端，样本和测量页面、表单模板与交叉引用，轻量部署和定制。这里的结构化输入不等于大模型语义抽取。 |
+| [6] | [Vandendorpe 等，PLOS原文](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1012170) | 十项实施规则：选择/试用、敏感数据、培训、反馈、备份归档等；实施指南，不是新算法。 |
+| [7] | [Higgins 等，Nature Protocols](https://www.nature.com/articles/s41596-021-00645-8)；[Oxford作者接受稿](https://ora.ox.ac.uk/objects/uuid%3A0328468f-e909-43ab-a750-940d6e6da7b6/files/rdj52w710m) | 学术环境中选择与实施ELN的工作框架和实践考虑；不要写成横向产品性能比较。 |
+| [8] | [Chen 等，Discover Education原文](https://link.springer.com/article/10.1007/s44217-024-00161-3) | 科学课程引入ELN并结合反馈/成绩考察；学生认可保存数据和报告整理优势，但课程成绩无改善。标题完整含副标题“student response and lessons learned”。教学样本不直接代表课题组研究业务。 |
+| [9] | [Lewis 等原论文](https://arxiv.org/abs/2005.11401) | 稠密维基百科检索与预训练seq2seq生成结合，按序列/词元组织资料，选定知识密集型任务效果改善；原工作涉及训练，不宜写RAG一律无需训练。 |
+| [10] | [Gao 等综述](https://arxiv.org/abs/2312.10997) | Naive/Advanced/Modular RAG架构及检索、增强、生成、评测等。综述不应当作统一性能证明。 |
+| [11] | [Gupta 等综述](https://arxiv.org/abs/2410.12837) | RAG架构演进、应用及效率/规模等挑战。与[10]共同作为方法比较框架。 |
+| [12] | [Zhou 等，明确2024 v1](https://arxiv.org/abs/2409.10102v1) | 作者是Zhou Y, Liu Y, Li X, et al；2026 v2才是当前参考误列的Zhou Y,Zhang W,Shao J等。v1摘要明确提出事实性、鲁棒性、公平性、透明性、问责性、隐私六维框架，另创建评价benchmark并对商业/开放模型评价；可写“建立相应评价基准”。 |
+| [13] | [李子骏等，期刊官方网页](https://mc.spacejournal.cn/article/doi/10.19304/J.ISSN1000-7180.2025.0652?viewType=HTML)；[官方PDF](https://mc.spacejournal.cn/cn/article/pdf/preview/10.19304/J.ISSN1000-7180.2025.0652.pdf) | 面向知识密集型任务的综述，模型检索协同及代表方法、应用和挑战；属于国内研究综述。 |
+| [14] | [Asai 等，Self-RAG原论文](https://arxiv.org/abs/2310.11511) | 专门训练反思标记，动态检索及相关性/支持性/生成判断；选定任务改善事实性与引用，不能把自评等同业务审核。 |
+| [15] | [Es 等，ACL Anthology原刊](https://aclanthology.org/2024.eacl-demo.16/) | 自动评价RAG相关检索、忠实使用上下文、生成质量，帮助缩短评价迭代；1.2应介绍研究问题与用途，不再详述指标公式。 |
+| [16] | [Hogan 等作者原稿](https://arxiv.org/abs/2003.02320)；[作者最终PDF](https://aidanhogan.com/docs/knowledge-graphs-computing-surveys.pdf) | 图谱表示/查询/构建/质量等综述；ACM CS54(4) article71:1–37，2021。 |
+| [17] | [Ji 等作者原稿](https://arxiv.org/abs/2002.00388)；[原刊PDF的NSF公共存档](https://par.nsf.gov/servlets/purl/10324498) | 表示、获取补全、时序与应用综述。在线2021，卷33(2):494–514为2022年期次，原参考2021和期次的组合值得统一；本轮不靠这个年份判断内容。 |
+| [18] | [Trajanoska 等原文摘要](https://arxiv.org/abs/2305.04676) | 原文明确可持续发展相关文本、ChatGPT与REBEL联合实体关系抽取比较，以及自动构图/本体生成；不应混写为专门材料科学文献抽取。 |
+| [19] | [Bai 等，npj Computational Materials原文](https://www.nature.com/articles/s41524-025-01540-6) | 从框架材料文献摘要抽实体关系，Qwen2-72B/JSON/Neo4j，保留标题DOI等来源，生成Cypher辅助问答；第三作者Yi Li，缩写应Li Y。不是实时ELN审核/修订数据。 |
+| [20] | [Lairgi 等原文](https://arxiv.org/abs/2409.03284)；[作者代码说明](https://github.com/AuvaLab/itext2kg/blob/main/README_itext2kg.md) | 文档整理、增量实体/关系提取与整合，语义重复消解，科学论文/网页/CV等材料测试；算法增量更新不等同ELN业务状态更新。 |
+| [21] | [Linders 与 Tomczak原文](https://arxiv.org/abs/2504.08893) | KG-RAG的多跳分解检索与显式推理，MetaQA多跳改进、单跳略有代价，不能直接推定本文一跳检索必然占优。 |
+| [22] | [Ma 等，EMNLP原刊PDF](https://aclanthology.org/2025.emnlp-main.1249.pdf)；[作者预印本](https://arxiv.org/abs/2505.20099) | 按QA类别和KG作用整理的综述/机会框架，不能描述为作者提出某一个统一关系共输入算法。 |
+| [23] | [Edge 等，GraphRAG原文](https://arxiv.org/abs/2404.16130) | 面向全局问题/资料集合主题汇总，实体关系图与预生成社区摘要、社区回答综合；报告所测global sensemaking的覆盖广度/多样性。 |
+| [24] | [Guo 等，明确2024 v1](https://arxiv.org/abs/2410.05779v1) | 图与向量表示，低/高层双层检索和增量更新；作者Zirui Guo,Lianghao Xia,Yanhua Yu,Tu Ao,Chao Huang，第三作者应Yu Y。和GraphRAG社区摘要机制应分别介绍。 |
+| [25] | [Yao 等，ReAct原文](https://arxiv.org/abs/2210.03629) | 推理与行动交替，外部Wikipedia信息、问答与交互环境测试；任务表现/可解释性改进不直接证明业务授权充分。 |
+| [26] | [Schick 等，Toolformer原文](https://arxiv.org/abs/2302.04761) | 用少量演示自监督训练何时/哪种工具/参数/返回结果利用，测试零样本改进。第二作者Jane Dwivedi-Yu，缩写Dwivedi-Yu J。 |
+| [27] | [Wang 等智能体综述](https://arxiv.org/abs/2308.11432) | 智能体构建框架、应用、评价与挑战；用于组织研究脉络，不承担原始算法效果证据。 |
+| [28] | [Bran 等，ChemCrow原文](https://www.nature.com/articles/s42256-024-00832-8) | 工具结合化学问答/规划，专家评估复杂任务收益。原文已有安全检查，以及启动合成前请求用户许可；本文人工确认只能作为ELN范围中的制度适配，不应称既有工作皆未控制操作。 |
+| [29] | [Boiko 等，Coscientist原文](https://www.nature.com/articles/s41586-023-06792-0)；[作者支持材料](https://github.com/gomesgroup/coscientist/blob/main/README.md) | GPT-4规划模块与网页/文档检索、代码执行、实验自动化，演示化学设计执行与优化；选定工具和实验任务中的可行性，不是任意科研任务自治保证。 |
+| [30] | [国家能源局转载国务院办公厅办法](https://www.nea.gov.cn/2018-04/27/c_137141036.htm) | 科学数据管理规定。1.2草案不新增此引文。 |
+| [31] | [孟小峰官方大学主页书目](https://ises.nju.edu.cn/b4/c8/c62812a767176/page.htm)；[论文作者公开PDF](https://bluejoe2008.github.io/pub/Scientific_Big_Data_Management_Concepts_Technologies_and_System.pdf) | 科学大数据管理概念/技术/系统；原文书目页码235–247，原参考235–248应核对。1.2草案不新增此引文。 |
+
+两项特别复核：
+
+- [12] 2024 v1 摘要不仅提出六维框架，还明确说明建立评价基准并评测多种商业与开放模型。保留2024年时，应同时使用v1作者。
+- [18] 原文用例明确为可持续发展相关文本，并比较ChatGPT和REBEL；本轮已修正原文将[18]混同科学文献/材料数据工作的笼统描述。
+
+参考元数据本轮已充分核实建议修正：[3]期次页码，[12]作者与版本，[19]第三作者，[24]第三作者并用et al，[26]第二作者。其余[8]标题副标题、[16]article71、[17]期次年份、[31]末页属于可选书目清理，避免扩大本轮任务。

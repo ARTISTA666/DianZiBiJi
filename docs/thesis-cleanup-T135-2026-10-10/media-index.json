@@ -1,0 +1,482 @@
+[
+  {
+    "p": 207,
+    "media": "word/media/image1.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image1.png",
+    "size": [
+      1342,
+      658
+    ],
+    "next": "图 1-1　论文结构与章节支撑关系"
+  },
+  {
+    "p": 276,
+    "media": "word/media/image2.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image2.png",
+    "size": [
+      1299,
+      295
+    ],
+    "next": "图 3-1　系统级与项目级权限边界示意"
+  },
+  {
+    "p": 384,
+    "media": "word/media/image3.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image3.png",
+    "size": [
+      1342,
+      1052
+    ],
+    "next": "图 4-1　系统总体架构"
+  },
+  {
+    "p": 419,
+    "media": "word/media/image4.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image4.png",
+    "size": [
+      1276,
+      904
+    ],
+    "next": "图 4-2　系统功能模块图"
+  },
+  {
+    "p": 471,
+    "media": "word/media/image5.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image5.png",
+    "size": [
+      1299,
+      1128
+    ],
+    "next": "图 4-3　数据库表关系图"
+  },
+  {
+    "p": 517,
+    "media": "word/media/image6.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image6.png",
+    "size": [
+      1749,
+      888
+    ],
+    "next": "图 4-4　实验知识图谱构建与计划覆盖总体流程"
+  },
+  {
+    "p": 594,
+    "media": "word/media/image7.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image7.png",
+    "size": [
+      1299,
+      523
+    ],
+    "next": "图 4-5　审核状态约束下的知识图谱构建流程"
+  },
+  {
+    "p": 599,
+    "media": "word/media/image8.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image8.png",
+    "size": [
+      1927,
+      1252
+    ],
+    "next": "图 4-6　实体规范化流程图"
+  },
+  {
+    "p": 646,
+    "media": "word/media/image9.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image9.png",
+    "size": [
+      1100,
+      639
+    ],
+    "next": "图 4-7　项目级检索增强问答总体流程"
+  },
+  {
+    "p": 680,
+    "media": "word/media/image10.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image10.png",
+    "size": [
+      1342,
+      836
+    ],
+    "next": "图 4-8　普通 RAG 与图谱增强 RAG 对照流程"
+  },
+  {
+    "p": 697,
+    "media": "word/media/image11.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image11.png",
+    "size": [
+      1342,
+      619
+    ],
+    "next": "图 4-9　权限约束下的项目级 RAG 问答流程"
+  },
+  {
+    "p": 724,
+    "media": "word/media/image12.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image12.png",
+    "size": [
+      1299,
+      649
+    ],
+    "next": "图 4-10　三类智能辅助调用流程"
+  },
+  {
+    "p": 977,
+    "media": "word/media/image13.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image13.png",
+    "size": [
+      1039,
+      649
+    ],
+    "next": "图 5-1　已审核实验笔记详情与审核记录"
+  },
+  {
+    "p": 979,
+    "media": "word/media/image14.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image14.png",
+    "size": [
+      1039,
+      649
+    ],
+    "next": "图 5-2　实验笔记列表与审核状态"
+  },
+  {
+    "p": 983,
+    "media": "word/media/image15.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image15.png",
+    "size": [
+      1878,
+      1315
+    ],
+    "next": "图 5-3　系统处理总流程图"
+  },
+  {
+    "p": 987,
+    "media": "word/media/image16.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image16.png",
+    "size": [
+      1299,
+      331
+    ],
+    "next": "图 5-4　实验笔记状态流转"
+  },
+  {
+    "p": 990,
+    "media": "word/media/image17.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image17.png",
+    "size": [
+      1707,
+      157
+    ],
+    "next": "图 5-5　附件资料审核与向量入库流水线"
+  },
+  {
+    "p": 1014,
+    "media": "word/media/image18.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image18.png",
+    "size": [
+      1216,
+      915
+    ],
+    "next": "图 5-6　项目二知识图谱全景"
+  },
+  {
+    "p": 1016,
+    "media": "word/media/image19.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image19.png",
+    "size": [
+      996,
+      749
+    ],
+    "next": "图 5-7　图谱一跳局部聚焦"
+  },
+  {
+    "p": 1021,
+    "media": "word/media/image20.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image20.png",
+    "size": [
+      1039,
+      649
+    ],
+    "next": "图 5-8　固定任务智能生成页面"
+  },
+  {
+    "p": 1023,
+    "media": "word/media/image21.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image21.png",
+    "size": [
+      996,
+      922
+    ],
+    "next": "图 5-9　计划覆盖与未匹配项展示"
+  },
+  {
+    "p": 1093,
+    "media": "word/media/image22.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image22.png",
+    "size": [
+      1216,
+      619
+    ],
+    "next": "图 5-10　项目成员角色与能力配置"
+  },
+  {
+    "p": 1095,
+    "media": "word/media/image23.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image23.png",
+    "size": [
+      576,
+      538
+    ],
+    "next": "图 5-11　笔记版本与退回修订入口"
+  },
+  {
+    "p": 1098,
+    "media": "word/media/image24.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image24.png",
+    "size": [
+      1216,
+      423
+    ],
+    "next": "图 5-12　资料上传关联与审核入库状态"
+  },
+  {
+    "p": 1100,
+    "media": "word/media/image25.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image25.png",
+    "size": [
+      512,
+      524
+    ],
+    "next": "图 5-13　OCR识别文本与人工校对确认"
+  },
+  {
+    "p": 1103,
+    "media": "word/media/image26.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image26.png",
+    "size": [
+      1002,
+      131
+    ],
+    "next": "图 5-14　图谱增强问答的来源编号与不足说明"
+  },
+  {
+    "p": 1105,
+    "media": "word/media/image27.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image27.png",
+    "size": [
+      1036,
+      350
+    ],
+    "next": "图 5-15　按需预警与确认处置入口"
+  },
+  {
+    "p": 1108,
+    "media": "word/media/image28.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image28.png",
+    "size": [
+      1000,
+      531
+    ],
+    "next": "图 5-16　项目工具调用的审计摘要"
+  },
+  {
+    "p": 1110,
+    "media": "word/media/image29.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image29.png",
+    "size": [
+      1036,
+      311
+    ],
+    "next": "图 5-17　独立盲评入口的访问隔离"
+  },
+  {
+    "p": 1113,
+    "media": "word/media/image30.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image30.png",
+    "size": [
+      702,
+      622
+    ],
+    "next": "图 5-18　当前会话的问答轻反馈入口"
+  },
+  {
+    "p": 1116,
+    "media": "word/media/image31.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image31.png",
+    "size": [
+      512,
+      580
+    ],
+    "next": "图 5-19　实验笔记内容编辑与本机草稿提示"
+  },
+  {
+    "p": 1119,
+    "media": "word/media/image32.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image32.png",
+    "size": [
+      592,
+      328
+    ],
+    "next": "图 5-20　四类预警指标的分级阈值配置"
+  },
+  {
+    "p": 1122,
+    "media": "word/media/image33.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image33.png",
+    "size": [
+      636,
+      312
+    ],
+    "next": "图 5-21　固定任务实验总结草稿节选"
+  },
+  {
+    "p": 1125,
+    "media": "word/media/image34.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image34.png",
+    "size": [
+      662,
+      350
+    ],
+    "next": "图 5-22　生成草稿的三类来源计数与编号"
+  },
+  {
+    "p": 1128,
+    "media": "word/media/image35.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image35.png",
+    "size": [
+      602,
+      382
+    ],
+    "next": "图 5-23　计划未覆盖条目的属性与来源追溯"
+  },
+  {
+    "p": 1171,
+    "media": "word/media/image36.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image36.png",
+    "size": [
+      1360,
+      720
+    ],
+    "next": "图 6-1　三项目已审核实验笔记数量分布"
+  },
+  {
+    "p": 1385,
+    "media": "word/media/image37.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image37.png",
+    "size": [
+      1440,
+      780
+    ],
+    "next": "图 6-2　分题型任务完成率"
+  },
+  {
+    "p": 1388,
+    "media": "word/media/image38.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image38.png",
+    "size": [
+      1920,
+      780
+    ],
+    "next": "图 6-3　证据覆盖率、任务完成率与响应时延"
+  },
+  {
+    "p": 1392,
+    "media": "word/media/image39.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image39.png",
+    "size": [
+      1400,
+      780
+    ],
+    "next": "图 6-4　图谱最低得分阈值敏感性"
+  },
+  {
+    "p": 1470,
+    "media": "word/media/image40.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image40.png",
+    "size": [
+      1440,
+      780
+    ],
+    "next": "图 6-5　四种对照方法任务完成率"
+  },
+  {
+    "p": 1472,
+    "media": "word/media/image41.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image41.png",
+    "size": [
+      1640,
+      800
+    ],
+    "next": "图 6-6　五种方法的事实覆盖率、封闭集精确命中率与F1"
+  },
+  {
+    "p": 1510,
+    "media": "word/media/image42.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image42.png",
+    "size": [
+      1299,
+      528
+    ],
+    "next": "图 6-7　四类固定任务的来源规模、总 Token 数与响应时延"
+  },
+  {
+    "p": 3548,
+    "media": "word/media/image43.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image43.png",
+    "size": [
+      1320,
+      972
+    ],
+    "next": "图 D-1　项目一PCR固定笔记原文展示"
+  },
+  {
+    "p": 3550,
+    "media": "word/media/image44.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image44.png",
+    "size": [
+      1320,
+      972
+    ],
+    "next": "图 D-2　项目一细胞活力固定笔记原文展示"
+  },
+  {
+    "p": 3552,
+    "media": "word/media/image45.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image45.png",
+    "size": [
+      1320,
+      972
+    ],
+    "next": "图 D-3　项目一Western Blot固定笔记原文展示"
+  },
+  {
+    "p": 3554,
+    "media": "word/media/image46.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image46.png",
+    "size": [
+      1320,
+      972
+    ],
+    "next": "图 D-4　项目一qPCR固定笔记原文展示"
+  },
+  {
+    "p": 3556,
+    "media": "word/media/image47.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image47.png",
+    "size": [
+      1320,
+      914
+    ],
+    "next": "图 D-5　原型批次SOP检索来源文本（1/2）"
+  },
+  {
+    "p": 3558,
+    "media": "word/media/image48.png",
+    "local": "/Users/yusong/Downloads/new/full-system/docs/thesis-cleanup-T135-2026-10-10/source-media/image48.png",
+    "size": [
+      1320,
+      739
+    ],
+    "next": "图 D-6　原型批次SOP检索来源文本（2/2）"
+  }
+]

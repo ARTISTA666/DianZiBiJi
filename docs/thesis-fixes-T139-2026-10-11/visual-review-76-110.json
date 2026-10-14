@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "task": "T139",
+  "reviewer": "/root/backend_engineer",
+  "status": "reviewed_snapshot",
+  "reviewed_at_utc": "2026-10-11 06:48:41 UTC",
+  "reviewed_snapshot": {
+    "image_directory": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression",
+    "total_rendered_pages": 110,
+    "reviewed_render_page_range": [
+      76,
+      110
+    ],
+    "reviewed_printed_page_range": [
+      69,
+      103
+    ],
+    "reviewed_page_count": 35,
+    "image_size_pixels": [
+      1414,
+      2000
+    ],
+    "sha_recheck_mismatches": []
+  },
+  "method": "逐页调用 view_image(detail=original) 查看完整页面原图；未用 contact sheet 或裁剪替代逐页查看。查看后复算每页 SHA256，与受审快照哈希逐一匹配。",
+  "check_scope": [
+    "公式分数、上下标、求和界限及编号的可见完整性",
+    "表格列/行/数字是否截断或溢出版心",
+    "图像、坐标轴、图例、图中标签的边界",
+    "caption与对应图表是否同页并完整",
+    "段落与页码是否遮挡",
+    "孤立标题与孤立caption"
+  ],
+  "result": {
+    "blocking_layout_findings": 0,
+    "pass_pages": 33,
+    "pages_with_minor_observations": [
+      87,
+      110
+    ],
+    "reviewed_snapshot_layout_status": "pass_with_minor_observations",
+    "current_draft_final_acceptance": false
+  },
+  "boundaries": "本记录仅审核上述 render-regression 快照的第76–110页视觉版式，不代表当前Word稿最终验收，也不替代内容、实验或统计准确性审核。未编辑Word或源代码。",
+  "inheritance_rule": "仅当后续同页完整PNG的SHA256与本记录相同，方可继承该页检查结果；任何图像变化、页码移动或新增页均须重新逐页查看。其他代理范围由其各自记录覆盖。",
+  "pages": [
+    {
+      "page": 76,
+      "status": "pass",
+      "observations": "完整查看；表6-13八项角色接口任务、原轮与补测计数、空值横线和caption完整，行内概率及校正数值可辨；页末段落自然续接。",
+      "printed_page": 69,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-76.png",
+      "sha256": "508b2880cbdd5ab94fd8e6f99192521b97d9ecded7e6125677ebbba2d28a64eb",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 77,
+      "status": "pass",
+      "observations": "完整查看；表6-14三项输入条件、TP/FP/FN、百分数和未定义横线完整，caption同页；英文名称与正文段落无溢出或遮挡。",
+      "printed_page": 70,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-77.png",
+      "sha256": "87125202608d94fac538a7a2603188049cff01f04a922c1df31b401e7b1d8ca8",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 78,
+      "status": "pass",
+      "observations": "完整查看；6.7小结标题后有完整四行正文，章末留白正常，无孤立标题、文字截断或页码遮挡。",
+      "printed_page": 71,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-78.png",
+      "sha256": "0e4bfb3949109b53be0c8f0e16bb0487e774af0c310278cc463e692e3984c8a9",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 79,
+      "status": "pass",
+      "observations": "完整查看；第七章、7.1–7.3标题均与正文相邻，列项缩进和段落延续正常；无孤立标题、字符截断或页脚重叠。",
+      "printed_page": 72,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-79.png",
+      "sha256": "ae0382b37a91fe884e329d9c52f44878ba0fbb496c96485d8677952a656fe9b7",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 80,
+      "status": "pass",
+      "observations": "完整查看；7.3续页列项正文及英文方法名清晰，章末留白正常；无公式、图表，未见溢出、遮挡或异常分页。",
+      "printed_page": 73,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-80.png",
+      "sha256": "bbf0bc4d4069fcdffea3eb8e5c288d28b1808f035b49976d77bc3e2af1afbf58",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 81,
+      "status": "pass",
+      "observations": "完整查看；致谢标题及五段正文排布完整，段落和末句未截断；页眉页码与正文分离。",
+      "printed_page": 74,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-81.png",
+      "sha256": "387e8eb3ef74470c88dc356891d6648fbf0c7e26df595edf0dd9109e6a38add7",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 82,
+      "status": "pass",
+      "observations": "完整查看；参考文献标题及[1]–[14]条目悬挂缩进整齐，DOI和长英文题名换行在正文边界内；未见截断、重叠或孤立续行。",
+      "printed_page": 75,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-82.png",
+      "sha256": "23f1fb9f66dd4e4e46afdd766be2d8c33a0c84d00dbc727b9d66164c7ad446fd",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 83,
+      "status": "pass",
+      "observations": "完整查看；参考文献[15]–[30]条目均完整，长题名、DOI及文献信息续行缩进一致；页脚与最后条目留有间距。",
+      "printed_page": 76,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-83.png",
+      "sha256": "6af4bbd008a199ca8461d2c435f63877558bfdb63a292a1b3229007d92db4a84",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 84,
+      "status": "pass",
+      "observations": "完整查看；参考文献[31]–[48]中英文字形及卷期页码清楚，条目换行自然；页尾完整条目不与页码重叠。",
+      "printed_page": 77,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-84.png",
+      "sha256": "395a94e901bfc031008829b858cf63c8e535f42edf4bb780180dd964c3d8c723",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 85,
+      "status": "pass",
+      "observations": "完整查看；参考文献[49]–[67]条目、英文题名和卷期页码均可辨，悬挂缩进及页尾完整性正常，无遮挡。",
+      "printed_page": 78,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-85.png",
+      "sha256": "2fb0d59c994cdcbdc3eac561f87e071d1e2deccc36823a69f356063091b7e6e9",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 86,
+      "status": "pass",
+      "observations": "完整查看；参考文献[68]–[84]的标准编号、URL、DOI和统计文献条目完整，长字符串未超出正文边界，页尾无截断。",
+      "printed_page": 79,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-86.png",
+      "sha256": "af41f086b5d7932c842201b06c2e536651d2175c1595ed6a636163829ea01589",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 87,
+      "status": "pass_with_minor_observation",
+      "observations": "完整查看；末条参考文献[85]单独占一页，首行两端对齐使英文词距偏大，留下较大空白；题名、URL及访问日期完整。可选压页或调整该行对齐，非阻断缺陷。",
+      "printed_page": 80,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-87.png",
+      "sha256": "af8a3800802615e383c546d2814c9ff3775b1911b5b72930057a1eec0ff03cef",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 88,
+      "status": "pass",
+      "observations": "完整查看；附录A标题、说明、表A-1 caption及Q01–Q20完整同页，长问题自然换行，†标记、温度和百分数清楚；表底与页脚不重叠。",
+      "printed_page": 81,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-88.png",
+      "sha256": "c7882bb3cf76dd0f8ba6e77cb5c6d27aeadd2dae7d38ce603d8bb2f069bcf486",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 89,
+      "status": "pass",
+      "observations": "完整查看；附录B及B.1/B.2标题均有后续正文或表格，表B-1(a)的12条关系、序号及源实体caption完整，无遮挡或表行截断。",
+      "printed_page": 82,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-89.png",
+      "sha256": "52b546b954cd913a36f28f6dfe19a810777a16f36765e8ef2e870276410983b4",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 90,
+      "status": "pass",
+      "observations": "完整查看；表B-1(b)和B-1(c)各自caption、表头及13–38序号完整，英文实体名、数值和多字结果行均在表格边界内，无跨页断行。",
+      "printed_page": 83,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-90.png",
+      "sha256": "e6ffb495fc7595d0e074f062736a99a98d12d99543c5970d69ee9182630ba506",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 91,
+      "status": "pass",
+      "observations": "完整查看；表B-1(d)第39–52行完整，B.3标题后紧接caption及表B-2，约束符号和长SQL说明自然换行；页尾注释与页码分离，无裁切。",
+      "printed_page": 84,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-91.png",
+      "sha256": "14dce28a22e0666f40e7ef3ad738607516ba0f2ce1dd4b1ff8f5922697b3e1af",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 92,
+      "status": "pass",
+      "observations": "完整查看；表B-2续表明确重列caption及表头，G01–G18公共字段完整；枚举说明与表B-3字段均清楚，无字段名溢出或行高截断。",
+      "printed_page": 85,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-92.png",
+      "sha256": "b0894761e8d64eea03fd282a0968f183753862d6e80da197b3b4766cbcc5ff9e",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 93,
+      "status": "pass",
+      "observations": "完整查看；表B-4–B-9各自caption、表头、字段行及补充唯一约束完整，六表密集排布但相互分离，未见截断或遮挡。",
+      "printed_page": 86,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-93.png",
+      "sha256": "ce3ef2827acb186ba1926bbd50bc6c3a20df5331179d15f385c31fb452323e70",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 94,
+      "status": "pass",
+      "observations": "完整查看；表B-10–B-14五表的caption、公共字段代码、长字段名和每行约束完整，表底留白足够，未见遮挡或行截断。",
+      "printed_page": 87,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-94.png",
+      "sha256": "3b66dc4704302e15a27c315ef198ceb3a5712ba67ace3da730e0ae08793ea7db",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 95,
+      "status": "pass",
+      "observations": "完整查看；表B-15–B-17的文件、OCR及知识库字段均完整，长字段名未越列，模型默认值的连字符处换行可辨；caption与对应表同页。",
+      "printed_page": 88,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-95.png",
+      "sha256": "55d55b9e81148da2614fd9235d93e5097a18df93b7c050647a108c34f4c5599e",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 96,
+      "status": "pass",
+      "observations": "完整查看；表B-18–B-20、补充唯一约束及vector(d)记号完整，legacy-unknown默认值换行清楚；各表行高及正文页脚间距正常。",
+      "printed_page": 89,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-96.png",
+      "sha256": "0a28b62834d12f289657f62ca30c1f68ddd4c1475e48496eecb8d347b571b2d9",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 97,
+      "status": "pass",
+      "observations": "完整查看；表B-21–B-24的caption及字段完整，补充唯一索引和WHERE条件在正文内自然换行，字符串引号及不等号可辨，无页尾截断。",
+      "printed_page": 90,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-97.png",
+      "sha256": "c9a58928662acf1516e4e5a0d41cbcfe769276d3889fd36210ea9862d2714531",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 98,
+      "status": "pass",
+      "observations": "完整查看；表B-25 caption双行仍完整相邻，表B-26长字段名及20项日志字段未溢出，表格底部与页码间距充分。",
+      "printed_page": 91,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-98.png",
+      "sha256": "eb9dc3321953b4e1762f08799bb8de12280db2a090583dd21113feb285a7eff7",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 99,
+      "status": "pass",
+      "observations": "完整查看；表B-27–B-29各自caption、字段及补充CK/UQ条件完整，双行caption与长约束换行清楚，无列间重叠或裁切。",
+      "printed_page": 92,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-99.png",
+      "sha256": "9ac5a2a3e76b3e862a3875db97160f0bdaa054b868759a6c68358c5778132035",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 100,
+      "status": "pass",
+      "observations": "完整查看；表B-30–B-33含长来源字段名、MCP表名和双行caption均完整，四列边界内文字清楚，末表及页脚不重叠。",
+      "printed_page": 93,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-100.png",
+      "sha256": "ef0d7623e28ad757b29e44ff349f124ce833218d5e2afcf727fd5e5a4b4fd3d0",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 101,
+      "status": "pass",
+      "observations": "完整查看；表B-34–B-37的会话、回合、事件和消息字段完整，JSON默认值花括号与长提示词版本换行可辨，caption未孤立。",
+      "printed_page": 94,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-101.png",
+      "sha256": "11ebf7b3e5e67dd6f0512dfbb450f933b09164be185f68fa0e5e28015713870f",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 102,
+      "status": "pass",
+      "observations": "完整查看；表B-38–B-41字段、幂等约束及双行caption均完整，长WHERE条件自然换行，行内括号及唯一键列表无截断。",
+      "printed_page": 95,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-102.png",
+      "sha256": "a7211b94daabc0688f132cb1ce5d60c5642bfb63a3e1d0b75d7be7132e570e67",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 103,
+      "status": "pass",
+      "observations": "完整查看；表B-42–B-45的预警、反馈及迁移字段表完整，长CK与UQ说明正常换行，四个caption均贴近对应表；无溢出或遮挡。",
+      "printed_page": 96,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-103.png",
+      "sha256": "565ac0aa7251599dfa34e882b2876efe61ffe3070d410b3b7bd22bb1535b32e2",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 104,
+      "status": "pass",
+      "observations": "完整查看；附录C标题及说明完整，表C-1十二项工具权限与审计动作、表C-2六项模板caption和每行齐全；权限字符串不越列，无孤立标题。",
+      "printed_page": 97,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-104.png",
+      "sha256": "a67e61c75e03ec11c02a716c03ae45834e109f938c7b0be6dcbb8461f0d8ac27",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 105,
+      "status": "pass",
+      "observations": "完整查看；附录D和D.1/D.2标题后有正文，表D-1三个文件名及明确省略的哈希前缀完整，表D-2七项附件归档完整；长协议URL在正文内，页尾段落自然续接。",
+      "printed_page": 98,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-105.png",
+      "sha256": "c15d86f33fc574dd43b0a05baacb5ff6e70ddd6a8c724139bd98254be5058f55",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 106,
+      "status": "pass",
+      "observations": "完整查看；D.2来源续段及三个长PDF链接可辨且未越正文边界，D.3标题与说明同页，图D-1–D-6引用正常，未见孤立标题或字符截断。",
+      "printed_page": 99,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-106.png",
+      "sha256": "b05ed9fd5719eea1ca58f92f77f3655828db8167706fbcd2b396b807fa659313",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 107,
+      "status": "pass",
+      "observations": "完整查看；图D-1/D-2两份固定笔记样例的标题、记录信息、结构化字段及正文原文全部可读，浅蓝小标题清楚，各caption与相应图同页且无重叠。",
+      "printed_page": 100,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-107.png",
+      "sha256": "2b94c495364b4269e34f85b57c2813d7d41aa3399ebb8dd4207b4af8dbadc678",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 108,
+      "status": "pass",
+      "observations": "完整查看；图D-3/D-4两份固定笔记样例完整，英文实体、日期、样本和结果文本可辨，两组caption及页码间距正常，图像未裁切。",
+      "printed_page": 101,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-108.png",
+      "sha256": "add5f3f4af291438dc04bd01830fece6403da387d73ecb1ebe047c368595f592",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 109,
+      "status": "pass",
+      "observations": "完整查看；图D-5/D-6两组SOP摘要的来源名、步骤、单位和caption清楚完整；D.4标题后有两行正文，无孤立标题、图像截断或页脚重叠。",
+      "printed_page": 102,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-109.png",
+      "sha256": "432fbc8f9d3aab88fa143871bbaf228c4f895a03b5bfd6b84f35c8367f9e2945",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    },
+    {
+      "page": 110,
+      "status": "pass_with_minor_observation",
+      "observations": "完整查看；表D-3三项历史运行及caption完整，命令、长测试名和revision换行均在正文边界内。最后一段首行因两端对齐及下一行长revision导致字距显著拉大，可选调整换行或对齐；无截断、重叠。",
+      "printed_page": 103,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/paper/render-regression/page-110.png",
+      "sha256": "80ee1fb4de5eb37277cebc5af1ba9dec5fcc45fe7382cb26b41f29dea49eafb0",
+      "viewed_full_page_original": true,
+      "post_review_sha_matches": true
+    }
+  ]
+}

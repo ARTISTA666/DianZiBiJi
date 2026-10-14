@@ -1,0 +1,647 @@
+{
+  "task": "T150",
+  "verification_status": "ANALYZED; offline identity/arithmetic verified, no model rerun or semantic evaluation",
+  "planned_cases": 48,
+  "persisted_cases": 48,
+  "successful_cases": 48,
+  "human_gold": false,
+  "raw_response_checks": [
+    {
+      "case_id": "T114-Q07-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q05-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q01-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q01-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q03-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q08-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q02-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q04-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q04-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q08-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q09-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q12-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q11-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q07-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q08-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q09-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q03-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q06-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q02-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q02-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q05-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q09-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q05-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q12-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q12-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q06-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q10-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q03-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q04-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q01-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q04-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q12-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q09-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q10-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q07-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q11-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q01-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q11-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q08-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q10-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q07-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q05-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q10-same_facts_text-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q03-budget_query_ranked-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q06-same_facts_triples-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q06-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q02-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    },
+    {
+      "case_id": "T114-Q11-budget_ordered-r1",
+      "completed": true,
+      "plan_identity_match": true,
+      "prompt_sha_from_messages_matches": true,
+      "response_id_matches": true,
+      "returned_model_matches": true,
+      "raw_answer_matches": true,
+      "raw_usage_matches": true,
+      "finish_reason_stop": true
+    }
+  ],
+  "all_response_checks_pass": true,
+  "all_lexical_traces_match": true,
+  "arm_summary": {
+    "same_facts_triples": {
+      "successful_cases": 12,
+      "mean_lexical_coverage": 0.1111111111111111,
+      "estimated_content_tokens_min": 3096,
+      "estimated_content_tokens_max": 3111,
+      "provider_prompt_tokens_min": 3101,
+      "provider_prompt_tokens_max": 3116,
+      "matches_frozen_summary": true
+    },
+    "budget_ordered": {
+      "successful_cases": 12,
+      "mean_lexical_coverage": 0.18055555555555555,
+      "estimated_content_tokens_min": 1524,
+      "estimated_content_tokens_max": 1536,
+      "provider_prompt_tokens_min": 1529,
+      "provider_prompt_tokens_max": 1541,
+      "matches_frozen_summary": true
+    },
+    "budget_query_ranked": {
+      "successful_cases": 12,
+      "mean_lexical_coverage": 0.1111111111111111,
+      "estimated_content_tokens_min": 1519,
+      "estimated_content_tokens_max": 1535,
+      "provider_prompt_tokens_min": 1524,
+      "provider_prompt_tokens_max": 1540,
+      "matches_frozen_summary": true
+    },
+    "same_facts_text": {
+      "successful_cases": 12,
+      "mean_lexical_coverage": 0.19444444444444445,
+      "estimated_content_tokens_min": 3228,
+      "estimated_content_tokens_max": 3243,
+      "provider_prompt_tokens_min": 3233,
+      "provider_prompt_tokens_max": 3248,
+      "matches_frozen_summary": true
+    }
+  },
+  "comparisons": {
+    "same_facts_triples_minus_same_facts_text": {
+      "n_questions": 12,
+      "mean_difference": -0.08333333333333333,
+      "bootstrap_ci95": [
+        -0.25,
+        0.0
+      ],
+      "sign_flip_p": 1.0,
+      "sign_flip_extreme_count": 4096,
+      "sign_flip_total_patterns": 4096,
+      "question_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "matches_frozen_summary": true
+    },
+    "budget_query_ranked_minus_budget_ordered": {
+      "n_questions": 12,
+      "mean_difference": -0.06944444444444443,
+      "bootstrap_ci95": [
+        -0.16666666666666666,
+        0.0
+      ],
+      "sign_flip_p": 0.5,
+      "sign_flip_extreme_count": 2048,
+      "sign_flip_total_patterns": 4096,
+      "question_differences": [
+        -0.3333333333333333,
+        0.0,
+        0.0,
+        0.0,
+        -0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "matches_frozen_summary": true
+    }
+  },
+  "prompt_tokens_total": 113077,
+  "completion_tokens_total": 10688,
+  "elapsed_seconds_range": [
+    0.885,
+    3.226
+  ],
+  "semantic_primary_outcome_computed": false,
+  "outstanding": [
+    "待独立领域人类语义评价；词面命中不证明事实正确、否定极性或样本绑定",
+    "回顾性已知12题和4份笔记；每题每臂1次，无新增来源或中文真实日志",
+    "同事实表达两臂实际长度不同；同预算上限不等于API实际token相等",
+    "当前词面结果未显示增益；不能证明图拓扑独立因果收益"
+  ],
+  "paired_question_units": 12,
+  "independence_not_established": "12题共享4条合成记录；48调用不是48独立问题，72条上下文含整条record_text，不是72独立原子事实。"
+}

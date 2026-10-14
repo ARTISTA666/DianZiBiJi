@@ -1,0 +1,7 @@
+started_utc: 2026-10-12T14:06:12.328381+00:00
+command: cargo +1.88.0 clippy --locked --all-targets --all-features -- -D warnings
+cwd: /Users/yusong/Downloads/new/full-system/backend
+TEST_DATABASE_URL and DATABASE_URL explicitly set to 127.0.0.1:55448/qa_t148
+
+    Checking eln-backend v0.1.0 (/Users/yusong/Downloads/new/full-system/backend)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.07s

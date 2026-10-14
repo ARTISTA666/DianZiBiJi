@@ -1,0 +1,331 @@
+{
+  "status": "PASS_reviewed_appendix_base_snapshot",
+  "task": "T139",
+  "owner": "code-reviewer",
+  "reviewed_utc": "2026-10-11T07:22:13.851923+00:00",
+  "scope": "只读核验最新base新增4段与已完成原始日志、快照/哈希身份及既有替换契约；不构成最终Word/PNG验收，不预先判定当前E2E、restart、90load结果。仅本次两个自有审核JSON更新。",
+  "input_sha256": {
+    "agent-work/t139-2026-10-11/paper/validation-appendix-base.txt": "e5e8aa2fdebb7c0fcfa37372914ba1091565d5389f5671d64addec9999dc362b",
+    "agent-work/t139-2026-10-11/paper/root-replacements.json": "732cf6731027c58e447113615e235f121f77b98e14f4f596d6d0a3ae043587bf",
+    "agent-work/t139-2026-10-11/paper/replacements-proposed.json": "0893cbacbcda8320de5f8252df08110527661f2d939e5eb443e79ed1d8e654bb",
+    "agent-work/t139-2026-10-11/paper/comparison-proposed.json": "1c2a0cf6fa34a954fa864ee99b87fcd437a3266dc812629df70645f077ec7513",
+    "agent-work/t139-2026-10-11/paper/capability-comparison-proposed.json": "d4785a4b6f221d217f5c6ed003c33b259499fe4b5ce6b1a4399eeeb388c4bebb",
+    "agent-work/t139-2026-10-11/paper/replacement-contract-review.json": "70efd718ae38c65bb806068198e2dff95386c964f5f283d9eeb9e98e26c1c6ab",
+    "agent-work/t139-2026-10-11/validation/snapshot-input.json": "c5154f9e7926c7dd6e336587d3f54caa973feef607503636ac0dae70957f7f72",
+    "agent-work/t139-2026-10-11/validation/snapshot-input-initial.json": "f808b8ae5e9c6b58509df584d1beab520b5237862f63b679de3068e2d1b733cf",
+    "agent-work/t139-2026-10-11/validation/snapshot-input-pre-e2e-anchors.json": "41e95b9353ac8b9db670bd5393566b8fe0bd96656d76b8a81998c788dea770a5",
+    "agent-work/t139-2026-10-11/validation/rust-db-tests-full-result.json": "fa7a99359a2a17114f99a1ab3fd6ac839e17cd64a6c2f5760aa203c3ec5fdabd",
+    "agent-work/t139-2026-10-11/validation/rust-db-tests-full.log": "f08ef866b669722218393dcbddd52aa587a426adb9c387574d0d602835cafbf2",
+    "agent-work/t139-2026-10-11/validation/scripts-pytest-clean-final-input.json": "3c57d498fd14e1bd1f4b5e1229fd101d8a59d462978d979a55baa23c822804a5",
+    "agent-work/t139-2026-10-11/validation/scripts-pytest-clean-final-result.json": "eef1ddfc30d598c3c6d6f2f32c0c4ab1b36e39b1e212cf315bd671dc469eba15",
+    "agent-work/t139-2026-10-11/validation/scripts-pytest-clean-final.log": "172b4a4dd0744ad928494f01b35b3d2e92bfc87c8bb6f9a00af6c35e26e9266e",
+    "agent-work/t139-2026-10-11/validation/cargo-fmt-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agent-work/t139-2026-10-11/validation/cargo-clippy.log": "beab921ea5eba1fb735137648e593c0967e28549958a13fb0c3e49dcd136b0ee",
+    "agent-work/t139-2026-10-11/frontend-lint-final.log": "b580af7c3af8cff7a62b72999ff790ece8eb7477bbe95209e6378c60f293ff40",
+    "agent-work/t139-2026-10-11/frontend-typecheck-final.log": "a76a31d8ed2106cdbfecbecf71114e9504eb85fcf088225170087fbc3954533f",
+    "agent-work/t139-2026-10-11/frontend-build-final.log": "512d7a1575f33da56ece4ca3a603d1e39311cbc5bb3d3fc229229d46dd6e21ae",
+    "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/tsc-e2e-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/eslint-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/playwright-list-final.log": "65b9a4a2cc47e5c25fa7764c65631852a50ff24b4700c5ee6b1972ba13950dec",
+    "agent-work/t139-2026-10-11/backend/final-contract-verification.json": "db05cb60477db428340c158227544a082506d14bf62aae79f0be6d71c4f9176f",
+    "agent-work/t139-2026-10-11/validation/e2e-failure-review-v2.json": "5a71e5fe5a28bbbc183bd1aa9ce6a5816ed0868b413489c4be9a0b0627943e80",
+    "agent-work/t139-2026-10-11/qa/e2e-anchor-fix/final-input-inheritance-v5.json": "b70cebbb9b187d1eedab311d2ea7342e323d3e5d41666f6f4d33397ec52037a1",
+    "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/eslint-v5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/tsc-e2e-v5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/playwright-list-v5.log": "65b9a4a2cc47e5c25fa7764c65631852a50ff24b4700c5ee6b1972ba13950dec",
+    "/Users/yusong/Downloads/new/full-system/agent-work/t139-2026-10-11/qa/e2e-anchor-fix/diff-check-v5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "paragraph_count": 4,
+  "final_snapshot_revision": "9e48d93b133a62ace8207a5a274c3ce731fa2b37",
+  "checks": [
+    {
+      "paragraph": 1,
+      "result": "pass",
+      "observation": "以b6cd3a24为基线，18授权输入=11后端+3前端实现+1探针+3浏览器测试；原抽取规则和既有快照不改，当前实现回归单列。"
+    },
+    {
+      "paragraph": 2,
+      "result": "pass",
+      "observation": "最终快照完整9e48d93与snapshot-input、v5继承清单及Git HEAD一致；Rust实际执行6d52a600与脚本实际8d45b78e身份不变。"
+    },
+    {
+      "paragraph": 3,
+      "result": "pass",
+      "observation": "Rust实际6d52a600：282库+2入口全部通过，391.58 s为库测试耗时；日志及结果SHA匹配，fmt/Clippy通过。后续14实现文件及配置同字节可继承。脚本实际8d45b78e：59已跟踪测试文件、546通过/52.69 s，同字节继承。前端3检查日志无诊断且构建完成；浏览器3静态检查仅称静态与9场景清单。 v5项目卡可访问名称定位进一步修正，两句定位变化保留具体URL、标题及后续断言；新ESLint/严格TS/9项清单静态检查均退出0并匹配日志SHA。"
+    },
+    {
+      "paragraph": 4,
+      "result": "pass",
+      "observation": "DB回滚/参数/权限/状态回归限定在集成证据；四种状态与四任务是矩阵内容而非额外测试函数计数。模型桩不被解释为生成质量。最新外部调用措辞准确区分回滚与持锁时序，明确耗时费用上界未测。新增SSE仅后端集成/回放和前端静态，明确异常分支无浏览器验收。"
+    }
+  ],
+  "source_identity_inheritance": {
+    "rust_actually_executed_revision": "6d52a600ae1cc882cdad6e620205595b291ebe95",
+    "library_passed": 282,
+    "main_passed": 2,
+    "library_duration_seconds": 391.58,
+    "implementation_files": [
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/files.rs",
+        "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/mcp.rs",
+        "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/notes.rs",
+        "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/project_alert.rs",
+        "sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/projects.rs",
+        "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/api/rag/mod.rs",
+        "sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/project_alert.rs",
+        "sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "backend/src/rag/index.rs",
+        "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "frontend/src/components/project-alerts.tsx",
+        "sha256": "6598665e59ab591982fd06e21e93a40f52ca648e331e9c2eead1ef233d2b9feb",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "frontend/src/lib/api.ts",
+        "sha256": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+        "executed_matches_final_and_primary": true
+      },
+      {
+        "path": "frontend/src/components/shared/AgentAssistant.tsx",
+        "sha256": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47",
+        "executed_matches_final_and_primary": true
+      }
+    ],
+    "configuration": [
+      {
+        "path": "backend/Cargo.lock",
+        "sha256": "ece22942c7153e4811cacbd6374bdfe74065eb31d82946e58f6f8ddf49ad2ebe",
+        "matches_actual_execution": true
+      },
+      {
+        "path": "backend/Cargo.toml",
+        "sha256": "03b5705a5a1691fd0596d43bb57c06fd4f49fb178e7f7c3c17b5d09c4cadf23e",
+        "matches_actual_execution": true
+      },
+      {
+        "path": "backend/rust-toolchain.toml",
+        "sha256": "1492287aa0b458ad3277d11eae2175fb662a33e7d7958ec99a057973f2bac1a2",
+        "matches_actual_execution": true
+      },
+      {
+        "path": "docker-compose.test-db.yml",
+        "sha256": "dfdc2dd20210fd773d83af73b181eaf51a287bb92b03c9621df30db8ad42d699",
+        "matches_actual_execution": true
+      },
+      {
+        "path": "scripts/ops/run-rust-db-tests.sh",
+        "sha256": "8bdeb6832751c33060184ccbf84cec63aedf78443cf26d95a16f38429f5e1fec",
+        "matches_actual_execution": true
+      }
+    ],
+    "scripts_actually_executed_revision": "8d45b78e29e40d662c3815b4382eb29ac2758e64",
+    "tracked_test_files_individually_sha256_checked": 59,
+    "all_scripts_git_delta_empty": true,
+    "test_execution_is_inherited_by_identical_bytes_not_rerun": true,
+    "final_v5_18_file_identity": [
+      {
+        "path": "backend/src/api/agent_runtime.rs",
+        "sha256": "2d5af5b911e2e4a1d5cd805699da3f43f5bb6f7f5e22002e9245a1d5ff48c887",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/agents.rs",
+        "sha256": "2510da7b650c20135a541e14ec28f9eaadd2b52b55097c739bea7b64abf3a067",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/files.rs",
+        "sha256": "f93f3ab882e81825bce2501640e170da04da8525f379bfdd076f169de8341117",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/knowledge_graph.rs",
+        "sha256": "a7d9745fdde42d16a19b547470c322e4f08652e38bb939055192d166c9c572d4",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/mcp.rs",
+        "sha256": "4059fedbac45cf01f9191d7892972deffe079979876422d1cdd552310d3596b3",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/notes.rs",
+        "sha256": "c9255217e1609e5b6b625c58deb48634df100b870eeaade55db97de833ea6c69",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/project_alert.rs",
+        "sha256": "88dbc41cd7f5f5d80bdada690d74a401b479fd5e357a387b6445f8aa5070c18e",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/projects.rs",
+        "sha256": "1da567ccdfcb6c308869febcb2091ea1447963d3830c02ef2263acb4ee755985",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/api/rag/mod.rs",
+        "sha256": "f75c5ad0ab3cf6cad99569b56da9f213402b8281175436b876a44f6dbd8b4f6a",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/project_alert.rs",
+        "sha256": "0e5a6c46abf678c0bceb8602030c28ca383a801dd3a6261196a7b04c3dfdd392",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "backend/src/rag/index.rs",
+        "sha256": "6fc4549dcf9f16d18a86b44b2710ee8931b6ee8729880c0db541b72b82a425cf",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "frontend/src/components/project-alerts.tsx",
+        "sha256": "6598665e59ab591982fd06e21e93a40f52ca648e331e9c2eead1ef233d2b9feb",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "frontend/src/lib/api.ts",
+        "sha256": "518a9b809169772fcedd09fd20775f0c404d7678624044330a6c7468550ba87d",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "scripts/experiments/validate_experiment_restart.py",
+        "sha256": "e489c6b9b421ac714f1f192654120ef353467fc2a8e565268688017909922dc6",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "frontend/src/components/shared/AgentAssistant.tsx",
+        "sha256": "0cb23683cd50f9e35ac17d1fe3cba27b0f6961d344803ae12b94eaf78839ac47",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": true
+      },
+      {
+        "path": "frontend/e2e/system.spec.ts",
+        "sha256": "e7559c0d67f4e99a64f74012814fb1158e6fdb6cd034dc37c972de1968b07c53",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": false
+      },
+      {
+        "path": "frontend/e2e/user-journeys.spec.ts",
+        "sha256": "e84b949fb18818ace85c912c954137728ab13d8802f1b9b0244ca0cd9a5570df",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": false
+      },
+      {
+        "path": "frontend/e2e/real-lab-acceptance.spec.ts",
+        "sha256": "be3f284006cc602a452fa3e076a0442163d9b62858ee661c8896afefae8f8d5f",
+        "current_primary_copy_commit_manifest_match": true,
+        "inherits_prior_implementation_or_probe_result": false
+      }
+    ],
+    "v5_configuration_blobs_checked": 6,
+    "scripts_final_v5_59_test_file_hashes_checked": true
+  },
+  "replacement_contract_sha_recheck": {
+    "result": "pass",
+    "root_replacements_sha256": "732cf6731027c58e447113615e235f121f77b98e14f4f596d6d0a3ae043587bf",
+    "other_three_inputs_match_record": true,
+    "independently_recorded_production_10_file_hashes_match": true,
+    "replacement_count": 55,
+    "R06_p847_single_phrase_reverse_recreates_previous_hash": "561d80b0e7c6eccce77ec07250e19a7d8e8124b59f1f2e5dbd033bea015457f1",
+    "P847_short_sentence_increment_reviewed": true
+  },
+  "boundary_source_refs": [
+    "backend/src/embedding.rs:43,69-76",
+    "backend/src/rag/index.rs:46-50,96-100",
+    "backend/src/api/rag/mod.rs:337,408",
+    "backend/src/api/agent_runtime.rs:1930",
+    "frontend/src/lib/api.ts:1350",
+    "frontend/src/components/shared/AgentAssistant.tsx:351-360"
+  ],
+  "resolved_finding": {
+    "original_quote": "外部请求、费用及提交后的展示事件位于数据库事务之外。",
+    "resolution": "原子效果不覆盖外部费用与提交后展示；嵌入实际可能在事务持锁期间调用，最新base已明确。"
+  },
+  "uncompleted_run_limits": [
+    "v2原始E2E为3 failed/6 did not run，调查记录仍FAIL。",
+    "v3构建期主动停止，没有测试结果。",
+    "当前最终快照的E2E、restart、90load实际结果尚待主线另行追加；本base没有预记这些结果PASS。",
+    "即使一般浏览器E2E通过，也不自动覆盖新增SSE异常分支。",
+    "最终Word及受变更影响的PNG页仍需重新核验。"
+  ],
+  "new_findings": [],
+  "result": "pass",
+  "incremental_reviews": [
+    {
+      "reviewed_utc": "2026-10-11T07:22:13.851923+00:00",
+      "result": "pass",
+      "scope": "base仅更新最终完整快照身份；此前四段语义/数字不变。最终18授权文件与配置、实际执行版本继承关系另核。",
+      "previous_final_snapshot": "c6de4c4d219e535bd25e794495070d191e7baa1c",
+      "current_final_snapshot": "9e48d93b133a62ace8207a5a274c3ce731fa2b37",
+      "base_reverse_only_revision_recovers_previous_sha256": true,
+      "previous_input_sha256_for_mutated_inputs": {
+        "agent-work/t139-2026-10-11/paper/validation-appendix-base.txt": "b24e40c7ca8767c272c37e74e9d3c535ce20c88619fb941c7374206bc9c71a0b",
+        "agent-work/t139-2026-10-11/paper/root-replacements.json": "684ff0e260665c054e9a3f34a1ba2ea25b648c2c5c0684ddb8c8f4059f76b730",
+        "agent-work/t139-2026-10-11/paper/replacement-contract-review.json": "f9513d296f360c8b7ad33eff154bd6deb23979194fa614e94e6a3b42e973f76b",
+        "agent-work/t139-2026-10-11/validation/snapshot-input.json": "2627f5e2aa9952ac5878c88800864941d1ddf0f0dbb3b8e8d3aaeaf729f8f166"
+      },
+      "runtime_limits": "v5继承文件本身明确E2E pending。本审查不接纳E2E/restart/load结果，待真实运行追加另审。",
+      "P847_sentence": "已受审短句消除段尾孤行，替换数仍55；视觉结论另文件。"
+    }
+  ]
+}

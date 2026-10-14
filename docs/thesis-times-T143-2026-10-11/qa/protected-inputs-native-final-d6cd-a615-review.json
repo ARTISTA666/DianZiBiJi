@@ -1,0 +1,491 @@
+{
+  "task": "T143 final independent read-only protected-input verification",
+  "utc": "2026-10-11T12:21:01.273807+00:00",
+  "identity": {
+    "word": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/1005-时间说明精简版-2026-10-11.docx",
+    "word_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+    "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-wps/1005-时间说明精简版-2026-10-11.pdf",
+    "pdf_sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a"
+  },
+  "protected_path_count": 53,
+  "archive_file_count_including_manifest": 50,
+  "main_Markdown_current_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+  "items": [
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/README.md",
+      "expected_sha256": "d358a31addbf144c1fcc34141d5f82f69c7ce09af4c38e885a8c260233009dea",
+      "bytes": 4835,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "d358a31addbf144c1fcc34141d5f82f69c7ce09af4c38e885a8c260233009dea",
+      "current_bytes": 4835,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/accepted-shortening.json",
+      "expected_sha256": "ab5974a80ff3195157656ba8ac21230753e6e14b2eb517ab73fcb90c3dafc283",
+      "bytes": 36958,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "ab5974a80ff3195157656ba8ac21230753e6e14b2eb517ab73fcb90c3dafc283",
+      "current_bytes": 36958,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/backend/native-final-e57b-visual-1-33.json",
+      "expected_sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a",
+      "bytes": 32787,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "ff46bdefb2995481b1265860d37933bfd19fdaea2b121282857029c387ef841a",
+      "current_bytes": 32787,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/baseline-inventory.json",
+      "expected_sha256": "8bd0403badd73b19e00e50857c984f16e184ebbe4ae662209ce50e6c902f5683",
+      "bytes": 7294,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "8bd0403badd73b19e00e50857c984f16e184ebbe4ae662209ce50e6c902f5683",
+      "current_bytes": 7294,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/build_paper.py",
+      "expected_sha256": "9877530f9d08730fe2495a1446333abe0607563ef0ce6a28ad24071a87cfb3d5",
+      "bytes": 6246,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "9877530f9d08730fe2495a1446333abe0607563ef0ce6a28ad24071a87cfb3d5",
+      "current_bytes": 6246,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/changes.json",
+      "expected_sha256": "7ad94c20a22592cb1fb10aca2bd6b83a38cbde5414d99fa9cf1db1fea07464c6",
+      "bytes": 83738,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "7ad94c20a22592cb1fb10aca2bd6b83a38cbde5414d99fa9cf1db1fea07464c6",
+      "current_bytes": 83738,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/check_pdf_citations.py",
+      "expected_sha256": "5609fbad60e8483c44f04ee32fdaab7a3d1d365b94b894362d881c3c816d6e65",
+      "bytes": 2498,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "5609fbad60e8483c44f04ee32fdaab7a3d1d365b94b894362d881c3c816d6e65",
+      "current_bytes": 2498,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/desktop-delivery-verification.json",
+      "expected_sha256": "947b9547aa8306524ec320e145850bd580b33c407829d790e59014ecf8224ad2",
+      "bytes": 935,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "947b9547aa8306524ec320e145850bd580b33c407829d790e59014ecf8224ad2",
+      "current_bytes": 935,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/figures/native-final-e57b-visual-34-67.json",
+      "expected_sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1",
+      "bytes": 56930,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "22d55feb1ddea2b04e8a260e52bd98b6e4c1f56cee3bb8f64ca260e4b1243fc1",
+      "current_bytes": 56930,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/final-evidence-manifest.json",
+      "expected_sha256": "2e9a66fdfd77447665a84e016476db2f220b1683a8d780ce373f23808037d3c0",
+      "bytes": 12295,
+      "baseline_archive_manifest_verified": false,
+      "current_sha256": "2e9a66fdfd77447665a84e016476db2f220b1683a8d780ce373f23808037d3c0",
+      "current_bytes": 12295,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/native-final-export.json",
+      "expected_sha256": "7159fcb8977815521f5115e43250fc4210ea960f736dce8178c52a9a2abc47bc",
+      "bytes": 920,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "7159fcb8977815521f5115e43250fc4210ea960f736dce8178c52a9a2abc47bc",
+      "current_bytes": 920,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/native-final-page-manifest.json",
+      "expected_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+      "bytes": 29450,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "f998bdad2ab8e7375a226ab5d791bd324ba7fd960e0f8e8ac5e0581e383b258d",
+      "current_bytes": 29450,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/native-final-pixel-comparison.json",
+      "expected_sha256": "db818324c35bf262525dddd0dc7d8474b9b5132448db79e6a1652cd7aea1261b",
+      "bytes": 1109,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "db818324c35bf262525dddd0dc7d8474b9b5132448db79e6a1652cd7aea1261b",
+      "current_bytes": 1109,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/paragraph-revisions.diff",
+      "expected_sha256": "b58693385eff31f6ed9d47eff21d24f785504f10d828dfb0c191208e42085967",
+      "bytes": 31788,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "b58693385eff31f6ed9d47eff21d24f785504f10d828dfb0c191208e42085967",
+      "current_bytes": 31788,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/pdf-citation-geometry-final.json",
+      "expected_sha256": "cb75fd4060f71aa521f1143067908278ca7a2edb494f2a833490188c93eee78d",
+      "bytes": 65493,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "cb75fd4060f71aa521f1143067908278ca7a2edb494f2a833490188c93eee78d",
+      "current_bytes": 65493,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/pdf-horizontal-edge-final-probe.json",
+      "expected_sha256": "aeaebc802e43c0af5f2d705aabea0c16972fcf069aeee7e82c0a60765142e6b6",
+      "bytes": 393,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "aeaebc802e43c0af5f2d705aabea0c16972fcf069aeee7e82c0a60765142e6b6",
+      "current_bytes": 393,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/protected-input-hashes.json",
+      "expected_sha256": "c0e416b7a28700468ae265bb4a227dc481ffda39a9cddb98f6c7df23a57c0e4d",
+      "bytes": 12591,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "c0e416b7a28700468ae265bb4a227dc481ffda39a9cddb98f6c7df23a57c0e4d",
+      "current_bytes": 12591,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/protected-inputs-final-review.json",
+      "expected_sha256": "86c2793568902e4857cec19395c37a2ea63549cfcea0be7c0488d719dd3db889",
+      "bytes": 13256,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "86c2793568902e4857cec19395c37a2ea63549cfcea0be7c0488d719dd3db889",
+      "current_bytes": 13256,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/content-boundary-native-final-e57b-6d54-review.json",
+      "expected_sha256": "23d92547e92bfc53caf84cf1f846807cadc2d37756a57ea279b494304e83a39d",
+      "bytes": 43118,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "23d92547e92bfc53caf84cf1f846807cadc2d37756a57ea279b494304e83a39d",
+      "current_bytes": 43118,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/final-report-map-e57b-6d54.json",
+      "expected_sha256": "a22c2ebd221fc4fe52614b08721039c2ebf3e072d45811e04e8cbcd9371dc260",
+      "bytes": 3361,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "a22c2ebd221fc4fe52614b08721039c2ebf3e072d45811e04e8cbcd9371dc260",
+      "current_bytes": 3361,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/format-native-final-e57b-6d54-review.json",
+      "expected_sha256": "d3602e0cc49368d3891b9d837d9a840cbbc20c7db7d1dc790ee085f8800bfadd",
+      "bytes": 7363,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "d3602e0cc49368d3891b9d837d9a840cbbc20c7db7d1dc790ee085f8800bfadd",
+      "current_bytes": 7363,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/native-final-e57b-visual-68-100.json",
+      "expected_sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e",
+      "bytes": 37896,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "b9fdc3a92e67e5d509d845c74bf8973f6870adc131541d571d41c8feee37d33e",
+      "current_bytes": 37896,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/protected-inputs-native-final-e57b-6d54-review.json",
+      "expected_sha256": "b114c43c61d10ed3278dde3d7813c3ad0c21e52e50e6229a0874d4787aca0390",
+      "bytes": 44494,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "b114c43c61d10ed3278dde3d7813c3ad0c21e52e50e6229a0874d4787aca0390",
+      "current_bytes": 44494,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/qa-native-final-e57b-6d54-summary.json",
+      "expected_sha256": "264e684f5c1f29c856b43e239dd2c867348060f61f82523b776bb4898818d7fe",
+      "bytes": 40002,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "264e684f5c1f29c856b43e239dd2c867348060f61f82523b776bb4898818d7fe",
+      "current_bytes": 40002,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/table-rules-native-final-e57b-6d54-coordinate-review.json",
+      "expected_sha256": "1b5cac08a427bafe9b3935ccdf39b1f5928f2229087d225ac273738734ebcf1e",
+      "bytes": 121565,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "1b5cac08a427bafe9b3935ccdf39b1f5928f2229087d225ac273738734ebcf1e",
+      "current_bytes": 121565,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/table-same-page-native-final-e57b-6d54-closure.json",
+      "expected_sha256": "885246eb42ddc83ff492ce40ed1b484f1f9a5e961c98a9e8ccee733864489c47",
+      "bytes": 2670,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "885246eb42ddc83ff492ce40ed1b484f1f9a5e961c98a9e8ccee733864489c47",
+      "current_bytes": 2670,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/table-same-page-native-final-e57b-6d54-text-review.json",
+      "expected_sha256": "63db032e6df0fcd39e726cc95f0ec6b2fe254013cc93f5de8aeb70249d639c3e",
+      "bytes": 34698,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "63db032e6df0fcd39e726cc95f0ec6b2fe254013cc93f5de8aeb70249d639c3e",
+      "current_bytes": 34698,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/toc-native-final-e57b-6d54-review.json",
+      "expected_sha256": "8703b4a63a06f4522c4369e25e4667537e0004f445b50c7620069f7573a60e4d",
+      "bytes": 65643,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "8703b4a63a06f4522c4369e25e4667537e0004f445b50c7620069f7573a60e4d",
+      "current_bytes": 65643,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/visual-input-native-final-e57b-6d54.json",
+      "expected_sha256": "3c3daf16b25e40e3033cf8907fb545a4587d3cbf92aa0639227901612fc22874",
+      "bytes": 15647,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "3c3daf16b25e40e3033cf8907fb545a4587d3cbf92aa0639227901612fc22874",
+      "current_bytes": 15647,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/word-protective-aligned-e57b-review.json",
+      "expected_sha256": "2982bcdc63d714557a58e81d0af2c7c6be2ec2176b7037ba09d23d9cf4f2397c",
+      "bytes": 117925,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "2982bcdc63d714557a58e81d0af2c7c6be2ec2176b7037ba09d23d9cf4f2397c",
+      "current_bytes": 117925,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/qa/word-protective-native-final-e57b-6d54-review.json",
+      "expected_sha256": "e3cd6bf9ffe9787d8607011a3bc095bba11a548eec6628c69d730ea68496adb7",
+      "bytes": 118289,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "e3cd6bf9ffe9787d8607011a3bc095bba11a548eec6628c69d730ea68496adb7",
+      "current_bytes": 118289,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/root-final-supplementary-visual-review.json",
+      "expected_sha256": "309aad1b2ed2455d00b4640304b65e1c0c86d1d9174030ee8436fbe53fe5a31c",
+      "bytes": 1454,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "309aad1b2ed2455d00b4640304b65e1c0c86d1d9174030ee8436fbe53fe5a31c",
+      "current_bytes": 1454,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/backend/native-final-visual-1-33.json",
+      "expected_sha256": "2087f916395060574ac9c5295ee49d3d42df41e86765b83befb8759f6474bbd5",
+      "bytes": 23281,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "2087f916395060574ac9c5295ee49d3d42df41e86765b83befb8759f6474bbd5",
+      "current_bytes": 23281,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/backend/native-no-comments-final-visual-1-33.json",
+      "expected_sha256": "11866307c23812e636e70ac652f75242be60855440a44c68b34c61658554ac44",
+      "bytes": 28919,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "11866307c23812e636e70ac652f75242be60855440a44c68b34c61658554ac44",
+      "current_bytes": 28919,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/blocked-31-indent-export.json",
+      "expected_sha256": "5eb018d7f32edd5e78c1e023af5d09c3c1f206bdff35c2b252354540622aa75f",
+      "bytes": 400,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "5eb018d7f32edd5e78c1e023af5d09c3c1f206bdff35c2b252354540622aa75f",
+      "current_bytes": 400,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/blocked-first-export.json",
+      "expected_sha256": "b260b3cbf89d288378f399a6d81f241f0eed1c22196a057a719542f7540d1802",
+      "bytes": 507,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "b260b3cbf89d288378f399a6d81f241f0eed1c22196a057a719542f7540d1802",
+      "current_bytes": 507,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/changes-31-indent-ab31.json",
+      "expected_sha256": "1afba210cd77d912d41706809cfea192f3eaf5a67d14db8cd8bc5f3df28c0e58",
+      "bytes": 71757,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "1afba210cd77d912d41706809cfea192f3eaf5a67d14db8cd8bc5f3df28c0e58",
+      "current_bytes": 71757,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/changes-before-table-alignment.json",
+      "expected_sha256": "54ff3c7561458a7f402f81551d8045dcf3ee72d4abab2cc4e6ab61231dde5071",
+      "bytes": 52120,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "54ff3c7561458a7f402f81551d8045dcf3ee72d4abab2cc4e6ab61231dde5071",
+      "current_bytes": 52120,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/figures/native-final-visual-34-67.json",
+      "expected_sha256": "5cb903474de275379442f622390e2f3426de5dd3cb6c7abcf8f1c4a54c69134f",
+      "bytes": 26774,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "5cb903474de275379442f622390e2f3426de5dd3cb6c7abcf8f1c4a54c69134f",
+      "current_bytes": 26774,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/figures/native-no-comments-final-visual-34-67.json",
+      "expected_sha256": "86b83e5fe0896dc26f0a08f3300942b29c7b2bb8692f95c50f50eb23e261dc6c",
+      "bytes": 53516,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "86b83e5fe0896dc26f0a08f3300942b29c7b2bb8692f95c50f50eb23e261dc6c",
+      "current_bytes": 53516,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/native-31-indent-pixel-comparison.json",
+      "expected_sha256": "31a23bf330ae9311f8b166bf438bb5b07106db337319b36b32debe8ae92343b7",
+      "bytes": 1024,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "31a23bf330ae9311f8b166bf438bb5b07106db337319b36b32debe8ae92343b7",
+      "current_bytes": 1024,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/native-aligned-export.json",
+      "expected_sha256": "46204cb3c6e7833ee333a41b4a9f95a9cd18a9ed8322b1c06e54560bda696c1a",
+      "bytes": 953,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "46204cb3c6e7833ee333a41b4a9f95a9cd18a9ed8322b1c06e54560bda696c1a",
+      "current_bytes": 953,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/native-export-pixel-comparison.json",
+      "expected_sha256": "4a11a58c0686055e0f1b57af4bb76e5274a3dff837a675d985ec7ab6d003da97",
+      "bytes": 1372,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "4a11a58c0686055e0f1b57af4bb76e5274a3dff837a675d985ec7ab6d003da97",
+      "current_bytes": 1372,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/native-first-export.json",
+      "expected_sha256": "fdd6c41da5d503303003fc0707026d686dd01cc16bcb84233cf57ec1d525f126",
+      "bytes": 251,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "fdd6c41da5d503303003fc0707026d686dd01cc16bcb84233cf57ec1d525f126",
+      "current_bytes": 251,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/native-no-comments-export.json",
+      "expected_sha256": "d1404376b640f5fcd1c86944eddbe07cec680f7227041dcfdf6f03ebef587ffd",
+      "bytes": 1170,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "d1404376b640f5fcd1c86944eddbe07cec680f7227041dcfdf6f03ebef587ffd",
+      "current_bytes": 1170,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/qa/native-no-comments-final-visual-68-100.json",
+      "expected_sha256": "b224fe1a26242fc1cf7eb89f73109844677b5bb8692e4710cb70298c0e541ddf",
+      "bytes": 26670,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "b224fe1a26242fc1cf7eb89f73109844677b5bb8692e4710cb70298c0e541ddf",
+      "current_bytes": 26670,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/qa/table-alignment-candidate-ab31-exact-review.json",
+      "expected_sha256": "3e9ba8fc382e3605213e41947a0117f21e830777725ec90bc10bdcc611947612",
+      "bytes": 11973,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "3e9ba8fc382e3605213e41947a0117f21e830777725ec90bc10bdcc611947612",
+      "current_bytes": 11973,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/qa/table-rules-native-alignment-d2a7-coordinate-review.json",
+      "expected_sha256": "a5595bd80a6722bd532724e02f77000436112478113517bdcee7adc1bbca0771",
+      "bytes": 121040,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "a5595bd80a6722bd532724e02f77000436112478113517bdcee7adc1bbca0771",
+      "current_bytes": 121040,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/qa/table-rules-native-before-alignment-b3d-coordinate-review.json",
+      "expected_sha256": "8507dd6617b20ac8a5d186fac05822521e06bf65a57ac3a024e91a8005225c67",
+      "bytes": 79028,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "8507dd6617b20ac8a5d186fac05822521e06bf65a57ac3a024e91a8005225c67",
+      "current_bytes": 79028,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/thesis-format-T142-2026-10-11/snapshots/table-alignment-exact-delta.json",
+      "expected_sha256": "b7466e1221fb5048a3396abcd543dcc0b2f61e6b20f451d820b244f28dac8715",
+      "bytes": 2484,
+      "baseline_archive_manifest_verified": true,
+      "current_sha256": "b7466e1221fb5048a3396abcd543dcc0b2f61e6b20f451d820b244f28dac8715",
+      "current_bytes": 2484,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Downloads/new/full-system/docs/毕业论文重构稿.md",
+      "expected_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+      "bytes": 273777,
+      "current_sha256": "f1b90491f2faf5d5134c5d0e339de6b35fbc2fcf9a0d61749f54287334485563",
+      "current_bytes": 273777,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Desktop/1005-精简与角标校正版-2026-10-11.docx",
+      "expected_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+      "bytes": 6025001,
+      "current_sha256": "e57b430f9b545319e5346a3935258d0d4afd263955995403c213c0049af5ce69",
+      "current_bytes": 6025001,
+      "equal": true
+    },
+    {
+      "path": "/Users/yusong/Desktop/1005-精简与角标校正版-2026-10-11.pdf",
+      "expected_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+      "bytes": 5390395,
+      "current_sha256": "6d54f973fee931127b45f3a8da18dca8e4a82ce3a842684f841e8be0ccb14410",
+      "current_bytes": 5390395,
+      "equal": true
+    }
+  ],
+  "new_tests_or_experiments_executed": false,
+  "result": "PASS_ALL_53_PROTECTED_PATHS_UNCHANGED"
+}

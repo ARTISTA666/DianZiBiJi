@@ -1,0 +1,205 @@
+{
+  "task": "T143",
+  "reviewer": "backend_engineer",
+  "identity": "reviewed_snapshot",
+  "reviewed_at_utc": "2026-10-11T12:20:37.931832+00:00",
+  "result": "pass",
+  "word": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/1005-时间说明精简版-2026-10-11.docx",
+  "word_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+  "pdf": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-wps/1005-时间说明精简版-2026-10-11.pdf",
+  "pdf_sha256": "a615a43d0a5b6f2e80974201d464c4d818cd152b5776289a5ea0518bf9aa279a",
+  "pdf_page_count": 100,
+  "manifest": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-page-manifest.json",
+  "manifest_sha256": "0f85bb9a839eb64c070d93705c4e7b75fdf5e7f5a18164ccf69caf6f04a772ef",
+  "view_method": {
+    "tool": "tools.view_image",
+    "detail": "original",
+    "batches": [
+      [
+        62,
+        64,
+        69
+      ],
+      [
+        95,
+        96,
+        99,
+        100
+      ]
+    ],
+    "full_page": true,
+    "contact_sheet_used": false,
+    "old_page_reviews_inherited": false
+  },
+  "scope": "仅本轮指定7个变化页的视觉与文字衔接复核，不代表其余93页或新实验/软件测试验收。",
+  "coverage": {
+    "required_pages": [
+      62,
+      64,
+      69,
+      95,
+      96,
+      99,
+      100
+    ],
+    "actually_original_viewed_pages": [
+      62,
+      64,
+      69,
+      95,
+      96,
+      99,
+      100
+    ],
+    "missing": [],
+    "pass": 7,
+    "blocked": 0
+  },
+  "overall_observations": [
+    "七页未见文字/公式表达裁剪、重叠、表体跨页、批注标记或超正文版心。",
+    "正文及附录日期删减后的衔接自然，所见历史与当前批次边界仍明确。",
+    "保留的来源文件名/规范版本日期、样例图内原始记录日期以及响应时延/负载窗口均有可辨上下文，未将其误认成需删除的命令执行总耗时。"
+  ],
+  "limits": [
+    "未修改Word、PDF、代码、Markdown或旧归档；仅新增本次JSON报告。",
+    "未运行软件测试，未重算历史实验或对全部论文进行逐数字/逐引文内容保护审计。"
+  ],
+  "pages": [
+    {
+      "page": 62,
+      "printed_page": 55,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-062.png",
+      "sha256": "0f8935c83daa74d243b454257ec00397f45b78cb5fea8cb47f9aecbb19b98eea",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "6.5.3标题有本页正文，删除日历时间后“两个运行批次”的说明衔接自然，15条与4条已审核笔记及20题/14题共同子集仍清楚分开。",
+        "表6-7题注、表头、七行结果及底线完整同页，三线样式正确且在正文版心内；响应时延ms及n=20/n=14字形完整。",
+        "来源编号格式示例[S数字]/[G数字]、范围示例、比例和页脚55完整，无截字或覆盖。"
+      ],
+      "issues": []
+    },
+    {
+      "page": 64,
+      "printed_page": 57,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-064.png",
+      "sha256": "c257922efbb8128aff3d7e2e29013477b53f1fcb3415506b36cc16a3c5f60d67",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "图6-6全部五组柱、图例、纵轴比例、柱顶数值及题注同页完整，文字可读，无边界裁剪。",
+        "图后扩展题集与冻结规则的解释自然；87/(87+27)=76.32%等表达完整，未见符号缺损。",
+        "6.5.4标题及固定任务正文同页，早期提示agent-v3与当前Rust agent-v10的批次区分明确，未因删日期混为同一运行；页脚57完整。"
+      ],
+      "issues": []
+    },
+    {
+      "page": 69,
+      "printed_page": 62,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-069.png",
+      "sha256": "c29eaa6d6e83201316179a361d555ef5a43e22f21ab8c1adf9afa01dcfa63232",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "表6-13标题、表头及全部八项任务完整同页，原轮/资料入库补测两个列口径可辨，三线完整且在版心内。",
+        "表前create/退回/修订/再提审/批准及原轮24场/18场、补测9场的说明衔接自然，表后8/9及fallback/needs_review等判定字样完整。",
+        "关系抽取输入、字段配对、冻结先于导入、重建不增加独立日记数量等限定完整，段尾3/4和页脚62未裁切。"
+      ],
+      "issues": []
+    },
+    {
+      "page": 95,
+      "printed_page": 88,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-095.png",
+      "sha256": "5e66b75d1d2cda5d076cbe720815eff524834db8a5b7a860ada71f0c13e4b6b6",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "附录D标题、D.1/D.2小节与正文排版正常；表D-1及表D-2各自题注、表头、全部表体和三线完整同页。",
+        "NCBI GEO来源文献[80]的左右方括号与数字整体上标完整，SHA-256前16位字样和三个文件前缀可读。",
+        "附件说明删去叙述性时间后仍以T114、当前提示版本登记及对应附件路径区分批次；MCP规范URL和版本日期作为来源身份完整显示。",
+        "本页最后“逐笔记计…”为正常段落续排到96页，非表体跨页或裁剪；页脚88完整。"
+      ],
+      "issues": []
+    },
+    {
+      "page": 96,
+      "printed_page": 89,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-096.png",
+      "sha256": "1e7f0009124cfb52ff5d776fbba63801a11b949af506149e59d3f4824d2b073a",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "上一页附录材料段正常续排到本页，错误清单、来源文件路径和三个公开来源URL显示完整，未见裁切。",
+        "三份来源的物理页/单元/参考关系数量与第三份来源作者未确认的限定可见，删去日历叙述不影响来源辨认。",
+        "D.3标题有正文；图D-1原文样例完整同页，记录字段、原文、图题可读，样例中的原始日期保持为来源图内容，未出现批注底色或遮挡；页脚89完整。"
+      ],
+      "issues": []
+    },
+    {
+      "page": 99,
+      "printed_page": 92,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-099.png",
+      "sha256": "95e8c10d77f959cd6be0aac49f8a50a40655fc7c0d85883e13152685fbded0c5",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "图D-6的三个SOP片段、文件/块编号及题注完整同页，样例实验温度和分钟等条件可读。",
+        "D.4标题与说明在本页；“另有9项浏览器场景属于另一历史批次”仍明确批次边界，删去过细时间后语句自然。",
+        "表D-3题注、四列表头与三行历史运行记录完整同页，三线无逐行横线；固定LLM桩、Rust/隔离pgvector与legacy/SQLite条件及结果可读；页脚92完整。"
+      ],
+      "issues": []
+    },
+    {
+      "page": 100,
+      "printed_page": 93,
+      "path": "/Users/yusong/Downloads/new/full-system/agent-work/t143-2026-10-11/native-final-render/page-100.png",
+      "sha256": "aa33395b60fe9c084550a1b2e3f62908b70c43ce65d34a925cd5cc6e3d75c975",
+      "dimensions": [
+        1415,
+        2000
+      ],
+      "result": "pass",
+      "actual_original_view": true,
+      "review_basis": "本轮真实调用tools.view_image(detail=original)逐页查看完整原尺寸PNG，无旧版继承。",
+      "observations": [
+        "表D-4题注、表头及全部历史Rust/持续读取/关系抽取/T139身份/检查/边界/浏览器/短负载/T141整改行完整同页，顶线、表头分隔及底线清楚。",
+        "各行删去命令总执行耗时后语句自然，历史观测与T139/T141批次身份、快照hash和测试统计仍明确。",
+        "持续读取的观测窗口、吞吐与p95/最大时延作为性能指标完整显示；短负载与历史600次明细缺口的限制仍可读。",
+        "T139外部成本不受DB回滚保证、嵌入调用可能延长持锁及SSE尚无异常分支浏览器验收的限定完整，未因压缩日期夸大验收范围。",
+        "长快照0268…7f71cc完整换行，底部T141行与表底线均无截断；印刷页93完整，未见批注标记。"
+      ],
+      "issues": []
+    }
+  ]
+}

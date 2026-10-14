@@ -1,0 +1,106 @@
+{
+  "task": "T132",
+  "reviewer": "architect",
+  "mode": "read-only prose semantics; temporary report only",
+  "generated_at_utc": "2026-10-05T03:12:55.143133+00:00",
+  "edit_py": "/private/tmp/advisor-T132-20261004/edit.py",
+  "edit_py_sha256": "1249cf53b392bc8c154c4546e15f791beaf8c37262eeb1d8ad1145e7fe6f3dea",
+  "candidate_sha256_at_review": "638d0350af852ac5d8a51045e451acaaa2860a1efa59b49a041169ab4e6da483",
+  "source_sha256": "6df10197d5fb55757580c93a7f42e76ba01b66309ad787ca35a3c43c0aad3ea3",
+  "R_final_effective_blocks": 48,
+  "overall_result": "pass; no required semantic correction identified",
+  "required_changes": [],
+  "checks": [
+    {
+      "name": "production_runtime",
+      "result": "pass",
+      "source_blocks": [
+        37,
+        45,
+        438,
+        542,
+        550,
+        554,
+        555,
+        556,
+        559,
+        569
+      ],
+      "finding": "Current system remains Rust/Axum. Current144-answer batch is identified as Rust retrieval evidence; unchanged550 preserves frozen context adapter plus direct DeepSeek generation."
+    },
+    {
+      "name": "old_batch_provenance",
+      "result": "pass",
+      "source_blocks": [
+        306,
+        441,
+        488,
+        838,
+        840,
+        841
+      ],
+      "finding": "441 alone clearly names20-question paired answers and four fixed-task outputs as pre-migration Python prototype records, with512-dimension old embeddings. D-3 retains runtime/date/database identities; 346-pass SQLite pytest is not relabeled Rust. Local early-prototype labels retain distinction from144 current answers."
+    },
+    {
+      "name": "no_human_field_study_readded",
+      "result": "pass",
+      "source_blocks": [
+        391,
+        423,
+        542,
+        543,
+        556,
+        559,
+        578,
+        579
+      ],
+      "finding": "Screenshots stay synthetic/software acceptance records; role actors and judges remain GPT simulations. No new human participant, questionnaire, interview or real-user empirical claim found in R or candidate body. Human confirmation is a software gate, not a field-study result."
+    },
+    {
+      "name": "comment10_indicators",
+      "result": "pass",
+      "source_blocks": [
+        273,
+        274,
+        278
+      ],
+      "finding": "It=relation type hint hit; In=source entity type note; Ie=note-extraction source. I(condition) still defined as1/0; all six haystack text fields and repeated text scoring remain explicit. Table4-7 retains B=3It+0.2In+0.3Ie and w/role formulas unchanged. j/t/n/e prose characters have native Word subscript. Equation4-10 and table4-7 math nodes canonical-identical to source.",
+      "code": "backend/src/rag/graph.rs:452",
+      "visual_followup": "Final pages must confirm subscript glyphs remain distinct at print size."
+    },
+    {
+      "name": "comment26_fact_check_denominator",
+      "result": "pass",
+      "source_blocks": [
+        509,
+        510,
+        511
+      ],
+      "finding": "96项次 correctly denotes repeated required-fact checks over12 questions×3 repetitions=36 answers, not96 distinct facts. Micro pooled denominator, macro per-answer averaging,29/96 and87/96, closed-set exact success, prohibited hits denominator, F1,27 improved+9 tied and macro paired difference+0.64 all retained. Removal of generic scientific-accuracy negation does not change metric scope.",
+      "code": "scripts/experiments/run_gse111619_experiment.py:193,297",
+      "archive": "docs/experiments/rag-experiment-5-internal-bundle-audit-2026-08-12.json; total96, hits29/87, macro delta0.6389"
+    },
+    {
+      "name": "specific_limitations_retained",
+      "result": "pass",
+      "source_blocks": [
+        441,
+        461,
+        535,
+        539,
+        543,
+        546,
+        550,
+        554,
+        556,
+        559,
+        578,
+        579,
+        580,
+        581
+      ],
+      "finding": "Posthoc references, missing old revision, light-load scope, metric differences, primaryp=.0938, context-size confounding,18/24 originals versus8/9 supplement, needs_review/citation failures and untested exception cases remain specifically stated."
+    }
+  ],
+  "writes": "Only this JSON; no Word, code or frozen evidence changed."
+}

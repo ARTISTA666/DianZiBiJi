@@ -1,0 +1,21 @@
+{
+  "task": "T141 table 1-1 native WPS body-margin repair",
+  "input_sha256": "4e86db7f88efc841f3b45af01b4e6410756188be1f921825227890979b1b39a4",
+  "output_sha256": "d082947a67a22753b8e30cf509f2452f1ac1cae62610dc3edfded0740a40e843",
+  "table_index_zero_based": 1,
+  "old_grid": [
+    1600,
+    3600,
+    4930
+  ],
+  "new_grid": [
+    1343,
+    3022,
+    4139
+  ],
+  "new_width_twips": 8504,
+  "rows": 4,
+  "all_other_table_xml_unchanged": true,
+  "only_document_xml_part_changed": true,
+  "text": "系统已确认的管理能力与本文研究的关系openBIS ELN-LIMS实验记录、材料及原始和分析数据关联，网页录入、检索和访问控制[2]记录关联与权限已有实现基础；本文考察这些约束向项目问答和工具执行的传递。eLabFTW 6.0条目读写权限、Review与Sign请求、正文修订和变更记录[5]复核、版本和追溯已有实现基础；本文将审核状态与知识准入、来源回查衔接。本文系统记录版本、项目授权、审核流程、资料归档及操作日志字段与标记规则建图、资料与一跳关系联合检索、独立计划覆盖核对，以及带来源和确认约束的辅助。"
+}

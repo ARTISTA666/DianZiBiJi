@@ -1,0 +1,110 @@
+{
+  "task": "T144",
+  "current_source_word_sha256": "35e9ebf37cc07087239feb8857b131873bf8643c26693cfbdcacf4eb0602bc45",
+  "T143_delivered_word_sha256": "d6cd81c1f183e6828c8b382e8b9e0022e5eec724b4b44c5692f3197275bef0dd",
+  "current_source_paragraph_count": 3635,
+  "old_paragraph_count": 3634,
+  "all_prior_paragraph_texts_exactly_equal": true,
+  "current_added_last_paragraph": {
+    "index": 3634,
+    "para_id": "54C73762",
+    "text": ""
+  },
+  "changed_or_removed_package_parts": [
+    "docProps/app.xml",
+    "docProps/core.xml",
+    "docProps/custom.xml",
+    "word/_rels/document.xml.rels",
+    "word/comments.xml",
+    "word/commentsExtended.xml",
+    "word/document.xml",
+    "word/fontTable.xml",
+    "word/media/image15.png",
+    "word/media/image16.png",
+    "word/media/image40.png",
+    "word/media/image42.png",
+    "word/media/image43.png",
+    "word/media/image44.png",
+    "word/media/image45.png",
+    "word/media/image46.png",
+    "word/media/image47.png",
+    "word/media/image48.png",
+    "word/media/image6.png",
+    "word/media/image8.png",
+    "word/settings.xml"
+  ],
+  "old_actual_binary_media_count": 48,
+  "current_actual_binary_media_count": 47,
+  "old_media_entries_including_directory": 49,
+  "current_media_entries_including_directory": 48,
+  "D3_six_referenced_assets_ordered_SHA_exact": true,
+  "D3_old_actual_references": [
+    {
+      "relationship_id": "rId54",
+      "part": "word/media/image43.png",
+      "sha256": "9c68fc8b65b5e4b9875a305cb79c456440cd137efa5f74a7b3846f19092326aa"
+    },
+    {
+      "relationship_id": "rId55",
+      "part": "word/media/image44.png",
+      "sha256": "3a6cf02a1e8f9161ec1e8b535c5487d77387a96567bf00f5449cf94d6ffc783d"
+    },
+    {
+      "relationship_id": "rId56",
+      "part": "word/media/image45.png",
+      "sha256": "049097df67c23d869a80a0e55bfa87992f0df9b184b846a475013f65c3194e49"
+    },
+    {
+      "relationship_id": "rId57",
+      "part": "word/media/image46.png",
+      "sha256": "aed09e2493af95668e33ec62a261b798ff92cdf4bd7675995759ccb664623745"
+    },
+    {
+      "relationship_id": "rId58",
+      "part": "word/media/image47.png",
+      "sha256": "26829979bace18100a12783d598588d735f212fabe9cb981e4c034120590efdb"
+    },
+    {
+      "relationship_id": "rId59",
+      "part": "word/media/image48.png",
+      "sha256": "7eab08018e502678db706064e17ee29c561591f1d2765f52badcef95b2b20bb4"
+    }
+  ],
+  "D3_current_actual_references": [
+    {
+      "relationship_id": "rId53",
+      "part": "word/media/image42.png",
+      "sha256": "9c68fc8b65b5e4b9875a305cb79c456440cd137efa5f74a7b3846f19092326aa"
+    },
+    {
+      "relationship_id": "rId54",
+      "part": "word/media/image43.png",
+      "sha256": "3a6cf02a1e8f9161ec1e8b535c5487d77387a96567bf00f5449cf94d6ffc783d"
+    },
+    {
+      "relationship_id": "rId55",
+      "part": "word/media/image44.png",
+      "sha256": "049097df67c23d869a80a0e55bfa87992f0df9b184b846a475013f65c3194e49"
+    },
+    {
+      "relationship_id": "rId56",
+      "part": "word/media/image45.png",
+      "sha256": "aed09e2493af95668e33ec62a261b798ff92cdf4bd7675995759ccb664623745"
+    },
+    {
+      "relationship_id": "rId57",
+      "part": "word/media/image46.png",
+      "sha256": "26829979bace18100a12783d598588d735f212fabe9cb981e4c034120590efdb"
+    },
+    {
+      "relationship_id": "rId58",
+      "part": "word/media/image47.png",
+      "sha256": "7eab08018e502678db706064e17ee29c561591f1d2765f52badcef95b2b20bb4"
+    }
+  ],
+  "all_prior_bibliography_texts_equal": true,
+  "schema_exact_equal": true,
+  "section_geometry_equal": true,
+  "status": "DISCLOSED_AUTHOR_RESAVE_BASELINE_DIFFERENCES",
+  "policy": "以用户当前35e9实物作为本轮唯一基线，不回退或修补T143旧成果；不把既存包件/媒体变化归责T144候选。本轮最终原生PNG若与T143不同，一律实际原尺寸重看。"
+}

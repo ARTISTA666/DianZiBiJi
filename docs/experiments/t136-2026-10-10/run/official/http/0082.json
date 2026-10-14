@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-10T15:52:29.274705+00:00",
+  "path": "/projects/2/notes",
+  "method": "POST",
+  "request": {
+    "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+    "experiment_type": "transformation_observation_and_retransformation",
+    "experiment_date": "2021-07-08",
+    "fixed_fields_json": {
+      "reagents": [],
+      "instrument": [],
+      "sample": [
+        "plates from Madina, Taylor, and Janella’s transformation on July 5th",
+        "competent cells",
+        "2019 RFP plasmid (17ng/ul)",
+        "negative control without any DNA"
+      ],
+      "result": [
+        "The two with 2019 RFP plasmid (17ng/ul, with volumes 5ul and 12ul) worked and had red colonies, but the plates had way too much growth.",
+        "the 2017 10pg test kit worked, but had few colonies.",
+        "2 with 2019 RFP plasmid that was left out (118ng/ul) had growth but colonies were not red, indicating a problem with plasmid or plates."
+      ]
+    },
+    "content_json": {}
+  },
+  "status": 200,
+  "response": {
+    "id": 20,
+    "project_id": 2,
+    "template_id": null,
+    "title": "ubc2021-04 RFP transformation plate observations and retransformation",
+    "experiment_type": "transformation_observation_and_retransformation",
+    "experiment_date": "2021-07-08",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 20,
+    "created_at": "2026-10-10T15:52:29.278535Z",
+    "updated_at": "2026-10-10T15:52:29.278535Z"
+  }
+}

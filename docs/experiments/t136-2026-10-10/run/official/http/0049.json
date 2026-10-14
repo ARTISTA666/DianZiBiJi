@@ -1,0 +1,28 @@
+{
+  "utc": "2026-10-10T15:52:28.927077+00:00",
+  "path": "/projects/1/notes",
+  "method": "POST",
+  "request": {
+    "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+    "experiment_type": "PCR_optimization_and_gel_electrophoresis",
+    "experiment_date": "2025-06-26",
+    "fixed_fields_json": {},
+    "content_json": {
+      "text": "This time, we used PCR protocol from paper:\nPCR reaction mix prep:\n● 12.5 ul of Phusion Plus Master Mix\n● 1 ul of 20uM of each ThripsITSF (20 pmol)\n● 1 ul of 20uM of each ThripsITSR (20 pmol)\n● 1 ul of 20uM of each SdITSF3 (20 pmol)\n● 1 ul of 20uM of each SdITSF7 (20 pmol)\n● 5 ul of extracted DNA\n● 3.5 of H2O\n\n\nPCR conditions:\n\nInitial denaturation 94°C 9 min\nDenaturation 94°C 30 sec\n}35 cycles\nAnnealing 52°C 30 sec\nExtension 72°C 1 min\nFinal extension 72°C 7 min\n\nMix PCR samples with loading dye (5:1) and use the appropriate ladder (with bands on 200-500 bp). Run on gel 2% agarose gel (1 g of agarose dissolved in 50 ml of TAE) with 130 V for 15 min.\nClear bands near 200 bp (characteristic to C strain), one sample has band on 300 bp (characteristic to 300 bp).\nSamples were loaded in this order: diluted ladder, miss, 7ng/ul extracted dna (trap water), 3.3 ng/ul, 2.6 ng/ul, 0.8 ng/ul, 0 ng/ul (Figure 1)."
+    }
+  },
+  "status": 200,
+  "response": {
+    "id": 12,
+    "project_id": 1,
+    "template_id": null,
+    "title": "team5863-04 PCR test extracted DNA samples (optimize)",
+    "experiment_type": "PCR_optimization_and_gel_electrophoresis",
+    "experiment_date": "2025-06-26",
+    "owner_user_id": 1,
+    "status": "draft",
+    "current_version_id": 12,
+    "created_at": "2026-10-10T15:52:29.361648Z",
+    "updated_at": "2026-10-10T15:52:29.361648Z"
+  }
+}

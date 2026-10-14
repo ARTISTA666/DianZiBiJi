@@ -1,0 +1,130 @@
+{
+  "task": "T141 independent root native PDF final five-table position verification",
+  "pdf_sha256": "bfd769f53d297732793833d8a5c46df5dae32c6dd02869a0ca0168dd3dfa9165",
+  "physical_pages": 100,
+  "tables": [
+    {
+      "physical_page": 36,
+      "table_horizontal_rules_x_pt": [
+        [
+          83.4,
+          508.6
+        ],
+        [
+          83.4,
+          508.6
+        ],
+        [
+          83.4,
+          508.6
+        ]
+      ],
+      "body_bounds_x_pt": [
+        79.4,
+        515.9
+      ],
+      "all_rules_in_body": true
+    },
+    {
+      "physical_page": 45,
+      "table_horizontal_rules_x_pt": [
+        [
+          83.4,
+          508.6
+        ],
+        [
+          83.4,
+          508.6
+        ],
+        [
+          83.4,
+          508.6
+        ]
+      ],
+      "body_bounds_x_pt": [
+        79.4,
+        515.9
+      ],
+      "all_rules_in_body": true
+    },
+    {
+      "physical_page": 46,
+      "table_horizontal_rules_x_pt": [
+        [
+          82.9,
+          508.1
+        ],
+        [
+          82.9,
+          508.1
+        ],
+        [
+          82.9,
+          508.1
+        ]
+      ],
+      "body_bounds_x_pt": [
+        79.4,
+        515.9
+      ],
+      "all_rules_in_body": true
+    },
+    {
+      "physical_page": 67,
+      "table_horizontal_rules_x_pt": [
+        [
+          85.15,
+          510.15
+        ],
+        [
+          85.15,
+          510.15
+        ],
+        [
+          85.15,
+          510.15
+        ],
+        [
+          82.9,
+          508.1
+        ],
+        [
+          82.9,
+          508.1
+        ],
+        [
+          82.9,
+          508.1
+        ]
+      ],
+      "body_bounds_x_pt": [
+        79.4,
+        515.9
+      ],
+      "all_rules_in_body": true
+    },
+    {
+      "physical_page": 99,
+      "table_horizontal_rules_x_pt": [
+        [
+          82.9,
+          508.1
+        ],
+        [
+          82.9,
+          508.1
+        ],
+        [
+          82.9,
+          508.1
+        ]
+      ],
+      "body_bounds_x_pt": [
+        79.4,
+        515.9
+      ],
+      "all_rules_in_body": true
+    }
+  ],
+  "visual_review_required_in_addition": true
+}

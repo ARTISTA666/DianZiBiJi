@@ -1,0 +1,865 @@
+{
+  "task": "T137",
+  "reviewer": "research-reviewer Agent",
+  "status": "pass",
+  "completed_at_utc": "2026-10-10T16:31:54.493548+00:00",
+  "render_directory": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2",
+  "bound_docx_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/1005-新测试结果同步版-2026-10-11.docx",
+  "bound_docx_sha256": "734236c3acc901be2b177e0af81058fe0b2a3991d6c4c8b315ff61d392e5a050",
+  "bound_pdf_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/1005-新测试结果同步版-2026-10-11.pdf",
+  "bound_pdf_sha256": "719a05bd38b678d5767b101d7830e1f9695547fa01d1f5751a778962160fc11f",
+  "scope": [
+    71,
+    105
+  ],
+  "method": "All changed pages76–105 physically viewed using view_image(detail=original), in five six-image batches. Pages71–75 inherit earlier direct original inspections only after independent byte-hash equality check. Hash comparison never replaces viewing changed images.",
+  "coverage": {
+    "total_pages": 35,
+    "direct_original_view_pages_this_render": [
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105
+    ],
+    "inherited_identical_pages": [
+      71,
+      72,
+      73,
+      74,
+      75
+    ],
+    "uncovered_pages": [],
+    "passed_pages": 35,
+    "failed_pages": []
+  },
+  "pages": [
+    {
+      "page": 71,
+      "printed_page": 64,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-71.png",
+      "image_sha256": "f276ba0839ce4469787d708cb2016279aad4940a5a67d9595f9fd406558b4a89",
+      "viewed_original_in_this_render": false,
+      "inspection_mode": "inherited from direct original image inspection of identical PNG bytes",
+      "pass": true,
+      "observations": [
+        "Table6-10 complete;6.6 heading has following text on the same page. Header/footer and glyphs clear."
+      ],
+      "inherited_from": {
+        "report_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/visual-qa-71-106.json",
+        "report_sha256": "4caff19edc00536aaff35c38c5307525bbd28301aecbbc8c0039c5478d99c439",
+        "physical_page": 71,
+        "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-71.png",
+        "image_sha256": "f276ba0839ce4469787d708cb2016279aad4940a5a67d9595f9fd406558b4a89",
+        "byte_identity_independently_recomputed": true
+      },
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 72,
+      "printed_page": 65,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-72.png",
+      "image_sha256": "be8a1227a133800a551f5ce47449985a4d63290d58a9335f4818f4aaef441d0f",
+      "viewed_original_in_this_render": false,
+      "inspection_mode": "inherited from direct original image inspection of identical PNG bytes",
+      "pass": true,
+      "observations": [
+        "Tables6-11 and6-11a complete with captions;body and formulas readable."
+      ],
+      "inherited_from": {
+        "report_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/visual-qa-71-106.json",
+        "report_sha256": "4caff19edc00536aaff35c38c5307525bbd28301aecbbc8c0039c5478d99c439",
+        "physical_page": 72,
+        "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-72.png",
+        "image_sha256": "be8a1227a133800a551f5ce47449985a4d63290d58a9335f4818f4aaef441d0f",
+        "byte_identity_independently_recomputed": true
+      },
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 73,
+      "printed_page": 66,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-73.png",
+      "image_sha256": "3ddb14915f35c3584c1269870c6a408e34c78b695cfcec19d884de1df7434ed4",
+      "viewed_original_in_this_render": false,
+      "inspection_mode": "inherited from direct original image inspection of identical PNG bytes",
+      "pass": true,
+      "observations": [
+        "Table6-12 complete;statistics text and body continuation within margins."
+      ],
+      "inherited_from": {
+        "report_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/visual-qa-71-106.json",
+        "report_sha256": "4caff19edc00536aaff35c38c5307525bbd28301aecbbc8c0039c5478d99c439",
+        "physical_page": 73,
+        "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-73.png",
+        "image_sha256": "3ddb14915f35c3584c1269870c6a408e34c78b695cfcec19d884de1df7434ed4",
+        "byte_identity_independently_recomputed": true
+      },
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 74,
+      "printed_page": 67,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-74.png",
+      "image_sha256": "4868c11179a3207cd196124845034449f0b7da15b5b10e8293ff17cbddb95621",
+      "viewed_original_in_this_render": false,
+      "inspection_mode": "inherited from direct original image inspection of identical PNG bytes",
+      "pass": true,
+      "observations": [
+        "Table6-13 complete;new selection/reference/pairing method text readable."
+      ],
+      "inherited_from": {
+        "report_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/visual-qa-71-106.json",
+        "report_sha256": "4caff19edc00536aaff35c38c5307525bbd28301aecbbc8c0039c5478d99c439",
+        "physical_page": 74,
+        "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-74.png",
+        "image_sha256": "4868c11179a3207cd196124845034449f0b7da15b5b10e8293ff17cbddb95621",
+        "byte_identity_independently_recomputed": true
+      },
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 75,
+      "printed_page": 68,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-75.png",
+      "image_sha256": "494fe968376b281799ae53a29b1142655d56c5ffb9f4958980f201fd7072f52a",
+      "viewed_original_in_this_render": false,
+      "inspection_mode": "inherited from direct original image inspection of identical PNG bytes",
+      "pass": true,
+      "observations": [
+        "Table6-14 caption and all three result rows remain together;undefined precision dash, content counts, metadata counts and error analysis clear. Chapter-end white space ordinary."
+      ],
+      "inherited_from": {
+        "report_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/visual-qa-71-106.json",
+        "report_sha256": "4caff19edc00536aaff35c38c5307525bbd28301aecbbc8c0039c5478d99c439",
+        "physical_page": 75,
+        "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final/page-75.png",
+        "image_sha256": "494fe968376b281799ae53a29b1142655d56c5ffb9f4958980f201fd7072f52a",
+        "byte_identity_independently_recomputed": true
+      },
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 76,
+      "printed_page": 69,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-76.png",
+      "image_sha256": "f4f6dbb0d689f5f05d8b8cd1320040fcc82fcadec4b0ba8d94b316efb6bbf3b7",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "Chapter7 complete on one page:7.1,7.2 and all four7.3 outlook points within margins. Last line has sufficient separation from footer. The unintended tail page is eliminated."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 77,
+      "printed_page": 70,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-77.png",
+      "image_sha256": "9f0cdc4e63ad2cd112a1ac3e07d97c112cbdd7213664aef77e914a7b5f16b47a",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "Acknowledgments complete on one page, following chapter7. 孙明斋,陆洲 and刘燕 names clear. No clipping, overlap or glyph corruption."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 78,
+      "printed_page": 71,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-78.png",
+      "image_sha256": "60cdd509d0fd1b738a64ab78dbaad6634554994bf7fd91a6dcde5f1c336e6d3d",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "References1–14 readable with normal hanging indents and complete boundary."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 79,
+      "printed_page": 72,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-79.png",
+      "image_sha256": "740c60c3a0d9666ac6eadcf456b8de001308d70b8db328b4d87d9eb04a0d8395",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "References15–30 readable;no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 80,
+      "printed_page": 73,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-80.png",
+      "image_sha256": "caa365ae25025605e85f1f6806b745b224e2944364423a889b3d203ea3fc8ad6",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "References31–48 clear, within margins; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 81,
+      "printed_page": 74,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-81.png",
+      "image_sha256": "e49b5aaea3e32004d1c5618fffcf53b417b0de7b58ae86ef5c5486080f82dd02",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "References49–67 clear, within margins; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 82,
+      "printed_page": 75,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-82.png",
+      "image_sha256": "1196ec81836f58ee23584c4fc64f165fbf7b624237d903bdda58d798daa6a2d6",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "References68–84 clear, including82–84 statistical references; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 83,
+      "printed_page": 76,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-83.png",
+      "image_sha256": "45887d3ad94c1468e971cc4800b3b2cd342e1740fcb3943e51891e74fc0135b2",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "AppendixA and tableA-1 complete with all20 questions on one page; Q05/Q20 dagger marks readable; caption attached."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 84,
+      "printed_page": 77,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-84.png",
+      "image_sha256": "853aafa41f4de9150125a5e78b0679f90496d56e8bcf86975b6e7a32d4d73027",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "AppendixB introduction and tableB-1(a) complete.52,40 and12 figures are present. Caption attached to all12 PCR relation rows; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 85,
+      "printed_page": 78,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-85.png",
+      "image_sha256": "47b25ed36534425f75db13ec4d4c1d6d93c0cbbb398d81324cf0e52ab1ec6510",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-1(b) andB-1(c) complete with attached captions and readable12/14 relation rows; no split, clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 86,
+      "printed_page": 79,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-86.png",
+      "image_sha256": "8494eaf02a6e72e1d8dbfda4271e21608f1ed83906d05ee97dda8efb6953a525",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TableB-1(d) complete, rows39–52 clear. B.3 heading andB-2 definitions readable within margins."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 87,
+      "printed_page": 80,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-87.png",
+      "image_sha256": "80fe3e50c812d178dc5a0c851a34590a13a397d2c105b5d5a74abf94f7fa3cf6",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TableB-2 continuationG01–G18 andB-3 complete; labels and enum text clear."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 88,
+      "printed_page": 81,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-88.png",
+      "image_sha256": "04ec4111d79705bb87da77e2a4050938f092e886573d00b955f531042697f108",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-4–B-9 and captions complete; long names fit."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 89,
+      "printed_page": 82,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-89.png",
+      "image_sha256": "7988ac56e09a2722e5eb27ab35a0a3497d67c5c3fbb735457cb35e1e2778ea4e",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-10–B-14 and captions complete; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 90,
+      "printed_page": 83,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-90.png",
+      "image_sha256": "33a1403999e9d1822d7ad7c3d18c4c1f58f4348cafb8c8b6a6d100640099bc98",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-15–B-17 complete; multiline model defaults fit rows."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 91,
+      "printed_page": 84,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-91.png",
+      "image_sha256": "5257a51ad19385e4739585875c6f87e5806db405496b1407890e3a024ed0a98e",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-18–B-20 complete, captions attached; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 92,
+      "printed_page": 85,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-92.png",
+      "image_sha256": "4c34a9032af6e12120c14edacdaabe609c0bac57acd296f080d2fcd20a7a808b",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-21–B-24 complete; long and two-line constraints fit rows."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 93,
+      "printed_page": 86,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-93.png",
+      "image_sha256": "bd69eb76975ce860fc456099c421240fa857af119fa061a67e779ed21d7c17b1",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TableB-25 caption wraps onto a second line but stays attached; tableB-26 complete."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 94,
+      "printed_page": 87,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-94.png",
+      "image_sha256": "173218baa6112d3bef83a638dc8cda36ab378945081cdbd5a59dd6d602ada7dc",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-27–B-29 complete; wrapped captions and constraints remain readable and attached."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 95,
+      "printed_page": 88,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-95.png",
+      "image_sha256": "e090cbee92bd113d1a42950454470fa7412ee9395c69e35a7568d94d5dd838b3",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-30–B-33 complete; long captions wrap without separation."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 96,
+      "printed_page": 89,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-96.png",
+      "image_sha256": "e0505f1b98825a2e04852ef48b5a3e5a4a3c07622b78d7d72c2d2749dba881ce",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-34–B-37 complete; default text safely wraps within rows."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 97,
+      "printed_page": 90,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-97.png",
+      "image_sha256": "2e5bb418dfbbe9b31ce771f36a87e6d568043238957fcbf1ec96e0947125cfbd",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-38–B-41 complete; long constraints fit within margins."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 98,
+      "printed_page": 91,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-98.png",
+      "image_sha256": "37988471db39ed36a14d61171f680bcb4dbd0e163b1b371262c1d7a340df0915",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TablesB-42–B-45 complete; ordinary chapter-end white space."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 99,
+      "printed_page": 92,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-99.png",
+      "image_sha256": "0bcc61c49da7d46a1f5a6a0201403821f3609ee4de35067e38654fea8fafa3a5",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "AppendixC, tablesC-1 andC-2 complete with12 tools and6 templates; captions attached."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 100,
+      "printed_page": 93,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-100.png",
+      "image_sha256": "9387fd04a240e56e17b3a3eec71bd04daa73c5dfd4e8c37a647a75d8e706c575",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "AppendixD, D.1/D.2 and tablesD-1/D-2 complete; long attachment row and protocol URL wrap within margins. Last paragraph continues normally."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 101,
+      "printed_page": 94,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-101.png",
+      "image_sha256": "145111d64c2287973b4182c11101e194a01c8ba996d29aa1d28cd812887f29bf",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "D.2 continuation and new public diary sources clear; 12 units,74 relations,56 exclusions,28 inputs readable. D.3 heading and explanatory paragraph attached; intentional break before full figures."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 102,
+      "printed_page": 95,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-102.png",
+      "image_sha256": "2958f0d75536285ead7f13f55a74736c23e3ae629d7e0dc1a0ecf3fff5a267b6",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "FiguresD-1 andD-2 complete with attached captions; Chinese/English labels,58°C and18% readable; no overlap or cropping."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 103,
+      "printed_page": 96,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-103.png",
+      "image_sha256": "e9530ac95906de0efe524b9c27623a2dd2c33999119457118f2e06efe11da1b3",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "FiguresD-3 andD-4 complete with attached captions; qPCR1/2 and2.3 values readable; no overlap or cropping."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 104,
+      "printed_page": 97,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-104.png",
+      "image_sha256": "3dd6ce99c9af14978f2914c3ed405a795fef53d1b0b44923bed020e534f8fc0a",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "FiguresD-5 andD-6 complete with attached captions; filenames, SOP text and units readable. D.4 heading has following text; no overlap or cropping."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    },
+    {
+      "page": 105,
+      "printed_page": 98,
+      "image_path": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/render-final-v2/page-105.png",
+      "image_sha256": "dc0909a80c2ccad4ac04b13d6f16161b2a15fe9454694647fe731c81ad4f277d",
+      "viewed_original_in_this_render": true,
+      "inspection_mode": "direct view_image(detail=original), six-image batch",
+      "pass": true,
+      "observations": [
+        "TableD-3 complete with attached caption. Long Rust command/test names and T136 runtime paragraph wrap within margins; administrator role statement readable; no clipping or overlap."
+      ],
+      "checks": {
+        "clipping": false,
+        "overlap": false,
+        "glyph_corruption": false,
+        "unexpected_blank_page": false,
+        "separated_caption": false,
+        "header_footer_problem": false,
+        "table_or_figure_boundary_problem": false
+      }
+    }
+  ],
+  "issues": [],
+  "resolved_prior_issues": [
+    {
+      "original_report": "/Users/yusong/Downloads/new/full-system/agent-work/t137-2026-10-11/visual-qa-71-106.json",
+      "original_page": 77,
+      "kind": "unintended-tail-page",
+      "final_page": 76,
+      "resolution": "All four outlook points now fit chapter7 single page; next page is acknowledgments."
+    }
+  ],
+  "minor_semantic_recheck": [
+    {
+      "source_p": 1661,
+      "current_all_w_p_index": 1699,
+      "text": "本文实现实验记录、项目权限、版本审核与资料管理，并保存问答来源和日志。补测显示规则可映射字段及元数据，本批英文正文的目标关系全部漏抽。",
+      "pass": true,
+      "reason": "Preserves implemented record/permission/review/document functions and evidence/log retention; states current field/metadata mapping and complete missed content relations for this English batch without generalizing."
+    },
+    {
+      "source_p": 1668,
+      "current_all_w_p_index": 1706,
+      "text": "（1）改进抽取与标注。12条英文日记的74条AI参考显示漏抽与名称切分问题。后续完善规则，另取中英文记录，经人工复核参考后验证。",
+      "pass": true,
+      "reason": "Retains12 diary units,74 AI-assisted reference relations, missed extraction/name-splitting findings and future independently selected Chinese/English records with human-reviewed references."
+    }
+  ],
+  "limitations": "Visual review covers the listed physical pages only; numerical/source/package protection checks are separate audit responsibilities."
+}
