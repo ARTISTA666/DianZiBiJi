@@ -1,7 +1,0 @@
-{
-  "status": "frozen-evidence",
-  "original_temporary_path": "/private/tmp/advisor-T129-20261003/screens/readonly-sustained-load-20261003.md",
-  "original_sha256": "6acafdb3f571c072b14d275ede6cd5e28df86c4f5df21b42ac9ccd286974255c",
-  "note": "原始说明作为JSON字符串归档，不将临时草案状态当作最终验收结论。",
-  "text": "> status: draft\n> owner: product-manager/T129\n\n本轮持续只读轻负载观测（2026-10-03）\n\n北京时间 23:36:40.646780 至 23:37:40.656328，使用 10 个并发 worker，每个 worker 每秒约 1 次请求，持续 60 秒访问本地 Rust 服务的 /health、/ready 与 /projects。三个端点各 200 次，共 600 次，全部 HTTP 200，600 个 request-id 均由响应原样返回。\n\n总墙时 60.01074 秒，成功吞吐 9.99821 请求/秒；整体 p95 为 13.376 ms，最大 17.724 ms。/health、/ready、/projects 的 p95 分别为 11.484、12.713、13.570 ms。p95 使用 nearest-rank ceil(0.95*n) 计算。\n\n运行版本首尾均为 fb87ce38c08aa3444759a47adda56e491ad05db2；开始时数据规模为 10 个项目、46 条笔记、44 个文件。本轮达到 p95≤2 秒、成功吞吐≥5 请求/秒的设计目标。观测边界是本地小数据、60 秒、限速只读轻负载；结果不代表最大容量、大规模压力、真实生产环境或模型生成性能。\n\n逐请求时间、状态码、request-id 和响应 request-id 见同目录 readonly-sustained-load-20261003.json。本轮不修改业务数据；认证状态临时文件已清理。该批次独立于较早的 90 请求短窗口观测，不覆盖历史证据。\n"
-}

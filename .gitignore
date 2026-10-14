@@ -60,46 +60,63 @@ docs/experiments/final-maturity-gate-latest.md
 docs/experiments/confirmatory-review-completion-latest.json
 docs/experiments/confirmatory-review-completion-latest.md
 
-# Thesis binary exports (use Release or cloud storage for distribution)
+# Thesis binary exports remain local
 *.pdf
 *.docx
 *.zip
 
-# Agent video recordings
-agent-work/reports/**/*.mp4
-agent-work/reports/**/*.webm
-
-# Local research workspace per AGENTS.md; canonical evidence stays in docs/.
-# Existing tracked AI/process records remain tracked; do not exclude by outcome.
-/agent-work/*
-!/agent-work/README.md
-!/agent-work/LOG.md
-!/agent-work/MANIFEST.md
-!/agent-work/thesis-agents/
+# Local tools, dataset caches, and presentation exports
 /.playwright-cli/
 /.freebuff/
-/docs/thesis-cleanup-T135-2026-10-10/render-final-v2/*.png
-/docs/thesis-cleanup-T135-2026-10-10/render-final-v3/*.png
-/docs/thesis-cleanup-T135-2026-10-10/render-final/*.png
-/docs/thesis-cleanup-T135-2026-10-10/render-stage1/*.png
-/docs/thesis-cleanup-T135-2026-10-10/render-stage2/*.png
-/docs/thesis-cleanup-T135-2026-10-10/render-stage3/*.png
-/docs/thesis-cleanup-T135-2026-10-10/render-stage4/*.png
-/docs/thesis-cleanup-T135-2026-10-10/source-media/*.png
-/docs/thesis-revision-T134-2026-10-09/render-final-v2/*.png
-/docs/thesis-revision-T134-2026-10-09/render-final-v3/*.png
-/docs/thesis-revision-T134-2026-10-09/render-final-v4/*.png
-/docs/thesis-revision-T134-2026-10-09/render-final-v5/*.png
-/docs/thesis-revision-T134-2026-10-09/render-final/*.png
-/docs/thesis-revision-T134-2026-10-09/render-first/*.png
-/docs/thesis-revision-T134-2026-10-09/render-font-test/*.png
-/docs/thesis-revision-T134-2026-10-09/render-fourth/*.png
-/docs/thesis-revision-T134-2026-10-09/render-second/*.png
-/docs/thesis-revision-T134-2026-10-09/render-source/*.png
-/docs/thesis-revision-T134-2026-10-09/render-third/*.png
-/docs/毕业论文-导师评价深化修订副本-2026-09-24.pages
-/docs/答辩材料/答辩PPT-可编辑版.pptx
-/docs/答辩材料/答辩PPT-图片版.pptx
 /data/real/
-# Original local E2E JWT retained locally; publish the labeled .public-redacted.json copy.
-/docs/thesis-fixes-T139-2026-10-11/e2e-failed-v4-results.json
+/docs/答辩材料/
+
+# Private manuscripts, reviews, collaboration and personal delivery records
+# Apply by material type; software protocols, test inputs and results stay tracked.
+/.zcode/
+/agent-work/
+/reviews/
+/docs/thesis-*/
+/docs/blind-review-*/
+/docs/coordination/
+/docs/审核意见/
+/docs/figures-redrawn-*/
+/docs/system-evidence/conflict-snapshots-*/
+/archive/advisor-package-*/
+/archive/advisor-snapshots/
+/archive/audit-snapshots/
+/archive/deprecated-scripts/
+/archive/reference-checks/
+/archive/rendered/
+/archive/thesis-format/
+/archive/thesis-versions/
+/archive/qoder-night/
+/archive/dev-logs/
+/docs/*论文*
+/docs/*盲审*
+/docs/源码*
+/docs/项目续审*
+/docs/项目论文*
+/docs/core-source-loc-*
+/docs/GitHub版本与公开材料核验-*
+/docs/公开材料口径勘误与AI贡献说明-*
+/docs/仓库整理与版本同步-*
+/AGENTS.local.md
+/docs/README.local.md
+/archive/design-superseded/engineering-agent-organization.md
+/docs/innovation/补证素材论文挂接表-2026-09-08.md
+/docs/project-optimization-T148-2026-10-12/README.md
+/docs/project-optimization-T148-2026-10-12/backend/backend-result.json
+/docs/project-optimization-T148-2026-10-12/baseline-manifest.json
+/docs/project-optimization-T148-2026-10-12/delta.patch
+/docs/project-optimization-T148-2026-10-12/final-evidence-manifest.json
+/docs/project-optimization-T148-2026-10-12/final-evidence-manifest.sha256
+/docs/project-optimization-T148-2026-10-12/frontend/validation.json
+/docs/project-optimization-T148-2026-10-12/protected-final.json
+/docs/project-optimization-T148-2026-10-12/qa/QA.json
+/docs/project-optimization-T148-2026-10-12/qa/evidence-review.json
+/docs/project-optimization-T148-2026-10-12/qa/final-report-review.json
+/docs/project-optimization-T148-2026-10-12/review/review.json
+/docs/project-optimization-T148-2026-10-12/source-delta-manifest.json
+/docs/任务台账.md
+/docs/并线协作状态.md

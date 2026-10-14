@@ -8,13 +8,13 @@
 
 后端已完整迁移到 Rust 1.88 + Axum，认证、权限、项目、实验笔记、文件/OCR、检索、知识图谱、RAG、智能体与成熟度门禁均由单个 Rust 进程直接执行，不再启动或代理 Python/FastAPI 服务。接口路径、请求/响应结构、PostgreSQL 数据库和前端保持不变；响应头 `x-backend-runtime: axum` 可用于确认运行时。
 
-工程协作采用分工明确的多 Agent 组织与独立发布复审，分层、所有权、RACI 和门禁见 [工程 Agent 组织、分类与发布责任制（已归档）](archive/design-superseded/engineering-agent-organization.md)。
+软件开发分工与检查命令见 [AGENTS.md](AGENTS.md)，使用、运维和验证材料见[文档导航](docs/README.md)。
 
 ## 版本、研究材料与贡献说明
 
-当前生产代码为 Rust / Next.js；论文 Markdown 包含历史稿，最新独立 Word 的身份和交付记录见[文档导航](docs/README.md)。系统测试通过不等于完成独立人工评价，也不证明作者已经能够独立解释或复现实验。
+公开仓库提供 Rust / Next.js 源码、使用与运维说明，以及运行和测试所需的协议与数据。论文草稿、审稿、个人核验、协作记录及相关交付归档仅在本地维护，不再随软件仓库同步。
 
-本项目的代码实现、实验执行、论文写作及内部复核存在广泛 AI / 多 Agent 协作。具体范围、历史表述冲突和仍待人工确认的事项见[公开材料勘误与 AI 贡献说明](docs/公开材料口径勘误与AI贡献说明-T160-2026-10-14.md)及[未闭环清单](docs/盲审报告逐项整改与未闭环清单-T150-2026-10-14.md)。保留历史版本供核查；构造角色场景不计为真实用户研究。
+本项目的代码实现、实验执行、论文写作及内部复核存在广泛 AI / 多 Agent 协作。系统测试通过不等于完成独立人工评价，也不替代作者对代码与实验的独立解释和复现；构造角色场景不计为真实用户研究。研究贡献、AI 使用范围与正式提交材料仍需由作者核实并按提交要求说明。
 
 ## AI 架构
 
@@ -154,7 +154,7 @@ backend/.venv/bin/python scripts/gates/check_backup_policy.py \
 
 模拟数据脚本不再生成 AI 问答、评价或智能体结果，论文统计应只使用真实接口运行产生的数据。
 
-详细配置与复现方法见 [docs/ai-rag-setup.md](archive/design-superseded/ai-rag-setup.md)。
+当前配置见[配置章节](#配置)，验证与复现命令见[验证章节](#验证)。
 人工试评与正式确认性评审的启动条件见 [docs/experiments/human-review-readiness-2026-07-16.md](docs/experiments/human-review-readiness-2026-07-16.md)。
 
 ## GSE111619 真实数据导入
