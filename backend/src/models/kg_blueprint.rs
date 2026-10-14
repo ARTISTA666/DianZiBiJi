@@ -10,7 +10,8 @@ pub const BLUEPRINT_PRIORITY_MANUAL: i32 = 100;
 pub const BLUEPRINT_SOURCE_MEETING_NOTE: &str = "meeting_note";
 pub const BLUEPRINT_SOURCE_PLAN_DOCUMENT: &str = "plan_document";
 
-/// 蓝图节点可用的实体类型（排除 note/project/user/file 等系统结构类型）。
+/// 蓝图节点类型：事实本体大类及有明确来源角色的细分计划类型。
+/// biosample 表示 BioSample 登录号；物理生物样本使用 sample。
 pub const BLUEPRINT_ENTITY_TYPES: &[&str] = &[
     "reagent",
     "instrument",
@@ -27,6 +28,15 @@ pub const BLUEPRINT_ENTITY_TYPES: &[&str] = &[
     "geo_accession",
     "software",
     "condition",
+    "biological_source",
+    "identifier",
+    "replicate",
+    "sra_accession",
+    "count_column",
+    "reference_genome",
+    "alignment_software",
+    "count_software",
+    "processing_software",
 ];
 
 /// 蓝图边可用的关系类型（排除 has_note/created_by/has_attachment 等系统结构关系）。
@@ -37,6 +47,9 @@ pub const BLUEPRINT_RELATION_TYPES: &[&str] = &[
     "produces_result",
     "has_experiment_type",
     "has_condition",
+    "has_biological_source",
+    "has_identifier",
+    "uses_software",
 ];
 
 #[derive(Debug, Deserialize)]

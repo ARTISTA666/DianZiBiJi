@@ -171,6 +171,7 @@ async fn upload_file(
     let stored = store_upload(
         &mut multipart,
         project_id,
+        file_category,
         state.settings.upload_max_bytes,
         &state.settings.storage_root,
     )
@@ -243,7 +244,7 @@ async fn upload_file(
     Ok(Json(fetch_file(&state.pool, file_id).await?.into()))
 }
 
-const ALLOWED_MIME_TYPES: &[&str] = &[
+const KNOWLEDGE_MIME_TYPES: &[&str] = &[
     "application/pdf",
     "image/jpeg",
     "image/png",
@@ -252,12 +253,69 @@ const ALLOWED_MIME_TYPES: &[&str] = &[
     "image/tiff",
     "image/bmp",
     "text/plain",
+    "text/csv",
+    "text/tab-separated-values",
+    "text/markdown",
+    "application/json",
+    "application/xml",
+    "text/xml",
+    "text/html",
+    "text/yaml",
+    "application/yaml",
+    "application/x-yaml",
+    "text/x-yaml",
+    "application/gzip",
+    "application/x-gzip",
+    "application/octet-stream",
+];
+
+const OFFICE_MIME_TYPES: &[&str] = &[
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     "application/msword",
     "application/vnd.ms-excel",
 ];
+
+fn validate_knowledge_format(
+    storage_filename: &str,
+    original_filename: &str,
+) -> Result<(), ApiError> {
+    // Keep these extensions aligned with crate::ocr::extract_text and its gzip payload check.
+    const TEXT_EXTENSIONS: &[&str] = &[
+        "txt", "csv", "tsv", "soft", "md", "json", "xml", "html", "log", "yaml", "yml",
+    ];
+    const IMAGE_EXTENSIONS: &[&str] = &["png", "jpg", "jpeg", "gif", "bmp", "tif", "tiff", "webp"];
+    let extension = FilePath::new(storage_filename)
+        .extension()
+        .and_then(|value| value.to_str())
+        .unwrap_or_default()
+        .to_ascii_lowercase();
+    let supported = if extension == "gz" {
+        let inner = FilePath::new(original_filename)
+            .file_stem()
+            .and_then(|value| value.to_str())
+            .unwrap_or_default();
+        let inner_extension = FilePath::new(inner)
+            .extension()
+            .and_then(|value| value.to_str())
+            .unwrap_or_default()
+            .to_ascii_lowercase();
+        TEXT_EXTENSIONS.contains(&inner_extension.as_str())
+    } else {
+        extension == "pdf"
+            || TEXT_EXTENSIONS.contains(&extension.as_str())
+            || IMAGE_EXTENSIONS.contains(&extension.as_str())
+    };
+    if supported {
+        Ok(())
+    } else {
+        Err(ApiError::new(
+            StatusCode::UNPROCESSABLE_ENTITY,
+            "知识资料仅支持 PDF、图片、文本和文本 gzip；Office 文件请作为笔记附件上传",
+        ))
+    }
+}
 
 struct StoredUpload {
     original_filename: String,
@@ -270,6 +328,7 @@ struct StoredUpload {
 async fn store_upload(
     multipart: &mut Multipart,
     project_id: i32,
+    file_category: &str,
     max_bytes: usize,
     storage_root: &str,
 ) -> Result<StoredUpload, ApiError> {
@@ -284,7 +343,9 @@ async fn store_upload(
         let original_filename = field.file_name().unwrap_or("file").to_owned();
         let mime_type = field.content_type().map(str::to_owned);
         match mime_type.as_deref() {
-            Some(ct) if ALLOWED_MIME_TYPES.contains(&ct) => {}
+            Some(ct)
+                if KNOWLEDGE_MIME_TYPES.contains(&ct)
+                    || (file_category == "note_attachment" && OFFICE_MIME_TYPES.contains(&ct)) => {}
             Some(ct) => {
                 return Err(ApiError::new(
                     StatusCode::UNPROCESSABLE_ENTITY,
@@ -297,6 +358,9 @@ async fn store_upload(
                     "文件类型不能为空",
                 ));
             }
+        }
+        if file_category == "knowledge_document" {
+            validate_knowledge_format(&original_filename, &original_filename)?;
         }
         let suffix = FilePath::new(&original_filename)
             .extension()
@@ -616,7 +680,40 @@ pub(crate) async fn review_file_action(
     ip_address: Option<&str>,
     user_agent: Option<&str>,
 ) -> Result<Json<FileRead>, ApiError> {
-    let record = require_file(state, user, file_id).await?;
+    let should_sync = payload.action == "approve";
+    let mut transaction = state.pool.begin().await?;
+    let _ = review_file_in_transaction(
+        state,
+        &mut transaction,
+        user,
+        file_id,
+        payload,
+        ip_address,
+        user_agent,
+    )
+    .await?;
+    transaction.commit().await?;
+    if should_sync {
+        if let Err(error) =
+            crate::api::rag::sync_approved_file(state, user, file_id, ip_address, user_agent).await
+        {
+            tracing::warn!(file_id, detail = %error.detail, "File approval committed; knowledge synchronization failed");
+        }
+    }
+    Ok(Json(fetch_file(&state.pool, file_id).await?.into()))
+}
+
+pub(crate) async fn review_file_in_transaction(
+    state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    user: &UserRecord,
+    file_id: i32,
+    payload: FileReviewRequest,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
+) -> Result<Json<FileRead>, ApiError> {
+    let record = fetch_file_for_update(transaction, file_id).await?;
+    require_project_access(&state.pool, user, record.project_id).await?;
     if record.file_category != "knowledge_document" {
         return Err(ApiError::new(
             StatusCode::CONFLICT,
@@ -632,7 +729,9 @@ pub(crate) async fn review_file_action(
     if !can_review_project(&state.pool, user, record.project_id).await? {
         return Err(ApiError::new(StatusCode::FORBIDDEN, "需要审核权限"));
     }
-    let should_sync = payload.action == "approve";
+    if payload.action == "approve" {
+        validate_knowledge_format(&record.storage_path, &record.original_filename)?;
+    }
     let (status, sync_status, message) = match payload.action.as_str() {
         "approve" => (
             "APPROVED",
@@ -654,7 +753,6 @@ pub(crate) async fn review_file_action(
             ))
         }
     };
-    let mut transaction = state.pool.begin().await?;
     let result = sqlx::query(
         r#"
         UPDATE files SET status = $2::filestatus,
@@ -666,7 +764,7 @@ pub(crate) async fn review_file_action(
     .bind(status)
     .bind(sync_status)
     .bind(message)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
     if result.rows_affected() != 1 {
         return Err(ApiError::new(
@@ -675,7 +773,7 @@ pub(crate) async fn review_file_action(
         ));
     }
     write_audit(
-        &mut *transaction,
+        &mut **transaction,
         AuditEvent {
             actor_user_id: Some(user.id),
             project_id: Some(record.project_id),
@@ -688,11 +786,7 @@ pub(crate) async fn review_file_action(
         },
     )
     .await?;
-    transaction.commit().await?;
-    if should_sync {
-        crate::api::rag::sync_approved_file(state, user, file_id, ip_address, user_agent).await?;
-    }
-    Ok(Json(fetch_file(&state.pool, file_id).await?.into()))
+    Ok(Json(fetch_file_in_transaction(transaction, file_id).await?))
 }
 
 fn validate_file_association(file_category: &str, note_id: Option<i32>) -> Result<(), ApiError> {
@@ -792,6 +886,25 @@ async fn fetch_file(pool: &sqlx::PgPool, file_id: i32) -> Result<StoredFileRecor
         .fetch_optional(pool)
         .await?
         .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "File not found"))
+}
+
+async fn fetch_file_for_update(
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    file_id: i32,
+) -> Result<StoredFileRecord, ApiError> {
+    let query = format!("SELECT {FILE_COLUMNS} FROM files WHERE id=$1 FOR UPDATE");
+    sqlx::query_as(&query)
+        .bind(file_id)
+        .fetch_optional(&mut **transaction)
+        .await?
+        .ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "File not found"))
+}
+
+pub(crate) async fn fetch_file_in_transaction(
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    file_id: i32,
+) -> Result<FileRead, ApiError> {
+    Ok(fetch_file_for_update(transaction, file_id).await?.into())
 }
 
 async fn require_write(
@@ -907,6 +1020,338 @@ mod tests {
             serde_json::from_slice(&bytes).unwrap()
         };
         (status, body)
+    }
+
+    async fn test_file_app(
+        overrides: HashMap<String, String>,
+    ) -> Option<(Router, String, i64, tempfile::TempDir, sqlx::PgPool)> {
+        let database_url = std::env::var("TEST_DATABASE_URL").ok()?;
+        let suffix = Uuid::new_v4().simple().to_string();
+        let username = format!("file_contract_{suffix}");
+        let storage = tempfile::tempdir().unwrap();
+        let mut values = HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "file-contract-test-secret".to_owned(),
+            ),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+            (
+                "STORAGE_ROOT".to_owned(),
+                storage.path().to_string_lossy().into_owned(),
+            ),
+        ]);
+        values.extend(overrides);
+        let settings = Settings::from_map(&values).unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool.clone(), settings).unwrap());
+        let (status, login) = json_call(
+            &app,
+            "POST",
+            "/auth/login",
+            None,
+            Some(json!({"username":username,"password":"RustAdmin123!"})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        let token = login["access_token"].as_str().unwrap().to_owned();
+        let (status, project) = json_call(
+            &app,
+            "POST",
+            "/projects",
+            Some(&token),
+            Some(json!({"name":format!("File contract {suffix}")})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        Some((app, token, project["id"].as_i64().unwrap(), storage, pool))
+    }
+
+    async fn upload_fixture(
+        app: &Router,
+        token: &str,
+        path: &str,
+        filename: &str,
+        mime_type: &str,
+    ) -> (StatusCode, Value) {
+        let boundary = "file-contract-boundary";
+        let body = format!("--{boundary}\r\nContent-Disposition: form-data; name=\"upload\"; filename=\"{filename}\"\r\nContent-Type: {mime_type}\r\n\r\nApproved protocol evidence\r\n--{boundary}--\r\n");
+        let (status, bytes) = request(
+            app,
+            "POST",
+            path,
+            Some(token),
+            Some(&format!("multipart/form-data; boundary={boundary}")),
+            body.into_bytes(),
+        )
+        .await;
+        (status, serde_json::from_slice(&bytes).unwrap())
+    }
+
+    #[tokio::test]
+    async fn test_t153_knowledge_upload_formats_and_office_attachment_boundary() {
+        let Some((app, token, project_id, _storage, pool)) = test_file_app(HashMap::new()).await
+        else {
+            return;
+        };
+        let path = format!("/projects/{project_id}/documents");
+        for (filename, mime) in [
+            (
+                "protocol.docx",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            ),
+            (
+                "measurements.xlsx",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            ),
+            (
+                "slides.pptx",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+            ),
+            ("protocol.doc", "application/msword"),
+            ("measurements.xls", "application/vnd.ms-excel"),
+            ("protocol.docx", "text/plain"),
+            ("protocol.exe", "application/octet-stream"),
+            ("protocol.txt", "text/calendar"),
+            ("protocol.gz", "application/gzip"),
+            ("protocol.docx.gz", "application/gzip"),
+        ] {
+            let (status, body) = upload_fixture(&app, &token, &path, filename, mime).await;
+            assert_eq!(
+                status,
+                StatusCode::UNPROCESSABLE_ENTITY,
+                "{filename}: {body}"
+            );
+        }
+        let count: i64 = sqlx::query_scalar("SELECT count(*) FROM files WHERE project_id=$1")
+            .bind(project_id as i32)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        assert_eq!(count, 0, "unsupported knowledge uploads must not persist");
+        for (filename, mime) in [
+            ("protocol.PDF", "application/pdf"),
+            ("scan.jpg", "image/jpeg"),
+            ("scan.jpeg", "image/jpeg"),
+            ("scan.tif", "image/tiff"),
+            ("scan.png", "image/png"),
+            ("scan.gif", "image/gif"),
+            ("scan.webp", "image/webp"),
+            ("scan.tiff", "image/tiff"),
+            ("scan.bmp", "image/bmp"),
+            ("protocol.txt", "text/plain"),
+            ("measurements.csv", "text/csv"),
+            ("measurements.tsv", "text/tab-separated-values"),
+            ("series.soft", "application/octet-stream"),
+            ("protocol.md", "text/markdown"),
+            ("data.json", "application/json"),
+            ("data.xml", "application/xml"),
+            ("data.xml", "text/xml"),
+            ("data.html", "text/html"),
+            ("data.log", "text/plain"),
+            ("data.yaml", "application/yaml"),
+            ("data.yml", "text/yaml"),
+            ("data.csv.gz", "application/gzip"),
+            ("data.SOFT.gz", "application/x-gzip"),
+        ] {
+            let (status, body) = upload_fixture(&app, &token, &path, filename, mime).await;
+            assert_eq!(status, StatusCode::OK, "{filename}: {body}");
+            assert_eq!(body["knowledge_sync_status"], "pending_review");
+        }
+        let (_, note) = json_call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(&token),
+            Some(json!({"title":"Office attachment","experiment_type":"audit"})),
+        )
+        .await;
+        let note_id = note["id"].as_i64().unwrap();
+        let (status, attachment) = upload_fixture(
+            &app,
+            &token,
+            &format!(
+                "/projects/{project_id}/files?file_category=note_attachment&note_id={note_id}"
+            ),
+            "protocol.docx",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{attachment}");
+        assert_eq!(attachment["file_category"], "note_attachment");
+        assert_eq!(attachment["knowledge_sync_status"], "not_applicable");
+    }
+
+    #[tokio::test]
+    async fn test_t153_existing_unsupported_knowledge_cannot_be_approved() {
+        let Some((app, token, project_id, storage, pool)) = test_file_app(HashMap::new()).await
+        else {
+            return;
+        };
+        let stored_path = storage.path().join("legacy.docx");
+        tokio::fs::write(&stored_path, b"legacy Office bytes")
+            .await
+            .unwrap();
+        let (_, user) = json_call(&app, "GET", "/auth/me", Some(&token), None).await;
+        let owner = user["id"].as_i64().unwrap() as i32;
+        let file_id: i32 = sqlx::query_scalar("INSERT INTO files (project_id,uploaded_by,file_category,original_filename,storage_path,mime_type,file_size,file_hash,status,knowledge_sync_status) VALUES ($1,$2,'KNOWLEDGE_DOCUMENT','legacy.docx',$3,'application/vnd.openxmlformats-officedocument.wordprocessingml.document',19,$4,'UPLOADED','pending_review') RETURNING id")
+            .bind(project_id as i32).bind(owner).bind(stored_path.to_string_lossy().as_ref()).bind("b".repeat(64)).fetch_one(&pool).await.unwrap();
+        let (status, body) = json_call(
+            &app,
+            "POST",
+            &format!("/files/{file_id}/review"),
+            Some(&token),
+            Some(json!({"action":"approve"})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::UNPROCESSABLE_ENTITY, "{body}");
+        let (_, stored) = json_call(
+            &app,
+            "GET",
+            &format!("/files/{file_id}"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(
+            stored["status"], "uploaded",
+            "invalid approval must not commit"
+        );
+        assert_eq!(stored["knowledge_sync_status"], "pending_review");
+        let approvals: i64 = sqlx::query_scalar("SELECT count(*) FROM audit_logs WHERE target_type='file' AND target_id=$1 AND action='review_document'").bind(file_id).fetch_one(&pool).await.unwrap();
+        assert_eq!(approvals, 0);
+    }
+
+    #[tokio::test]
+    async fn test_t153_committed_approval_returns_sync_failure_and_retry_recovers() {
+        use axum::{response::IntoResponse, Json};
+        use std::sync::{
+            atomic::{AtomicUsize, Ordering},
+            Arc,
+        };
+        let calls = Arc::new(AtomicUsize::new(0));
+        let provider_calls = calls.clone();
+        let provider = Router::new().route(
+            "/embeddings",
+            axum::routing::post(move || {
+                let calls = provider_calls.clone();
+                async move {
+                    if calls.fetch_add(1, Ordering::SeqCst) == 0 {
+                        (
+                            StatusCode::SERVICE_UNAVAILABLE,
+                            Json(json!({"error":"temporary embedding failure"})),
+                        )
+                            .into_response()
+                    } else {
+                        Json(json!({"data":[{"index":0,"embedding":vec![0.1;1024]}]}))
+                            .into_response()
+                    }
+                }
+            }),
+        );
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let url = format!("http://{}/embeddings", listener.local_addr().unwrap());
+        let server = tokio::spawn(async move {
+            axum::serve(listener, provider).await.unwrap();
+        });
+        let Some((app, token, project_id, _storage, pool)) = test_file_app(HashMap::from([
+            (
+                "EMBEDDING_BACKEND".to_owned(),
+                "openai_compatible".to_owned(),
+            ),
+            ("EMBEDDING_MODEL".to_owned(), "BAAI/bge-m3".to_owned()),
+            ("EMBEDDING_DIMENSION".to_owned(), "1024".to_owned()),
+            ("EMBEDDING_API_URL".to_owned(), url),
+        ]))
+        .await
+        else {
+            server.abort();
+            return;
+        };
+        let (status, file) = upload_fixture(
+            &app,
+            &token,
+            &format!("/projects/{project_id}/documents"),
+            "protocol.txt",
+            "text/plain",
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        let file_id = file["id"].as_i64().unwrap();
+        let (status, approved) = json_call(
+            &app,
+            "POST",
+            &format!("/files/{file_id}/review"),
+            Some(&token),
+            Some(json!({"action":"approve"})),
+        )
+        .await;
+        assert_eq!(
+            status,
+            StatusCode::OK,
+            "committed approval must return its actual state: {approved}"
+        );
+        assert_eq!(approved["status"], "approved");
+        assert_eq!(approved["knowledge_sync_status"], "failed");
+        assert!(approved["knowledge_sync_message"]
+            .as_str()
+            .unwrap()
+            .contains("temporary embedding failure"));
+        let (_, stored) = json_call(
+            &app,
+            "GET",
+            &format!("/files/{file_id}"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(stored, approved);
+        let chunks: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM rag_document_chunks WHERE file_id=$1")
+                .bind(file_id as i32)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        assert_eq!(chunks, 0);
+        let (status, retry) = json_call(
+            &app,
+            "POST",
+            &format!("/files/{file_id}/rag/sync"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{retry}");
+        let (_, stored) = json_call(
+            &app,
+            "GET",
+            &format!("/files/{file_id}"),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(stored["status"], "approved");
+        assert_eq!(stored["knowledge_sync_status"], "synced");
+        assert_eq!(calls.load(Ordering::SeqCst), 2);
+        let (status, _) = json_call(
+            &app,
+            "POST",
+            &format!("/files/{file_id}/review"),
+            Some(&token),
+            Some(json!({"action":"approve"})),
+        )
+        .await;
+        assert_eq!(
+            status,
+            StatusCode::CONFLICT,
+            "retry must target sync, not approval"
+        );
+        server.abort();
     }
 
     #[tokio::test]

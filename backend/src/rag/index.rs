@@ -2,7 +2,7 @@
 
 use serde_json::json;
 use sha2::{Digest, Sha256};
-use sqlx::{FromRow, PgPool, Postgres, QueryBuilder, Transaction};
+use sqlx::{Executor, FromRow, Postgres, QueryBuilder, Transaction};
 
 use super::{chunk::chunk_text, vector_literal};
 use crate::{
@@ -25,7 +25,10 @@ pub struct RagFileRecord {
     pub knowledge_sync_status: String,
 }
 
-pub async fn fetch_rag_file(pool: &PgPool, file_id: i32) -> Result<RagFileRecord, ApiError> {
+pub async fn fetch_rag_file<'e, E>(executor: E, file_id: i32) -> Result<RagFileRecord, ApiError>
+where
+    E: Executor<'e, Database = Postgres>,
+{
     sqlx::query_as(
         r#"
         SELECT id, project_id, original_filename, storage_path, file_hash,
@@ -35,7 +38,7 @@ pub async fn fetch_rag_file(pool: &PgPool, file_id: i32) -> Result<RagFileRecord
         "#,
     )
     .bind(file_id)
-    .fetch_optional(pool)
+    .fetch_optional(executor)
     .await?
     .ok_or_else(|| ApiError::new(axum::http::StatusCode::NOT_FOUND, "File not found"))
 }
@@ -44,8 +47,16 @@ pub async fn index_file(
     transaction: &mut Transaction<'_, Postgres>,
     state: &AppState,
     file: &RagFileRecord,
-) -> Result<i32, String> {
+) -> Result<i32, ApiError> {
     let settings = &state.settings;
+    state
+        .embeddings
+        .require_project_policy(
+            &mut **transaction,
+            file.project_id,
+            settings.allow_sensitive_external_ai,
+        )
+        .await?;
     let extension = std::path::Path::new(&file.storage_path)
         .extension()
         .and_then(|value| value.to_str())
@@ -58,19 +69,22 @@ pub async fn index_file(
         let result: Option<(String, String)> = sqlx::query_as(
             r#"
             SELECT corrected_text, file_hash FROM file_ocr_results
-            WHERE file_id = $1 AND review_status = 'confirmed'
+            WHERE file_id = $1 AND file_hash = $2 AND review_status = 'confirmed'
             ORDER BY id DESC LIMIT 1
             "#,
         )
         .bind(file.id)
+        .bind(&file.file_hash)
         .fetch_optional(&mut **transaction)
         .await
-        .map_err(|error| error.to_string())?;
+        .map_err(index_error)?;
         let Some((text, hash)) = result else {
-            return Err("Image OCR must be reviewed and confirmed before indexing".to_owned());
+            return Err(index_error(
+                "Image OCR must be reviewed and confirmed before indexing",
+            ));
         };
         if hash != file.file_hash {
-            return Err("Confirmed OCR does not match the current file".to_owned());
+            return Err(index_error("Confirmed OCR does not match the current file"));
         }
         text
     } else {
@@ -83,34 +97,31 @@ pub async fn index_file(
             },
         )
         .await
-        .map_err(|error| error.to_string())?
+        .map_err(index_error)?
         .text
     };
     let chunks = chunk_text(&text, settings.rag_chunk_size, settings.rag_chunk_overlap);
     if chunks.is_empty() {
-        return Err("No extractable text was found in the document".to_owned());
+        return Err(index_error("No extractable text was found in the document"));
     }
-    let embeddings = state
-        .embeddings
-        .embed(&chunks)
-        .await
-        .map_err(|error| error.to_string())?;
+    let embeddings = state.embeddings.embed(&chunks).await.map_err(index_error)?;
     if embeddings.len() != chunks.len() {
-        return Err(format!(
+        return Err(index_error(format!(
             "Embedding backend returned {} vectors for {} chunks; expected {} dimensions",
             embeddings.len(),
             chunks.len(),
             settings.embedding_dimension
-        ));
+        )));
     }
     for embedding in &embeddings {
-        validate_embedding_dimensions(embedding, settings.embedding_dimension)?;
+        validate_embedding_dimensions(embedding, settings.embedding_dimension)
+            .map_err(index_error)?;
     }
     sqlx::query("DELETE FROM rag_document_chunks WHERE file_id = $1")
         .bind(file.id)
         .execute(&mut **transaction)
         .await
-        .map_err(|error| error.to_string())?;
+        .map_err(index_error)?;
     let metadata =
         json!({"filename": file.original_filename, "chunk_version": settings.rag_index_version});
     for range in rag_insert_batch_ranges(chunks.len()) {
@@ -143,9 +154,13 @@ pub async fn index_file(
             .build()
             .execute(&mut **transaction)
             .await
-            .map_err(|error| error.to_string())?;
+            .map_err(index_error)?;
     }
     Ok(chunks.len() as i32)
+}
+
+fn index_error(detail: impl std::fmt::Display) -> ApiError {
+    ApiError::new(axum::http::StatusCode::BAD_GATEWAY, detail.to_string())
 }
 
 fn rag_insert_batch_ranges(chunk_count: usize) -> Vec<std::ops::Range<usize>> {

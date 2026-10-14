@@ -1,3 +1,5 @@
+use std::collections::{HashMap, HashSet};
+
 use serde_json::{json, Value};
 use sqlx::{Postgres, Transaction};
 
@@ -15,14 +17,87 @@ use crate::{
 
 const BLUEPRINT_TEXT_MAX_CHARS: usize = 20_000;
 const BLUEPRINT_PROMPT_MAX_CHARS: usize = 12_000;
+const BLUEPRINT_TEMPLATE_VERSION: &str = "blueprint-v2";
+const BLUEPRINT_RULE_VERSION: &str = "typed-field-rules-v2";
 
 const BLUEPRINT_SYSTEM_PROMPT: &str = r#"你是科研实验项目的知识蓝图解析器。输入是一份项目计划书或组会纪要文本。请抽取其中明确提到的知识实体与它们之间的关系，输出严格的 JSON 对象（禁止 markdown 代码块、禁止解释文字），格式：
 {"nodes":[{"entity_type":"reagent","label":"CCK-8 试剂盒","description":"细胞活性检测试剂"}],"edges":[{"source_label":"细胞活力检测","target_label":"CCK-8 试剂盒","relation_type":"uses_reagent"}]}
 约束：
-1. entity_type 只能取：reagent,instrument,sample,result,experiment_type,treatment,perturbation,culture,cell_type,cell_line,group,biosample,geo_accession,software,condition
-2. relation_type 只能取：uses_reagent,uses_instrument,uses_sample,produces_result,has_experiment_type,has_condition
+1. entity_type 只能取：reagent,instrument,sample,result,experiment_type,treatment,perturbation,culture,cell_type,cell_line,group,biosample,geo_accession,software,condition,biological_source,identifier,replicate,sra_accession,count_column,reference_genome,alignment_software,count_software,processing_software
+2. relation_type 只能取：uses_reagent,uses_instrument,uses_sample,produces_result,has_experiment_type,has_condition,has_biological_source,has_identifier,uses_software
 3. label 不超过 40 字符，保留原文写法；description 不超过 80 字符，可为空字符串
-4. 只抽取文本明确提到的知识项，不要编造；edges 中的 source_label/target_label 必须出现在 nodes 的 label 中"#;
+4. 只抽取文本明确提到的知识项，不要编造；edges 中的 source_label/target_label 必须出现在 nodes 的 label 中
+5. 细分类型保留字段角色：cell_line/cell_type 为 biological_source 的细胞系/细胞类型；treatment/perturbation/culture/group/replicate 为 condition 的处理/扰动/培养/分组/重复；geo_accession/sra_accession/biosample/count_column/reference_genome 为 identifier 的 GEO/SRA/BioSample 登录号/计数列/参考基因组；alignment_software/count_software/processing_software 为 software 的比对/计数/处理角色。biosample 只用于 BioSample 登录号，物理样本使用 sample；无法确定具体角色时使用事实大类。"#;
+
+// (plan type, canonical fact type, source relation, required source role).
+// Fine roles remain independent even when extraction merges their identical fact labels.
+const BLUEPRINT_ROLE_MAPPING: &[(&str, &str, &str, &str)] = &[
+    (
+        "cell_line",
+        "biological_source",
+        "has_biological_source",
+        "cell_line",
+    ),
+    (
+        "cell_type",
+        "biological_source",
+        "has_biological_source",
+        "cell_type",
+    ),
+    ("treatment", "condition", "has_condition", "treatment"),
+    ("perturbation", "condition", "has_condition", "perturbation"),
+    ("culture", "condition", "has_condition", "culture"),
+    ("group", "condition", "has_condition", "group"),
+    ("replicate", "condition", "has_condition", "replicate"),
+    (
+        "geo_accession",
+        "identifier",
+        "has_identifier",
+        "geo_accession",
+    ),
+    (
+        "biosample",
+        "identifier",
+        "has_identifier",
+        "biosample_accession",
+    ),
+    (
+        "sra_accession",
+        "identifier",
+        "has_identifier",
+        "sra_accession",
+    ),
+    (
+        "count_column",
+        "identifier",
+        "has_identifier",
+        "count_column",
+    ),
+    (
+        "reference_genome",
+        "identifier",
+        "has_identifier",
+        "reference_genome",
+    ),
+    (
+        "alignment_software",
+        "software",
+        "uses_software",
+        "alignment_software",
+    ),
+    (
+        "count_software",
+        "software",
+        "uses_software",
+        "count_software",
+    ),
+    (
+        "processing_software",
+        "software",
+        "uses_software",
+        "processing_software",
+    ),
+];
 
 #[derive(serde::Deserialize)]
 struct BlueprintLlmNode {
@@ -56,17 +131,17 @@ fn is_blueprint_relation_type(relation_type: &str) -> bool {
 }
 
 pub fn resolve_source_priority(source_kind: &str, requested: Option<i32>) -> Result<i32, ApiError> {
-    if let Some(priority) = requested {
-        return Ok(priority.clamp(1, 1000));
-    }
-    match source_kind {
-        BLUEPRINT_SOURCE_MEETING_NOTE => Ok(BLUEPRINT_PRIORITY_MEETING_NOTE),
-        BLUEPRINT_SOURCE_PLAN_DOCUMENT => Ok(BLUEPRINT_PRIORITY_PLAN_DOCUMENT),
-        other => Err(ApiError::new(
-            axum::http::StatusCode::BAD_REQUEST,
-            format!("Invalid source_kind: {other}"),
-        )),
-    }
+    let default = match source_kind {
+        BLUEPRINT_SOURCE_MEETING_NOTE => BLUEPRINT_PRIORITY_MEETING_NOTE,
+        BLUEPRINT_SOURCE_PLAN_DOCUMENT => BLUEPRINT_PRIORITY_PLAN_DOCUMENT,
+        other => {
+            return Err(ApiError::new(
+                axum::http::StatusCode::BAD_REQUEST,
+                format!("Invalid source_kind: {other}"),
+            ))
+        }
+    };
+    Ok(requested.map_or(default, |priority| priority.clamp(1, 1000)))
 }
 
 /// 蓝图节点写入入参。
@@ -107,44 +182,16 @@ pub async fn upsert_blueprint_node(
     if normalized_label.is_empty() {
         return Ok(BlueprintNodeUpsert::Kept(0));
     }
-    let existing: Option<(i32, i32)> = sqlx::query_as(
-        r#"
-        SELECT id, priority FROM public.kg_blueprint_nodes
-        WHERE project_id = $1 AND entity_type = $2 AND normalized_label = $3 AND status <> 'retired'
-        "#,
-    )
-    .bind(project_id)
-    .bind(entity_type)
-    .bind(&normalized_label)
-    .fetch_optional(&mut **transaction)
-    .await?;
-    if let Some((node_id, existing_priority)) = existing {
-        if *priority < existing_priority {
-            sqlx::query(
-                r#"
-                UPDATE public.kg_blueprint_nodes
-                SET description = $3, source_kind = $4, source_label = $5, priority = $6, updated_at = now()
-                WHERE id = $1 AND project_id = $2
-                "#,
-            )
-            .bind(node_id)
-            .bind(project_id)
-            .bind(*description)
-            .bind(*source_kind)
-            .bind(*source_label)
-            .bind(*priority)
-            .execute(&mut **transaction)
-            .await?;
-            return Ok(BlueprintNodeUpsert::Updated(node_id));
-        }
-        return Ok(BlueprintNodeUpsert::Kept(node_id));
-    }
-    let node_id: i32 = sqlx::query_scalar(
+    let result: Option<(i32, bool)> = sqlx::query_as(
         r#"
         INSERT INTO public.kg_blueprint_nodes
             (project_id, entity_type, label, normalized_label, description, status, source_kind, source_label, priority, created_by)
         VALUES ($1, $2, $3, $4, $5, 'planned', $6, $7, $8, $9)
-        RETURNING id
+        ON CONFLICT (project_id, entity_type, normalized_label) WHERE status <> 'retired'
+        DO UPDATE SET description = EXCLUDED.description, source_kind = EXCLUDED.source_kind,
+                      source_label = EXCLUDED.source_label, priority = EXCLUDED.priority, updated_at = now()
+        WHERE EXCLUDED.priority < kg_blueprint_nodes.priority
+        RETURNING id, (xmax = 0) AS inserted
         "#,
     )
     .bind(project_id)
@@ -156,9 +203,23 @@ pub async fn upsert_blueprint_node(
     .bind(*source_label)
     .bind(*priority)
     .bind(*created_by)
-    .fetch_one(&mut **transaction)
+    .fetch_optional(&mut **transaction)
     .await?;
-    Ok(BlueprintNodeUpsert::Added(node_id))
+    if let Some((node_id, inserted)) = result {
+        return Ok(if inserted {
+            BlueprintNodeUpsert::Added(node_id)
+        } else {
+            BlueprintNodeUpsert::Updated(node_id)
+        });
+    }
+    // A non-winning source keeps the existing node. READ COMMITTED sees the conflicting
+    // transaction after ON CONFLICT has waited for it, including a concurrent first insert.
+    let node_id: i32 = sqlx::query_scalar(
+        "SELECT id FROM public.kg_blueprint_nodes WHERE project_id=$1 AND entity_type=$2 AND normalized_label=$3 AND status <> 'retired'",
+    )
+    .bind(project_id).bind(*entity_type).bind(&normalized_label)
+    .fetch_one(&mut **transaction).await?;
+    Ok(BlueprintNodeUpsert::Kept(node_id))
 }
 
 /// 写入一条蓝图边（同端点同关系类型唯一）。返回是否新增。
@@ -168,6 +229,7 @@ pub async fn upsert_blueprint_edge(
     source_node_id: i32,
     target_node_id: i32,
     relation_type: &str,
+    source_kind: &str,
     priority: i32,
 ) -> Result<bool, ApiError> {
     if source_node_id == target_node_id || source_node_id == 0 || target_node_id == 0 {
@@ -176,37 +238,24 @@ pub async fn upsert_blueprint_edge(
     if !is_blueprint_relation_type(relation_type) {
         return Ok(false);
     }
-    let existing: Option<i32> = sqlx::query_scalar(
-        r#"
-        SELECT id FROM public.kg_blueprint_edges
-        WHERE project_id = $1 AND source_node_id = $2 AND target_node_id = $3
-          AND relation_type = $4 AND status <> 'retired'
-        "#,
-    )
-    .bind(project_id)
-    .bind(source_node_id)
-    .bind(target_node_id)
-    .bind(relation_type)
-    .fetch_optional(&mut **transaction)
-    .await?;
-    if existing.is_some() {
-        return Ok(false);
-    }
-    sqlx::query(
+    let result = sqlx::query(
         r#"
         INSERT INTO public.kg_blueprint_edges
             (project_id, source_node_id, target_node_id, relation_type, status, source_kind, priority)
-        VALUES ($1, $2, $3, $4, 'planned', 'plan_document', $5)
+        VALUES ($1, $2, $3, $4, 'planned', $5, $6)
+        ON CONFLICT (project_id, source_node_id, target_node_id, relation_type) WHERE status <> 'retired'
+        DO NOTHING
         "#,
     )
     .bind(project_id)
     .bind(source_node_id)
     .bind(target_node_id)
     .bind(relation_type)
+    .bind(source_kind)
     .bind(priority)
     .execute(&mut **transaction)
     .await?;
-    Ok(true)
+    Ok(result.rows_affected() == 1)
 }
 
 /// 从计划书/组会纪要文本解析蓝图。优先 LLM 结构化解析；
@@ -217,7 +266,7 @@ pub async fn parse_blueprint_document(
     project_id: i32,
     created_by: i32,
     request: &BlueprintParseRequest,
-) -> Result<BlueprintParseResponse, ApiError> {
+) -> Result<(BlueprintParseResponse, Value), ApiError> {
     let priority = resolve_source_priority(&request.source_kind, request.priority)?;
     let title = request.title.trim();
     if title.is_empty() || title.chars().count() > 200 {
@@ -226,7 +275,8 @@ pub async fn parse_blueprint_document(
             "title 必填且不超过 200 字符",
         ));
     }
-    let text = resolve_parse_text(state, transaction, project_id, request).await?;
+    let input = resolve_parse_text(transaction, project_id, request).await?;
+    let text = &input.text;
     let char_count = text.chars().count();
     if char_count < 10 {
         return Err(ApiError::new(
@@ -235,18 +285,21 @@ pub async fn parse_blueprint_document(
         ));
     }
 
+    let prompt_text: String = text.chars().take(BLUEPRINT_PROMPT_MAX_CHARS).collect();
+    let mut model_provenance = Value::Null;
+    let llm_attempted = !state.settings.ai_api_key.trim().is_empty();
     let (parse_mode, parsed, mut message): (String, BlueprintLlmOutput, String) =
         if state.settings.ai_api_key.trim().is_empty() {
             (
                 "rule_based".to_owned(),
-                rule_based_blueprint(&text),
+                rule_based_blueprint(text),
                 "未配置 AI 服务，使用规则抽取模式（仅抽取节点）".to_owned(),
             )
         } else {
-            match llm_blueprint(state, &text).await {
+            match llm_blueprint(state, &prompt_text, &mut model_provenance).await {
                 Ok(output) => ("llm".to_owned(), output, String::new()),
                 Err(error) => {
-                    let mut fallback = rule_based_blueprint(&text);
+                    let mut fallback = rule_based_blueprint(text);
                     if fallback.nodes.is_empty() {
                         return Err(ApiError::new(
                             axum::http::StatusCode::BAD_GATEWAY,
@@ -264,7 +317,8 @@ pub async fn parse_blueprint_document(
         };
 
     // 节点批内去重（同型同名保留首个），并校验实体类型合法。
-    let mut batch: Vec<(String, String, String)> = Vec::new();
+    let mut batch_types = HashSet::new();
+    let mut batch_ids: HashMap<String, Option<i32>> = HashMap::new();
     let mut nodes_added: i64 = 0;
     let mut nodes_updated: i64 = 0;
     let mut nodes_dropped: i64 = 0;
@@ -280,11 +334,7 @@ pub async fn parse_blueprint_document(
             continue;
         }
         let normalized = normalize_entity_label(&label);
-        if normalized.is_empty()
-            || batch.iter().any(|(batch_type, batch_label, _)| {
-                batch_type == &entity_type && batch_label == &normalized
-            })
-        {
+        if normalized.is_empty() || !batch_types.insert((entity_type.clone(), normalized.clone())) {
             nodes_dropped += 1;
             continue;
         }
@@ -294,9 +344,8 @@ pub async fn parse_blueprint_document(
             .chars()
             .take(200)
             .collect::<String>();
-        batch.push((entity_type.clone(), normalized, description.clone()));
         let source_label = title.to_owned();
-        match upsert_blueprint_node(
+        let node_id = match upsert_blueprint_node(
             transaction,
             project_id,
             &BlueprintNodeInput {
@@ -311,15 +360,29 @@ pub async fn parse_blueprint_document(
         )
         .await?
         {
-            BlueprintNodeUpsert::Added(_) => nodes_added += 1,
-            BlueprintNodeUpsert::Updated(_) => nodes_updated += 1,
-            BlueprintNodeUpsert::Kept(node_id) => {
-                if node_id == 0 {
-                    nodes_dropped += 1;
-                    batch.pop();
-                }
+            BlueprintNodeUpsert::Added(node_id) => {
+                nodes_added += 1;
+                node_id
             }
+            BlueprintNodeUpsert::Updated(node_id) => {
+                nodes_updated += 1;
+                node_id
+            }
+            BlueprintNodeUpsert::Kept(node_id) => node_id,
+        };
+        if node_id == 0 {
+            nodes_dropped += 1;
+            continue;
         }
+        // Label-only edges cannot choose between two typed nodes with the same label.
+        batch_ids
+            .entry(normalized)
+            .and_modify(|id| {
+                if *id != Some(node_id) {
+                    *id = None;
+                }
+            })
+            .or_insert(Some(node_id));
     }
 
     // 边解析：端点按规范名在本次批内解析，越界/自环/非法关系类型丢弃。
@@ -332,8 +395,8 @@ pub async fn parse_blueprint_document(
             edges_dropped += 1;
             continue;
         }
-        let source_node_id = lookup_batch_node_id(transaction, project_id, &source).await?;
-        let target_node_id = lookup_batch_node_id(transaction, project_id, &target).await?;
+        let source_node_id = batch_ids.get(&source).copied().flatten().unwrap_or(0);
+        let target_node_id = batch_ids.get(&target).copied().flatten().unwrap_or(0);
         if source_node_id == 0 || target_node_id == 0 {
             edges_dropped += 1;
             continue;
@@ -344,6 +407,7 @@ pub async fn parse_blueprint_document(
             source_node_id,
             target_node_id,
             edge.relation_type.trim(),
+            &request.source_kind,
             priority,
         )
         .await?
@@ -377,47 +441,50 @@ pub async fn parse_blueprint_document(
     .fetch_one(&mut **transaction)
     .await?;
 
-    Ok(BlueprintParseResponse {
-        document_id,
-        parse_mode,
-        nodes_added,
-        nodes_updated,
-        edges_added,
-        edges_dropped: edges_dropped + nodes_dropped,
-        message,
-    })
+    let provenance = json!({
+        "source": input.source,
+        "full_input": input.snapshot,
+        "full_text": text,
+        "full_text_sha256": rag::sha256_hex(text.as_bytes()),
+        "sent_text": if llm_attempted { Some(&prompt_text) } else { None },
+        "sent_text_sha256": if llm_attempted { Some(rag::sha256_hex(prompt_text.as_bytes())) } else { None },
+        "full_chars": char_count,
+        "sent_chars": if llm_attempted { prompt_text.chars().count() } else { 0 },
+        "truncated": llm_attempted && prompt_text.chars().count() < char_count,
+        "llm_attempted": llm_attempted,
+        "generation_parameters": {"temperature": 0.1, "max_tokens": 4000},
+        "template_version": BLUEPRINT_TEMPLATE_VERSION,
+        "rule_version": BLUEPRINT_RULE_VERSION,
+        "system_prompt": BLUEPRINT_SYSTEM_PROMPT,
+        "system_prompt_sha256": rag::sha256_hex(BLUEPRINT_SYSTEM_PROMPT.as_bytes()),
+        "model": model_provenance,
+    });
+    Ok((
+        BlueprintParseResponse {
+            document_id,
+            parse_mode,
+            nodes_added,
+            nodes_updated,
+            edges_added,
+            edges_dropped: edges_dropped + nodes_dropped,
+            message,
+        },
+        provenance,
+    ))
 }
 
-async fn lookup_batch_node_id(
-    transaction: &mut Transaction<'_, Postgres>,
-    project_id: i32,
-    normalized_label: &str,
-) -> Result<i32, ApiError> {
-    if normalized_label.is_empty() {
-        return Ok(0);
-    }
-    let ids: Vec<i32> = sqlx::query_scalar(
-        r#"
-        SELECT id FROM public.kg_blueprint_nodes
-        WHERE project_id = $1 AND normalized_label = $2 AND status <> 'retired'
-        ORDER BY priority ASC, id ASC LIMIT 1
-        "#,
-    )
-    .bind(project_id)
-    .bind(normalized_label)
-    .fetch_all(&mut **transaction)
-    .await?;
-    Ok(ids.first().copied().unwrap_or(0))
+struct BlueprintParseInput {
+    text: String,
+    source: Value,
+    snapshot: Value,
 }
 
-/// 解析文本来源：直接文本 / 项目内文件 OCR / 项目内笔记版本内容。
+/// 解析来源及可恢复内容：直接文本 / 项目内 OCR 结果 / 笔记当前版本与固定字段。
 async fn resolve_parse_text(
-    state: &AppState,
     transaction: &mut Transaction<'_, Postgres>,
     project_id: i32,
     request: &BlueprintParseRequest,
-) -> Result<String, ApiError> {
-    let _ = state;
+) -> Result<BlueprintParseInput, ApiError> {
     if let Some(text) = &request.text {
         let trimmed = text.trim().to_owned();
         if trimmed.chars().count() > BLUEPRINT_TEXT_MAX_CHARS {
@@ -426,12 +493,17 @@ async fn resolve_parse_text(
                 format!("文本过长，最多 {BLUEPRINT_TEXT_MAX_CHARS} 字符"),
             ));
         }
-        return Ok(trimmed);
+        return Ok(BlueprintParseInput {
+            snapshot: json!({"text": trimmed}),
+            text: trimmed,
+            source: json!({"kind": "text"}),
+        });
     }
     if let Some(file_id) = request.file_id {
-        let text: Option<String> = sqlx::query_scalar(
+        let row: Option<(i32, bool, String)> = sqlx::query_as(
             r#"
-            SELECT COALESCE(NULLIF(o.corrected_text, ''), o.raw_text)
+            SELECT o.id, (NULLIF(o.corrected_text, '') IS NOT NULL),
+                   COALESCE(NULLIF(o.corrected_text, ''), o.raw_text)
             FROM public.file_ocr_results o
             JOIN public.files f ON f.id = o.file_id
             WHERE o.file_id = $1 AND f.project_id = $2
@@ -442,34 +514,44 @@ async fn resolve_parse_text(
         .bind(project_id)
         .fetch_optional(&mut **transaction)
         .await?;
-        return text.ok_or_else(|| {
+        let (ocr_id, corrected, text) = row.ok_or_else(|| {
             ApiError::new(
                 axum::http::StatusCode::NOT_FOUND,
                 "文件不存在或尚无 OCR 文本，请先完成文档解析",
             )
+        })?;
+        return Ok(BlueprintParseInput {
+            snapshot: json!({"text": text}),
+            text,
+            source: json!({"kind": "file_ocr", "file_id": file_id, "ocr_result_id": ocr_id,
+                           "text_variant": if corrected { "corrected" } else { "raw" }}),
         });
     }
     if let Some(note_id) = request.note_id {
-        let content: Option<Value> = sqlx::query_scalar(
+        let row: Option<(i32, Value, Value)> = sqlx::query_as(
             r#"
-            SELECT v.content_json
-            FROM public.note_versions v
-            JOIN public.experiment_notes n ON n.id = v.note_id
-            WHERE v.note_id = $1 AND n.project_id = $2
-            ORDER BY v.id DESC LIMIT 1
+            SELECT v.id, v.fixed_fields_json, v.content_json
+            FROM public.experiment_notes n
+            JOIN public.note_versions v ON v.id = n.current_version_id AND v.note_id = n.id
+            WHERE n.id = $1 AND n.project_id = $2
             "#,
         )
         .bind(note_id)
         .bind(project_id)
         .fetch_optional(&mut **transaction)
         .await?;
-        let content = content.ok_or_else(|| {
-            ApiError::new(axum::http::StatusCode::NOT_FOUND, "笔记不存在或尚无版本")
+        let (version_id, fields, content) = row.ok_or_else(|| {
+            ApiError::new(
+                axum::http::StatusCode::NOT_FOUND,
+                "笔记不存在或尚无当前版本",
+            )
         })?;
-        if let Some(text) = content.get("text").and_then(Value::as_str) {
-            return Ok(text.to_owned());
-        }
-        return Ok(content.to_string());
+        let snapshot = json!({"fixed_fields_json": fields, "content_json": content});
+        return Ok(BlueprintParseInput {
+            text: snapshot.to_string(),
+            snapshot,
+            source: json!({"kind": "note", "note_id": note_id, "note_version_id": version_id}),
+        });
     }
     Err(ApiError::new(
         axum::http::StatusCode::BAD_REQUEST,
@@ -477,12 +559,26 @@ async fn resolve_parse_text(
     ))
 }
 
-async fn llm_blueprint(state: &AppState, text: &str) -> Result<BlueprintLlmOutput, String> {
-    let prompt_text: String = text.chars().take(BLUEPRINT_PROMPT_MAX_CHARS).collect();
+async fn llm_blueprint(
+    state: &AppState,
+    prompt_text: &str,
+    provenance: &mut Value,
+) -> Result<BlueprintLlmOutput, String> {
+    *provenance =
+        json!({"provider": state.ai_provider.provider_name(), "model": state.ai_provider.model()});
     let result =
-        rag::generate_with_max_tokens(state, BLUEPRINT_SYSTEM_PROMPT, &prompt_text, 0.1, 4000)
+        rag::generate_with_max_tokens(state, BLUEPRINT_SYSTEM_PROMPT, prompt_text, 0.1, 4000)
             .await
-            .map_err(|error| error.to_string())?;
+            .map_err(|error| {
+                provenance["error"] = json!(error.to_string());
+                error.to_string()
+            })?;
+    // Preserve an actual provider response even when its JSON cannot be accepted.
+    *provenance = json!({
+        "provider": state.ai_provider.provider_name(), "request_id": result.request_id,
+        "model": result.model, "usage": result.usage,
+        "response": result.answer, "response_sha256": rag::sha256_hex(result.answer.as_bytes()),
+    });
     let object =
         extract_json_object(&result.answer).ok_or_else(|| "回答中未找到 JSON 对象".to_owned())?;
     serde_json::from_value::<BlueprintLlmOutput>(object)
@@ -498,19 +594,43 @@ fn extract_json_object(answer: &str) -> Option<Value> {
     serde_json::from_str(&answer[start..=end]).ok()
 }
 
-/// 规则兜底：复用图谱抽取器的正则术语识别，把计划文本当作自由文本处理（仅节点、无边）。
+/// 规则兜底：明确的 JSON 字段复用字段抽取，其余自由文本保持现有正则识别范围。
+/// 每个已知角色成为独立计划点；没有细分角色的实体保留事实本体类型（仅节点、无边）。
 fn rule_based_blueprint(text: &str) -> BlueprintLlmOutput {
-    let content = json!({"text": text});
-    let nodes = extract_terms(&json!({}), &content)
-        .into_iter()
-        .filter(|term| is_blueprint_entity_type(term.entity_type))
-        .map(|term| BlueprintLlmNode {
-            entity_type: term.entity_type.to_owned(),
-            label: term.label,
-            description: String::new(),
-        })
-        .take(120)
-        .collect();
+    let content: Value = serde_json::from_str(text).unwrap_or_else(|_| json!({"text": text}));
+    let mut nodes = Vec::new();
+    let fields = content
+        .get("fixed_fields_json")
+        .cloned()
+        .unwrap_or_else(|| json!({}));
+    let body = content.get("content_json").unwrap_or(&content);
+    for term in extract_terms(&fields, body) {
+        let types: Vec<&str> = BLUEPRINT_ROLE_MAPPING
+            .iter()
+            .filter(|(_, fact_type, relation, role)| {
+                *fact_type == term.entity_type
+                    && *relation == term.relation_type
+                    && term.roles.contains(*role)
+            })
+            .map(|(plan_type, _, _, _)| *plan_type)
+            .collect();
+        let types = if types.is_empty() {
+            vec![term.entity_type]
+        } else {
+            types
+        };
+        for entity_type in types
+            .into_iter()
+            .filter(|entity_type| is_blueprint_entity_type(entity_type))
+        {
+            nodes.push(BlueprintLlmNode {
+                entity_type: entity_type.to_owned(),
+                label: term.label.clone(),
+                description: String::new(),
+            });
+        }
+    }
+    nodes.truncate(120);
     BlueprintLlmOutput {
         nodes,
         edges: Vec::new(),
@@ -534,50 +654,48 @@ struct BlueprintNodeEvidenceRow {
     evidence_at: Option<chrono::DateTime<chrono::Utc>>,
 }
 
-/// 项目蓝图全量读取：节点（含证据覆盖）、边、解析记录与总体完成度。
-/// 覆盖判定：蓝图节点与实证图谱 kg_entities 按 (类型, 规范名) 精确匹配。
-pub async fn project_blueprint(
+/// Shared evidence lookup for coverage, missing-point suggestions and both blueprint alerts.
+/// Same-project normalized labels match the canonical fact type. Fine plan types additionally
+/// require their own role on a still-approved source note; roles on other notes cannot stand in.
+pub(crate) async fn project_blueprint_nodes(
     transaction: &mut Transaction<'_, Postgres>,
     project_id: i32,
-) -> Result<KnowledgeBlueprintRead, ApiError> {
+) -> Result<Vec<BlueprintNodeRead>, ApiError> {
+    let plan_types: Vec<&str> = BLUEPRINT_ROLE_MAPPING.iter().map(|row| row.0).collect();
+    let fact_types: Vec<&str> = BLUEPRINT_ROLE_MAPPING.iter().map(|row| row.1).collect();
+    let relation_types: Vec<&str> = BLUEPRINT_ROLE_MAPPING.iter().map(|row| row.2).collect();
+    let roles: Vec<&str> = BLUEPRINT_ROLE_MAPPING.iter().map(|row| row.3).collect();
     let rows: Vec<BlueprintNodeEvidenceRow> = sqlx::query_as(
         r#"
         SELECT n.id, n.entity_type, n.label, n.description, n.status, n.source_kind,
                n.source_label, n.priority, n.created_at, n.updated_at,
                e.id AS entity_id, e.updated_at AS evidence_at
         FROM public.kg_blueprint_nodes n
+        LEFT JOIN unnest($2::text[], $3::text[], $4::text[], $5::text[])
+            AS mapping(plan_type, fact_type, relation_type, role) ON mapping.plan_type = n.entity_type
         LEFT JOIN public.kg_entities e
-            ON e.project_id = n.project_id AND e.entity_type = n.entity_type
+            ON e.project_id = n.project_id
+           AND e.entity_type = COALESCE(mapping.fact_type, n.entity_type)
            AND e.normalized_label = n.normalized_label
+           AND EXISTS (
+               SELECT 1 FROM public.kg_relations r
+               JOIN public.experiment_notes source ON source.id = r.source_id
+                   AND source.project_id = r.project_id AND source.status = 'APPROVED'::notestatus
+               WHERE r.project_id = e.project_id AND r.target_entity_id = e.id
+                 AND r.source_type IN ('note', 'note_extraction')
+                 AND (mapping.role IS NULL OR (
+                     r.relation_type = mapping.relation_type AND r.properties::jsonb->'roles' ? mapping.role
+                 ))
+           )
         WHERE n.project_id = $1 AND n.status <> 'retired'
-        ORDER BY n.id
+        ORDER BY n.id, e.id
         "#,
     )
-    .bind(project_id)
-    .fetch_all(&mut **transaction)
-    .await?;
-
-    let mut nodes: Vec<BlueprintNodeRead> = Vec::new();
-    let mut seen_evidence: std::collections::HashMap<
-        i32,
-        (Vec<i32>, Option<chrono::DateTime<chrono::Utc>>),
-    > = std::collections::HashMap::new();
+    .bind(project_id).bind(plan_types).bind(fact_types).bind(relation_types).bind(roles)
+    .fetch_all(&mut **transaction).await?;
+    let mut nodes = std::collections::BTreeMap::new();
     for row in rows {
-        let entry = seen_evidence
-            .entry(row.id)
-            .or_insert_with(|| (Vec::new(), None));
-        if let Some(entity_id) = row.entity_id {
-            if !entry.0.contains(&entity_id) {
-                entry.0.push(entity_id);
-            }
-            if let Some(at) = row.evidence_at {
-                entry.1 = Some(match entry.1 {
-                    Some(current) if current >= at => current,
-                    _ => at,
-                });
-            }
-        }
-        nodes.push(BlueprintNodeRead {
+        let node = nodes.entry(row.id).or_insert_with(|| BlueprintNodeRead {
             id: row.id,
             entity_type: row.entity_type,
             label: row.label,
@@ -594,17 +712,24 @@ pub async fn project_blueprint(
                 last_evidence_at: None,
             },
         });
-    }
-    let total_nodes = nodes.len() as i64;
-    for node in &mut nodes {
-        if let Some((entity_ids, last_evidence_at)) = seen_evidence.get(&node.id) {
-            node.evidence = BlueprintEvidence {
-                entity_count: entity_ids.len() as i64,
-                entity_ids: entity_ids.clone(),
-                last_evidence_at: *last_evidence_at,
-            };
+        if let Some(entity_id) = row.entity_id {
+            if !node.evidence.entity_ids.contains(&entity_id) {
+                node.evidence.entity_ids.push(entity_id);
+            }
+            node.evidence.entity_count = node.evidence.entity_ids.len() as i64;
+            node.evidence.last_evidence_at = node.evidence.last_evidence_at.max(row.evidence_at);
         }
     }
+    Ok(nodes.into_values().collect())
+}
+
+/// 项目蓝图全量读取：角色约束的证据覆盖、边、解析记录与总体完成度。
+pub async fn project_blueprint(
+    transaction: &mut Transaction<'_, Postgres>,
+    project_id: i32,
+) -> Result<KnowledgeBlueprintRead, ApiError> {
+    let nodes = project_blueprint_nodes(transaction, project_id).await?;
+    let total_nodes = nodes.len() as i64;
 
     let edges: Vec<BlueprintEdgeRead> = sqlx::query_as(
         r#"
@@ -748,4 +873,52 @@ pub async fn patch_blueprint_edge(
         ));
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_rule_blueprint_preserves_fact_ontology_roles() {
+        let output = super::rule_based_blueprint(
+            r#"{"cell_line":"HCT116","cell_type":"HCT116","source_accession":"GSE123","biosample_accession":"SAMEA1","treatment":"Heat","culture_condition":"Heat","alignment_method":"STAR","count_method":"HTSeq","replicate_label":"R1","genome_build":"GRCh38","cell_line_description":"generic biological source","other_accession":"generic identifier","condition":"Control","shrna_construct":"shX","sra_accession":"SRR1","count_column":"C1","processing_software":"R"}"#,
+        );
+        let actual: std::collections::HashSet<_> = output
+            .nodes
+            .iter()
+            .map(|node| (node.entity_type.as_str(), node.label.as_str()))
+            .collect();
+        for expected in [
+            ("cell_line", "HCT116"),
+            ("cell_type", "HCT116"),
+            ("geo_accession", "GSE123"),
+            ("biosample", "SAMEA1"),
+            ("treatment", "Heat"),
+            ("culture", "Heat"),
+            ("alignment_software", "STAR"),
+            ("count_software", "HTSeq"),
+            ("replicate", "R1"),
+            ("reference_genome", "GRCh38"),
+            ("biological_source", "generic biological source"),
+            ("identifier", "generic identifier"),
+            ("group", "Control"),
+            ("perturbation", "shX"),
+            ("sra_accession", "SRR1"),
+            ("count_column", "C1"),
+            ("processing_software", "R"),
+        ] {
+            assert!(
+                actual.contains(&expected),
+                "fallback dropped or collapsed {expected:?}: {actual:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn test_t148_source_priority_rejects_unknown_kind_with_explicit_priority() {
+        assert!(super::resolve_source_priority("tweet", Some(10)).is_err());
+        assert_eq!(
+            super::resolve_source_priority("meeting_note", Some(0)).unwrap(),
+            1
+        );
+    }
 }

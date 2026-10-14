@@ -1,5 +1,5 @@
 import path from "node:path";
-import { APIRequestContext, APIResponse, expect, Page, request, test } from "@playwright/test";
+import { APIRequestContext, APIResponse, expect, Page, request, Response, test } from "@playwright/test";
 
 const API_URL = process.env.E2E_API_URL || "http://127.0.0.1:18000";
 const RUN_ID = process.env.E2E_RUN_ID || Date.now().toString();
@@ -67,7 +67,7 @@ const projectIds = new Map<string, number>();
 
 test.describe.configure({ mode: "serial" });
 
-async function checkedJson(response: APIResponse) {
+async function checkedJson(response: APIResponse | Response) {
   expect(response.ok(), await response.text()).toBeTruthy();
   return response.json();
 }
@@ -139,7 +139,7 @@ async function reviewNote(page: Page, project: Project) {
   await expect(card).toBeVisible();
   await card.getByPlaceholder("审核意见").fill("记录完整，实验上下文和下一步计划清晰，批准归档。");
   await card.getByRole("button", { name: "通过", exact: true }).click();
-  await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
+  await expect(page.getByText("所有笔记和资料已审批完毕", { exact: true })).toBeVisible();
   await logout(page);
 }
 
@@ -188,9 +188,21 @@ async function runAiFlow(page: Page, project: Project) {
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
   await expect(page.getByText(/已初始化 · 1 个文件已入库/)).toBeVisible();
   await page.getByPlaceholder("输入问题...").fill(project.question);
+  const queryResponse = page.waitForResponse((response) =>
+    response.url().endsWith(`/projects/${projectId}/rag/query`) && response.request().method() === "POST",
+  );
   await page.getByRole("button", { name: "提问", exact: true }).click();
+  const queryResult = await checkedJson(await queryResponse);
+  expect(queryResult.citation_audit).toMatchObject({ passed: false, has_evidence: true, citation_count: 0 });
+  expect(queryResult.fallback_reason).toBe("needs_review");
+  expect(queryResult.sources.length).toBeGreaterThan(0);
+  expect(queryResult.sources[0]).toMatchObject({ filename });
   await expect(page.getByText(/E2E 固定回答/).first()).toBeVisible({ timeout: 60_000 });
-  await expect(page.getByText(/引用校验/).first()).toBeVisible();
+  await expect(page.getByText("未引用检索证据 → 降级 needs_review", { exact: true })).toBeVisible();
+  await expect(page.getByText("降级：needs_review", { exact: true })).toBeVisible();
+  const sourceLink = page.getByRole("link").filter({ hasText: `[S1] ${filename}` });
+  await expect(sourceLink).toBeVisible();
+  await expect(sourceLink).toHaveAttribute("href", `/projects/${projectId}/data#file-${queryResult.sources[0].file_id}`);
 
   await page.goto(`/projects/${projectId}/reports`, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "生成", exact: true }).click();

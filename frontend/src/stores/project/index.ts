@@ -2,7 +2,7 @@ import { create } from "zustand";
 import {
   getProjectMembers,
   getProjectNotes,
-  getProjectFiles,
+  getAllProjectFiles,
   getPendingApprovals,
   getTemplates,
   getProjectRagStatus,
@@ -89,10 +89,11 @@ const singleTabLoader = <Data>(config: {
     const state = useProjectStore.getState();
     if (state.selectedProjectId !== projectId) return;
     const sessionEpoch = epochs.session;
+    const requestEpoch = epochs.projectData;
     if (Date.now() - state[config.cacheKey] < CACHE_TTL_MS) return;
     const result = await Promise.allSettled([config.fetcher(token, projectId)]);
     const current = useProjectStore.getState();
-    if (!isCurrentSessionRequest(sessionEpoch) || current.selectedProjectId !== projectId) return;
+    if (!isCurrentSessionRequest(sessionEpoch) || requestEpoch !== epochs.projectData || current.selectedProjectId !== projectId) return;
     useProjectStore.setState({
       ...(result[0].status === "fulfilled" ? config.apply(result[0].value) : {}),
       projectDataErrors: mergeProjectDataErrors(current.projectDataErrors, [config.label], result),
@@ -131,6 +132,8 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       notesTotal: 0,
       pendingNotes: [],
       files: [],
+      filesTotal: 0,
+      filesComplete: false,
       ragStatus: null,
       ragAnswer: null,
       kgGraph: null,
@@ -161,7 +164,8 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
       const results = await Promise.allSettled([
         getProjectMembers(token, projectId),
         getProjectNotes(token, projectId),
-        getProjectFiles(token, projectId),
+        getAllProjectFiles(token, projectId, () => isCurrentSessionRequest(sessionEpoch)
+          && requestEpoch === epochs.projectData && get().selectedProjectId === projectId),
         getPendingApprovals(token),
         getTemplates(token),
       ]);
@@ -187,6 +191,8 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
         notes: notesResult.items,
         notesTotal: notesResult.total,
         files: filesResult.items,
+        filesTotal: filesResult.total,
+        filesComplete: results[2].status === "fulfilled" && filesResult.items.length >= filesResult.total,
         pendingNotes: unwrap(results[3], [] as Note[]),
         templates: unwrap(results[4], []),
         projectDataErrors,
@@ -244,8 +250,13 @@ export const useProjectStore = create<ProjectStoreState>()((set, get, store) => 
   loadDataTabData: singleTabLoader({
     cacheKey: "dataTabLastFetchedAt",
     label: "项目资料",
-    fetcher: getProjectFiles,
-    apply: (result) => ({ files: result.items }),
+    fetcher: (token, projectId) => {
+      const sessionEpoch = epochs.session;
+      const requestEpoch = epochs.projectData;
+      return getAllProjectFiles(token, projectId, () => isCurrentSessionRequest(sessionEpoch)
+        && requestEpoch === epochs.projectData && get().selectedProjectId === projectId);
+    },
+    apply: (result) => ({ files: result.items, filesTotal: result.total, filesComplete: result.items.length >= result.total }),
   }),
 
   loadBlindReviewTabData: singleTabLoader({

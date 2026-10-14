@@ -81,7 +81,7 @@ db.close()
 
 def load_sensitivity() -> dict:
     result = subprocess.run(
-        [str(ROOT / "scripts" / "docker-compose-with-revision.sh"), "exec", "-T", "backend", "python", "-"],
+        [str(ROOT / "scripts" / "ops" / "docker-compose-with-revision.sh"), "exec", "-T", "backend", "python", "-"],
         cwd=ROOT,
         input=CONTAINER_CODE,
         check=True,
@@ -92,8 +92,35 @@ def load_sensitivity() -> dict:
     return json.loads(result.stdout)
 
 
-def main() -> None:
-    data = load_sensitivity()
+def load_from_report() -> dict:
+    """从已冻结的敏感性报告重建绘图数据，用于不连后端的重绘。"""
+    thresholds, confidence = {}, {}
+    section = None
+    for line in REPORT_PATH.read_text(encoding="utf8").splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if not cells or set(cells[0]) <= set("-: "):
+            continue
+        if cells[0] == "最低得分阈值":
+            section = "t"
+            continue
+        if cells[0] == "抽取关系置信度":
+            section = "c"
+            continue
+        if section == "t":
+            thresholds[cells[0]] = {
+                "coverage": float(cells[1].rstrip("%")) / 100,
+                "avg_hits": float(cells[2]),
+                "full_top10": int(cells[3]),
+                "zero_hit": int(cells[4]),
+            }
+        elif section == "c":
+            confidence[cells[0]] = int(cells[1])
+    return {"thresholds": thresholds, "confidence_same_cases": confidence}
+
+
+def main(data: dict, write_report: bool = True) -> None:
     thresholds = [0.5, 1.0, 2.0, 3.0, 4.0]
     rows = [data["thresholds"][str(value)] for value in thresholds]
 
@@ -104,19 +131,19 @@ def main() -> None:
         [row["coverage"] * 100 for row in rows],
         marker="o",
         color="#4C78A8",
-        label="Graph coverage",
+        label="Questions with >=1 relation",
     )
     axis_right.plot(
         thresholds,
         [row["avg_hits"] for row in rows],
         marker="s",
         color="#F58518",
-        label="Mean graph hits",
+        label="Mean relations per question",
     )
-    axis_left.set_xlabel("Minimum graph score")
-    axis_left.set_ylabel("Coverage (%)", color="#4C78A8")
-    axis_right.set_ylabel("Mean hits", color="#F58518")
-    axis_left.set_ylim(0, 105)
+    axis_left.set_xlabel("Minimum relation score")
+    axis_left.set_ylabel("Non-empty hit rate (%)", color="#4C78A8")
+    axis_right.set_ylabel("Mean relations", color="#F58518")
+    axis_left.set_ylim(0, 110)
     axis_right.set_ylim(0, 11)
     axis_left.set_yticks([0, 20, 40, 60, 80, 100])
     axis_right.set_yticks([0, 2, 4, 6, 8, 10])
@@ -183,10 +210,23 @@ def main() -> None:
         ]
     )
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    REPORT_PATH.write_text("\n".join(lines_out), encoding="utf-8")
-    print(f"Report saved: {REPORT_PATH}")
+    if write_report:
+        REPORT_PATH.write_text("\n".join(lines_out), encoding="utf-8")
+        print(f"Report saved: {REPORT_PATH}")
     print(f"Chart saved: {CHART_PATH}")
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--from-report",
+        action="store_true",
+        help="按已冻结的 docs/experiments/kg-threshold-sensitivity.md 重绘，不连接运行中的后端",
+    )
+    args = parser.parse_args()
+    if args.from_report:
+        main(load_from_report(), write_report=False)
+    else:
+        main(load_sensitivity())

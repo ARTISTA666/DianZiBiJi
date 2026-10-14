@@ -113,6 +113,14 @@ async fn retrieve_with_connection(
             HashMap::new(),
         )
     } else {
+        state
+            .embeddings
+            .require_project_policy(
+                &mut *connection,
+                project_id,
+                settings.allow_sensitive_external_ai,
+            )
+            .await?;
         let query_embedding = state
             .embeddings
             .embed(&[query.to_owned()])

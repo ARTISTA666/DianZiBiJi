@@ -1,0 +1,138 @@
+\ProvidesPackage{ahnu-reference}[2026/09/13 AHNU reference thesis overlay]
+% Load after the unchanged bensz-thesis AHNU profile. Measurements are PDF bp.
+\RequirePackage{needspace}
+\RequirePackage{adjustbox}
+\geometry{a4paper,left=2.8cm,right=2.8cm,top=2.8cm,bottom=2.8cm,
+  headheight=14bp,headsep=23.6bp,footskip=26.8bp}
+\IfFontExistsTF{SimSun}{
+  \setCJKmainfont{SimSun}[AutoFakeBold=2]
+  \setCJKfamilyfont{ahnuReplicaSong}[AutoFakeBold=2]{SimSun}
+  \renewcommand{\ahnuSong}{\CJKfamily{ahnuReplicaSong}}
+}{\IfFontExistsTF{Songti SC}{
+  \setCJKfamilyfont{ahnuReplicaSong}[AutoFakeBold=1.2]{Songti SC}
+  \renewcommand{\ahnuSong}{\CJKfamily{ahnuReplicaSong}}}{}
+  \typeout{AHNU-FONT-FALLBACK: SimSun unavailable; using Songti SC or FandolSong}}
+\IfFontExistsTF{SimHei}{\setCJKfamilyfont{ahnuReplicaHei}{SimHei}
+  \renewcommand{\ahnuHei}{\CJKfamily{ahnuReplicaHei}}}{
+  \typeout{AHNU-FONT-FALLBACK: SimHei unavailable; using Heiti SC or FandolHei}}
+\renewcommand{\ahnuHeaderFont}{\normalfont\fontsize{9bp}{11bp}\selectfont}
+\renewcommand{\ahnuFrontTitleFont}{\ahnuSong\bfseries\fontsize{18bp}{24bp}\selectfont}
+\renewcommand{\ahnuSubsectionFont}{\ahnuHei\bfseries\fontsize{14bp}{20bp}\selectfont}
+\ctexset{
+  chapter={aftername=\hspace{0.5em},beforeskip=0bp,afterskip=28bp},
+  section={beforeskip=18bp,afterskip=24.5bp},
+  subsection={beforeskip=12bp,afterskip=14bp}}
+\setlength{\parindent}{24bp}
+\setlength{\parskip}{0pt}
+\setlength{\topskip}{16bp}
+\AtBeginDocument{\titlespacing*{\section}{0bp}{18bp}{18.5bp}}
+\setlength{\emergencystretch}{4em}
+\raggedbottom
+% The sample has a 0.7 bp rule and no running header text.
+\fancypagestyle{ahnu-main}{\fancyhf{}\fancyfoot[C]{\ahnuHeaderFont\thepage}
+  \renewcommand{\headrulewidth}{0.7bp}\renewcommand{\footrulewidth}{0pt}}
+\fancypagestyle{ahnu-front}{\fancyhf{}\fancyfoot[C]{\ahnuHeaderFont\thepage}
+  \renewcommand{\headrulewidth}{0.7bp}\renewcommand{\footrulewidth}{0pt}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\ahnuHeaderFont\thepage}
+  \renewcommand{\headrulewidth}{0.7bp}\renewcommand{\footrulewidth}{0pt}}
+\fancypagestyle{ahnu-cover}{\fancyhf{}\fancyfoot[C]{\ahnuHeaderFont\thepage}
+  \renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0pt}}
+\renewcommand{\ahnuFrontHeading}[1]{%
+  \thispagestyle{ahnu-front}\par
+  \vspace*{-18bp}{\centering\ahnuFrontTitleFont #1\par}\vspace{5bp}\ahnuBodyFont}
+
+% The reference TOC shows chapters and sections, 14 bp type / 18 bp baseline.
+\setcounter{tocdepth}{1}
+\contentsmargin{28bp}
+\titlecontents{chapter}[5.7em]{\ahnuSong\fontsize{14bp}{18bp}\selectfont}
+  {\contentslabel{4.1em}}{\hspace*{-4.1em}}
+  {\titlerule*[3bp]{.}\contentspage}
+\titlecontents{section}[4.1em]{\ahnuSong\fontsize{14bp}{18bp}\selectfont}
+  {\contentslabel{2.05em}}{\hspace*{-2.05em}}
+  {\titlerule*[3bp]{.}\contentspage}
+\makeatletter
+\renewcommand{\tableofcontents}{%
+  \clearpage\thispagestyle{empty}
+  \vspace*{0bp}{\centering\ahnuHei\fontsize{16bp}{22bp}\selectfont 目\quad 录\par}
+  \vspace{24.3bp}\begingroup\advance\linewidth-10.5bp\advance\hsize-10.5bp
+  \pagestyle{empty}\@starttoc{toc}\clearpage\endgroup}
+\@ifundefined{c@none}{\newcounter{none}}{}
+\makeatother
+\DeclareCaptionFont{ahnufive}{\ahnuSong\fontsize{10.5bp}{15bp}\selectfont}
+\captionsetup{font={ahnufive,bf},labelfont=bf,textfont=bf,skip=6bp}
+\AtBeginEnvironment{longtable}{\fontsize{10.5bp}{15bp}\selectfont}
+\renewcommand{\small}{\fontsize{10.5bp}{15bp}\selectfont}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\graphicspath{{assets/}{assets/screenshots/}{assets/innovation-screenshots/}}
+
+% Preserve source bibliography text and numeric IDs; reproduce the sample's
+% 12/20 type and hanging entries. A 30 bp indent accommodates 3-digit labels.
+\newcommand{\ahnuReferencesHeading}{%
+  \clearpage\phantomsection\addcontentsline{toc}{chapter}{参考文献}
+  \vspace*{-12bp}\noindent{\ahnuSong\bfseries 参考文献：}\par\vspace{10bp}}
+\newenvironment{ahnuReferences}{\ahnuBodyFont\begin{list}{}{
+  \setlength{\leftmargin}{30bp}\setlength{\labelwidth}{26bp}
+  \setlength{\labelsep}{4bp}\setlength{\itemsep}{0pt}\setlength{\parsep}{0pt}
+  \setlength{\topsep}{0pt}\setlength{\partopsep}{0pt}
+  \renewcommand{\makelabel}[1]{##1\hfil}}}{\end{list}}
+
+% Cover: same TikZ construction as upstream, with positions/weights measured
+% from the supplied 2024 thesis (never copy that author's personal metadata).
+\renewcommand{\ahnuCoverTopFont}{\ahnuSong\bfseries\fontsize{14bp}{18bp}\selectfont}
+\renewcommand{\ahnuCoverTypeFont}{\ahnuSong\bfseries\fontsize{24bp}{30bp}\selectfont}
+\renewcommand{\ahnuCoverLabelFont}{\ahnuSong\bfseries\fontsize{14bp}{18bp}\selectfont}
+\renewcommand{\ahnuCoverValueFont}{\ahnuSong\bfseries\fontsize{14bp}{18bp}\selectfont}
+\renewcommand{\ahnuCoverField}[5]{%
+  \node[anchor=west,inner sep=0pt] at ([xshift=#2,yshift=-#1]current page.north west)
+    {{\ahnuCoverLabelFont #3}};
+  \draw[line width=0.48bp] ([xshift=226.2bp,yshift=\dimexpr-#1-18.8bp\relax]current page.north west)
+    -- ([xshift=471.9bp,yshift=\dimexpr-#1-18.8bp\relax]current page.north west);
+  \node[anchor=center,inner sep=0pt,align=center,text width=240bp]
+    at ([xshift=349bp,yshift=-#1]current page.north west) {{\ahnuCoverValueFont #4}};}
+\renewcommand{\ahnuMakeCover}{%
+  \thispagestyle{ahnu-cover}\begingroup
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=west,inner sep=0pt] at ([xshift=79.32bp,yshift=-94.9bp]current page.north west)
+      {{\ahnuCoverTopFont 分类号：\ahnuClassNo}};
+    \node[anchor=north,inner sep=0pt] at ([xshift=292.32bp,yshift=-129bp]current page.north west)
+      {\includegraphics[width=246bp]{\ahnuCalligraphyPath}};
+    \node[anchor=center,inner sep=0pt] at ([xshift=292.4bp,yshift=-251.7bp]current page.north west)
+      {{\ahnuCoverTypeFont 硕\hspace{0.8375em}士\hspace{0.8375em}学\hspace{0.8375em}位\hspace{0.8375em}论\hspace{0.8375em}文}};
+    \node[anchor=west,inner sep=0pt] at ([xshift=117.6bp,yshift=-322.4bp]current page.north west)
+      {{\ahnuCoverLabelFont 题\hspace{2em}目：}};
+    \node[anchor=center,inner sep=0pt,align=center,text width=311bp]
+      at ([xshift=354.25bp,yshift=-323.9bp]current page.north west)
+      {{\ahnuSong\bfseries\fontsize{10.5bp}{15bp}\selectfont\ahnuTitleZh}};
+    \draw[line width=0.48bp] ([xshift=188.4bp,yshift=-344.9bp]current page.north west)
+      -- ([xshift=499.4bp,yshift=-344.9bp]current page.north west);
+    \node[anchor=west,inner sep=0pt] at ([xshift=136.44bp,yshift=-371.3bp]current page.north west)
+      {{\bfseries\fontsize{14bp}{18bp}\selectfont Title:}};
+    \node[anchor=center,inner sep=0pt,align=center,text width=311bp]
+      at ([xshift=343.9bp,yshift=-373bp]current page.north west)
+      {{\normalfont\fontsize{10.5bp}{15.6bp}\selectfont\ahnuTitleEn\par}};
+    \draw[line width=0.48bp] ([xshift=188.4bp,yshift=-395.5bp]current page.north west)
+      -- ([xshift=499.4bp,yshift=-395.5bp]current page.north west);
+    \ahnuCoverField{462.2bp}{119.52bp}{学 科、专业：}{\ahnuMajor}{}
+    \ahnuCoverField{497.7bp}{119.04bp}{研\hspace{0.35em}究\hspace{0.35em}方\hspace{0.35em}向：}{\ahnuResearchDirection}{}
+    \ahnuCoverField{533.2bp}{119.04bp}{作\hspace{0.35em}者\hspace{0.35em}姓\hspace{0.35em}名：}{\ahnuAuthor}{}
+    \ahnuCoverField{568.7bp}{123.48bp}{导师及职称：}{\ahnuSupervisor}{}
+    \ahnuCoverField{604.2bp}{123.48bp}{论文提交期：}{\ahnuSubmitDate}{}
+    \ahnuCoverField{639.7bp}{123.48bp}{授予学位期：}{\ahnuDegreeDate}{}
+  \end{tikzpicture}\null\vfill\endgroup}
+\renewcommand{\ahnuMakeTitlePage}{%
+  \thispagestyle{ahnu-cover}\begingroup
+  \begin{tikzpicture}[remember picture,overlay]
+    \draw[line width=0.48bp] ([xshift=82.3bp,yshift=-79.6bp]current page.north west)
+      rectangle ([xshift=513bp,yshift=-762.2bp]current page.north west);
+    \node[anchor=north,inner sep=0pt,align=center,text width=400bp]
+      at ([yshift=-147bp]current page.north)
+      {{\ahnuSong\bfseries\fontsize{22bp}{31.2bp}\selectfont
+        \xeCJKsetup{CJKglue=\hskip0pt}\ahnuTitlePageZh\par}};
+    \node[anchor=north,inner sep=0pt] at ([yshift=-244bp]current page.north)
+      {{\ahnuSong\fontsize{16bp}{22bp}\selectfont\ahnuAuthor}};
+    \node[anchor=north,inner sep=0pt] at ([yshift=-688bp]current page.north)
+      {{\ahnuHei\fontsize{16bp}{22bp}\selectfont\ahnuBottomLine}};
+    \node[anchor=north,inner sep=0pt] at ([yshift=-719bp]current page.north)
+      {{\ahnuHei\fontsize{16bp}{22bp}\selectfont\ahnuBottomDate}};
+  \end{tikzpicture}\null\vfill\endgroup}
+\providecommand{\ahnuTitlePageZh}{\ahnuTitleZh}

@@ -398,16 +398,39 @@ pub(crate) async fn update_project_member_action(
     ip_address: Option<&str>,
     user_agent: Option<&str>,
 ) -> Result<Json<ProjectMemberRead>, ApiError> {
-    require_project_manager(&state.pool, &user, project_id).await?;
+    let mut transaction = state.pool.begin().await?;
+    let result = update_project_member_in_transaction(
+        &state,
+        &mut transaction,
+        &user,
+        project_id,
+        user_id,
+        payload,
+        (ip_address, user_agent),
+    )
+    .await?;
+    transaction.commit().await?;
+    Ok(result)
+}
+
+pub(crate) async fn update_project_member_in_transaction(
+    state: &AppState,
+    transaction: &mut Transaction<'_, Postgres>,
+    user: &UserRecord,
+    project_id: i32,
+    user_id: i32,
+    payload: ProjectMemberUpdate,
+    client_info: (Option<&str>, Option<&str>),
+) -> Result<Json<ProjectMemberRead>, ApiError> {
+    let (ip_address, user_agent) = client_info;
+    require_project_manager(&state.pool, user, project_id).await?;
     if let Some(role) = &payload.project_role {
         validate_project_role(role).map_err(validation_error)?;
     }
-    let mut transaction = state.pool.begin().await?;
-    lock_project_membership(&mut transaction, project_id).await?;
-    let user =
-        require_project_manager_in_transaction(&mut transaction, &user, project_id, &[]).await?;
-    reject_independent_reviewer_member_mutation(&mut transaction, project_id, user_id).await?;
-    let membership = fetch_membership_in_transaction(&mut transaction, project_id, user_id).await?;
+    lock_project_membership(transaction, project_id).await?;
+    let user = require_project_manager_in_transaction(transaction, user, project_id, &[]).await?;
+    reject_independent_reviewer_member_mutation(transaction, project_id, user_id).await?;
+    let membership = fetch_membership_in_transaction(transaction, project_id, user_id).await?;
     let was_manager = is_manager(&membership);
     let next_role = payload
         .project_role
@@ -417,16 +440,10 @@ pub(crate) async fn update_project_member_action(
     let next_can_manage = payload.can_manage.unwrap_or(membership.can_manage);
     let next_is_manager = next_can_read && (next_can_manage || next_role == "owner");
     if was_manager {
-        protect_manager_transition(
-            &mut transaction,
-            project_id,
-            Some(&membership),
-            next_is_manager,
-        )
-        .await?;
+        protect_manager_transition(transaction, project_id, Some(&membership), next_is_manager)
+            .await?;
     }
-    protect_project_owner_transition(&mut transaction, project_id, user_id, next_is_manager)
-        .await?;
+    protect_project_owner_transition(transaction, project_id, user_id, next_is_manager).await?;
     if user_id == user.id && user.role != "super_admin" && !next_is_manager {
         return Err(ApiError::new(
             StatusCode::CONFLICT,
@@ -453,11 +470,11 @@ pub(crate) async fn update_project_member_action(
     .bind(payload.can_review)
     .bind(payload.can_evaluate)
     .bind(payload.can_manage)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
-    let updated = fetch_membership_in_transaction(&mut transaction, project_id, user_id).await?;
+    let updated = fetch_membership_in_transaction(transaction, project_id, user_id).await?;
     audit_project(
-        &mut transaction,
+        transaction,
         user.id,
         "update_project_member",
         project_id,
@@ -467,7 +484,6 @@ pub(crate) async fn update_project_member_action(
         user_agent,
     )
     .await?;
-    transaction.commit().await?;
     Ok(Json(updated))
 }
 

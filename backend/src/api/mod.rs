@@ -18,6 +18,7 @@ mod search;
 mod templates;
 mod users;
 
+pub use agent_runtime::expire_pending_actions;
 pub use rag::schedule_queued_experiments;
 
 use std::{sync::OnceLock, time::Instant};

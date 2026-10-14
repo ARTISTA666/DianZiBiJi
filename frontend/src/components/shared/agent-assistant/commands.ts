@@ -8,7 +8,7 @@ import {
   disableUser as apiDisableUser,
   extractOcr,
   getGroups as apiGetGroups,
-  getProjectFiles,
+  getAllProjectFiles,
   getProjectMembers,
   getProjectNotes,
   getUsers as apiGetUsers,
@@ -158,7 +158,7 @@ const commands: AgentCommand[] = [
       }
       const targetFiles = projectId === ctx.currentProjectId
         ? ctx.files
-        : (await getProjectFiles(ctx.token, projectId)).items;
+        : (await getAllProjectFiles(ctx.token, projectId)).items;
       say(
         ctx,
         targetFiles.length

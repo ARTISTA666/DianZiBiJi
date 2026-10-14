@@ -21,6 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  ApiRequestError,
   approveAgentPendingAction,
   cancelAgentTurn,
   createAgentSession,
@@ -54,6 +55,7 @@ type PendingConfirmation = {
   description: string;
   action: () => Promise<string>;
   cancel?: () => Promise<void>;
+  actionId?: string;
 };
 
 type PendingPlan = {
@@ -86,7 +88,7 @@ export function AgentAssistant() {
   const [pendingPlan, setPendingPlan] = useState<PendingPlan | null>(null);
   const [agentProfile, setAgentProfile] = useState<AgentProfile>("fast");
   const [liveAgentStatus, setLiveAgentStatus] = useState<string | null>(null);
-  const [chainOfThought, setChainOfThought] = useState<Array<{ step: string; detail: string; status: string }>>([]);
+  const [chainOfThought, setChainOfThought] = useState<Array<{ step: string; detail: string; status: string; confirmation?: boolean; actionId?: string }>>([]);
   const [showChain, setShowChain] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [expandedMessageIds, setExpandedMessageIds] = useState<Set<string>>(new Set());
@@ -98,6 +100,13 @@ export function AgentAssistant() {
   const ragRequestId = useRef(0);
   const serverSessionId = useRef<string | null>(null);
   const eventStreamCleanup = useRef<(() => void) | null>(null);
+  const seenEventIds = useRef(new Set<string>());
+  const eventStreamTerminal = useRef(false);
+  const contextEpoch = useRef(0);
+  const confirmationQueue = useRef<PendingConfirmation[]>([]);
+  const presentedConfirmation = useRef<PendingConfirmation | null>(null);
+  const pendingEventActionIds = useRef(new Set<string>());
+  const settledActionIds = useRef(new Set<string>());
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const toggleExpandMessage = (id: string) => {
@@ -160,9 +169,18 @@ export function AgentAssistant() {
   }, [currentProjectId, selectedProjectId, storeRagStatus]);
 
   useEffect(() => {
+    contextEpoch.current += 1;
+    ragRequestId.current += 1;
+    setBusy(false);
+    setUploading(false);
+    setInput("");
     setRagReady(null);
     setMessages(initialMessages);
     setPendingConfirmation(null);
+    confirmationQueue.current = [];
+    presentedConfirmation.current = null;
+    pendingEventActionIds.current.clear();
+    settledActionIds.current.clear();
     setPendingPlan(null);
     setAgentProfile("fast");
     setLiveAgentStatus(null);
@@ -170,12 +188,16 @@ export function AgentAssistant() {
     eventStreamCleanup.current?.();
     eventStreamCleanup.current = null;
     serverSessionId.current = null;
-  }, [currentProjectId]);
-
-  useEffect(() => () => {
-    eventStreamCleanup.current?.();
-    eventStreamCleanup.current = null;
-  }, []);
+    seenEventIds.current.clear();
+    eventStreamTerminal.current = false;
+    return () => {
+      contextEpoch.current += 1;
+      ragRequestId.current += 1;
+      eventStreamCleanup.current?.();
+      eventStreamCleanup.current = null;
+      serverSessionId.current = null;
+    };
+  }, [currentProjectId, token, user?.id]);
 
   useEffect(() => {
     if (!open || !token || currentProjectId === null) return;
@@ -208,15 +230,41 @@ export function AgentAssistant() {
 
   if (!user) return null;
 
+  // Every asynchronous operation owns the project and identity that started it.
+  const contextGuard = () => {
+    const requestEpoch = contextEpoch.current;
+    const userId = user.id;
+    return () => requestEpoch === contextEpoch.current
+      && useAuthStore.getState().token === token
+      && useAuthStore.getState().user?.id === userId
+      && (currentProjectId === null || useProjectStore.getState().selectedProjectId === currentProjectId);
+  };
+
   const addMessage = (message: Omit<AgentMessage, "id">) => {
     messageId.current += 1;
     const id = globalThis.crypto.randomUUID();
     setMessages((current) => [...current, { ...message, id }]);
   };
 
-  const askConfirmation = (description: string, action: () => Promise<string>, cancel?: () => Promise<void>) => {
-    setPendingConfirmation({ description, action, cancel });
-    addMessage({ role: "assistant", content: `${description}\n\n这是可能改变或不可逆的操作。回复“确认”继续，回复“取消”放弃。` });
+  const showNextConfirmation = () => {
+    const next = confirmationQueue.current[0] ?? null;
+    if (next === presentedConfirmation.current) return;
+    presentedConfirmation.current = next;
+    setPendingConfirmation(next);
+    if (next) addMessage({ role: "assistant", content: `${next.description}\n\n这是可能改变或不可逆的操作。回复“确认”继续，回复“取消”放弃。` });
+  };
+
+  const removeConfirmation = (confirmation: PendingConfirmation) => {
+    confirmationQueue.current = confirmationQueue.current.filter((item) => item !== confirmation);
+    presentedConfirmation.current = null;
+    setPendingConfirmation(null);
+  };
+
+  const askConfirmation = (description: string, action: () => Promise<string>, cancel?: () => Promise<void>, actionId?: string) => {
+    if (actionId && (settledActionIds.current.has(actionId) || confirmationQueue.current.some((item) => item.actionId === actionId))) return;
+    const wasEmpty = confirmationQueue.current.length === 0;
+    confirmationQueue.current.push({ description, action, cancel, actionId });
+    if (wasEmpty) showNextConfirmation();
   };
 
   const commandContext: AgentCommandContext = {
@@ -233,7 +281,8 @@ export function AgentAssistant() {
     askConfirmation,
   };
 
-  const renderAgentTurnResult = (snapshot: AgentRuntimeSnapshot) => {
+  const renderAgentTurnResult = (snapshot: AgentRuntimeSnapshot, isCurrent: () => boolean) => {
+    if (!isCurrent()) return;
     const assistant = [...snapshot.messages].reverse().find((message) => message.role === "assistant");
     const recentSteps = snapshot.steps.slice(-8);
     addMessage({
@@ -243,23 +292,38 @@ export function AgentAssistant() {
         ? recentSteps.map((step) => `${step.tool_name}: ${step.status}`).join(" · ")
         : `${snapshot.session.provider} / ${snapshot.session.model_name}`,
     });
-    const pending = [...snapshot.pending_actions].reverse().find((action) => action.status === "pending");
-    if (pending) {
+    for (const pending of snapshot.pending_actions.filter((action) => action.status === "pending")) {
       askConfirmation(
         `确认执行 ${pending.tool_name}（${pending.arguments_summary}）？`,
         async () => {
+          if (!isCurrent()) return "";
           const approved = await approveAgentPendingAction(token || "", pending.id);
+          if (!isCurrent()) return "";
+          settledActionIds.current.add(pending.id);
+          pendingEventActionIds.current.delete(pending.id);
+          setLiveAgentStatus(confirmationQueue.current.length || pendingEventActionIds.current.size ? "等待确认高风险操作" : null);
           return approved.execution_status === "completed"
             ? `${pending.tool_name} 已执行完成。`
             : `${pending.tool_name} 已确认，当前状态：${approved.execution_status}。`;
         },
-        async () => { await rejectAgentPendingAction(token || "", pending.id); },
+        async () => {
+          if (!isCurrent()) return;
+          await rejectAgentPendingAction(token || "", pending.id);
+          if (isCurrent()) {
+            settledActionIds.current.add(pending.id);
+            pendingEventActionIds.current.delete(pending.id);
+            setLiveAgentStatus(confirmationQueue.current.length || pendingEventActionIds.current.size ? "等待确认高风险操作" : null);
+          }
+        },
+        pending.id,
       );
     }
   };
 
   const approvePendingPlan = async () => {
     if (!pendingPlan || !token || !serverSessionId.current) return;
+    const isCurrent = contextGuard();
+    if (!isCurrent()) return;
     const plan = pendingPlan;
     const sessionId = serverSessionId.current;
     setPendingPlan(null);
@@ -267,32 +331,44 @@ export function AgentAssistant() {
     addMessage({ role: "assistant", content: "计划已确认，正在按计划执行…" });
     try {
       const result = await startAgentTurn(token, sessionId, plan.turnId, plan.planHash);
-      renderAgentTurnResult(result);
+      if (!isCurrent()) return;
+      renderAgentTurnResult(result, isCurrent);
     } catch (error) {
-      addMessage({ role: "assistant", content: agentErrorMessage(error, "深度 Agent 执行失败，未自动重试。") });
+      if (!isCurrent()) return;
+      setLiveAgentStatus(null);
+      const message = error instanceof ApiRequestError && error.status === 409
+        ? "计划已变更、已处理或不可用；本次未执行，请重新生成计划。"
+        : agentErrorMessage(error, "深度 Agent 执行失败，未自动重试。");
+      addMessage({ role: "assistant", content: message });
     } finally {
-      setBusy(false);
+      if (isCurrent()) setBusy(false);
     }
   };
 
   const cancelPendingPlan = async () => {
     if (!pendingPlan || !token || !serverSessionId.current) return;
+    const isCurrent = contextGuard();
+    if (!isCurrent()) return;
     const plan = pendingPlan;
     setPendingPlan(null);
     setBusy(true);
     try {
       await cancelAgentTurn(token, serverSessionId.current, plan.turnId);
+      if (!isCurrent()) return;
       addMessage({ role: "assistant", content: "深度计划已取消，未执行任何工具。" });
     } catch (error) {
+      if (!isCurrent()) return;
       addMessage({ role: "assistant", content: agentErrorMessage(error, "取消计划失败，请刷新会话确认当前状态。") });
     } finally {
-      setBusy(false);
+      if (isCurrent()) setBusy(false);
     }
   };
 
   const sendMessage = async (rawText: string) => {
     const text = rawText.trim();
     if (!text || busy || uploading) return;
+    const isCurrent = contextGuard();
+    if (!isCurrent()) return;
     addMessage({ role: "user", content: redactSensitiveText(text) });
     setInput("");
     setBusy(true);
@@ -317,13 +393,19 @@ export function AgentAssistant() {
         if (pendingConfirmation) {
           if (/^(确认|确定|是|执行|继续|好|好的|yes|ok)$/i.test(text)) {
             const action = pendingConfirmation.action;
-            setPendingConfirmation(null);
+            removeConfirmation(pendingConfirmation);
             addMessage({ role: "assistant", content: "正在执行已确认的操作…" });
-            addMessage({ role: "assistant", content: await action() });
+            const result = await action();
+            if (isCurrent()) {
+              addMessage({ role: "assistant", content: result });
+              showNextConfirmation();
+            }
           } else if (/^(取消|不用|不要|否|no|cancel)$/i.test(text)) {
+            removeConfirmation(pendingConfirmation);
             await pendingConfirmation.cancel?.();
-            setPendingConfirmation(null);
+            if (!isCurrent()) return;
             addMessage({ role: "assistant", content: "已取消。" });
+            showNextConfirmation();
           } else {
             addMessage({ role: "assistant", content: "请回复“确认”或“取消”。" });
           }
@@ -332,10 +414,21 @@ export function AgentAssistant() {
         let sessionId = serverSessionId.current;
         if (!sessionId) {
           const created = await createAgentSession(token, currentProjectId);
+          if (!isCurrent()) return;
           sessionId = created.session.id;
           serverSessionId.current = sessionId;
           eventStreamCleanup.current?.();
+          seenEventIds.current.clear();
+          eventStreamTerminal.current = false;
           eventStreamCleanup.current = subscribeAgentSessionEvents(token, sessionId, (event) => {
+            if (!isCurrent() || serverSessionId.current !== sessionId) return;
+            if (event.id) {
+              if (seenEventIds.current.has(event.id)) return;
+              seenEventIds.current.add(event.id);
+            }
+            if (["turn.started", "plan.preview", "tool.started", "confirmation.required"].includes(event.event)) {
+              eventStreamTerminal.current = false;
+            }
             const tool = typeof event.data.tool === "string" ? event.data.tool : "工具";
             if (event.event === "plan.preview") {
               const planText = (event.data as { plan?: { text?: unknown } }).plan?.text ?? "";
@@ -345,20 +438,62 @@ export function AgentAssistant() {
               setLiveAgentStatus(`正在执行：${tool}`);
               setChainOfThought((current) => [...current, { step: `调用 ${tool}`, detail: String(event.data.arguments_summary ?? ""), status: "running" }]);
             } else if (event.event === "confirmation.required") {
+              const result = event.data.result as { structuredContent?: { pending_action_id?: unknown } } | undefined;
+              const actionId = event.data.action_id ?? result?.structuredContent?.pending_action_id ?? event.data.id;
+              if (typeof actionId === "string" && settledActionIds.current.has(actionId)) return;
+              if (typeof actionId === "string") pendingEventActionIds.current.add(actionId);
               setLiveAgentStatus("等待确认高风险操作");
-              setChainOfThought((current) => [...current, { step: `高风险操作 ${tool} 等待确认`, detail: "", status: "waiting" }]);
+              setChainOfThought((current) => [...current, { step: `高风险操作 ${tool} 等待确认`, detail: "", status: "waiting", confirmation: true, actionId: typeof actionId === "string" ? actionId : undefined }]);
             } else if (event.event === "tool.completed") {
-              setLiveAgentStatus(`已完成：${tool}`);
-              setChainOfThought((current) => current.map((entry, index) => index === current.length - 1 && entry.status === "running" ? { ...entry, status: "done" } : entry));
+              const alreadyCompleted = event.data.status === "already_completed";
+              const detail = alreadyCompleted ? "此前已完成，本次未执行" : "";
+              setLiveAgentStatus(alreadyCompleted ? `${tool}：${detail}` : `已完成：${tool}`);
+              setChainOfThought((current) => current.map((entry, index) => index === current.length - 1 && entry.status === "running" ? { ...entry, status: "done", detail: detail || entry.detail } : entry));
+            } else if (event.event === "tool.failed") {
+              setLiveAgentStatus(`执行失败：${tool}`);
+              setChainOfThought((current) => current.map((entry, index) => index === current.length - 1 && entry.status === "running" ? { ...entry, status: "failed", detail: "工具执行失败，未确认本次操作成功" } : entry));
+            } else if (event.event === "confirmation.rejected" || event.event === "confirmation.expired") {
+              eventStreamTerminal.current = event.data.terminal === true;
+              if (typeof event.data.action_id === "string") {
+                pendingEventActionIds.current.delete(event.data.action_id);
+                settledActionIds.current.add(event.data.action_id);
+              }
+              const wasCurrent = confirmationQueue.current[0]?.actionId === event.data.action_id;
+              confirmationQueue.current = confirmationQueue.current.filter((item) => item.actionId !== event.data.action_id);
+              if (wasCurrent) showNextConfirmation();
+              const expired = event.event === "confirmation.expired";
+              setLiveAgentStatus(pendingEventActionIds.current.size || confirmationQueue.current.length ? "等待确认高风险操作" : expired ? "高风险操作已过期，未执行工具" : "高风险操作已取消，未执行工具");
+              setChainOfThought((current) => current.map((entry) => entry.confirmation && entry.actionId === event.data.action_id && entry.status === "waiting" ? { ...entry, status: expired ? "failed" : "cancelled", detail: expired ? "确认已过期，未执行工具" : "已拒绝确认，未执行工具" } : entry));
+            } else if (event.event === "confirmation.completed") {
+              eventStreamTerminal.current = event.data.terminal === true;
+              if (typeof event.data.action_id === "string") {
+                pendingEventActionIds.current.delete(event.data.action_id);
+                settledActionIds.current.add(event.data.action_id);
+              }
+              const wasCurrent = confirmationQueue.current[0]?.actionId === event.data.action_id;
+              confirmationQueue.current = confirmationQueue.current.filter((item) => item.actionId !== event.data.action_id);
+              if (wasCurrent) showNextConfirmation();
+              const detail = event.data.replayed === true ? "此前已完成，本次未执行" : "已确认执行完成";
+              setLiveAgentStatus(pendingEventActionIds.current.size || confirmationQueue.current.length ? "等待确认高风险操作" : detail);
+              setChainOfThought((current) => current.map((entry) => entry.confirmation && entry.actionId === event.data.action_id && entry.status === "waiting" ? { ...entry, status: "done", detail } : entry));
             } else if (event.event === "turn.completed" || event.event === "turn.cancelled") {
+              eventStreamTerminal.current = event.event === "turn.cancelled" || event.data.terminal === true;
               setLiveAgentStatus(null);
-              setChainOfThought((current) => current.map((entry) => entry.status === "running" ? { ...entry, status: "done" } : entry));
+              setChainOfThought((current) => current.map((entry) => entry.status === "running" ? { ...entry, status: "waiting", detail: event.event === "turn.cancelled" ? "本轮已取消，执行结果请查会话记录" : "未收到工具完成结果，请查会话记录" } : entry));
             } else if (event.event === "error") {
+              eventStreamTerminal.current = true;
               setLiveAgentStatus("服务端 Agent 发生错误");
+              setChainOfThought((current) => current.map((entry) => entry.status === "running" ? { ...entry, status: "failed", detail: "本轮发生错误，工具执行结果请查会话记录" } : entry));
             }
-          }, () => setLiveAgentStatus("事件连接中断，当前操作不会自动重试"));
+          }, () => {
+            if (isCurrent() && serverSessionId.current === sessionId && !eventStreamTerminal.current) {
+              setLiveAgentStatus((current) => ["高风险操作已取消，未执行工具", "高风险操作已过期，未执行工具", "此前已完成，本次未执行", "已确认执行完成"].includes(current || "")
+                ? current : "事件连接中断，正在重连；操作不会自动重试");
+            }
+          });
         }
         const response = await createAgentTurn(token, sessionId, text, agentProfile);
+        if (!isCurrent()) return;
         if ("plan_hash" in response) {
           setPendingPlan({
             turnId: response.turn_id,
@@ -373,30 +508,67 @@ export function AgentAssistant() {
           });
           return;
         }
-        renderAgentTurnResult(response);
+        renderAgentTurnResult(response, isCurrent);
         return;
       }
 
       if (pendingConfirmation) {
         if (/^(确认|确定|是|执行|继续|好|好的|yes|ok)$/i.test(text)) {
           const action = pendingConfirmation.action;
-          setPendingConfirmation(null);
+          removeConfirmation(pendingConfirmation);
           addMessage({ role: "assistant", content: "正在执行已确认的操作…" });
-          addMessage({ role: "assistant", content: await action() });
+          const result = await action();
+          if (isCurrent()) {
+            addMessage({ role: "assistant", content: result });
+            showNextConfirmation();
+          }
         } else if (/^(取消|不用|不要|否|no|cancel)$/i.test(text)) {
-          setPendingConfirmation(null);
+          removeConfirmation(pendingConfirmation);
           addMessage({ role: "assistant", content: "已取消。" });
+          showNextConfirmation();
         } else {
           addMessage({ role: "assistant", content: `请确认是否${pendingConfirmation.description.split("\n")[0]}。回复“确认”或“取消”。` });
         }
         return;
       }
 
-      await runAgentCommands(commandContext, text);
+      await runAgentCommands({
+        ...commandContext,
+        router: { ...router, push: (...args) => { if (isCurrent()) router.push(...args); } },
+        addMessage: (message) => { if (isCurrent()) addMessage(message); },
+        setRagReady: (ready) => { if (isCurrent()) setRagReady(ready); },
+        askConfirmation: (description, action, cancel) => {
+          if (isCurrent()) askConfirmation(description,
+            async () => isCurrent() ? action() : "",
+            async () => { if (isCurrent()) await cancel?.(); });
+        },
+      }, text);
     } catch (error) {
-      addMessage({ role: "assistant", content: agentErrorMessage(error, "Agent 执行失败，请稍后重试。") });
+      if (!isCurrent()) return;
+      const settled = Boolean(pendingConfirmation?.actionId && settledActionIds.current.has(pendingConfirmation.actionId));
+      const retryable = pendingConfirmation?.actionId && !settled
+        && (!(error instanceof ApiRequestError) || error.status >= 500 || error.status === 408 || error.status === 429);
+      if (retryable && !confirmationQueue.current.some((item) => item.actionId === pendingConfirmation.actionId)) {
+        confirmationQueue.current.unshift(pendingConfirmation);
+      }
+      if (pendingConfirmation?.actionId && !retryable) {
+        pendingEventActionIds.current.delete(pendingConfirmation.actionId);
+        settledActionIds.current.add(pendingConfirmation.actionId);
+      }
+      const message = settled
+        ? "该操作已由服务端处理，结果以会话记录为准；没有自动再次提交。"
+        : retryable
+          ? `${agentErrorMessage(error, "请求响应失败。")}\n请求结果尚未确认；请回复“确认”或“取消”手动重试。系统不会自动再次提交。`
+          : pendingConfirmation && error instanceof ApiRequestError && error.status === 409
+            ? "确认已过期、已处理或不可用；本次确认未成功，请查看会话记录。"
+            : agentErrorMessage(error, "Agent 执行失败，请稍后重试。");
+      setLiveAgentStatus(confirmationQueue.current.length || pendingEventActionIds.current.size ? "等待确认高风险操作" : null);
+      setChainOfThought((current) => current.map((entry) => !settled && entry.confirmation && entry.actionId === pendingConfirmation?.actionId && entry.status === "waiting"
+        ? { ...entry, status: retryable ? "waiting" : "failed", detail: retryable ? "请求结果尚未确认，等待手动重试" : message } : entry));
+      addMessage({ role: "assistant", content: message });
+      if (pendingConfirmation) showNextConfirmation();
     } finally {
-      setBusy(false);
+      if (isCurrent()) setBusy(false);
     }
   };
 
@@ -404,6 +576,8 @@ export function AgentAssistant() {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file || !token) return;
+    const isCurrent = contextGuard();
+    if (!isCurrent()) return;
     if (currentProjectId === null) {
       addMessage({ role: "assistant", content: "请先进入项目，再上传资料。" });
       return;
@@ -411,11 +585,13 @@ export function AgentAssistant() {
     setUploading(true);
     try {
       const uploaded = await uploadFile(token, currentProjectId, file);
+      if (!isCurrent()) return;
       addMessage({ role: "assistant", content: `资料「${uploaded.original_filename}」已上传。后续可以说“审核通过资料 ${uploaded.id}”或“同步资料 ${uploaded.id}”。` });
     } catch (error) {
+      if (!isCurrent()) return;
       addMessage({ role: "assistant", content: agentErrorMessage(error, "资料上传失败，请稍后重试。") });
     } finally {
-      setUploading(false);
+      if (isCurrent()) setUploading(false);
     }
   };
 
@@ -500,7 +676,7 @@ export function AgentAssistant() {
                   <ol className="mt-2 space-y-1.5 border-l border-border/60 pl-3 text-xs">
                     {chainOfThought.map((entry, index) => (
                       <li key={index} className="relative">
-                        <span className={`absolute -left-[13px] top-1 h-1.5 w-1.5 rounded-full ${entry.status === "done" ? "bg-emerald-500" : entry.status === "running" ? "animate-pulse bg-primary" : "bg-amber-400"}`} />
+                        <span className={`absolute -left-[13px] top-1 h-1.5 w-1.5 rounded-full ${entry.status === "done" ? "bg-emerald-500" : entry.status === "failed" ? "bg-rose-500" : entry.status === "running" ? "animate-pulse bg-primary" : "bg-amber-400"}`} />
                         <p className="font-medium">{entry.step}</p>
                         {entry.detail && <p className="whitespace-pre-wrap text-[11px] text-muted-foreground">{entry.detail}</p>}
                       </li>

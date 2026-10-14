@@ -287,6 +287,8 @@ async fn confirm_result(
             "Text extraction result is already confirmed",
         ));
     }
+    crate::api::rag::invalidate_confirmed_ocr_index(&mut transaction, locked_context.file_id)
+        .await?;
     write_audit(
         &mut *transaction,
         AuditEvent {

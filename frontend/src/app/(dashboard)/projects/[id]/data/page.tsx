@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ErrorBanner } from "@/components/shared/error-banner";
 import { EmptyState } from "@/components/shared/empty-state";
+import { PagePagination } from "@/components/shared/page-pagination";
 import { useAuthStore, useProjectStore } from "@/stores";
 import type { OcrJobResult, StoredFile } from "@/lib/api";
 import { getErrorMessage, formatFileSize } from "@/lib/utils";
@@ -36,6 +37,8 @@ export default function DataPage() {
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
   const files = useProjectStore((s) => s.files);
+  const filesTotal = useProjectStore((s) => s.filesTotal);
+  const filesComplete = useProjectStore((s) => s.filesComplete);
   const notes = useProjectStore((s) => s.notes);
   const members = useProjectStore((s) => s.members);
   const selectedProject = useProjectStore((s) => s.selectedProject);
@@ -44,6 +47,7 @@ export default function DataPage() {
   const loadDataTabData = useProjectStore((s) => s.loadDataTabData);
   const ocrRequestEpoch = useRef(0);
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
   const feedback = useActionFeedback();
   const { confirm, ConfirmDialog } = useConfirmDialog();
   const membership = members.find((member) => member.user_id === user?.id);
@@ -55,6 +59,9 @@ export default function DataPage() {
     || selectedProject?.owner_user_id === user?.id
     || membership?.can_manage === true
     || membership?.project_role === "owner";
+  const canAccessOcr = canWrite || (canReview && (membership?.can_read === true || canManage));
+  const page = Math.min(currentPage, Math.max(0, Math.ceil(files.length / 50) - 1));
+  const visibleFiles = files.slice(page * 50, (page + 1) * 50);
 
   useEffect(() => {
     if (token) loadDataTabData(token, projectId);
@@ -65,6 +72,16 @@ export default function DataPage() {
   const [ocrResult, setOcrResult] = useState<OcrJobResult | null>(null);
   const [ocrDraft, setOcrDraft] = useState("");
   const [ocrBusy, setOcrBusy] = useState(false);
+
+  useEffect(() => {
+    ocrRequestEpoch.current += 1;
+    setOcrFile(null);
+    setOcrResult(null);
+    setOcrBusy(false);
+    setCurrentPage(0);
+    setError("");
+    return () => { ocrRequestEpoch.current += 1; };
+  }, [projectId, token, user?.id]);
 
   // 拒绝审核意见收集 dialog
   const [rejectTarget, setRejectTarget] = useState<StoredFile | null>(null);
@@ -84,8 +101,13 @@ export default function DataPage() {
     if (!token) return;
     setError("");
     try {
-      await reviewFile(token, fileId, action, comment);
+      const reviewed = await reviewFile(token, fileId, action, comment);
       feedback.success(action === "approve" ? "资料审核已通过" : "资料审核已拒绝");
+      if (action === "approve" && reviewed.knowledge_sync_status === "failed") {
+        const message = `资料审核已通过，知识库同步失败：${reviewed.knowledge_sync_message || "请重试向量入库"}`;
+        setError(message);
+        feedback.error(message);
+      }
       // 刷新文件列表，及时反映审核状态与同步提示信息。
       useProjectStore.getState().invalidateCache();
       await loadDataTabData(token, projectId);
@@ -146,7 +168,7 @@ export default function DataPage() {
   };
 
   const openOcr = async (f: (typeof files)[0]) => {
-    if (!canWrite || !token) return;
+    if (!canAccessOcr || !token) return;
     const requestEpoch = ++ocrRequestEpoch.current;
     setOcrFile(f);
     setOcrDraft("");
@@ -160,6 +182,7 @@ export default function DataPage() {
         result = await getLatestOcrResult(token, f.id);
       } catch (error) {
         if (!(error instanceof ApiRequestError) || error.status !== 404) throw error;
+        if (!canWrite) throw new Error("此文件尚无 OCR 结果，请具有写入权限的成员先提取文本。");
         result = await extractOcr(token, f.id);
       }
       if (requestEpoch !== ocrRequestEpoch.current) return;
@@ -177,7 +200,7 @@ export default function DataPage() {
   };
 
   const confirmOcr = async () => {
-    if (!token || !ocrFile || !ocrResult || ocrResult.file_id !== ocrFile.id) return;
+    if (!token || !canReview || !ocrFile || !ocrResult || ocrResult.file_id !== ocrFile.id) return;
     const requestEpoch = ++ocrRequestEpoch.current;
     setOcrBusy(true);
     setError("");
@@ -187,12 +210,13 @@ export default function DataPage() {
       if (requestEpoch !== ocrRequestEpoch.current) return;
       setOcrFile(null);
       feedback.success("文本校对已确认，图片资料现可进入 RAG 入库流程");
-      const refreshed = await (await import("@/lib/api")).getProjectFiles(token, projectId);
+      const refreshed = await (await import("@/lib/api")).getAllProjectFiles(token, projectId,
+        () => requestEpoch === ocrRequestEpoch.current && useProjectStore.getState().selectedProjectId === projectId);
       if (
         requestEpoch === ocrRequestEpoch.current
         && useProjectStore.getState().selectedProjectId === projectId
       ) {
-        useProjectStore.setState({ files: refreshed.items });
+        useProjectStore.setState({ files: refreshed.items, filesTotal: refreshed.total, filesComplete: refreshed.items.length >= refreshed.total });
       }
     } catch (e) {
       if (requestEpoch === ocrRequestEpoch.current) {
@@ -208,6 +232,7 @@ export default function DataPage() {
   return (
     <div className="space-y-4">
       {error && <ErrorBanner message={error} />}
+      {!filesComplete && <ErrorBanner message="资料列表尚未完整加载，请刷新后查看全部文件或审批结果。" />}
 
       {/* Upload */}
       {canWrite && (
@@ -237,7 +262,7 @@ export default function DataPage() {
         />
       ) : (
         <div className="space-y-2">
-          {files.map((f) => (
+          {visibleFiles.map((f) => (
             <Card id={`file-${f.id}`} key={f.id} data-testid={`file-row-${f.id}`}>
               <CardContent className="flex items-center justify-between py-3">
                 <div className="min-w-0 flex-1">
@@ -261,7 +286,7 @@ export default function DataPage() {
                     </Badge>
                   )}
                   <Badge variant="secondary">{knowledgeSyncText[f.knowledge_sync_status] || f.knowledge_sync_status}</Badge>
-                  {canWrite && f.status !== "archived" && isImageFile(f) && (
+                  {canAccessOcr && f.status !== "archived" && isImageFile(f) && (
                     <Button aria-label={`提取文本 ${f.original_filename}`} variant="outline" size="sm" onClick={() => openOcr(f)}>
                       <Eye className="mr-1 h-3 w-3" />OCR
                     </Button>
@@ -294,6 +319,16 @@ export default function DataPage() {
               </CardContent>
             </Card>
           ))}
+          <PagePagination
+            startItem={page * 50 + 1}
+            endItem={Math.min((page + 1) * 50, files.length)}
+            total={filesTotal}
+            hasPrev={page > 0}
+            hasNext={(page + 1) * 50 < files.length}
+            onPrev={() => setCurrentPage(Math.max(0, page - 1))}
+            onNext={() => setCurrentPage(page + 1)}
+            pageInfo={`第 ${page + 1} / ${Math.max(1, Math.ceil(files.length / 50))} 页`}
+          />
         </div>
       )}
 

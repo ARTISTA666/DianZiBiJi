@@ -461,7 +461,7 @@ export type AgentTurnPreviewResponse = {
 };
 
 export type AgentEvent = {
-  id: number;
+  id: string;
   event: string;
   data: Record<string, unknown>;
 };
@@ -551,7 +551,7 @@ async function apiFetch<T>(
     throw error;
   }
   if (!response.ok) {
-    if (response.status === 401 && !isRedirecting) {
+    if (response.status === 401 && path !== "/auth/login" && !isRedirecting) {
       isRedirecting = true;
       // 登录接口自身的 401（账号/密码错误）不算会话过期，不写标记。
       if (!path.startsWith("/auth/")) {
@@ -843,8 +843,30 @@ export function getPendingApprovals(token: string) {
   return apiFetch<Note[]>("/approvals/pending", token);
 }
 
-export function getProjectFiles(token: string, projectId: number) {
-  return apiFetch<PaginatedResponse<StoredFile>>(`/projects/${projectId}/files`, token);
+export function getProjectFiles(token: string, projectId: number, skip = 0, limit = 200) {
+  return apiFetch<PaginatedResponse<StoredFile> & { skip: number; limit: number }>(
+    `/projects/${projectId}/files?${new URLSearchParams({ skip: String(skip), limit: String(limit) })}`, token,
+  );
+}
+
+/** Collect metadata for the data and approvals tabs; stop when the original page range ends. */
+export async function getAllProjectFiles(token: string, projectId: number, isCurrent = () => true) {
+  const files = new Map<number, StoredFile>();
+  let skip = 0;
+  let total = 0;
+  let rangeEnd = Infinity;
+  while (skip < rangeEnd) {
+    if (!isCurrent()) throw new DOMException("项目或登录状态已变化", "AbortError");
+    const page = await getProjectFiles(token, projectId, skip, 200);
+    if (!isCurrent()) throw new DOMException("项目或登录状态已变化", "AbortError");
+    total = page.total;
+    // A growing total must not make one refresh run indefinitely.
+    rangeEnd = Math.min(rangeEnd, total);
+    if (page.items.length === 0) break;
+    page.items.forEach((file) => { if (!files.has(file.id)) files.set(file.id, file); });
+    skip += Math.max(1, page.limit || page.items.length);
+  }
+  return { items: [...files.values()], total };
 }
 
 export function uploadFile(token: string, projectId: number, file: File, noteId?: number | null, category = "note_attachment") {
@@ -1141,7 +1163,7 @@ export type AlertEvaluationSummary = {
 export const ALERT_METRIC_TEXT: Record<string, string> = {
   review_stall_hours: "审批停滞",
   return_rate: "退回率",
-  blueprint_stagnant_days: "蓝图停滞",
+  blueprint_stagnant_days: "匹配实体最近更新间隔",
   progress_deviation: "进展偏差",
 };
 
@@ -1347,13 +1369,17 @@ export function subscribeAgentSessionEvents(
     "turn.cancelled",
     "tool.started",
     "tool.completed",
+    "tool.failed",
     "confirmation.required",
     "confirmation.rejected",
     "confirmation.completed",
+    "confirmation.expired",
     "error",
   ];
   const listeners = eventTypes.map((eventType) => {
     const listener = (event: Event) => {
+      // Native connection errors share the "error" name with server messages.
+      if (!(event instanceof MessageEvent)) return;
       const message = event as MessageEvent<string>;
       let data: Record<string, unknown> = {};
       try {
@@ -1361,7 +1387,7 @@ export function subscribeAgentSessionEvents(
       } catch {
         data = { value: message.data };
       }
-      onEvent({ id: Number(message.lastEventId || 0), event: eventType, data });
+      onEvent({ id: message.lastEventId, event: eventType, data });
     };
     source.addEventListener(eventType, listener);
     return [eventType, listener] as const;

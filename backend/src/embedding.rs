@@ -1,8 +1,14 @@
 use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
+use std::time::Duration;
 use thiserror::Error;
 
 use crate::config::Settings;
+use crate::error::ApiError;
+
+const EMBEDDING_CONNECT_TIMEOUT: Duration = Duration::from_secs(5);
+const EMBEDDING_REQUEST_TIMEOUT: Duration = Duration::from_secs(60);
+pub(crate) const SENSITIVE_EXTERNAL_AI_DENIED: &str = "敏感项目未获准向外部 AI 服务发送数据";
 
 #[derive(Clone)]
 pub struct EmbeddingService {
@@ -25,7 +31,47 @@ pub enum EmbeddingError {
 }
 
 impl EmbeddingService {
+    /// Network embedding providers share the project's external-AI policy.
+    /// The hash backend never sends document or query text outside this process.
+    pub(crate) async fn require_project_policy<'e, E>(
+        &self,
+        executor: E,
+        project_id: i32,
+        allow_sensitive_external_ai: bool,
+    ) -> Result<(), ApiError>
+    where
+        E: sqlx::Executor<'e, Database = sqlx::Postgres>,
+    {
+        if self.backend == "hash" || allow_sensitive_external_ai {
+            return Ok(());
+        }
+        let sensitive: bool = sqlx::query_scalar("SELECT is_sensitive FROM projects WHERE id=$1")
+            .bind(project_id)
+            .fetch_optional(executor)
+            .await?
+            .ok_or_else(|| ApiError::new(axum::http::StatusCode::NOT_FOUND, "项目不存在"))?;
+        if sensitive {
+            return Err(ApiError::new(
+                axum::http::StatusCode::FORBIDDEN,
+                SENSITIVE_EXTERNAL_AI_DENIED,
+            ));
+        }
+        Ok(())
+    }
+
     pub fn new(settings: &Settings) -> Result<Self, EmbeddingError> {
+        Self::with_timeouts(
+            settings,
+            EMBEDDING_CONNECT_TIMEOUT,
+            EMBEDDING_REQUEST_TIMEOUT,
+        )
+    }
+
+    pub(crate) fn with_timeouts(
+        settings: &Settings,
+        connect_timeout: Duration,
+        request_timeout: Duration,
+    ) -> Result<Self, EmbeddingError> {
         if !matches!(
             settings.embedding_backend.as_str(),
             "hash" | "openai_compatible"
@@ -40,7 +86,12 @@ impl EmbeddingService {
             dimensions: settings.embedding_dimension,
             api_url: settings.embedding_api_url.clone(),
             api_key: settings.embedding_api_key.clone(),
-            client: reqwest::Client::new(),
+            client: reqwest::Client::builder()
+                .connect_timeout(connect_timeout)
+                // reqwest's total timeout also covers reading the response body.
+                .timeout(request_timeout)
+                .build()
+                .map_err(|error| EmbeddingError::Request(error.to_string()))?,
         })
     }
 
@@ -187,10 +238,95 @@ fn embedding_tokens(text: &str) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use serde_json::json;
-    use std::collections::HashMap;
+    use std::{collections::HashMap, time::Duration};
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
     use super::{parse_embedding_response, EmbeddingService};
     use crate::config::Settings;
+
+    async fn fault_provider(response: Option<String>) -> (String, tokio::task::JoinHandle<()>) {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let task = tokio::spawn(async move {
+            let (mut stream, _) = listener.accept().await.unwrap();
+            let mut request = [0; 4096];
+            let received = stream.read(&mut request).await.unwrap();
+            assert!(received > 0, "fault provider must receive a request");
+            if let Some(response) = response {
+                stream.write_all(response.as_bytes()).await.unwrap();
+            }
+            tokio::time::sleep(Duration::from_secs(2)).await;
+        });
+        (format!("http://{address}/embeddings"), task)
+    }
+
+    fn remote_settings(url: String) -> Settings {
+        Settings::from_map(&HashMap::from([
+            (
+                "EMBEDDING_BACKEND".to_owned(),
+                "openai_compatible".to_owned(),
+            ),
+            ("EMBEDDING_MODEL".to_owned(), "BAAI/bge-m3".to_owned()),
+            ("EMBEDDING_DIMENSION".to_owned(), "1024".to_owned()),
+            ("EMBEDDING_API_URL".to_owned(), url),
+        ]))
+        .unwrap()
+    }
+
+    #[tokio::test]
+    async fn t148_remote_timeout_bounds_missing_headers_and_stalled_body() {
+        for response in [
+            None,
+            Some(
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: 128\r\n\r\n{"
+                    .to_owned(),
+            ),
+        ] {
+            let (url, task) = fault_provider(response).await;
+            let service = EmbeddingService::with_timeouts(
+                &remote_settings(url),
+                Duration::from_millis(50),
+                Duration::from_millis(100),
+            )
+            .unwrap();
+            let started = std::time::Instant::now();
+            let result = tokio::time::timeout(
+                Duration::from_millis(500),
+                service.embed(&["timeout regression".to_owned()]),
+            )
+            .await;
+            task.abort();
+            assert!(result
+                .expect("embedding request must finish within the total request timeout")
+                .is_err());
+            assert!(
+                started.elapsed() >= Duration::from_millis(80),
+                "the fault must reach the request timeout, rather than failing immediately"
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn t148_remote_provider_error_is_returned_without_vectors() {
+        let body = r#"{"error":"fault replacement"}"#;
+        let (url, task) = fault_provider(Some(format!(
+            "HTTP/1.1 503 Service Unavailable\r\nContent-Type: application/json\r\nContent-Length: {}\r\n\r\n{body}", body.len(),
+        ))).await;
+        let service = EmbeddingService::with_timeouts(
+            &remote_settings(url),
+            Duration::from_millis(50),
+            Duration::from_millis(100),
+        )
+        .unwrap();
+        let error = service
+            .embed(&["provider error".to_owned()])
+            .await
+            .unwrap_err();
+        task.abort();
+        assert!(
+            matches!(error, super::EmbeddingError::Request(ref detail) if detail == "fault replacement")
+        );
+    }
 
     #[tokio::test]
     async fn hash_backend_is_explicit_deterministic_test_double() {

@@ -30,6 +30,8 @@ def test_summarize_rolls_up_cycles_and_errors() -> None:
         "p95_ms": 30,
         "max_ms": 35,
         "ok": False,
+        "max_cycle_p95_ms": 30,
+        "p95_aggregation": "max_cycle_p95_legacy_no_raw_records",
     }
 
 
@@ -61,3 +63,33 @@ def test_run_soak_runs_at_least_until_duration() -> None:
 
     assert report["summary"]["cycles"] == 2
     assert report["summary"]["ok"] is True
+
+
+def test_pooled_percentile_is_not_maximum_of_unequal_cycle_percentiles() -> None:
+    fast = [{"latency_ms": 1, "error": None} for _ in range(100)]
+    slow = [{"latency_ms": 1000, "error": None}]
+    report = MODULE.summarize([
+        {"requests": 100, "successful": 100, "errors": [], "p95_ms": 1, "max_ms": 1, "records": fast},
+        {"requests": 1, "successful": 1, "errors": [], "p95_ms": 1000, "max_ms": 1000, "records": slow},
+    ])
+    assert report["p95_ms"] == 1
+    assert report["max_cycle_p95_ms"] == 1000
+    assert report["p95_aggregation"] == "pooled_requests"
+
+
+def test_duration_is_measured_and_start_timestamp_precedes_runner() -> None:
+    now = {"value": 0.0}
+    timestamps = []
+
+    def runner(*_args):
+        from datetime import datetime, timezone
+        timestamps.append(datetime.now(timezone.utc).isoformat())
+        now["value"] += 5.0
+        return {"requests": 1, "successful": 1, "errors": [], "p95_ms": 1, "max_ms": 1}
+
+    report = MODULE.run_soak(api_base="http://local.test", username="admin", password="dummy",
+        requests=1, concurrency=1, duration_seconds=2, interval_seconds=0, runner=runner,
+        clock=lambda: now["value"])
+    assert report["duration_seconds"] == 5.0
+    assert report["target_duration_seconds"] == 2
+    assert report["started_at"] <= timestamps[0] <= report["ended_at"]

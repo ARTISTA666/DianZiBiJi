@@ -44,7 +44,8 @@ async function logout(page: Page) {
 }
 
 async function openProject(page: Page) {
-  await page.getByText(PROJECT_NAME, { exact: true }).click();
+  await page.getByRole("button").filter({ has: page.getByText(PROJECT_NAME, { exact: true }) }).click();
+  await expect(page).toHaveURL(new RegExp(`/projects/${projectId}$`));
   await expect(page.getByRole("button", { name: PROJECT_NAME, exact: true })).toBeVisible();
 }
 
@@ -141,7 +142,7 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
   await expect(approvalCard).toBeVisible();
   await approvalCard.getByPlaceholder("审核意见").fill("请补充退火温度和复核结论。");
   await approvalCard.getByRole("button", { name: "退回", exact: true }).click();
-  await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
+  await expect(page.getByText("所有笔记和资料已审批完毕", { exact: true })).toBeVisible();
   await logout(page);
 
   await login(page, AUTHOR, PASSWORD);
@@ -160,7 +161,7 @@ test("项目负责人、记录员和审核人完成退回修订审批闭环", as
   const revisedCard = page.locator('[data-testid^="approval-note-"]').filter({ hasText: NOTE_TITLE });
   await revisedCard.getByPlaceholder("审核意见").fill("温度与复核结论完整，批准归档。");
   await revisedCard.getByRole("button", { name: "通过", exact: true }).click();
-  await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
+  await expect(page.getByText("所有笔记和资料已审批完毕", { exact: true })).toBeVisible();
 
   await logout(page);
   await login(page, AUTHOR, PASSWORD);
@@ -259,8 +260,8 @@ test("多角色完成 AI 资料、图谱、问答与报告协作闭环", async (
   await login(page, AUTHOR, PASSWORD);
   await openProject(page);
   await page.goto(`/projects/${projectId}/kg`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "重建图谱", exact: true }).click();
-  await expect(page.getByText("图谱已重建", { exact: true })).toBeVisible({ timeout: 60_000 });
+  await page.getByRole("button", { name: "重新提取并构建图谱", exact: true }).click();
+  await expect(page.getByText("图谱已根据最新实验审核记录重新构建", { exact: true })).toBeVisible({ timeout: 60_000 });
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
   await expect(page.getByText("已初始化 · 1 个文件已入库", { exact: true })).toBeVisible();
   await page.getByPlaceholder("输入问题...").fill("这份项目资料的实验结论是什么？");
@@ -293,7 +294,7 @@ test("只读成员只能查阅，不能看到写入或项目管理操作", async
   await expect(page.getByRole("button", { name: `归档 ${path.basename(IMAGE_PATH)}` })).toHaveCount(0);
   await expect(page.getByRole("button", { name: `通过 ${path.basename(IMAGE_PATH)}` })).toHaveCount(0);
   await page.goto(`/projects/${projectId}/kg`, { waitUntil: "networkidle" });
-  await expect(page.getByRole("button", { name: "重建图谱" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "重新提取并构建图谱", exact: true })).toHaveCount(0);
   await expect(page.getByRole("button", { name: "提取", exact: true })).toHaveCount(0);
   await page.goto(`/projects/${projectId}/reports`, { waitUntil: "networkidle" });
   await expect(page.getByRole("button", { name: "生成", exact: true })).toHaveCount(0);

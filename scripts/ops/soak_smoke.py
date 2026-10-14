@@ -11,19 +11,30 @@ from pathlib import Path
 from typing import Callable
 
 from load_smoke import run as run_load
+from load_smoke import percentiles
 
 
 def summarize(cycles: list[dict]) -> dict:
     errors = [error for cycle in cycles for error in cycle.get("errors", [])]
-    return {
+    max_cycle_p95 = max((cycle.get("p95_ms", 0) for cycle in cycles), default=0)
+    raw_complete = bool(cycles) and all(len(cycle.get("records", [])) == cycle.get("requests", 0) for cycle in cycles)
+    records = [record for cycle in cycles for record in cycle.get("records", [])] if raw_complete else []
+    result = {
         "cycles": len(cycles),
         "requests": sum(cycle.get("requests", 0) for cycle in cycles),
         "successful": sum(cycle.get("successful", 0) for cycle in cycles),
         "errors": errors,
-        "p95_ms": max((cycle.get("p95_ms", 0) for cycle in cycles), default=0),
+        "p95_ms": max_cycle_p95,
         "max_ms": max((cycle.get("max_ms", 0) for cycle in cycles), default=0),
         "ok": bool(cycles) and not errors,
+        "max_cycle_p95_ms": max_cycle_p95,
+        "p95_aggregation": "max_cycle_p95_legacy_no_raw_records",
     }
+    if raw_complete:
+        result.update(percentiles([r["latency_ms"] for r in records]))
+        result.update({"p95_aggregation": "pooled_requests", "latency_population": "all_attempts",
+                       "record_count": len(records)})
+    return result
 
 
 def run_soak(
@@ -39,6 +50,9 @@ def run_soak(
     sleep: Callable[[float], None] = time.sleep,
     clock: Callable[[], float] = time.monotonic,
 ) -> dict:
+    if duration_seconds <= 0 or interval_seconds < 0:
+        raise ValueError("duration must be positive and interval nonnegative")
+    started_at = datetime.now(timezone.utc).isoformat()
     started = clock()
     deadline = started + duration_seconds
     cycles = []
@@ -48,8 +62,10 @@ def run_soak(
             break
         sleep(max(0.0, min(interval_seconds, deadline - clock())))
     return {
-        "started_at": datetime.now(timezone.utc).isoformat(),
-        "duration_seconds": duration_seconds,
+        "started_at": started_at,
+        "ended_at": datetime.now(timezone.utc).isoformat(),
+        "duration_seconds": clock() - started,
+        "target_duration_seconds": duration_seconds,
         "interval_seconds": interval_seconds,
         "requests_per_cycle": requests,
         "concurrency": concurrency,

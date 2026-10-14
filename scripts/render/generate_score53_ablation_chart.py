@@ -67,7 +67,7 @@ def main() -> None:
         color="#F58518",
         label="top-10 集合重合率",
     )
-    axis_left.set_ylim(0.9, 1.005)
+    axis_left.set_ylim(0.0, 1.05)
     axis_right.set_ylim(0.0, 1.05)
     axis_left.set_xticks(list(positions))
     if font is not None:
@@ -92,8 +92,9 @@ def main() -> None:
             color="#4C78A8",
         )
     axis_right.annotate(
-        "全部档位 0.91",
+        "全部档位 0.91" if font is not None else "All settings: 0.91",
         (len(order) - 1.35, 0.91),
+        fontproperties=font,
         xytext=(0, 6),
         textcoords="offset points",
         ha="center",

@@ -150,11 +150,11 @@ def fix_table_62_widths(tex: str) -> str:
 
 def fix_table_b2_widths(tex: str) -> str:
     """附录表 B-2(主要数据表字段与主外键)5 列等宽 0.20 → 长外键/核心字段 texttt 串溢出 40-89pt。
-    重分配:数据表0.13 主键0.05 外键0.30 核心字段0.26 字段含义0.26。"""
+    重分配:数据表0.17 主键0.08 外键0.27 核心字段0.25 字段含义0.23。"""
     if "主要数据表字段与主外键" not in tex:
         return tex
     pat = re.compile(r"p\{\(\\linewidth - 8\\tabcolsep\) \* \\real\{0\.2000\}\}")
-    new_order = ["0.13", "0.05", "0.30", "0.26", "0.26"]
+    new_order = ["0.17", "0.08", "0.27", "0.25", "0.23"]
     cnt = [0]
     def _sub(m):
         i = cnt[0]; cnt[0] += 1
@@ -257,10 +257,10 @@ def fix_table_atomicity(tex: str) -> str:
             return ("{\\def\\LTcaptype{none} % do not increment counter\n"
                     "\\begin{center}\n" + tab + "\n" + cap_line + head
                     + body + "\\bottomrule\n\\end{tabular}\n\\end{center}\n}")
-        # 长表:题注+表头 → endfirsthead;续页 endhead 仅表头
+        # 长表:题注+表头 → endfirsthead;续页 endhead 加续表题注与表头
         return ("{\\def\\LTcaptype{none} % do not increment counter\n"
                 + head_spec + "\n" + cap_line + head + "\\endfirsthead\n"
-                + head + "\\endhead\n\\bottomrule\\noalign{}\n\\endlastfoot\n" + body + tail)
+                + cap_line.replace("表 ", "续表 ", 1) + head + "\\endhead\n\\bottomrule\\noalign{}\n\\endlastfoot\n" + body + tail)
     return pat.sub(_fix, tex)
 
 def fix_table_a1_widths(tex: str) -> str:
@@ -282,11 +282,11 @@ def fix_table_a1_widths(tex: str) -> str:
 
 def fix_table_b3_widths(tex: str) -> str:
     """附录表 B-3(运行时扩展域)5 列等宽 0.20:主键列"主/键"竖排断行、
-    "session_id+ 回合"孤字。重分配 数据表0.15 主键0.09 约束0.22 字段0.27 含义0.27。"""
+    "session_id+ 回合"孤字。重分配 数据表0.18 主键0.20 约束0.21 字段0.22 含义0.19。"""
     if "运行时扩展域数据表" not in tex:
         return tex
     pat = re.compile(r"p\{\(\\linewidth - 8\\tabcolsep\) \* \\real\{0\.2000\}\}")
-    new_order = ["0.15", "0.09", "0.22", "0.27", "0.27"]
+    new_order = ["0.18", "0.20", "0.21", "0.22", "0.19"]
     cnt = [0]
     def _sub(m):
         i = cnt[0]; cnt[0] += 1
@@ -368,10 +368,10 @@ def fix_table_code_breaks(tex: str) -> str:
     # 1) 列表分隔: \texttt{a},\texttt{b} / a、b
     pat1 = re.compile(r'(\\texttt\{[^}]*\})(,|、)(?=\\texttt\{)')
     tex = pat1.sub(r'\1\2\\allowbreak ', tex)
-    # 2) \texttt{...} 内部: 下划线转义(\_)与逗号后允许断行(仅长度>16 的串)
+    # 2) \texttt{...} 内部: 下划线转义(\_)与逗号后允许断行(仅长度>8 的串)
     def _inner(m):
         body = m.group(1)
-        if len(body) <= 16:
+        if len(body) <= 8:
             return m.group(0)
         body2 = body.replace("\\_", "\\_\\allowbreak{}")
         body2 = body2.replace(",", ",\\allowbreak{}")
@@ -386,6 +386,12 @@ def to_tex(fragment: str, name: str) -> str:
     frag = Path(f"/tmp/crlt/frag_{name}.md")
     # `?"`+中文:pandoc smart 把句末问号后的收尾直引号误判为左引号(5.3 节 Q06/Q07/Q11 三处 ¿ 渲染缺陷实录);
     # 此类序列统一为全角问号+全角右引号,md 源保持半角风格不动
+    # Keep each raster figure, caption, and notes together on one page.
+    fragment = re.sub(
+        r"\\begin\{center\}([\s\S]*?)\\end\{center\}",
+        lambda m: (r"\begin{center}\begin{minipage}{\textwidth}\centering" + m[1]
+                   + r"\end{minipage}\end{center}")
+        if r"\includegraphics" in m[1] else m[0], fragment)
     frag_text = re.sub(r'\?"(?=[\u4e00-\u9fff\u3000-\u303f])', "？”", guard(add_table_captions(fragment)))
     frag.write_text(frag_text, encoding="utf-8")
     r = subprocess.run(["pandoc", str(frag), "-f", "markdown+smart", "-t", "latex",
@@ -468,9 +474,12 @@ thanks_body = to_tex(segs["致谢"], "thanks")
 # ---------- main.tex:按实际章数输入 + 附录 ----------
 mp = PROJ/"main.tex"
 mt = mp.read_text(encoding="utf-8")
+# Remove every prior appendix inclusion; append once after references.
+mt = mt.replace(r"\input{extraTex/body/appendix.tex}", "")
 mt = re.sub(r"(\\input\{extraTex/body/chapter-01\.tex\})([\s\S]*?)(\\clearpage\n\\chapter\*\{参考文献\})",
             lambda m: m.group(1) + "".join(f"\n\\input{{extraTex/body/chapter-{i:02d}.tex}}" for i in range(2, max(written_chapters) + 1)) +
-                      "\n\\input{extraTex/body/appendix.tex}\n" + m.group(3), mt)
+                      "\n" + m.group(3), mt)
+mt = mt.replace(r"\end{document}", "\\clearpage\n\\input{extraTex/body/appendix.tex}\n\\end{document}")
 mp.write_text(mt, encoding="utf-8")
 
 # ---------- meta.tex:真实元数据 ----------

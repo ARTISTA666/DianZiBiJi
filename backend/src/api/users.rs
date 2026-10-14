@@ -340,14 +340,21 @@ async fn change_own_password(
         r#"
         UPDATE users
         SET password_hash = $2, auth_version = auth_version + 1, updated_at = now()
-        WHERE id = $1
+        WHERE id = $1 AND auth_version = $3 AND status = 'ACTIVE'::userstatus
         RETURNING auth_version
         "#,
     )
     .bind(user.id)
     .bind(password_hash)
-    .fetch_one(&mut *transaction)
-    .await?;
+    .bind(user.auth_version)
+    .fetch_optional(&mut *transaction)
+    .await?
+    .ok_or_else(|| {
+        ApiError::new(
+            StatusCode::CONFLICT,
+            "Account changed while updating password; sign in again",
+        )
+    })?;
     audit_user(
         &mut transaction,
         user.id,
@@ -1001,6 +1008,78 @@ mod tests {
         assert_eq!(error.status, StatusCode::CONFLICT);
         assert!(error.detail.contains("last active"));
         transaction.rollback().await.unwrap();
+    }
+
+    #[tokio::test]
+    async fn test_inflight_password_change_cannot_overwrite_a_newer_password() {
+        let Some((_, pool)) = test_app().await else {
+            return;
+        };
+        let (user_id, _, password) = insert_test_user(&pool, "member").await;
+        let user = sqlx::query_as::<_, crate::models::UserRecord>(
+            "SELECT id, username, password_hash, display_name, email, lower(role::text) AS role, lower(status::text) AS status, auth_version FROM users WHERE id=$1",
+        ).bind(user_id).fetch_one(&pool).await.unwrap();
+        let settings = Settings::from_map(&HashMap::from([
+            (
+                "DATABASE_URL".to_owned(),
+                std::env::var("TEST_DATABASE_URL").unwrap(),
+            ),
+            (
+                "SECRET_KEY".to_owned(),
+                "password-race-synthetic-secret".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let state = AppState::new(pool.clone(), settings).unwrap();
+        let client = super::ClientInfo {
+            ip_address: "unknown".into(),
+            user_agent: None,
+        };
+        // Both requests have already passed authentication with the same version.
+        let first = super::change_own_password(
+            axum::extract::State(state.clone()),
+            client.clone(),
+            super::CurrentUser(user.clone()),
+            axum::Json(crate::models::UserPasswordChange {
+                current_password: password.clone(),
+                new_password: "FirstNewPassword123!".into(),
+            }),
+        )
+        .await;
+        assert!(first.is_ok());
+        let second = super::change_own_password(
+            axum::extract::State(state),
+            client,
+            super::CurrentUser(user),
+            axum::Json(crate::models::UserPasswordChange {
+                current_password: password,
+                new_password: "StaleNewPassword123!".into(),
+            }),
+        )
+        .await;
+        match second {
+            Err(error) => assert_eq!(error.status, StatusCode::CONFLICT),
+            Ok(_) => panic!("stale authenticated password request overwrote the newer password"),
+        }
+        let (stored_hash, version): (String, i32) =
+            sqlx::query_as("SELECT password_hash, auth_version FROM users WHERE id=$1")
+                .bind(user_id)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        assert!(crate::security::verify_password(
+            "FirstNewPassword123!",
+            &stored_hash
+        ));
+        assert_eq!(version, 1);
+        let audits: i64 = sqlx::query_scalar(
+            "SELECT count(*) FROM audit_logs WHERE actor_user_id=$1 AND action='change_password'",
+        )
+        .bind(user_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(audits, 1);
     }
 
     #[tokio::test]

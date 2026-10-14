@@ -185,6 +185,7 @@ export default function ApprovalsPage() {
   const token = useAuthStore((s) => s.token);
   const pendingNotes = useProjectStore((s) => s.pendingNotes);
   const files = useProjectStore((s) => s.files);
+  const filesComplete = useProjectStore((s) => s.filesComplete);
   const members = useProjectStore((s) => s.members);
   const loadBaseProjectData = useProjectStore((s) => s.loadBaseProjectData);
   const reviewFile = useProjectStore((s) => s.reviewFile);
@@ -224,7 +225,7 @@ export default function ApprovalsPage() {
   const handleFileAction = async (fileId: number, action: "approve" | "reject") => {
     if (!token) return;
     try {
-      await reviewFile(token, fileId, action, fileComment[fileId] || "");
+      const reviewed = await reviewFile(token, fileId, action, fileComment[fileId] || "");
       setFileComment((current) => {
         const next = { ...current };
         delete next[fileId];
@@ -232,6 +233,11 @@ export default function ApprovalsPage() {
       });
       loadBaseProjectData(token, projectId);
       feedback.success(action === "approve" ? "资料已通过" : "资料已拒绝");
+      if (action === "approve" && reviewed.knowledge_sync_status === "failed") {
+        const message = `资料已通过审核，知识库同步失败；请进入资料页重试。${reviewed.knowledge_sync_message || ""}`;
+        handleError(message);
+        feedback.error(message);
+      }
     } catch (e) {
       const msg = getErrorMessage(e, "资料审核失败");
       handleError(msg);
@@ -248,13 +254,14 @@ export default function ApprovalsPage() {
     && file.status === "uploaded"
   ));
 
-  if (projectPending.length === 0 && projectPendingFiles.length === 0) {
+  if (filesComplete && projectPending.length === 0 && projectPendingFiles.length === 0) {
     return (
       <Card className="border-dashed">
         <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+          {error && <p role="alert" className="mb-3 text-sm text-destructive">{error}</p>}
           <FileCheck className="h-12 w-12 text-muted-foreground/50 mb-4" />
-          <p className="text-lg font-medium text-muted-foreground">所有笔记已审批完毕</p>
-          <p className="text-sm text-muted-foreground/70 mt-1">新笔记提交审批后将在此显示</p>
+          <p className="text-lg font-medium text-muted-foreground">所有笔记和资料已审批完毕</p>
+          <p className="text-sm text-muted-foreground/70 mt-1">新笔记或知识资料提交审批后将在此显示</p>
         </CardContent>
       </Card>
     );
@@ -262,6 +269,7 @@ export default function ApprovalsPage() {
 
   return (
     <div className="space-y-4">
+      {!filesComplete && <p role="alert" className="text-sm text-destructive">资料列表尚未完整加载，无法确认全部审批状态，请刷新后重试。</p>}
       {error && (
         <p className="rounded-md bg-destructive/10 px-4 py-2 text-sm text-destructive">
           {error}

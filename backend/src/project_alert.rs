@@ -1,10 +1,11 @@
 use axum::http::StatusCode;
 use chrono::Utc;
-use serde_json::json;
+use serde_json::{json, Value};
 use sqlx::{Postgres, Transaction};
 
 use crate::{
     error::ApiError,
+    kg_blueprint::project_blueprint_nodes,
     models::{
         AlertEvaluationSummary, AlertMetricSnapshot, AlertThresholdRead,
         AlertThresholdUpsertRequest, ALERT_METRICS, ALERT_METRIC_BLUEPRINT_STAGNANT_DAYS,
@@ -15,6 +16,7 @@ use crate::{
 pub const ALERT_LEVELS: &[&str] = &["warn", "critical"];
 /// 近 N 条审批用于计算退回率（与导师讨论的"提交质量"口径）。
 pub const RETURN_RATE_WINDOW: i64 = 10;
+const ALERT_RULE_VERSION: &str = "project-alerts-v2";
 
 fn is_alert_metric(metric: &str) -> bool {
     ALERT_METRICS.contains(&metric)
@@ -44,13 +46,27 @@ pub async fn evaluate_project_alerts(
     transaction: &mut Transaction<'_, Postgres>,
     project_id: i32,
 ) -> Result<AlertEvaluationSummary, ApiError> {
+    Ok(evaluate_project_alerts_with_audit(transaction, project_id)
+        .await?
+        .0)
+}
+
+/// Keep the observed inputs beside the result, without changing the public response schema.
+pub async fn evaluate_project_alerts_with_audit(
+    transaction: &mut Transaction<'_, Postgres>,
+    project_id: i32,
+) -> Result<(AlertEvaluationSummary, Value), ApiError> {
     let thresholds = project_alert_thresholds(transaction, project_id).await?;
+    // Compare database timestamps using the database clock (the Docker host may be skewed).
+    let evaluated_at: chrono::DateTime<Utc> = sqlx::query_scalar("SELECT now()")
+        .fetch_one(&mut **transaction)
+        .await?;
     let mut metrics: Vec<AlertMetricSnapshot> = Vec::new();
 
     // ── 指标 1：最老待审笔记等待时长（小时）──
-    let review_stall: Option<f64> = sqlx::query_scalar(
+    let review_stall: Option<(i32, chrono::DateTime<Utc>, f64)> = sqlx::query_as(
         r#"
-        SELECT (EXTRACT(EPOCH FROM (now() - n.updated_at)) / 3600.0)::float8
+        SELECT n.id, n.updated_at, (EXTRACT(EPOCH FROM (now() - n.updated_at)) / 3600.0)::float8
         FROM public.experiment_notes n
         WHERE n.project_id = $1 AND n.status = 'SUBMITTED'::notestatus
         ORDER BY n.updated_at ASC LIMIT 1
@@ -62,13 +78,13 @@ pub async fn evaluate_project_alerts(
     metrics.push(snapshot_metric(
         &thresholds,
         ALERT_METRIC_REVIEW_STALL_HOURS,
-        review_stall.unwrap_or(0.0),
+        review_stall.as_ref().map_or(0.0, |row| row.2),
     ));
 
     // ── 指标 2：近 RETURN_RATE_WINDOW 条审批的退回占比 ──
-    let recent: Vec<String> = sqlx::query_scalar(
+    let recent: Vec<(i32, i32, i32, String, chrono::DateTime<Utc>)> = sqlx::query_as(
         r#"
-        SELECT lower(action)
+        SELECT a.id, a.note_id, a.version_id, lower(a.action), a.created_at
         FROM public.note_approvals a
         JOIN public.experiment_notes n ON n.id = a.note_id
         WHERE n.project_id = $1
@@ -85,7 +101,7 @@ pub async fn evaluate_project_alerts(
     } else {
         recent
             .iter()
-            .filter(|action| action.as_str() == "return")
+            .filter(|row| matches!(row.3.as_str(), "return" | "returned"))
             .count() as f64
             / recent.len() as f64
     };
@@ -95,49 +111,36 @@ pub async fn evaluate_project_alerts(
         return_rate,
     ));
 
-    // ── 指标 3：蓝图最近实证距今天数（无蓝图视为 0，不告警）──
-    let blueprint_stagnant: Option<f64> = sqlx::query_scalar(
-        r#"
-        SELECT (EXTRACT(EPOCH FROM (now() - max(e.updated_at))) / 86400.0)::float8
-        FROM public.kg_blueprint_nodes b
-        JOIN public.kg_entities e
-            ON e.project_id = b.project_id AND e.entity_type = b.entity_type
-           AND e.normalized_label = b.normalized_label
-        WHERE b.project_id = $1 AND b.status <> 'retired'
-        "#,
-    )
-    .bind(project_id)
-    .fetch_optional(&mut **transaction)
-    .await?
-    .flatten();
+    // Coverage, suggestions and alerts use the same canonical type / source-role contract.
+    let blueprint_nodes = project_blueprint_nodes(transaction, project_id).await?;
+    // 指标 3：匹配实体最近更新间隔；重抽可复位，无匹配取 0，不衡量新增覆盖。
+    let blueprint_stagnant = blueprint_nodes
+        .iter()
+        .filter_map(|node| node.evidence.last_evidence_at)
+        .max()
+        .map_or(0.0, |latest| {
+            (evaluated_at - latest).num_milliseconds() as f64 / 86_400_000.0
+        });
     metrics.push(snapshot_metric(
         &thresholds,
         ALERT_METRIC_BLUEPRINT_STAGNANT_DAYS,
-        blueprint_stagnant.unwrap_or(0.0),
+        blueprint_stagnant,
     ));
 
     // ── 指标 4：进展偏差率 = 蓝图待实证知识点占比（无蓝图视为 0）──
-    let deviation: Option<f64> = sqlx::query_scalar(
-        r#"
-        SELECT
-            CASE WHEN count(*) = 0 THEN NULL::float8
-                 ELSE (count(*) FILTER (WHERE e.id IS NULL))::float8 / count(*)::float8
-            END
-        FROM public.kg_blueprint_nodes b
-        LEFT JOIN public.kg_entities e
-            ON e.project_id = b.project_id AND e.entity_type = b.entity_type
-           AND e.normalized_label = b.normalized_label
-        WHERE b.project_id = $1 AND b.status <> 'retired'
-        "#,
-    )
-    .bind(project_id)
-    .fetch_optional(&mut **transaction)
-    .await?
-    .flatten();
+    let deviation = if blueprint_nodes.is_empty() {
+        0.0
+    } else {
+        blueprint_nodes
+            .iter()
+            .filter(|node| node.evidence.entity_count == 0)
+            .count() as f64
+            / blueprint_nodes.len() as f64
+    };
     metrics.push(snapshot_metric(
         &thresholds,
         ALERT_METRIC_PROGRESS_DEVIATION,
-        deviation.unwrap_or(0.0),
+        deviation,
     ));
 
     // ── 告警落库：有 warn/critical 才建；同一 (metric, status='open') 幂等去重，值刷新 ──
@@ -160,7 +163,7 @@ pub async fn evaluate_project_alerts(
                 critical_of(&thresholds, &metric.metric) * 100.0
             ),
             ALERT_METRIC_BLUEPRINT_STAGNANT_DAYS => format!(
-                "知识蓝图最近实证距今 {:.0} 天（阈值 warn {:.0} / critical {:.0}）",
+                "匹配实体最近更新间隔 {:.0} 天（阈值 warn {:.0} / critical {:.0}）",
                 metric.value,
                 warn_of(&thresholds, &metric.metric),
                 critical_of(&thresholds, &metric.metric)
@@ -184,10 +187,63 @@ pub async fn evaluate_project_alerts(
         .await?;
     }
 
-    Ok(AlertEvaluationSummary {
-        evaluated_at: Utc::now(),
+    let summary = AlertEvaluationSummary {
+        evaluated_at,
         metrics,
-    })
+    };
+    let blueprint_support: Vec<Value> = blueprint_nodes
+        .iter()
+        .map(|node| {
+            json!({
+                "node_id": node.id, "entity_type": node.entity_type, "label": node.label,
+                "evidence": node.evidence,
+            })
+        })
+        .collect();
+    let supports = json!({
+        ALERT_METRIC_REVIEW_STALL_HOURS: {
+            "oldest_submitted_note": review_stall.map(|(id, updated_at, hours)| json!({
+                "note_id": id, "updated_at": updated_at, "hours": hours,
+            })),
+        },
+        ALERT_METRIC_RETURN_RATE: {
+            "window_limit": RETURN_RATE_WINDOW,
+            "window_order": "created_at_desc,id_desc",
+            "numerator": recent.iter().filter(|row| matches!(row.3.as_str(), "return" | "returned")).count(),
+            "denominator": recent.len(),
+            "approvals": recent.iter().map(|row| json!({
+                "id": row.0, "note_id": row.1, "note_version_id": row.2,
+                "action": row.3, "created_at": row.4,
+            })).collect::<Vec<_>>(),
+        },
+        ALERT_METRIC_BLUEPRINT_STAGNANT_DAYS: {
+            "latest_evidence_at": blueprint_nodes.iter().filter_map(|node| node.evidence.last_evidence_at).max(),
+            "nodes": blueprint_support,
+        },
+        ALERT_METRIC_PROGRESS_DEVIATION: {
+            "numerator": blueprint_nodes.iter().filter(|node| node.evidence.entity_count == 0).count(),
+            "denominator": blueprint_nodes.len(),
+            "nodes": blueprint_support,
+        },
+    });
+    let mut detail = evaluation_audit_detail(&summary);
+    for metric in detail["metrics"]
+        .as_array_mut()
+        .expect("audit metrics array")
+    {
+        let name = metric["metric"].as_str().expect("metric name").to_owned();
+        metric["warn_threshold"] = json!(warn_of(&thresholds, &name));
+        metric["critical_threshold"] = json!(critical_of(&thresholds, &name));
+        metric["enabled"] = json!(!thresholds
+            .iter()
+            .any(|row| row.metric == name && !row.enabled));
+        metric["threshold_id"] = json!(thresholds
+            .iter()
+            .find(|row| row.metric == name)
+            .map(|row| row.id));
+        metric["support"] = supports[&name].clone();
+    }
+    Ok((summary, detail))
 }
 
 fn warn_of(thresholds: &[AlertThresholdRead], metric: &str) -> f64 {
@@ -256,38 +312,14 @@ pub async fn upsert_open_alert(
     level: &str,
     detail: &str,
 ) -> Result<(), ApiError> {
-    let existing: Option<i32> = sqlx::query_scalar(
-        r#"
-        SELECT id FROM public.project_alerts
-        WHERE project_id = $1 AND metric = $2 AND status = 'open'
-        "#,
-    )
-    .bind(project_id)
-    .bind(metric)
-    .fetch_optional(&mut **transaction)
-    .await?;
-    if let Some(alert_id) = existing {
-        sqlx::query(
-            r#"
-            UPDATE public.project_alerts
-            SET metric_value = $3, level = $4, detail = $5, updated_at = now()
-            WHERE id = $1 AND project_id = $2
-            "#,
-        )
-        .bind(alert_id)
-        .bind(project_id)
-        .bind(metric_value)
-        .bind(level)
-        .bind(detail)
-        .execute(&mut **transaction)
-        .await?;
-        return Ok(());
-    }
     sqlx::query(
         r#"
         INSERT INTO public.project_alerts
             (project_id, metric, metric_value, level, status, detail)
         VALUES ($1, $2, $3, $4, 'open', $5)
+        ON CONFLICT (project_id, metric) WHERE status = 'open'
+        DO UPDATE SET metric_value = EXCLUDED.metric_value, level = EXCLUDED.level,
+                      detail = EXCLUDED.detail, updated_at = now()
         "#,
     )
     .bind(project_id)
@@ -423,10 +455,12 @@ pub async fn upsert_alert_threshold(
 /// 评估 JSON 细节（审计 detail 用）。
 pub fn evaluation_audit_detail(summary: &AlertEvaluationSummary) -> serde_json::Value {
     json!({
+        "rule_version": ALERT_RULE_VERSION,
+        "evaluated_at": summary.evaluated_at,
         "metrics": summary
             .metrics
             .iter()
-            .map(|m| json!({"metric": m.metric, "value": (m.value * 1000.0).round() / 1000.0, "level": m.level}))
+            .map(|m| json!({"metric": m.metric, "value": m.value, "level": m.level}))
             .collect::<Vec<_>>(),
     })
 }

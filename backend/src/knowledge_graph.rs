@@ -5,12 +5,16 @@ use std::{
 
 use regex::Regex;
 use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
 use sqlx::{FromRow, Postgres, Transaction};
 
 use crate::{
+    audit::{write_audit, AuditEvent},
     error::ApiError,
     models::{KnowledgeEntityRead, KnowledgeExtractionRunRead, KnowledgeRelationRead},
 };
+
+const EXTRACTION_RULE_VERSION: &str = "kg-rules-v2-atomic-arrays";
 
 #[derive(Debug, FromRow)]
 struct ExtractableNote {
@@ -61,6 +65,18 @@ pub async fn extract_note(
     .fetch_optional(&mut **transaction)
     .await?
     .ok_or_else(|| ApiError::internal("Note not found during graph extraction"))?;
+    let version = if let Some(version_id) = note.current_version_id {
+        sqlx::query_as::<_, (Value, Value)>(
+            "SELECT fixed_fields_json, content_json FROM note_versions WHERE id = $1 AND note_id = $2",
+        )
+        .bind(version_id)
+        .bind(note.id)
+        .fetch_optional(&mut **transaction)
+        .await?
+    } else {
+        None
+    };
+    let provenance = extraction_provenance(note.current_version_id, version.as_ref());
     if rebuild {
         clear_note_graph(transaction, note_id).await?;
     }
@@ -75,10 +91,10 @@ pub async fn extract_note(
             transaction,
             &note,
             triggered_by,
-            0,
-            0,
+            (0, 0),
             "failed",
             "Project not found",
+            &provenance,
         )
         .await;
     };
@@ -225,16 +241,6 @@ pub async fn extract_note(
         );
     }
 
-    let version = if let Some(version_id) = note.current_version_id {
-        sqlx::query_as::<_, (Value, Value)>(
-            "SELECT fixed_fields_json, content_json FROM note_versions WHERE id = $1",
-        )
-        .bind(version_id)
-        .fetch_optional(&mut **transaction)
-        .await?
-    } else {
-        None
-    };
     if let Some((fixed_fields, content)) = version {
         for term in extract_terms(&fixed_fields, &content) {
             let entity = upsert_entity(
@@ -249,6 +255,9 @@ pub async fn extract_note(
             .await?;
             let mut roles: Vec<String> = term.roles.into_iter().collect();
             roles.sort();
+            let mut properties = provenance.clone();
+            properties["method"] = json!("rule_based");
+            properties["roles"] = json!(roles);
             let relation = upsert_relation(
                 transaction,
                 note.project_id,
@@ -258,7 +267,7 @@ pub async fn extract_note(
                 Some("note_extraction"),
                 Some(note.id),
                 0.7,
-                json!({"method": "rule_based", "roles": roles}),
+                properties,
             )
             .await?;
             entities.insert(entity);
@@ -270,10 +279,10 @@ pub async fn extract_note(
         transaction,
         &note,
         triggered_by,
-        entities.len() as i32,
-        relations.len() as i32,
+        (entities.len() as i32, relations.len() as i32),
         "completed",
         "Knowledge graph extraction completed",
+        &provenance,
     )
     .await
 }
@@ -421,12 +430,12 @@ async fn record_run(
     transaction: &mut Transaction<'_, Postgres>,
     note: &ExtractableNote,
     triggered_by: i32,
-    extracted_entities: i32,
-    extracted_relations: i32,
+    counts: (i32, i32),
     status: &str,
     message: &str,
+    provenance: &Value,
 ) -> Result<KnowledgeExtractionRunRead, ApiError> {
-    Ok(sqlx::query_as::<_, KnowledgeExtractionRunRead>(
+    let run = sqlx::query_as::<_, KnowledgeExtractionRunRead>(
         r#"
         INSERT INTO kg_extraction_runs (
             project_id, note_id, triggered_by, status, extracted_entities,
@@ -441,11 +450,47 @@ async fn record_run(
     .bind(note.id)
     .bind(triggered_by)
     .bind(status)
-    .bind(extracted_entities)
-    .bind(extracted_relations)
+    .bind(counts.0)
+    .bind(counts.1)
     .bind(message)
     .fetch_one(&mut **transaction)
-    .await?)
+    .await?;
+    let mut detail = provenance.clone();
+    detail["run_id"] = json!(run.id);
+    detail["note_id"] = json!(note.id);
+    write_audit(
+        &mut **transaction,
+        AuditEvent {
+            actor_user_id: Some(triggered_by),
+            project_id: Some(note.project_id),
+            action: "kg_extraction_provenance",
+            target_type: Some("kg_extraction_run"),
+            target_id: Some(run.id),
+            detail,
+            ip_address: None,
+            user_agent: None,
+        },
+    )
+    .await?;
+    Ok(run)
+}
+
+fn extraction_provenance(version_id: Option<i32>, version: Option<&(Value, Value)>) -> Value {
+    let content_hash = version.map(|(fixed_fields, content)| {
+        let input = json!({"fixed_fields": fixed_fields, "content": content});
+        format!(
+            "{:x}",
+            Sha256::digest(serde_json::to_vec(&input).expect("JSON values serialize"))
+        )
+    });
+    json!({
+        "source_note_version_id": version_id,
+        "source_status": if version.is_some() { "available" } else if version_id.is_some() { "missing_version" } else { "no_current_version" },
+        "content_hash": content_hash,
+        "content_hash_algorithm": "sha256-json-fields-content-v1",
+        "source_scope": "note_version_fields_and_content",
+        "rule_version": EXTRACTION_RULE_VERSION,
+    })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -607,7 +652,9 @@ pub(crate) fn extract_terms(fixed_fields: &Value, content: &Value) -> Vec<Extrac
     let mut terms = Vec::new();
     collect_structured(fixed_fields, &mut terms);
     collect_structured(content, &mut terms);
-    let text = flatten_text(&[fixed_fields, content]).join("\n");
+    // Structured arrays were already extracted with their declared boundaries.
+    // Do not interpret their labels again as free-text prefixes.
+    let text = flatten_text(&[fixed_fields, content], false).join("\n");
     let patterns = [
         (
             "reagent",
@@ -648,7 +695,8 @@ pub(crate) fn extract_terms(fixed_fields: &Value, content: &Value) -> Vec<Extrac
             }
         }
     }
-    let normalized = clean_label(&text).to_lowercase();
+    let all_text = flatten_text(&[fixed_fields, content], true).join("\n");
+    let normalized = clean_label(&all_text).to_lowercase();
     if normalized.contains("htseq 生成基因级原始计数")
         || normalized.contains("raw gene-level count")
     {
@@ -844,7 +892,12 @@ fn split_value(value: &Value, keep_sentence: bool) -> Vec<String> {
     match value {
         Value::Array(items) => items
             .iter()
-            .flat_map(|item| split_value(item, keep_sentence))
+            .flat_map(|item| match item {
+                // An array already declares term boundaries. Punctuation inside
+                // an element belongs to that term; legacy strings still split.
+                Value::String(text) => vec![text.trim().to_owned()],
+                _ => split_value(item, keep_sentence),
+            })
             .collect(),
         Value::String(text) => split_string(text, keep_sentence),
         Value::Null | Value::Object(_) => Vec::new(),
@@ -888,20 +941,24 @@ fn dedupe_terms(terms: Vec<ExtractedTerm>) -> Vec<ExtractedTerm> {
     values
 }
 
-fn flatten_text(values: &[&Value]) -> Vec<String> {
+fn flatten_text(values: &[&Value], include_structured_arrays: bool) -> Vec<String> {
     let mut output = Vec::new();
     for value in values {
         match value {
             Value::String(text) if !text.trim().is_empty() => output.push(text.trim().to_owned()),
             Value::Object(fields) => {
                 for (key, item) in fields {
+                    if !include_structured_arrays && item.is_array() && classify_key(key).is_some()
+                    {
+                        continue;
+                    }
                     output.push(key.clone());
-                    output.extend(flatten_text(&[item]));
+                    output.extend(flatten_text(&[item], include_structured_arrays));
                 }
             }
             Value::Array(items) => {
                 for item in items {
-                    output.extend(flatten_text(&[item]));
+                    output.extend(flatten_text(&[item], include_structured_arrays));
                 }
             }
             Value::Number(number) => output.push(number.to_string()),
@@ -1057,6 +1114,122 @@ mod tests {
     use super::{extract_terms, normalize_entity_label, resolve_synonyms, split_string};
     use serde_json::json;
 
+    #[tokio::test]
+    async fn t148_run_and_fact_relations_preserve_exact_version_provenance() {
+        use crate::{
+            config::Settings,
+            db::{connect_database, initialize_database},
+        };
+        use sha2::{Digest, Sha256};
+        use std::collections::HashMap;
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let username = format!("kg_provenance_{}", uuid::Uuid::new_v4().simple());
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            ("SECRET_KEY".to_owned(), "kg-provenance-test".to_owned()),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let user_id: i32 = sqlx::query_scalar("SELECT id FROM users WHERE username=$1")
+            .bind(username)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+        let mut transaction = pool.begin().await.unwrap();
+        let project_id: i32 = sqlx::query_scalar("INSERT INTO projects (name,is_sensitive,status,approval_enabled,owner_user_id) VALUES ('KG provenance test',false,'ACTIVE',true,$1) RETURNING id")
+            .bind(user_id).fetch_one(&mut *transaction).await.unwrap();
+        let note_id: i32 = sqlx::query_scalar("INSERT INTO experiment_notes (project_id,title,experiment_type,owner_user_id,status) VALUES ($1,'Versioned extraction','PCR',$2,'APPROVED') RETURNING id")
+            .bind(project_id).bind(user_id).fetch_one(&mut *transaction).await.unwrap();
+        let mut first_run_id = None;
+        let mut first_detail = None;
+        for (number, fixed_fields) in [
+            json!({"samples":["样本1、2"]}),
+            json!({"samples":["样本3、4"]}),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let content = json!({"text":"仪器：PCR 仪"});
+            let version_id: i32 = sqlx::query_scalar("INSERT INTO note_versions (note_id,version_number,fixed_fields_json,content_json,created_by,is_locked) VALUES ($1,$2,$3,$4,$5,true) RETURNING id")
+                .bind(note_id).bind(number as i32 + 1).bind(&fixed_fields).bind(&content).bind(user_id)
+                .fetch_one(&mut *transaction).await.unwrap();
+            sqlx::query("UPDATE experiment_notes SET current_version_id=$1 WHERE id=$2")
+                .bind(version_id)
+                .bind(note_id)
+                .execute(&mut *transaction)
+                .await
+                .unwrap();
+            let run = super::extract_note(&mut transaction, note_id, user_id, true)
+                .await
+                .unwrap();
+            assert_eq!(
+                run.message.as_deref(),
+                Some("Knowledge graph extraction completed")
+            );
+            let detail: Option<serde_json::Value> = sqlx::query_scalar("SELECT detail_json FROM audit_logs WHERE action='kg_extraction_provenance' AND target_type='kg_extraction_run' AND target_id=$1")
+                .bind(run.id).fetch_optional(&mut *transaction).await.unwrap();
+            let detail =
+                detail.expect("each extraction run must have provenance in the same transaction");
+            let expected_hash = format!(
+                "{:x}",
+                Sha256::digest(
+                    serde_json::to_vec(&json!({"fixed_fields":fixed_fields,"content":content}))
+                        .unwrap()
+                )
+            );
+            assert_eq!(detail["source_note_version_id"], version_id);
+            assert_eq!(detail["content_hash"], expected_hash);
+            assert_eq!(detail["source_status"], "available");
+            assert!(detail["rule_version"]
+                .as_str()
+                .is_some_and(|value| !value.is_empty()));
+            let facts: Vec<serde_json::Value> = sqlx::query_scalar("SELECT properties FROM kg_relations WHERE source_type='note_extraction' AND source_id=$1")
+                .bind(note_id).fetch_all(&mut *transaction).await.unwrap();
+            assert!(!facts.is_empty());
+            for fact in facts {
+                for key in ["source_note_version_id", "content_hash", "rule_version"] {
+                    assert_eq!(fact[key], detail[key]);
+                }
+            }
+            if number == 0 {
+                first_run_id = Some(run.id);
+                first_detail = Some(detail);
+            }
+        }
+        let retained: serde_json::Value = sqlx::query_scalar("SELECT detail_json FROM audit_logs WHERE action='kg_extraction_provenance' AND target_id=$1")
+            .bind(first_run_id).fetch_one(&mut *transaction).await.unwrap();
+        assert_eq!(
+            retained,
+            first_detail.unwrap(),
+            "later rebuilds must not rewrite earlier run provenance"
+        );
+        sqlx::query("UPDATE experiment_notes SET current_version_id=NULL WHERE id=$1")
+            .bind(note_id)
+            .execute(&mut *transaction)
+            .await
+            .unwrap();
+        let no_version = super::extract_note(&mut transaction, note_id, user_id, true)
+            .await
+            .unwrap();
+        let detail: serde_json::Value = sqlx::query_scalar("SELECT detail_json FROM audit_logs WHERE action='kg_extraction_provenance' AND target_id=$1")
+            .bind(no_version.id).fetch_one(&mut *transaction).await.unwrap();
+        assert!(detail["source_note_version_id"].is_null());
+        assert!(detail["content_hash"].is_null());
+        assert_eq!(detail["source_status"], "no_current_version");
+        transaction.rollback().await.unwrap();
+        let rolled_back_audits: i64 = sqlx::query_scalar("SELECT count(*) FROM audit_logs WHERE project_id=$1 AND action='kg_extraction_provenance'")
+            .bind(project_id).fetch_one(&pool).await.unwrap();
+        assert_eq!(rolled_back_audits, 0);
+    }
+
     #[test]
     fn test_graph_term_normalization_and_splitting() {
         assert_eq!(
@@ -1068,6 +1241,57 @@ mod tests {
             split_string("初始结果；第二结果", true),
             ["初始结果", "第二结果"]
         );
+    }
+
+    #[test]
+    fn t148_array_elements_preserve_t136_sample_punctuation() {
+        let sample = "plates from Madina, Taylor, and Janella’s transformation on July 5th";
+        let terms = extract_terms(&json!({"samples": [sample]}), &json!({}));
+        let labels: Vec<_> = terms
+            .iter()
+            .filter(|term| term.entity_type == "sample")
+            .map(|term| term.label.as_str())
+            .collect();
+        assert_eq!(labels, [sample]);
+    }
+
+    #[test]
+    fn t148_array_labels_are_not_resplit_by_body_regex() {
+        let terms = extract_terms(
+            &json!({"samples": ["样本：cDNA 样本 1、2、阴性对照"]}),
+            &json!({"text": "样本：独立正文样本"}),
+        );
+        let labels: Vec<_> = terms
+            .iter()
+            .filter(|term| term.entity_type == "sample")
+            .map(|term| term.label.as_str())
+            .collect();
+        assert_eq!(labels.len(), 2);
+        assert!(labels.contains(&"样本：cDNA 样本 1、2、阴性对照"));
+        assert!(labels.contains(&"独立正文样本"));
+    }
+
+    #[test]
+    fn t148_chinese_arrays_dedupe_and_keep_body_supplements() {
+        let terms = extract_terms(
+            &json!({"samples": ["cDNA 样本 1、2、阴性对照", "cDNA 样本 1、2、阴性对照"],
+                "reagents": "PBS、Trypsin", "results": ["初始结果；第二结果"]}),
+            &json!({"text": "仪器：BioTek Synergy H1\n结果：细胞活力 95%"}),
+        );
+        let labels = |kind: &str| -> Vec<&str> {
+            terms
+                .iter()
+                .filter(|term| term.entity_type == kind)
+                .map(|term| term.label.as_str())
+                .collect()
+        };
+        assert_eq!(labels("sample"), ["cDNA 样本 1、2、阴性对照"]);
+        assert_eq!(labels("reagent").len(), 2);
+        assert!(labels("reagent").contains(&"PBS"));
+        assert!(labels("reagent").contains(&"Trypsin"));
+        assert_eq!(labels("instrument"), ["BioTek Synergy H1"]);
+        assert!(labels("result").contains(&"初始结果；第二结果"));
+        assert!(labels("result").contains(&"细胞活力 95%"));
     }
 
     #[test]

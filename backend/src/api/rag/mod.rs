@@ -1,6 +1,10 @@
 // RAG API 模块根：路由、查询/检索/日志、状态与提示词构建，并保留需要数据库/模拟 HTTP 服务的集成测试。
 
-use std::{collections::HashSet, sync::OnceLock, time::Instant};
+use std::{
+    collections::HashSet,
+    sync::OnceLock,
+    time::{Duration, Instant},
+};
 
 #[cfg(test)]
 use std::sync::Arc;
@@ -13,6 +17,7 @@ use axum::{
 };
 use regex::Regex;
 use serde_json::{json, Value};
+use sha2::{Digest, Sha256};
 
 use crate::{
     ai_provider::GenerationRequest,
@@ -58,6 +63,7 @@ const DATASET_COLUMNS: &str = r#"
 "#;
 const REPEATABLE_READ_READ_ONLY_SQL: &str =
     "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY";
+const PROJECT_INDEX_REBUILD_BUDGET: Duration = Duration::from_secs(300);
 
 #[cfg(test)]
 #[derive(Clone)]
@@ -325,55 +331,75 @@ async fn sync_file(
     Ok(Json(build_status(&state, file.project_id).await?))
 }
 
-pub(crate) async fn rebuild_project_index_action(
+pub(crate) async fn rebuild_project_index_in_transaction(
     state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     user: &UserRecord,
     project_id: i32,
-    ip_address: Option<&str>,
-    user_agent: Option<&str>,
+) -> Result<RagStatusRead, ApiError> {
+    rebuild_project_index_with_budget(
+        state,
+        transaction,
+        user,
+        project_id,
+        PROJECT_INDEX_REBUILD_BUDGET,
+    )
+    .await
+}
+
+async fn rebuild_project_index_with_budget(
+    state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    user: &UserRecord,
+    project_id: i32,
+    budget: Duration,
+) -> Result<RagStatusRead, ApiError> {
+    // The caller owns commit/rollback. Cancelling this future propagates an
+    // error so confirmed actions cannot commit a partial replacement index.
+    tokio::time::timeout(
+        budget,
+        rebuild_project_index_inner(state, transaction, user, project_id),
+    )
+    .await
+    .map_err(|_| {
+        ApiError::new(
+            StatusCode::GATEWAY_TIMEOUT,
+            "Project RAG index rebuild exceeded its total time budget",
+        )
+    })?
+}
+
+async fn rebuild_project_index_inner(
+    state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    user: &UserRecord,
+    project_id: i32,
 ) -> Result<RagStatusRead, ApiError> {
     require_project_access(&state.pool, user, project_id).await?;
     require_manager(state, user, project_id).await?;
-    let mut transaction = state.pool.begin().await?;
     let file_ids: Vec<i32> = sqlx::query_scalar(
-        "SELECT id FROM files WHERE project_id=$1 AND status='APPROVED'::filestatus AND file_category='KNOWLEDGE_DOCUMENT'::filecategory ORDER BY id",
-    )
-    .bind(project_id)
-    .fetch_all(&mut *transaction)
-    .await?;
-    // Keep each file's last good chunks until replacement embeddings are ready.
-    // `index_file` swaps one file atomically, so a provider failure cannot empty
-    // the entire project index midway through an explicit rebuild.
-    sqlx::query(
-        "UPDATE rag_file_syncs SET sync_status='stale',updated_at=now() WHERE project_id=$1 AND index_version=$2",
-    )
-    .bind(project_id)
-    .bind(&state.settings.rag_index_version)
-    .execute(&mut *transaction)
-    .await?;
-    transaction.commit().await?;
-
+        "SELECT id FROM files WHERE project_id=$1 AND status='APPROVED'::filestatus AND file_category='KNOWLEDGE_DOCUMENT'::filecategory ORDER BY id FOR UPDATE",
+    ).bind(project_id).fetch_all(&mut **transaction).await?;
+    sqlx::query("UPDATE rag_file_syncs SET sync_status='stale',updated_at=now() WHERE project_id=$1 AND index_version=$2")
+        .bind(project_id).bind(&state.settings.rag_index_version).execute(&mut **transaction).await?;
     for file_id in &file_ids {
-        sync_approved_file(state, user, *file_id, ip_address, user_agent).await?;
+        sync_approved_file_in_transaction(
+            state,
+            transaction,
+            user,
+            *file_id,
+            None,
+            Some("agent-confirmation"),
+        )
+        .await?;
     }
-    write_audit(
-        &state.pool,
-        AuditEvent {
-            actor_user_id: Some(user.id),
-            project_id: Some(project_id),
-            action: "rebuild_project_rag_index",
-            target_type: Some("project"),
-            target_id: Some(project_id),
-            detail: json!({
-                "index_version": state.settings.rag_index_version,
-                "file_count": file_ids.len()
-            }),
-            ip_address: ip_address.map(str::to_owned),
-            user_agent: user_agent.map(str::to_owned),
-        },
-    )
-    .await?;
-    build_status(state, project_id).await
+    write_audit(&mut **transaction, AuditEvent {
+        actor_user_id: Some(user.id),project_id: Some(project_id),action: "rebuild_project_rag_index",
+        target_type: Some("project"),target_id: Some(project_id),
+        detail: json!({"index_version":state.settings.rag_index_version,"file_count":file_ids.len()}),
+        ip_address: None,user_agent: Some("agent-confirmation".to_owned()),
+    }).await?;
+    build_status_in_transaction(state, transaction, project_id).await
 }
 
 /// Index an approved document exactly once per content hash and dataset.
@@ -387,65 +413,75 @@ pub(crate) async fn sync_approved_file(
     user_agent: Option<&str>,
 ) -> Result<(), ApiError> {
     let file = fetch_rag_file(&state.pool, file_id).await?;
-    if file.file_category != "knowledge_document" {
-        return Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "Only knowledge documents can be indexed",
-        ));
-    }
-    if file.status != "approved" {
-        return Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "Only approved documents can be indexed",
-        ));
-    }
-    let dataset = ensure_dataset_for_sync(state, user, file.project_id).await?;
-    require_compatible_embedding(state, &dataset)?;
-
-    // 图片资料的文本来源是人工确认过的 OCR。审核动作可以先完成，
-    // 但在 OCR 确认前不能把空/未审核文本送入知识库。
-    if is_ocr_document(&file.storage_path) {
-        let has_confirmed_ocr: bool = sqlx::query_scalar(
-            r#"
-            SELECT EXISTS(
-                SELECT 1 FROM file_ocr_results
-                WHERE file_id = $1
-                  AND file_hash = $2
-                  AND review_status = 'confirmed'
-            )
-            "#,
-        )
-        .bind(file.id)
-        .bind(&file.file_hash)
-        .fetch_one(&state.pool)
-        .await?;
-        if !has_confirmed_ocr {
-            sqlx::query(
-                "UPDATE files SET knowledge_sync_status = 'pending_sync', knowledge_sync_message = '等待 OCR 校对确认后自动入库' WHERE id = $1 AND status = 'APPROVED'::filestatus",
-            )
-            .bind(file.id)
-            .execute(&state.pool)
-            .await?;
-            return Ok(());
+    let mut transaction = state.pool.begin().await?;
+    match sync_approved_file_in_transaction(
+        state,
+        &mut transaction,
+        user,
+        file_id,
+        ip_address,
+        user_agent,
+    )
+    .await
+    {
+        Ok(()) => {
+            transaction.commit().await?;
+            Ok(())
+        }
+        Err(error) => {
+            transaction.rollback().await?;
+            if error.status == StatusCode::BAD_GATEWAY
+                || (error.status == StatusCode::FORBIDDEN
+                    && error.detail == crate::embedding::SENSITIVE_EXTERNAL_AI_DENIED)
+                || (error.status == StatusCode::CONFLICT && error.detail == EMBEDDING_MODEL_CHANGED)
+            {
+                mark_sync_failed(state, user, &file, &error.detail).await?;
+            }
+            Err(error)
         }
     }
+}
 
-    let mut transaction = state.pool.begin().await?;
-    let locked: (String, String) = sqlx::query_as(
-        r#"
-        SELECT lower(file_category::text), lower(status::text)
-        FROM files WHERE id = $1 FOR UPDATE
-        "#,
+/// Caller owns the commit: confirmed review/rebuild persists chunks and execution key together.
+pub(crate) async fn sync_approved_file_in_transaction(
+    state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    user: &UserRecord,
+    file_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
+) -> Result<(), ApiError> {
+    // All indexing paths acquire files before datasets/sync rows.
+    let locked: Option<(String, String)> = sqlx::query_as(
+        "SELECT lower(file_category::text), lower(status::text) FROM files WHERE id=$1 FOR UPDATE",
     )
-    .bind(file.id)
-    .fetch_one(&mut *transaction)
+    .bind(file_id)
+    .fetch_optional(&mut **transaction)
     .await?;
+    let locked = locked.ok_or_else(|| ApiError::new(StatusCode::NOT_FOUND, "File not found"))?;
     if locked.0 != "knowledge_document" || locked.1 != "approved" {
         return Err(ApiError::new(
             StatusCode::CONFLICT,
             "Only approved knowledge documents can be indexed",
         ));
     }
+    let file = fetch_rag_file(&mut **transaction, file_id).await?;
+    let dataset = ensure_dataset_in_transaction(state, transaction, user, file.project_id).await?;
+    require_compatible_embedding(state, &dataset)?;
+
+    // 图片资料的文本来源是人工确认过的 OCR。审核动作可以先完成，
+    // 但在 OCR 确认前不能把空/未审核文本送入知识库。
+    let content_hash = sync_content_hash(transaction, &file).await?;
+    let Some(content_hash) = content_hash else {
+        sqlx::query(
+                "UPDATE files SET knowledge_sync_status = 'pending_sync', knowledge_sync_message = '等待 OCR 校对确认后自动入库' WHERE id = $1 AND status = 'APPROVED'::filestatus",
+            )
+            .bind(file.id)
+            .execute(&mut **transaction)
+            .await?;
+        return Ok(());
+    };
+
     let already_synced: bool = sqlx::query_scalar(
         r#"
         SELECT EXISTS(
@@ -460,12 +496,11 @@ pub(crate) async fn sync_approved_file(
     )
     .bind(file.id)
     .bind(&dataset.dify_dataset_id)
-    .bind(&file.file_hash)
+    .bind(&content_hash)
     .bind(&state.settings.rag_index_version)
-    .fetch_one(&mut *transaction)
+    .fetch_one(&mut **transaction)
     .await?;
     if already_synced {
-        transaction.commit().await?;
         return Ok(());
     }
     sqlx::query(
@@ -486,22 +521,15 @@ pub(crate) async fn sync_approved_file(
     .bind(file.project_id)
     .bind(&dataset.dify_dataset_id)
     .bind(&state.settings.rag_index_version)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
     sqlx::query(
         "UPDATE files SET knowledge_sync_status = 'pending_sync', knowledge_sync_message = 'Extracting, chunking and embedding document' WHERE id = $1",
     )
     .bind(file.id)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
-    let chunk_count = match index_file(&mut transaction, state, &file).await {
-        Ok(count) => count,
-        Err(detail) => {
-            transaction.rollback().await?;
-            mark_sync_failed(state, user, &file, &detail).await?;
-            return Err(ApiError::new(StatusCode::BAD_GATEWAY, detail));
-        }
-    };
+    let chunk_count = index_file(transaction, state, &file).await?;
     let message = format!(
         "Indexed {chunk_count} chunks with {}",
         dataset.embedding_model
@@ -517,9 +545,9 @@ pub(crate) async fn sync_approved_file(
     .bind(file.id)
     .bind(format!("local-file-{}", file.id))
     .bind(chunk_count)
-    .bind(&file.file_hash)
+    .bind(&content_hash)
     .bind(&message)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
     let synced = sqlx::query(
         r#"
@@ -530,7 +558,7 @@ pub(crate) async fn sync_approved_file(
     )
     .bind(file.id)
     .bind(&message)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
     if synced.rows_affected() != 1 {
         return Err(ApiError::new(
@@ -539,7 +567,7 @@ pub(crate) async fn sync_approved_file(
         ));
     }
     write_audit(
-        &mut *transaction,
+        &mut **transaction,
         AuditEvent {
             actor_user_id: Some(user.id),
             project_id: Some(file.project_id),
@@ -552,7 +580,50 @@ pub(crate) async fn sync_approved_file(
         },
     )
     .await?;
-    transaction.commit().await?;
+    Ok(())
+}
+
+async fn sync_content_hash(
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    file: &crate::rag::RagFileRecord,
+) -> Result<Option<String>, ApiError> {
+    if !is_ocr_document(&file.storage_path) {
+        return Ok(Some(file.file_hash.clone()));
+    }
+    let text: Option<String> = sqlx::query_scalar(
+        "SELECT corrected_text FROM file_ocr_results WHERE file_id=$1 AND file_hash=$2 AND review_status='confirmed' ORDER BY id DESC LIMIT 1",
+    ).bind(file.id).bind(&file.file_hash).fetch_optional(&mut **transaction).await?;
+    Ok(text.map(|text| {
+        let mut hash = Sha256::new();
+        hash.update(file.file_hash.as_bytes());
+        hash.update([0]);
+        hash.update(text.as_bytes());
+        format!("{:x}", hash.finalize())
+    }))
+}
+
+/// Invalidate old OCR evidence in the same transaction as its corrected text.
+/// Failed/retried indexing cannot make the previous text eligible for retrieval.
+pub(crate) async fn invalidate_confirmed_ocr_index(
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    file_id: i32,
+) -> Result<(), ApiError> {
+    let file = fetch_rag_file(&mut **transaction, file_id).await?;
+    if file.file_category != "knowledge_document"
+        || file.status != "approved"
+        || !is_ocr_document(&file.storage_path)
+    {
+        return Ok(());
+    }
+    let hash = sync_content_hash(transaction, &file).await?;
+    let unchanged: bool = sqlx::query_scalar("SELECT EXISTS(SELECT 1 FROM rag_file_syncs WHERE file_id=$1 AND content_hash=$2 AND sync_status='synced')")
+        .bind(file_id).bind(&hash).fetch_one(&mut **transaction).await?;
+    if !unchanged {
+        sqlx::query("UPDATE files SET knowledge_sync_status='pending_sync',knowledge_sync_message='OCR 校对已更新，等待重新入库' WHERE id=$1")
+            .bind(file_id).execute(&mut **transaction).await?;
+        sqlx::query("UPDATE rag_file_syncs SET sync_status='stale',sync_message='OCR 校对已更新，等待重新入库',updated_at=now() WHERE file_id=$1")
+            .bind(file_id).execute(&mut **transaction).await?;
+    }
     Ok(())
 }
 
@@ -602,8 +673,8 @@ async fn retrieve_project_rag(
     Json(payload): Json<RagRetrievalRequest>,
 ) -> Result<Json<RagRetrievalResponse>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
-    // This route returns only local retrieval evidence and never contacts an
-    // external AI provider.  External-AI policy therefore must not block it;
+    // This route does not call a generation model. BM25/hash are local;
+    // shared retrieval enforces external-AI policy for network query embeddings.
     // blind-review access remains enforced below as a separate permission.
     require_unblinded_access(&state, &user, project_id).await?;
     let query = validate_query(&payload.query)?;
@@ -1695,12 +1766,18 @@ pub(super) async fn fetch_dataset(
         .await?)
 }
 
-async fn ensure_dataset_for_sync(
+async fn ensure_dataset_in_transaction(
     state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
     user: &UserRecord,
     project_id: i32,
 ) -> Result<RagDatasetRead, ApiError> {
-    if let Some(dataset) = fetch_dataset(state, project_id).await? {
+    let query = format!("SELECT {DATASET_COLUMNS} FROM project_rag_datasets WHERE project_id=$1");
+    if let Some(dataset) = sqlx::query_as::<_, RagDatasetRead>(&query)
+        .bind(project_id)
+        .fetch_optional(&mut **transaction)
+        .await?
+    {
         return Ok(dataset);
     }
     let generation_model = state.ai_provider.model();
@@ -1723,9 +1800,11 @@ async fn ensure_dataset_for_sync(
     .bind(&state.settings.embedding_model)
     .bind(generation_model)
     .bind(user.id)
-    .execute(&state.pool)
+    .execute(&mut **transaction)
     .await?;
-    fetch_dataset(state, project_id)
+    sqlx::query_as::<_, RagDatasetRead>(&query)
+        .bind(project_id)
+        .fetch_optional(&mut **transaction)
         .await?
         .ok_or_else(|| ApiError::internal("Unable to initialize local RAG dataset"))
 }
@@ -1755,6 +1834,8 @@ pub(crate) fn validate_query(query: &str) -> Result<&str, ApiError> {
     Ok(query)
 }
 
+const EMBEDDING_MODEL_CHANGED: &str = "嵌入模型已变更，请重新初始化资料库并重建已审核文档的索引";
+
 pub(super) fn require_compatible_embedding(
     state: &AppState,
     dataset: &RagDatasetRead,
@@ -1762,10 +1843,7 @@ pub(super) fn require_compatible_embedding(
     if dataset.embedding_model == state.settings.embedding_model {
         Ok(())
     } else {
-        Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "嵌入模型已变更，请重新初始化资料库并重建已审核文档的索引",
-        ))
+        Err(ApiError::new(StatusCode::CONFLICT, EMBEDDING_MODEL_CHANGED))
     }
 }
 
@@ -1777,12 +1855,22 @@ async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead
     sqlx::query(REPEATABLE_READ_READ_ONLY_SQL)
         .execute(&mut *transaction)
         .await?;
+    let status = build_status_in_transaction(state, &mut transaction, project_id).await?;
+    transaction.commit().await?;
+    Ok(status)
+}
+
+pub(crate) async fn build_status_in_transaction(
+    state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    project_id: i32,
+) -> Result<RagStatusRead, ApiError> {
     let dataset = {
         let query =
             format!("SELECT {DATASET_COLUMNS} FROM project_rag_datasets WHERE project_id = $1");
         sqlx::query_as::<_, RagDatasetRead>(&query)
             .bind(project_id)
-            .fetch_optional(&mut *transaction)
+            .fetch_optional(&mut **transaction)
             .await?
     };
     let dataset_id = dataset.as_ref().map(|record| record.id);
@@ -1790,12 +1878,12 @@ async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead
         .as_ref()
         .map(|record| record.embedding_model.clone());
     let active_corpus = document_snapshot_in_transaction(
-        &mut transaction,
+        transaction,
         project_id,
         &state.settings.rag_index_version,
     )
     .await?;
-    let active_graph = graph_snapshot_in_transaction(&mut transaction, project_id).await?;
+    let active_graph = graph_snapshot_in_transaction(transaction, project_id).await?;
     let (pending_sync_count, failed_sync_count, synced_count): (i64, i64, i64) = sqlx::query_as(
         r#"
             SELECT
@@ -1820,9 +1908,8 @@ async fn build_status(state: &AppState, project_id: i32) -> Result<RagStatusRead
     )
     .bind(project_id)
     .bind(&state.settings.rag_index_version)
-    .fetch_one(&mut *transaction)
+    .fetch_one(&mut **transaction)
     .await?;
-    transaction.commit().await?;
     Ok(RagStatusRead {
         initialized: dataset.is_some(),
         dataset,
@@ -1851,13 +1938,6 @@ async fn mark_sync_failed(
     detail: &str,
 ) -> Result<(), ApiError> {
     let mut transaction = state.pool.begin().await?;
-    sqlx::query(
-        "UPDATE rag_file_syncs SET sync_status = 'failed', sync_message = $2, updated_at = now() WHERE file_id = $1",
-    )
-    .bind(file.id)
-    .bind(detail)
-    .execute(&mut *transaction)
-    .await?;
     let failed = sqlx::query(
         r#"
         UPDATE files SET knowledge_sync_status = 'failed', knowledge_sync_message = $2
@@ -1872,6 +1952,13 @@ async fn mark_sync_failed(
         transaction.rollback().await?;
         return Ok(());
     }
+    sqlx::query(
+        "UPDATE rag_file_syncs SET sync_status = 'failed', sync_message = $2, updated_at = now() WHERE file_id = $1",
+    )
+    .bind(file.id)
+    .bind(detail)
+    .execute(&mut *transaction)
+    .await?;
     write_audit(
         &mut *transaction,
         AuditEvent {
@@ -2636,6 +2723,441 @@ mod tests {
         assert_eq!(
             config["graph_schema_version"],
             crate::rag::GRAPH_SCHEMA_VERSION
+        );
+    }
+
+    #[tokio::test]
+    async fn t148_index_provider_faults_keep_existing_chunks_and_release_locks() {
+        let Some((pool, settings, user)) = t148_index_fixture().await else {
+            return;
+        };
+        let body = r#"{"error":"fault replacement"}"#;
+        let responses = [None,
+            Some("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: 128\r\n\r\n{".to_owned()),
+            Some(format!("HTTP/1.1 503 Service Unavailable\r\nContent-Type: application/json\r\nContent-Length: {}\r\n\r\n{body}", body.len()))];
+        for response in responses {
+            let (url, provider) = t148_index_fault_provider(response).await;
+            let mut settings = settings.clone();
+            settings.embedding_api_url = url;
+            let mut state = AppState::new(pool.clone(), settings.clone()).unwrap();
+            state.embeddings = crate::embedding::EmbeddingService::with_timeouts(
+                &settings,
+                std::time::Duration::from_millis(50),
+                std::time::Duration::from_millis(100),
+            )
+            .unwrap();
+            let (_storage, project_id, file_id) =
+                t148_existing_index(&pool, &settings, &user).await;
+            let error = tokio::time::timeout(
+                std::time::Duration::from_secs(1),
+                super::sync_approved_file(&state, &user, file_id, None, None),
+            )
+            .await
+            .unwrap()
+            .unwrap_err();
+            provider.abort();
+            assert_eq!(error.status, StatusCode::BAD_GATEWAY);
+            t148_assert_index_and_lock(&pool, file_id).await;
+            let sync: (String, i32) = sqlx::query_as(
+                "SELECT sync_status,chunk_count FROM rag_file_syncs WHERE file_id=$1",
+            )
+            .bind(file_id)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+            assert_eq!(sync, ("failed".to_owned(), 1));
+            let success_audits: i64 = sqlx::query_scalar("SELECT count(*) FROM audit_logs WHERE project_id=$1 AND action='index_rag_document'")
+                .bind(project_id).fetch_one(&pool).await.unwrap();
+            assert_eq!(success_audits, 0);
+        }
+    }
+
+    #[tokio::test]
+    async fn t148_rebuild_total_budget_rolls_back_and_releases_locks() {
+        let Some((pool, settings, user)) = t148_index_fixture().await else {
+            return;
+        };
+        let (url, provider) = t148_index_fault_provider(None).await;
+        let mut settings = settings;
+        settings.embedding_api_url = url;
+        let state = AppState::new(pool.clone(), settings.clone()).unwrap();
+        let (_storage, project_id, file_id) = t148_existing_index(&pool, &settings, &user).await;
+        let mut transaction = pool.begin().await.unwrap();
+        let error = tokio::time::timeout(
+            std::time::Duration::from_secs(1),
+            super::rebuild_project_index_with_budget(
+                &state,
+                &mut transaction,
+                &user,
+                project_id,
+                std::time::Duration::from_millis(250),
+            ),
+        )
+        .await
+        .unwrap()
+        .unwrap_err();
+        provider.abort();
+        assert_eq!(error.status, StatusCode::GATEWAY_TIMEOUT);
+        // The confirmed-action caller propagates the error and drops its transaction.
+        drop(transaction);
+        t148_assert_index_and_lock(&pool, file_id).await;
+        let sync: (String, String, i32) = sqlx::query_as(
+            "SELECT sync_status,sync_message,chunk_count FROM rag_file_syncs WHERE file_id=$1",
+        )
+        .bind(file_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(
+            sync,
+            (
+                "synced".to_owned(),
+                "previous successful index".to_owned(),
+                1
+            )
+        );
+        let file_status: String =
+            sqlx::query_scalar("SELECT knowledge_sync_status FROM files WHERE id=$1")
+                .bind(file_id)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        assert_eq!(file_status, "synced");
+        let datasets: i64 =
+            sqlx::query_scalar("SELECT count(*) FROM project_rag_datasets WHERE project_id=$1")
+                .bind(project_id)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        assert_eq!(
+            datasets, 0,
+            "cancelled rebuild must not retain its new dataset"
+        );
+    }
+
+    async fn t148_index_fixture() -> Option<(sqlx::PgPool, Settings, crate::models::UserRecord)> {
+        let database_url = std::env::var("TEST_DATABASE_URL").ok()?;
+        let username = format!("index_fault_{}", Uuid::new_v4().simple());
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            ("SECRET_KEY".to_owned(), "index-fault-secret".to_owned()),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+            (
+                "EMBEDDING_BACKEND".to_owned(),
+                "openai_compatible".to_owned(),
+            ),
+            ("EMBEDDING_MODEL".to_owned(), "BAAI/bge-m3".to_owned()),
+            ("EMBEDDING_DIMENSION".to_owned(), "1024".to_owned()),
+            (
+                "EMBEDDING_API_URL".to_owned(),
+                "http://127.0.0.1:1/embeddings".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let user = sqlx::query_as("SELECT id,username,password_hash,display_name,email,lower(role::text) AS role,lower(status::text) AS status,auth_version FROM users WHERE username=$1")
+            .bind(username).fetch_one(&pool).await.unwrap();
+        Some((pool, settings, user))
+    }
+
+    #[tokio::test]
+    async fn t153_ocr_reconfirmation_refreshes_chunks_without_changing_physical_hash() {
+        let Some((pool, mut settings, user)) = t148_index_fixture().await else {
+            return;
+        };
+        settings.embedding_backend = "hash".to_owned();
+        settings.embedding_model = "rust-hash-1024-v1".to_owned();
+        settings.embedding_dimension = 1024;
+        let (_storage, project_id, file_id) = t148_existing_index(&pool, &settings, &user).await;
+        sqlx::query("UPDATE files SET storage_path='synthetic-confirmed.png',original_filename='synthetic-confirmed.png' WHERE id=$1").bind(file_id).execute(&pool).await.unwrap();
+        sqlx::query("INSERT INTO file_ocr_results (file_id,project_id,created_by,file_hash,raw_text,corrected_text,extraction_method,character_count,truncated,review_status) VALUES ($1,$2,$3,$4,'raw synthetic','first confirmed synthetic protocol','synthetic',33,false,'confirmed')")
+            .bind(file_id).bind(project_id).bind(user.id).bind("b".repeat(64)).execute(&pool).await.unwrap();
+        let state = AppState::new(pool.clone(), settings).unwrap();
+        super::sync_approved_file(&state, &user, file_id, None, None)
+            .await
+            .unwrap();
+        let first_hash: String =
+            sqlx::query_scalar("SELECT content_hash FROM rag_file_syncs WHERE file_id=$1")
+                .bind(file_id)
+                .fetch_one(&pool)
+                .await
+                .unwrap();
+        sqlx::query("UPDATE file_ocr_results SET corrected_text='second corrected synthetic protocol' WHERE file_id=$1").bind(file_id).execute(&pool).await.unwrap();
+        super::sync_approved_file(&state, &user, file_id, None, None)
+            .await
+            .unwrap();
+        let chunks: Vec<String> = sqlx::query_scalar(
+            "SELECT content FROM rag_document_chunks WHERE file_id=$1 ORDER BY chunk_index",
+        )
+        .bind(file_id)
+        .fetch_all(&pool)
+        .await
+        .unwrap();
+        assert_eq!(chunks, ["second corrected synthetic protocol"]);
+        let identity: (String,String)=sqlx::query_as("SELECT f.file_hash,r.content_hash FROM files f JOIN rag_file_syncs r ON r.file_id=f.id WHERE f.id=$1").bind(file_id).fetch_one(&pool).await.unwrap();
+        assert_eq!(identity.0, "b".repeat(64));
+        assert_ne!(identity.1, first_hash);
+    }
+
+    #[tokio::test]
+    async fn t153_incompatible_embedding_records_sync_failure_without_relabeling_conflicts() {
+        let Some((pool, settings, user)) = t148_index_fixture().await else {
+            return;
+        };
+        let (_storage, project_id, file_id) = t148_existing_index(&pool, &settings, &user).await;
+        sqlx::query("INSERT INTO project_rag_datasets (project_id,dify_dataset_id,dify_dataset_name,provider,embedding_model,generation_model,status,created_by) VALUES ($1,$2,'synthetic dataset','synthetic','old-model','synthetic','active',$3)")
+            .bind(project_id).bind(format!("local-project-{project_id}")).bind(user.id).execute(&pool).await.unwrap();
+        let state = AppState::new(pool.clone(), settings).unwrap();
+        let error = super::sync_approved_file(&state, &user, file_id, None, None)
+            .await
+            .unwrap_err();
+        assert_eq!(error.status, StatusCode::CONFLICT);
+        let actual: (String, Option<String>) = sqlx::query_as(
+            "SELECT knowledge_sync_status,knowledge_sync_message FROM files WHERE id=$1",
+        )
+        .bind(file_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(actual.0, "failed");
+        assert_eq!(actual.1.as_deref(), Some(error.detail.as_str()));
+        sqlx::query("UPDATE files SET status='ARCHIVED',knowledge_sync_status='synced',knowledge_sync_message='synthetic previous state' WHERE id=$1").bind(file_id).execute(&pool).await.unwrap();
+        let error = super::sync_approved_file(&state, &user, file_id, None, None)
+            .await
+            .unwrap_err();
+        assert_eq!(error.status, StatusCode::CONFLICT);
+        let actual: (String, Option<String>) = sqlx::query_as(
+            "SELECT knowledge_sync_status,knowledge_sync_message FROM files WHERE id=$1",
+        )
+        .bind(file_id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(
+            actual,
+            (
+                "synced".to_owned(),
+                Some("synthetic previous state".to_owned())
+            )
+        );
+    }
+
+    #[tokio::test]
+    async fn t153_sensitive_project_blocks_remote_index_and_retrieval_but_allows_bm25() {
+        let Some((pool, settings, user)) = t148_index_fixture().await else {
+            return;
+        };
+        let (_storage, project_id, file_id) = t148_existing_index(&pool, &settings, &user).await;
+        sqlx::query("UPDATE projects SET is_sensitive=true WHERE id=$1")
+            .bind(project_id)
+            .execute(&pool)
+            .await
+            .unwrap();
+        let state = AppState::new(pool.clone(), settings.clone()).unwrap();
+        let error = crate::rag::retrieve(&state, project_id, "synthetic query", false)
+            .await
+            .unwrap_err();
+        assert_eq!(
+            error.status,
+            StatusCode::FORBIDDEN,
+            "shared MCP/retrieval path must stop before embedding"
+        );
+        assert!(
+            !crate::rag::retrieve(&state, project_id, "previous evidence", true)
+                .await
+                .unwrap()
+                .is_empty()
+        );
+        let error = super::sync_approved_file(&state, &user, file_id, None, None)
+            .await
+            .unwrap_err();
+        assert_eq!(
+            error.status,
+            StatusCode::FORBIDDEN,
+            "remote indexing must stop at project policy"
+        );
+        let mut local = settings;
+        local.embedding_backend = "hash".to_owned();
+        local.embedding_model = "rust-hash-1024-v1".to_owned();
+        local.embedding_dimension = 1024;
+        let local = AppState::new(pool.clone(), local).unwrap();
+        super::sync_approved_file(&local, &user, file_id, None, None)
+            .await
+            .unwrap();
+        crate::rag::retrieve(&local, project_id, "Replacement approved protocol", false)
+            .await
+            .unwrap();
+    }
+
+    async fn t148_index_fault_provider(
+        response: Option<String>,
+    ) -> (String, tokio::task::JoinHandle<()>) {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let address = listener.local_addr().unwrap();
+        let provider = tokio::spawn(async move {
+            let (mut stream, _) = listener.accept().await.unwrap();
+            let mut request = [0; 4096];
+            let received = stream.read(&mut request).await.unwrap();
+            assert!(received > 0, "fault provider must receive a request");
+            if let Some(response) = response {
+                stream.write_all(response.as_bytes()).await.unwrap();
+            }
+            tokio::time::sleep(std::time::Duration::from_secs(2)).await;
+        });
+        (format!("http://{address}/embeddings"), provider)
+    }
+
+    async fn t148_existing_index(
+        pool: &sqlx::PgPool,
+        settings: &Settings,
+        user: &crate::models::UserRecord,
+    ) -> (tempfile::TempDir, i32, i32) {
+        let storage = tempfile::tempdir().unwrap();
+        let path = storage.path().join("protocol.txt");
+        std::fs::write(&path, "Replacement approved protocol.").unwrap();
+        let project_id: i32 = sqlx::query_scalar("INSERT INTO projects (name,is_sensitive,status,approval_enabled,owner_user_id) VALUES ($1,false,'ACTIVE',true,$2) RETURNING id")
+            .bind(format!("Index fault {}", Uuid::new_v4().simple())).bind(user.id).fetch_one(pool).await.unwrap();
+        let file_id: i32 = sqlx::query_scalar("INSERT INTO files (project_id,uploaded_by,file_category,original_filename,storage_path,file_size,file_hash,status,knowledge_sync_status) VALUES ($1,$2,'KNOWLEDGE_DOCUMENT','protocol.txt',$3,30,$4,'APPROVED','synced') RETURNING id")
+            .bind(project_id).bind(user.id).bind(path.to_str().unwrap()).bind("b".repeat(64)).fetch_one(pool).await.unwrap();
+        sqlx::query("INSERT INTO rag_file_syncs (file_id,project_id,dify_dataset_id,sync_status,sync_message,chunk_count,content_hash,index_version) VALUES ($1,$2,$3,'synced','previous successful index',1,$4,$5)")
+            .bind(file_id).bind(project_id).bind(format!("local-project-{project_id}")).bind("a".repeat(64)).bind(&settings.rag_index_version).execute(pool).await.unwrap();
+        let embedding = format!("[{}]", vec!["0"; settings.embedding_dimension].join(","));
+        sqlx::query("INSERT INTO rag_document_chunks (project_id,file_id,chunk_index,content,content_hash,character_count,embedding,metadata_json,chunk_version,index_version) VALUES ($1,$2,0,'previous evidence',$3,17,$4::vector,'{}',$5,$5)")
+            .bind(project_id).bind(file_id).bind("a".repeat(64)).bind(embedding).bind(&settings.rag_index_version).execute(pool).await.unwrap();
+        (storage, project_id, file_id)
+    }
+
+    async fn t148_assert_index_and_lock(pool: &sqlx::PgPool, file_id: i32) {
+        let mut probe = pool.begin().await.unwrap();
+        tokio::time::timeout(
+            std::time::Duration::from_secs(1),
+            sqlx::query("SELECT id FROM files WHERE id=$1 FOR UPDATE")
+                .bind(file_id)
+                .execute(&mut *probe),
+        )
+        .await
+        .expect("failed indexing must release the file lock")
+        .unwrap();
+        probe.rollback().await.unwrap();
+        let chunks: Vec<String> = sqlx::query_scalar(
+            "SELECT content FROM rag_document_chunks WHERE file_id=$1 ORDER BY chunk_index",
+        )
+        .bind(file_id)
+        .fetch_all(pool)
+        .await
+        .unwrap();
+        assert_eq!(chunks, ["previous evidence"]);
+    }
+
+    #[tokio::test]
+    async fn t139_rebuild_and_failure_follow_file_before_sync_lock_order() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let suffix = Uuid::new_v4().simple().to_string();
+        let username = format!("lock_order_{suffix}");
+        let directory = tempfile::tempdir().unwrap();
+        let document = directory.path().join("protocol.txt");
+        std::fs::write(&document, "Approved protocol for lock order regression.").unwrap();
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url.clone()),
+            ("SECRET_KEY".to_owned(), "lock-order-secret".to_owned()),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+            ("EMBEDDING_BACKEND".to_owned(), "hash".to_owned()),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let user: crate::models::UserRecord = sqlx::query_as("SELECT id,username,password_hash,display_name,email,lower(role::text) AS role,lower(status::text) AS status,auth_version FROM users WHERE username=$1")
+            .bind(username).fetch_one(&pool).await.unwrap();
+        let project_id: i32 = sqlx::query_scalar("INSERT INTO projects (name,is_sensitive,status,approval_enabled,owner_user_id) VALUES ($1,false,'ACTIVE',true,$2) RETURNING id")
+            .bind(format!("Lock order {suffix}")).bind(user.id).fetch_one(&pool).await.unwrap();
+        let file_id: i32=sqlx::query_scalar("INSERT INTO files (project_id,uploaded_by,file_category,original_filename,storage_path,file_size,file_hash,status,knowledge_sync_status) VALUES ($1,$2,'KNOWLEDGE_DOCUMENT','protocol.txt',$3,43,$4,'APPROVED','failed') RETURNING id")
+            .bind(project_id).bind(user.id).bind(document.to_str().unwrap()).bind("b".repeat(64)).fetch_one(&pool).await.unwrap();
+        sqlx::query("INSERT INTO rag_file_syncs (file_id,project_id,dify_dataset_id,sync_status,index_version) VALUES ($1,$2,'initial-dataset','failed',$3)")
+            .bind(file_id).bind(project_id).bind(&settings.rag_index_version).execute(&pool).await.unwrap();
+        let application_name = format!("t139-lock-{suffix}");
+        let options = database_url
+            .parse::<sqlx::postgres::PgConnectOptions>()
+            .unwrap()
+            .application_name(&application_name);
+        let worker_pool = sqlx::postgres::PgPoolOptions::new()
+            .max_connections(3)
+            .connect_with(options)
+            .await
+            .unwrap();
+        let state = AppState::new(worker_pool.clone(), settings).unwrap();
+        let mut results = Vec::new();
+        for mark_failure in [false, true] {
+            // This connection represents a regular sync that already owns files.
+            let mut regular_sync = pool.begin().await.unwrap();
+            let owner_pid: i32 = sqlx::query_scalar("SELECT pg_backend_pid()")
+                .fetch_one(&mut *regular_sync)
+                .await
+                .unwrap();
+            sqlx::query("SELECT id FROM files WHERE id=$1 FOR UPDATE")
+                .bind(file_id)
+                .execute(&mut *regular_sync)
+                .await
+                .unwrap();
+            sqlx::query("SET LOCAL lock_timeout='250ms'")
+                .execute(&mut *regular_sync)
+                .await
+                .unwrap();
+            let worker_state = state.clone();
+            let worker_user = user.clone();
+            let worker = tokio::spawn(async move {
+                if mark_failure {
+                    let file = crate::rag::fetch_rag_file(&worker_state.pool, file_id).await?;
+                    super::mark_sync_failed(&worker_state, &worker_user, &file, "test failure")
+                        .await
+                } else {
+                    let mut transaction = worker_state.pool.begin().await?;
+                    super::rebuild_project_index_in_transaction(
+                        &worker_state,
+                        &mut transaction,
+                        &worker_user,
+                        project_id,
+                    )
+                    .await?;
+                    transaction.commit().await?;
+                    Ok::<(), crate::error::ApiError>(())
+                }
+            });
+            // Observe the actual PostgreSQL wait; no scheduler timing assumptions.
+            tokio::time::timeout(std::time::Duration::from_secs(5),async {
+                loop {
+                    let waiting: bool = sqlx::query_scalar("SELECT EXISTS(SELECT 1 FROM pg_stat_activity WHERE application_name=$1 AND $2=ANY(pg_blocking_pids(pid)))")
+                        .bind(&application_name).bind(owner_pid).fetch_one(&pool).await.unwrap();
+                    if waiting { break; }
+                    tokio::time::sleep(std::time::Duration::from_millis(10)).await;
+                }
+            }).await.unwrap();
+            let progressed = sqlx::query(
+                "UPDATE rag_file_syncs SET sync_message='regular sync progressed' WHERE file_id=$1",
+            )
+            .bind(file_id)
+            .execute(&mut *regular_sync)
+            .await
+            .is_ok();
+            regular_sync.rollback().await.unwrap();
+            worker.await.unwrap().unwrap();
+            results.push((mark_failure, progressed));
+        }
+        worker_pool.close().await;
+        assert!(
+            results.iter().all(|(_, progressed)| *progressed),
+            "regular files→syncs must progress while rebuild/failure waits for files: {results:?}"
         );
     }
 

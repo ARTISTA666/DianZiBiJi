@@ -1,7 +1,7 @@
 use std::{env, ffi::OsString, net::SocketAddr, time::Duration};
 
 use eln_backend::{
-    api::schedule_queued_experiments,
+    api::{expire_pending_actions, schedule_queued_experiments},
     build_app,
     config::Settings,
     db::{
@@ -87,39 +87,16 @@ fn monitor_stale_experiment_runs(pool: PgPool) {
 }
 
 /// 定期自动过期 Agent pending action——当用户未及时确认/拒绝时，
-/// 将过期的 action 标记为 expired 并释放对应会话，防止会话无限期卡在
-/// awaiting_confirmation 状态。
+/// 将过期的 action 标记为 expired，所属轮次的待确认项全部结束后释放会话。
 fn monitor_expired_pending_actions(pool: PgPool) {
     tokio::spawn(async move {
         let mut interval = tokio::time::interval(Duration::from_secs(5));
         interval.tick().await;
         loop {
             interval.tick().await;
-            match sqlx::query(
-                r#"
-                WITH expired AS (
-                    UPDATE agent_pending_actions
-                    SET status = 'expired', decided_at = now()
-                    WHERE status = 'pending' AND expires_at <= now()
-                    RETURNING id, session_id
-                )
-                UPDATE agent_sessions s
-                SET active_turn = NULL,
-                    status = 'completed',
-                    final_state_json = jsonb_build_object('reason', 'pending_action_expired'),
-                    updated_at = now()
-                FROM expired e
-                WHERE s.id = e.session_id AND s.status = 'awaiting_confirmation'
-                "#,
-            )
-            .execute(&pool)
-            .await
-            {
-                Ok(result) if result.rows_affected() > 0 => {
-                    warn!(
-                        rows = result.rows_affected(),
-                        "auto-expired stale agent pending actions"
-                    );
+            match expire_pending_actions(&pool).await {
+                Ok(expired) if expired > 0 => {
+                    warn!(expired, "auto-expired stale agent pending actions");
                 }
                 Ok(_) => {}
                 Err(error) => {

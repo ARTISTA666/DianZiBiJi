@@ -397,8 +397,31 @@ pub(crate) async fn submit_note_action(
     ip_address: Option<&str>,
     user_agent: Option<&str>,
 ) -> Result<Json<NoteRead>, ApiError> {
-    let note = fetch_note(&state.pool, note_id).await?;
+    let mut transaction = state.pool.begin().await?;
+    let result = submit_note_in_transaction(
+        state,
+        &mut transaction,
+        user,
+        note_id,
+        ip_address,
+        user_agent,
+    )
+    .await?;
+    transaction.commit().await?;
+    Ok(result)
+}
+
+pub(crate) async fn submit_note_in_transaction(
+    state: &AppState,
+    transaction: &mut Transaction<'_, Postgres>,
+    user: &UserRecord,
+    note_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
+) -> Result<Json<NoteRead>, ApiError> {
+    let note = fetch_note_for_update(transaction, note_id).await?;
     let project = require_project_access(&state.pool, user, note.project_id).await?;
+    require_write(&state.pool, user, note.project_id).await?;
     if note.owner_user_id != user.id {
         return Err(ApiError::new(
             StatusCode::FORBIDDEN,
@@ -412,25 +435,17 @@ pub(crate) async fn submit_note_action(
         ));
     }
 
-    let mut transaction = state.pool.begin().await?;
-    let locked = fetch_note_for_update(&mut transaction, note_id).await?;
-    if !matches!(locked.status.as_str(), "draft" | "returned") {
-        return Err(ApiError::new(
-            StatusCode::CONFLICT,
-            "Note cannot be submitted",
-        ));
-    }
     // 提审必须落在版本快照上：绕过 create/update 路径产生的无版本草稿
     // （如脚本直接灌库的数据）在这里补建空快照，否则审批与作废将因
     // "Note has no current version" 永远无法执行。
-    let locked_version_id = match locked.current_version_id {
+    let locked_version_id = match note.current_version_id {
         Some(version_id) => version_id,
         None => {
             let version_number: i32 = sqlx::query_scalar(
                 "SELECT COALESCE(max(version_number), 0)::int + 1 FROM note_versions WHERE note_id = $1",
             )
             .bind(note_id)
-            .fetch_one(&mut *transaction)
+            .fetch_one(&mut **transaction)
             .await?;
             let created_version_id: i32 = sqlx::query_scalar(
                 r#"
@@ -447,12 +462,12 @@ pub(crate) async fn submit_note_action(
             .bind(preserve_json(&json!({})))
             .bind(preserve_json(&json!({})))
             .bind(user.id)
-            .fetch_one(&mut *transaction)
+            .fetch_one(&mut **transaction)
             .await?;
             sqlx::query("UPDATE experiment_notes SET current_version_id = $2 WHERE id = $1")
                 .bind(note_id)
                 .bind(created_version_id)
-                .execute(&mut *transaction)
+                .execute(&mut **transaction)
                 .await?;
             created_version_id
         }
@@ -462,7 +477,7 @@ pub(crate) async fn submit_note_action(
     } else {
         sqlx::query("UPDATE note_versions SET is_locked = true WHERE id = $1")
             .bind(locked_version_id)
-            .execute(&mut *transaction)
+            .execute(&mut **transaction)
             .await?;
         "APPROVED"
     };
@@ -471,12 +486,12 @@ pub(crate) async fn submit_note_action(
     )
     .bind(note_id)
     .bind(status)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
     if !project.approval_enabled {
-        let run = extract_note(&mut transaction, note_id, user.id, true).await?;
+        let run = extract_note(transaction, note_id, user.id, true).await?;
         audit_note(
-            &mut transaction,
+            transaction,
             user,
             "auto_extract_note_kg",
             note.project_id,
@@ -491,9 +506,9 @@ pub(crate) async fn submit_note_action(
         )
         .await?;
     }
-    crate::api::search::sync_note(&mut transaction, note_id).await?;
+    crate::api::search::sync_note(transaction, note_id).await?;
     audit_note(
-        &mut transaction,
+        transaction,
         user,
         "submit_note",
         note.project_id,
@@ -503,8 +518,7 @@ pub(crate) async fn submit_note_action(
         user_agent,
     )
     .await?;
-    transaction.commit().await?;
-    Ok(Json(fetch_note(&state.pool, note_id).await?))
+    Ok(Json(fetch_note_for_update(transaction, note_id).await?))
 }
 
 async fn list_note_versions(
@@ -669,6 +683,18 @@ async fn list_pending_approvals(
         SELECT {NOTE_COLUMNS}
         FROM experiment_notes
         WHERE status = 'SUBMITTED'::notestatus
+          AND EXISTS(
+              SELECT 1 FROM projects p
+              WHERE p.id = experiment_notes.project_id
+                AND (
+                    $2 OR p.owner_user_id = $1 OR ($3 AND p.is_sensitive = false)
+                    OR EXISTS(
+                        SELECT 1 FROM project_members reader
+                        WHERE reader.project_id = p.id AND reader.user_id = $1
+                          AND reader.can_read = true
+                    )
+                )
+          )
           AND NOT EXISTS(
               SELECT 1 FROM project_reviewers pr
               WHERE pr.project_id = experiment_notes.project_id
@@ -688,6 +714,7 @@ async fn list_pending_approvals(
     let notes = sqlx::query_as::<_, NoteRead>(&query)
         .bind(user.id)
         .bind(user.role == "super_admin")
+        .bind(user.role == "pi")
         .fetch_all(&state.pool)
         .await?;
     Ok(Json(notes))
@@ -740,7 +767,33 @@ pub(crate) async fn review_note_action(
     ip_address: Option<&str>,
     user_agent: Option<&str>,
 ) -> Result<Json<NoteRead>, ApiError> {
-    let note = require_note_access(&state.pool, user, note_id).await?;
+    let mut transaction = state.pool.begin().await?;
+    let result = review_note_in_transaction(
+        state,
+        &mut transaction,
+        user,
+        note_id,
+        payload,
+        approve,
+        (ip_address, user_agent),
+    )
+    .await?;
+    transaction.commit().await?;
+    Ok(result)
+}
+
+pub(crate) async fn review_note_in_transaction(
+    state: &AppState,
+    transaction: &mut Transaction<'_, Postgres>,
+    user: &UserRecord,
+    note_id: i32,
+    payload: ApprovalRequest,
+    approve: bool,
+    client_info: (Option<&str>, Option<&str>),
+) -> Result<Json<NoteRead>, ApiError> {
+    let (ip_address, user_agent) = client_info;
+    let note = fetch_note_for_update(transaction, note_id).await?;
+    require_project_access(&state.pool, user, note.project_id).await?;
     require_review(&state.pool, user, note.project_id).await?;
     if note.status != "submitted" {
         let detail = if approve {
@@ -758,7 +811,6 @@ pub(crate) async fn review_note_action(
     } else {
         ("RETURNED", "returned", "return_note")
     };
-    let mut transaction = state.pool.begin().await?;
     let result = sqlx::query(
         r#"
         UPDATE experiment_notes
@@ -768,7 +820,7 @@ pub(crate) async fn review_note_action(
     )
     .bind(note_id)
     .bind(status)
-    .execute(&mut *transaction)
+    .execute(&mut **transaction)
     .await?;
     if result.rows_affected() != 1 {
         let detail = if approve {
@@ -781,11 +833,11 @@ pub(crate) async fn review_note_action(
     if approve {
         sqlx::query("UPDATE note_versions SET is_locked = true WHERE id = $1")
             .bind(version_id)
-            .execute(&mut *transaction)
+            .execute(&mut **transaction)
             .await?;
     }
     insert_approval(
-        &mut transaction,
+        transaction,
         note_id,
         version_id,
         user.id,
@@ -794,9 +846,9 @@ pub(crate) async fn review_note_action(
     )
     .await?;
     if approve {
-        let run = extract_note(&mut transaction, note_id, user.id, true).await?;
+        let run = extract_note(transaction, note_id, user.id, true).await?;
         audit_note(
-            &mut transaction,
+            transaction,
             user,
             "auto_extract_note_kg",
             note.project_id,
@@ -811,9 +863,9 @@ pub(crate) async fn review_note_action(
         )
         .await?;
     }
-    crate::api::search::sync_note(&mut transaction, note_id).await?;
+    crate::api::search::sync_note(transaction, note_id).await?;
     audit_note(
-        &mut transaction,
+        transaction,
         user,
         audit_action,
         note.project_id,
@@ -823,8 +875,7 @@ pub(crate) async fn review_note_action(
         user_agent,
     )
     .await?;
-    transaction.commit().await?;
-    Ok(Json(fetch_note(&state.pool, note_id).await?))
+    Ok(Json(fetch_note_for_update(transaction, note_id).await?))
 }
 
 async fn list_note_approvals(
@@ -1923,6 +1974,71 @@ mod tests {
                 .all(|item| item["id"] != note_id),
             "independent reviewer received ordinary NoteRead metadata"
         );
+
+        let member_name = format!("pending_guard_member_{suffix}");
+        let (created, member) = call(
+            &app, "POST", "/users", Some(&admin_token),
+            Some(json!({"username":member_name,"password":"MemberPass123!","display_name":"No-read reviewer","role":"member"})),
+        ).await;
+        assert_eq!(created, StatusCode::OK);
+        let member_id = member["id"].as_i64().unwrap();
+        let (added, _) = call(
+            &app, "POST", &format!("/projects/{project_id}/members"), Some(&admin_token),
+            Some(json!({"user_id":member_id,"project_role":"member","can_read":false,"can_review":true})),
+        ).await;
+        assert_eq!(added, StatusCode::OK);
+        let member_token = login(&app, &member_name, "MemberPass123!").await;
+        let (detail_status, _) = call(
+            &app,
+            "GET",
+            &format!("/notes/{note_id}"),
+            Some(&member_token),
+            None,
+        )
+        .await;
+        assert_eq!(detail_status, StatusCode::FORBIDDEN);
+        let (pending_status, pending) =
+            call(&app, "GET", "/approvals/pending", Some(&member_token), None).await;
+        assert_eq!(pending_status, StatusCode::OK);
+        assert!(
+            pending
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|item| item["id"] != note_id),
+            "member without read permission received note metadata"
+        );
+
+        let (granted, _) = call(
+            &app,
+            "PATCH",
+            &format!("/projects/{project_id}/members/{member_id}"),
+            Some(&admin_token),
+            Some(json!({"can_read":true})),
+        )
+        .await;
+        assert_eq!(granted, StatusCode::OK);
+        let (_, pending) = call(&app, "GET", "/approvals/pending", Some(&member_token), None).await;
+        assert!(pending
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|item| item["id"] == note_id));
+        let (revoked, _) = call(
+            &app,
+            "PATCH",
+            &format!("/projects/{project_id}/members/{member_id}"),
+            Some(&admin_token),
+            Some(json!({"can_read":false})),
+        )
+        .await;
+        assert_eq!(revoked, StatusCode::OK);
+        let (_, pending) = call(&app, "GET", "/approvals/pending", Some(&member_token), None).await;
+        assert!(pending
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|item| item["id"] != note_id));
     }
 
     #[tokio::test]

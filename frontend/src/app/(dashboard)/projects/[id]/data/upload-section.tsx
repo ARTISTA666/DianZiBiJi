@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,12 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dropzone } from "@/components/dropzone";
 import type { Note, StoredFile } from "@/lib/api";
 import { getErrorMessage } from "@/lib/utils";
+import { KNOWLEDGE_DOCUMENT_ACCEPT, NOTE_ATTACHMENT_ACCEPT, isSupportedKnowledgeFile } from "@/lib/knowledge-files";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8001";
-const SUPPORTED_UPLOAD_ACCEPT = [
-  ".pdf", ".jpg", ".jpeg", ".png", ".gif", ".webp", ".tif", ".tiff", ".bmp", ".txt",
-  ".doc", ".docx", ".xls", ".xlsx", ".pptx",
-].join(",");
 
 function uploadFileWithProgress(
   file: File,
@@ -70,7 +67,7 @@ interface UploadSectionProps {
   /** 上传开始时回调，父组件用于清除旧错误提示 */
   onStart: () => void;
   /** 上传成功后回传文件名列表，由父组件统一提示并刷新列表 */
-  onUploaded: (names: string[]) => void;
+  onUploaded: (names: string[]) => void | Promise<void>;
   /** 上传失败回传错误文案，由父组件统一展示 */
   onError: (message: string) => void;
   notes: Note[];
@@ -82,50 +79,88 @@ export function UploadSection({ projectId, token, onStart, onUploaded, onError, 
   const [uploading, setUploading] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const contextEpoch = useRef(0);
+  const uploadActive = useRef(false);
+
+  useEffect(() => {
+    contextEpoch.current += 1;
+    uploadActive.current = false;
+    setSelectedFiles([]);
+    setNoteId("");
+    setUploading(false);
+    setUploadProgress(null);
+    return () => { contextEpoch.current += 1; };
+  }, [projectId, token]);
 
   const handleFilesSelected = useCallback((files: File[]) => {
+    if (uploadActive.current) return;
+    if (category === "knowledge_document" && files.some((file) => !isSupportedKnowledgeFile(file))) {
+      onError("知识文档支持 PDF、图片和文本数据；Office 文件请转换格式，或作为笔记附件上传。");
+      return;
+    }
     setSelectedFiles((prev) => [...prev, ...files]);
-  }, []);
+  }, [category, onError]);
 
   const handleUpload = async () => {
     const authToken = token;
-    if (!authToken || selectedFiles.length === 0) return;
+    if (!authToken || uploadActive.current || selectedFiles.length === 0 || (category === "note_attachment" && !noteId)) return;
+    if (category === "knowledge_document" && selectedFiles.some((file) => !isSupportedKnowledgeFile(file))) {
+      onError("当前选择含不支持的知识文档格式，请转换格式后重新选择。");
+      return;
+    }
+    const requestEpoch = contextEpoch.current;
+    const isCurrent = () => requestEpoch === contextEpoch.current;
+    const batch = [...selectedFiles];
+    const names: string[] = [];
+    let errorMessage: string | null = null;
+    uploadActive.current = true;
     setUploading(true);
     onStart();
     setUploadProgress(0);
     try {
-      const names: string[] = [];
-      for (let i = 0; i < selectedFiles.length; i++) {
-        const file = selectedFiles[i];
+      for (let i = 0; i < batch.length; i++) {
+        if (!isCurrent()) return;
+        const file = batch[i];
         await uploadFileWithProgress(file, projectId, category, noteId ? Number(noteId) : null, (pct) => {
           // Overall progress across all files
-          const overall = Math.round(((i + pct / 100) / selectedFiles.length) * 100);
-          setUploadProgress(overall);
+          const overall = Math.round(((i + pct / 100) / batch.length) * 100);
+          if (isCurrent()) setUploadProgress(overall);
         });
+        if (!isCurrent()) return;
         names.push(file.name);
+        setSelectedFiles((pending) => pending.filter((item) => item !== file));
       }
-      setUploadProgress(100);
-      setSelectedFiles([]);
-      onUploaded(names);
     } catch (e) {
-      onError(getErrorMessage(e, "上传失败"));
+      errorMessage = getErrorMessage(e, "上传失败");
     } finally {
-      setUploading(false);
-      setUploadProgress(null);
+      if (isCurrent()) {
+        try {
+          if (names.length > 0) await onUploaded(names);
+        } catch (e) {
+          errorMessage ??= getErrorMessage(e, "文件已上传，刷新列表失败");
+        }
+        if (isCurrent()) {
+          // The refresh callback clears old errors; preserve the failed upload afterwards.
+          if (errorMessage) onError(errorMessage);
+          uploadActive.current = false;
+          setUploading(false);
+          setUploadProgress(null);
+        }
+      }
     }
   };
 
   return (
     <Card>
       <CardContent className="flex items-start gap-3 py-4">
-        <Select value={category} onValueChange={setCategory}>
+        <Select value={category} disabled={uploading} onValueChange={(value) => { if (!uploadActive.current) { setCategory(value); setSelectedFiles([]); } }}>
           <SelectTrigger aria-label="文件类别" className="w-36 mt-2"><SelectValue /></SelectTrigger>
           <SelectContent>
             {categories.map((c) => (<SelectItem key={c} value={c}>{categoryText[c] || c}</SelectItem>))}
           </SelectContent>
         </Select>
         {category === "note_attachment" && (
-          <Select value={noteId} onValueChange={setNoteId}>
+          <Select value={noteId} disabled={uploading} onValueChange={(value) => { if (!uploadActive.current) setNoteId(value); }}>
             <SelectTrigger aria-label="关联笔记" className="w-52 mt-2"><SelectValue placeholder="选择关联笔记" /></SelectTrigger>
             <SelectContent>
               {notes.map((note) => (
@@ -135,12 +170,17 @@ export function UploadSection({ projectId, token, onStart, onUploaded, onError, 
           </Select>
         )}
         <div className="flex-1 space-y-2">
-          <Dropzone
-            onFilesSelected={handleFilesSelected}
-            accept={SUPPORTED_UPLOAD_ACCEPT}
-            multiple
-            maxSize={50 * 1024 * 1024}
-          />
+          <div aria-disabled={uploading} className={uploading ? "pointer-events-none opacity-60" : undefined}>
+            <Dropzone
+              onFilesSelected={handleFilesSelected}
+              accept={category === "knowledge_document" ? KNOWLEDGE_DOCUMENT_ACCEPT : NOTE_ATTACHMENT_ACCEPT}
+              multiple
+              maxSize={50 * 1024 * 1024}
+            />
+          </div>
+          {category === "knowledge_document" && (
+            <p className="text-xs text-muted-foreground">支持 PDF、图片、TXT/CSV/TSV/SOFT/Markdown/JSON/XML/HTML/YAML 等文本及其 gzip 压缩文件；Office 文档请先转换格式。</p>
+          )}
           {selectedFiles.length > 0 && (
             <div className="text-xs text-muted-foreground">
               已选择 {selectedFiles.length} 个文件：{selectedFiles.map((f) => f.name).join("、")}

@@ -113,6 +113,8 @@ export const createCoreSlice: StateCreator<ProjectStoreState, [], [], CoreSlice>
       notesTotal: 0,
       pendingNotes: [],
       files: [],
+      filesTotal: 0,
+      filesComplete: false,
       ragStatus: null,
       ragAnswer: null,
       kgGraph: null,

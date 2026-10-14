@@ -17,7 +17,7 @@ use crate::{
     },
     permissions::{can_manage_project, require_project_access},
     project_alert::{
-        acknowledge_alert, close_resolved_alerts, evaluate_project_alerts, evaluation_audit_detail,
+        acknowledge_alert, close_resolved_alerts, evaluate_project_alerts_with_audit,
         project_alert_thresholds, upsert_alert_threshold,
     },
     AppState,
@@ -49,7 +49,8 @@ async fn evaluate_alerts(
 ) -> Result<Json<AlertEvaluationSummary>, ApiError> {
     require_project_access(&state.pool, &user, project_id).await?;
     let mut transaction = state.pool.begin().await?;
-    let summary = evaluate_project_alerts(&mut transaction, project_id).await?;
+    let (summary, mut detail) =
+        evaluate_project_alerts_with_audit(&mut transaction, project_id).await?;
     let resolved = close_resolved_alerts(&mut transaction, project_id, &summary).await?;
     write_audit(
         &mut *transaction,
@@ -60,7 +61,6 @@ async fn evaluate_alerts(
             target_type: Some("project"),
             target_id: Some(project_id),
             detail: {
-                let mut detail = evaluation_audit_detail(&summary);
                 if let Some(object) = detail.as_object_mut() {
                     object.insert("resolved".to_owned(), json!(resolved));
                 }
@@ -323,6 +323,120 @@ mod tests {
         .await;
         let project_id = project["id"].as_i64().unwrap();
         (app, admin, member, project_id, pool)
+    }
+
+    #[tokio::test]
+    async fn test_matched_entity_update_interval_resets_on_reextract_and_is_zero_without_matches() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let (app, admin, _, project_id, pool) = setup(&database_url, "alert_interval").await;
+        let (status, profile) = call(&app, "GET", "/auth/me", Some(&admin), None).await;
+        assert_eq!(status, StatusCode::OK);
+        let admin_id = profile["id"].as_i64().unwrap();
+        sqlx::query(
+            "INSERT INTO kg_blueprint_nodes (project_id, entity_type, label, normalized_label, created_by, created_at) VALUES ($1, 'reagent', 'PBS', $3, $2, now() - interval '40 days')",
+        ).bind(project_id as i32).bind(admin_id as i32)
+         .bind(crate::knowledge_graph::normalize_entity_label("PBS"))
+         .execute(&pool).await.unwrap();
+        let (status, unmatched) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/evaluate"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        let metric_value = |summary: &Value, metric: &str| -> f64 {
+            summary["metrics"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|row| row["metric"] == metric)
+                .unwrap()["value"]
+                .as_f64()
+                .unwrap()
+        };
+        assert_eq!(metric_value(&unmatched, "blueprint_stagnant_days"), 0.0);
+        assert_eq!(metric_value(&unmatched, "progress_deviation"), 1.0);
+        let (status, note) = call(
+            &app, "POST", &format!("/projects/{project_id}/notes"), Some(&admin),
+            Some(json!({"title": "Interval note", "experiment_type": "Assay", "fixed_fields_json": {"reagents": ["PBS"]}})),
+        ).await;
+        assert_eq!(status, StatusCode::OK);
+        let note_id = note["id"].as_i64().unwrap();
+        for endpoint in ["submit", "approve"] {
+            let (status, _) = call(
+                &app,
+                "POST",
+                &format!("/notes/{note_id}/{endpoint}"),
+                Some(&admin),
+                Some(json!({})),
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK);
+        }
+        sqlx::query(
+            "UPDATE kg_entities SET updated_at = now() - interval '40 days' WHERE project_id = $1",
+        )
+        .bind(project_id as i32)
+        .execute(&pool)
+        .await
+        .unwrap();
+        let (_, old) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/evaluate"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert!(
+            metric_value(&old, "blueprint_stagnant_days") >= 40.0,
+            "{old}"
+        );
+        assert_eq!(metric_value(&old, "progress_deviation"), 0.0);
+        let (_, inbox) = call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/alerts"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        let alert = inbox["alerts"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|row| row["metric"] == "blueprint_stagnant_days")
+            .unwrap();
+        assert!(alert["detail"]
+            .as_str()
+            .unwrap()
+            .starts_with("匹配实体最近更新间隔"));
+        let (status, _) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/kg/extract"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        let (_, refreshed) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/evaluate"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert!(metric_value(&refreshed, "blueprint_stagnant_days") < 0.01);
+        assert_eq!(
+            metric_value(&old, "progress_deviation"),
+            metric_value(&refreshed, "progress_deviation")
+        );
     }
 
     /// 审批停滞指标：提交一条笔记（不审批）→ 评估 → open 告警；
@@ -695,5 +809,137 @@ mod tests {
         .await;
         assert_eq!(valid_ratio_status, StatusCode::OK);
         assert_eq!(valid_ratio["warn_threshold"], 0.7);
+    }
+    #[tokio::test]
+    async fn test_return_rate_counts_returned_and_legacy_return() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let (app, admin, _, project_id, pool) = setup(&database_url, "return_contract").await;
+        let mut returned_note_id = 0;
+        for endpoint in ["return", "return", "return", "approve"] {
+            let (status, note) = call(
+                &app,
+                "POST",
+                &format!("/projects/{project_id}/notes"),
+                Some(&admin),
+                Some(json!({"title": format!("Review {endpoint}"), "experiment_type": "Assay"})),
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK, "{note}");
+            let note_id = note["id"].as_i64().unwrap();
+            for action in ["submit", endpoint] {
+                let (status, response) = call(
+                    &app,
+                    "POST",
+                    &format!("/notes/{note_id}/{action}"),
+                    Some(&admin),
+                    Some(json!({})),
+                )
+                .await;
+                assert_eq!(status, StatusCode::OK, "{response}");
+            }
+            if endpoint == "return" {
+                returned_note_id = note_id;
+            }
+        }
+        let metric = |summary: &Value| {
+            summary["metrics"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|row| row["metric"] == "return_rate")
+                .unwrap()
+                .clone()
+        };
+        let (status, summary) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/evaluate"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{summary}");
+        assert_eq!(
+            metric(&summary)["value"],
+            0.75,
+            "normal returned approvals must be counted"
+        );
+        assert_eq!(metric(&summary)["level"], "critical");
+        let actions: Vec<String> = sqlx::query_scalar("SELECT a.action FROM note_approvals a JOIN experiment_notes n ON n.id=a.note_id WHERE n.project_id=$1 ORDER BY a.id")
+            .bind(project_id as i32).fetch_all(&pool).await.unwrap();
+        assert_eq!(actions, ["returned", "returned", "returned", "approved"]);
+        // Only the backward-compatibility case uses a historical fixture.
+        sqlx::query("INSERT INTO note_approvals (note_id,version_id,reviewer_user_id,action) SELECT note_id,version_id,reviewer_user_id,'return' FROM note_approvals WHERE note_id=$1 ORDER BY id DESC LIMIT 1")
+            .bind(returned_note_id as i32).execute(&pool).await.unwrap();
+        let (_, summary) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/evaluate"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert_eq!(
+            metric(&summary)["value"],
+            0.8,
+            "historical return is counted alongside returned"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_t148_alert_audit_keeps_thresholds_and_exact_support_window() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let (app, admin, _, project_id, pool) = setup(&database_url, "alert_provenance").await;
+        let (_, me) = call(&app, "GET", "/auth/me", Some(&admin), None).await;
+        let user_id = me["id"].as_i64().unwrap() as i32;
+        let (_,note)=call(&app,"POST",&format!("/projects/{project_id}/notes"),Some(&admin),Some(json!({"title":"Audit note","experiment_type":"Assay","content_text":"Evidence for evaluation."}))).await;
+        let note_id = note["id"].as_i64().unwrap() as i32;
+        let mut approval_ids = Vec::new();
+        for action in ["approve", "return", "returned"] {
+            let id:i32=sqlx::query_scalar("INSERT INTO note_approvals(note_id,version_id,reviewer_user_id,action,comment) SELECT id,current_version_id,$2,$3,'audit fixture' FROM experiment_notes WHERE id=$1 RETURNING id").bind(note_id).bind(user_id).bind(action).fetch_one(&pool).await.unwrap();
+            approval_ids.push(id);
+        }
+        let (status,threshold)=call(&app,"POST",&format!("/projects/{project_id}/alerts/thresholds"),Some(&admin),Some(json!({"metric":"return_rate","warn_threshold":0.2,"critical_threshold":0.6,"enabled":true}))).await;
+        assert_eq!(status, StatusCode::OK, "{threshold}");
+        let (status, summary) = call(
+            &app,
+            "POST",
+            &format!("/projects/{project_id}/alerts/evaluate"),
+            Some(&admin),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{summary}");
+        let detail:Value=sqlx::query_scalar("SELECT detail_json FROM audit_logs WHERE project_id=$1 AND action='alerts_evaluate' ORDER BY id DESC LIMIT 1").bind(project_id as i32).fetch_one(&pool).await.unwrap();
+        assert!(
+            detail["rule_version"].is_string(),
+            "rule identity is required: {detail}"
+        );
+        let rate = detail["metrics"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|metric| metric["metric"] == "return_rate")
+            .unwrap();
+        assert_eq!(rate["warn_threshold"], 0.2);
+        assert_eq!(rate["critical_threshold"], 0.6);
+        assert_eq!(rate["support"]["window_limit"], 10);
+        assert_eq!(rate["support"]["numerator"], 2);
+        assert_eq!(rate["support"]["denominator"], 3);
+        let rows = rate["support"]["approvals"].as_array().unwrap();
+        let actual_ids: std::collections::HashSet<_> = rows
+            .iter()
+            .map(|row| row["id"].as_i64().unwrap() as i32)
+            .collect();
+        assert_eq!(actual_ids, approval_ids.into_iter().collect());
+        assert!(
+            (rate["value"].as_f64().unwrap() - 2.0 / 3.0).abs() < 1e-12,
+            "audit must retain unrounded metric"
+        );
+        assert_eq!(detail["evaluated_at"], summary["evaluated_at"]);
     }
 }

@@ -87,9 +87,30 @@ pub(crate) async fn rebuild_project_knowledge_action(
     ip_address: Option<&str>,
     user_agent: Option<&str>,
 ) -> Result<Json<Vec<KnowledgeExtractionRunRead>>, ApiError> {
-    require_project_access(&state.pool, &user, project_id).await?;
-    require_write(&state, &user, project_id).await?;
     let mut transaction = state.pool.begin().await?;
+    let result = rebuild_project_knowledge_in_transaction(
+        &state,
+        &mut transaction,
+        &user,
+        project_id,
+        ip_address,
+        user_agent,
+    )
+    .await?;
+    transaction.commit().await?;
+    Ok(result)
+}
+
+pub(crate) async fn rebuild_project_knowledge_in_transaction(
+    state: &AppState,
+    transaction: &mut sqlx::Transaction<'_, sqlx::Postgres>,
+    user: &UserRecord,
+    project_id: i32,
+    ip_address: Option<&str>,
+    user_agent: Option<&str>,
+) -> Result<Json<Vec<KnowledgeExtractionRunRead>>, ApiError> {
+    require_project_access(&state.pool, user, project_id).await?;
+    require_write(state, user, project_id).await?;
     let note_ids: Vec<i32> = sqlx::query_scalar(
         r#"
         SELECT id FROM experiment_notes
@@ -97,14 +118,14 @@ pub(crate) async fn rebuild_project_knowledge_action(
         "#,
     )
     .bind(project_id)
-    .fetch_all(&mut *transaction)
+    .fetch_all(&mut **transaction)
     .await?;
     let mut runs = Vec::with_capacity(note_ids.len());
     for note_id in note_ids {
-        runs.push(extract_note(&mut transaction, note_id, user.id, true).await?);
+        runs.push(extract_note(transaction, note_id, user.id, true).await?);
     }
     write_audit(
-        &mut *transaction,
+        &mut **transaction,
         AuditEvent {
             actor_user_id: Some(user.id),
             project_id: Some(project_id),
@@ -117,7 +138,6 @@ pub(crate) async fn rebuild_project_knowledge_action(
         },
     )
     .await?;
-    transaction.commit().await?;
     Ok(Json(runs))
 }
 
@@ -258,7 +278,7 @@ mod tests {
         .unwrap();
         let pool = connect_database(&settings).await.unwrap();
         initialize_database(&pool, &settings).await.unwrap();
-        let app = build_app(AppState::new(pool, settings).unwrap());
+        let app = build_app(AppState::new(pool.clone(), settings).unwrap());
         let (_, login) = call(
             &app,
             "POST",
@@ -321,6 +341,67 @@ mod tests {
         )
         .await;
 
+        let mut excluded_ids = Vec::new();
+        for blocked in ["DRAFT", "SUBMITTED", "RETURNED", "ARCHIVED"] {
+            let (status, excluded) = call(
+                &app,
+                "POST",
+                &format!("/projects/{project_id}/notes"),
+                Some(admin),
+                Some(json!({
+                    "title": format!("Excluded {blocked}"),
+                    "experiment_type": "Assay",
+                    "fixed_fields_json": {"result": format!("Excluded result {blocked}")}
+                })),
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK);
+            let excluded_id = excluded["id"].as_i64().unwrap();
+            let (status, _) = call(
+                &app,
+                "POST",
+                &format!("/notes/{excluded_id}/submit"),
+                Some(admin),
+                None,
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK);
+            // Preserve extracted rows to test current-state filtering even when
+            // stale rows exist; these fixtures do not test state transitions.
+            sqlx::query("UPDATE experiment_notes SET status = $2::notestatus WHERE id = $1")
+                .bind(excluded_id as i32)
+                .bind(blocked)
+                .execute(&pool)
+                .await
+                .unwrap();
+            let before: i64 =
+                sqlx::query_scalar("SELECT count(*) FROM kg_extraction_runs WHERE note_id = $1")
+                    .bind(excluded_id as i32)
+                    .fetch_one(&pool)
+                    .await
+                    .unwrap();
+            assert!(before > 0);
+            for (method, suffix) in [("POST", "extract"), ("GET", "graph")] {
+                let (status, _) = call(
+                    &app,
+                    method,
+                    &format!("/notes/{excluded_id}/kg/{suffix}"),
+                    Some(admin),
+                    None,
+                )
+                .await;
+                assert_eq!(status, StatusCode::CONFLICT, "{blocked}: {suffix}");
+            }
+            let after: i64 =
+                sqlx::query_scalar("SELECT count(*) FROM kg_extraction_runs WHERE note_id = $1")
+                    .bind(excluded_id as i32)
+                    .fetch_one(&pool)
+                    .await
+                    .unwrap();
+            assert_eq!(before, after);
+            excluded_ids.push((excluded_id, before));
+        }
+
         let (extract_status, run) = call(
             &app,
             "POST",
@@ -374,6 +455,36 @@ mod tests {
         )
         .await;
         assert_eq!(rebuild_status, StatusCode::OK);
+        let (status, project_graph) = call(
+            &app,
+            "GET",
+            &format!("/projects/{project_id}/kg/graph"),
+            Some(admin),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        assert!(project_graph["relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|relation| {
+                !excluded_ids
+                    .iter()
+                    .any(|(id, _)| *id == relation["source_id"].as_i64().unwrap_or(-1))
+            }));
+        for (excluded_id, before) in excluded_ids {
+            let after: i64 =
+                sqlx::query_scalar("SELECT count(*) FROM kg_extraction_runs WHERE note_id = $1")
+                    .bind(excluded_id as i32)
+                    .fetch_one(&pool)
+                    .await
+                    .unwrap();
+            assert_eq!(
+                before, after,
+                "project rebuild must not extract excluded notes"
+            );
+        }
         let (_, rebuilt) = call(
             &app,
             "GET",

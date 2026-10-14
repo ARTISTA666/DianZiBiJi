@@ -56,6 +56,21 @@ def run_restore_with_fake_docker(
         encoding="utf-8",
     )
     docker.chmod(0o700)
+    # This archive-guard test deliberately reaches a fake Docker failure. Give
+    # the revision wrapper a clean Git fixture so a developer's unrelated local
+    # edits cannot prevent that boundary from being exercised.
+    git = tools / "git"
+    git.write_text(
+        "#!/bin/sh\n"
+        'if [ "$1" = "-C" ]; then shift 2; fi\n'
+        'case "$*" in\n'
+        '  "rev-parse --verify HEAD^{commit}") printf "%s\\n" aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;\n'
+        '  "diff --quiet"|"diff --cached --quiet"|"status --porcelain=v1 --untracked-files=all") exit 0 ;;\n'
+        '  *) exit 2 ;;\n'
+        "esac\n",
+        encoding="utf-8",
+    )
+    git.chmod(0o700)
     environment = os.environ.copy()
     environment["PATH"] = f"{tools}{os.pathsep}{environment['PATH']}"
     return subprocess.run(

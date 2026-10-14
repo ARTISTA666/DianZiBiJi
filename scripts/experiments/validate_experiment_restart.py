@@ -14,7 +14,7 @@ import httpx
 
 TERMINAL = {"completed", "completed_with_errors", "failed", "interrupted"}
 ROOT = Path(__file__).resolve().parents[2]
-COMPOSE_WRAPPER = ROOT / "scripts" / "docker-compose-with-revision.sh"
+COMPOSE_WRAPPER = ROOT / "scripts" / "ops" / "docker-compose-with-revision.sh"
 
 
 def latest_e2e_project(projects: list[dict] | dict) -> dict:
@@ -72,7 +72,7 @@ def main() -> int:
     parser.add_argument("--password", required=True)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    compose = [str(COMPOSE_WRAPPER), "-p", args.compose_project, "-f", str(args.compose_file)]
+    compose = ["bash", str(COMPOSE_WRAPPER), "-p", args.compose_project, "-f", str(args.compose_file)]
 
     with httpx.Client(base_url=args.api_base, timeout=15, trust_env=False) as client:
         login = client.post("/auth/login", json={"username": args.username, "password": args.password})
@@ -98,7 +98,9 @@ def main() -> int:
         subprocess.run([*compose, "kill", "-s", "SIGKILL", "backend"], check=True, capture_output=True, text=True)
         subprocess.run([*compose, "up", "-d", "--no-deps", "backend"], check=True, capture_output=True, text=True)
         wait_for_ready(client)
-        interrupted = wait_for_status(client, run_id, {"interrupted"}, 10)
+        # Rust preserves the worker's 30-second lease across a fast restart;
+        # allow lease expiry and the one-second reaper before expecting interruption.
+        interrupted = wait_for_status(client, run_id, {"interrupted"}, 40)
         if interrupted["summary_json"].get("unexecuted_cases") != 1:
             raise RuntimeError("Interrupted run did not retain its unexecuted case")
 

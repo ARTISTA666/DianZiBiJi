@@ -35,8 +35,8 @@ async function checkedJson(response: APIResponse) {
 }
 
 
-async function login(page: Page, username: string, password: string) {
-  await page.goto("/login", { waitUntil: "networkidle" });
+async function login(page: Page, username: string, password: string, navigate = true) {
+  if (navigate) await page.goto("/login", { waitUntil: "networkidle" });
   await page.getByLabel("账号").fill(username);
   await page.getByLabel("密码").fill(password);
   const loginButton = page.getByRole("button", { name: "登录" });
@@ -47,8 +47,9 @@ async function login(page: Page, username: string, password: string) {
 }
 
 
-async function selectProject(page: Page) {
-  await page.getByText(PROJECT_NAME, { exact: true }).click();
+async function selectProject(page: Page, suffix = "") {
+  await page.getByRole("button").filter({ has: page.getByText(PROJECT_NAME, { exact: true }) }).click();
+  await expect(page).toHaveURL(new RegExp(`/projects/${projectId}${suffix}$`));
   await expect(page.getByRole("button", { name: PROJECT_NAME, exact: true })).toBeVisible();
 }
 
@@ -136,7 +137,7 @@ test("登录并完成笔记审批", async ({ page }) => {
   await card.getByPlaceholder("审核意见").fill("E2E 审批通过");
   await card.getByRole("button", { name: "通过", exact: true }).click();
 
-  await expect(page.getByText("所有笔记已审批完毕")).toBeVisible();
+  await expect(page.getByText("所有笔记和资料已审批完毕", { exact: true })).toBeVisible();
 
   // 纯 LLM 不依赖项目资料库初始化，确保空资料库也能完成通用问答。
   await page.getByRole("tab", { name: "AI 问答", exact: true }).click();
@@ -199,11 +200,17 @@ test("图片 OCR、人工校对、入库、问答和五方法实验形成闭环"
 
   // 盲评题目来自实验运行。实验控制台已从主项目移出，测试直接调用原系统
   // 的实验 API 准备最小题集，避免把旧页面重新耦合进主系统验收。
+  const ragStatus = await checkedJson(await adminApi.get(`/projects/${projectId}/rag/status`));
+  const snapshot = ragStatus.corpus_snapshot;
+  expect(snapshot.corpus_snapshot_hash).toMatch(/^[a-f0-9]{64}$/);
+  expect(snapshot.graph_snapshot_hash).toMatch(/^[a-f0-9]{64}$/);
   const experiment = await checkedJson(await adminApi.post(`/projects/${projectId}/rag/experiments`, {
     data: {
       name: "E2E 盲评题集准备",
       questions: [OCR_QUESTION],
-        modes: ["pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag"],
+      modes: ["pure_llm", "bm25_rag", "project_rag", "structured_query", "kg_enhanced_rag"],
+      expected_corpus_snapshot_hash: snapshot.corpus_snapshot_hash,
+      expected_graph_snapshot_hash: snapshot.graph_snapshot_hash,
       repetitions: 1,
       randomize_order: false,
       random_seed: 20260713,
@@ -218,7 +225,7 @@ test("图片 OCR、人工校对、入库、问答和五方法实验形成闭环"
 
 test("独立评价人只能在盲评页面提交评价", async ({ page }) => {
   await login(page, EVALUATOR, EVALUATOR_PASSWORD);
-  await selectProject(page);
+  await selectProject(page, "/blind-review");
   await expect(page.getByRole("heading", { name: "独立人工盲评" })).toBeVisible();
   await expect(page.getByText("正式评审前必须先冻结题集、语料和评分规则。")).toBeVisible();
   await expect(page.getByRole("tab", { name: "笔记", exact: true })).toHaveCount(0);
@@ -288,8 +295,13 @@ test("系统管理员完成账号、小组和审计闭环", async ({ page }) => 
   await expect(reviewerRow).toHaveCount(0);
 
   await page.getByRole("button", { name: "账户菜单" }).click();
+  const logoutResponse = page.waitForResponse((response) =>
+    response.request().method() === "POST" && response.url().endsWith("/auth/logout"));
   await page.getByRole("menuitem", { name: "退出登录" }).click();
-  await login(page, MANAGED_USER, "ManagedUser123!");
+  expect((await logoutResponse).ok()).toBeTruthy();
+  await page.waitForURL("**/login", { waitUntil: "networkidle" });
+  await expect(page.getByLabel("账号")).toBeVisible();
+  await login(page, MANAGED_USER, "ManagedUser123!", false);
   await expect(page.getByText("暂无项目", { exact: true })).toBeVisible();
   await expect(page.getByText(PROJECT_NAME, { exact: true })).toHaveCount(0);
 });

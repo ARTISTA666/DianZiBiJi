@@ -817,6 +817,20 @@ pub(crate) async fn handle_tools_call(
             ));
         }
     }
+    if requires_pending_action(&tool) {
+        validate_tool_project_scope(&state.pool, tool.name, &arguments)
+            .await
+            .map_err(|error| {
+                (
+                    if error.status == StatusCode::FORBIDDEN {
+                        -32003
+                    } else {
+                        -32602
+                    },
+                    error.detail,
+                )
+            })?;
+    }
     let result = if requires_pending_action(&tool) {
         create_pending_action(state, user, &tool, arguments).await
     } else {
@@ -836,12 +850,15 @@ pub(crate) async fn handle_tools_call(
             )),
         }
     };
-    if result.is_ok() {
-        let outcome = if requires_pending_action(&tool) {
-            "confirmation_required"
-        } else {
-            "completed"
-        };
+    if let Ok(value) = &result {
+        let outcome =
+            value["structuredContent"]["code"]
+                .as_str()
+                .unwrap_or(if value["isError"] == true {
+                    "failed"
+                } else {
+                    "completed"
+                });
         if let Err(error) = write_audit(
             &state.pool,
             AuditEvent {
@@ -1081,6 +1098,52 @@ async fn call_create_draft_note(
     Ok(result)
 }
 
+/// A readable second project is still outside this request's fixed project scope.
+pub(crate) async fn validate_tool_project_scope<'e, E>(
+    executor: E,
+    tool: &str,
+    arguments: &Value,
+) -> Result<(), ApiError>
+where
+    E: sqlx::Executor<'e, Database = sqlx::Postgres>,
+{
+    let (table, id_field) = match tool {
+        "submit_note_review" | "review_note" => ("experiment_notes", "note_id"),
+        "review_document" => ("files", "file_id"),
+        _ => return Ok(()),
+    };
+    let integer = |name: &str| {
+        arguments
+            .get(name)
+            .and_then(Value::as_i64)
+            .and_then(|value| i32::try_from(value).ok())
+            .ok_or_else(|| {
+                ApiError::new(
+                    StatusCode::UNPROCESSABLE_ENTITY,
+                    format!("{name} is required"),
+                )
+            })
+    };
+    let project_id = integer("project_id")?;
+    let object_id = integer(id_field)?;
+    let query = format!("SELECT project_id FROM {table} WHERE id=$1");
+    let actual_project: Option<i32> = sqlx::query_scalar(&query)
+        .bind(object_id)
+        .fetch_optional(executor)
+        .await?;
+    match actual_project {
+        Some(actual) if actual == project_id => Ok(()),
+        Some(_) => Err(ApiError::new(
+            StatusCode::FORBIDDEN,
+            "Target object does not belong to the fixed project",
+        )),
+        None => Err(ApiError::new(
+            StatusCode::NOT_FOUND,
+            "Target object not found",
+        )),
+    }
+}
+
 async fn create_pending_action(
     state: &AppState,
     user: &crate::models::UserRecord,
@@ -1106,49 +1169,57 @@ async fn create_pending_action(
         tool.name,
         arguments_hash.get(..12).unwrap_or(&arguments_hash)
     );
-    let existing: Option<uuid::Uuid> = sqlx::query_scalar(
-        "SELECT id FROM agent_pending_actions WHERE user_id=$1 AND tool_name=$2 AND idempotency_key=$3",
+    // The unique key chooses a single stored request even when registrations race.
+    sqlx::query(
+        r#"INSERT INTO agent_pending_actions (
+            id,user_id,project_id,tool_name,arguments_json,arguments_summary,
+            arguments_hash,idempotency_key,status,expires_at
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'pending',now()+interval '10 minutes')
+        ON CONFLICT (user_id,tool_name,idempotency_key) DO NOTHING"#,
     )
+    .bind(uuid::Uuid::new_v4())
     .bind(user.id)
+    .bind(project_id)
     .bind(tool.name)
+    .bind(arguments)
+    .bind(&summary)
+    .bind(&arguments_hash)
     .bind(&idempotency_key)
-    .fetch_optional(&state.pool)
+    .execute(&state.pool)
     .await
     .map_err(|error| (-32603, format!("Database error: {error}")))?;
-    let pending_id = if let Some(existing) = existing {
-        existing
+    let (pending_id, stored_hash, stored_summary, stored_status, expires_at, remaining):
+        (uuid::Uuid, String, String, String, chrono::DateTime<chrono::Utc>, i64) = sqlx::query_as(
+        "SELECT id,arguments_hash,arguments_summary,status,expires_at,GREATEST(0,ceil(EXTRACT(EPOCH FROM expires_at-now())))::bigint FROM agent_pending_actions WHERE user_id=$1 AND tool_name=$2 AND idempotency_key=$3",
+    )
+    .bind(user.id).bind(tool.name).bind(&idempotency_key)
+    .fetch_one(&state.pool).await
+    .map_err(|error| (-32603, format!("Database error: {error}")))?;
+    if stored_hash != arguments_hash {
+        return Err((
+            -32009,
+            "Idempotency key was reused with different parameters".to_owned(),
+        ));
+    }
+    let status = if stored_status == "pending" && remaining == 0 {
+        "expired"
     } else {
-        let pending_id = uuid::Uuid::new_v4();
-        sqlx::query(
-            r#"
-            INSERT INTO agent_pending_actions (
-                id, user_id, project_id, tool_name, arguments_json, arguments_summary,
-                arguments_hash, idempotency_key, status, expires_at
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'pending',now() + interval '10 minutes')
-            "#,
-        )
-        .bind(pending_id)
-        .bind(user.id)
-        .bind(project_id)
-        .bind(tool.name)
-        .bind(arguments)
-        .bind(&summary)
-        .bind(&arguments_hash)
-        .bind(&idempotency_key)
-        .execute(&state.pool)
-        .await
-        .map_err(|error| (-32603, format!("Database error: {error}")))?;
-        pending_id
+        &stored_status
     };
+    let awaiting = status == "pending";
     Ok(json!({
-        "isError": true,
-        "content": [{"type":"text","text":"该操作需要用户在 10 分钟内明确确认。"}],
+        "isError": awaiting || status != "completed",
+        "content": [{"type":"text","text":if awaiting {
+            format!("该操作需要用户在剩余 {remaining} 秒内明确确认。")
+        } else { format!("该确认动作当前状态为 {status}，不会再次执行。") }}],
         "structuredContent": {
-            "code": "confirmation_required",
+            "code": if awaiting { "confirmation_required" } else if status == "completed" { "already_completed" } else { "confirmation_unavailable" },
             "pending_action_id": pending_id,
-            "expires_in_seconds": 600,
+            "status": status,
+            "expires_at": expires_at,
+            "expires_in_seconds": if awaiting { remaining } else { 0 },
             "tool": tool.name,
-            "arguments_summary": summary
+            "arguments_summary": stored_summary
         }
     }))
 }
@@ -1237,9 +1308,9 @@ async fn handle_resource_read(
         .map_err(|_| (-32602, "Invalid resource id".to_owned()))?;
     verify_project_access(pool, user, project_id).await?;
     let value = match parts[1] {
-        "notes" => sqlx::query_scalar::<_, Value>("SELECT jsonb_build_object('id',id,'title',title,'experiment_type',experiment_type,'experiment_date',experiment_date,'content',content_json) FROM experiment_notes WHERE id=$1 AND project_id=$2 AND status='APPROVED'::notestatus")
+        "notes" => sqlx::query_scalar::<_, Value>("SELECT jsonb_build_object('id',n.id,'title',n.title,'experiment_type',n.experiment_type,'experiment_date',n.experiment_date,'content',v.content_json) FROM experiment_notes n JOIN note_versions v ON v.id=n.current_version_id AND v.note_id=n.id WHERE n.id=$1 AND n.project_id=$2 AND n.status='APPROVED'::notestatus")
             .bind(resource_id).bind(project_id).fetch_optional(pool).await,
-        "documents" => sqlx::query_scalar::<_, Value>("SELECT jsonb_build_object('id',id,'filename',original_filename,'metadata',metadata_json,'knowledge_sync_status',knowledge_sync_status) FROM files WHERE id=$1 AND project_id=$2 AND status='APPROVED'::filestatus AND file_category='KNOWLEDGE_DOCUMENT'::filecategory")
+        "documents" => sqlx::query_scalar::<_, Value>("SELECT jsonb_build_object('id',id,'filename',original_filename,'metadata',jsonb_build_object('file_category',lower(file_category::text),'mime_type',mime_type,'file_size',file_size,'file_hash',file_hash,'created_at',created_at),'knowledge_sync_status',knowledge_sync_status) FROM files WHERE id=$1 AND project_id=$2 AND status='APPROVED'::filestatus AND file_category='KNOWLEDGE_DOCUMENT'::filecategory")
             .bind(resource_id).bind(project_id).fetch_optional(pool).await,
         "agent-runs" => sqlx::query_scalar::<_, Value>("SELECT jsonb_build_object('id',id,'task_type',task_type,'title',title,'body',body,'status',status,'model_name',model_name,'prompt_version',prompt_version) FROM agent_generation_runs WHERE id=$1 AND project_id=$2 AND user_id=$3")
             .bind(resource_id).bind(project_id).bind(user.id).fetch_optional(pool).await,
@@ -1468,7 +1539,182 @@ fn call_list_agent_tasks() -> Value {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::HashMap;
+
+    use axum::{
+        body::{to_bytes, Body},
+        http::Request,
+    };
+    use tower::ServiceExt;
+
     use super::*;
+
+    #[tokio::test]
+    async fn test_resources_list_then_read_approved_note_and_document() {
+        let Ok(database_url) = std::env::var("TEST_DATABASE_URL") else {
+            return;
+        };
+        let username = format!("mcp_resources_{}", uuid::Uuid::new_v4().simple());
+        let settings = crate::config::Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            (
+                "SECRET_KEY".to_owned(),
+                "mcp-resource-test-secret".to_owned(),
+            ),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = crate::db::connect_database(&settings).await.unwrap();
+        crate::db::initialize_database(&pool, &settings)
+            .await
+            .unwrap();
+        let user: crate::models::UserRecord = sqlx::query_as(
+            "SELECT id,username,password_hash,display_name,email,lower(role::text) AS role,lower(status::text) AS status,auth_version FROM users WHERE username=$1",
+        )
+        .bind(username)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let project_id: i32 = sqlx::query_scalar(
+            "INSERT INTO projects (name,is_sensitive,status,approval_enabled,owner_user_id) VALUES ($1,true,'ACTIVE',true,$2) RETURNING id",
+        )
+        .bind(format!("MCP resource project {}", uuid::Uuid::new_v4().simple()))
+        .bind(user.id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let note_id: i32 = sqlx::query_scalar(
+            "INSERT INTO experiment_notes (project_id,title,experiment_type,owner_user_id,status) VALUES ($1,'Approved resource note','PCR',$2,'APPROVED') RETURNING id",
+        )
+        .bind(project_id)
+        .bind(user.id)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        for version_number in 1..=2 {
+            let version_id: i32 = sqlx::query_scalar(
+                "INSERT INTO note_versions (note_id,version_number,fixed_fields_json,content_json,created_by,change_summary,is_locked) VALUES ($1,$2,'{}',$3,$4,'resource fixture',true) RETURNING id",
+            )
+            .bind(note_id)
+            .bind(version_number)
+            .bind(json!({"text": format!("version {version_number}")}))
+            .bind(user.id)
+            .fetch_one(&pool)
+            .await
+            .unwrap();
+            sqlx::query("UPDATE experiment_notes SET current_version_id=$2 WHERE id=$1")
+                .bind(note_id)
+                .bind(version_id)
+                .execute(&pool)
+                .await
+                .unwrap();
+        }
+        let file_id: i32 = sqlx::query_scalar(
+            "INSERT INTO files (project_id,uploaded_by,file_category,original_filename,storage_path,mime_type,file_size,file_hash,status,knowledge_sync_status) VALUES ($1,$2,'KNOWLEDGE_DOCUMENT','protocol.txt','/unused/resource.txt','text/plain',16,$3,'APPROVED','synced') RETURNING id",
+        )
+        .bind(project_id)
+        .bind(user.id)
+        .bind("a".repeat(64))
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        let token = crate::security::create_access_token(
+            &user.id.to_string(),
+            user.auth_version,
+            &settings.secret_key,
+            30,
+        )
+        .unwrap();
+        let app = crate::build_app(AppState::new(pool.clone(), settings).unwrap());
+        let rpc = |method: &str, params: Value| {
+            Request::builder()
+                .method("POST")
+                .uri("/api/mcp")
+                .header("authorization", format!("Bearer {token}"))
+                .header("content-type", "application/json")
+                .header("accept", "application/json, text/event-stream")
+                .body(Body::from(
+                    json!({"jsonrpc":"2.0","id":1,"method":method,"params":params}).to_string(),
+                ))
+                .unwrap()
+        };
+        let response = app
+            .clone()
+            .oneshot(rpc("resources/list", json!({})))
+            .await
+            .unwrap();
+        assert_eq!(response.status(), StatusCode::OK);
+        let listed: Value =
+            serde_json::from_slice(&to_bytes(response.into_body(), 1024 * 1024).await.unwrap())
+                .unwrap();
+        assert!(listed.get("error").is_none(), "{listed}");
+        let mut read_errors = Vec::new();
+        for (kind, id) in [("notes", note_id), ("documents", file_id)] {
+            let uri = format!("eln://projects/{project_id}/{kind}/{id}");
+            assert!(listed["result"]["resources"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|resource| resource["uri"] == uri));
+            let response = app
+                .clone()
+                .oneshot(rpc("resources/read", json!({"uri":uri})))
+                .await
+                .unwrap();
+            assert_eq!(response.status(), StatusCode::OK);
+            let read: Value =
+                serde_json::from_slice(&to_bytes(response.into_body(), 1024 * 1024).await.unwrap())
+                    .unwrap();
+            if read.get("error").is_some() {
+                read_errors.push(read);
+                continue;
+            }
+            let content: Value =
+                serde_json::from_str(read["result"]["contents"][0]["text"].as_str().unwrap())
+                    .unwrap();
+            assert_eq!(content["id"], id);
+            if kind == "notes" {
+                assert_eq!(content["content"]["text"], "version 2");
+            } else {
+                assert_eq!(content["filename"], "protocol.txt");
+                assert_eq!(content["metadata"]["mime_type"], "text/plain");
+                assert_eq!(content["metadata"]["file_size"], 16);
+                assert_eq!(content["knowledge_sync_status"], "synced");
+            }
+        }
+        assert!(
+            read_errors.is_empty(),
+            "listed resources failed to read: {read_errors:?}"
+        );
+        sqlx::query("UPDATE experiment_notes SET status='DRAFT' WHERE id=$1")
+            .bind(note_id)
+            .execute(&pool)
+            .await
+            .unwrap();
+        sqlx::query("UPDATE files SET status='UPLOADED' WHERE id=$1")
+            .bind(file_id)
+            .execute(&pool)
+            .await
+            .unwrap();
+        for (kind, id) in [("notes", note_id), ("documents", file_id)] {
+            let response = app
+                .clone()
+                .oneshot(rpc(
+                    "resources/read",
+                    json!({"uri":format!("eln://projects/{project_id}/{kind}/{id}")}),
+                ))
+                .await
+                .unwrap();
+            let read: Value =
+                serde_json::from_slice(&to_bytes(response.into_body(), 1024 * 1024).await.unwrap())
+                    .unwrap();
+            assert_eq!(read["error"]["code"], -32602);
+        }
+    }
 
     #[test]
     fn test_tool_registry_declares_security_and_execution_policy() {

@@ -246,6 +246,9 @@ export function ProjectAlertsPanel({
                 />
               ))}
             <p className="text-[11px] text-muted-foreground">
+              匹配实体最近更新间隔按最近维护时间计算，重抽会重新计时；无匹配实体时取 0，由进展偏差反映未覆盖比例。
+            </p>
+            <p className="text-[11px] text-muted-foreground">
               每次调整都写入审计日志；指标回落到正常区间后，对应 open 预警自动转为 resolved。
             </p>
           </CardContent>

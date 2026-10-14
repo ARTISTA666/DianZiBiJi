@@ -6,10 +6,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
 
 BLUE, ORANGE = "#1f77b4", "#ff7f0e"
 GREEN, RED = "#2ca02c", "#d62728"
-OUT = "/tmp/crlt/projects/thesis-ahnu-master/assets/screenshots"
+OUT = Path(__file__).resolve().parents[2] / "docs" / "user-guide-assets"
 
 def style_ax(ax):
     ax.grid(axis="y", linestyle="--", alpha=0.35)
@@ -77,7 +78,7 @@ for bars in (b3, b4):
     label_bars(bars, fmt="{:.2f}%", dy=3)
 ax2.set_xticks(x); ax2.set_xticklabels(metrics_r, fontsize=9.5)
 ax2.set_ylabel("Rate (%)", fontsize=11)
-ax2.set_ylim(95, 101.6)
+ax2.set_ylim(0, 110)
 ax2.set_yticks([95, 96, 97, 98, 99, 100])
 ax2.set_title("Rates against the 52-relation gold standard", fontsize=10.5, pad=26)
 style_ax(ax2)

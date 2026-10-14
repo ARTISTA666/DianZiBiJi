@@ -1583,9 +1583,11 @@ mod tests {
             let prompt = payload["messages"][1]["content"]
                 .as_str()
                 .unwrap_or_default();
-            let citation = Regex::new(r"\[N\d+\]")
-                .unwrap()
+            let note_pattern = Regex::new(r"\[N\d+\]").unwrap();
+            let other_pattern = Regex::new(r"\[(?:R|F)\d+\]").unwrap();
+            let citation = note_pattern
                 .find(prompt)
+                .or_else(|| other_pattern.find(prompt))
                 .map_or("".to_owned(), |value| value.as_str().to_owned());
             Json(json!({
                 "id": "agent-mock-request",
@@ -1667,7 +1669,7 @@ mod tests {
         .unwrap();
         let pool = connect_database(&settings).await.unwrap();
         initialize_database(&pool, &settings).await.unwrap();
-        let app = build_app(AppState::new(pool, settings).unwrap());
+        let app = build_app(AppState::new(pool.clone(), settings).unwrap());
         let (_, login) = call(
             &app,
             "POST",
@@ -1718,40 +1720,124 @@ mod tests {
         )
         .await;
 
-        let (status, generated) = call(
-            &app,
-            "POST",
-            "/api/agents/generate",
-            Some(token),
-            Some(json!({
-                "project_id": project_id,
-                "task_type": "experiment_summary",
-                "date_from": "2026-06-01",
-                "date_to": "2026-06-06"
-            })),
-        )
-        .await;
-        assert_eq!(status, StatusCode::OK);
-        assert_eq!(generated["status"], "completed");
-        assert_eq!(generated["source_note_ids_json"], json!([note_id]));
-        assert!(generated["body"]
-            .as_str()
-            .unwrap()
-            .contains(&format!("[N{note_id}]")));
-        assert_eq!(
-            generated["input_params_json"]["review_result"]["passed"],
-            true
-        );
+        // Leave stale graph rows deliberately: source selection must enforce the
+        // current note status, independently of cleanup on normal transitions.
+        let mut excluded_relation_ids = Vec::<i64>::new();
+        for blocked in ["DRAFT", "SUBMITTED", "RETURNED", "ARCHIVED"] {
+            let (created_status, excluded) = call(
+                &app,
+                "POST",
+                &format!("/projects/{project_id}/notes"),
+                Some(token),
+                Some(json!({
+                    "title": format!("Excluded {blocked}"),
+                    "experiment_type": "Cell assay",
+                    "experiment_date": "2026-06-05",
+                    "fixed_fields_json": {"result": format!("Excluded result {blocked}")},
+                    "content_json": {"text": format!("Excluded evidence {blocked}")}
+                })),
+            )
+            .await;
+            assert_eq!(created_status, StatusCode::OK);
+            let excluded_id = excluded["id"].as_i64().unwrap();
+            for endpoint in ["submit", "approve"] {
+                let (status, _) = call(
+                    &app,
+                    "POST",
+                    &format!("/notes/{excluded_id}/{endpoint}"),
+                    Some(token),
+                    Some(json!({})),
+                )
+                .await;
+                assert_eq!(status, StatusCode::OK);
+            }
+            let rows: Vec<i32> = sqlx::query_scalar(
+                "SELECT id FROM kg_relations WHERE source_type IN ('note', 'note_extraction') AND source_id = $1",
+            )
+            .bind(excluded_id as i32)
+            .fetch_all(&pool)
+            .await
+            .unwrap();
+            assert!(!rows.is_empty());
+            excluded_relation_ids.extend(rows.into_iter().map(i64::from));
+            sqlx::query("UPDATE experiment_notes SET status = $2::notestatus WHERE id = $1")
+                .bind(excluded_id as i32)
+                .bind(blocked)
+                .execute(&pool)
+                .await
+                .unwrap();
+        }
 
-        let (status, history) = call(
-            &app,
-            "GET",
-            &format!("/projects/{project_id}/agents/runs"),
-            Some(token),
-            None,
-        )
-        .await;
-        assert_eq!(status, StatusCode::OK);
-        assert_eq!(history[0]["id"], generated["id"]);
+        for task_type in [
+            "experiment_summary",
+            "weekly_report",
+            "stage_report",
+            "graph_overview",
+        ] {
+            let (status, generated) = call(
+                &app,
+                "POST",
+                "/api/agents/generate",
+                Some(token),
+                Some(json!({
+                    "project_id": project_id,
+                    "task_type": task_type,
+                    "date_from": "2026-06-01",
+                    "date_to": "2026-06-06"
+                })),
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK);
+            assert_eq!(generated["status"], "completed");
+            if task_type == "graph_overview" {
+                assert_eq!(generated["source_note_ids_json"], json!([]));
+            } else {
+                assert_eq!(generated["source_note_ids_json"], json!([note_id]));
+            }
+            let visible_relations = generated["source_graph_relation_ids_json"]
+                .as_array()
+                .unwrap();
+            assert!(!visible_relations.is_empty());
+            assert!(visible_relations
+                .iter()
+                .all(|id| !excluded_relation_ids.contains(&id.as_i64().unwrap())));
+            let expected_citation = if task_type == "graph_overview" {
+                visible_relations
+                    .iter()
+                    .map(|id| format!("[R{}]", id.as_i64().unwrap()))
+                    .find(|marker| generated["body"].as_str().unwrap().contains(marker))
+                    .unwrap_or_else(|| {
+                        panic!(
+                            "{task_type}: no visible relation citation in {}",
+                            generated["body"]
+                        )
+                    })
+            } else {
+                format!("[N{note_id}]")
+            };
+            assert!(
+                generated["body"]
+                    .as_str()
+                    .unwrap()
+                    .contains(&expected_citation),
+                "{task_type}: {}",
+                generated["body"]
+            );
+            assert_eq!(
+                generated["input_params_json"]["review_result"]["passed"],
+                true
+            );
+
+            let (status, history) = call(
+                &app,
+                "GET",
+                &format!("/projects/{project_id}/agents/runs"),
+                Some(token),
+                None,
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK);
+            assert_eq!(history[0]["id"], generated["id"]);
+        }
     }
 }

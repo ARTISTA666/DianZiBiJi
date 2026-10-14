@@ -97,11 +97,47 @@ export default function ProjectNotesPage() {
 
   // Saving state
   const [saving, setSaving] = useState(false);
+  const savingActive = useRef(false);
+  const contextEpoch = useRef(0);
+  const formContext = useRef<string | null>(null);
+  const contextKey = JSON.stringify([projectId, token, user?.id]);
   const draftReady = useRef(false);
   const draftKey = `eln.note-draft:${projectId}:${editingNote ?? "new"}`;
 
   useEffect(() => {
-    if (!dialogOpen) {
+    contextEpoch.current += 1;
+    detailRequestEpoch.current += 1;
+    savingActive.current = false;
+    formContext.current = null;
+    draftReady.current = false;
+    setSaving(false);
+    setDialogOpen(false);
+    setEditingNote(null);
+    setForm(emptyForm);
+    setPendingImages([]);
+    setError("");
+    setDetailNote(null);
+    setVersions([]);
+    setApprovals([]);
+    setAttachments([]);
+    setComment("");
+    return () => {
+      contextEpoch.current += 1;
+      detailRequestEpoch.current += 1;
+    };
+  }, [projectId, token, user?.id]);
+
+  const contextGuard = () => {
+    const requestEpoch = contextEpoch.current;
+    const userId = user?.id;
+    return () => requestEpoch === contextEpoch.current
+      && useAuthStore.getState().token === token
+      && useAuthStore.getState().user?.id === userId
+      && useProjectStore.getState().selectedProjectId === projectId;
+  };
+
+  useEffect(() => {
+    if (!dialogOpen || formContext.current !== contextKey) {
       draftReady.current = false;
       return;
     }
@@ -120,16 +156,16 @@ export default function ProjectNotesPage() {
       // A malformed or unavailable local draft must not block normal editing.
     }
     draftReady.current = true;
-  }, [dialogOpen, draftKey]);
+  }, [dialogOpen, draftKey, contextKey]);
 
   useEffect(() => {
-    if (!dialogOpen || !draftReady.current) return;
+    if (!dialogOpen || !draftReady.current || formContext.current !== contextKey) return;
     try {
       window.localStorage.setItem(draftKey, JSON.stringify(form));
     } catch {
       // Local storage is best effort; the explicit save remains authoritative.
     }
-  }, [dialogOpen, draftKey, form]);
+  }, [dialogOpen, draftKey, form, contextKey]);
 
   // Confirm dialog
   const { confirm, ConfirmDialog } = useConfirmDialog();
@@ -181,6 +217,10 @@ export default function ProjectNotesPage() {
   });
 
   const resetForm = () => {
+    contextEpoch.current += 1;
+    savingActive.current = false;
+    setSaving(false);
+    formContext.current = null;
     setForm(emptyForm);
     setEditingNote(null);
     setPendingImages([]);
@@ -188,24 +228,35 @@ export default function ProjectNotesPage() {
   };
 
   const openNew = useCallback(() => {
+    contextEpoch.current += 1;
+    savingActive.current = false;
+    setSaving(false);
+    formContext.current = contextKey;
     setForm(formForTemplate(templates[0]));
     setEditingNote(null);
     setPendingImages([]);
     setError("");
     setDialogOpen(true);
-  }, [templates]);
+  }, [templates, contextKey]);
 
   const openEdit = async (note: NoteItem) => {
     if (!token) return;
+    const isCurrent = contextGuard();
+    if (!isCurrent()) return;
     setError("");
     try {
       const vs = await getNoteVersions(token, note.id);
+      if (!isCurrent()) return;
       const latest = vs[0];
       if (!latest) throw new Error("未找到可编辑的笔记版本");
       const text = (latest.content_json?.text as string)
         || (latest.content_json?.content as string)
         || "";
       detailRequestEpoch.current += 1;
+      contextEpoch.current += 1;
+      savingActive.current = false;
+      setSaving(false);
+      formContext.current = contextKey;
       setDetailNote(null);
       setEditingNote(note.id);
       setPendingImages([]);
@@ -219,13 +270,16 @@ export default function ProjectNotesPage() {
       });
       setDialogOpen(true);
     } catch (e) {
-      setError(getErrorMessage(e, "笔记内容加载失败，未进入编辑模式"));
+      if (isCurrent()) setError(getErrorMessage(e, "笔记内容加载失败，未进入编辑模式"));
     }
   };
 
   const handleSave = async (e: FormEvent) => {
     e.preventDefault();
-    if (!token) return;
+    if (!token || !user || saving || savingActive.current) return;
+    const isCurrent = contextGuard();
+    if (!isCurrent()) return;
+    savingActive.current = true;
     setError("");
     setSaving(true);
     try {
@@ -240,26 +294,45 @@ export default function ProjectNotesPage() {
       let targetNoteId = editingNote;
       if (editingNote) {
         await updateNote(token, editingNote, payload);
+        if (!isCurrent()) return;
       } else {
         const created = await createNote(token, {
           project_id: projectId,
           ...payload,
         });
+        if (!isCurrent()) return;
         targetNoteId = created.id;
+        // Creation already committed. Retrying attachments must edit this same note.
+        setEditingNote(created.id);
+        try {
+          window.localStorage.setItem(`eln.note-draft:${projectId}:${created.id}`, JSON.stringify(form));
+          window.localStorage.removeItem(`eln.note-draft:${projectId}:new`);
+        } catch {
+          // The server identity is retained even when local drafts are unavailable.
+        }
       }
+      fetchNotes();
 
-      // 如果用户选择了待上传图片，并发上传并关联到该笔记
+      // Retain only failed attachments so a retry cannot duplicate successful uploads.
       const uploadedImageCount = pendingImages.length;
       if (uploadedImageCount > 0 && targetNoteId) {
-        await Promise.all(
+        const uploads = await Promise.allSettled(
           pendingImages.map((imgFile) =>
             uploadFile(token, projectId, imgFile, targetNoteId, "note_attachment")
           )
         );
+        if (!isCurrent()) return;
+        const successful = new Set(pendingImages.filter((_, index) => uploads[index].status === "fulfilled"));
+        setPendingImages((current) => current.filter((file) => !successful.has(file)));
+        const failed = uploads.filter((result) => result.status === "rejected");
+        if (failed.length > 0) {
+          throw new Error(`笔记已保存，${failed.length} 张图片上传失败；再次保存仅重试失败图片。${getErrorMessage(failed[0].reason, "图片上传失败")}`);
+        }
       }
 
       try {
         window.localStorage.removeItem(`eln.note-draft:${projectId}:${editingNote ?? "new"}`);
+        window.localStorage.removeItem(`eln.note-draft:${projectId}:${targetNoteId}`);
       } catch {
         // Local storage can be unavailable in private browsing; the server save still stands.
       }
@@ -272,9 +345,12 @@ export default function ProjectNotesPage() {
           : "笔记已保存"
       );
     } catch (e) {
-      setError(getErrorMessage(e, "保存失败"));
+      if (isCurrent()) setError(getErrorMessage(e, "保存失败"));
     } finally {
-      setSaving(false);
+      if (isCurrent()) {
+        savingActive.current = false;
+        setSaving(false);
+      }
     }
   };
 
