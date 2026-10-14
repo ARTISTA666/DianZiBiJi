@@ -20,20 +20,14 @@
 
 ## 使用与概览
 
-- [三端已完成工作验收-2026-09-11](<三端已完成工作验收-2026-09-11.md>)
 - [用户使用手册](<用户使用手册.md>)
-- [项目梳理-2026-08-29](<项目梳理-2026-08-29.md>)
 
 ## 运维与发布
 
-- [AI优化工作交接_2026-08-10](<operations/AI优化工作交接_2026-08-10.md>)
 - [backup-restore](<operations/backup-restore.md>)
 - [controlled-beta-launch](<operations/controlled-beta-launch.md>)
 - [final-maturity-evidence](<operations/final-maturity-evidence.md>)
-- [release-remediation-2026-07-30](<operations/release-remediation-2026-07-30.md>)
 - [secret-rotation](<operations/secret-rotation.md>)
-- [上线前最终准备工作计划_2026-08-01](<operations/上线前最终准备工作计划_2026-08-01.md>)
-- [工作区功能域收敛计划_2026-08-10](<operations/工作区功能域收敛计划_2026-08-10.md>)
 
 ## 测试计划与模板
 
@@ -43,9 +37,6 @@
 ## 功能机制与设计
 
 - [GraphRAG学生画像-设计文档](<innovation/GraphRAG学生画像-设计文档.md>)
-- [创新点前端可用性评估-v1](<innovation/创新点前端可用性评估-v1.md>)
-- [创新点开发总览](<innovation/创新点开发总览.md>)
-- [创新点试用展示-2026-09-08](<innovation/创新点试用展示-2026-09-08.md>)
 - [动态知识蓝图机制-v1](<innovation/动态知识蓝图机制-v1.md>)
 - [图谱可视化语义映射-v1](<innovation/图谱可视化语义映射-v1.md>)
 - [智能体工作流与思维链-v1](<innovation/智能体工作流与思维链-v1.md>)

@@ -358,7 +358,6 @@ backend/.venv/bin/python scripts/gates/final_maturity_gate.py
 
 它要求内部门禁通过、`docs/system-evidence/production-config-latest.json` 与 `validation-results.json` 内嵌生产配置快照均为 `passed`，且 env 文件 SHA-256、关键项清单和结构化生产检查 `checks` 完全一致并全部通过；还要求外部冻结包通过、经 `scripts/gates/check_long_soak_report.py` 校验的长时 soak 证据通过、经 `scripts/gates/check_tls_deployment.py` 生成的真实 TLS 部署证据通过、经 `scripts/gates/check_offsite_backup_evidence.py` 校验的异地加密备份证据通过，并且最终证据 SHA-256 manifest 验证通过。当前缺少这些外部/生产证据时，该门禁应当失败，并把阻塞项写入 `docs/experiments/final-maturity-gate-latest.md`。这条门禁仍用于论文确认性人工评审和正式人工质量声明；受控试运行策略见 [docs/operations/controlled-beta-launch.md](docs/operations/controlled-beta-launch.md)。
 
-当前整改状态、代码冻结前置和外部事项的执行顺序见 [发布整改状态（2026-07-30）](docs/operations/release-remediation-2026-07-30.md)。
 前端“报告”页会通过 `/maturity/status` 只读显示内部门禁、最终成熟门禁和确认性人工评审完成门禁，并区分 `human_review_allowed`（可启动正式评审）与 `human_review_report_allowed`（可发布人工评审结果）；只要最终成熟门禁失败，页面会明确提示不要启动正式人工评审。
 各证据文件的最小结构见 [docs/operations/final-maturity-evidence.md](docs/operations/final-maturity-evidence.md)。
 
