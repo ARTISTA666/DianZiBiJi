@@ -556,7 +556,15 @@ mod tests {
             .filter_map(Value::as_object)
             .map(|path| path.len())
             .sum::<usize>();
-        assert_eq!(operations, 113);
+        assert_eq!(operations, 115);
+        assert!(
+            body["paths"]["/projects/{project_id}/agent/next-step-suggestion/feedback"]["get"]
+                .is_object()
+        );
+        assert!(
+            body["paths"]["/projects/{project_id}/agent/next-step-suggestion/feedback"]["post"]
+                .is_object()
+        );
         assert!(body["paths"]["/api/mcp"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions"]["post"].is_object());
         assert!(body["paths"]["/api/agent/sessions/{session_id}/turns"]["post"].is_object());
