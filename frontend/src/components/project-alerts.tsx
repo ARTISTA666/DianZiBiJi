@@ -144,7 +144,7 @@ export function ProjectAlertsPanel({
                 预警收件箱
               </CardTitle>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                AI 自主推进 + 阈值触发报警 + 导师自主干预——不做每步审核，只在指标越界时提醒
+                按需评估四项项目指标，越界触发预警并由管理员确认与调阈，处置全程写入审计日志
               </p>
             </div>
             <div className="flex gap-2">
