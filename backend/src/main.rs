@@ -119,6 +119,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let settings = Settings::from_env()?;
+    let graph_model = match eln_backend::knowledge_graph::semantic::LocalModel::from_env() {
+        Ok(model) => model,
+        Err(error) if startup_mode == StartupMode::CheckConfig => return Err(error.into()),
+        Err(error) => {
+            warn!(%error, "optional graph enrichment disabled due to invalid configuration");
+            None
+        }
+    };
     info!(
         app_env = %settings.app_env,
         revision = %settings.app_revision,
@@ -134,6 +142,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let recovered = recover_interrupted_experiment_runs(&pool).await?;
     if recovered > 0 {
         warn!(recovered, "recovered interrupted RAG experiment runs");
+    }
+    if let Some(model) = graph_model {
+        model.start(pool.clone());
     }
     monitor_stale_experiment_runs(pool.clone());
     monitor_expired_pending_actions(pool.clone());

@@ -64,6 +64,8 @@ export interface KgRelation {
   target_entity_id: number;
   relation_type: string;
   relation_label?: string;
+  source_type?: string | null;
+  properties?: Record<string, unknown>;
   confidence?: number;
 }
 
@@ -77,12 +79,13 @@ interface GraphNode {
   degree: number;
   color: string;
   shape: NodeShape;
-  freshness: number;
   updatedAt?: string;
   radius: number;
   isNote: boolean;
   x?: number;
   y?: number;
+  vx?: number;
+  vy?: number;
   fx?: number;
   fy?: number;
   pinned?: boolean;
@@ -109,6 +112,8 @@ const ENTITY_COLORS: Record<string, string> = {
   software: "#475569",     // 软件：深灰
   result: "#0ea5e9",       // 产物/结果：天蓝
   biosample: "#14b8a6",    // 生物样本：蓝绿
+  sample: "#0f766e",
+  experiment_type: "#be185d",
   gene: "#10b981",         // 基因/靶标：翡翠绿
   protein: "#059669",      // 蛋白：深绿
   disease: "#ef4444",      // 疾病：红色
@@ -239,13 +244,6 @@ export function KnowledgeGraphVisualization({
     // 所有外部传入的有效实体均予以渲染，杜绝因关系过滤产生孤立实体导致整图被吞白屏
     const visibleEntities = entities;
 
-    const times = visibleEntities
-      .map((e) => (e.updated_at ? new Date(e.updated_at).getTime() : Number.NaN))
-      .filter((t) => Number.isFinite(t));
-    const minT = times.length ? Math.min(...times) : 0;
-    const maxT = times.length ? Math.max(...times) : 0;
-    const span = maxT - minT || 1;
-
     const entToNotes = new Map<number, number[]>();
     relations.forEach((r) => {
       const src = map.get(r.source_entity_id);
@@ -266,9 +264,6 @@ export function KnowledgeGraphVisualization({
       const degree = relations.filter(
         (r) => r.source_entity_id === e.id || r.target_entity_id === e.id
       ).length;
-      const t = e.updated_at ? new Date(e.updated_at).getTime() : Number.NaN;
-      const freshness = Number.isFinite(t) ? 0.15 + 0.85 * ((t - minT) / span) : 0.5;
-
       const isNote = e.entity_type === "note" || e.entity_type === "project";
       // 节点尺寸平滑映射：实验笔记枢纽 18px，普通实体依据关联度 10~13px
       const radius = isNote
@@ -288,9 +283,8 @@ export function KnowledgeGraphVisualization({
         entityType: e.entity_type,
         val: radius,
         degree,
-        color: isNote ? "#6366f1" : getEntityColor(e.entity_type),
+        color: getEntityColor(e.entity_type),
         shape: "circle",
-        freshness,
         updatedAt: e.updated_at,
         radius,
         isNote,
@@ -321,6 +315,7 @@ export function KnowledgeGraphVisualization({
 
   // 关键稳定性保障：严格单向引用图数据，避免 Hover 触发父组件重绘时因传参新对象导致 D3 物理力场频繁重热（Reheat）剧烈乱动
   const graphData = useMemo(() => ({ nodes, links }), [nodes, links]);
+  const noteTabs = noteEntities.filter((node) => node.entityType === "note");
 
   // 组件卸载时销毁未决的 hover 防抖定时器
   useEffect(() => {
@@ -331,8 +326,9 @@ export function KnowledgeGraphVisualization({
     };
   }, []);
 
-  // 计算当前聚焦的核心实体（优先级：鼠标悬停 > 选中锁定的实体）
-  const primaryFocusId = hoveredNodeId ?? selectedEntityId;
+  const lockedFocusId = selectedEntityId !== null && entityMap.has(selectedEntityId) ? selectedEntityId : null;
+  const primaryFocusId = lockedFocusId ?? (hoveredNodeId !== null && entityMap.has(hoveredNodeId) ? hoveredNodeId : null);
+  const visibleEntityTypes = useMemo(() => [...new Set(entities.map((entity) => entity.entity_type))].sort(), [entities]);
 
   // 计算一跳关联的高亮网络
   const highlightedIds = useMemo(() => {
@@ -359,6 +355,9 @@ export function KnowledgeGraphVisualization({
         const neighbor = entityMap.get(neighborId);
         return {
           id: r.id,
+          fromNoteContent: r.source_type === "note_extraction",
+          modelCandidate: r.properties?.method === "local_semantic",
+          evidence: typeof r.properties?.evidence === "string" ? r.properties.evidence : undefined,
           relationType: r.relation_type,
           relationLabel: kgRelationTypeText[r.relation_type] || r.relation_type,
           confidence: r.confidence ?? 0.85,
@@ -373,10 +372,32 @@ export function KnowledgeGraphVisualization({
     return {
       node,
       connected,
+      noteFactCount: node.entityType === "note" ? connected.filter((edge) => edge.fromNoteContent).length : null,
     };
   }, [selectedEntityId, nodes, relations, entityMap]);
 
-  // 科学实验星系聚类力场
+  const lockedPositions = useMemo(() => {
+    if (!selectedDetails) return null;
+    const centerId = selectedDetails.node.id;
+    const neighbors = [...new Set(selectedDetails.connected.map(({ neighborId }) => neighborId))]
+      .filter((id) => id !== centerId);
+    const positions = new Map<number, { x: number; y: number }>([[centerId, { x: 0, y: 0 }]]);
+    if (neighbors.length === 1) positions.set(centerId, { x: -105, y: 0 });
+    const radius = Math.max(165, neighbors.length * 9);
+    neighbors.forEach((id, index) => {
+      const phase = neighbors.length > 2 ? -Math.PI / 2 : 0;
+      const angle = index * 2 * Math.PI / neighbors.length + phase;
+      positions.set(id, { x: Math.cos(angle) * radius * 1.24, y: Math.sin(angle) * radius });
+    });
+    return positions;
+  }, [selectedDetails]);
+  const focusPadding = lockedPositions?.size === 2 ? Math.round(Math.min(168, graphSize.width * 0.16)) : 68;
+
+  const fitGraph = useCallback((duration = 400) => {
+    graphRef.current?.zoomToFit?.(duration, lockedPositions ? focusPadding : 56,
+      lockedPositions ? (node: GraphNode) => lockedPositions.has(node.id) : undefined);
+  }, [lockedPositions, focusPadding]);
+
   const configureGraph = useCallback(() => {
     const graph = graphRef.current;
     if (!graph) return;
@@ -386,8 +407,8 @@ export function KnowledgeGraphVisualization({
     const w = graphSize.width || 900;
     const h = graphSize.height || 600;
 
-    const rx = Math.max(220, Math.min(360, w * 0.35));
-    const ry = Math.max(160, Math.min(260, h * 0.32));
+    const rx = Math.max(260, Math.min(490, w * 0.42));
+    const ry = Math.max(185, Math.min(320, h * 0.40));
     const noteAnchorMap = new Map<number, { x: number; y: number }>();
 
     notes.forEach((n, idx) => {
@@ -428,18 +449,30 @@ export function KnowledgeGraphVisualization({
       );
     }
 
-    graph.d3Force("charge")?.strength(-300).distanceMax(480);
-    graph.d3Force("link")?.distance(72);
+    graph.d3Force("charge")?.strength(-355).distanceMax(530);
+    graph.d3Force("link")?.distance(90);
     graph.d3Force("center")?.strength(0.04);
 
     if (forceCollide) {
       graph.d3Force("collide", forceCollide((n: any) => (n.radius || 11) + 14).iterations(2));
     }
-  }, [noteEntities, entityToNoteMap, graphSize.width, graphSize.height]);
-
-  const fitGraph = useCallback((duration = 400) => {
-    graphRef.current?.zoomToFit?.(duration, 56);
-  }, []);
+    // Keep locked one-hop views steady without changing the underlying graph or user pins.
+    const placeLockedNodes = lockedPositions ? () => {
+      for (const node of nodes) {
+        const position = lockedPositions.get(node.id);
+        if (!position || node.pinned) continue;
+        node.x = position.x;
+        node.y = position.y;
+        node.vx = 0;
+        node.vy = 0;
+      }
+    } : null;
+    graph.d3Force("lockedLayout", placeLockedNodes);
+    placeLockedNodes?.();
+    fitOnEngineStopRef.current = !lockedPositions;
+    graph.d3ReheatSimulation();
+    if (lockedPositions) fitGraph(280);
+  }, [noteEntities, entityToNoteMap, graphSize.width, graphSize.height, lockedPositions, nodes, fitGraph]);
 
   const handleEngineStop = useCallback(() => {
     if (!fitOnEngineStopRef.current) return;
@@ -453,17 +486,6 @@ export function KnowledgeGraphVisualization({
     const current = graph.zoom?.() || 1;
     graph.zoom?.(Math.max(0.15, Math.min(3.5, current * factor)), 200);
   }, []);
-
-  const focusOnNode = useCallback((nodeId: number) => {
-    const targetNode = nodes.find((n) => n.id === nodeId);
-    if (!targetNode || !graphRef.current) return;
-    const x = targetNode.x;
-    const y = targetNode.y;
-    if (Number.isFinite(x) && Number.isFinite(y)) {
-      graphRef.current.centerAt(x, y, 600);
-      graphRef.current.zoom(1.6, 600);
-    }
-  }, [nodes]);
 
   const toggleNodePin = useCallback((nodeId: number, pin: boolean) => {
     const graphData = graphRef.current?.graphData?.();
@@ -496,16 +518,19 @@ export function KnowledgeGraphVisualization({
     const q = inGraphSearch.trim().toLowerCase();
     if (!q) return;
     const matched = nodes.find((n) => n.name.toLowerCase().includes(q));
-    if (matched) {
-      onEntitySelect(matched.id);
-      focusOnNode(matched.id);
-    }
-  }, [inGraphSearch, nodes, onEntitySelect, focusOnNode]);
+    if (!matched) return;
+    if (matched.id === lockedFocusId) fitGraph();
+    else onEntitySelect(matched.id);
+  }, [inGraphSearch, nodes, onEntitySelect, lockedFocusId, fitGraph]);
 
   const toggleFullscreen = useCallback(() => {
     setIsFullscreen((v) => !v);
-    setTimeout(() => fitGraph(200), 150);
-  }, [fitGraph]);
+  }, []);
+
+  const resetOverview = useCallback(() => {
+    if (lockedFocusId === null) fitGraph();
+    else onEntitySelect(null);
+  }, [lockedFocusId, fitGraph, onEntitySelect]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -538,7 +563,13 @@ export function KnowledgeGraphVisualization({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen, selectedEntityId, onEntitySelect]);
 
-  // 🌟 极简高雅 Canvas 节点绘制（借鉴 Obsidian / Neo4j 工业级设计）
+  const shouldDrawLabel = useCallback((node: GraphNode) => {
+    if (labelMode === "all") return true;
+    if (node.id === hoveredNodeId) return true;
+    return labelMode === "smart" && (lockedFocusId === null ? node.entityType === "project" : node.id === lockedFocusId);
+  }, [hoveredNodeId, labelMode, lockedFocusId]);
+
+  // Canvas node drawing
   const paintNode = useCallback(
     (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
       const x = node.x;
@@ -593,15 +624,7 @@ export function KnowledgeGraphVisualization({
       ctx.lineWidth = (node.pinned ? 2 : node.isNote ? 1.5 : 1) / globalScale;
       ctx.stroke();
 
-      // 3. 语义标签展示：
-      // - 聚焦时：焦点节点与其相邻邻居均展示清晰标签
-      // - 全景态时：仅实验笔记展示标签，保持极简呼吸感
-      const shouldDrawLabel =
-        hasActiveFocus
-          ? isInFocusNetwork
-          : (labelMode === "all" || (labelMode === "smart" && (node.isNote || globalScale >= 1.7)));
-
-      if (shouldDrawLabel) {
+      if (shouldDrawLabel(node)) {
         const displayName = node.displayName || node.name || "";
         const labelText = isFocusCenter || node.isNote ? node.labelWithSummary || displayName : displayName;
 
@@ -639,7 +662,7 @@ export function KnowledgeGraphVisualization({
 
       ctx.restore();
     },
-    [primaryFocusId, highlightedIds, labelMode]
+    [primaryFocusId, highlightedIds, shouldDrawLabel]
   );
 
   // 关键稳定性保障：专用于射线拾取判定（Shadow Canvas），稳定提供拾取色块，杜绝 Hover 碰撞震颤循环
@@ -656,16 +679,8 @@ export function KnowledgeGraphVisualization({
       ctx.fillStyle = color;
       ctx.fill();
 
-      // 当节点附带文本标签时，将标签药丸区域也绘制到 Shadow Canvas，使得文字区域同样可响应 Hover 聚焦与点击
-      const hasActiveFocus = primaryFocusId !== null;
-      const isInFocusNetwork = highlightedIds.has(node.id);
       const isFocusCenter = node.id === primaryFocusId;
-      const shouldDrawLabel =
-        hasActiveFocus
-          ? isInFocusNetwork
-          : (labelMode === "all" || (labelMode === "smart" && node.isNote));
-
-      if (shouldDrawLabel) {
+      if (shouldDrawLabel(node)) {
         const displayName = node.displayName || node.name || "";
         const labelText = isFocusCenter || node.isNote ? (node.labelWithSummary || displayName) : displayName;
         if (labelText) {
@@ -679,7 +694,7 @@ export function KnowledgeGraphVisualization({
         }
       }
     },
-    [primaryFocusId, highlightedIds, labelMode]
+    [primaryFocusId, shouldDrawLabel]
   );
 
   // 连线中点语义药丸标签
@@ -695,7 +710,7 @@ export function KnowledgeGraphVisualization({
 
       // hover 聚焦时，仅在相连边上显示标签
       if (primaryFocusId !== null && !isFocused) return;
-      if (!showLinkLabels && !isFocused) return;
+      if (!showLinkLabels) return;
 
       const mx = (source.x + target.x) / 2;
       const my = (source.y + target.y) / 2;
@@ -790,7 +805,7 @@ export function KnowledgeGraphVisualization({
       if (primaryFocusId !== null) {
         return isLinkedToFocus ? link.color : "transparent";
       }
-      return hexToRgba(link.color, 0.28);
+      return hexToRgba(link.color, 0.5);
     },
     [primaryFocusId]
   );
@@ -805,7 +820,7 @@ export function KnowledgeGraphVisualization({
       if (primaryFocusId !== null) {
         return isLinkedToFocus ? 2.2 : 0;
       }
-      return 0.75;
+      return 1.05;
     },
     [primaryFocusId]
   );
@@ -872,10 +887,10 @@ export function KnowledgeGraphVisualization({
 
   return (
     <div
-      className={`relative flex flex-col transition-all duration-300 ${
+      className={`flex flex-col transition-all duration-300 ${
         isFullscreen
-          ? "fixed inset-0 z-50 bg-background/95 backdrop-blur-md p-4"
-          : "w-full"
+          ? "fixed inset-0 z-[70] bg-background/95 backdrop-blur-md p-4"
+          : "relative w-full"
       }`}
     >
       <Card className="flex flex-1 flex-col overflow-hidden border-border/75 shadow-card bg-card">
@@ -898,7 +913,7 @@ export function KnowledgeGraphVisualization({
                 ) : (
                   <>
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
-                    <span className="text-muted-foreground">全景图谱 ({nodes.length} 实体)</span>
+                    <span className="text-muted-foreground">全景图谱 ({nodes.length} 个实体 · {links.length} 条关系)</span>
                     <span className="text-[11px] text-muted-foreground/80">· 悬停聚焦一跳 · 单击锁定 · 拖拽固定</span>
                   </>
                 )}
@@ -964,7 +979,7 @@ export function KnowledgeGraphVisualization({
                     <ChevronDown className="h-3 w-3 opacity-60" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="text-xs">
+                <DropdownMenuContent align="end" className="z-[80] text-xs">
                   <DropdownMenuLabel>实体标签策略</DropdownMenuLabel>
                   <DropdownMenuCheckboxItem
                     checked={labelMode === "smart"}
@@ -997,10 +1012,7 @@ export function KnowledgeGraphVisualization({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => {
-                  onEntitySelect(null);
-                  fitGraph(400);
-                }}
+                onClick={resetOverview}
                 className="h-7 px-2 text-xs"
                 title="重置全景视角"
               >
@@ -1021,15 +1033,12 @@ export function KnowledgeGraphVisualization({
         </CardHeader>
 
         {/* 顶部实验快捷穿梭胶囊 */}
-        {noteEntities.length > 0 && (
+        {noteTabs.length > 0 && (
           <div className="flex items-center gap-1.5 overflow-x-auto border-b border-border/50 bg-muted/10 px-4 py-1.5 text-xs no-scrollbar">
             <span className="flex-none text-[11px] font-medium text-muted-foreground mr-1">实验直达:</span>
             <button
               type="button"
-              onClick={() => {
-                onEntitySelect(null);
-                fitGraph(350);
-              }}
+              onClick={resetOverview}
               className={`flex-none rounded-md px-2.5 py-0.5 text-xs transition-colors ${
                 selectedEntityId === null
                   ? "bg-primary text-primary-foreground font-medium shadow-xs"
@@ -1038,16 +1047,13 @@ export function KnowledgeGraphVisualization({
             >
               全部总览 ({nodes.length})
             </button>
-            {noteEntities.map((note, idx) => {
+            {noteTabs.map((note, idx) => {
               const isSelected = selectedEntityId === note.id;
               return (
                 <button
                   key={note.id}
                   type="button"
-                  onClick={() => {
-                    onEntitySelect(note.id);
-                    focusOnNode(note.id);
-                  }}
+                  onClick={() => isSelected ? fitGraph() : onEntitySelect(note.id)}
                   title={note.name}
                   className={`flex-none truncate max-w-56 rounded-md px-2.5 py-0.5 text-xs transition-colors ${
                     isSelected
@@ -1064,55 +1070,86 @@ export function KnowledgeGraphVisualization({
 
         {/* 画布核心区域 */}
         <CardContent
-          ref={containerRef}
           className={`relative overflow-hidden p-0 bg-dot-grid bg-muted/10 ${
             isFullscreen ? "flex-1 h-full" : "h-[min(76vh,50rem)] min-h-[36rem]"
           }`}
         >
-          {graphSize.width > 0 && (
-            <ForceGraph2D
-              ref={graphRef as any}
-              graphData={graphData}
-              width={graphSize.width}
-              height={graphSize.height}
-              nodeVisibility={isNodeVisible}
-              linkVisibility={isLinkVisible}
-              nodeLabel={nodeLabelAccessor}
-              nodeVal={nodeValAccessor}
-              nodeCanvasObject={paintNode}
-              nodePointerAreaPaint={paintNodePointerArea}
-              linkCanvasObjectMode={linkCanvasObjectModeAccessor}
-              linkCanvasObject={paintLinkCanvas}
-              linkLabel={linkLabelAccessor}
-              linkColor={linkColorAccessor}
-              linkWidth={linkWidthAccessor}
-              linkDirectionalArrowLength={linkArrowLengthAccessor}
-              linkDirectionalArrowRelPos={0.88}
-              linkDirectionalArrowColor={linkArrowColorAccessor}
-              linkCurvature={0.06}
-              onNodeHover={handleNodeHover}
-              onNodeClick={handleNodeClick}
-              onNodeRightClick={handleNodeRightClick}
-              onNodeDragEnd={handleNodeDragEnd}
-              onBackgroundClick={handleBackgroundClick}
-              enableZoomInteraction={true}
-              enablePanInteraction={true}
-              enablePointerInteraction={true}
-              onEngineStop={handleEngineStop}
-              minZoom={0.15}
-              maxZoom={3.5}
-              cooldownTicks={120}
-              cooldownTime={1800}
-              d3AlphaDecay={0.05}
-              d3VelocityDecay={0.45}
-              warmupTicks={80}
-              autoPauseRedraw={false}
-            />
-          )}
+          <div ref={containerRef} className={`absolute inset-0 ${selectedDetails ? "lg:right-[23.5rem]" : ""}`}>
+            {graphSize.width > 0 && (
+              <ForceGraph2D
+                ref={graphRef as any}
+                graphData={graphData}
+                width={graphSize.width}
+                height={graphSize.height}
+                nodeVisibility={isNodeVisible}
+                linkVisibility={isLinkVisible}
+                nodeLabel={nodeLabelAccessor}
+                nodeVal={nodeValAccessor}
+                nodeCanvasObject={paintNode}
+                nodePointerAreaPaint={paintNodePointerArea}
+                linkCanvasObjectMode={linkCanvasObjectModeAccessor}
+                linkCanvasObject={paintLinkCanvas}
+                linkLabel={linkLabelAccessor}
+                linkColor={linkColorAccessor}
+                linkWidth={linkWidthAccessor}
+                linkDirectionalArrowLength={linkArrowLengthAccessor}
+                linkDirectionalArrowRelPos={0.88}
+                linkDirectionalArrowColor={linkArrowColorAccessor}
+                linkCurvature={0.06}
+                onNodeHover={handleNodeHover}
+                onNodeClick={handleNodeClick}
+                onNodeRightClick={handleNodeRightClick}
+                onNodeDragEnd={handleNodeDragEnd}
+                onBackgroundClick={handleBackgroundClick}
+                enableZoomInteraction={true}
+                enablePanInteraction={true}
+                enablePointerInteraction={true}
+                onEngineStop={handleEngineStop}
+                minZoom={0.15}
+                maxZoom={3.5}
+                cooldownTicks={120}
+                cooldownTime={1800}
+                d3AlphaDecay={0.05}
+                d3VelocityDecay={0.45}
+                warmupTicks={80}
+                autoPauseRedraw={false}
+              />
+            )}
+            {/* 画布悬浮缩放控制器 */}
+            <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1 rounded-lg border border-border/80 bg-background/90 p-1 shadow-subtle backdrop-blur-md">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={() => zoomGraph(1.25)}
+                title="放大"
+              >
+                <ZoomIn className="h-3.5 w-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={() => zoomGraph(0.8)}
+                title="缩小"
+              >
+                <ZoomOut className="h-3.5 w-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={resetOverview}
+                title="重置全景"
+              >
+                <RotateCcw className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          </div>
 
-          {/* 右侧毛玻璃全息实体检视抽屉 */}
+          {/* 右侧实体详情 */}
           {selectedDetails && (
-            <div className="absolute top-3 right-3 bottom-3 w-80 z-20 flex flex-col rounded-xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-md transition-all animate-in fade-in slide-in-from-right-4 duration-200">
+            <div role="region" aria-label="实体详情" className="absolute top-3 right-3 bottom-3 w-[calc(100%-1.5rem)] max-w-80 lg:max-w-[22rem] z-20 flex flex-col rounded-xl border border-border/80 bg-card p-4 shadow-lg animate-in fade-in duration-200">
               <div className="flex items-start justify-between gap-2 border-b border-border/60 pb-3">
                 <div className="min-w-0">
                   <Badge
@@ -1126,7 +1163,7 @@ export function KnowledgeGraphVisualization({
                   >
                     {kgEntityTypeText[selectedDetails.node.entityType] || selectedDetails.node.entityType}
                   </Badge>
-                  <h4 className="text-sm font-semibold text-foreground truncate" title={selectedDetails.node.name}>
+                  <h4 className="break-words text-sm font-semibold text-foreground">
                     {selectedDetails.node.name}
                   </h4>
                 </div>
@@ -1134,6 +1171,7 @@ export function KnowledgeGraphVisualization({
                   variant="ghost"
                   size="icon"
                   className="h-6 w-6 text-muted-foreground hover:text-foreground shrink-0"
+                  aria-label="关闭实体详情"
                   onClick={() => onEntitySelect(null)}
                 >
                   <X className="h-4 w-4" />
@@ -1142,15 +1180,15 @@ export function KnowledgeGraphVisualization({
 
               <div className="grid grid-cols-2 gap-2 py-3 border-b border-border/50 text-xs">
                 <div className="rounded-md bg-muted/40 p-2">
-                  <p className="text-[10px] text-muted-foreground">拓扑关联度</p>
+                  <p className="text-[10px] text-muted-foreground">{selectedDetails.noteFactCount === null ? "当前关联" : "当前视图的笔记内容关联"}</p>
                   <p className="text-base font-bold text-foreground">
-                    {selectedDetails.node.degree} <span className="text-[10px] font-normal text-muted-foreground">条关联</span>
+                    {selectedDetails.noteFactCount ?? selectedDetails.node.degree} <span className="text-[10px] font-normal text-muted-foreground">条关联</span>
                   </p>
                 </div>
                 <div className="rounded-md bg-muted/40 p-2">
-                  <p className="text-[10px] text-muted-foreground">置信度</p>
-                  <p className="text-base font-bold text-foreground">
-                    {(selectedDetails.node.freshness * 100).toFixed(0)}%
+                  <p className="text-[10px] text-muted-foreground">更新时间</p>
+                  <p className="text-base font-bold tabular-nums text-foreground">
+                    {selectedDetails.node.updatedAt?.slice(0, 10) || "—"}
                   </p>
                 </div>
               </div>
@@ -1160,24 +1198,31 @@ export function KnowledgeGraphVisualization({
                   直接关联实体 ({selectedDetails.connected.length})
                 </p>
                 {selectedDetails.connected.map((c) => (
-                  <div
-                    key={c.id}
-                    onClick={() => {
-                      onEntitySelect(c.neighborId);
-                      focusOnNode(c.neighborId);
-                    }}
-                    className="flex items-center justify-between gap-1.5 rounded-lg border border-border/50 bg-background/60 p-2 text-xs hover:border-primary/50 hover:bg-primary/5 cursor-pointer transition-colors"
-                  >
-                    <div className="min-w-0 flex items-center gap-1.5">
-                      <span
-                        className="h-2 w-2 rounded-full shrink-0"
-                        style={{ backgroundColor: c.neighborColor }}
-                      />
-                      <span className="truncate font-medium text-foreground">{c.neighborLabel}</span>
-                    </div>
-                    <Badge variant="secondary" className="text-[10px] px-1 py-0 shrink-0">
-                      {c.relationLabel}
-                    </Badge>
+                  <div key={c.id}>
+                    <button
+                      type="button"
+                      onClick={() => onEntitySelect(c.neighborId)}
+                      className="flex w-full items-center justify-between gap-2 rounded-lg border border-border/50 bg-background/60 p-2 text-left text-sm hover:border-primary/50 hover:bg-primary/5 transition-colors"
+                    >
+                      <div className="min-w-0 flex items-center gap-1.5">
+                        <span
+                          className="h-2 w-2 rounded-full shrink-0"
+                          style={{ backgroundColor: c.neighborColor }}
+                        />
+                        <span className="break-words font-medium text-foreground">{c.neighborLabel}</span>
+                      </div>
+                      <Badge variant="secondary" className="text-[10px] px-1 py-0 shrink-0">
+                        {c.relationLabel}{c.modelCandidate ? " · 模型候选" : ""}
+                      </Badge>
+                    </button>
+                    {c.evidence && (
+                      <details className="mx-2 mt-1 text-xs text-muted-foreground">
+                        <summary className="cursor-pointer">查看笔记原文</summary>
+                        <blockquote className="my-1 border-l-2 border-border pl-2 text-sm leading-relaxed text-foreground">
+                          {c.evidence}
+                        </blockquote>
+                      </details>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1187,7 +1232,7 @@ export function KnowledgeGraphVisualization({
                   size="sm"
                   variant="default"
                   className="flex-1 text-xs h-8"
-                  onClick={() => focusOnNode(selectedDetails.node.id)}
+                  onClick={() => fitGraph()}
                 >
                   <Focus className="mr-1.5 h-3.5 w-3.5" />
                   对焦居中
@@ -1249,10 +1294,10 @@ export function KnowledgeGraphVisualization({
                   </button>
                 </div>
 
-                <div className="grid grid-cols-2 gap-1.5 text-[11px]">
-                  {Object.entries(ENTITY_COLORS).slice(0, 10).map(([type, color]) => (
+                <div className="grid max-h-64 grid-cols-2 gap-1.5 overflow-auto text-[11px]">
+                  {visibleEntityTypes.map((type) => (
                     <div key={type} className="flex items-center gap-1.5">
-                      <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                      <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: getEntityColor(type) }} />
                       <span className="text-muted-foreground truncate">{kgEntityTypeText[type] || type}</span>
                     </div>
                   ))}
@@ -1261,39 +1306,6 @@ export function KnowledgeGraphVisualization({
             )}
           </div>
 
-          {/* 画布悬浮缩放控制器 */}
-          <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1 rounded-lg border border-border/80 bg-background/90 p-1 shadow-subtle backdrop-blur-md">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={() => zoomGraph(1.25)}
-              title="放大"
-            >
-              <ZoomIn className="h-3.5 w-3.5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={() => zoomGraph(0.8)}
-              title="缩小"
-            >
-              <ZoomOut className="h-3.5 w-3.5" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={() => {
-                onEntitySelect(null);
-                fitGraph(400);
-              }}
-              title="重置全景"
-            >
-              <RotateCcw className="h-3.5 w-3.5" />
-            </Button>
-          </div>
         </CardContent>
       </Card>
     </div>

@@ -14,7 +14,7 @@ pub const INITIAL_SCHEMA: &str = include_str!("../sql/0001_initial.sql");
 const DATABASE_INITIALIZATION_LOCK_ID: i64 = 4_545_704_429_315_697;
 const RAG_HNSW_INITIALIZATION_LOCK_ID: i64 = 4_545_704_429_315_698;
 const RAG_HNSW_INDEX_NAME: &str = "ix_rag_chunks_embedding_hnsw";
-const RUST_SCHEMA_VERSION: i32 = 6;
+const RUST_SCHEMA_VERSION: i32 = 7;
 // Compatibility marker only: it is not an index/chunk version or provenance.
 const LEGACY_SCHEMA_RECOVERY_GUIDANCE: &str =
     "Apply the complete legacy Alembic history through 0013_rust_retrieval_identity with the previous migration image, or restore a compatible backup.";
@@ -53,6 +53,17 @@ const RUNTIME_SCHEMA_SIGNATURE: &[(&str, &[&str])] = &[
     ("kg_entities", &["id"]),
     ("kg_relations", &["id"]),
     ("kg_extraction_runs", &["id"]),
+    (
+        "kg_prose_annotations",
+        &[
+            "version_id",
+            "model",
+            "revision",
+            "facts",
+            "lease",
+            "retry_at",
+        ],
+    ),
     (
         "kg_blueprint_nodes",
         &["id", "normalized_label", "priority"],
@@ -424,7 +435,10 @@ async fn initialize_database_once(pool: &PgPool, settings: &Settings) -> Result<
             completed_at timestamp with time zone,
             UNIQUE (session_id, turn_id, sequence_no)
         );
-        CREATE UNIQUE INDEX IF NOT EXISTS uq_agent_step_idempotency
+        -- Steps record attempts; execution keys below deduplicate business writes.
+        -- Retrying a key must retain another trace and reach the tool's hash check.
+        DROP INDEX IF EXISTS public.uq_agent_step_idempotency;
+        CREATE INDEX IF NOT EXISTS ix_agent_step_idempotency
             ON public.agent_steps (session_id, tool_name, idempotency_key)
             WHERE idempotency_key IS NOT NULL;
 
@@ -636,6 +650,19 @@ async fn initialize_database_once(pool: &PgPool, settings: &Settings) -> Result<
         );
         CREATE INDEX IF NOT EXISTS ix_kg_blueprint_documents_project
             ON public.kg_blueprint_documents (project_id);
+
+        CREATE TABLE IF NOT EXISTS public.kg_prose_annotations (
+            version_id integer PRIMARY KEY REFERENCES public.note_versions(id) ON DELETE CASCADE,
+            model text NOT NULL,
+            revision text NOT NULL,
+            facts jsonb,
+            lease uuid,
+            retry_at timestamptz NOT NULL DEFAULT now()
+        );
+
+        ALTER TABLE public.kg_prose_annotations
+            ADD COLUMN IF NOT EXISTS attempts integer NOT NULL DEFAULT 0,
+            ADD COLUMN IF NOT EXISTS last_error text;
 
         -- Mirrors legacy Alembic migration 0016: project alert tables
         -- (创新点四：预警与人工审核闭环——阈值可调的多维指标 + 报警收件箱).

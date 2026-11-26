@@ -14,7 +14,10 @@ use crate::{
     models::{KnowledgeEntityRead, KnowledgeExtractionRunRead, KnowledgeRelationRead},
 };
 
-const EXTRACTION_RULE_VERSION: &str = "kg-rules-v2-atomic-arrays";
+mod prose;
+pub mod semantic;
+
+const EXTRACTION_RULE_VERSION: &str = "kg-rules-v4-grounded-prose";
 
 #[derive(Debug, FromRow)]
 struct ExtractableNote {
@@ -24,6 +27,7 @@ struct ExtractableNote {
     experiment_type: String,
     experiment_date: Option<chrono::NaiveDate>,
     owner_user_id: i32,
+    status: String,
     current_version_id: Option<i32>,
 }
 
@@ -46,6 +50,9 @@ pub(crate) struct ExtractedTerm {
     pub(crate) relation_type: &'static str,
     pub(crate) label: String,
     pub(crate) roles: HashSet<String>,
+    pub(crate) method: &'static str,
+    pub(crate) evidence: Option<String>,
+    pub(crate) semantic_source: Option<(String, String)>,
 }
 
 pub async fn extract_note(
@@ -54,17 +61,48 @@ pub async fn extract_note(
     triggered_by: i32,
     rebuild: bool,
 ) -> Result<KnowledgeExtractionRunRead, ApiError> {
+    let (note, provenance, counts) = sync_note_graph(transaction, note_id, rebuild).await?;
+    let (status, message) = if counts.is_some() {
+        ("completed", "Knowledge graph extraction completed")
+    } else {
+        ("failed", "Project not found")
+    };
+    record_run(
+        transaction,
+        &note,
+        triggered_by,
+        counts.unwrap_or_default(),
+        status,
+        message,
+        &provenance,
+    )
+    .await
+}
+
+// Both approval and asynchronous backfill materialize the same approved version.
+// Only the interactive entry point creates a user-attributed extraction run.
+async fn sync_note_graph(
+    transaction: &mut Transaction<'_, Postgres>,
+    note_id: i32,
+    rebuild: bool,
+) -> Result<(ExtractableNote, Value, Option<(i32, i32)>), ApiError> {
     let note = sqlx::query_as::<_, ExtractableNote>(
         r#"
         SELECT id, project_id, title, experiment_type, experiment_date,
-               owner_user_id, current_version_id
-        FROM experiment_notes WHERE id = $1
+               owner_user_id, status::text AS status, current_version_id
+        FROM experiment_notes WHERE id = $1 FOR UPDATE
         "#,
     )
     .bind(note_id)
     .fetch_optional(&mut **transaction)
     .await?
     .ok_or_else(|| ApiError::internal("Note not found during graph extraction"))?;
+    if note.status != "APPROVED" {
+        return Err(ApiError::new(
+            axum::http::StatusCode::CONFLICT,
+            "Only approved notes can be extracted",
+        ));
+    }
     let version = if let Some(version_id) = note.current_version_id {
         sqlx::query_as::<_, (Value, Value)>(
             "SELECT fixed_fields_json, content_json FROM note_versions WHERE id = $1 AND note_id = $2",
@@ -87,16 +125,7 @@ pub async fn extract_note(
             .fetch_optional(&mut **transaction)
             .await?;
     let Some(project_name) = project_name else {
-        return record_run(
-            transaction,
-            &note,
-            triggered_by,
-            (0, 0),
-            "failed",
-            "Project not found",
-            &provenance,
-        )
-        .await;
+        return Ok((note, provenance, None));
     };
 
     let mut entities = HashSet::new();
@@ -242,32 +271,18 @@ pub async fn extract_note(
     }
 
     if let Some((fixed_fields, content)) = version {
-        for term in extract_terms(&fixed_fields, &content) {
-            let entity = upsert_entity(
+        let mut terms = note_terms(&fixed_fields, &content);
+        if let Some(version_id) = note.current_version_id {
+            terms.extend(semantic::cached_terms(transaction, version_id).await?);
+        }
+        for term in distinct_note_terms(terms) {
+            let (entity, relation) = persist_note_term(
                 transaction,
                 note.project_id,
-                term.entity_type,
-                &term.label,
-                None,
-                None,
-                json!({"extraction": "rule_based"}),
-            )
-            .await?;
-            let mut roles: Vec<String> = term.roles.into_iter().collect();
-            roles.sort();
-            let mut properties = provenance.clone();
-            properties["method"] = json!("rule_based");
-            properties["roles"] = json!(roles);
-            let relation = upsert_relation(
-                transaction,
-                note.project_id,
+                note.id,
                 note_entity,
-                entity,
-                term.relation_type,
-                Some("note_extraction"),
-                Some(note.id),
-                0.7,
-                properties,
+                &provenance,
+                term,
             )
             .await?;
             entities.insert(entity);
@@ -275,16 +290,57 @@ pub async fn extract_note(
         }
     }
 
-    record_run(
+    Ok((
+        note,
+        provenance,
+        Some((entities.len() as i32, relations.len() as i32)),
+    ))
+}
+
+async fn persist_note_term(
+    transaction: &mut Transaction<'_, Postgres>,
+    project_id: i32,
+    note_id: i32,
+    note_entity: i32,
+    provenance: &Value,
+    term: ExtractedTerm,
+) -> Result<(i32, i32), ApiError> {
+    let entity = upsert_entity(
         transaction,
-        &note,
-        triggered_by,
-        (entities.len() as i32, relations.len() as i32),
-        "completed",
-        "Knowledge graph extraction completed",
-        &provenance,
+        project_id,
+        term.entity_type,
+        &term.label,
+        None,
+        None,
+        json!({"extraction": term.method}),
     )
-    .await
+    .await?;
+    let mut roles: Vec<String> = term.roles.into_iter().collect();
+    roles.sort();
+    let mut properties = provenance.clone();
+    properties["method"] = json!(term.method);
+    properties["mention"] = json!(term.label);
+    if let Some((model, revision)) = term.semantic_source {
+        properties["model"] = json!(model);
+        properties["semantic_revision"] = json!(revision);
+    }
+    if let Some(evidence) = term.evidence {
+        properties["evidence"] = json!(evidence);
+    }
+    properties["roles"] = json!(roles);
+    let relation = upsert_relation(
+        transaction,
+        project_id,
+        note_entity,
+        entity,
+        term.relation_type,
+        Some("note_extraction"),
+        Some(note_id),
+        0.7,
+        properties,
+    )
+    .await?;
+    Ok((entity, relation))
 }
 
 pub async fn clear_note_graph(
@@ -413,7 +469,7 @@ pub async fn note_graph(
         .collect::<HashSet<_>>()
         .into_iter()
         .collect();
-    let entities = sqlx::query_as::<_, KnowledgeEntityRead>(
+    let mut entities = sqlx::query_as::<_, KnowledgeEntityRead>(
         r#"
         SELECT id, project_id, entity_type, label, normalized_label, natural_key,
                source_type, source_id, properties, created_at, updated_at
@@ -423,6 +479,19 @@ pub async fn note_graph(
     .bind(&entity_ids)
     .fetch_all(&mut **transaction)
     .await?;
+    // The project graph uses one canonical name. A note displays the name its author wrote.
+    let mentions: HashMap<_, _> = relations
+        .iter()
+        .filter(|r| {
+            r.source_type.as_deref() == Some("note_extraction") && r.source_id == Some(note_id)
+        })
+        .filter_map(|r| Some((r.target_entity_id, r.properties.get("mention")?.as_str()?)))
+        .collect();
+    for entity in &mut entities {
+        if let Some(mention) = mentions.get(&entity.id) {
+            entity.label = (*mention).to_owned();
+        }
+    }
     Ok((entities, relations))
 }
 
@@ -552,7 +621,11 @@ async fn upsert_entity(
             "#,
         )
         .bind(entity.id)
-        .bind(&label)
+        .bind(if uses_source_key {
+            &label
+        } else {
+            &entity.label
+        })
         .bind(&normalized_label)
         .bind(&natural_key)
         .bind(merged)
@@ -567,6 +640,9 @@ async fn upsert_entity(
             source_type, source_id, properties, created_at, updated_at
         )
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, now(), now())
+        ON CONFLICT (project_id, natural_key) DO UPDATE
+        SET label = CASE WHEN EXCLUDED.source_id IS NULL THEN kg_entities.label ELSE EXCLUDED.label END,
+            properties = (kg_entities.properties::jsonb || EXCLUDED.properties::jsonb)::json, updated_at = now()
         RETURNING id
         "#,
     )
@@ -648,13 +724,22 @@ async fn upsert_relation(
     .await?)
 }
 
+fn note_terms(fixed_fields: &Value, content: &Value) -> Vec<ExtractedTerm> {
+    let mut terms = extract_terms(fixed_fields, content);
+    let mut paragraphs = Vec::new();
+    prose::narrative(content, &mut paragraphs);
+    prose::collect(&paragraphs, &mut terms);
+    dedupe_terms(terms)
+}
+
 pub(crate) fn extract_terms(fixed_fields: &Value, content: &Value) -> Vec<ExtractedTerm> {
     let mut terms = Vec::new();
     collect_structured(fixed_fields, &mut terms);
     collect_structured(content, &mut terms);
     // Structured arrays were already extracted with their declared boundaries.
     // Do not interpret their labels again as free-text prefixes.
-    let text = flatten_text(&[fixed_fields, content], false).join("\n");
+    let raw_prefix_text = flatten_text(&[fixed_fields, content], false).join("\n");
+    let text = prose::context::filtered_prefix_text(&raw_prefix_text);
     let patterns = [
         (
             "reagent",
@@ -691,6 +776,12 @@ pub(crate) fn extract_terms(fixed_fields: &Value, content: &Value) -> Vec<Extrac
         let regex = Regex::new(pattern).expect("knowledge extraction regex is valid");
         for captures in regex.captures_iter(&text) {
             for label in split_string(&captures[1], keep_sentence) {
+                // A bare number in a free-text sample list may be an abbreviated
+                // suffix ("cDNA sample 1, 2"). Keep explicit structured labels,
+                // but do not create a sample or infer a missing prefix here.
+                if entity_type == "sample" && label.chars().all(|c| c.is_ascii_digit()) {
+                    continue;
+                }
                 terms.push(term(entity_type, relation_type, label, None));
             }
         }
@@ -849,7 +940,7 @@ fn classify_key(key: &str) -> Option<(&'static str, &'static str, Option<&'stati
         .map(|(_, entity_type, relation_type, keep)| (entity_type, relation_type, None, keep))
 }
 
-fn term(
+pub(crate) fn term(
     entity_type: &'static str,
     relation_type: &'static str,
     label: String,
@@ -885,6 +976,9 @@ fn term(
         relation_type,
         label: clean_label(&label),
         roles,
+        method: "rule_based",
+        evidence: None,
+        semantic_source: None,
     }
 }
 
@@ -920,7 +1014,36 @@ fn split_string(value: &str, keep_sentence: bool) -> Vec<String> {
         .collect()
 }
 
-fn dedupe_terms(terms: Vec<ExtractedTerm>) -> Vec<ExtractedTerm> {
+// Rule and model output can quote the same occurrence with or without an
+// English article. Preserve the first source and never merge separate mentions.
+fn distinct_note_terms(terms: Vec<ExtractedTerm>) -> Vec<ExtractedTerm> {
+    let mut seen = HashSet::new();
+    let terms = terms
+        .into_iter()
+        .filter(|item| {
+            let Some(evidence) = item.evidence.as_deref() else {
+                return true;
+            };
+            let core = match item.label.split_once(' ') {
+                Some((word, rest))
+                    if ["a", "an", "the"]
+                        .iter()
+                        .any(|s| word.eq_ignore_ascii_case(s)) =>
+                {
+                    rest
+                }
+                _ => &item.label,
+            };
+            if core.is_empty() || evidence.match_indices(core).count() != 1 {
+                return true;
+            }
+            seen.insert((item.entity_type, evidence.to_owned(), core.to_owned()))
+        })
+        .collect();
+    dedupe_terms(terms)
+}
+
+pub(crate) fn dedupe_terms(terms: Vec<ExtractedTerm>) -> Vec<ExtractedTerm> {
     let mut by_key: HashMap<(String, String), ExtractedTerm> = HashMap::new();
     for item in terms.into_iter().filter(|item| !item.label.is_empty()) {
         let key = (
@@ -952,7 +1075,17 @@ fn flatten_text(values: &[&Value], include_structured_arrays: bool) -> Vec<Strin
                     {
                         continue;
                     }
-                    output.push(key.clone());
+                    if !include_structured_arrays
+                        && fields.contains_key("type")
+                        && matches!(key.as_str(), "type" | "attrs" | "marks")
+                    {
+                        continue;
+                    }
+                    // JSON keys describe the editor or form. Only field values
+                    // are source text for the free-text prefix parser.
+                    if include_structured_arrays {
+                        output.push(key.clone());
+                    }
                     output.extend(flatten_text(&[item], include_structured_arrays));
                 }
             }
@@ -1292,6 +1425,229 @@ mod tests {
         assert_eq!(labels("instrument"), ["BioTek Synergy H1"]);
         assert!(labels("result").contains(&"初始结果；第二结果"));
         assert!(labels("result").contains(&"细胞活力 95%"));
+    }
+
+    #[test]
+    fn approved_free_prose_identifies_typed_facts_and_keeps_source_evidence() {
+        let english = "We inspected the reference panel using a digital microscope. We added a cleaning solution. We measured sample A17. We observed a stable signal.";
+        let chinese = "操作员用显微镜观察了试样。随后加入了清洗液。观察到信号稳定。";
+        for (body, expected) in [
+            (
+                english,
+                vec![
+                    ("instrument", "digital microscope"),
+                    ("reagent", "cleaning solution"),
+                    ("sample", "sample A17"),
+                    ("result", "a stable signal"),
+                ],
+            ),
+            (
+                chinese,
+                vec![
+                    ("instrument", "显微镜"),
+                    ("reagent", "清洗液"),
+                    ("result", "信号稳定"),
+                ],
+            ),
+        ] {
+            let terms = super::note_terms(&json!({}), &json!({"text": body}));
+            assert_eq!(terms.len(), expected.len(), "{terms:?}");
+            for (kind, label) in expected {
+                let fact = terms
+                    .iter()
+                    .find(|t| t.entity_type == kind && t.label == label)
+                    .unwrap();
+                let evidence = fact.evidence.as_deref().unwrap();
+                assert!(body.contains(evidence) && evidence.contains(label));
+            }
+        }
+    }
+
+    #[test]
+    fn approved_free_prose_ignores_negative_hypothetical_and_untyped_mentions() {
+        for body in [
+            "We did not use the microscope. We plan to add the cleaning solution. A camera was listed in the catalog.",
+            "If a microscope was used, record its serial. Was a digital microscope used?",
+            "We used a new method. We added a line to the chart.",
+            "没有使用显微镜。计划加入清洗液。是否观察到信号稳定？",
+        ] {
+            assert!(super::note_terms(&json!({}), &json!({"text": body})).is_empty(), "{body}");
+        }
+    }
+
+    #[test]
+    fn free_prose_requires_a_completed_act_and_preserves_explicit_fields() {
+        for body in [
+            "A cabinet with a digital microscope was delivered. A used microscope is on the shelf.",
+            "Using a microscope helps with inspection. Please test sample A7.",
+            "The operator was told to work with a camera. The technician tried using a digital microscope.",
+            "The digital microscope was unused. 本次实验将使用显微镜。请用温度计检查。原计划使用天平。",
+        ] {
+            assert!(super::note_terms(&json!({}), &json!({"text":body})).is_empty(), "{body}");
+        }
+        let terms = super::note_terms(
+            &json!({"instruments":["digital microscope"]}),
+            &json!({"text":"We used a digital microscope. We did not use the camera; we used a balance."}),
+        );
+        assert_eq!(terms.len(), 2);
+        assert_eq!(
+            terms
+                .iter()
+                .find(|t| t.label == "digital microscope")
+                .unwrap()
+                .method,
+            "rule_based"
+        );
+        assert_eq!(
+            terms.iter().find(|t| t.label == "balance").unwrap().method,
+            "local_prose"
+        );
+        let labeled = super::note_terms(
+            &json!({}),
+            &json!({"text":"Result: we observed a stable signal."}),
+        );
+        assert_eq!(labeled.len(), 1);
+    }
+
+    #[test]
+    fn free_prose_supports_named_equipment_material_samples_and_measured_outcomes() {
+        let body = "We tested the brass coupon on a digital microscope. We used an instrument named “FluxScope R7”. The pressure reached 18.5 kPa. 随后对样品 K9 进行了称量。实测温度升至 23 °C。";
+        let terms = super::note_terms(&json!({}), &json!({"text":body}));
+        for (kind, label) in [
+            ("sample", "brass coupon"),
+            ("instrument", "digital microscope"),
+            ("instrument", "FluxScope R7"),
+            ("sample", "样品 K9"),
+            ("result", "The pressure reached 18.5 kPa"),
+            ("result", "温度升至 23 °C"),
+        ] {
+            assert!(
+                terms
+                    .iter()
+                    .any(|t| t.entity_type == kind && t.label == label),
+                "{label}: {terms:?}"
+            );
+        }
+        assert_eq!(terms.len(), 6);
+    }
+
+    #[test]
+    fn free_prose_respects_reported_speech_null_results_and_model_identifiers() {
+        let body = "The vendor wrote: “We used a camera. We tested sample J9.” We used an optical spectrometer AX-42. We observed no cracks. 仪器手册写道：“用相机拍摄。用天平称量。”本次检查未发现裂纹。";
+        let terms = super::note_terms(
+            &json!({}),
+            &json!({"content":[{"children":[{"text":body}]}],"attachments":[{"text":"We used a camera."}]}),
+        );
+        let labels: Vec<_> = terms.iter().map(|t| t.label.as_str()).collect();
+        for label in ["optical spectrometer AX-42", "no cracks", "未发现裂纹"] {
+            assert!(labels.contains(&label), "{labels:?}");
+        }
+        assert_eq!(labels.len(), 3, "{labels:?}");
+    }
+
+    #[test]
+    fn free_prose_filters_lists_across_paragraphs_but_recovers_actual_use() {
+        let body = json!({"paragraphs":[
+            {"text":"Equipment inventory:"}, {"text":"Instruments: reserve camera"},
+            {"text":"Next run plan:"}, {"text":"- We used a microscope."},
+            {"text":"Instruments actually used:"}, {"text":"- dial gauge R4"},
+            {"text":"The manual says: “We checked the reading."},
+            {"text":"We used a camera.” We weighed sample L3."},
+            {"text":"库房清单：温度计，但本次实际使用了天平。"},
+            {"text":"下次计划："}, {"text":"- 使用相机。"},
+            {"text":"实际观测："}, {"text":"本次检查未见裂纹。"}
+        ]});
+        let terms = super::note_terms(&json!({}), &body);
+        let labels: Vec<_> = terms.iter().map(|t| t.label.as_str()).collect();
+        for label in ["dial gauge R4", "sample L3", "天平", "未见裂纹"] {
+            assert!(labels.contains(&label), "{labels:?}");
+        }
+        assert_eq!(labels.len(), 4, "{labels:?}");
+    }
+
+    #[test]
+    fn grounded_duplicates_must_refer_to_the_same_occurrence_and_role() {
+        let make = |kind, label: &str, sentence: &str| {
+            let mut item = super::term(kind, "test", label.to_owned(), None);
+            item.evidence = Some(sentence.to_owned());
+            item
+        };
+        let line = "We recorded a deviation of 0.07 mm.";
+        let terms = super::distinct_note_terms(vec![
+            make("result", "a deviation of 0.07 mm", line),
+            make("result", "deviation of 0.07 mm", line),
+            make("sample", "deviation of 0.07 mm", line),
+            make("sample", "a spring", "We compared a spring and the spring."),
+            make(
+                "sample",
+                "the spring",
+                "We compared a spring and the spring.",
+            ),
+        ]);
+        assert_eq!(terms.len(), 4);
+        assert!(terms.iter().any(|t| t.label == "a deviation of 0.07 mm"));
+    }
+
+    #[test]
+    fn prose_list_in_rich_text_never_creates_an_editor_key_as_an_entity() {
+        let content = json!({"paragraphs":[{"text":"本次实际使用仪器："},{"text":"- 游标卡尺"}]});
+        let terms = super::note_terms(&json!({}), &content);
+        let labels: Vec<_> = terms.iter().map(|fact| fact.label.as_str()).collect();
+        assert_eq!(labels, ["游标卡尺"]);
+    }
+
+    #[test]
+    fn free_prose_rejects_instructions_and_incidental_equipment_names() {
+        for body in [
+            "手册写道：“用显微镜查看样品 A1。”",
+            "The manual says: We used a microscope.",
+            "We used the threshold indicator. We plan to test the brass coupon.",
+            "The target pressure was set to 18.5 kPa. 目标压力设为 18 kPa。",
+        ] {
+            assert!(
+                super::note_terms(&json!({}), &json!({"text":body})).is_empty(),
+                "{body}"
+            );
+        }
+    }
+
+    #[test]
+    fn t181_qpcr_abbreviated_body_does_not_create_numeric_sample() {
+        let terms = extract_terms(
+            &json!({"samples": ["cDNA 样本 1", "cDNA 样本 2", "阴性对照"]}),
+            &json!({"text": "样本: cDNA 样本 1、2、阴性对照"}),
+        );
+        let labels: Vec<_> = terms
+            .iter()
+            .filter(|term| term.entity_type == "sample")
+            .map(|term| term.label.as_str())
+            .collect();
+        assert_eq!(labels, ["cDNA 样本 1", "cDNA 样本 2", "阴性对照"]);
+    }
+
+    #[test]
+    fn t181_ambiguous_body_does_not_invent_sample_prefix() {
+        let terms = extract_terms(
+            &json!({}),
+            &json!({"text": "样本: cDNA 样本 1、2、阴性对照"}),
+        );
+        let labels: Vec<_> = terms
+            .iter()
+            .filter(|term| term.entity_type == "sample")
+            .map(|term| term.label.as_str())
+            .collect();
+        assert_eq!(labels, ["cDNA 样本 1", "阴性对照"]);
+    }
+
+    #[test]
+    fn t181_explicit_numeric_sample_and_numeric_result_are_preserved() {
+        let terms = extract_terms(&json!({"samples": ["2"]}), &json!({"text": "结果: 2"}));
+        assert!(terms
+            .iter()
+            .any(|term| term.entity_type == "sample" && term.label == "2"));
+        assert!(terms
+            .iter()
+            .any(|term| term.entity_type == "result" && term.label == "2"));
     }
 
     #[test]

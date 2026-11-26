@@ -1342,6 +1342,490 @@ mod tests {
         body["access_token"].as_str().unwrap().to_owned()
     }
 
+    async fn t219_graph_fixture() -> (Router, sqlx::PgPool, String, i32) {
+        let database_url = std::env::var("TEST_DATABASE_URL")
+            .expect("T219 consistency tests require an isolated TEST_DATABASE_URL");
+        let username = format!("t219_{}", Uuid::new_v4().simple());
+        let settings = Settings::from_map(&HashMap::from([
+            ("DATABASE_URL".to_owned(), database_url),
+            ("SECRET_KEY".to_owned(), "t219-test-secret".to_owned()),
+            ("BOOTSTRAP_ADMIN_USERNAME".to_owned(), username.clone()),
+            (
+                "BOOTSTRAP_ADMIN_PASSWORD".to_owned(),
+                "RustAdmin123!".to_owned(),
+            ),
+        ]))
+        .unwrap();
+        let pool = connect_database(&settings).await.unwrap();
+        initialize_database(&pool, &settings).await.unwrap();
+        let app = build_app(AppState::new(pool.clone(), settings).unwrap());
+        let token = login(&app, &username, "RustAdmin123!").await;
+        let (status, project) = call(
+            &app,
+            "POST",
+            "/projects",
+            Some(&token),
+            Some(json!({"name": username, "approval_enabled": true})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{project}");
+        (app, pool, token, project["id"].as_i64().unwrap() as i32)
+    }
+
+    async fn t219_submitted_note(
+        app: &Router,
+        token: &str,
+        project_id: i32,
+        title: &str,
+        reagents: &[&str],
+    ) -> i32 {
+        let (status, note) = call(
+            app,
+            "POST",
+            &format!("/projects/{project_id}/notes"),
+            Some(token),
+            Some(json!({
+                "title": title,
+                "experiment_type": "Consistency assay",
+                "fixed_fields_json": {"reagents": reagents},
+                "content_json": {"text": "Deterministic database fixture"}
+            })),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{note}");
+        let note_id = note["id"].as_i64().unwrap() as i32;
+        let (status, submitted) = call(
+            app,
+            "POST",
+            &format!("/notes/{note_id}/submit"),
+            Some(token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{submitted}");
+        assert_eq!(submitted["status"], "submitted");
+        note_id
+    }
+
+    async fn t219_project_snapshot(pool: &sqlx::PgPool, project_id: i32) -> Value {
+        let mut snapshot = serde_json::Map::new();
+        for table in [
+            "experiment_notes",
+            "note_versions",
+            "note_approvals",
+            "kg_entities",
+            "kg_relations",
+            "search_documents",
+            "kg_extraction_runs",
+            "audit_logs",
+        ] {
+            let filter = if matches!(table, "note_versions" | "note_approvals") {
+                "note_id IN (SELECT id FROM experiment_notes WHERE project_id=$1)"
+            } else {
+                "project_id=$1"
+            };
+            // Both interpolated values come from the fixed table list above.
+            let rows: Value = sqlx::query_scalar(&format!(
+                "SELECT COALESCE(jsonb_agg(to_jsonb(t) ORDER BY id), '[]'::jsonb) \
+                 FROM {table} t WHERE {filter}"
+            ))
+            .bind(project_id)
+            .fetch_one(pool)
+            .await
+            .unwrap();
+            snapshot.insert(table.to_owned(), rows);
+        }
+        Value::Object(snapshot)
+    }
+
+    async fn t219_semantic_graph(pool: &sqlx::PgPool, project_id: i32) -> Value {
+        sqlx::query_scalar(
+            r#"
+            SELECT jsonb_build_object(
+                'entities', COALESCE((
+                    SELECT jsonb_agg(jsonb_build_object(
+                        'key', natural_key, 'type', entity_type, 'label', label,
+                        'source_type', source_type, 'source_id', source_id,
+                        'properties', properties
+                    ) ORDER BY natural_key)
+                    FROM kg_entities WHERE project_id=$1
+                ), '[]'::jsonb),
+                'relations', COALESCE((
+                    SELECT jsonb_agg(jsonb_build_object(
+                        'source_key', s.natural_key, 'target_key', t.natural_key,
+                        'type', r.relation_type, 'source_type', r.source_type,
+                        'source_id', r.source_id, 'confidence', r.confidence,
+                        'properties', r.properties
+                    ) ORDER BY s.natural_key, t.natural_key, r.relation_type)
+                    FROM kg_relations r
+                    JOIN kg_entities s ON s.id=r.source_entity_id
+                    JOIN kg_entities t ON t.id=r.target_entity_id
+                    WHERE r.project_id=$1
+                ), '[]'::jsonb)
+            )
+            "#,
+        )
+        .bind(project_id)
+        .fetch_one(pool)
+        .await
+        .unwrap()
+    }
+
+    async fn t219_call_with_graph_fault(
+        app: &Router,
+        pool: &sqlx::PgPool,
+        token: &str,
+        note_id: i32,
+        rebuild: bool,
+        old_relation_ids: &[i32],
+    ) -> ((StatusCode, Value), bool) {
+        let name = format!("t219_kg_fault_{}", Uuid::new_v4().simple());
+        let old_ids = old_relation_ids
+            .iter()
+            .map(i32::to_string)
+            .collect::<Vec<_>>()
+            .join(",");
+        // Sequence increments survive rollback, proving the exact fault point fired.
+        // The trigger also verifies that partial writes exist and old rows are gone.
+        sqlx::raw_sql(&format!(
+            r#"
+            CREATE SEQUENCE public.{name}_seen;
+            CREATE FUNCTION public.{name}() RETURNS trigger LANGUAGE plpgsql AS $$
+            BEGIN
+                IF NEW.source_type='note_extraction' AND NEW.source_id={note_id} THEN
+                    IF (SELECT count(*) FROM kg_relations
+                        WHERE source_type='note' AND source_id={note_id}) < 3
+                       OR NOT EXISTS (SELECT 1 FROM kg_entities WHERE id=NEW.target_entity_id)
+                       OR EXISTS (SELECT 1 FROM kg_relations
+                                  WHERE id=ANY(ARRAY[{old_ids}]::integer[])) THEN
+                        RAISE EXCEPTION 'T219 fault preconditions were not reached';
+                    END IF;
+                    PERFORM nextval('public.{name}_seen');
+                    RAISE EXCEPTION USING ERRCODE='P0219',
+                        MESSAGE='T219 injected mid-extraction SQL failure';
+                END IF;
+                RETURN NEW;
+            END $$;
+            CREATE TRIGGER {name} BEFORE INSERT OR UPDATE ON kg_relations
+                FOR EACH ROW EXECUTE FUNCTION public.{name}();
+            "#
+        ))
+        .execute(pool)
+        .await
+        .unwrap();
+        let suffix = if rebuild { "kg/extract" } else { "approve" };
+        let response = call(
+            app,
+            "POST",
+            &format!("/notes/{note_id}/{suffix}"),
+            Some(token),
+            Some(if rebuild {
+                json!({"rebuild": true})
+            } else {
+                json!({"comment": "T219 approval"})
+            }),
+        )
+        .await;
+        let triggered: bool =
+            sqlx::query_scalar(&format!("SELECT is_called FROM public.{name}_seen"))
+                .fetch_one(pool)
+                .await
+                .unwrap();
+        // Remove the fault before assertions or retrying the request.
+        sqlx::raw_sql(&format!(
+            "DROP TRIGGER {name} ON kg_relations; \
+             DROP FUNCTION public.{name}(); DROP SEQUENCE public.{name}_seen;"
+        ))
+        .execute(pool)
+        .await
+        .unwrap();
+        eprintln!(
+            "T219_DB_FAULT {}",
+            json!({"note_id": note_id, "endpoint": suffix, "sqlstate": "P0219",
+                   "triggered_after_partial_writes": triggered,
+                   "old_relation_ids_required_absent": old_relation_ids,
+                   "http_status": response.0.as_u16(), "fault_objects_removed": true})
+        );
+        (response, triggered)
+    }
+
+    #[tokio::test]
+    async fn t219_approval_graph_failure_rolls_back_and_retry_is_atomic() {
+        let (app, pool, token, project_id) = t219_graph_fixture().await;
+        let note_id =
+            t219_submitted_note(&app, &token, project_id, "Approval fault", &["PBS"]).await;
+        let before = t219_project_snapshot(&pool, project_id).await;
+        assert_eq!(before["experiment_notes"][0]["status"], "SUBMITTED");
+        assert_eq!(before["note_versions"][0]["is_locked"], false);
+        for table in [
+            "kg_entities",
+            "kg_relations",
+            "kg_extraction_runs",
+            "search_documents",
+        ] {
+            assert_eq!(before[table], json!([]), "unexpected baseline {table}");
+        }
+
+        let ((status, _), triggered) =
+            t219_call_with_graph_fault(&app, &pool, &token, note_id, false, &[]).await;
+        assert!(triggered, "the mid-extraction fault must actually fire");
+        assert_eq!(status, StatusCode::INTERNAL_SERVER_ERROR);
+        assert_eq!(t219_project_snapshot(&pool, project_id).await, before);
+
+        let (status, approved) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/approve"),
+            Some(&token),
+            Some(json!({"comment": "T219 retry"})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{approved}");
+        let after = t219_project_snapshot(&pool, project_id).await;
+        assert_eq!(after["experiment_notes"][0]["status"], "APPROVED");
+        assert_eq!(after["note_versions"][0]["is_locked"], true);
+        assert_eq!(after["note_approvals"].as_array().unwrap().len(), 1);
+        assert_eq!(after["kg_extraction_runs"].as_array().unwrap().len(), 1);
+        assert_eq!(after["kg_extraction_runs"][0]["status"], "completed");
+        assert_eq!(after["search_documents"].as_array().unwrap().len(), 1);
+        assert!(!after["kg_relations"].as_array().unwrap().is_empty());
+
+        let (status, _) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/approve"),
+            Some(&token),
+            Some(json!({"comment": "duplicate success"})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::CONFLICT);
+        assert_eq!(t219_project_snapshot(&pool, project_id).await, after);
+    }
+
+    #[tokio::test]
+    async fn t219_failed_rebuild_restores_old_graph_and_repeated_rebuild_is_semantic_idempotent() {
+        let (app, pool, token, project_id) = t219_graph_fixture().await;
+        let note_id =
+            t219_submitted_note(&app, &token, project_id, "Rebuild fault", &["PBS"]).await;
+        let (status, body) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/approve"),
+            Some(&token),
+            Some(json!({"comment": "initial approval"})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{body}");
+        let before = t219_project_snapshot(&pool, project_id).await;
+        let semantic_before = t219_semantic_graph(&pool, project_id).await;
+        let old_ids: Vec<i32> = before["kg_relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|row| row["id"].as_i64().unwrap() as i32)
+            .collect();
+        assert!(!old_ids.is_empty());
+
+        let ((status, _), triggered) =
+            t219_call_with_graph_fault(&app, &pool, &token, note_id, true, &old_ids).await;
+        assert!(
+            triggered,
+            "fault must fire after old relation IDs were removed"
+        );
+        assert_eq!(status, StatusCode::INTERNAL_SERVER_ERROR);
+        assert_eq!(t219_project_snapshot(&pool, project_id).await, before);
+
+        for expected_run_count in [2, 3] {
+            let (status, run) = call(
+                &app,
+                "POST",
+                &format!("/notes/{note_id}/kg/extract"),
+                Some(&token),
+                Some(json!({"rebuild": true})),
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK, "{run}");
+            assert_eq!(run["status"], "completed");
+            assert_eq!(
+                t219_semantic_graph(&pool, project_id).await,
+                semantic_before
+            );
+            let count: i64 =
+                sqlx::query_scalar("SELECT count(*) FROM kg_extraction_runs WHERE note_id=$1")
+                    .bind(note_id)
+                    .fetch_one(&pool)
+                    .await
+                    .unwrap();
+            assert_eq!(count, expected_run_count);
+        }
+    }
+
+    #[tokio::test]
+    async fn t219_archive_collects_only_unshared_extracted_entities() {
+        let (app, pool, token, project_id) = t219_graph_fixture().await;
+        let mut notes = Vec::new();
+        for (title, unique_reagent) in [
+            ("First note", "Unique reagent A"),
+            ("Second note", "Unique reagent B"),
+        ] {
+            let note_id =
+                t219_submitted_note(&app, &token, project_id, title, &["PBS", unique_reagent])
+                    .await;
+            let (status, body) = call(
+                &app,
+                "POST",
+                &format!("/notes/{note_id}/approve"),
+                Some(&token),
+                Some(json!({"comment": "shared entity fixture"})),
+            )
+            .await;
+            assert_eq!(status, StatusCode::OK, "{body}");
+            notes.push(note_id);
+        }
+        let (status, second_before) = call(
+            &app,
+            "GET",
+            &format!("/notes/{}/kg/graph", notes[1]),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        let (status, body) = call(
+            &app,
+            "POST",
+            &format!("/notes/{}/kg/extract", notes[0]),
+            Some(&token),
+            Some(json!({"rebuild": true})),
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{body}");
+        let (status, second_after_rebuild) = call(
+            &app,
+            "GET",
+            &format!("/notes/{}/kg/graph", notes[1]),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        let without_shared_entity_update_times = |mut graph: Value| {
+            for entity in graph["entities"].as_array_mut().unwrap() {
+                if matches!(
+                    entity["entity_type"].as_str(),
+                    Some("project" | "user" | "experiment_type")
+                ) || entity["label"] == "PBS"
+                {
+                    entity.as_object_mut().unwrap().remove("updated_at");
+                }
+            }
+            graph
+        };
+        assert_eq!(
+            without_shared_entity_update_times(second_after_rebuild.clone()),
+            without_shared_entity_update_times(second_before),
+            "rebuilding one note may touch shared entity timestamps but must preserve IDs and properties"
+        );
+        let second_before = second_after_rebuild;
+        let before = t219_project_snapshot(&pool, project_id).await;
+        let entities = before["kg_entities"].as_array().unwrap();
+        let shared_id = entities.iter().find(|row| row["label"] == "PBS").unwrap()["id"]
+            .as_i64()
+            .unwrap();
+        let shared_refs: i64 = sqlx::query_scalar(
+            "SELECT count(*) FROM kg_relations WHERE target_entity_id=$1 AND relation_type='uses_reagent'",
+        )
+        .bind(shared_id as i32)
+        .fetch_one(&pool)
+        .await
+        .unwrap();
+        assert_eq!(shared_refs, 2);
+        assert!(entities
+            .iter()
+            .any(|row| row["label"] == "Unique reagent A"));
+        let business_ids: Vec<Value> = entities
+            .iter()
+            .filter(|row| matches!(row["source_type"].as_str(), Some("project" | "user")))
+            .map(|row| row["id"].clone())
+            .collect();
+        assert_eq!(business_ids.len(), 2);
+
+        let (status, body) = call(
+            &app,
+            "POST",
+            &format!("/notes/{}/archive", notes[0]),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{body}");
+        let after = t219_project_snapshot(&pool, project_id).await;
+        let entities = after["kg_entities"].as_array().unwrap();
+        assert!(entities.iter().any(|row| row["id"] == shared_id));
+        assert!(!entities
+            .iter()
+            .any(|row| row["label"] == "Unique reagent A"));
+        assert!(entities
+            .iter()
+            .any(|row| row["label"] == "Unique reagent B"));
+        assert!(!entities
+            .iter()
+            .any(|row| row["source_type"] == "note" && row["source_id"] == notes[0]));
+        for id in &business_ids {
+            assert!(entities.iter().any(|row| &row["id"] == id));
+        }
+        assert!(after["kg_relations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|row| row["source_id"] != notes[0]));
+        assert!(after["search_documents"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .all(|row| row["note_id"] != notes[0]));
+        let (status, second_after) = call(
+            &app,
+            "GET",
+            &format!("/notes/{}/kg/graph", notes[1]),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        assert_eq!(
+            second_after, second_before,
+            "another note's full graph must remain intact"
+        );
+
+        let (status, body) = call(
+            &app,
+            "POST",
+            &format!("/notes/{}/archive", notes[1]),
+            Some(&token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK, "{body}");
+        let final_snapshot = t219_project_snapshot(&pool, project_id).await;
+        let final_entities = final_snapshot["kg_entities"].as_array().unwrap();
+        assert!(final_snapshot["kg_relations"]
+            .as_array()
+            .unwrap()
+            .is_empty());
+        assert!(final_snapshot["search_documents"]
+            .as_array()
+            .unwrap()
+            .is_empty());
+        assert_eq!(final_entities.len(), business_ids.len());
+        for id in business_ids {
+            assert!(final_entities.iter().any(|row| row["id"] == id));
+        }
+        assert!(final_entities
+            .iter()
+            .all(|row| matches!(row["source_type"].as_str(), Some("project" | "user"))));
+    }
+
     #[test]
     fn test_note_json_storage_preserves_user_values_across_repeated_updates() {
         let raw = json!({
@@ -1579,6 +2063,7 @@ mod tests {
         assert_eq!(created["status"], "draft");
         let note_id = created["id"].as_i64().unwrap();
 
+        let body_text = "We weighed sample P9 using a digital balance. We did not use a camera.";
         let (updated_status, updated) = call(
             &app,
             "PATCH",
@@ -1586,7 +2071,7 @@ mod tests {
             Some(&writer_token),
             Some(json!({
                 "title": "PCR updated",
-                "content_json": {"text": "Updated result"},
+                "content_json": {"content": [{"type":"paragraph","children":[{"text":body_text}]}]},
                 "change_summary": "second version"
             })),
         )
@@ -1670,6 +2155,54 @@ mod tests {
             .unwrap()
             .iter()
             .any(|relation| relation["relation_type"] == "uses_reagent"));
+
+        // The reviewer approved this exact immutable version. Its free-form facts
+        // must survive a rebuild with the same verbatim evidence and source ID.
+        let (rebuild, run) = call(
+            &app,
+            "POST",
+            &format!("/notes/{note_id}/kg/extract"),
+            Some(&admin),
+            Some(json!({"rebuild": true})),
+        )
+        .await;
+        assert_eq!(rebuild, StatusCode::OK, "{run}");
+        let (status, rebuilt) = call(
+            &app,
+            "GET",
+            &format!("/notes/{note_id}/kg/graph"),
+            Some(&writer_token),
+            None,
+        )
+        .await;
+        assert_eq!(status, StatusCode::OK);
+        for snapshot in [&graph, &rebuilt] {
+            let entities = snapshot["entities"].as_array().unwrap();
+            assert!(entities.iter().all(|e| e["label"] != "camera"));
+            let relations = snapshot["relations"].as_array().unwrap();
+            for (label, relation_type) in [
+                ("sample P9", "uses_sample"),
+                ("digital balance", "uses_instrument"),
+            ] {
+                let entity = entities.iter().find(|e| e["label"] == label).unwrap();
+                let relation = relations
+                    .iter()
+                    .find(|r| {
+                        r["target_entity_id"] == entity["id"] && r["relation_type"] == relation_type
+                    })
+                    .unwrap();
+                assert_eq!(relation["source_id"], note_id);
+                assert_eq!(relation["properties"]["method"], "local_prose");
+                assert_eq!(
+                    relation["properties"]["source_note_version_id"],
+                    versions[0]["id"]
+                );
+                assert_eq!(
+                    relation["properties"]["evidence"],
+                    "We weighed sample P9 using a digital balance."
+                );
+            }
+        }
 
         let (approvals_status, approvals) = call(
             &app,

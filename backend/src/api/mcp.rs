@@ -636,7 +636,7 @@ pub fn tool_registry() -> Vec<ToolSpec> {
         },
         ToolSpec {
             name: "submit_note_review",
-            description: "提交笔记审核；执行前必须由用户确认。",
+            description: "登记提交笔记审核请求，返回 confirmation_required；此调用不提交笔记，须随后由用户通过确认界面执行。",
             input_schema: object_schema(
                 json!({"project_id":{"type":"integer","minimum":1},"note_id":{"type":"integer","minimum":1},"idempotency_key":{"type":"string","minLength":8,"maxLength":100}}),
                 &["project_id", "note_id", "idempotency_key"],
@@ -649,7 +649,7 @@ pub fn tool_registry() -> Vec<ToolSpec> {
         },
         ToolSpec {
             name: "review_note",
-            description: "审批或拒绝笔记；执行前必须由用户确认。",
+            description: "登记审批或拒绝笔记请求，返回 confirmation_required；此调用不改变审批状态，须随后由用户通过确认界面执行。",
             input_schema: object_schema(
                 json!({"project_id":{"type":"integer","minimum":1},"note_id":{"type":"integer","minimum":1},"decision":{"type":"string","enum":["approve","reject"]},"comment":{"type":"string"},"idempotency_key":{"type":"string","minLength":8,"maxLength":100}}),
                 &["project_id", "note_id", "decision", "idempotency_key"],
@@ -1056,23 +1056,31 @@ async fn call_create_draft_note(
         "{:x}",
         Sha256::digest(serde_json::to_vec(&args).unwrap_or_default())
     );
-    let existing: Option<(String,Value)> = sqlx::query_as(
-        "SELECT arguments_hash,result_json FROM tool_execution_keys WHERE user_id=$1 AND tool_name='create_draft_note' AND idempotency_key=$2"
-    ).bind(user.id).bind(idempotency_key).fetch_optional(&state.pool).await.map_err(|error| (-32603, format!("Database error: {error}")))?;
-    if let Some((stored_hash, result)) = existing {
-        if stored_hash != arguments_hash {
-            return Err((
-                -32602,
-                "Idempotency key was reused with different parameters".to_owned(),
-            ));
-        }
-        return Ok(result);
-    }
     let mut transaction = state
         .pool
         .begin()
         .await
         .map_err(|error| (-32603, format!("Database error: {error}")))?;
+    // Claim before creating the note. Conflicting callers wait for this transaction
+    // and then read its committed result; a failed write rolls the claim back too.
+    let claimed = sqlx::query("INSERT INTO tool_execution_keys (user_id,tool_name,idempotency_key,arguments_hash,result_json) VALUES ($1,'create_draft_note',$2,$3,'{}') ON CONFLICT DO NOTHING")
+        .bind(user.id).bind(idempotency_key).bind(&arguments_hash).execute(&mut *transaction).await
+        .map_err(|error| (-32603, format!("Database error: {error}")))?.rows_affected() == 1;
+    if !claimed {
+        let existing: Option<(String,Value)> = sqlx::query_as(
+        "SELECT arguments_hash,result_json FROM tool_execution_keys WHERE user_id=$1 AND tool_name='create_draft_note' AND idempotency_key=$2"
+    ).bind(user.id).bind(idempotency_key).fetch_optional(&mut *transaction).await.map_err(|error| (-32603, format!("Database error: {error}")))?;
+        if let Some((stored_hash, result)) = existing {
+            if stored_hash != arguments_hash {
+                return Err((
+                    -32602,
+                    "Idempotency key was reused with different parameters".to_owned(),
+                ));
+            }
+            return Ok(result);
+        }
+        return Err((-32603, "Idempotency result is unavailable".to_owned()));
+    }
     let note_id: i32 = sqlx::query_scalar(
         r#"INSERT INTO experiment_notes (project_id,title,experiment_type,owner_user_id,status,created_at,updated_at)
            VALUES ($1,$2,$3,$4,'DRAFT'::notestatus,now(),now()) RETURNING id"#,
@@ -1089,8 +1097,8 @@ async fn call_create_draft_note(
         .await
         .map_err(|error| (-32603, format!("Database error: {error}")))?;
     let result = json!({"content":[{"type":"text","text":"草稿笔记已创建"}],"structuredContent":{"status":"completed","note_id":note_id,"project_id":project_id,"draft":true}});
-    sqlx::query("INSERT INTO tool_execution_keys (user_id,tool_name,idempotency_key,arguments_hash,result_json) VALUES ($1,'create_draft_note',$2,$3,$4)")
-        .bind(user.id).bind(idempotency_key).bind(arguments_hash).bind(&result).execute(&mut *transaction).await.map_err(|error| (-32603, format!("Database error: {error}")))?;
+    sqlx::query("UPDATE tool_execution_keys SET result_json=$3 WHERE user_id=$1 AND tool_name='create_draft_note' AND idempotency_key=$2")
+        .bind(user.id).bind(idempotency_key).bind(&result).execute(&mut *transaction).await.map_err(|error| (-32603, format!("Database error: {error}")))?;
     transaction
         .commit()
         .await

@@ -249,7 +249,7 @@ export default function ProjectLayout({ children }: { children: React.ReactNode 
         </TabsList>
       </Tabs>
 
-      <div className={`mt-6 transition-all duration-200 ${isPending ? "opacity-40 translate-y-1" : "opacity-100 translate-y-0"}`}>{children}</div>
+      <div className={`mt-6 transition-opacity duration-200 ${isPending ? "opacity-40" : "opacity-100"}`}>{children}</div>
     </div>
   );
 }
