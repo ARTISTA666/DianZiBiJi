@@ -1630,6 +1630,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/agent/next-step-suggestion/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Suggestion Feedback */
+        get: operations["list_suggestion_feedback_projects__project_id__agent_next_step_suggestion_feedback_get"];
+        put?: never;
+        /** Record Suggestion Feedback */
+        post: operations["record_suggestion_feedback_projects__project_id__agent_next_step_suggestion_feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -7029,6 +7047,66 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_suggestion_feedback_projects__project_id__agent_next_step_suggestion_feedback_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    record_suggestion_feedback_projects__project_id__agent_next_step_suggestion_feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    suggestion_key: string;
+                    /** @enum {string} */
+                    status: "accepted" | "ignored";
+                    mode?: string;
+                    related_labels?: string[];
+                    summary?: string;
+                };
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

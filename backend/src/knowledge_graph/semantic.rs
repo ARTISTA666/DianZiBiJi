@@ -154,7 +154,16 @@ impl LocalModel {
                 .fetch_optional(pool)
                 .await?;
         let Some(content) = content else {
-            return Ok(true);
+            sqlx::query(
+                "UPDATE kg_prose_annotations SET lease=NULL, attempts=attempts+1, last_error='missing_note_version',
+                 retry_at=now()+make_interval(secs => LEAST(3600,30*(LEAST(attempts,119)+1)))
+                 WHERE version_id=$1 AND lease=$2",
+            )
+            .bind(version_id)
+            .bind(lease)
+            .execute(pool)
+            .await?;
+            return Ok(false);
         };
         let result =
             tokio::time::timeout(Duration::from_secs(220), self.annotate(&content, revision)).await;
@@ -202,6 +211,14 @@ impl LocalModel {
         .fetch_optional(&mut *tx)
         .await?;
         let Some((note_id, project_id)) = active else {
+            sqlx::query(
+                "UPDATE kg_prose_annotations SET lease=NULL WHERE version_id=$1 AND lease=$2",
+            )
+            .bind(version_id)
+            .bind(lease)
+            .execute(&mut *tx)
+            .await?;
+            tx.commit().await?;
             return Ok(());
         };
         let updated = sqlx::query("UPDATE kg_prose_annotations SET facts=$3, model=$4, revision=$5, lease=NULL, retry_at=now(), attempts=0, last_error=NULL WHERE version_id=$1 AND lease=$2")

@@ -311,6 +311,9 @@ pub fn graph_context_budget(context: &[RagGraphContextRead], query: &str) -> usi
     visible
 }
 
+/// 面向 GEO RNA-seq 结构化计数摘要（`GSM*` / `total_count` / `detected_gene_rows`）
+/// 的诊断性数值汇总辅助。仅在问题显式询问计数或非零行数且图谱中存在对应格式节点时生效，
+/// 不影响常规实验记录检索路径。
 fn numeric_summary_lines(context: &[RagGraphContextRead], query: &str) -> Vec<String> {
     let normalized_query = query.to_lowercase();
     if !["计数", "行数", "total", "detected"]
@@ -403,8 +406,9 @@ fn graph_context_line(index: usize, item: &RagGraphContextRead) -> String {
                 .join("、")
         )
     };
+    // 数值 1.0 / 0.7 仅用于区分业务事实边与规则抽取边的来源权重，并非统计校准概率。
     format!(
-        "[G{}] {}（{}） {} {}（{}） (置信度 {:.2}{role_text})\n",
+        "[G{}] {}（{}） {} {}（{}） (来源权重 {:.2}{role_text})\n",
         index + 1,
         inline_text(&item.source_label),
         inline_text(&item.source_entity_type_label),
